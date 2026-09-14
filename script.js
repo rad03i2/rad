@@ -239,3 +239,13 @@
     });
   }
 })();
+
+// [portfolio-enhancements-loader]
+(() => {
+  if (document.querySelector('script[data-portfolio-enhancements]')) return;
+  const s = document.createElement('script');
+  s.src = 'enhancements.js';
+  s.defer = true;
+  s.dataset.portfolioEnhancements = 'true';
+  document.head.appendChild(s);
+})();
