@@ -74,16 +74,16 @@
         <a href="https://www.facebook.com/rad03e" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-8h2.75l.41-3.2H13.5V8.76c0-.93.26-1.56 1.59-1.56h1.7V4.34c-.29-.04-1.3-.12-2.47-.12-2.44 0-4.11 1.49-4.11 4.23v2.35H7.45V14h2.76v8h3.29Z"/></svg>
         </a>`;
-      heroActions.insertAdjacentElement('afterend', socials);
+      heroActions.insertBefore(socials, heroActions.children[1] || null);
 
       const style = document.createElement('style');
       style.id = 'heroSocialStyles';
       style.textContent = `
-        .hero-socials{display:flex;align-items:center;gap:10px;margin-top:14px;direction:ltr}
-        .hero-socials a{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(184,190,181,.22);border-radius:50%;color:#969d94;background:rgba(255,255,255,.025);transition:color .2s ease,border-color .2s ease,background .2s ease,transform .2s ease}
+        .hero-socials{display:flex;align-items:center;gap:7px;margin:0 2px;direction:ltr;flex:0 0 auto}
+        .hero-socials a{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(184,190,181,.22);border-radius:50%;color:#969d94;background:rgba(255,255,255,.025);transition:color .2s ease,border-color .2s ease,background .2s ease,transform .2s ease}
         .hero-socials a:hover{color:#c8cec4;border-color:rgba(210,216,205,.38);background:rgba(255,255,255,.055);transform:translateY(-2px)}
-        .hero-socials svg{width:17px;height:17px;display:block}
-        @media(max-width:760px){.hero-socials{margin-top:12px}.hero-socials a{width:34px;height:34px}.hero-socials svg{width:16px;height:16px}}
+        .hero-socials svg{width:15px;height:15px;display:block}
+        @media(max-width:760px){.hero-socials{gap:6px;margin:0 1px}.hero-socials a{width:29px;height:29px}.hero-socials svg{width:14px;height:14px}}
       `;
       document.head.appendChild(style);
     }
