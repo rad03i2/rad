@@ -1,0 +1,76 @@
+name: Split portfolio source files
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  split:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Split inline CSS and JavaScript
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+
+          html_path = Path('index.html')
+          text = html_path.read_text(encoding='utf-8')
+
+          style_pattern = re.compile(r'<style\b[^>]*>(.*?)</style>', re.I | re.S)
+          script_pattern = re.compile(r'<script\b(?![^>]*\bsrc\s*=)[^>]*>(.*?)</script>', re.I | re.S)
+
+          styles = style_pattern.findall(text)
+          scripts = script_pattern.findall(text)
+
+          if not styles and not scripts:
+              print('Source is already split; no changes required.')
+              sys.exit(0)
+
+          if len(styles) != 1:
+              raise SystemExit(f'Expected exactly one inline <style> block, found {len(styles)}.')
+          if not scripts:
+              raise SystemExit('No inline JavaScript blocks were found.')
+
+          css = styles[0].strip('\n') + '\n'
+          Path('styles.css').write_text(css, encoding='utf-8')
+          text = style_pattern.sub('  <link rel="stylesheet" href="styles.css">', text, count=1)
+
+          js_parts = []
+          def replace_script(match):
+              js_parts.append(match.group(1).strip('\n'))
+              return '  <script src="script.js"></script>' if len(js_parts) == 1 else ''
+
+          text = script_pattern.sub(replace_script, text)
+          Path('script.js').write_text('\n\n'.join(js_parts) + '\n', encoding='utf-8')
+
+          html_path.write_text(text, encoding='utf-8')
+
+          print(f'Created styles.css from {len(styles)} style block.')
+          print(f'Created script.js from {len(js_parts)} JavaScript blocks.')
+          print('Updated index.html to reference the external files.')
+          PY
+
+      - name: Commit split files
+        shell: bash
+        run: |
+          if git diff --quiet && [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html styles.css script.js
+          git commit -m "chore: split portfolio HTML CSS and JavaScript"
+          git push
