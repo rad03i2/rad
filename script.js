@@ -5,6 +5,8 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
+  document.documentElement.classList.add('js');
+
   // Mobile menu
   const menuButton = $('.menu-button');
   const navigation = $('#navigation');
@@ -27,11 +29,10 @@
     });
   }
 
-  document.documentElement.classList.add('js');
   const year = $('#year');
   if (year) year.textContent = String(new Date().getFullYear());
 
-  // Highlight active navigation section
+  // Highlight current navigation section
   const navLinks = $$('#navigation a[href^="#"]');
   const sections = navLinks.map((link) => $(link.getAttribute('href'))).filter(Boolean);
   if (sections.length) {
@@ -58,7 +59,37 @@
     updateCurrentSection();
   }
 
-  // Subtle code-stream background, if the original site has it
+  // Social links in the hero
+  if (!$('#heroSocials')) {
+    const heroActions = $('.hero-actions');
+    if (heroActions) {
+      const socials = document.createElement('div');
+      socials.id = 'heroSocials';
+      socials.className = 'hero-socials';
+      socials.setAttribute('aria-label', 'حساباتي على مواقع التواصل');
+      socials.innerHTML = `
+        <a href="https://www.instagram.com/rad_03i" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 2A3.76 3.76 0 0 0 4 7.75v8.5A3.76 3.76 0 0 0 7.75 20h8.5A3.76 3.76 0 0 0 20 16.25v-8.5A3.76 3.76 0 0 0 16.25 4h-8.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.25-3.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/rad03e" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-8h2.75l.41-3.2H13.5V8.76c0-.93.26-1.56 1.59-1.56h1.7V4.34c-.29-.04-1.3-.12-2.47-.12-2.44 0-4.11 1.49-4.11 4.23v2.35H7.45V14h2.76v8h3.29Z"/></svg>
+        </a>`;
+      heroActions.insertAdjacentElement('afterend', socials);
+
+      const style = document.createElement('style');
+      style.id = 'heroSocialStyles';
+      style.textContent = `
+        .hero-socials{display:flex;align-items:center;gap:10px;margin-top:14px;direction:ltr}
+        .hero-socials a{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(184,190,181,.22);border-radius:50%;color:#969d94;background:rgba(255,255,255,.025);transition:color .2s ease,border-color .2s ease,background .2s ease,transform .2s ease}
+        .hero-socials a:hover{color:#c8cec4;border-color:rgba(210,216,205,.38);background:rgba(255,255,255,.055);transform:translateY(-2px)}
+        .hero-socials svg{width:17px;height:17px;display:block}
+        @media(max-width:760px){.hero-socials{margin-top:12px}.hero-socials a{width:34px;height:34px}.hero-socials svg{width:16px;height:16px}}
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  // Subtle code-stream background
   const stream = $('#codeStream');
   if (stream && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const lines = [
@@ -183,9 +214,8 @@
       <div class="section-header showcase-header">
         <div>
           <p class="section-label"><span>03 /</span> المشاريع</p>
-          <h2 id="projects-title">مشاريع مختارة.<br><em>مرتبة حسب تسلسل الصور.</em></h2>
+          <h2 id="projects-title">مشاريعي الخاصة</h2>
         </div>
-        <p class="section-intro">صور تعريفية احترافية لكل مشروع، مع شرح موجز ورابط مباشر إلى المستودع على GitHub.</p>
       </div>
       <div class="projects-showcase-grid" id="projectsShowcaseGrid">${cards}</div>
       <div class="projects-more-wrap">
