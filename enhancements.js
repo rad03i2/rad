@@ -403,3 +403,17 @@
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
+
+/* ACCESSIBILITY-FINAL */
+(function(){
+  const fixAccessibleNames=()=>{
+    const brand=document.querySelector('a.brand');
+    if(brand) brand.removeAttribute('aria-label');
+    document.querySelectorAll('.showcase-image-link[aria-label]').forEach(a=>a.removeAttribute('aria-label'));
+  };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fixAccessibleNames,{once:true});
+  else fixAccessibleNames();
+  const observer=new MutationObserver(fixAccessibleNames);
+  observer.observe(document.documentElement,{childList:true,subtree:true});
+  setTimeout(()=>observer.disconnect(),5000);
+})();
