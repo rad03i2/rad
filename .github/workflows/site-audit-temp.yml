@@ -1,4 +1,4 @@
-name: Lighthouse baseline temporary
+name: Lighthouse optimized temporary
 
 on:
   push:
@@ -19,7 +19,6 @@ jobs:
       - name: Run Lighthouse mobile and desktop
         shell: bash
         run: |
-          google-chrome --version || true
           npx --yes lighthouse@12.8.2 https://rdwan.dev/ --output=json --output-path=/tmp/mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
           npx --yes lighthouse@12.8.2 https://rdwan.dev/ --preset=desktop --output=json --output-path=/tmp/desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
           node <<'JS'
@@ -29,7 +28,17 @@ jobs:
             const c=j.categories,a=j.audits;
             const out={mode,scores:{performance:Math.round(c.performance.score*100),accessibility:Math.round(c.accessibility.score*100),bestPractices:Math.round(c['best-practices'].score*100),seo:Math.round(c.seo.score*100)},metrics:{FCP:a['first-contentful-paint'].displayValue,LCP:a['largest-contentful-paint'].displayValue,CLS:a['cumulative-layout-shift'].displayValue,TBT:a['total-blocking-time'].displayValue,SpeedIndex:a['speed-index'].displayValue},transfer:a['total-byte-weight']?.displayValue,dom:a['dom-size']?.displayValue};
             console.log('LIGHTHOUSE',JSON.stringify(out));
-            const fails=Object.entries(a).filter(([k,v])=>v.scoreDisplayMode==='numeric' && typeof v.score==='number' && v.score<0.9).sort((x,y)=>(x[1].score??1)-(y[1].score??1)).slice(0,15).map(([k,v])=>({id:k,score:v.score,title:v.title,display:v.displayValue}));
-            console.log('LOW_AUDITS_'+mode.toUpperCase(),JSON.stringify(fails));
+            const seoRefs=c.seo.auditRefs||[];
+            const seoFails=seoRefs.map(r=>({id:r.id,weight:r.weight,score:a[r.id]?.score,title:a[r.id]?.title,display:a[r.id]?.displayValue})).filter(x=>x.score!==1 && x.score!==null && x.score!==undefined);
+            console.log('SEO_FAILS_'+mode.toUpperCase(),JSON.stringify(seoFails));
+            const accRefs=c.accessibility.auditRefs||[];
+            const accFails=accRefs.map(r=>({id:r.id,weight:r.weight,score:a[r.id]?.score,title:a[r.id]?.title})).filter(x=>x.score===0);
+            console.log('ACCESSIBILITY_FAILS_'+mode.toUpperCase(),JSON.stringify(accFails.slice(0,20)));
+            const cls=a['layout-shifts']?.details?.items||a['cls-culprits-insight']?.details?.items||[];
+            console.log('CLS_ITEMS_'+mode.toUpperCase(),JSON.stringify(cls.slice(0,10)));
+            const lcp=a['largest-contentful-paint-element']?.details?.items||a['lcp-discovery-insight']?.details?.items||[];
+            console.log('LCP_ITEMS_'+mode.toUpperCase(),JSON.stringify(lcp.slice(0,6)));
+            const network=(a['network-requests']?.details?.items||[]).sort((x,y)=>(y.transferSize||0)-(x.transferSize||0)).slice(0,10).map(x=>({url:x.url,transferSize:x.transferSize,resourceSize:x.resourceSize,mimeType:x.mimeType}));
+            console.log('LARGEST_REQUESTS_'+mode.toUpperCase(),JSON.stringify(network));
           }
           JS
