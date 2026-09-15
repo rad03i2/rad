@@ -1,4 +1,4 @@
-name: Optimize homepage assets temporary
+name: Accessibility tuning temporary
 
 on:
   push:
@@ -16,44 +16,33 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Compress portrait and fix crawlable modal links
+      - name: Fix accessible names and contrast without changing layout
         run: |
-          python -m pip install --quiet pillow
           python <<'PY'
           from pathlib import Path
-          from PIL import Image
-          import io,re
-
-          image_path=Path('assets/images/radwan-profile.webp')
-          img=Image.open(image_path).convert('RGB')
-          print('portrait before',img.size,image_path.stat().st_size)
-          max_w=1200
-          if img.width>max_w:
-              h=round(img.height*max_w/img.width)
-              img=img.resize((max_w,h),Image.Resampling.LANCZOS)
-          buf=io.BytesIO()
-          img.save(buf,'WEBP',quality=90,method=6)
-          data=buf.getvalue()
-          image_path.write_bytes(data)
-          print('portrait after',img.size,len(data))
 
           js=Path('enhancements.js')
           text=js.read_text(encoding='utf-8')
-          text=text.replace('<a class="enh-primary enh-modal-github" target="_blank" rel="noopener">','<a class="enh-primary enh-modal-github" href="https://github.com/rad03i2" target="_blank" rel="noopener">')
-          text=text.replace('<a class="enh-secondary enh-modal-demo" target="_blank" rel="noopener" hidden','<a class="enh-secondary enh-modal-demo" href="https://rdwan.dev/" target="_blank" rel="noopener" hidden')
-          text=text.replace('<a class="enh-secondary enh-desktop-link" href="#">GitHub Desktop</a>','<a class="enh-secondary enh-desktop-link" href="https://github.com/rad03i2">GitHub Desktop</a>')
+          marker='/* ACCESSIBILITY-FINAL */'
+          if marker not in text:
+              text += '''\n/* ACCESSIBILITY-FINAL */\n(function(){\n  const fixAccessibleNames=()=>{\n    const brand=document.querySelector('a.brand');\n    if(brand) brand.removeAttribute('aria-label');\n    document.querySelectorAll('.showcase-image-link[aria-label]').forEach(a=>a.removeAttribute('aria-label'));\n  };\n  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fixAccessibleNames,{once:true});\n  else fixAccessibleNames();\n  const observer=new MutationObserver(fixAccessibleNames);\n  observer.observe(document.documentElement,{childList:true,subtree:true});\n  setTimeout(()=>observer.disconnect(),5000);\n})();\n'''
           js.write_text(text,encoding='utf-8')
 
-          css=Path('styles.css').read_text(encoding='utf-8')
-          for token in ['hero-copy','hero-title','hero-grid','animation-delay','opacity:0']:
-              print('\nTOKEN',token)
-              for m in list(re.finditer(re.escape(token),css,re.I))[:8]:
-                  print(re.sub(r'\s+',' ',css[max(0,m.start()-220):m.start()+420])[:650])
+          css=Path('enhancements.css')
+          c=css.read_text(encoding='utf-8')
+          if '/* ACCESSIBILITY-FINAL */' not in c:
+              c += '\n/* ACCESSIBILITY-FINAL */\n.closing-code{color:#5d704d!important}\n'
+          css.write_text(c,encoding='utf-8')
+
+          idx=Path('index.html')
+          h=idx.read_text(encoding='utf-8')
+          h=h.replace('width="2048" height="1801"','width="1200" height="1055"')
+          idx.write_text(h,encoding='utf-8')
           PY
-      - name: Commit performance fixes
+      - name: Commit accessibility fixes
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add assets/images/radwan-profile.webp enhancements.js
-          git commit -m 'Improve homepage image delivery and crawlable links' || exit 0
+          git add enhancements.js enhancements.css index.html
+          git commit -m 'Improve accessibility without changing visual layout' || exit 0
           git push
