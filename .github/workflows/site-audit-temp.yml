@@ -1,4 +1,4 @@
-name: Live site audit temporary
+name: Lighthouse baseline temporary
 
 on:
   push:
@@ -13,111 +13,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-node@v4
         with:
-          python-version: '3.12'
-      - name: Install audit dependencies
-        run: python -m pip install --quiet requests beautifulsoup4
-      - name: Run live audit
+          node-version: '22'
+      - name: Run Lighthouse mobile and desktop
         shell: bash
         run: |
-          python <<'PY'
-          import json, requests, re, sys
-          from bs4 import BeautifulSoup
-          from urllib.parse import urljoin
-
-          urls = [
-            'https://rdwan.dev/',
-            'https://www.rdwan.dev/',
-            'https://rdwan.dev/robots.txt',
-            'https://rdwan.dev/sitemap.xml',
-            'https://rdwan.dev/about-radwan-abdulhadi.html',
-            'https://rdwan.dev/projects/',
-            'https://rdwan.dev/services/',
-            'https://rdwan.dev/projects/01-smart-file-manager.html',
-            'https://rdwan.dev/assets/social/home.jpg',
-            'https://rdwan.dev/assets/social/project-01.jpg',
-          ]
-          headers={'User-Agent':'Mozilla/5.0 (compatible; RADSiteAudit/1.0)'}
-          print('=== HTTP / REDIRECT AUDIT ===')
-          for u in urls:
-            try:
-              r=requests.get(u,headers=headers,timeout=25,allow_redirects=True)
-              print(json.dumps({'url':u,'status':r.status_code,'final':r.url,'type':r.headers.get('content-type'),'bytes':len(r.content)},ensure_ascii=False))
-            except Exception as e:
-              print(json.dumps({'url':u,'error':str(e)},ensure_ascii=False))
-
-          print('\n=== META / SOCIAL / SCHEMA AUDIT ===')
-          for u in ['https://rdwan.dev/','https://rdwan.dev/projects/01-smart-file-manager.html','https://rdwan.dev/projects/08-arabic-ui-components.html']:
-            try:
-              r=requests.get(u,headers=headers,timeout=25)
-              soup=BeautifulSoup(r.text,'html.parser')
-              def meta(name=None, prop=None):
-                tag=soup.find('meta', attrs={'name':name}) if name else soup.find('meta', attrs={'property':prop})
-                return tag.get('content') if tag else None
-              can=soup.find('link',rel='canonical')
-              jsonlds=[]
-              types=[]
-              errors=[]
-              for s in soup.find_all('script',attrs={'type':'application/ld+json'}):
-                try:
-                  d=json.loads(s.string or s.get_text())
-                  jsonlds.append(d)
-                  def collect(x):
-                    if isinstance(x,dict):
-                      t=x.get('@type')
-                      if isinstance(t,list): types.extend(t)
-                      elif t: types.append(t)
-                      for v in x.values(): collect(v)
-                    elif isinstance(x,list):
-                      for v in x: collect(v)
-                  collect(d)
-                except Exception as e: errors.append(str(e))
-              data={
-                'url':u,
-                'status':r.status_code,
-                'title': soup.title.string.strip() if soup.title and soup.title.string else None,
-                'description':meta(name='description'),
-                'robots':meta(name='robots'),
-                'canonical':can.get('href') if can else None,
-                'og:title':meta(prop='og:title'),
-                'og:description':meta(prop='og:description'),
-                'og:url':meta(prop='og:url'),
-                'og:image':meta(prop='og:image'),
-                'twitter:card':meta(name='twitter:card'),
-                'twitter:title':meta(name='twitter:title'),
-                'twitter:image':meta(name='twitter:image'),
-                'jsonld_blocks':len(jsonlds),
-                'schema_types':sorted(set(types)),
-                'jsonld_errors':errors,
-              }
-              print(json.dumps(data,ensure_ascii=False))
-            except Exception as e:
-              print(json.dumps({'url':u,'error':str(e)},ensure_ascii=False))
-
-          print('\n=== PAGESPEED INSIGHTS ===')
-          endpoint='https://www.googleapis.com/pagespeedonline/v5/runPagespeed'
-          for strategy in ['mobile','desktop']:
-            params=[('url','https://rdwan.dev/'),('strategy',strategy),('category','performance'),('category','seo'),('category','accessibility'),('category','best-practices')]
-            try:
-              r=requests.get(endpoint,params=params,headers=headers,timeout=120)
-              print('PSI_HTTP',strategy,r.status_code)
-              if r.ok:
-                j=r.json(); lr=j.get('lighthouseResult',{}); cats=lr.get('categories',{}); audits=lr.get('audits',{})
-                out={'strategy':strategy,'finalUrl':lr.get('finalUrl'),'scores':{k:round((v.get('score') or 0)*100) for k,v in cats.items()}}
-                for key in ['first-contentful-paint','largest-contentful-paint','cumulative-layout-shift','speed-index','total-blocking-time','interactive']:
-                  a=audits.get(key,{})
-                  out[key]={'display':a.get('displayValue'),'score':a.get('score')}
-                opp=[]
-                for k,a in audits.items():
-                  det=a.get('details') or {}
-                  sav=det.get('overallSavingsMs') or 0
-                  if sav and sav>100:
-                    opp.append((sav,k,a.get('title')))
-                out['top_savings']=[{'ms':round(x[0]),'id':x[1],'title':x[2]} for x in sorted(opp,reverse=True)[:8]]
-                print(json.dumps(out,ensure_ascii=False))
-              else:
-                print(r.text[:1200])
-            except Exception as e:
-              print('PSI_ERROR',strategy,str(e))
-          PY
+          google-chrome --version || true
+          npx --yes lighthouse@12.8.2 https://rdwan.dev/ --output=json --output-path=/tmp/mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+          npx --yes lighthouse@12.8.2 https://rdwan.dev/ --preset=desktop --output=json --output-path=/tmp/desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+          node <<'JS'
+          const fs=require('fs');
+          for (const mode of ['mobile','desktop']) {
+            const j=JSON.parse(fs.readFileSync('/tmp/'+mode+'.json','utf8'));
+            const c=j.categories,a=j.audits;
+            const out={mode,scores:{performance:Math.round(c.performance.score*100),accessibility:Math.round(c.accessibility.score*100),bestPractices:Math.round(c['best-practices'].score*100),seo:Math.round(c.seo.score*100)},metrics:{FCP:a['first-contentful-paint'].displayValue,LCP:a['largest-contentful-paint'].displayValue,CLS:a['cumulative-layout-shift'].displayValue,TBT:a['total-blocking-time'].displayValue,SpeedIndex:a['speed-index'].displayValue},transfer:a['total-byte-weight']?.displayValue,dom:a['dom-size']?.displayValue};
+            console.log('LIGHTHOUSE',JSON.stringify(out));
+            const fails=Object.entries(a).filter(([k,v])=>v.scoreDisplayMode==='numeric' && typeof v.score==='number' && v.score<0.9).sort((x,y)=>(x[1].score??1)-(y[1].score??1)).slice(0,15).map(([k,v])=>({id:k,score:v.score,title:v.title,display:v.displayValue}));
+            console.log('LOW_AUDITS_'+mode.toUpperCase(),JSON.stringify(fails));
+          }
+          JS
