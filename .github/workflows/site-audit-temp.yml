@@ -1,4 +1,4 @@
-name: Lighthouse optimized temporary
+name: Lighthouse final-tuning temporary
 
 on:
   push:
@@ -26,19 +26,13 @@ jobs:
           for (const mode of ['mobile','desktop']) {
             const j=JSON.parse(fs.readFileSync('/tmp/'+mode+'.json','utf8'));
             const c=j.categories,a=j.audits;
-            const out={mode,scores:{performance:Math.round(c.performance.score*100),accessibility:Math.round(c.accessibility.score*100),bestPractices:Math.round(c['best-practices'].score*100),seo:Math.round(c.seo.score*100)},metrics:{FCP:a['first-contentful-paint'].displayValue,LCP:a['largest-contentful-paint'].displayValue,CLS:a['cumulative-layout-shift'].displayValue,TBT:a['total-blocking-time'].displayValue,SpeedIndex:a['speed-index'].displayValue},transfer:a['total-byte-weight']?.displayValue,dom:a['dom-size']?.displayValue};
-            console.log('LIGHTHOUSE',JSON.stringify(out));
-            const seoRefs=c.seo.auditRefs||[];
-            const seoFails=seoRefs.map(r=>({id:r.id,weight:r.weight,score:a[r.id]?.score,title:a[r.id]?.title,display:a[r.id]?.displayValue})).filter(x=>x.score!==1 && x.score!==null && x.score!==undefined);
-            console.log('SEO_FAILS_'+mode.toUpperCase(),JSON.stringify(seoFails));
-            const accRefs=c.accessibility.auditRefs||[];
-            const accFails=accRefs.map(r=>({id:r.id,weight:r.weight,score:a[r.id]?.score,title:a[r.id]?.title})).filter(x=>x.score===0);
-            console.log('ACCESSIBILITY_FAILS_'+mode.toUpperCase(),JSON.stringify(accFails.slice(0,20)));
-            const cls=a['layout-shifts']?.details?.items||a['cls-culprits-insight']?.details?.items||[];
-            console.log('CLS_ITEMS_'+mode.toUpperCase(),JSON.stringify(cls.slice(0,10)));
-            const lcp=a['largest-contentful-paint-element']?.details?.items||a['lcp-discovery-insight']?.details?.items||[];
-            console.log('LCP_ITEMS_'+mode.toUpperCase(),JSON.stringify(lcp.slice(0,6)));
-            const network=(a['network-requests']?.details?.items||[]).sort((x,y)=>(y.transferSize||0)-(x.transferSize||0)).slice(0,10).map(x=>({url:x.url,transferSize:x.transferSize,resourceSize:x.resourceSize,mimeType:x.mimeType}));
+            console.log('LIGHTHOUSE',JSON.stringify({mode,scores:{performance:Math.round(c.performance.score*100),accessibility:Math.round(c.accessibility.score*100),bestPractices:Math.round(c['best-practices'].score*100),seo:Math.round(c.seo.score*100)},metrics:{FCP:a['first-contentful-paint'].displayValue,LCP:a['largest-contentful-paint'].displayValue,CLS:a['cumulative-layout-shift'].displayValue,TBT:a['total-blocking-time'].displayValue,SpeedIndex:a['speed-index'].displayValue},transfer:a['total-byte-weight']?.displayValue,dom:a['dom-size']?.displayValue}));
+            for (const id of ['crawlable-anchors','color-contrast','label-content-name-mismatch','layout-shifts','cls-culprits-insight','largest-contentful-paint-element','lcp-discovery-insight']) {
+              const x=a[id]; if(!x) continue;
+              console.log('AUDIT_DETAIL',mode,id,'score=',x.score,'display=',x.displayValue||'');
+              console.log(JSON.stringify((x.details?.items||[]).slice(0,12)));
+            }
+            const network=(a['network-requests']?.details?.items||[]).sort((x,y)=>(y.transferSize||0)-(x.transferSize||0)).slice(0,8).map(x=>({url:x.url,transferSize:x.transferSize,resourceSize:x.resourceSize,mimeType:x.mimeType}));
             console.log('LARGEST_REQUESTS_'+mode.toUpperCase(),JSON.stringify(network));
           }
           JS
