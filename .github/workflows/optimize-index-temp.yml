@@ -1,4 +1,4 @@
-name: Final font delivery optimization temporary
+name: Above-fold stability and boot optimization temporary
 
 on:
   push:
@@ -16,43 +16,80 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Preload local Cairo fonts and remove duplicate Person schema
+      - name: Stabilize hero and split enhancement work
         shell: bash
         run: |
           python <<'PY'
           from pathlib import Path
           import re
 
+          # 1) Put above-the-fold dynamic elements in the initial HTML.
           idx=Path('index.html')
           h=idx.read_text(encoding='utf-8')
-          marker='<link rel="preload" href="assets/images/radwan-profile.webp" as="image" type="image/webp" fetchpriority="high">'
-          preloads='\n'.join([
-            '<link rel="preload" href="assets/fonts/cairo-1.woff2" as="font" type="font/woff2" crossorigin>',
-            '<link rel="preload" href="assets/fonts/cairo-2.woff2" as="font" type="font/woff2" crossorigin>',
-            '<link rel="preload" href="assets/fonts/cairo-3.woff2" as="font" type="font/woff2" crossorigin>',
-            '<link rel="preload" href="assets/fonts/cairo-4.woff2" as="font" type="font/woff2" crossorigin>'
-          ])
-          # Remove older individual font preload(s), then add one canonical preload block.
-          h=re.sub(r'\s*<link rel="preload" href="assets/fonts/cairo-[1-4]\.woff2" as="font" type="font/woff2" crossorigin>','',h)
-          if marker in h:
-              h=h.replace(marker, marker+'\n  '+preloads.replace('\n','\n  '),1)
-          else:
-              raise SystemExit('hero image preload marker not found')
 
-          # Keep only the richer SEO-V4 Person graph; remove the earlier minimal duplicate Person JSON-LD.
-          h=re.sub(r'<script type="application/ld\+json">\{"@context":"https://schema.org","@type":"Person","name":"Radwan Abdulhadi".*?</script>\s*','',h,count=1)
+          if 'id="enhHeaderControls"' not in h:
+              nav_start=h.find('<nav class="nav-links" id="navigation"')
+              if nav_start < 0: raise SystemExit('navigation not found')
+              nav_end=h.find('</nav>',nav_start)
+              if nav_end < 0: raise SystemExit('navigation end not found')
+              nav_end += len('</nav>')
+              controls='''\n      <div id="enhHeaderControls" class="enh-header-controls"><button id="enhLangToggle" type="button" data-tip="Language">EN</button><button id="enhThemeToggle" type="button" aria-label="تبديل المظهر"></button><button id="enhCommandOpen" type="button" data-tip="Ctrl + K">⌘K</button><button id="enhMotionToggle" type="button" data-tip="تقليل الحركة">≈</button></div>'''
+              h=h[:nav_end]+controls+h[nav_end:]
+
+          hero_actions=h.find('<div class="hero-actions">')
+          if hero_actions < 0: raise SystemExit('hero actions not found')
+          if 'class="enh-availability enh-reveal"' not in h[:hero_actions]:
+              availability='<div class="enh-availability enh-reveal" data-i18n="available">متاح لتنفيذ المشاريع</div>\n          '
+              h=h[:hero_actions]+availability+h[hero_actions:]
+              hero_actions=h.find('<div class="hero-actions">')
+
+          if 'id="heroSocials"' not in h:
+              first_link_end=h.find('</a>',hero_actions)
+              if first_link_end < 0: raise SystemExit('first hero action not found')
+              first_link_end += len('</a>')
+              socials='''\n            <div id="heroSocials" class="hero-socials" aria-label="حساباتي على مواقع التواصل"><a href="https://www.instagram.com/rad_03i" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 2A3.76 3.76 0 0 0 4 7.75v8.5A3.76 3.76 0 0 0 7.75 20h8.5A3.76 3.76 0 0 0 20 16.25v-8.5A3.76 3.76 0 0 0 16.25 4h-8.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.25-3.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z"/></svg></a><a href="https://www.facebook.com/rad03e" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-8h2.75l.41-3.2H13.5V8.76c0-.93.26-1.56 1.59-1.56h1.7V4.34c-.29-.04-1.3-.12-2.47-.12-2.44 0-4.11 1.49-4.11 4.23v2.35H7.45V14h2.76v8h3.29Z"/></svg></a></div>'''
+              h=h[:first_link_end]+socials+h[first_link_end:]
+
           idx.write_text(h,encoding='utf-8')
+
+          # 2) Keep the exact settled social styling, but load it before first paint.
+          cssp=Path('enhancements.css')
+          c=cssp.read_text(encoding='utf-8')
+          marker='/* STATIC-HERO-SOCIALS */'
+          if marker not in c:
+              c += '''\n/* STATIC-HERO-SOCIALS */\n.hero-socials{display:flex;align-items:center;gap:7px;margin:0 2px;direction:ltr;flex:0 0 auto}.hero-socials a{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(184,190,181,.22);border-radius:50%;color:#969d94;background:rgba(255,255,255,.025);transition:color .2s ease,border-color .2s ease,background .2s ease,transform .2s ease}.hero-socials a:hover{color:#c8cec4;border-color:rgba(210,216,205,.38);background:rgba(255,255,255,.055);transform:translateY(-2px)}.hero-socials svg{width:15px;height:15px;display:block}@media(max-width:760px){.hero-socials{gap:6px;margin:0 1px}.hero-socials a{width:29px;height:29px}.hero-socials svg{width:14px;height:14px}}\n'''
+          cssp.write_text(c,encoding='utf-8')
+
+          # 3) Preloaded Cairo should not swap after first paint under throttling.
+          base=Path('styles.css')
+          s=base.read_text(encoding='utf-8').replace('font-display:swap','font-display:block')
+          base.write_text(s,encoding='utf-8')
+
+          # 4) Bind controls even when their layout is already present, and split boot work.
+          jsp=Path('enhancements.js')
+          js=jsp.read_text(encoding='utf-8')
+          start=js.find('  function addHeaderControls() {')
+          end=js.find('  function saveBaseText() {',start)
+          if start < 0 or end < 0: raise SystemExit('addHeaderControls block not found')
+          new_controls='''  function addHeaderControls() {\n    const header = $('.header-inner') || $('.site-header'); if (!header) return;\n    let wrap = $('#enhHeaderControls');\n    if (!wrap) {\n      wrap = document.createElement('div'); wrap.id = 'enhHeaderControls'; wrap.className = 'enh-header-controls';\n      wrap.innerHTML = `<button id="enhLangToggle" type="button" data-tip="Language">EN</button><button id="enhThemeToggle" type="button"></button><button id="enhCommandOpen" type="button" data-tip="Ctrl + K">⌘K</button><button id="enhMotionToggle" type="button" data-tip="${t('reduceMotion')}">≈</button>`;\n      header.appendChild(wrap);\n    }\n    if (wrap.dataset.bound !== '1') {\n      wrap.dataset.bound = '1';\n      $('#enhLangToggle')?.addEventListener('click', () => setLanguage(lang === 'ar' ? 'en' : 'ar'));\n      $('#enhThemeToggle')?.addEventListener('click', () => applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'));\n      $('#enhCommandOpen')?.addEventListener('click', openCommandPalette);\n      $('#enhMotionToggle')?.addEventListener('click', () => setMotion(!document.documentElement.classList.contains('enh-reduce-motion')));\n    }\n    applyTheme(); setMotion(store.get('rad-motion') === 'reduced');\n  }\n\n'''
+          js=js[:start]+new_controls+js[end:]
+
+          old_boot='''  function boot(){\n    injectHead();addLoadingScreen();addProgressBar();addHeaderControls();renderFirstLanguage();addAvailability();addStatsAndTicker();addFeaturedSinax();addServices();addProcess();addToolsAreasTimeline();addServiceComparison();addRequestModal();addFaqIfMissing();addContact();addGithubActivity();addCommandPalette();addBottomNav();addFloatingButtons();addWelcomeAndLastProject();addQrPwa();addUpdateControl();addAccessibility();addOpenGraphRuntime();addStructuredDataRuntime();addServiceDeepLinkOnCards();applyImagePerf();bootProjects();revealOnScroll();animateCounters();\n  }'''
+          new_boot='''  function boot(){\n    // Keep first paint small and stable; the loader is intentionally skipped.\n    injectHead(); addProgressBar(); addHeaderControls(); renderFirstLanguage(); addAvailability(); addAccessibility(); applyImagePerf();\n\n    // Project behavior is useful early, but does not need to block first paint.\n    setTimeout(() => { try { bootProjects(); } catch (e) { console.warn(e); } }, 90);\n\n    // Build below-the-fold enhancements one small task at a time.\n    const tasks=[addStatsAndTicker,addFeaturedSinax,addServices,addProcess,addToolsAreasTimeline,addServiceComparison,addRequestModal,addFaqIfMissing,addContact,addGithubActivity,addCommandPalette,addBottomNav,addFloatingButtons,addWelcomeAndLastProject,addQrPwa,addUpdateControl,addOpenGraphRuntime,addStructuredDataRuntime,addServiceDeepLinkOnCards,revealOnScroll,animateCounters];\n    const step=()=>{\n      const fn=tasks.shift(); if(!fn) return;\n      try { fn(); } catch(e) { console.warn(e); }\n      if(!tasks.length) return;\n      if('requestIdleCallback' in window) requestIdleCallback(step,{timeout:350}); else setTimeout(step,28);\n    };\n    if('requestIdleCallback' in window) requestIdleCallback(step,{timeout:500}); else setTimeout(step,180);\n  }'''
+          if old_boot not in js: raise SystemExit('boot block not found')
+          js=js.replace(old_boot,new_boot,1)
+          jsp.write_text(js,encoding='utf-8')
 
           sw=Path('service-worker.js')
           if sw.exists():
-              s=sw.read_text(encoding='utf-8')
-              s=re.sub(r'rad-portfolio-v3\.\d+\.0','rad-portfolio-v3.3.0',s)
-              sw.write_text(s,encoding='utf-8')
+              txt=sw.read_text(encoding='utf-8')
+              txt=re.sub(r'rad-portfolio-v3\.\d+\.0','rad-portfolio-v3.4.0',txt)
+              sw.write_text(txt,encoding='utf-8')
           PY
-      - name: Commit final font optimization
+      - name: Commit performance optimization
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html service-worker.js
-          git commit -m 'Preload Cairo fonts and consolidate Person schema' || exit 0
+          git add index.html styles.css enhancements.css enhancements.js service-worker.js
+          git commit -m 'Stabilize above-fold UI and defer enhancement work' || exit 0
           git push
