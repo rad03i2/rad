@@ -424,8 +424,8 @@
       }
       loader._hideTimer=setTimeout(()=>{
         loader.classList.add('is-done');
-        loader._removeTimer=setTimeout(()=>loader.remove(),480);
-      },560);
+        loader._removeTimer=setTimeout(()=>loader.remove(),180);
+      },320);
     };
 
     document.addEventListener('click',(event)=>{
