@@ -1,0 +1,99 @@
+name: Client tools finalize temp
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/client-tools-finalize-temp.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Finalize client integrations
+        shell: python
+        run: |
+          from pathlib import Path
+
+          js = Path('enhancements.js')
+          s = js.read_text(encoding='utf-8')
+
+          def replace_once(old, new, label):
+              global s
+              count = s.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected 1 occurrence, found {count}')
+              s = s.replace(old, new, 1)
+
+          replace_once(
+              "  const calendlyConsultation = 'https://calendly.com/rdwanbdalhady33/30min';",
+              "  const calendlyConsultation = 'https://calendly.com/rdwanbdalhady33/30min';\n  const omnisendUpdates = 'https://omniform1.com/forms/v1/landingPage/6aa951449b0f973742e3f90d/6aa9b7a1f85082d5ccd3f79c';",
+              'Omnisend constant'
+          )
+
+          replace_once(
+              "['06','التسليم والمتابعة','بعد التسليم تبقى المتابعة والتحديثات البريدية منظمة عبر Omnisend عند تفعيلها.']",
+              "['06','التسليم والمتابعة','بعد التسليم يمكن للعميل الاشتراك في تحديثات المشاريع عبر Omnisend ومتابعة الجديد.']",
+              'Arabic Omnisend process copy'
+          )
+          replace_once(
+              "['06','Delivery & follow-up','After delivery, follow-up and email updates can be organized through Omnisend once activated.']",
+              "['06','Delivery & follow-up','After delivery, clients can subscribe to project updates through Omnisend and follow new releases.']",
+              'English Omnisend process copy'
+          )
+
+          old_process_cta = "<a class=\"enh-secondary\" href=\"${consultationUrl}\" target=\"_blank\" rel=\"noopener noreferrer\">${lang==='ar'?'احجز استشارة':'Book a consultation'}</a><small class=\"enh-muted\">${lang==='ar'?'الدفع عبر Stripe متاح بعد الاتفاق على تفاصيل المشروع.':'Stripe payment is provided after the project details are agreed.'}</small>"
+          new_process_cta = "<a class=\"enh-secondary\" href=\"${consultationUrl}\" target=\"_blank\" rel=\"noopener noreferrer\">${lang==='ar'?'احجز استشارة':'Book a consultation'}</a><a class=\"enh-secondary\" href=\"${omnisendUpdates}\" target=\"_blank\" rel=\"noopener noreferrer\">${lang==='ar'?'تابع تحديثات المشاريع':'Project updates'}</a><small class=\"enh-muted\">${lang==='ar'?'الدفع الآمن عبر Stripe يتم بعد الاتفاق على نطاق المشروع والسعر.':'Secure Stripe payment is provided after scope and price are agreed.'}</small>"
+          replace_once(old_process_cta, new_process_cta, 'process CTAs')
+
+          old_contact = "<a class=\"enh-secondary\" href=\"${consultationUrl}\" target=\"_blank\" rel=\"noopener noreferrer\">${lang==='ar'?'احجز استشارة':'Book a consultation'}</a><a class=\"enh-secondary\" href=\"${instagram}\" target=\"_blank\" rel=\"noopener\">Instagram</a>"
+          new_contact = "<a class=\"enh-secondary\" href=\"${consultationUrl}\" target=\"_blank\" rel=\"noopener noreferrer\">${lang==='ar'?'احجز استشارة':'Book a consultation'}</a><a class=\"enh-secondary\" href=\"${omnisendUpdates}\" target=\"_blank\" rel=\"noopener noreferrer\">${lang==='ar'?'تحديثات المشاريع':'Project updates'}</a><a class=\"enh-secondary\" href=\"${instagram}\" target=\"_blank\" rel=\"noopener\">Instagram</a>"
+          replace_once(old_contact, new_contact, 'contact Omnisend CTA')
+
+          old_commands = "{label:lang==='ar'?'احجز استشارة':'Book a consultation',hint:'B',action:openConsultation},...projects.map"
+          new_commands = "{label:lang==='ar'?'احجز استشارة':'Book a consultation',hint:'B',action:openConsultation},{label:lang==='ar'?'تابع تحديثات المشاريع':'Project updates',hint:'U',action:()=>window.open(omnisendUpdates,'_blank','noopener,noreferrer')},...projects.map"
+          replace_once(old_commands, new_commands, 'command palette Omnisend')
+
+          js.write_text(s, encoding='utf-8')
+
+          css = Path('enhancements.css')
+          c = css.read_text(encoding='utf-8')
+          old_grid = '.enh-process-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:28px}'
+          new_grid = '.enh-process-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}'
+          if c.count(old_grid) != 1:
+              raise SystemExit(f'process grid: expected 1 occurrence, found {c.count(old_grid)}')
+          css.write_text(c.replace(old_grid,new_grid,1), encoding='utf-8')
+
+          sw = Path('service-worker.js')
+          sws = sw.read_text(encoding='utf-8')
+          if 'rad-portfolio-v3.9.0' not in sws:
+              raise SystemExit('service worker cache version changed unexpectedly')
+          sw.write_text(sws.replace('rad-portfolio-v3.9.0','rad-portfolio-v3.10.0',1), encoding='utf-8')
+
+      - name: Verify JavaScript syntax
+        run: node --check enhancements.js
+
+      - name: Verify integration strings
+        run: |
+          grep -Fq "https://tally.so/r/RGAekK" enhancements.js
+          grep -Fq "https://calendly.com/rdwanbdalhady33/30min" enhancements.js
+          grep -Fq "https://omniform1.com/forms/v1/landingPage/6aa951449b0f973742e3f90d/6aa9b7a1f85082d5ccd3f79c" enhancements.js
+          grep -Fq "Stripe" enhancements.js
+          grep -Fq "repeat(3,minmax(0,1fr))" enhancements.css
+
+      - name: Commit final integration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add enhancements.js enhancements.css service-worker.js
+          git diff --cached --check
+          git commit -m "Finalize client service integrations" || exit 0
+          git push origin main
