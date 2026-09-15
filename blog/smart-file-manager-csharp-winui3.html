@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>بناء Smart File Manager باستخدام C# وWinUI 3 | Radwan Abdulhadi</title>
+<meta name="description" content="شرح تقني لمشروع Smart File Manager: إعادة تسمية الملفات جماعيًا مع المعاينة، واكتشاف الملفات المكررة باستخدام تجميع الحجم وSHA-256، ضمن C# وWinUI 3.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<link rel="canonical" href="https://rdwan.dev/blog/smart-file-manager-csharp-winui3.html">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Radwan Abdulhadi Portfolio"><meta property="og:title" content="Building Smart File Manager with C# and WinUI 3"><meta property="og:description" content="Batch rename previews, duplicate detection and a clean Windows desktop structure using C# and WinUI 3."><meta property="og:url" content="https://rdwan.dev/blog/smart-file-manager-csharp-winui3.html"><meta property="og:image" content="https://rdwan.dev/assets/social/project-01.jpg"><meta property="article:published_time" content="2026-09-15"><meta property="article:author" content="Radwan Abdulhadi">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Building Smart File Manager with C# and WinUI 3"><meta name="twitter:image" content="https://rdwan.dev/assets/social/project-01.jpg">
+<link rel="icon" href="../assets/rad-icon.svg">
+<style>:root{color-scheme:dark;--bg:#0f120e;--panel:#171b16;--text:#f3f6ef;--muted:#a5aca1;--lime:#c6f16c;--line:rgba(255,255,255,.12)}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,"Noto Sans Arabic",sans-serif;line-height:1.95}.wrap{width:min(900px,calc(100% - 36px));margin:auto}a{color:var(--lime)}.top{padding:22px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:16px}.brand{color:var(--text);text-decoration:none;font-weight:800}.hero{padding:58px 0 28px}.eyebrow{color:var(--lime);font-size:12px;font-weight:800;letter-spacing:.12em}.hero h1{font-size:clamp(2.1rem,5.8vw,4rem);line-height:1.2;margin:8px 0 16px}.lead{color:var(--muted);font-size:1.08rem}.cover{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:24px;border:1px solid var(--line);margin:16px 0 34px}article{font-size:1.03rem}article h2{margin-top:38px;font-size:1.6rem}article h3{margin-top:28px}article p,article li{color:#d7ddd3}.note{padding:18px 20px;border:1px solid var(--line);border-radius:18px;background:var(--panel);color:var(--muted)}code{direction:ltr;unicode-bidi:embed;background:#20251e;padding:2px 6px;border-radius:6px}.links{display:flex;gap:10px;flex-wrap:wrap;margin:34px 0 60px}.btn{display:inline-block;padding:10px 15px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--text)}.btn.primary{background:var(--lime);color:#111;border-color:var(--lime)}footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);font-size:13px}</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://rdwan.dev/#person","name":"رضوان عبد الهادي","alternateName":["Radwan Abdulhadi","Radwan Abdulhadi Ahmed"],"url":"https://rdwan.dev/","sameAs":["https://github.com/rad03i2","https://www.instagram.com/rad_03i","https://www.facebook.com/rad03e"]},{"@type":"TechArticle","@id":"https://rdwan.dev/blog/smart-file-manager-csharp-winui3.html#article","headline":"بناء Smart File Manager باستخدام C# وWinUI 3","description":"شرح تقني لمشروع Smart File Manager وإعادة التسمية الجماعية واكتشاف الملفات المكررة باستخدام SHA-256.","datePublished":"2026-09-15","dateModified":"2026-09-15","inLanguage":["ar","en"],"image":"https://rdwan.dev/assets/social/project-01.jpg","author":{"@id":"https://rdwan.dev/#person"},"mainEntityOfPage":"https://rdwan.dev/blog/smart-file-manager-csharp-winui3.html","about":["C#","WinUI 3","Windows App SDK","SHA-256","File Management"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Radwan Abdulhadi","item":"https://rdwan.dev/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://rdwan.dev/blog/"},{"@type":"ListItem","position":3,"name":"Smart File Manager with C# and WinUI 3","item":"https://rdwan.dev/blog/smart-file-manager-csharp-winui3.html"}]}]}</script>
+</head>
+<body><div class="wrap"><header class="top"><a class="brand" href="../">&lt;RAD /&gt;</a><a href="./">كل المقالات</a></header><main>
+<section class="hero"><div class="eyebrow">C# · WINUI 3 · WINDOWS</div><h1>بناء Smart File Manager باستخدام C# وWinUI 3</h1><p class="lead">كيف يمكن تنظيم أداة Windows صغيرة حول فكرتين واضحتين: إعادة تسمية الملفات جماعيًا مع معاينة آمنة، واكتشاف الملفات المكررة بالاعتماد على الحجم ثم SHA-256.</p></section>
+<img class="cover" src="../assets/images/projects/project-01.webp" alt="Smart File Manager project preview" width="1600" height="900" fetchpriority="high">
+<article>
+<p>مشروع <strong>Smart File Manager</strong> هو تطبيق سطح مكتب Windows مبني باستخدام <strong>C#</strong> و<strong>WinUI 3</strong> و<strong>Windows App SDK</strong>. بدل محاولة بناء مدير ملفات ضخم منذ البداية، يركز المستودع على وظيفتين عمليتين ومفهومتين بوضوح: <em>Batch Rename</em> و<em>Duplicate File Finder</em>. هذا التحديد يجعل بنية المشروع أبسط، ويجعل اختبار كل وظيفة وفهمها أسهل.</p>
+
+<h2>1. إعادة التسمية الجماعية يجب أن تبدأ بالمعاينة</h2>
+<p>تغيير أسماء عشرات أو مئات الملفات عملية حساسة؛ لذلك الفكرة الأساسية في جزء إعادة التسمية ليست مجرد تنفيذ النمط المطلوب، بل إظهار الاسم القديم والاسم الجديد قبل تطبيق التغيير. المشروع يدعم أفكارًا مثل إضافة prefix أو suffix، الترقيم التلقائي، واستبدال نص داخل أسماء الملفات مع الحفاظ على امتداداتها.</p>
+<p>وجود المعاينة يفصل بين مرحلتين مهمتين: <strong>حساب النتيجة</strong> ثم <strong>تطبيق النتيجة</strong>. هذا الفصل مفيد في تطبيقات سطح المكتب لأن المستخدم يستطيع التأكد من النمط قبل إجراء أي تعديل على الملفات.</p>
+
+<h2>2. لماذا لا نحسب SHA-256 لكل الملفات مباشرة؟</h2>
+<p>في اكتشاف الملفات المكررة، لا يحتاج البرنامج إلى حساب hash لكل ملف من البداية. الخطوة الأولى هي تجميع الملفات حسب الحجم. الملفات ذات الأحجام المختلفة لا يمكن أن تكون متطابقة byte-for-byte، وبالتالي نستبعدها مبكرًا. بعد ذلك فقط تُحسب قيمة <code>SHA-256</code> للمرشحين الذين يشتركون في الحجم.</p>
+<p>هذه الطريقة تقلل العمل غير الضروري، خصوصًا عند فحص مجلد يحتوي على عدد كبير من الملفات المختلفة. وعند تطابق الحجم والـhash يمكن عرض الملفات ضمن مجموعات تكرار وإظهار المساحة التي تشغلها النسخ الزائدة.</p>
+
+<h2>3. التقنيات المستخدمة</h2>
+<p>المستودع يستخدم <strong>.NET 8</strong> و<strong>WinUI 3</strong> و<strong>Windows App SDK</strong>، إضافة إلى <strong>CommunityToolkit.Mvvm</strong>. البنية تفصل النماذج والخدمات والمساعدات عن ملفات الواجهة مثل <code>MainWindow.xaml</code>. الهدف من هذا التنظيم أن تبقى عمليات الملفات منفصلة قدر الإمكان عن منطق العرض.</p>
+<div class="note">هذه المقالة تصف ما هو منشور في المستودع الحالي ولا تدّعي أن المشروع بديل كاملًا لمدير ملفات Windows أو أنه منتج تجاري نهائي.</div>
+
+<h2>4. ماذا نتعلم من المشروع؟</h2>
+<ul>
+<li>العمليات الجماعية تحتاج Preview قبل التنفيذ.</li>
+<li>يمكن تقليل تكلفة اكتشاف التكرار باستخدام فلترة الحجم قبل hashing.</li>
+<li>فصل خدمات الملفات عن الواجهة يجعل الكود أسهل في القراءة والتطوير.</li>
+<li>الأدوات الصغيرة ذات نطاق واضح مناسبة جدًا لتجربة WinUI 3 وWindows App SDK.</li>
+</ul>
+
+<h2>5. تشغيل المشروع</h2>
+<p>المستودع يحتوي أوامر التشغيل الأساسية باستخدام <code>dotnet restore</code> و<code>dotnet build</code> و<code>dotnet run</code>. وإذا طلب WinUI تفعيل Developer Mode في Windows، يمكن تفعيله من إعدادات المطور.</p>
+
+<div class="links"><a class="btn primary" href="../projects/01-smart-file-manager.html">صفحة المشروع</a><a class="btn" href="https://github.com/rad03i2/SmartFileManager" target="_blank" rel="noopener">المصدر على GitHub</a><a class="btn" href="./">مقالات أخرى</a></div>
+</article></main><footer>Radwan Abdulhadi · <a href="https://rdwan.dev">rdwan.dev</a></footer></div></body></html>
