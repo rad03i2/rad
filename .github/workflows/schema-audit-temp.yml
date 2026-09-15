@@ -1,0 +1,40 @@
+name: Schema audit temporary
+
+on:
+  push:
+    paths:
+      - '.github/workflows/schema-audit-temp.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate live pages with validator.schema.org
+        run: |
+          python -m pip install --quiet requests beautifulsoup4
+          python <<'PY'
+          import requests,re
+          from bs4 import BeautifulSoup
+          urls=['https://rdwan.dev/','https://rdwan.dev/projects/01-smart-file-manager.html','https://rdwan.dev/projects/08-arabic-ui-components.html']
+          for u in urls:
+            r=requests.post('https://validator.schema.org/validate',data={'url':u},timeout=60,headers={'User-Agent':'Mozilla/5.0'})
+            text=r.text
+            soup=BeautifulSoup(text,'html.parser')
+            plain=' '.join(soup.stripped_strings)
+            low=plain.lower()
+            error_hits=len(re.findall(r'\berror\b',low))
+            warning_hits=len(re.findall(r'\bwarning\b',low))
+            print('SCHEMA_URL',u,'HTTP',r.status_code,'ERROR_WORDS',error_hits,'WARNING_WORDS',warning_hits)
+            for pat in ['ERROR','WARNING','SoftwareSourceCode','Person','WebSite','BreadcrumbList','ProfilePage']:
+              idx=text.lower().find(pat.lower())
+              if idx!=-1:
+                snippet=re.sub(r'<[^>]+>',' ',text[max(0,idx-180):idx+420])
+                snippet=re.sub(r'\s+',' ',snippet)
+                print('MATCH',pat,snippet[:600])
+          PY
