@@ -56,7 +56,10 @@ jobs:
 
           old_contact = "<a class=\"enh-secondary\" href=\"${consultationUrl}\" target=\"_blank\" rel=\"noopener noreferrer\">${lang==='ar'?'احجز استشارة':'Book a consultation'}</a><a class=\"enh-secondary\" href=\"${instagram}\" target=\"_blank\" rel=\"noopener\">Instagram</a>"
           new_contact = "<a class=\"enh-secondary\" href=\"${consultationUrl}\" target=\"_blank\" rel=\"noopener noreferrer\">${lang==='ar'?'احجز استشارة':'Book a consultation'}</a><a class=\"enh-secondary\" href=\"${omnisendUpdates}\" target=\"_blank\" rel=\"noopener noreferrer\">${lang==='ar'?'تحديثات المشاريع':'Project updates'}</a><a class=\"enh-secondary\" href=\"${instagram}\" target=\"_blank\" rel=\"noopener\">Instagram</a>"
-          replace_once(old_contact, new_contact, 'contact Omnisend CTA')
+          contact_count = s.count(old_contact)
+          if contact_count != 2:
+              raise SystemExit(f'Omnisend CTA locations: expected 2 occurrences, found {contact_count}')
+          s = s.replace(old_contact, new_contact)
 
           old_commands = "{label:lang==='ar'?'احجز استشارة':'Book a consultation',hint:'B',action:openConsultation},...projects.map"
           new_commands = "{label:lang==='ar'?'احجز استشارة':'Book a consultation',hint:'B',action:openConsultation},{label:lang==='ar'?'تابع تحديثات المشاريع':'Project updates',hint:'U',action:()=>window.open(omnisendUpdates,'_blank','noopener,noreferrer')},...projects.map"
