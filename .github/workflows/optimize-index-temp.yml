@@ -1,4 +1,4 @@
-name: Critical render path optimization temporary
+name: Final layout stability optimization temporary
 
 on:
   push:
@@ -16,52 +16,54 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install font tooling
-        run: python -m pip install --quiet fonttools brotli
-      - name: Externalize embedded Cairo fonts and prioritize LCP image
+      - name: Stabilize font and dynamic hero content
         shell: bash
         run: |
           python <<'PY'
           from pathlib import Path
-          import re,base64
-          from fontTools.ttLib import TTFont
+          import re
 
           cssp=Path('styles.css')
-          css=cssp.read_text(encoding='utf-8')
-          out=Path('assets/fonts'); out.mkdir(parents=True,exist_ok=True)
-          pattern=re.compile(r'data:font/ttf;base64,([A-Za-z0-9+/=]+)')
-          matches=list(pattern.finditer(css))
-          print('embedded_fonts',len(matches),'css_before',len(css.encode()))
-          replacements=[]
-          for i,m in enumerate(matches,1):
-              raw=base64.b64decode(m.group(1))
-              ttf=out/f'cairo-{i}.ttf'
-              woff=out/f'cairo-{i}.woff2'
-              ttf.write_bytes(raw)
-              font=TTFont(str(ttf)); font.flavor='woff2'; font.save(str(woff)); ttf.unlink()
-              replacements.append((m.group(0),f'assets/fonts/cairo-{i}.woff2'))
-              print('font',i,'woff2_bytes',woff.stat().st_size)
-          for old,new in replacements: css=css.replace(old,new)
+          css=cssp.read_text(encoding='utf-8').replace("format('truetype')","format('woff2')")
           cssp.write_text(css,encoding='utf-8')
-          print('css_after',len(css.encode()))
 
           idx=Path('index.html')
           h=idx.read_text(encoding='utf-8')
-          preload='<link rel="preload" href="assets/images/radwan-profile.webp" as="image" type="image/webp" fetchpriority="high">'
-          if preload not in h:
-              h=h.replace('<link rel="stylesheet" href="styles.css">',preload+'\n  <link rel="stylesheet" href="styles.css">',1)
-          h=h.replace('fetchpriority="high" decoding="async" alt="صورة رضوان عبدالهادي"','fetchpriority="high" decoding="sync" alt="صورة رضوان عبدالهادي"')
+          fontpre='<link rel="preload" href="assets/fonts/cairo-4.woff2" as="font" type="font/woff2" crossorigin>'
+          if fontpre not in h:
+              marker='<link rel="preload" href="assets/images/radwan-profile.webp" as="image" type="image/webp" fetchpriority="high">'
+              h=h.replace(marker,marker+'\n  '+fontpre,1)
+
+          # Render stats/ticker in initial HTML so JS enhancement no longer inserts them after first paint.
+          if 'id="enhStats"' not in h:
+              start=h.find('<section',h.find('<main'))
+              home=h.find('id="home"',start)
+              if home==-1: raise SystemExit('home section not found')
+              sec_start=h.rfind('<section',start,home+1)
+              pos=home
+              depth=0
+              token=re.compile(r'<section\b|</section>')
+              end=None
+              for m in token.finditer(h,sec_start):
+                  if m.group(0).startswith('<section'): depth+=1
+                  else:
+                      depth-=1
+                      if depth==0:
+                          end=m.end(); break
+              if end is None: raise SystemExit('home section end not found')
+              block='''\n<section id="enhStats" class="enh-shell enh-reveal"><div class="enh-stats"><div class="enh-stat"><strong data-count="20">0</strong><span>مشروعًا معروضًا</span></div><div class="enh-stat"><strong>Web</strong><span>واجهات ومواقع ويب</span></div><div class="enh-stat"><strong>Desktop</strong><span>أدوات وتطبيقات حاسوب</span></div><div class="enh-stat"><strong>Automation</strong><span>أتمتة وسير عمل</span></div></div></section>\n<div class="enh-tech-strip enh-reveal"><div class="enh-tech-track">''' + ''.join(f'<span class="enh-tech-chip">{x}</span>' for x in ['Python','C#','.NET','JavaScript','HTML','CSS','Git','GitHub','PowerShell','C++','SQL','Android','Kotlin','PHP','Automation','IoT']*2) + '''</div></div>\n'''
+              h=h[:end]+block+h[end:]
           idx.write_text(h,encoding='utf-8')
 
           sw=Path('service-worker.js')
           if sw.exists():
-              s=sw.read_text(encoding='utf-8').replace("rad-portfolio-v3.0.0","rad-portfolio-v3.1.0")
+              s=sw.read_text(encoding='utf-8').replace('rad-portfolio-v3.1.0','rad-portfolio-v3.2.0')
               sw.write_text(s,encoding='utf-8')
           PY
-      - name: Commit render-path optimization
+      - name: Commit stability optimization
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add styles.css index.html service-worker.js assets/fonts
-          git commit -m 'Externalize Cairo font and prioritize hero image' || exit 0
+          git add styles.css index.html service-worker.js
+          git commit -m 'Preload hero font and render hero extras statically' || exit 0
           git push
