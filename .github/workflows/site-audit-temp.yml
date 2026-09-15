@@ -1,4 +1,4 @@
-name: Lighthouse final verification temporary
+name: Measure dynamic hero extras temporary
 
 on:
   push:
@@ -12,25 +12,30 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run Lighthouse mobile and desktop
+      - name: Measure rendered extras
         shell: bash
         run: |
-          npx --yes lighthouse@12.8.2 https://rdwan.dev/ --output=json --output-path=/tmp/mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
-          npx --yes lighthouse@12.8.2 https://rdwan.dev/ --preset=desktop --output=json --output-path=/tmp/desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+          npm install --silent puppeteer-core@24
           node <<'JS'
-          const fs=require('fs');
-          for (const mode of ['mobile','desktop']) {
-            const j=JSON.parse(fs.readFileSync('/tmp/'+mode+'.json','utf8'));
-            const c=j.categories,a=j.audits;
-            console.log('LIGHTHOUSE',JSON.stringify({mode,scores:{performance:Math.round(c.performance.score*100),accessibility:Math.round(c.accessibility.score*100),bestPractices:Math.round(c['best-practices'].score*100),seo:Math.round(c.seo.score*100)},metrics:{FCP:a['first-contentful-paint'].displayValue,LCP:a['largest-contentful-paint'].displayValue,CLS:a['cumulative-layout-shift'].displayValue,TBT:a['total-blocking-time'].displayValue,SpeedIndex:a['speed-index'].displayValue},transfer:a['total-byte-weight']?.displayValue,dom:a['dom-size']?.displayValue}));
-            for (const id of ['crawlable-anchors','color-contrast','label-content-name-mismatch','layout-shifts','cls-culprits-insight','largest-contentful-paint-element']) {
-              const x=a[id]; if(!x) continue;
-              console.log('AUDIT_DETAIL',mode,id,'score=',x.score,'display=',x.displayValue||'');
-              console.log(JSON.stringify((x.details?.items||[]).slice(0,12)));
+          const puppeteer=require('puppeteer-core');
+          (async()=>{
+            const browser=await puppeteer.launch({headless:true,executablePath:'/usr/bin/google-chrome',args:['--no-sandbox','--disable-dev-shm-usage']});
+            for(const [name,width,height] of [['desktop',1365,900],['mobile',412,915]]){
+              const page=await browser.newPage();
+              await page.setViewport({width,height,deviceScaleFactor:1});
+              await page.goto('https://rdwan.dev/',{waitUntil:'networkidle0',timeout:120000});
+              await new Promise(r=>setTimeout(r,1200));
+              const m=await page.evaluate(()=>{
+                const rect=s=>document.querySelector(s)?.getBoundingClientRect();
+                const stats=rect('#enhStats'),tech=rect('.enh-tech-strip'),hero=rect('#home'),band=rect('.tech-band'),about=rect('#about');
+                return {stats:stats&&{h:stats.height,top:stats.top,bottom:stats.bottom},tech:tech&&{h:tech.height,top:tech.top,bottom:tech.bottom},hero:hero&&{bottom:hero.bottom,h:hero.height},band:band&&{top:band.top,h:band.height},about:about&&{top:about.top},totalExtras:(stats?.height||0)+(tech?.height||0)};
+              });
+              console.log('MEASURE',name,JSON.stringify(m));
+              await page.close();
             }
-          }
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
           JS
