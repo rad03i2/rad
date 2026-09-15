@@ -19,4 +19,4 @@ Official portfolio repository for **Radwan Abdulhadi**, featuring software proje
 
 The site includes structured data (Schema.org), Open Graph / social preview metadata, Twitter Card metadata, an XML sitemap, RSS feed, robots.txt, project-specific indexable pages, large social preview images, `llms.txt`, and IndexNow support.
 
-> The canonical public URL is prepared for `https://rad03i2.github.io/rad/` once GitHub Pages is enabled for this repository.
+> The canonical public URL is prepared for `https://rdwan.dev/` once GitHub Pages is enabled for this repository.
