@@ -10,6 +10,7 @@ on:
       - 'services/**'
       - 'sitemap.xml'
       - 'feed.xml'
+      - 'robots.txt'
   workflow_dispatch:
 
 permissions:
@@ -23,11 +24,11 @@ jobs:
       - name: Submit public URLs to IndexNow
         shell: bash
         env:
-          SITE_URL: https://rad03i2.github.io/rad
+          SITE_URL: https://rdwan.dev
           INDEXNOW_KEY: ff7de3f199bfcac8fda652aec7caabcd
         run: |
           if ! curl -fsS --max-time 12 "$SITE_URL/" >/dev/null; then
-            echo "Public site is not reachable yet; skipping IndexNow without failing."
+            echo "Public custom domain is not reachable yet; skipping IndexNow without failing."
             exit 0
           fi
           python - <<'PY2' > /tmp/indexnow.json
@@ -35,8 +36,16 @@ jobs:
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
           root=ET.parse('sitemap.xml').getroot()
           urls=[x.text for x in root.findall('.//s:loc',ns) if x.text]
-          site=os.environ['SITE_URL']
-          print(json.dumps({'host':site.split('://',1)[1].split('/')[0],'key':os.environ['INDEXNOW_KEY'],'keyLocation':site+'/'+os.environ['INDEXNOW_KEY']+'.txt','urlList':urls}))
+          site=os.environ['SITE_URL'].rstrip('/')
+          host=site.split('://',1)[1].split('/')[0]
+          print(json.dumps({
+            'host':host,
+            'key':os.environ['INDEXNOW_KEY'],
+            'keyLocation':site+'/'+os.environ['INDEXNOW_KEY']+'.txt',
+            'urlList':urls
+          }))
           PY2
-          curl -fsS -X POST 'https://api.indexnow.org/indexnow' -H 'Content-Type: application/json; charset=utf-8' --data-binary @/tmp/indexnow.json
-          echo "IndexNow submission sent."
+          curl -fsS -X POST 'https://api.indexnow.org/indexnow' \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            --data-binary @/tmp/indexnow.json
+          echo "IndexNow submission sent for rdwan.dev."
