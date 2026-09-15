@@ -1,0 +1,47 @@
+name: Replace SEO canonical domain
+
+on:
+  push:
+    paths:
+      - '.github/workflows/replace-domain.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  replace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace old public URL with custom domain
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          old='https://rad03i2.github.io/rad'
+          new='https://rdwan.dev'
+          changed=[]
+          for p in Path('.').rglob('*'):
+              if not p.is_file():
+                  continue
+              s=p.as_posix()
+              if s.startswith('.git/') or s.startswith('.github/workflows/'):
+                  continue
+              try:
+                  text=p.read_text(encoding='utf-8')
+              except Exception:
+                  continue
+              if old in text:
+                  p.write_text(text.replace(old,new),encoding='utf-8')
+                  changed.append(s)
+          print('Updated files:', len(changed))
+          for x in changed:
+              print(x)
+          PY
+      - name: Commit custom-domain SEO update
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A ':!/.github/workflows'
+          git commit -m 'Use rdwan.dev as canonical SEO domain' || exit 0
+          git push
