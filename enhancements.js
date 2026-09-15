@@ -11,6 +11,7 @@
   const omnisendUpdates = 'https://omniform1.com/forms/v1/landingPage/6aa951449b0f973742e3f90d/6aa9b7a1f85082d5ccd3f79c';
   const projectRequestUrl = `${tallyProjectForm}?utm_source=rdwan.dev&utm_medium=website&utm_campaign=project_request`;
   const consultationUrl = `${calendlyConsultation}?utm_source=rdwan.dev&utm_medium=website&utm_campaign=project_consultation`;
+  const techIcons = [["aarch64","AArch64"],["apl","APL"],["arduino","Arduino"],["awk","AWK"],["bash","Bash"],["c","C"],["cairo","Cairo"],["ceylon","Ceylon"],["clojure","Clojure"],["coffeescript","CoffeeScript"],["cplusplus","C++"],["crystal","Crystal"],["csharp","C#"],["dart","Dart"],["elixir","Elixir"],["elm","Elm"],["embeddedc","Embedded C"],["erlang","Erlang"],["fortran","Fortran"],["fsharp","F#"],["go","Go"],["groovy","Groovy"],["haskell","Haskell"],["haxe","Haxe"],["java","Java"],["javascript","JavaScript"],["jule","Jule"],["julia","Julia"],["kotlin","Kotlin"],["labview","LabVIEW"],["latex","LaTeX"],["lua","Lua"],["matlab","MATLAB"],["nim","Nim"],["objectivec","Objective-C"],["ocaml","OCaml"],["perl","Perl"],["php","PHP"],["powershell","PowerShell"],["r","R"],["ruby","Ruby"],["rust","Rust"],["scala","Scala"],["solidity","Solidity"],["swift","Swift"],["typescript","TypeScript"],["vala","Vala"],["visualbasic","Visual Basic"],["vyper","Vyper"],["wasm","WebAssembly"],["zig","Zig"],["html5","HTML5"],["css3","CSS3"],["sass","Sass"],["less","Less"],["markdown","Markdown"],["json","JSON"],["nodejs","Node.js"],["denojs","Deno"],["bun","Bun"],["react","React"],["vuejs","Vue.js"],["angular","Angular"],["svelte","Svelte"],["nextjs","Next.js"],["nuxtjs","Nuxt"],["django","Django"],["flask","Flask"],["fastapi","FastAPI"],["laravel","Laravel"],["rails","Ruby on Rails"],["spring","Spring"],["dotnetcore",".NET Core"],["flutter","Flutter"],["electron","Electron"],["qt","Qt"],["tensorflow","TensorFlow"],["pytorch","PyTorch"],["opencv","OpenCV"],["mysql","MySQL"],["postgresql","PostgreSQL"],["mongodb","MongoDB"],["sqlite","SQLite"],["redis","Redis"],["mariadb","MariaDB"],["microsoftsqlserver","SQL Server"],["oracle","Oracle"],["cassandra","Cassandra"],["neo4j","Neo4j"],["firebase","Firebase"],["supabase","Supabase"],["docker","Docker"],["kubernetes","Kubernetes"],["git","Git"],["github","GitHub"],["gitlab","GitLab"],["npm","npm"],["yarn","Yarn"],["pnpm","pnpm"],["vitejs","Vite"],["webpack","Webpack"],["cmake","CMake"],["gradle","Gradle"],["maven","Maven"],["terraform","Terraform"],["ansible","Ansible"],["jenkins","Jenkins"],["githubactions","GitHub Actions"],["linux","Linux"],["android","Android"]];
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const store = {
@@ -201,15 +202,36 @@
     const actions = $('.hero-actions', copy); if (actions) actions.insertAdjacentElement('beforebegin', badge); else copy.appendChild(badge);
   }
 
+
+  function hydrateTechIconTicker() {
+    const track = $('#programmingIconTicker') || $('.enh-tech-track');
+    if (!track || track.dataset.iconsReady === '1') return;
+
+    if (!document.querySelector('link[data-devicon]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/devicon@2.17.0/devicon.min.css';
+      link.dataset.devicon = '2.17.0';
+      document.head.appendChild(link);
+    }
+
+    const icons = techIcons.map(([slug,label]) =>
+      `<span class="enh-tech-icon" title="${label}"><i class="devicon-${slug}-plain devicon-${slug}-original colored"></i></span>`
+    ).join('');
+
+    track.innerHTML = `<div class="enh-tech-sequence">${icons}</div><div class="enh-tech-sequence" aria-hidden="true">${icons}</div>`;
+    track.dataset.iconsReady = '1';
+  }
+
   function addStatsAndTicker() {
     const hero = $('.hero'); if (!hero || $('#enhStats')) return;
     const stats = document.createElement('section'); stats.id = 'enhStats'; stats.className = 'enh-shell enh-reveal';
     stats.innerHTML = `<div class="enh-stats"><div class="enh-stat"><strong data-count="${projects.length}">0</strong><span>${lang==='ar'?'مشروعًا معروضًا':'projects displayed'}</span></div><div class="enh-stat"><strong>Web</strong><span>${lang==='ar'?'واجهات ومواقع ويب':'interfaces & websites'}</span></div><div class="enh-stat"><strong>Desktop</strong><span>${lang==='ar'?'أدوات وتطبيقات حاسوب':'desktop tools'}</span></div><div class="enh-stat"><strong>Automation</strong><span>${lang==='ar'?'أتمتة وسير عمل':'automated workflows'}</span></div></div>`;
     hero.insertAdjacentElement('afterend', stats);
-    const tech = document.createElement('div'); tech.className = 'enh-tech-strip enh-reveal';
-    const names = ['Python','C#','.NET','JavaScript','HTML','CSS','Git','GitHub','PowerShell','C++','SQL','Android','Kotlin','PHP','Automation','IoT'];
-    tech.innerHTML = `<div class="enh-tech-track">${[...names,...names].map(x=>`<span class="enh-tech-chip">${x}</span>`).join('')}</div>`;
+    const tech = document.createElement('div'); tech.className = 'enh-tech-strip enh-reveal'; tech.setAttribute('aria-label','Programming languages and technologies');
+    tech.innerHTML = '<div class="enh-tech-track" id="programmingIconTicker" aria-hidden="true"></div>';
     stats.insertAdjacentElement('afterend', tech);
+    hydrateTechIconTicker();
   }
 
   function addFeaturedSinax() {
@@ -253,11 +275,11 @@
   }
 
   function addServiceComparison() {
-    const tools=$('#enhToolsAreas'); if(!tools || $('#enhCompare')) return;
+    const tools=$('#enhToolsAreas'); const projectsSection=$('#projects'); if((!tools && !projectsSection) || $('#enhCompare')) return;
     const sec=document.createElement('section'); sec.id='enhCompare'; sec.className='enh-section';
     const cols=lang==='ar' ? [['موقع ويب','أفضل للعرض والخدمات والوصول من أي جهاز.','واجهة متجاوبة','نشر على الويب'],['تطبيق Windows','أفضل للأدوات المحلية وإدارة الملفات والنظام.','واجهة مكتبية','تكامل مع Windows'],['أتمتة','أفضل لتقليل الخطوات المتكررة وتسريع العمل.','سكربتات واختصارات','سير عمل مخصص']] : [['Website','Best for presentation, services and cross-device access.','Responsive UI','Web deployment'],['Windows app','Best for local utilities, files and system workflows.','Desktop UI','Windows integration'],['Automation','Best for reducing repeated steps and speeding up work.','Scripts & shortcuts','Custom workflow']];
     sec.innerHTML=`<div class="enh-shell"><div class="enh-kicker">${lang==='ar'?'اختيار الخدمة':'Choose a service'}</div><h2 class="enh-title small">${lang==='ar'?'ما النوع الأنسب لفكرتك؟':'Which direction fits your idea?'}</h2><div class="enh-compare-grid">${cols.map(c=>`<article><h3>${c[0]}</h3><p>${c[1]}</p><ul><li>${c[2]}</li><li>${c[3]}</li></ul></article>`).join('')}</div></div>`;
-    tools.insertAdjacentElement('afterend',sec);
+    if (tools) tools.insertAdjacentElement('afterend',sec); else projectsSection.insertAdjacentElement('beforebegin',sec);
   }
 
   function prepareProjectCards() {
@@ -460,7 +482,7 @@
     setTimeout(() => { try { bootProjects(); } catch (e) { console.warn(e); } }, 90);
 
     // Build below-the-fold enhancements one small task at a time.
-    const tasks=[addStatsAndTicker,addFeaturedSinax,addServices,addProcess,addToolsAreasTimeline,addServiceComparison,addRequestModal,addFaqIfMissing,addContact,addGithubActivity,addCommandPalette,addBottomNav,addFloatingButtons,addWelcomeAndLastProject,addQrPwa,addUpdateControl,addOpenGraphRuntime,addStructuredDataRuntime,addServiceDeepLinkOnCards,revealOnScroll,animateCounters];
+    const tasks=[hydrateTechIconTicker,addStatsAndTicker,addFeaturedSinax,addServices,addProcess,addServiceComparison,addRequestModal,addFaqIfMissing,addContact,addGithubActivity,addCommandPalette,addBottomNav,addFloatingButtons,addWelcomeAndLastProject,addQrPwa,addUpdateControl,addOpenGraphRuntime,addStructuredDataRuntime,addServiceDeepLinkOnCards,revealOnScroll,animateCounters];
     const step=()=>{
       const fn=tasks.shift(); if(!fn) return;
       try { fn(); } catch(e) { console.warn(e); }
