@@ -1,0 +1,43 @@
+name: UI refinement temp
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/ui-refinement-temp.yml'
+      - 'tools/apply_ui_refinement_v2.py'
+
+permissions:
+  contents: write
+
+jobs:
+  refine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Apply requested refinements
+        run: python tools/apply_ui_refinement_v2.py
+      - name: Verify JavaScript
+        run: node --check enhancements.js
+      - name: Verify requested removals and redesign
+        run: |
+          grep -Fq "opacity:.38" styles.css
+          grep -Fq "programmingIconTicker" index.html
+          grep -Fq "enh-capability-card" enhancements.js
+          grep -Fq "enh-capability-card" enhancements.css
+          grep -Fq "rad-portfolio-v3.12.0" service-worker.js
+          ! grep -Fq '<div class="hero-values">' index.html
+          ! grep -Fq '<div class="tech-band">' index.html
+          ! grep -Fq 'addProcess,addToolsAreasTimeline,addServiceComparison' enhancements.js
+      - name: Commit refined UI
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html styles.css enhancements.js enhancements.css service-worker.js
+          git diff --cached --check
+          git commit -m "Simplify portfolio sections and redesign services" || exit 0
+          git push origin main
