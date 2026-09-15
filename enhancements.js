@@ -252,10 +252,26 @@
 
   function addServices() {
     const projectsSection = $('#projects'); if (!projectsSection || $('#services')) return;
+    const capabilities = lang==='ar' ? [
+      ['01','ويب ومنصات','مواقع شخصية وتجارية، صفحات هبوط، متاجر، لوحات تحكم، تطبيقات ويب وواجهات عربية RTL متجاوبة.'],
+      ['02','Windows والحاسوب','تطبيقات C# و.NET وWinUI، أدوات ملفات ونظام، برامج داخلية ولوحات تشغيل مخصصة.'],
+      ['03','الهاتف','تطبيقات وتجارب Android، واجهات Kotlin، ونماذج Python/Kivy قابلة للتطوير.'],
+      ['04','Python والأتمتة','معالجة ملفات وبيانات، نسخ احتياطي، تقارير، إعادة تسمية جماعية، وأتمتة خطوات وسير عمل متكرر.'],
+      ['05','الذكاء الاصطناعي','دمج خدمات ونماذج AI، أدوات نصوص ومحتوى، مساعدين ذكيين وسير عمل مدعوم بالذكاء الاصطناعي.'],
+      ['06','البيانات والأنظمة','واجهات API، قواعد بيانات، أنظمة إدارة، لوحات بيانات، IoT وحساسات وربط خدمات متعددة.'],
+      ['07','أدوات مخصصة','إضافات متصفح، PDF وصور وصوت وفيديو، محولات، QR، أدوات مطورين وبرامج مصممة لفكرة محددة.']
+    ] : [
+      ['01','Web & platforms','Portfolios, business sites, landing pages, stores, dashboards, web apps and responsive RTL interfaces.'],
+      ['02','Windows & desktop','C#, .NET and WinUI apps, file/system utilities, internal tools and custom desktop workflows.'],
+      ['03','Mobile','Android experiences, Kotlin interfaces and extendable Python/Kivy prototypes.'],
+      ['04','Python & automation','File/data processing, backups, reports, batch renaming and repeatable workflow automation.'],
+      ['05','AI solutions','AI integrations, text/content tools, smart assistants and AI-assisted workflows.'],
+      ['06','Data & systems','APIs, databases, management systems, dashboards, IoT/sensor projects and service integrations.'],
+      ['07','Custom utilities','Browser extensions, PDF/image/audio/video tools, converters, QR utilities and purpose-built software.']
+    ];
     const sec = document.createElement('section'); sec.id = 'services'; sec.className = 'enh-services enh-section enh-snap';
-    sec.innerHTML = `<div class="enh-shell"><div class="enh-kicker" data-i18n="services">${t('services')}</div><h2 class="enh-title" data-i18n="servicesTitle">${t('servicesTitle')}</h2><p class="enh-subtitle" data-i18n="servicesSub">${t('servicesSub')}</p><div class="enh-services-grid">${serviceItems.map(([id,ic,ar,en,dar,den])=>`<article id="service-${id}" class="enh-service enh-reveal" data-service="${id}"><div class="enh-service-icon">${ic}</div><h3>${lang==='ar'?ar:en}</h3><p>${lang==='ar'?dar:den}</p><button type="button" class="enh-service-share" data-service-link="${id}">${t('serviceLink')}</button></article>`).join('')}</div><div class="enh-request-row"><a class="enh-primary" id="enhOpenRequest" href="${projectRequestUrl}" target="_blank" rel="noopener noreferrer" data-i18n="request">${t('request')}</a><a class="enh-secondary" href="${consultationUrl}" target="_blank" rel="noopener noreferrer">${lang==='ar'?'احجز استشارة':'Book a consultation'}</a><a class="enh-secondary" href="${omnisendUpdates}" target="_blank" rel="noopener noreferrer">${lang==='ar'?'تحديثات المشاريع':'Project updates'}</a><a class="enh-secondary" href="${instagram}" target="_blank" rel="noopener">Instagram</a></div></div>`;
+    sec.innerHTML = `<div class="enh-shell"><div class="enh-kicker" data-i18n="services">${t('services')}</div><h2 class="enh-title" data-i18n="servicesTitle">${t('servicesTitle')}</h2><p class="enh-subtitle">${lang==='ar'?'بدل أن أحصر فكرتك في قالب جاهز، أبني الحل حول الفكرة نفسها: من أداة صغيرة ذكية إلى نظام متكامل، مع اختيار التقنية المناسبة لكل مشروع.':'Rather than forcing your idea into a template, I build around the idea itself — from a focused smart utility to a complete system, using the right technology for each project.'}</p><article class="enh-capability-card enh-reveal"><div class="enh-capability-intro"><span class="enh-capability-code">BUILD / CREATE / AUTOMATE</span><h3>${lang==='ar'?'فكرتك يمكن أن تصبح منتجًا يعمل ويُستخدم.':'Your idea can become a product people can actually use.'}</h3><p>${lang==='ar'?'أستطيع تصميم الواجهة، برمجة المنطق، ربط البيانات والخدمات، أتمتة العمليات، وبناء تجربة واضحة وسريعة وقابلة للتوسع — سواء كانت الفكرة موقعًا، تطبيقًا، أداة، نظامًا داخليًا أو تجربة جديدة بالكامل.':'I can shape the interface, build the logic, connect data and services, automate workflows and deliver a clear, fast, extensible experience — whether it is a website, app, utility, internal system or something entirely new.'}</p><div class="enh-capability-tags"><span>Web</span><span>Windows</span><span>Mobile</span><span>Python</span><span>AI</span><span>Automation</span><span>Data</span><span>IoT</span><span>APIs</span><span>RTL</span></div></div><div class="enh-capability-list">${capabilities.map(([n,h,p])=>`<div class="enh-capability-row"><b>${n}</b><div><strong>${h}</strong><span>${p}</span></div></div>`).join('')}</div><div class="enh-capability-footer"><span>${lang==='ar'?'فكرتك غير موجودة ضمن الأمثلة؟ أرسلها كما هي. الهدف أن نصنع الحل المناسب لها، لا أن نجبرها على شكل جاهز.':'Do not see your exact idea in the examples? Send it as-is. The goal is to build the right solution around it, not force it into a preset shape.'}</span><div class="enh-request-row"><a class="enh-primary" id="enhOpenRequest" href="${projectRequestUrl}" target="_blank" rel="noopener noreferrer" data-i18n="request">${t('request')}</a><a class="enh-secondary" href="${consultationUrl}" target="_blank" rel="noopener noreferrer">${lang==='ar'?'احجز استشارة':'Book a consultation'}</a><a class="enh-secondary" href="${omnisendUpdates}" target="_blank" rel="noopener noreferrer">${lang==='ar'?'تحديثات المشاريع':'Project updates'}</a></div></div></article></div>`;
     projectsSection.insertAdjacentElement('beforebegin', sec);
-    $$('.enh-service-share', sec).forEach(btn => btn.addEventListener('click', () => copyServiceLink(btn.dataset.serviceLink)));
   }
 
   function addProcess() {
@@ -482,7 +498,7 @@
     setTimeout(() => { try { bootProjects(); } catch (e) { console.warn(e); } }, 90);
 
     // Build below-the-fold enhancements one small task at a time.
-    const tasks=[hydrateTechIconTicker,addStatsAndTicker,addFeaturedSinax,addServices,addProcess,addServiceComparison,addRequestModal,addFaqIfMissing,addContact,addGithubActivity,addCommandPalette,addBottomNav,addFloatingButtons,addWelcomeAndLastProject,addQrPwa,addUpdateControl,addOpenGraphRuntime,addStructuredDataRuntime,addServiceDeepLinkOnCards,revealOnScroll,animateCounters];
+    const tasks=[hydrateTechIconTicker,addStatsAndTicker,addFeaturedSinax,addServices,addProcess,addRequestModal,addFaqIfMissing,addContact,addGithubActivity,addCommandPalette,addBottomNav,addFloatingButtons,addWelcomeAndLastProject,addQrPwa,addUpdateControl,addOpenGraphRuntime,addStructuredDataRuntime,addServiceDeepLinkOnCards,revealOnScroll,animateCounters];
     const step=()=>{
       const fn=tasks.shift(); if(!fn) return;
       try { fn(); } catch(e) { console.warn(e); }
