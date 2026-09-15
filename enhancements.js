@@ -125,14 +125,20 @@
   }
 
   function addHeaderControls() {
-    const header = $('.header-inner') || $('.site-header'); if (!header || $('#enhHeaderControls')) return;
-    const wrap = document.createElement('div'); wrap.id = 'enhHeaderControls'; wrap.className = 'enh-header-controls';
-    wrap.innerHTML = `<button id="enhLangToggle" type="button" data-tip="Language">EN</button><button id="enhThemeToggle" type="button"></button><button id="enhCommandOpen" type="button" data-tip="Ctrl + K">⌘K</button><button id="enhMotionToggle" type="button" data-tip="${t('reduceMotion')}">≈</button>`;
-    header.appendChild(wrap);
-    $('#enhLangToggle').addEventListener('click', () => setLanguage(lang === 'ar' ? 'en' : 'ar'));
-    $('#enhThemeToggle').addEventListener('click', () => applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'));
-    $('#enhCommandOpen').addEventListener('click', openCommandPalette);
-    $('#enhMotionToggle').addEventListener('click', () => setMotion(!document.documentElement.classList.contains('enh-reduce-motion')));
+    const header = $('.header-inner') || $('.site-header'); if (!header) return;
+    let wrap = $('#enhHeaderControls');
+    if (!wrap) {
+      wrap = document.createElement('div'); wrap.id = 'enhHeaderControls'; wrap.className = 'enh-header-controls';
+      wrap.innerHTML = `<button id="enhLangToggle" type="button" data-tip="Language">EN</button><button id="enhThemeToggle" type="button"></button><button id="enhCommandOpen" type="button" data-tip="Ctrl + K">⌘K</button><button id="enhMotionToggle" type="button" data-tip="${t('reduceMotion')}">≈</button>`;
+      header.appendChild(wrap);
+    }
+    if (wrap.dataset.bound !== '1') {
+      wrap.dataset.bound = '1';
+      $('#enhLangToggle')?.addEventListener('click', () => setLanguage(lang === 'ar' ? 'en' : 'ar'));
+      $('#enhThemeToggle')?.addEventListener('click', () => applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'));
+      $('#enhCommandOpen')?.addEventListener('click', openCommandPalette);
+      $('#enhMotionToggle')?.addEventListener('click', () => setMotion(!document.documentElement.classList.contains('enh-reduce-motion')));
+    }
     applyTheme(); setMotion(store.get('rad-motion') === 'reduced');
   }
 
@@ -398,7 +404,21 @@
   function bootProjects(retries=0){if(!prepareProjectCards()){if(retries<50)setTimeout(()=>bootProjects(retries+1),100);return;}addProjectTools();bindProjectModal();addProjectSkeletons();renderProjectsLanguage();handleDirectLinks();polishTooltips();revealOnScroll();addMagneticAndSpotlight();}
 
   function boot(){
-    injectHead();addLoadingScreen();addProgressBar();addHeaderControls();renderFirstLanguage();addAvailability();addStatsAndTicker();addFeaturedSinax();addServices();addProcess();addToolsAreasTimeline();addServiceComparison();addRequestModal();addFaqIfMissing();addContact();addGithubActivity();addCommandPalette();addBottomNav();addFloatingButtons();addWelcomeAndLastProject();addQrPwa();addUpdateControl();addAccessibility();addOpenGraphRuntime();addStructuredDataRuntime();addServiceDeepLinkOnCards();applyImagePerf();bootProjects();revealOnScroll();animateCounters();
+    // Keep first paint small and stable; the loader is intentionally skipped.
+    injectHead(); addProgressBar(); addHeaderControls(); renderFirstLanguage(); addAvailability(); addAccessibility(); applyImagePerf();
+
+    // Project behavior is useful early, but does not need to block first paint.
+    setTimeout(() => { try { bootProjects(); } catch (e) { console.warn(e); } }, 90);
+
+    // Build below-the-fold enhancements one small task at a time.
+    const tasks=[addStatsAndTicker,addFeaturedSinax,addServices,addProcess,addToolsAreasTimeline,addServiceComparison,addRequestModal,addFaqIfMissing,addContact,addGithubActivity,addCommandPalette,addBottomNav,addFloatingButtons,addWelcomeAndLastProject,addQrPwa,addUpdateControl,addOpenGraphRuntime,addStructuredDataRuntime,addServiceDeepLinkOnCards,revealOnScroll,animateCounters];
+    const step=()=>{
+      const fn=tasks.shift(); if(!fn) return;
+      try { fn(); } catch(e) { console.warn(e); }
+      if(!tasks.length) return;
+      if('requestIdleCallback' in window) requestIdleCallback(step,{timeout:350}); else setTimeout(step,28);
+    };
+    if('requestIdleCallback' in window) requestIdleCallback(step,{timeout:500}); else setTimeout(step,180);
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
