@@ -1,4 +1,4 @@
-name: Accessibility tuning temporary
+name: Critical render path optimization temporary
 
 on:
   push:
@@ -16,33 +16,52 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Fix accessible names and contrast without changing layout
+      - name: Install font tooling
+        run: python -m pip install --quiet fonttools brotli
+      - name: Externalize embedded Cairo fonts and prioritize LCP image
+        shell: bash
         run: |
           python <<'PY'
           from pathlib import Path
+          import re,base64
+          from fontTools.ttLib import TTFont
 
-          js=Path('enhancements.js')
-          text=js.read_text(encoding='utf-8')
-          marker='/* ACCESSIBILITY-FINAL */'
-          if marker not in text:
-              text += '''\n/* ACCESSIBILITY-FINAL */\n(function(){\n  const fixAccessibleNames=()=>{\n    const brand=document.querySelector('a.brand');\n    if(brand) brand.removeAttribute('aria-label');\n    document.querySelectorAll('.showcase-image-link[aria-label]').forEach(a=>a.removeAttribute('aria-label'));\n  };\n  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fixAccessibleNames,{once:true});\n  else fixAccessibleNames();\n  const observer=new MutationObserver(fixAccessibleNames);\n  observer.observe(document.documentElement,{childList:true,subtree:true});\n  setTimeout(()=>observer.disconnect(),5000);\n})();\n'''
-          js.write_text(text,encoding='utf-8')
-
-          css=Path('enhancements.css')
-          c=css.read_text(encoding='utf-8')
-          if '/* ACCESSIBILITY-FINAL */' not in c:
-              c += '\n/* ACCESSIBILITY-FINAL */\n.closing-code{color:#5d704d!important}\n'
-          css.write_text(c,encoding='utf-8')
+          cssp=Path('styles.css')
+          css=cssp.read_text(encoding='utf-8')
+          out=Path('assets/fonts'); out.mkdir(parents=True,exist_ok=True)
+          pattern=re.compile(r'data:font/ttf;base64,([A-Za-z0-9+/=]+)')
+          matches=list(pattern.finditer(css))
+          print('embedded_fonts',len(matches),'css_before',len(css.encode()))
+          replacements=[]
+          for i,m in enumerate(matches,1):
+              raw=base64.b64decode(m.group(1))
+              ttf=out/f'cairo-{i}.ttf'
+              woff=out/f'cairo-{i}.woff2'
+              ttf.write_bytes(raw)
+              font=TTFont(str(ttf)); font.flavor='woff2'; font.save(str(woff)); ttf.unlink()
+              replacements.append((m.group(0),f'assets/fonts/cairo-{i}.woff2'))
+              print('font',i,'woff2_bytes',woff.stat().st_size)
+          for old,new in replacements: css=css.replace(old,new)
+          cssp.write_text(css,encoding='utf-8')
+          print('css_after',len(css.encode()))
 
           idx=Path('index.html')
           h=idx.read_text(encoding='utf-8')
-          h=h.replace('width="2048" height="1801"','width="1200" height="1055"')
+          preload='<link rel="preload" href="assets/images/radwan-profile.webp" as="image" type="image/webp" fetchpriority="high">'
+          if preload not in h:
+              h=h.replace('<link rel="stylesheet" href="styles.css">',preload+'\n  <link rel="stylesheet" href="styles.css">',1)
+          h=h.replace('fetchpriority="high" decoding="async" alt="صورة رضوان عبدالهادي"','fetchpriority="high" decoding="sync" alt="صورة رضوان عبدالهادي"')
           idx.write_text(h,encoding='utf-8')
+
+          sw=Path('service-worker.js')
+          if sw.exists():
+              s=sw.read_text(encoding='utf-8').replace("rad-portfolio-v3.0.0","rad-portfolio-v3.1.0")
+              sw.write_text(s,encoding='utf-8')
           PY
-      - name: Commit accessibility fixes
+      - name: Commit render-path optimization
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add enhancements.js enhancements.css index.html
-          git commit -m 'Improve accessibility without changing visual layout' || exit 0
+          git add styles.css index.html service-worker.js assets/fonts
+          git commit -m 'Externalize Cairo font and prioritize hero image' || exit 0
           git push
