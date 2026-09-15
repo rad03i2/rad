@@ -1,0 +1,123 @@
+name: Restore internal action loader temporary
+
+on:
+  push:
+    paths:
+      - '.github/workflows/restore-internal-loader-temp.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore loader for internal actions only
+        shell: bash
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          import re
+
+          p=Path('enhancements.js')
+          js=p.read_text(encoding='utf-8')
+          marker='// INTERNAL-ACTION-LOADER'
+          if marker not in js:
+              boot_pos=js.find('  function boot(){')
+              if boot_pos < 0:
+                  raise SystemExit('boot function not found')
+              block=r'''  // INTERNAL-ACTION-LOADER
+  function setupInternalActionLoader(){
+    if(document.documentElement.dataset.internalLoaderBound==='1') return;
+    document.documentElement.dataset.internalLoaderBound='1';
+
+    const excludedButtons = '#enhLangToggle,#enhThemeToggle,#enhMotionToggle,#enhCommandOpen,.menu-button,.enh-modal-close,.enh-filter,[data-no-loader]';
+    const showLoader = () => {
+      let loader = document.querySelector('.enh-loader.enh-action-loader');
+      if(loader){
+        loader.classList.remove('is-done');
+        clearTimeout(loader._hideTimer);
+        clearTimeout(loader._removeTimer);
+      } else {
+        loader=document.createElement('div');
+        loader.className='enh-loader enh-action-loader';
+        loader.setAttribute('aria-hidden','true');
+        loader.innerHTML='<div><b>&lt;RAD /&gt;</b><span></span></div>';
+        document.body.appendChild(loader);
+      }
+      loader._hideTimer=setTimeout(()=>{
+        loader.classList.add('is-done');
+        loader._removeTimer=setTimeout(()=>loader.remove(),480);
+      },560);
+    };
+
+    document.addEventListener('click',(event)=>{
+      if(event.defaultPrevented || event.button!==0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const target=event.target.closest('a,button');
+      if(!target || target.matches(excludedButtons) || target.disabled) return;
+
+      if(target.tagName==='A'){
+        const raw=(target.getAttribute('href')||'').trim();
+        if(!raw || raw==='#' || raw.startsWith('mailto:') || raw.startsWith('tel:') || raw.startsWith('javascript:') || target.hasAttribute('download')) return;
+        let url;
+        try{ url=new URL(target.href,location.href); }catch{return;}
+        // Never show the loader for links that leave rdwan.dev.
+        if(url.origin!==location.origin) return;
+        showLoader();
+        return;
+      }
+
+      // Buttons that perform visible actions inside the portfolio use the loader too.
+      showLoader();
+    },true);
+  }
+
+'''
+              js=js[:boot_pos]+block+js[boot_pos:]
+
+          # Ensure the listener is registered during the lightweight part of boot,
+          # without restoring the old startup loader.
+          boot_start=js.find('  function boot(){')
+          if boot_start < 0:
+              raise SystemExit('boot function missing after insertion')
+          boot_end=js.find('\n  }',boot_start)
+          snippet=js[boot_start:boot_end+4]
+          if 'setupInternalActionLoader();' not in snippet:
+              needle='injectHead(); addProgressBar(); addHeaderControls(); renderFirstLanguage(); addAvailability(); addAccessibility(); applyImagePerf();'
+              if needle in snippet:
+                  snippet=snippet.replace(needle,needle+' setupInternalActionLoader();',1)
+              else:
+                  snippet=snippet.replace('{\n','{\n    setupInternalActionLoader();\n',1)
+              js=js[:boot_start]+snippet+js[boot_end+4:]
+
+          p.write_text(js,encoding='utf-8')
+
+          # Add a small action-specific polish while keeping the original loader design.
+          cp=Path('enhancements.css')
+          css=cp.read_text(encoding='utf-8')
+          css_marker='/* INTERNAL-ACTION-LOADER */'
+          if css_marker not in css:
+              css += r'''
+/* INTERNAL-ACTION-LOADER */
+.enh-action-loader{cursor:progress}.enh-action-loader>div{transform:translateY(-2px);animation:enhActionLoaderIn .18s ease both}.enh-action-loader b{letter-spacing:-2px}.enh-action-loader span{width:180px}.enh-action-loader.is-done>div{transform:scale(.985);transition:transform .35s ease}@keyframes enhActionLoaderIn{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:translateY(-2px) scale(1)}}
+@media (prefers-reduced-motion:reduce){.enh-action-loader>div,.enh-action-loader span{animation:none!important}}
+'''
+              cp.write_text(css,encoding='utf-8')
+
+          sw=Path('service-worker.js')
+          if sw.exists():
+              s=sw.read_text(encoding='utf-8')
+              s=re.sub(r'rad-portfolio-v3\.\d+\.0','rad-portfolio-v3.6.0',s)
+              sw.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit loader behavior
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add enhancements.js enhancements.css service-worker.js
+          git commit -m 'Restore loader for internal site actions' || exit 0
+          git push
