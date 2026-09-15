@@ -403,9 +403,53 @@
 
   function bootProjects(retries=0){if(!prepareProjectCards()){if(retries<50)setTimeout(()=>bootProjects(retries+1),100);return;}addProjectTools();bindProjectModal();addProjectSkeletons();renderProjectsLanguage();handleDirectLinks();polishTooltips();revealOnScroll();addMagneticAndSpotlight();}
 
+  // INTERNAL-ACTION-LOADER
+  function setupInternalActionLoader(){
+    if(document.documentElement.dataset.internalLoaderBound==='1') return;
+    document.documentElement.dataset.internalLoaderBound='1';
+
+    const excludedButtons = '#enhLangToggle,#enhThemeToggle,#enhMotionToggle,#enhCommandOpen,.menu-button,.enh-modal-close,.enh-filter,[data-no-loader]';
+    const showLoader = () => {
+      let loader = document.querySelector('.enh-loader.enh-action-loader');
+      if(loader){
+        loader.classList.remove('is-done');
+        clearTimeout(loader._hideTimer);
+        clearTimeout(loader._removeTimer);
+      } else {
+        loader=document.createElement('div');
+        loader.className='enh-loader enh-action-loader';
+        loader.setAttribute('aria-hidden','true');
+        loader.innerHTML='<div><b>&lt;RAD /&gt;</b><span></span></div>';
+        document.body.appendChild(loader);
+      }
+      loader._hideTimer=setTimeout(()=>{
+        loader.classList.add('is-done');
+        loader._removeTimer=setTimeout(()=>loader.remove(),480);
+      },560);
+    };
+
+    document.addEventListener('click',(event)=>{
+      if(event.defaultPrevented || event.button!==0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const target=event.target.closest('a,button');
+      if(!target || target.matches(excludedButtons) || target.disabled) return;
+
+      if(target.tagName==='A'){
+        const raw=(target.getAttribute('href')||'').trim();
+        if(!raw || raw==='#' || raw.startsWith('mailto:') || raw.startsWith('tel:') || raw.startsWith('javascript:') || target.hasAttribute('download')) return;
+        let url;
+        try{ url=new URL(target.href,location.href); }catch{return;}
+        if(url.origin!==location.origin) return;
+        showLoader();
+        return;
+      }
+
+      showLoader();
+    },true);
+  }
+
   function boot(){
     // Keep first paint small and stable; the loader is intentionally skipped.
-    injectHead(); addProgressBar(); addHeaderControls(); renderFirstLanguage(); addAvailability(); addAccessibility(); applyImagePerf();
+    injectHead(); addProgressBar(); addHeaderControls(); renderFirstLanguage(); addAvailability(); addAccessibility(); applyImagePerf(); setupInternalActionLoader();
 
     // Project behavior is useful early, but does not need to block first paint.
     setTimeout(() => { try { bootProjects(); } catch (e) { console.warn(e); } }, 90);
