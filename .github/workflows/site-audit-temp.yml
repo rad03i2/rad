@@ -1,4 +1,4 @@
-name: Measure dynamic hero extras temporary
+name: Final live SEO performance audit
 
 on:
   push:
@@ -15,27 +15,62 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Measure rendered extras
+      - name: Install Lighthouse
+        run: npm install --silent lighthouse@12 chrome-launcher@1
+      - name: Audit homepage
         shell: bash
         run: |
-          npm install --silent puppeteer-core@24
+          npx lighthouse https://rdwan.dev/ --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --output=json --output-path=/tmp/lh.json --quiet || true
           node <<'JS'
-          const puppeteer=require('puppeteer-core');
+          const fs=require('fs');
+          const r=JSON.parse(fs.readFileSync('/tmp/lh.json','utf8'));
+          const c=r.categories,a=r.audits;
+          console.log('FINAL_LIGHTHOUSE',JSON.stringify({
+            performance:c.performance.score,
+            accessibility:c.accessibility.score,
+            bestPractices:c['best-practices'].score,
+            seo:c.seo.score,
+            fcp:a['first-contentful-paint'].numericValue,
+            lcp:a['largest-contentful-paint'].numericValue,
+            cls:a['cumulative-layout-shift'].numericValue,
+            tbt:a['total-blocking-time'].numericValue,
+            speedIndex:a['speed-index'].numericValue
+          }));
+          JS
+      - name: Validate live structured data and social metadata
+        shell: bash
+        run: |
+          npm install --silent cheerio@1
+          node <<'JS'
+          const cheerio=require('cheerio');
+          const urls=[
+            ['home','https://rdwan.dev/'],
+            ['about','https://rdwan.dev/about-radwan-abdulhadi.html'],
+            ['projects','https://rdwan.dev/projects/'],
+            ['project','https://rdwan.dev/projects/01-smart-file-manager.html'],
+            ['blog','https://rdwan.dev/blog/'],
+            ['article','https://rdwan.dev/blog/how-i-built-smart-file-manager-with-csharp-winui3.html'],
+            ['notes','https://rdwan.dev/notes/']
+          ];
+          const expected={home:['Person','WebSite','ProfilePage','ItemList'],about:['Person','ProfilePage'],projects:['Person','ItemList'],project:['Person','WebPage','SoftwareSourceCode','BreadcrumbList'],blog:['Person','Blog'],article:['Person','BlogPosting','BreadcrumbList'],notes:['Person','CollectionPage']};
           (async()=>{
-            const browser=await puppeteer.launch({headless:true,executablePath:'/usr/bin/google-chrome',args:['--no-sandbox','--disable-dev-shm-usage']});
-            for(const [name,width,height] of [['desktop',1365,900],['mobile',412,915]]){
-              const page=await browser.newPage();
-              await page.setViewport({width,height,deviceScaleFactor:1});
-              await page.goto('https://rdwan.dev/',{waitUntil:'networkidle0',timeout:120000});
-              await new Promise(r=>setTimeout(r,1200));
-              const m=await page.evaluate(()=>{
-                const rect=s=>document.querySelector(s)?.getBoundingClientRect();
-                const stats=rect('#enhStats'),tech=rect('.enh-tech-strip'),hero=rect('#home'),band=rect('.tech-band'),about=rect('#about');
-                return {stats:stats&&{h:stats.height,top:stats.top,bottom:stats.bottom},tech:tech&&{h:tech.height,top:tech.top,bottom:tech.bottom},hero:hero&&{bottom:hero.bottom,h:hero.height},band:band&&{top:band.top,h:band.height},about:about&&{top:about.top},totalExtras:(stats?.height||0)+(tech?.height||0)};
+            for(const [name,url] of urls){
+              const res=await fetch(url,{redirect:'follow'});
+              if(!res.ok) throw new Error(`${name} HTTP ${res.status}`);
+              const html=await res.text(),$=cheerio.load(html);
+              let types=[];
+              $('script[type="application/ld+json"]').each((_,el)=>{
+                try{const j=JSON.parse($(el).text()); const arr=j['@graph']||[j]; for(const x of arr){let t=x['@type']; if(Array.isArray(t))types.push(...t); else if(t)types.push(t)}}catch(e){throw new Error(`${name} invalid JSON-LD: ${e.message}`)}
               });
-              console.log('MEASURE',name,JSON.stringify(m));
-              await page.close();
+              for(const t of expected[name]) if(!types.includes(t)) throw new Error(`${name} missing schema ${t}; got ${types.join(',')}`);
+              const canonical=$('link[rel="canonical"]').attr('href')||'';
+              if(!canonical.startsWith('https://rdwan.dev')) throw new Error(`${name} bad canonical ${canonical}`);
+              const og=$('meta[property="og:image"]').attr('content')||'';
+              if(name==='home'||name==='project'||name==='article'){
+                if(!og.startsWith('https://rdwan.dev/')) throw new Error(`${name} missing/bad og:image ${og}`);
+                if(!$('meta[name="twitter:card"]').attr('content')) throw new Error(`${name} missing twitter card`);
+              }
+              console.log('LIVE_META_OK',name,'schemas='+types.join('|'),'canonical='+canonical,'og='+og);
             }
-            await browser.close();
           })().catch(e=>{console.error(e);process.exit(1)});
           JS
