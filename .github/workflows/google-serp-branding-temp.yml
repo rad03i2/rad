@@ -1,0 +1,139 @@
+name: Improve Google SERP branding temporary
+
+on:
+  push:
+    paths:
+      - '.github/workflows/google-serp-branding-temp.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install image tooling
+        run: python -m pip install --quiet pillow
+      - name: Create portrait favicon and strengthen site-name signals
+        shell: bash
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          import json, re
+
+          PREFERRED='Radwan Abdalhady'
+          ALT=['Radwan Abdulhadi','RAD','rdwan.dev']
+          favicon='/assets/images/radwan-favicon.png'
+          apple='/assets/images/radwan-favicon-180.png'
+
+          # 1) Build stable square portrait favicons from the site's existing profile photo.
+          src=Path('assets/images/radwan-profile.webp')
+          im=Image.open(src).convert('RGB')
+          w,h=im.size
+          side=min(w,h)
+          left=(w-side)//2
+          top=max(0,(h-side)//2)
+          square=im.crop((left,top,left+side,top+side))
+          square.resize((512,512),Image.Resampling.LANCZOS).save('assets/images/radwan-favicon.png','PNG',optimize=True)
+          square.resize((180,180),Image.Resampling.LANCZOS).save('assets/images/radwan-favicon-180.png','PNG',optimize=True)
+          square.resize((64,64),Image.Resampling.LANCZOS).save('favicon.ico',format='ICO',sizes=[(16,16),(32,32),(48,48),(64,64)])
+
+          # 2) Make favicon signals consistent across every HTML page.
+          for p in Path('.').rglob('*.html'):
+              if '.git' in p.parts:
+                  continue
+              s=p.read_text(encoding='utf-8')
+              # Remove existing favicon/apple-touch icon declarations, including old data URI icon.
+              s=re.sub(r'\s*<link\s+rel=["\'](?:shortcut\s+icon|icon|apple-touch-icon)["\'][^>]*>','',s,flags=re.I)
+              # Put stable absolute favicon URLs before </head>.
+              insert=(f'\n<link rel="icon" type="image/png" sizes="512x512" href="{favicon}">'
+                      f'\n<link rel="icon" href="/favicon.ico" sizes="any">'
+                      f'\n<link rel="apple-touch-icon" sizes="180x180" href="{apple}">')
+              if '</head>' in s:
+                  s=s.replace('</head>',insert+'\n</head>',1)
+              # Align Open Graph site name on all pages.
+              s=re.sub(r'<meta\s+property=["\']og:site_name["\']\s+content=["\'][^"\']*["\']\s*/?>',
+                       f'<meta property="og:site_name" content="{PREFERRED}">',s,flags=re.I)
+              p.write_text(s,encoding='utf-8')
+
+          # 3) Strengthen homepage-only Site Name signals.
+          hp=Path('index.html')
+          s=hp.read_text(encoding='utf-8')
+          if 'name="application-name"' in s:
+              s=re.sub(r'<meta\s+name=["\']application-name["\']\s+content=["\'][^"\']*["\']\s*/?>',
+                       f'<meta name="application-name" content="{PREFERRED}">',s,flags=re.I)
+          else:
+              s=s.replace('</head>',f'\n<meta name="application-name" content="{PREFERRED}">\n</head>',1)
+
+          # Ensure homepage has og:site_name even if a prior declaration was absent.
+          if 'og:site_name' not in s:
+              s=s.replace('</head>',f'\n<meta property="og:site_name" content="{PREFERRED}">\n</head>',1)
+
+          # Update the existing WebSite JSON-LD node rather than adding a duplicate WebSite block.
+          script_re=re.compile(r'(<script[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)',re.I|re.S)
+          changed=False
+          def patch_json(m):
+              nonlocal_changed=[False]
+              raw=m.group(2).strip()
+              try:
+                  data=json.loads(raw)
+              except Exception:
+                  return m.group(0)
+              def visit(x):
+                  if isinstance(x,dict):
+                      t=x.get('@type')
+                      types=t if isinstance(t,list) else [t]
+                      if 'WebSite' in types:
+                          x['name']=PREFERRED
+                          x['alternateName']=ALT
+                          x['url']='https://rdwan.dev/'
+                          nonlocal_changed[0]=True
+                      if 'Person' in types:
+                          al=x.get('alternateName',[])
+                          if isinstance(al,str): al=[al]
+                          wanted=['Radwan Abdalhady','Radwan Abdulhadi','Radwan Abdulhadi Ahmed','Radwan Abd Alhady','RAD']
+                          x['alternateName']=list(dict.fromkeys(wanted+al))
+                      for v in x.values(): visit(v)
+                  elif isinstance(x,list):
+                      for v in x: visit(v)
+              visit(data)
+              if nonlocal_changed[0]:
+                  return m.group(1)+'\n'+json.dumps(data,ensure_ascii=False,indent=2)+'\n'+m.group(3)
+              return m.group(0)
+          s=script_re.sub(patch_json,s)
+          hp.write_text(s,encoding='utf-8')
+
+          # 4) PWA identity uses the same public name and portrait icons.
+          mp=Path('manifest.webmanifest')
+          manifest=json.loads(mp.read_text(encoding='utf-8'))
+          manifest['name']=PREFERRED+' - Developer Portfolio'
+          manifest['short_name']=PREFERRED
+          manifest['icons']=[
+              {'src':'assets/images/radwan-favicon-180.png','sizes':'180x180','type':'image/png','purpose':'any'},
+              {'src':'assets/images/radwan-favicon.png','sizes':'512x512','type':'image/png','purpose':'any'}
+          ]
+          mp.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+
+          # 5) Refresh SW cache and include the new branding assets.
+          swp=Path('service-worker.js')
+          sw=swp.read_text(encoding='utf-8')
+          sw=re.sub(r"const CACHE_VERSION='[^']+'", "const CACHE_VERSION='rad-portfolio-v3.8.0'", sw, count=1)
+          sw=sw.replace("'assets/rad-icon.svg'", "'assets/images/radwan-favicon.png','assets/images/radwan-favicon-180.png','favicon.ico'")
+          swp.write_text(sw,encoding='utf-8')
+
+          print('branding assets created:', Image.open('assets/images/radwan-favicon.png').size)
+          print('preferred site name:', PREFERRED)
+          PY
+      - name: Commit SERP branding improvements
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html manifest.webmanifest service-worker.js favicon.ico assets/images/radwan-favicon.png assets/images/radwan-favicon-180.png '*.html' projects blog notes services about-radwan-abdulhadi.html 2>/dev/null || true
+          git add -A
+          git commit -m 'Use portrait favicon and preferred Google site name' || exit 0
+          git push
