@@ -36,6 +36,10 @@ jobs:
             tbt:a['total-blocking-time'].numericValue,
             speedIndex:a['speed-index'].numericValue
           }));
+          for(const id of Object.keys(a).filter(x=>/layout|lcp|render-block|font/i.test(x))){
+            const x=a[id];
+            if(x.score!==1 || x.numericValue) console.log('DIAG',id,JSON.stringify({score:x.score,numericValue:x.numericValue,displayValue:x.displayValue,details:x.details?.items?.slice?.(0,4)}));
+          }
           JS
       - name: Validate live structured data and social metadata
         shell: bash
@@ -49,10 +53,11 @@ jobs:
             ['projects','https://rdwan.dev/projects/'],
             ['project','https://rdwan.dev/projects/01-smart-file-manager.html'],
             ['blog','https://rdwan.dev/blog/'],
-            ['article','https://rdwan.dev/blog/how-i-built-smart-file-manager-with-csharp-winui3.html'],
-            ['notes','https://rdwan.dev/notes/']
+            ['article','https://rdwan.dev/blog/smart-file-manager-csharp-winui3.html'],
+            ['notes','https://rdwan.dev/notes/'],
+            ['note','https://rdwan.dev/notes/duplicate-files-size-then-sha256.html']
           ];
-          const expected={home:['Person','WebSite','ProfilePage','ItemList'],about:['Person','ProfilePage'],projects:['Person','ItemList'],project:['Person','WebPage','SoftwareSourceCode','BreadcrumbList'],blog:['Person','Blog'],article:['Person','BlogPosting','BreadcrumbList'],notes:['Person','CollectionPage']};
+          const expected={home:['Person','WebSite','ProfilePage','ItemList'],about:['Person','ProfilePage'],projects:['Person','ItemList'],project:['Person','WebPage','SoftwareSourceCode','BreadcrumbList'],blog:['Person','CollectionPage'],article:['Person','TechArticle','BreadcrumbList'],notes:['Person','CollectionPage'],note:['Person','TechArticle']};
           (async()=>{
             for(const [name,url] of urls){
               const res=await fetch(url,{redirect:'follow'});
@@ -60,13 +65,14 @@ jobs:
               const html=await res.text(),$=cheerio.load(html);
               let types=[];
               $('script[type="application/ld+json"]').each((_,el)=>{
-                try{const j=JSON.parse($(el).text()); const arr=j['@graph']||[j]; for(const x of arr){let t=x['@type']; if(Array.isArray(t))types.push(...t); else if(t)types.push(t)}}catch(e){throw new Error(`${name} invalid JSON-LD: ${e.message}`)}
+                const j=JSON.parse($(el).text()); const arr=j['@graph']||[j];
+                for(const x of arr){let t=x['@type']; if(Array.isArray(t))types.push(...t); else if(t)types.push(t)}
               });
               for(const t of expected[name]) if(!types.includes(t)) throw new Error(`${name} missing schema ${t}; got ${types.join(',')}`);
               const canonical=$('link[rel="canonical"]').attr('href')||'';
               if(!canonical.startsWith('https://rdwan.dev')) throw new Error(`${name} bad canonical ${canonical}`);
               const og=$('meta[property="og:image"]').attr('content')||'';
-              if(name==='home'||name==='project'||name==='article'){
+              if(name==='home'||name==='project'||name==='article'||name==='note'){
                 if(!og.startsWith('https://rdwan.dev/')) throw new Error(`${name} missing/bad og:image ${og}`);
                 if(!$('meta[name="twitter:card"]').attr('content')) throw new Error(`${name} missing twitter card`);
               }
