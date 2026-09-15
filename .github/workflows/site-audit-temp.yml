@@ -1,4 +1,4 @@
-name: Lighthouse final-tuning temporary
+name: Lighthouse final verification temporary
 
 on:
   push:
@@ -27,12 +27,10 @@ jobs:
             const j=JSON.parse(fs.readFileSync('/tmp/'+mode+'.json','utf8'));
             const c=j.categories,a=j.audits;
             console.log('LIGHTHOUSE',JSON.stringify({mode,scores:{performance:Math.round(c.performance.score*100),accessibility:Math.round(c.accessibility.score*100),bestPractices:Math.round(c['best-practices'].score*100),seo:Math.round(c.seo.score*100)},metrics:{FCP:a['first-contentful-paint'].displayValue,LCP:a['largest-contentful-paint'].displayValue,CLS:a['cumulative-layout-shift'].displayValue,TBT:a['total-blocking-time'].displayValue,SpeedIndex:a['speed-index'].displayValue},transfer:a['total-byte-weight']?.displayValue,dom:a['dom-size']?.displayValue}));
-            for (const id of ['crawlable-anchors','color-contrast','label-content-name-mismatch','layout-shifts','cls-culprits-insight','largest-contentful-paint-element','lcp-discovery-insight']) {
+            for (const id of ['crawlable-anchors','color-contrast','label-content-name-mismatch','layout-shifts','cls-culprits-insight','largest-contentful-paint-element']) {
               const x=a[id]; if(!x) continue;
               console.log('AUDIT_DETAIL',mode,id,'score=',x.score,'display=',x.displayValue||'');
               console.log(JSON.stringify((x.details?.items||[]).slice(0,12)));
             }
-            const network=(a['network-requests']?.details?.items||[]).sort((x,y)=>(y.transferSize||0)-(x.transferSize||0)).slice(0,8).map(x=>({url:x.url,transferSize:x.transferSize,resourceSize:x.resourceSize,mimeType:x.mimeType}));
-            console.log('LARGEST_REQUESTS_'+mode.toUpperCase(),JSON.stringify(network));
           }
           JS
