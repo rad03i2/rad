@@ -21,7 +21,11 @@ jobs:
         run: |
           python <<'PY'
           from pathlib import Path
-          import re
+          import re, base64
+          JS_B64='ICAvLyBJTlRFUk5BTC1BQ1RJT04tTE9BREVSCiAgZnVuY3Rpb24gc2V0dXBJbnRlcm5hbEFjdGlvbkxvYWRlcigpewogICAgaWYoZG9jdW1lbnQuZG9jdW1lbnRFbGVtZW50LmRhdGFzZXQuaW50ZXJuYWxMb2FkZXJCb3VuZD09PScxJykgcmV0dXJuOwogICAgZG9jdW1lbnQuZG9jdW1lbnRFbGVtZW50LmRhdGFzZXQuaW50ZXJuYWxMb2FkZXJCb3VuZD0nMSc7CgogICAgY29uc3QgZXhjbHVkZWRCdXR0b25zID0gJyNlbmhMYW5nVG9nZ2xlLCNlbmhUaGVtZVRvZ2dsZSwjZW5oTW90aW9uVG9nZ2xlLCNlbmhDb21tYW5kT3BlbiwubWVudS1idXR0b24sLmVuaC1tb2RhbC1jbG9zZSwuZW5oLWZpbHRlcixbZGF0YS1uby1sb2FkZXJdJzsKICAgIGNvbnN0IHNob3dMb2FkZXIgPSAoKSA9PiB7CiAgICAgIGxldCBsb2FkZXIgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCcuZW5oLWxvYWRlci5lbmgtYWN0aW9uLWxvYWRlcicpOwogICAgICBpZihsb2FkZXIpewogICAgICAgIGxvYWRlci5jbGFzc0xpc3QucmVtb3ZlKCdpcy1kb25lJyk7CiAgICAgICAgY2xlYXJUaW1lb3V0KGxvYWRlci5faGlkZVRpbWVyKTsKICAgICAgICBjbGVhclRpbWVvdXQobG9hZGVyLl9yZW1vdmVUaW1lcik7CiAgICAgIH0gZWxzZSB7CiAgICAgICAgbG9hZGVyPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpOwogICAgICAgIGxvYWRlci5jbGFzc05hbWU9J2VuaC1sb2FkZXIgZW5oLWFjdGlvbi1sb2FkZXInOwogICAgICAgIGxvYWRlci5zZXRBdHRyaWJ1dGUoJ2FyaWEtaGlkZGVuJywndHJ1ZScpOwogICAgICAgIGxvYWRlci5pbm5lckhUTUw9JzxkaXY+PGI+Jmx0O1JBRCAvJmd0OzwvYj48c3Bhbj48L3NwYW4+PC9kaXY+JzsKICAgICAgICBkb2N1bWVudC5ib2R5LmFwcGVuZENoaWxkKGxvYWRlcik7CiAgICAgIH0KICAgICAgbG9hZGVyLl9oaWRlVGltZXI9c2V0VGltZW91dCgoKT0+ewogICAgICAgIGxvYWRlci5jbGFzc0xpc3QuYWRkKCdpcy1kb25lJyk7CiAgICAgICAgbG9hZGVyLl9yZW1vdmVUaW1lcj1zZXRUaW1lb3V0KCgpPT5sb2FkZXIucmVtb3ZlKCksNDgwKTsKICAgICAgfSw1NjApOwogICAgfTsKCiAgICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCdjbGljaycsKGV2ZW50KT0+ewogICAgICBpZihldmVudC5kZWZhdWx0UHJldmVudGVkIHx8IGV2ZW50LmJ1dHRvbiE9PTAgfHwgZXZlbnQubWV0YUtleSB8fCBldmVudC5jdHJsS2V5IHx8IGV2ZW50LnNoaWZ0S2V5IHx8IGV2ZW50LmFsdEtleSkgcmV0dXJuOwogICAgICBjb25zdCB0YXJnZXQ9ZXZlbnQudGFyZ2V0LmNsb3Nlc3QoJ2EsYnV0dG9uJyk7CiAgICAgIGlmKCF0YXJnZXQgfHwgdGFyZ2V0Lm1hdGNoZXMoZXhjbHVkZWRCdXR0b25zKSB8fCB0YXJnZXQuZGlzYWJsZWQpIHJldHVybjsKCiAgICAgIGlmKHRhcmdldC50YWdOYW1lPT09J0EnKXsKICAgICAgICBjb25zdCByYXc9KHRhcmdldC5nZXRBdHRyaWJ1dGUoJ2hyZWYnKXx8JycpLnRyaW0oKTsKICAgICAgICBpZighcmF3IHx8IHJhdz09PScjJyB8fCByYXcuc3RhcnRzV2l0aCgnbWFpbHRvOicpIHx8IHJhdy5zdGFydHNXaXRoKCd0ZWw6JykgfHwgcmF3LnN0YXJ0c1dpdGgoJ2phdmFzY3JpcHQ6JykgfHwgdGFyZ2V0Lmhhc0F0dHJpYnV0ZSgnZG93bmxvYWQnKSkgcmV0dXJuOwogICAgICAgIGxldCB1cmw7CiAgICAgICAgdHJ5eyB1cmw9bmV3IFVSTCh0YXJnZXQuaHJlZixsb2NhdGlvbi5ocmVmKTsgfWNhdGNoe3JldHVybjt9CiAgICAgICAgaWYodXJsLm9yaWdpbiE9PWxvY2F0aW9uLm9yaWdpbikgcmV0dXJuOwogICAgICAgIHNob3dMb2FkZXIoKTsKICAgICAgICByZXR1cm47CiAgICAgIH0KCiAgICAgIHNob3dMb2FkZXIoKTsKICAgIH0sdHJ1ZSk7CiAgfQoK'
+          CSS_B64='Ci8qIElOVEVSTkFMLUFDVElPTi1MT0FERVIgKi8KLmVuaC1hY3Rpb24tbG9hZGVye2N1cnNvcjpwcm9ncmVzc30uZW5oLWFjdGlvbi1sb2FkZXI+ZGl2e3RyYW5zZm9ybTp0cmFuc2xhdGVZKC0ycHgpO2FuaW1hdGlvbjplbmhBY3Rpb25Mb2FkZXJJbiAuMThzIGVhc2UgYm90aH0uZW5oLWFjdGlvbi1sb2FkZXIgYntsZXR0ZXItc3BhY2luZzotMnB4fS5lbmgtYWN0aW9uLWxvYWRlciBzcGFue3dpZHRoOjE4MHB4fS5lbmgtYWN0aW9uLWxvYWRlci5pcy1kb25lPmRpdnt0cmFuc2Zvcm06c2NhbGUoLjk4NSk7dHJhbnNpdGlvbjp0cmFuc2Zvcm0gLjM1cyBlYXNlfUBrZXlmcmFtZXMgZW5oQWN0aW9uTG9hZGVySW57ZnJvbXtvcGFjaXR5OjA7dHJhbnNmb3JtOnRyYW5zbGF0ZVkoOHB4KSBzY2FsZSguOTg1KX10b3tvcGFjaXR5OjE7dHJhbnNmb3JtOnRyYW5zbGF0ZVkoLTJweCkgc2NhbGUoMSl9fQpAbWVkaWEgKHByZWZlcnMtcmVkdWNlZC1tb3Rpb246cmVkdWNlKXsuZW5oLWFjdGlvbi1sb2FkZXI+ZGl2LC5lbmgtYWN0aW9uLWxvYWRlciBzcGFue2FuaW1hdGlvbjpub25lIWltcG9ydGFudH19Cg=='
+          block=base64.b64decode(JS_B64).decode('utf-8')
+          css_block=base64.b64decode(CSS_B64).decode('utf-8')
 
           p=Path('enhancements.js')
           js=p.read_text(encoding='utf-8')
@@ -30,57 +34,8 @@ jobs:
               boot_pos=js.find('  function boot(){')
               if boot_pos < 0:
                   raise SystemExit('boot function not found')
-              block=r'''  // INTERNAL-ACTION-LOADER
-  function setupInternalActionLoader(){
-    if(document.documentElement.dataset.internalLoaderBound==='1') return;
-    document.documentElement.dataset.internalLoaderBound='1';
-
-    const excludedButtons = '#enhLangToggle,#enhThemeToggle,#enhMotionToggle,#enhCommandOpen,.menu-button,.enh-modal-close,.enh-filter,[data-no-loader]';
-    const showLoader = () => {
-      let loader = document.querySelector('.enh-loader.enh-action-loader');
-      if(loader){
-        loader.classList.remove('is-done');
-        clearTimeout(loader._hideTimer);
-        clearTimeout(loader._removeTimer);
-      } else {
-        loader=document.createElement('div');
-        loader.className='enh-loader enh-action-loader';
-        loader.setAttribute('aria-hidden','true');
-        loader.innerHTML='<div><b>&lt;RAD /&gt;</b><span></span></div>';
-        document.body.appendChild(loader);
-      }
-      loader._hideTimer=setTimeout(()=>{
-        loader.classList.add('is-done');
-        loader._removeTimer=setTimeout(()=>loader.remove(),480);
-      },560);
-    };
-
-    document.addEventListener('click',(event)=>{
-      if(event.defaultPrevented || event.button!==0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      const target=event.target.closest('a,button');
-      if(!target || target.matches(excludedButtons) || target.disabled) return;
-
-      if(target.tagName==='A'){
-        const raw=(target.getAttribute('href')||'').trim();
-        if(!raw || raw==='#' || raw.startsWith('mailto:') || raw.startsWith('tel:') || raw.startsWith('javascript:') || target.hasAttribute('download')) return;
-        let url;
-        try{ url=new URL(target.href,location.href); }catch{return;}
-        // Never show the loader for links that leave rdwan.dev.
-        if(url.origin!==location.origin) return;
-        showLoader();
-        return;
-      }
-
-      // Buttons that perform visible actions inside the portfolio use the loader too.
-      showLoader();
-    },true);
-  }
-
-'''
               js=js[:boot_pos]+block+js[boot_pos:]
 
-          # Ensure the listener is registered during the lightweight part of boot,
-          # without restoring the old startup loader.
           boot_start=js.find('  function boot(){')
           if boot_start < 0:
               raise SystemExit('boot function missing after insertion')
@@ -93,20 +48,12 @@ jobs:
               else:
                   snippet=snippet.replace('{\n','{\n    setupInternalActionLoader();\n',1)
               js=js[:boot_start]+snippet+js[boot_end+4:]
-
           p.write_text(js,encoding='utf-8')
 
-          # Add a small action-specific polish while keeping the original loader design.
           cp=Path('enhancements.css')
           css=cp.read_text(encoding='utf-8')
-          css_marker='/* INTERNAL-ACTION-LOADER */'
-          if css_marker not in css:
-              css += r'''
-/* INTERNAL-ACTION-LOADER */
-.enh-action-loader{cursor:progress}.enh-action-loader>div{transform:translateY(-2px);animation:enhActionLoaderIn .18s ease both}.enh-action-loader b{letter-spacing:-2px}.enh-action-loader span{width:180px}.enh-action-loader.is-done>div{transform:scale(.985);transition:transform .35s ease}@keyframes enhActionLoaderIn{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:translateY(-2px) scale(1)}}
-@media (prefers-reduced-motion:reduce){.enh-action-loader>div,.enh-action-loader span{animation:none!important}}
-'''
-              cp.write_text(css,encoding='utf-8')
+          if '/* INTERNAL-ACTION-LOADER */' not in css:
+              cp.write_text(css+css_block,encoding='utf-8')
 
           sw=Path('service-worker.js')
           if sw.exists():
