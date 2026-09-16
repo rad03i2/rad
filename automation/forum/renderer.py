@@ -95,7 +95,14 @@ def _schema(record: dict, locale: str, view: dict) -> dict:
                 "mainEntityOfPage": canonical,
                 "image": [image],
                 "author": {"@type": "Person", "name": author_name, "url": SITE + "/forum/authors/radwan-abdulhadi/"},
-                "publisher": {"@type": "Person", "name": "Radwan Abdulhadi", "url": SITE + "/"},
+                "publisher": {
+                    "@type": "NewsMediaOrganization",
+                    "@id": SITE + "/forum/#publisher",
+                    "name": "RDWAN Tech",
+                    "url": SITE + "/forum/",
+                    "logo": {"@type": "ImageObject", "url": SITE + "/assets/images/radwan-favicon.png"},
+                    "founder": {"@type": "Person", "name": "Radwan Abdulhadi", "url": SITE + "/forum/authors/radwan-abdulhadi/"},
+                },
                 "articleSection": category,
                 "keywords": tags,
             },
@@ -142,6 +149,7 @@ def render_record(record: dict, locale: str = "ar") -> str:
     en_url = SITE + _url(record, "en")
     images = record.get("images") or {}
     hero_image = _absolute(images.get("hero") or record.get("image") or "/assets/social/home.jpg")
+    card_image = _absolute(images.get("card") or images.get("hero") or record.get("image") or "/assets/social/home.jpg")
     social_image = _absolute(images.get("social") or images.get("hero") or record.get("image") or "/assets/social/home.jpg")
     alt_map = images.get("alt") or {}
     image_alt = alt_map.get(locale) or view.get("title", "")
@@ -168,6 +176,7 @@ def render_record(record: dict, locale: str = "ar") -> str:
         HREFLANG_EN=_ea(en_url),
         HREFLANG_DEFAULT=_ea(SITE + "/forum/"),
         HERO_IMAGE=_ea(hero_image),
+        CARD_IMAGE=_ea(card_image),
         SOCIAL_IMAGE=_ea(social_image),
         IMAGE_ALT=_ea(image_alt),
         IMAGE_CREDIT_HTML=image_credit_html,
