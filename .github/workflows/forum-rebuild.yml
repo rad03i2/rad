@@ -16,6 +16,7 @@ on:
       - 'automation/forum/build_locale_pages.py'
       - 'automation/forum/migrate_legacy_content.py'
       - 'automation/forum/rebuild_articles.py'
+      - 'automation/forum/rebuild_indexes.py'
       - 'automation/forum/tests/test_*.py'
       - 'automation/forum/requirements.txt'
       - '.github/workflows/forum-rebuild.yml'
@@ -70,6 +71,9 @@ jobs:
 
       - name: Rebuild all structured articles
         run: python automation/forum/rebuild_articles.py
+
+      - name: Rebuild feeds and search indexes
+        run: python automation/forum/rebuild_indexes.py
 
       - name: Commit rebuilt publication
         shell: bash
