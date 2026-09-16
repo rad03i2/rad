@@ -134,13 +134,8 @@ def _call_copilot(prompt: str) -> dict:
         raise RuntimeError("GITHUB_TOKEN is required for Copilot CLI automation")
 
     command = [
-        "copilot",
-        "-p", prompt,
-        "-s",
-        "--no-ask-user",
-        "--no-color",
-        "--no-custom-instructions",
-        "--no-auto-update",
+        "copilot", "-p", prompt, "-s", "--no-ask-user", "--no-color",
+        "--no-custom-instructions", "--no-auto-update",
     ]
     last_error = None
     for _ in range(2):
@@ -163,14 +158,9 @@ def _source_text(usable: list[dict]) -> str:
     blocks = []
     for index, src in enumerate(usable, 1):
         blocks.append(
-            f"SOURCE {index}\n"
-            f"Name: {src.get('name')}\n"
-            f"Type: {src.get('kind')}\n"
-            f"URL: {src.get('url')}\n"
-            f"Feed title: {src.get('feed_title', '')}\n"
-            f"Feed summary: {src.get('feed_summary', '')}\n"
-            f"Page title: {src.get('title', '')}\n"
-            f"Page description: {src.get('description', '')}\n"
+            f"SOURCE {index}\nName: {src.get('name')}\nType: {src.get('kind')}\nURL: {src.get('url')}\n"
+            f"Feed title: {src.get('feed_title', '')}\nFeed summary: {src.get('feed_summary', '')}\n"
+            f"Page title: {src.get('title', '')}\nPage description: {src.get('description', '')}\n"
             f"Extracted text:\n{src.get('text', '')[:7000]}"
         )
     return "\n\n".join(blocks)
@@ -191,8 +181,8 @@ def _write_locale(story: dict, usable: list[dict], locale: str) -> dict:
 
 أخرج JSON صالحاً فقط:
 {{
-  "title":"عنوان عربي واضح 45-90 حرفاً",
-  "description":"وصف SEO دقيق 120-170 حرفاً",
+  "title":"عنوان عربي صحفي واضح ومباشر، استهدف 40-60 حرفاً ولا تتجاوز 62 حرفاً إلا للضرورة",
+  "description":"وصف SEO دقيق وجذاب من 115-155 حرفاً يشرح الخبر بلا حشو",
   "deck":"مقدمة قصيرة من جملة أو جملتين",
   "summary_bullets":["3 إلى 5 نقاط"],
   "sections":[{{"heading":"عنوان قسم","paragraphs":["فقرة","فقرة"]}}],
@@ -202,7 +192,7 @@ def _write_locale(story: dict, usable: list[dict], locale: str) -> dict:
   "confidence_note":"ملاحظة داخلية قصيرة"
 }}
 
-الشروط: 600-1000 كلمة عربية، 4-7 أقسام، لغة صحفية تقنية طبيعية، فرّق بين الحقائق وما تعلنه الشركات، لا تستخدم رأياً شخصياً، لا تضف روابط داخل الفقرات، ولا تنقل جملاً طويلة حرفياً.
+الشروط: 600-1000 كلمة عربية، 4-7 أقسام، لغة صحفية تقنية طبيعية، ضع اسم الشركة أو المنتج والحدث الأساسي مبكرًا في العنوان، تجنب العناوين العامة والـClickbait، فرّق بين الحقائق وما تعلنه الشركات، لا تستخدم رأياً شخصياً، لا تضف روابط داخل الفقرات، ولا تنقل جملاً طويلة حرفياً.
 """.strip()
     else:
         prompt = f"""
@@ -217,8 +207,8 @@ Sources:
 
 Return valid JSON only:
 {{
-  "title":"Clear, factual English headline, preferably 45-90 characters",
-  "description":"Accurate SEO description, 120-170 characters",
+  "title":"Clear factual headline; target 45-60 characters and avoid exceeding about 62 unless necessary",
+  "description":"Accurate compelling SEO description of 120-155 characters",
   "deck":"One or two concise opening sentences",
   "summary_bullets":["3 to 5 concise points"],
   "sections":[{{"heading":"Section heading","paragraphs":["Paragraph","Paragraph"]}}],
@@ -228,7 +218,7 @@ Return valid JSON only:
   "confidence_note":"Short internal note about source confidence"
 }}
 
-Requirements: 600-1000 English words, 4-7 useful sections, professional technology-news style, clearly attribute company claims when appropriate, no first-person opinion, no links inside paragraphs, and no long copied passages.
+Requirements: 600-1000 English words, 4-7 useful sections, professional technology-news style, put the primary entity and news action early in the headline, avoid clickbait and vague headlines, clearly attribute company claims when appropriate, no first-person opinion, no links inside paragraphs, and no long copied passages.
 """.strip()
 
     article = _call_copilot(prompt)
@@ -243,7 +233,4 @@ def write_article(story: dict, source_pack: list[dict], settings: dict) -> dict:
     usable = [s for s in source_pack if s.get("ok") and (s.get("text") or s.get("feed_summary"))]
     if not usable:
         raise RuntimeError("No usable source text available")
-    return {
-        "ar": _write_locale(story, usable, "ar"),
-        "en": _write_locale(story, usable, "en"),
-    }
+    return {"ar": _write_locale(story, usable, "ar"), "en": _write_locale(story, usable, "en")}
