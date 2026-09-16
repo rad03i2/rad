@@ -2,12 +2,20 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 FORUM = ROOT / "forum"
 SITE = "https://rdwan.dev"
 CATEGORIES = ("ai", "robotics", "automation", "mobile", "computers", "apps", "web", "social", "security", "announcements")
+TRUST_PAGES = (
+    ("/forum/about/", "about/index.html", "0.7"),
+    ("/forum/editorial-policy/", "editorial-policy/index.html", "0.7"),
+    ("/forum/corrections/", "corrections/index.html", "0.6"),
+    ("/forum/ai-policy/", "ai-policy/index.html", "0.6"),
+    ("/forum/authors/radwan-abdulhadi/", "authors/radwan-abdulhadi/index.html", "0.8"),
+)
 INDEX_ROBOTS = "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
 NOINDEX_ROBOTS = "noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
 
@@ -77,6 +85,29 @@ def _prune_empty_categories(active: dict[str, set[str]]) -> int:
     return removed
 
 
+def _ensure_trust_pages() -> int:
+    path = FORUM / "sitemap.xml"
+    if not path.exists():
+        return 0
+    text = path.read_text(encoding="utf-8")
+    stamp = datetime.now(timezone.utc).date().isoformat()
+    additions: list[str] = []
+    for url_path, file_path, priority in TRUST_PAGES:
+        if not (FORUM / file_path).exists():
+            continue
+        absolute = SITE + url_path
+        if f"<loc>{absolute}</loc>" in text:
+            continue
+        additions.append(
+            f'  <url><loc>{absolute}</loc><lastmod>{stamp}</lastmod>'
+            f'<changefreq>monthly</changefreq><priority>{priority}</priority></url>'
+        )
+    if additions and "</urlset>" in text:
+        text = text.replace("</urlset>", "\n".join(additions) + "\n</urlset>", 1)
+        path.write_text(text, encoding="utf-8")
+    return len(additions)
+
+
 def main() -> int:
     posts = {locale: _load_posts(locale) for locale in ("ar", "en")}
     active = {
@@ -93,10 +124,12 @@ def main() -> int:
 
     router_changed = _fix_router_language()
     removed = _prune_empty_categories(active)
+    trust_added = _ensure_trust_pages()
     print(
         "SEO finalize: "
         f"category_pages_changed={changed_pages} "
         f"empty_category_sitemap_entries_removed={removed} "
+        f"trust_pages_added={trust_added} "
         f"router_lang_fixed={router_changed} "
         f"active_ar={sorted(active['ar'])} active_en={sorted(active['en'])}"
     )
