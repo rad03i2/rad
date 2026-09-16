@@ -1,12 +1,12 @@
 name: RDWAN Tech 20-Minute Publisher
-# Cloud watchdog: checks every 5 minutes and publishes only when at least 20 minutes
-# have elapsed since the last successful publication. Explicit minute offsets avoid
-# top-of-hour congestion and make missed GitHub schedule slots recover quickly.
+# Primary cloud publisher. Runs every 20 minutes at an offset that avoids the
+# top of the hour. publisher.py is still the source of truth for the 20-minute
+# publication gap, so delayed or duplicate triggers cannot double-publish.
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *'
+    - cron: '2,22,42 * * * *'
 
 permissions:
   contents: write
@@ -69,7 +69,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rdwan-tech-watchdog-${{ github.run_number }}
+          name: rdwan-tech-primary-${{ github.run_number }}
           path: |
             automation/forum/state/run_report.json
             automation/forum/state/publisher_report.json
@@ -85,9 +85,9 @@ jobs:
           git add forum sitemap.xml automation/forum/state/*.json
           git add -- ':(glob)**/*.html'
           if git diff --cached --quiet; then
-            echo "Watchdog check completed; no publication was due in this cycle."
+            echo "Primary publisher check completed; no publication was due in this cycle."
             exit 0
           fi
-          git commit -m "RDWAN Tech: automated 20-minute publication watchdog"
+          git commit -m "RDWAN Tech: automated 20-minute publication"
           git pull --rebase origin main
           git push origin HEAD:main
