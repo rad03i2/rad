@@ -1,9 +1,9 @@
-name: RDWAN Tech Hourly Publisher
+name: RDWAN Tech 20-Minute Publisher
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '7 * * * *'
+    - cron: '3,23,43 * * * *'
   push:
     branches: [main]
     paths:
@@ -14,7 +14,7 @@ permissions:
   copilot-requests: write
 
 concurrency:
-  group: rdwan-tech-hourly-publisher
+  group: rdwan-tech-20-minute-publisher
   cancel-in-progress: false
 
 jobs:
@@ -61,7 +61,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rdwan-tech-hourly-${{ github.run_number }}
+          name: rdwan-tech-20min-${{ github.run_number }}
           path: |
             automation/forum/state/run_report.json
             automation/forum/state/publisher_report.json
@@ -76,10 +76,10 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add forum automation/forum/state/*.json
           if git diff --cached --quiet; then
-            echo "No repository changes this hour."
+            echo "No repository changes in this 20-minute cycle."
             exit 0
           fi
-          git commit -m "RDWAN Tech: hourly automated publication"
+          git commit -m "RDWAN Tech: 20-minute automated publication"
           git pull --rebase origin main
           git push origin HEAD:main
 
