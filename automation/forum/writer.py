@@ -6,6 +6,7 @@ import re
 import shutil
 import subprocess
 from html import unescape
+from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
@@ -17,21 +18,43 @@ def _clean_text(text: str) -> str:
     return text
 
 
+def _meta_content(soup: BeautifulSoup, *queries: tuple[str, str]) -> str:
+    for key, value in queries:
+        tag = soup.find("meta", attrs={key: value})
+        if tag and tag.get("content"):
+            return str(tag.get("content")).strip()
+    return ""
+
+
 def _extract_page(url: str, user_agent: str) -> dict:
     headers = {"User-Agent": user_agent, "Accept": "text/html,application/xhtml+xml"}
     try:
         response = requests.get(url, headers=headers, timeout=18, allow_redirects=True)
         response.raise_for_status()
     except Exception as exc:
-        return {"url": url, "ok": False, "error": str(exc), "text": ""}
+        return {"url": url, "ok": False, "error": str(exc), "text": "", "image_url": ""}
 
     soup = BeautifulSoup(response.text, "html.parser")
+    title = _clean_text((soup.title.string if soup.title and soup.title.string else ""))
+    description = _clean_text(_meta_content(
+        soup,
+        ("name", "description"),
+        ("property", "og:description"),
+        ("name", "twitter:description"),
+    ))
+    image_raw = _meta_content(
+        soup,
+        ("property", "og:image:secure_url"),
+        ("property", "og:image"),
+        ("name", "twitter:image"),
+        ("name", "twitter:image:src"),
+    )
+    image_url = urljoin(response.url, image_raw) if image_raw else ""
+    image_width = _meta_content(soup, ("property", "og:image:width"))
+    image_height = _meta_content(soup, ("property", "og:image:height"))
+
     for tag in soup(["script", "style", "noscript", "svg", "nav", "footer", "header", "form", "aside"]):
         tag.decompose()
-
-    title = _clean_text((soup.title.string if soup.title and soup.title.string else ""))
-    meta = soup.find("meta", attrs={"name": "description"}) or soup.find("meta", attrs={"property": "og:description"})
-    description = _clean_text(meta.get("content", "") if meta else "")
 
     candidates = []
     for selector in ["article", "main", "[role='main']", ".article-body", ".post-content", ".entry-content"]:
@@ -55,6 +78,9 @@ def _extract_page(url: str, user_agent: str) -> dict:
         "title": title,
         "description": description,
         "text": body[:9000],
+        "image_url": image_url,
+        "image_width": image_width,
+        "image_height": image_height,
     }
 
 
@@ -71,9 +97,9 @@ def build_source_pack(story: dict, settings: dict) -> list[dict]:
         sources.append({
             "name": source.get("name", source.get("domain", "Corroborating source")),
             "url": source.get("url"),
-            "kind": "corroborating",
+            "kind": source.get("type", "corroborating"),
             "feed_title": source.get("title", ""),
-            "feed_summary": "",
+            "feed_summary": source.get("summary", ""),
         })
 
     pack = []
@@ -117,9 +143,9 @@ def _call_copilot(prompt: str) -> dict:
         "--no-auto-update",
     ]
     last_error = None
-    for attempt in range(2):
+    for _ in range(2):
         try:
-            proc = subprocess.run(command, text=True, capture_output=True, timeout=150, env=os.environ.copy())
+            proc = subprocess.run(command, text=True, capture_output=True, timeout=180, env=os.environ.copy())
         except subprocess.TimeoutExpired as exc:
             last_error = f"Copilot CLI timed out: {exc}"
             continue
@@ -133,14 +159,10 @@ def _call_copilot(prompt: str) -> dict:
     raise RuntimeError(last_error or "Copilot CLI failed")
 
 
-def write_article(story: dict, source_pack: list[dict], settings: dict) -> dict:
-    usable = [s for s in source_pack if s.get("ok") and (s.get("text") or s.get("feed_summary"))]
-    if not usable:
-        raise RuntimeError("No usable source text available")
-
-    source_text = []
+def _source_text(usable: list[dict]) -> str:
+    blocks = []
     for index, src in enumerate(usable, 1):
-        source_text.append(
+        blocks.append(
             f"SOURCE {index}\n"
             f"Name: {src.get('name')}\n"
             f"Type: {src.get('kind')}\n"
@@ -151,50 +173,77 @@ def write_article(story: dict, source_pack: list[dict], settings: dict) -> dict:
             f"Page description: {src.get('description', '')}\n"
             f"Extracted text:\n{src.get('text', '')[:7000]}"
         )
+    return "\n\n".join(blocks)
 
-    joined_sources = "\n\n".join(source_text)
-    prompt = f"""
-أنت المحرر الآلي لمنصة RDWAN Tech العربية. مهمتك كتابة خبر تقني أصلي اعتماداً حصراً على المادة المصدرية أدناه.
 
-القصة المرشحة:
-العنوان الأصلي: {story.get('title')}
+def _write_locale(story: dict, usable: list[dict], locale: str) -> dict:
+    joined_sources = _source_text(usable)
+    if locale == "ar":
+        prompt = f"""
+أنت محرر تقني عربي دقيق لمنصة RDWAN Tech. اكتب نسخة عربية أصلية من الخبر اعتماداً حصراً على المصادر أدناه، من دون ترجمة حرفية ومن دون اختراع أي معلومة.
+
+القصة: {story.get('title')}
 التصنيف: {story.get('category_label')} ({story.get('category')})
-درجة الترند الداخلية: {story.get('trend', {}).get('score')}
-وقت النشر لدى المصدر: {story.get('published_at')}
+وقت المصدر: {story.get('published_at')}
 
 المصادر:
 {joined_sources}
 
-اكتب مقالاً عربياً أصلياً متكاملاً. ركز على: ما الذي حدث، التفاصيل المؤكدة، لماذا يهم، السياق التقني، وما الذي ينبغي متابعته لاحقاً. لا تجعل المقال إعلاناً للشركة. إذا كان المصدر بياناً رسمياً فصغ ما تقوله الشركة على أنه إعلان أو ادعاء من الشركة عندما يلزم. إذا اختلفت المصادر فاذكر الاختلاف. لا تضف أي معلومة غير موجودة في المصادر.
-
-أخرج JSON صالحاً فقط، بلا Markdown وبلا أي نص قبله أو بعده، بهذا الشكل:
+أخرج JSON صالحاً فقط:
 {{
-  "title": "عنوان عربي واضح وغير مضلل، يفضل 45-85 حرفاً",
-  "description": "وصف SEO دقيق بين 120 و165 حرفاً",
-  "deck": "مقدمة قصيرة من جملة أو جملتين",
-  "summary_bullets": ["3 إلى 5 نقاط مختصرة"],
-  "sections": [
-    {{"heading": "عنوان قسم", "paragraphs": ["فقرة", "فقرة"]}}
-  ],
-  "tags": ["4 إلى 8 وسوم عربية أو أسماء كيانات"],
-  "entities": ["الشركات أو المنتجات أو التقنيات الرئيسية"],
-  "article_type": "news",
-  "confidence_note": "سطر داخلي قصير يصف مدى اعتماد المقال على مصدر رسمي أو عدة مصادر"
+  "title":"عنوان عربي واضح 45-90 حرفاً",
+  "description":"وصف SEO دقيق 120-170 حرفاً",
+  "deck":"مقدمة قصيرة من جملة أو جملتين",
+  "summary_bullets":["3 إلى 5 نقاط"],
+  "sections":[{{"heading":"عنوان قسم","paragraphs":["فقرة","فقرة"]}}],
+  "tags":["4 إلى 8 وسوم"],
+  "entities":["الكيانات الرئيسية"],
+  "article_type":"news",
+  "confidence_note":"ملاحظة داخلية قصيرة"
 }}
 
-الشروط:
-- استهدف 650 إلى 1100 كلمة عربية إجمالاً.
-- أنشئ 4 إلى 7 أقسام مفيدة بلا حشو.
-- لا تستخدم عبارات مثل «بحسب معلوماتي» أو «كمساعد».
-- لا تخترع سعراً أو تاريخ إتاحة أو مواصفات إذا لم تذكرها المصادر.
-- لا تضع روابط داخل نص الفقرات؛ روابط المصادر ستضاف آلياً.
-- لا تنقل جملاً طويلة حرفياً من المصادر؛ لخص وأعد الصياغة.
-- لا تكرر المقدمة في الأقسام.
+الشروط: 600-1000 كلمة عربية، 4-7 أقسام، لغة صحفية تقنية طبيعية، فرّق بين الحقائق وما تعلنه الشركات، لا تستخدم رأياً شخصياً، لا تضف روابط داخل الفقرات، ولا تنقل جملاً طويلة حرفياً.
+""".strip()
+    else:
+        prompt = f"""
+You are the English technology editor for RDWAN Tech. Write an original English news article based ONLY on the supplied source material. Do not translate the Arabic edition and do not invent facts, prices, dates, specifications, quotes, or context that is absent from the sources.
+
+Candidate story: {story.get('title')}
+Category: {story.get('category')} / {story.get('category_label')}
+Source publication time: {story.get('published_at')}
+
+Sources:
+{joined_sources}
+
+Return valid JSON only:
+{{
+  "title":"Clear, factual English headline, preferably 45-90 characters",
+  "description":"Accurate SEO description, 120-170 characters",
+  "deck":"One or two concise opening sentences",
+  "summary_bullets":["3 to 5 concise points"],
+  "sections":[{{"heading":"Section heading","paragraphs":["Paragraph","Paragraph"]}}],
+  "tags":["4 to 8 useful tags or entity names"],
+  "entities":["Main companies, products or technologies"],
+  "article_type":"news",
+  "confidence_note":"Short internal note about source confidence"
+}}
+
+Requirements: 600-1000 English words, 4-7 useful sections, professional technology-news style, clearly attribute company claims when appropriate, no first-person opinion, no links inside paragraphs, and no long copied passages.
 """.strip()
 
     article = _call_copilot(prompt)
     required = ["title", "description", "deck", "summary_bullets", "sections", "tags"]
-    missing = [k for k in required if not article.get(k)]
+    missing = [key for key in required if not article.get(key)]
     if missing:
-        raise RuntimeError(f"Copilot output missing fields: {', '.join(missing)}")
+        raise RuntimeError(f"Copilot {locale} output missing fields: {', '.join(missing)}")
     return article
+
+
+def write_article(story: dict, source_pack: list[dict], settings: dict) -> dict:
+    usable = [s for s in source_pack if s.get("ok") and (s.get("text") or s.get("feed_summary"))]
+    if not usable:
+        raise RuntimeError("No usable source text available")
+    return {
+        "ar": _write_locale(story, usable, "ar"),
+        "en": _write_locale(story, usable, "en"),
+    }
