@@ -6,7 +6,6 @@ on:
     branches: [main]
     paths:
       - 'forum/templates/**'
-      - 'forum/content/**/*.json'
       - 'forum/forum-media.css'
       - 'automation/forum/renderer.py'
       - 'automation/forum/indexes.py'
@@ -27,8 +26,8 @@ permissions:
   copilot-requests: write
 
 concurrency:
-  group: rdwan-tech-article-rebuild
-  cancel-in-progress: true
+  group: rdwan-tech-publication-write
+  cancel-in-progress: false
 
 jobs:
   rebuild:
