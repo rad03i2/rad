@@ -9,7 +9,7 @@ from publisher import _make_content_record, _post_from_record, _quality_gate
 
 
 class PublisherQualityTests(unittest.TestCase):
-    def _article(self):
+    def _article_ar(self):
         return {
             "title": "شركة تقنية تكشف منصة جديدة لتسريع تطبيقات الذكاء الاصطناعي",
             "description": "إعلان تقني جديد يوضح منصة موجهة لتسريع تطبيقات الذكاء الاصطناعي، مع تفاصيل عن الاستخدامات والسياق التقني وما يعنيه للمطورين.",
@@ -23,38 +23,54 @@ class PublisherQualityTests(unittest.TestCase):
             "entities": ["Example AI"]
         }
 
-    def test_complete_article_passes(self):
-        article = self._article()
+    def _article_en(self):
+        return {
+            "title": "Technology company unveils a new platform for faster AI applications",
+            "description": "A new technology platform aims to accelerate artificial intelligence workloads, with details on use cases, architecture and developer impact.",
+            "deck": "The company introduced a new platform designed to run modern AI workloads more efficiently across current computing environments.",
+            "summary_bullets": ["First useful point", "Second useful point", "Third useful point"],
+            "sections": [
+                {"heading": f"Section {i}", "paragraphs": [" ".join(["This technical paragraph explains confirmed details from the source without exaggeration or unsupported claims."] * 9), " ".join(["A second paragraph adds useful context while clearly separating company statements from directly supported facts."] * 9)]}
+                for i in range(1, 5)
+            ],
+            "tags": ["Technology", "Artificial Intelligence", "Platform"],
+            "entities": ["Example AI"]
+        }
+
+    def _editions(self):
+        return {"ar": self._article_ar(), "en": self._article_en()}
+
+    def test_complete_bilingual_article_passes(self):
         story = {"source": {"type": "official"}}
         sources = [{"ok": True, "text": "source text", "url": "https://example.com"}]
-        ok, errors = _quality_gate(story, sources, article)
+        ok, errors = _quality_gate(story, sources, self._editions())
         self.assertTrue(ok, errors)
 
-    def test_short_article_fails(self):
-        article = {"title": "عنوان قصير جداً", "description": "وصف", "deck": "قصير", "summary_bullets": [], "sections": [], "tags": []}
-        ok, errors = _quality_gate({"source": {"type": "official"}}, [{"ok": True, "text": "x"}], article)
+    def test_missing_english_fails(self):
+        story = {"source": {"type": "official"}}
+        sources = [{"ok": True, "text": "source text", "url": "https://example.com"}]
+        ok, errors = _quality_gate(story, sources, {"ar": self._article_ar()})
         self.assertFalse(ok)
-        self.assertIn("article_too_short", errors)
+        self.assertIn("en:missing_edition", errors)
 
-    def test_publication_uses_structured_content_record(self):
+    def test_publication_uses_bilingual_structured_record(self):
         story = {
-            "id": "abc123",
-            "url": "https://example.com/news",
-            "title": "Example AI platform launch",
-            "category": "ai",
-            "category_label": "الذكاء الاصطناعي",
-            "source": {"type": "official"},
+            "id": "abc123", "url": "https://example.com/news", "title": "Example AI platform launch",
+            "category": "ai", "category_label": "الذكاء الاصطناعي", "source": {"type": "official"},
             "verification": {"confidence": 1.0, "reason": "official_source", "official": True},
             "trend": {"score": 110, "age_hours": 1},
         }
         sources = [{"name": "Example", "url": story["url"], "kind": "official", "feed_title": story["title"]}]
-        record = _make_content_record(story, self._article(), sources, "example-ai-platform-launch", datetime(2026, 9, 16, 14, 0, tzinfo=timezone.utc), 4)
+        images = {"hero": "/forum/assets/test/hero.webp", "card": "/forum/assets/test/card.webp", "social": "/forum/assets/test/social.jpg", "alt": {"ar": "صورة", "en": "Image"}, "credit": "Example", "sourceUrl": story["url"]}
+        record = _make_content_record(story, self._editions(), sources, "example-ai-platform-launch", datetime(2026, 9, 16, 14, 0, tzinfo=timezone.utc), images)
+        self.assertEqual(record["schemaVersion"], 2)
         self.assertEqual(record["template"], "article")
-        self.assertEqual(record["categorySlug"], "ai")
-        self.assertEqual(record["url"], "/forum/ai/example-ai-platform-launch/")
-        post = _post_from_record(record, story)
-        self.assertEqual(post["url"], record["url"])
-        self.assertEqual(post["title"], record["title"])
+        self.assertEqual(record["urls"]["ar"], "/forum/ar/ai/example-ai-platform-launch/")
+        self.assertEqual(record["urls"]["en"], "/forum/en/ai/example-ai-platform-launch/")
+        ar_post = _post_from_record(record, "ar", story)
+        en_post = _post_from_record(record, "en", story)
+        self.assertEqual(ar_post["image"], images["card"])
+        self.assertEqual(en_post["alternates"]["ar"], record["urls"]["ar"])
 
 
 if __name__ == "__main__":
