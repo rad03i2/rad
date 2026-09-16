@@ -1,0 +1,20 @@
+name: Schedule Health Probe
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Confirm scheduled trigger
+        run: |
+          echo "GitHub schedule is active."
+          echo "event=${{ github.event_name }}"
+          echo "run_started_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
