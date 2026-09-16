@@ -1,10 +1,11 @@
 name: RDWAN Tech 20-Minute Publisher
-# Quality-resilient publisher: retry rejected drafts and fall back to the next eligible story.
+# Runs as a 5-minute watchdog. The publisher itself enforces a 20-minute gap,
+# so a delayed/missed GitHub schedule gets another chance within about 5 minutes.
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '3,23,43 * * * *'
+    - cron: '*/5 * * * *'
   push:
     branches: [main]
     paths:
@@ -55,7 +56,7 @@ jobs:
       - name: Collect and evaluate fresh stories
         run: python automation/forum/run.py
 
-      - name: Select trend, write and publish one article
+      - name: Publish if 20-minute gap is due
         run: python automation/forum/publisher.py
 
       - name: Build crawlable Arabic and English forum hubs
@@ -71,7 +72,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rdwan-tech-20min-${{ github.run_number }}
+          name: rdwan-tech-watchdog-${{ github.run_number }}
           path: |
             automation/forum/state/run_report.json
             automation/forum/state/publisher_report.json
@@ -87,9 +88,9 @@ jobs:
           git add forum sitemap.xml automation/forum/state/*.json
           git add -- ':(glob)**/*.html'
           if git diff --cached --quiet; then
-            echo "No repository changes in this 20-minute cycle."
+            echo "Watchdog check completed; no publication was due in this cycle."
             exit 0
           fi
-          git commit -m "RDWAN Tech: 20-minute automated publication"
+          git commit -m "RDWAN Tech: automated 20-minute publication watchdog"
           git pull --rebase origin main
           git push origin HEAD:main
