@@ -68,16 +68,11 @@ def write_feed(posts: list[dict], now: datetime, locale: str) -> None:
         (FORUM / "feed.xml").write_text(content.replace(f"feed-{locale}.xml", "feed.xml"), encoding="utf-8")
 
 
-def _alternate_for(post: dict, locale: str) -> str:
-    value = (post.get("alternates") or {}).get(locale)
-    if value:
-        return value
-    url = str(post.get("url") or "")
-    if url.startswith("/forum/ar/") or url.startswith("/forum/en/"):
-        parts = url.split("/")
-        parts[2] = locale
-        return "/".join(parts)
-    return url
+def _explicit_alternates(post: dict) -> tuple[str, str]:
+    alternates = post.get("alternates") or {}
+    ar_url = str(alternates.get("ar") or "").strip()
+    en_url = str(alternates.get("en") or "").strip()
+    return ar_url, en_url
 
 
 def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
@@ -102,14 +97,18 @@ def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
                 continue
             seen.add(url)
             modified = (post.get("dateModified") or post.get("date") or today)[:10]
-            ar_url = _alternate_for(post, "ar")
-            en_url = _alternate_for(post, "en")
-            lines.append(
-                f'  <url><loc>{SITE}{url}</loc><lastmod>{modified}</lastmod><changefreq>daily</changefreq><priority>0.8</priority>'
-                f'<xhtml:link rel="alternate" hreflang="ar" href="{SITE}{ar_url}"/>'
-                f'<xhtml:link rel="alternate" hreflang="en" href="{SITE}{en_url}"/>'
-                f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}{ar_url}"/></url>'
-            )
+            ar_url, en_url = _explicit_alternates(post)
+            if ar_url and en_url:
+                lines.append(
+                    f'  <url><loc>{SITE}{url}</loc><lastmod>{modified}</lastmod><changefreq>daily</changefreq><priority>0.8</priority>'
+                    f'<xhtml:link rel="alternate" hreflang="ar" href="{SITE}{ar_url}"/>'
+                    f'<xhtml:link rel="alternate" hreflang="en" href="{SITE}{en_url}"/>'
+                    f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}{ar_url}"/></url>'
+                )
+            else:
+                lines.append(
+                    f'  <url><loc>{SITE}{url}</loc><lastmod>{modified}</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>'
+                )
     lines.append("</urlset>")
     (FORUM / "sitemap.xml").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
