@@ -1,5 +1,6 @@
 (()=>{
 'use strict';
+if(!document.querySelector('link[data-rt-media]')){const l=document.createElement('link');l.rel='stylesheet';l.href='/forum/forum-media.css';l.dataset.rtMedia='1';document.head.appendChild(l)}
 const $=(s,r=document)=>r.querySelector(s);const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const locale=(document.body.dataset.locale||document.documentElement.lang||'ar').toLowerCase().startsWith('en')?'en':'ar';
