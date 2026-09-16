@@ -1,57 +1,28 @@
-# RDWAN Tech Automation — Phase 1
+# RDWAN Tech Automation
 
-This branch contains the safe collection pipeline for `rdwan.dev/forum/`.
+This directory powers the automated RDWAN Tech publishing pipeline.
 
-## Current mode
+## Current production target
 
-- `publishingEnabled: false`
-- `dryRun: true`
-- No article HTML is generated.
-- No public forum files are modified.
-- The collector only writes automation state on the `forum-automation` branch.
+- collect trusted technology stories
+- rank trends and corroborate them
+- publish at most one complete Arabic article per hour
+- generate SEO metadata and structured data
+- update posts.json, RSS, sitemap and Google News sitemap
+- keep a publication history to prevent duplicates
 
-## Pipeline
+## Safety
 
-1. Fetch RSS/Atom feeds from configured sources.
-2. Normalize URLs, titles, summaries and dates.
-3. Reject blocked or stale items.
-4. Classify into the fixed RDWAN Tech taxonomy.
-5. Assign source confidence and importance score.
-6. Deduplicate by canonical URL and title similarity.
-7. Store new items in `state/queue.json`.
-8. Store publish-eligible review candidates in `state/candidates.json`.
-9. Write health metrics and source errors to `state/run_report.json`.
+The hourly publisher refuses to publish if the generated article fails the quality gate or if sources are insufficient. Official sources may stand alone; journalism stories require independent corroboration.
 
-## Important files
+## Core files
 
-- `config/sources.json` — source registry and trust level.
-- `config/categories.json` — fixed taxonomy and classifier keywords.
-- `config/blocked_domains.json` — hard block list.
-- `config/settings.json` — thresholds and safety switches.
-- `state/queue.json` — incoming stories for review.
-- `state/seen.json` — deduplication registry.
-- `state/candidates.json` — high-confidence candidates produced after a run.
-- `state/run_report.json` — source health and pipeline metrics.
+- collector.py — fetch RSS/Atom sources
+- verifier.py — trust, freshness and category scoring
+- deduplicator.py — URL/title duplicate filtering
+- trend.py — trend score and corroboration
+- writer.py — source extraction + GitHub Models Arabic writer
+- publisher.py — hourly article rendering and SEO/index updates
+- run.py — collection pipeline
 
-## Local run
-
-```bash
-python -m pip install -r automation/forum/requirements.txt
-python -m unittest discover -s automation/forum/tests
-python automation/forum/run.py --dry-run
-```
-
-## Safety switches
-
-Publishing cannot happen unless both conditions are changed intentionally:
-
-```json
-"publishingEnabled": true,
-"dryRun": false
-```
-
-Phase 1 does not include a publisher module, so changing those values alone still cannot publish articles.
-
-## Next phase
-
-After the queue has collected enough real stories, review source quality, duplication rate and classification accuracy. Then add fact extraction, multi-source corroboration, article generation and the quality gate on top of this collector.
+The production workflow runs from GitHub Actions and uses the built-in GITHUB_TOKEN for both repository writes and GitHub Models inference.
