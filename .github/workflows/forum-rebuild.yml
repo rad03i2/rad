@@ -1,26 +1,10 @@
 name: RDWAN Tech Article Rebuild
+# Maintenance-only rebuild. Normal automated publishing already rebuilds the
+# required pages, indexes and SEO output, so this workflow is intentionally
+# manual to avoid duplicate write jobs and noisy push-trigger failures.
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'forum/templates/**'
-      - 'forum/forum-media.css'
-      - 'automation/forum/renderer.py'
-      - 'automation/forum/indexes.py'
-      - 'automation/forum/publisher.py'
-      - 'automation/forum/image_pipeline.py'
-      - 'automation/forum/writer.py'
-      - 'automation/forum/build_locale_pages.py'
-      - 'automation/forum/seo_finalize.py'
-      - 'automation/forum/migrate_legacy_content.py'
-      - 'automation/forum/rebuild_articles.py'
-      - 'automation/forum/rebuild_indexes.py'
-      - 'automation/forum/tests/test_*.py'
-      - 'automation/forum/requirements.txt'
-      - 'automation/seo/**'
-      - '.github/workflows/forum-rebuild.yml'
 
 permissions:
   contents: write
