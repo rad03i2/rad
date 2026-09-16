@@ -21,6 +21,14 @@ INDEX_ROBOTS = "index,follow,max-image-preview:large,max-snippet:-1,max-video-pr
 NOINDEX_ROBOTS = "noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
 RELATED_START = "<!-- SEO_RELATED_START -->"
 RELATED_END = "<!-- SEO_RELATED_END -->"
+PERSON_PUBLISHER = '"publisher":{"@type":"Person","name":"Radwan Abdulhadi","url":"https://rdwan.dev/"}'
+ORG_PUBLISHER = (
+    '"publisher":{"@type":"NewsMediaOrganization","@id":"https://rdwan.dev/forum/#publisher",'
+    '"name":"RDWAN Tech","url":"https://rdwan.dev/forum/",'
+    '"logo":{"@type":"ImageObject","url":"https://rdwan.dev/assets/images/radwan-favicon.png"},'
+    '"founder":{"@type":"Person","name":"Radwan Abdulhadi",'
+    '"url":"https://rdwan.dev/forum/authors/radwan-abdulhadi/"}}'
+)
 
 
 def _load_posts(locale: str) -> list[dict]:
@@ -147,7 +155,8 @@ def _article_path(post: dict, locale: str) -> Path | None:
 
 def _related_card(post: dict) -> str:
     url = escape(str(post.get("url") or "#"), quote=True)
-    title = escape(str(post.get("title") or ""))
+    title_raw = str(post.get("title") or "")
+    title = escape(title_raw)
     excerpt = escape(str(post.get("excerpt") or ""))
     category = escape(str(post.get("category") or "Technology"))
     date = escape(str(post.get("dateLabel") or ""))
@@ -156,7 +165,7 @@ def _related_card(post: dict) -> str:
         f'<a class="rt-feed-item" href="{url}">'
         f'<div class="rt-feed-copy"><div class="rt-feed-kicker"><span>{category}</span></div>'
         f'<h3>{title}</h3><p>{excerpt}</p><div class="rt-feed-time">{date}</div></div>'
-        f'<div class="rt-thumb"><img src="{escape(image, quote=True)}" alt="{escape(title, quote=True)}" '
+        f'<div class="rt-thumb"><img src="{escape(image, quote=True)}" alt="{escape(title_raw, quote=True)}" '
         f'width="800" height="450" loading="lazy" decoding="async"></div></a>'
     )
 
@@ -176,8 +185,9 @@ def _related_block(locale: str, related: list[dict]) -> str:
     )
 
 
-def _inject_related(posts_by_locale: dict[str, list[dict]]) -> int:
-    changed = 0
+def _optimize_article_pages(posts_by_locale: dict[str, list[dict]]) -> tuple[int, int]:
+    pages_changed = 0
+    schema_changed = 0
     marker = re.compile(re.escape(RELATED_START) + r".*?" + re.escape(RELATED_END), re.S)
     for locale, posts in posts_by_locale.items():
         for post in posts:
@@ -185,7 +195,10 @@ def _inject_related(posts_by_locale: dict[str, list[dict]]) -> int:
             if not path or not path.exists():
                 continue
             text = path.read_text(encoding="utf-8")
-            cleaned = marker.sub("", text)
+            upgraded = text.replace(PERSON_PUBLISHER, ORG_PUBLISHER)
+            if upgraded != text:
+                schema_changed += 1
+            cleaned = marker.sub("", upgraded)
             related = _related_posts(post, posts)
             block = _related_block(locale, related)
             if block and "</article>" in cleaned:
@@ -194,8 +207,8 @@ def _inject_related(posts_by_locale: dict[str, list[dict]]) -> int:
                 updated = cleaned
             if updated != text:
                 path.write_text(updated, encoding="utf-8")
-                changed += 1
-    return changed
+                pages_changed += 1
+    return pages_changed, schema_changed
 
 
 def main() -> int:
@@ -215,13 +228,14 @@ def main() -> int:
     router_changed = _fix_router_language()
     removed = _prune_empty_categories(active)
     trust_added = _ensure_trust_pages()
-    related_changed = _inject_related(posts)
+    article_pages_changed, schema_changed = _optimize_article_pages(posts)
     print(
         "SEO finalize: "
         f"category_pages_changed={changed_pages} "
         f"empty_category_sitemap_entries_removed={removed} "
         f"trust_pages_added={trust_added} "
-        f"related_article_pages_changed={related_changed} "
+        f"article_pages_changed={article_pages_changed} "
+        f"publisher_schema_upgraded={schema_changed} "
         f"router_lang_fixed={router_changed} "
         f"active_ar={sorted(active['ar'])} active_en={sorted(active['en'])}"
     )
