@@ -19,6 +19,7 @@ on:
       - 'automation/forum/rebuild_indexes.py'
       - 'automation/forum/tests/test_*.py'
       - 'automation/forum/requirements.txt'
+      - 'automation/seo/**'
       - '.github/workflows/forum-rebuild.yml'
 
 permissions:
@@ -78,16 +79,20 @@ jobs:
       - name: Finalize SEO indexability
         run: python automation/forum/seo_finalize.py
 
+      - name: Normalize canonical host across HTML
+        run: python automation/seo/normalize_html.py
+
       - name: Commit rebuilt publication
         shell: bash
         run: |
           git config user.name "RDWAN Tech Automation"
           git config user.email "actions@users.noreply.github.com"
           git add forum sitemap.xml
+          git add -- ':(glob)**/*.html'
           if git diff --cached --quiet; then
-            echo "Publication already matches bilingual templates."
+            echo "Publication already matches bilingual templates and canonical host rules."
             exit 0
           fi
-          git commit -m "RDWAN Tech: rebuild bilingual image-rich publication"
+          git commit -m "RDWAN Tech: rebuild bilingual publication and normalize canonical host"
           git pull --rebase origin main
           git push origin HEAD:main
