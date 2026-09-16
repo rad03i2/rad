@@ -95,6 +95,10 @@ def _image_extension(post: dict) -> str:
     return f'<image:image><image:loc>{escape(image)}</image:loc><image:title>{title}</image:title></image:image>'
 
 
+def _category_has_posts(posts: list[dict], slug: str) -> bool:
+    return any(str(post.get("categorySlug") or "") == slug for post in posts)
+
+
 def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
@@ -107,10 +111,15 @@ def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
             f'{_locale_links("/forum/ar/", "/forum/en/", "/forum/")}</url>'
         )
         for slug in CATEGORY_SLUGS:
+            if not _category_has_posts(posts_by_locale.get(locale, []), slug):
+                continue
             ar_url = f"/forum/ar/{slug}/"; en_url = f"/forum/en/{slug}/"
+            # Only expose bilingual hreflang when both editions have content for this topic.
+            both = _category_has_posts(posts_by_locale.get("ar", []), slug) and _category_has_posts(posts_by_locale.get("en", []), slug)
+            alternates = _locale_links(ar_url, en_url, ar_url) if both else ""
             lines.append(
                 f'  <url><loc>{SITE}/forum/{locale}/{slug}/</loc><lastmod>{today}</lastmod><changefreq>hourly</changefreq><priority>0.9</priority>'
-                f'{_locale_links(ar_url, en_url, ar_url)}</url>'
+                f'{alternates}</url>'
             )
 
     seen = set()
