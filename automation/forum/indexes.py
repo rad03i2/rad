@@ -34,6 +34,10 @@ def _absolute(url: str | None) -> str:
     return value if value.startswith("http://") or value.startswith("https://") else SITE + (value if value.startswith("/") else "/" + value)
 
 
+def _plain(value) -> str:
+    return " ".join(str(value or "").split())
+
+
 def write_feed(posts: list[dict], now: datetime, locale: str) -> None:
     is_ar = locale == "ar"
     items = []
@@ -114,7 +118,6 @@ def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
             if not _category_has_posts(posts_by_locale.get(locale, []), slug):
                 continue
             ar_url = f"/forum/ar/{slug}/"; en_url = f"/forum/en/{slug}/"
-            # Only expose bilingual hreflang when both editions have content for this topic.
             both = _category_has_posts(posts_by_locale.get("ar", []), slug) and _category_has_posts(posts_by_locale.get("en", []), slug)
             alternates = _locale_links(ar_url, en_url, ar_url) if both else ""
             lines.append(
@@ -172,6 +175,44 @@ def write_news_sitemap(posts_by_locale: dict[str, list[dict]], now: datetime) ->
     (FORUM / "news-sitemap.xml").write_text(content, encoding="utf-8")
 
 
+def write_llms(posts_by_locale: dict[str, list[dict]], now: datetime) -> None:
+    lines = [
+        "# RDWAN Tech",
+        "",
+        "Official bilingual technology publication within rdwan.dev.",
+        "Arabic and English coverage of artificial intelligence, robotics, automation, mobile, computers, software, the web, social platforms and security.",
+        "",
+        "## Primary URLs",
+        f"- Publication: {SITE}/forum/",
+        f"- Arabic edition: {SITE}/forum/ar/",
+        f"- English edition: {SITE}/forum/en/",
+        f"- About: {SITE}/forum/about/",
+        f"- Author: {SITE}/forum/authors/radwan-abdulhadi/",
+        f"- Editorial policy: {SITE}/forum/editorial-policy/",
+        f"- Corrections policy: {SITE}/forum/corrections/",
+        f"- AI and automation policy: {SITE}/forum/ai-policy/",
+        f"- Sitemap: {SITE}/forum/sitemap.xml",
+        f"- News sitemap: {SITE}/forum/news-sitemap.xml",
+        f"- Arabic RSS: {SITE}/forum/feed-ar.xml",
+        f"- English RSS: {SITE}/forum/feed-en.xml",
+        "",
+        f"Last generated: {now.astimezone(timezone.utc).isoformat(timespec='seconds').replace('+00:00', 'Z')}",
+    ]
+    labels = {"ar": "Latest Arabic stories", "en": "Latest English stories"}
+    for locale in ("ar", "en"):
+        lines.extend(["", f"## {labels[locale]}"])
+        for post in posts_by_locale.get(locale, [])[:25]:
+            title = _plain(post.get("title"))
+            url = _absolute(post.get("url"))
+            excerpt = _plain(post.get("excerpt"))
+            category = _plain(post.get("category"))
+            date = _plain(post.get("dateLabel") or str(post.get("date") or "")[:10])
+            meta = " · ".join(part for part in (category, date) if part)
+            suffix = f" — {excerpt}" if excerpt else ""
+            lines.append(f"- [{title}]({url})" + (f" ({meta})" if meta else "") + suffix)
+    (FORUM / "llms.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def write_root_sitemap_index(now: datetime) -> None:
     stamp = now.astimezone(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
     content = f'''<?xml version="1.0" encoding="UTF-8"?>
@@ -190,4 +231,5 @@ def write_all(posts, now: datetime) -> None:
     write_feed(mapped["en"], now, "en")
     write_sitemap(mapped, now.date().isoformat())
     write_news_sitemap(mapped, now)
+    write_llms(mapped, now)
     write_root_sitemap_index(now)
