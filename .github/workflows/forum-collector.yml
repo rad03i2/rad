@@ -1,11 +1,12 @@
 name: RDWAN Tech 20-Minute Publisher
 # Runs as a 5-minute watchdog. The publisher itself enforces a 20-minute gap,
 # so a delayed/missed GitHub schedule gets another chance within about 5 minutes.
+# Offset away from minute 00 to reduce GitHub Actions schedule congestion.
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '2-59/5 * * * *'
   push:
     branches: [main]
     paths:
