@@ -1,9 +1,9 @@
-name: RDWAN Tech Collector — Dry Run
+name: RDWAN Tech Hourly Publisher
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '7 * * * *'
   push:
     branches: [main]
     paths:
@@ -11,20 +11,23 @@ on:
 
 permissions:
   contents: write
+  models: read
 
 concurrency:
-  group: rdwan-tech-collector
+  group: rdwan-tech-hourly-publisher
   cancel-in-progress: false
 
 jobs:
-  collect:
+  publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 18
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Checkout safe automation branch
+      - name: Checkout main
         uses: actions/checkout@v4
         with:
-          ref: forum-automation
+          ref: main
           fetch-depth: 0
 
       - name: Set up Python
@@ -40,28 +43,34 @@ jobs:
       - name: Run pipeline tests
         run: python -m unittest discover -s automation/forum/tests -v
 
-      - name: Collect and evaluate stories
-        run: python automation/forum/run.py --dry-run
+      - name: Collect and evaluate fresh stories
+        run: python automation/forum/run.py
 
-      - name: Upload review snapshot
+      - name: Select trend, write and publish one article
+        run: python automation/forum/publisher.py
+
+      - name: Upload publisher audit snapshot
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rdwan-tech-collector-${{ github.run_number }}
+          name: rdwan-tech-hourly-${{ github.run_number }}
           path: |
-            automation/forum/state/queue.json
-            automation/forum/state/candidates.json
             automation/forum/state/run_report.json
-          retention-days: 7
+            automation/forum/state/publisher_report.json
+            automation/forum/state/candidates.json
+          retention-days: 14
+          if-no-files-found: warn
 
-      - name: Persist collector state to forum-automation branch
+      - name: Commit publication and state
         shell: bash
         run: |
           git config user.name "RDWAN Tech Automation"
           git config user.email "actions@users.noreply.github.com"
-          git add automation/forum/state/*.json
+          git add forum automation/forum/state/*.json
           if git diff --cached --quiet; then
-            echo "No state changes to commit."
+            echo "No publishable change this hour."
             exit 0
           fi
-          git commit -m "automation: update RDWAN Tech collector state"
-          git push origin HEAD:forum-automation
+          git commit -m "RDWAN Tech: hourly automated publication"
+          git pull --rebase origin main
+          git push origin HEAD:main
