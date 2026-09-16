@@ -14,6 +14,7 @@ on:
       - 'automation/forum/image_pipeline.py'
       - 'automation/forum/writer.py'
       - 'automation/forum/build_locale_pages.py'
+      - 'automation/forum/seo_finalize.py'
       - 'automation/forum/migrate_legacy_content.py'
       - 'automation/forum/rebuild_articles.py'
       - 'automation/forum/rebuild_indexes.py'
@@ -75,12 +76,15 @@ jobs:
       - name: Rebuild feeds and search indexes
         run: python automation/forum/rebuild_indexes.py
 
+      - name: Finalize SEO indexability
+        run: python automation/forum/seo_finalize.py
+
       - name: Commit rebuilt publication
         shell: bash
         run: |
           git config user.name "RDWAN Tech Automation"
           git config user.email "actions@users.noreply.github.com"
-          git add forum
+          git add forum sitemap.xml
           if git diff --cached --quiet; then
             echo "Publication already matches bilingual templates."
             exit 0
