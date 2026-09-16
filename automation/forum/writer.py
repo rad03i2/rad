@@ -3,12 +3,12 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
+import subprocess
 from html import unescape
 
 import requests
 from bs4 import BeautifulSoup
-
-MODEL_ENDPOINT = "https://models.github.ai/inference/chat/completions"
 
 
 def _clean_text(text: str) -> str:
@@ -101,38 +101,36 @@ def _extract_json(text: str) -> dict:
         raise
 
 
-def _call_model(model: str, prompt: str) -> dict:
-    token = os.environ.get("GITHUB_TOKEN")
-    if not token:
-        raise RuntimeError("GITHUB_TOKEN is required for GitHub Models")
+def _call_copilot(prompt: str) -> dict:
+    if not shutil.which("copilot"):
+        raise RuntimeError("GitHub Copilot CLI is not installed")
+    if not (os.environ.get("GITHUB_TOKEN") or os.environ.get("COPILOT_GITHUB_TOKEN")):
+        raise RuntimeError("GITHUB_TOKEN is required for Copilot CLI automation")
 
-    payload = {
-        "model": model,
-        "messages": [
-            {
-                "role": "system",
-                "content": (
-                    "أنت محرر تقني عربي دقيق يعمل لصالح RDWAN Tech. "
-                    "اكتب فقط من الحقائق الموجودة في المصادر المرفقة. لا تخترع أرقاماً أو تصريحات أو سياقاً غير موجود. "
-                    "إذا اختلفت المصادر فاذكر الاختلاف بوضوح. لا تنسخ صياغة المصدر؛ أعد بناء الخبر بأسلوب عربي أصلي."
-                ),
-            },
-            {"role": "user", "content": prompt},
-        ],
-        "temperature": 0.2,
-        "max_tokens": 3200,
-    }
-    response = requests.post(
-        MODEL_ENDPOINT,
-        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
-        json=payload,
-        timeout=90,
-    )
-    if response.status_code >= 400:
-        raise RuntimeError(f"GitHub Models error {response.status_code}: {response.text[:600]}")
-    data = response.json()
-    content = data["choices"][0]["message"]["content"]
-    return _extract_json(content)
+    command = [
+        "copilot",
+        "-p", prompt,
+        "-s",
+        "--no-ask-user",
+        "--no-color",
+        "--no-custom-instructions",
+        "--no-auto-update",
+    ]
+    last_error = None
+    for attempt in range(2):
+        try:
+            proc = subprocess.run(command, text=True, capture_output=True, timeout=150, env=os.environ.copy())
+        except subprocess.TimeoutExpired as exc:
+            last_error = f"Copilot CLI timed out: {exc}"
+            continue
+        if proc.returncode != 0:
+            last_error = f"Copilot CLI failed ({proc.returncode}): {(proc.stderr or proc.stdout)[-1200:]}"
+            continue
+        try:
+            return _extract_json(proc.stdout)
+        except Exception as exc:
+            last_error = f"Copilot returned invalid JSON: {exc}; output={proc.stdout[:900]}"
+    raise RuntimeError(last_error or "Copilot CLI failed")
 
 
 def write_article(story: dict, source_pack: list[dict], settings: dict) -> dict:
@@ -154,7 +152,10 @@ def write_article(story: dict, source_pack: list[dict], settings: dict) -> dict:
             f"Extracted text:\n{src.get('text', '')[:7000]}"
         )
 
+    joined_sources = "\n\n".join(source_text)
     prompt = f"""
+أنت المحرر الآلي لمنصة RDWAN Tech العربية. مهمتك كتابة خبر تقني أصلي اعتماداً حصراً على المادة المصدرية أدناه.
+
 القصة المرشحة:
 العنوان الأصلي: {story.get('title')}
 التصنيف: {story.get('category_label')} ({story.get('category')})
@@ -162,11 +163,11 @@ def write_article(story: dict, source_pack: list[dict], settings: dict) -> dict:
 وقت النشر لدى المصدر: {story.get('published_at')}
 
 المصادر:
-{'\n\n'.join(source_text)}
+{joined_sources}
 
-المطلوب: أنشئ مقالاً عربياً أصلياً متكاملاً مناسباً لمنصة أخبار تقنية احترافية. ركز على: ما الذي حدث، التفاصيل المؤكدة، لماذا يهم، السياق التقني، وما الذي ينبغي متابعته لاحقاً. لا تجعل المقال إعلاناً للشركة. إذا كان المصدر بياناً رسمياً فرّق بين ما تقوله الشركة وبين الحقائق الخارجية. لا تضف رأياً شخصياً.
+اكتب مقالاً عربياً أصلياً متكاملاً. ركز على: ما الذي حدث، التفاصيل المؤكدة، لماذا يهم، السياق التقني، وما الذي ينبغي متابعته لاحقاً. لا تجعل المقال إعلاناً للشركة. إذا كان المصدر بياناً رسمياً فصغ ما تقوله الشركة على أنه إعلان أو ادعاء من الشركة عندما يلزم. إذا اختلفت المصادر فاذكر الاختلاف. لا تضف أي معلومة غير موجودة في المصادر.
 
-أخرج JSON فقط بهذا الشكل:
+أخرج JSON صالحاً فقط، بلا Markdown وبلا أي نص قبله أو بعده، بهذا الشكل:
 {{
   "title": "عنوان عربي واضح وغير مضلل، يفضل 45-85 حرفاً",
   "description": "وصف SEO دقيق بين 120 و165 حرفاً",
@@ -183,18 +184,17 @@ def write_article(story: dict, source_pack: list[dict], settings: dict) -> dict:
 
 الشروط:
 - استهدف 650 إلى 1100 كلمة عربية إجمالاً.
-- 4 إلى 7 أقسام مفيدة، بلا حشو.
+- أنشئ 4 إلى 7 أقسام مفيدة بلا حشو.
 - لا تستخدم عبارات مثل «بحسب معلوماتي» أو «كمساعد».
 - لا تخترع سعراً أو تاريخ إتاحة أو مواصفات إذا لم تذكرها المصادر.
 - لا تضع روابط داخل نص الفقرات؛ روابط المصادر ستضاف آلياً.
+- لا تنقل جملاً طويلة حرفياً من المصادر؛ لخص وأعد الصياغة.
 - لا تكرر المقدمة في الأقسام.
 """.strip()
 
-    model = settings.get("githubModel", "openai/gpt-4.1-mini")
-    article = _call_model(model, prompt)
-
+    article = _call_copilot(prompt)
     required = ["title", "description", "deck", "summary_bullets", "sections", "tags"]
     missing = [k for k in required if not article.get(k)]
     if missing:
-        raise RuntimeError(f"Model output missing fields: {', '.join(missing)}")
+        raise RuntimeError(f"Copilot output missing fields: {', '.join(missing)}")
     return article
