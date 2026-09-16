@@ -8,7 +8,10 @@ on:
       - 'forum/templates/**'
       - 'forum/content/**/*.json'
       - 'automation/forum/renderer.py'
+      - 'automation/forum/indexes.py'
+      - 'automation/forum/publisher.py'
       - 'automation/forum/rebuild_articles.py'
+      - 'automation/forum/tests/test_*.py'
       - '.github/workflows/forum-rebuild.yml'
 
 permissions:
@@ -39,7 +42,7 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check -r automation/forum/requirements.txt
 
-      - name: Test renderer
+      - name: Test publishing architecture
         run: python -m unittest discover -s automation/forum/tests -v
 
       - name: Rebuild all structured articles
