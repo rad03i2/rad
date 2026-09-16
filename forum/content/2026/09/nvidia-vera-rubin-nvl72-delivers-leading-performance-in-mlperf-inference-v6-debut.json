@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 2,
+  "template": "article",
+  "id": "c60864f37894392f651b",
+  "slug": "nvidia-vera-rubin-nvl72-delivers-leading-performance-in-mlperf-inference-v6-debut",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/nvidia-vera-rubin-nvl72-delivers-leading-performance-in-mlperf-inference-v6-debut/",
+    "en": "/forum/en/ai/nvidia-vera-rubin-nvl72-delivers-leading-performance-in-mlperf-inference-v6-debut/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إنفيديا تكشف أداء Vera Rubin NVL72 في ظهورها الأول باختبارات MLPerf",
+      "description": "تقول إنفيديا إن نظام Vera Rubin NVL72 حقق أداءً يصل إلى 3.7 مرات أعلى من GB300 NVL72 في نتائج أولية ضمن MLPerf Inference v6.1.",
+      "deck": "قدمت إنفيديا أول نتائج معاينة لنظام Vera Rubin NVL72 ضمن اختبارات MLPerf Inference v6.1، معلنة تفوقاً في معدل المعالجة مقارنةً بمنصة GB300 NVL72. كما أظهرت نتائج GB300 كفاءة توسع بلغت 99% عند توزيع الحمل على أربع وحدات رفوف.",
+      "summaryBullets": [
+        "Vera Rubin NVL72 حقق معدل معالجة أعلى بما يصل إلى 3.7 مرات من GB300 NVL72 في اختبار Qwen3-VL.",
+        "في اختبار DeepSeek-R1، أعلنت إنفيديا تفوقاً يصل إلى 2.5 مرة باستخدام TensorRT-LLM.",
+        "توسعت منصة GB300 NVL72 من رف واحد إلى أربعة رفوف بكفاءة بلغت 99% في سيناريو المعالجة غير المتصلة.",
+        "رفعت تحسينات البرمجيات أداء GB300 NVL72 في Qwen3-VL بما يصل إلى 1.6 مرة مقارنة بنتائج الإصدار السابق.",
+        "أظهرت اختبارات معاينة داخلية أداءً أعلى 30 مرة لـ Vera Rubin NVL72 في معيار SemiAnalysis AgentX مقارنةً بـ GB300 NVL72."
+      ],
+      "sections": [
+        {
+          "heading": "ظهور أول لمنصة Vera Rubin",
+          "paragraphs": [
+            "أعلنت إنفيديا نتائج أول مشاركة معاينة لنظام Vera Rubin NVL72 في مجموعة اختبارات MLPerf Inference v6.1، مشيرةً إلى أن النظام سجل أداءً متقدماً في اثنين من الاختبارات الأكثر تطلباً ضمن الحزمة، وهما DeepSeek-R1 وQwen3-VL. وتتناول هذه الاختبارات أحمالاً مرتبطة بالنماذج اللغوية الكبيرة والاستدلال متعدد الوسائط، بما يعكس أنواعاً من الاستخدامات التي تحتاج إلى معدلات معالجة مرتفعة وزمن استجابة منخفض.",
+            "بحسب الأرقام التي نشرتها الشركة، حقق Vera Rubin NVL72 معدل معالجة أعلى بما يصل إلى 3.7 مرات من GB300 NVL72 في Qwen3-VL، عبر سيناريوهات المعالجة غير المتصلة والخادمة والتفاعلية. واستُخدم إطار vLLM مع إطار الاستدلال مفتوح المصدر NVIDIA Dynamo في هذه النتائج. أما في DeepSeek-R1، ومع استخدام مكتبة NVIDIA TensorRT-LLM، فقد بلغ التفوق المعلن ما يصل إلى 2.5 مرة مقارنةً بـ GB300 NVL72."
+          ]
+        },
+        {
+          "heading": "تصميم متكامل للعتاد والبرمجيات",
+          "paragraphs": [
+            "تربط إنفيديا هذه النتائج بتصميم مشترك بين العتاد والبرمجيات، وليس بمكوّن منفرد. وتستفيد منصة Vera Rubin من أنوية Tensor المحسّنة ومن محرك Transformer Engine لتسريع مرحلتي تجهيز المدخلات وتوليد المخرجات أثناء الاستدلال. كما تستخدم دقة NVFP4 لتقليص الذاكرة اللازمة لأوزان النموذج وآلية الانتباه وذاكرة KV cache، بهدف رفع معدل المعالجة مع خسارة محدودة في جودة المخرجات، وفق وصف الشركة.",
+            "اعتمدت نتائج Vera Rubin بدرجة كبيرة على أسلوب تقديم مفكك يفصل بين مرحلتي prefill وdecode، إلى جانب التوازي واسع النطاق للخبراء داخل نماذج mixture-of-experts، وهي بنية تستخدمها نماذج مثل DeepSeek-R1 وQwen3-VL. وتوفر منظومة NVL72 نطاق توسع داخل الرف مدعومة بالجيل السادس من NVIDIA NVLink وNVLink Switch؛ وتقول إنفيديا إن هذه الوصلات تقدم معدلات نقل حزم أعلى بعشر مرات وزمناً أقل بثلاث مرات من شبكات Ethernet المتاحة تجارياً."
+          ]
+        },
+        {
+          "heading": "كفاءة توسع GB300 عبر عدة رفوف",
+          "paragraphs": [
+            "إلى جانب نتائج Vera Rubin، عرضت إنفيديا نتائج توضح قدرة GB300 NVL72 على التوسع بكفاءة. فقد امتدت مشاركة DeepSeek-R1 من رف واحد يضم 72 وحدة معالجة رسومية إلى أربعة رفوف بإجمالي 288 وحدة، وحققت كفاءة توسع بلغت 99% في سيناريو المعالجة غير المتصلة. ووفق الشركة، نما معدل المعالجة تقريباً بما يتناسب مع زيادة العتاد.",
+            "تعد كفاءة التوسع مؤشراً على مدى استفادة أحمال الذكاء الاصطناعي من إضافة وحدات معالجة جديدة، إذ لا تؤدي زيادة عدد الوحدات تلقائياً إلى زيادة مماثلة في الإنتاجية. كما أظهرت GB300 NVL72 أداءً على مستوى الرف في اختبار WAN 2.2 لتحويل النص إلى فيديو، بمعدل 0.65 فيديو بدقة 720p في الثانية وزمن 5.7 ثوانٍ للفيديو، وهو ما وصفته إنفيديا بأنه معدل معالجة أعلى تسع مرات وزمن استجابة أقل 7.5 مرات من عقدة واحدة."
+          ]
+        },
+        {
+          "heading": "البرمجيات تواصل رفع الأداء",
+          "paragraphs": [
+            "تقول إنفيديا إن التحسينات البرمجية المستمرة أسهمت في رفع أداء مشاركاتها ضمن الإصدار 6.1. وسجل GB300 NVL72 في اختبار Qwen3-VL أداءً أعلى بما يصل إلى 1.6 مرة مقارنة بنتائج الإصدار 6.0. وعزت الشركة هذه الزيادة إلى خفض دقة ذاكرة KV cache، وإضافة عمليات دمج للنوى، وتحسين النوى البرمجية، واستخدام التقديم المفكك مع vLLM وNVIDIA Dynamo.",
+            "استمرت التحسينات بعد الموعد النهائي لتقديم نتائج الإصدار 6.1. وتنبه إنفيديا إلى أن نتائج لاحقة غير معتمدة بعد من MLCommons أظهرت مكاسب إضافية في اختباري GPT-OSS-120B وDLRMv3، لذلك لا تُعامل هذه الأرقام بوصفها نتائج تحقق نهائية ضمن الإصدار المنشور.",
+            "كما قدمت الشركة نتائج لمنصة Jetson AGX Thor باستخدام TensorRT Edge-LLM في معيار Edge-Agentic المستحدث، مع نموذج Qwen3.6-27B. ويهدف هذا النوع من الاختبارات إلى تغطية الاستدلال المرتبط بالوكلاء، حيث تتطلب الأنظمة مراحل متتابعة من التفكير والتخطيط والتنفيذ."
+          ]
+        },
+        {
+          "heading": "الاستدلال الوكيلي ومشاركة الشركاء",
+          "paragraphs": [
+            "توضح إنفيديا أن الوكلاء القادرين على التفكير وتنفيذ الخطط عبر خطوات متعددة يغيرون طريقة قياس أداء الاستدلال. وفي اختبارات المعاينة ضمن معيار SemiAnalysis AgentX، أعلنت الشركة أن Vera Rubin NVL72 حقق أداءً أعلى 30 مرة من GB300 NVL72. كما أشارت إلى أن معيار MLPerf Endpoints المرتقب سيقدم قياساً موحداً لأحمال الاستدلال الوكيلي، بما يتجاوز ما تقيسه اختبارات معدل المعالجة التقليدية.",
+            "وشارك شركاء من منظومة إنفيديا في النتائج، إذ قدم 19 شريكاً اختبارات أداء، من بينهم ثمانية استخدموا أنظمة Blackwell NVL72 متعددة العقد. وتشمل القائمة ASUS وAzure وCisco وCoreWeave وCrusoe وDell Technologies وFujitsu وGiga Computing وHPE وInventec وLambda وMiTAC Computing وNebius وOracle Cloud Infrastructure وQuanta Cloud Technology وRed Hat وScitiX وSupermicro وWiwynn. كما قدمت Nebius نتائج معاينة لمنصة Vera Rubin NVL72، وقالت إنفيديا إنها أظهرت أداءً قوياً."
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "إنفيديا",
+        "Vera Rubin NVL72",
+        "MLPerf Inference",
+        "GB300 NVL72",
+        "استدلال النماذج",
+        "مراكز البيانات"
+      ],
+      "entities": [
+        "NVIDIA",
+        "Vera Rubin NVL72",
+        "GB300 NVL72",
+        "MLCommons",
+        "MLPerf Inference v6.1",
+        "DeepSeek-R1",
+        "Qwen3-VL",
+        "NVIDIA Dynamo"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "16 سبتمبر 2026",
+      "modifiedLabel": "16 سبتمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 777
+    },
+    "en": {
+      "title": "NVIDIA Vera Rubin NVL72 Posts Up to 3.7x Throughput Gain",
+      "description": "NVIDIA says its Vera Rubin NVL72 preview delivered up to 3.7x the throughput of GB300 NVL72 in MLPerf Inference v6.1 tests.",
+      "deck": "NVIDIA's Vera Rubin NVL72 made its first MLPerf Inference preview submission with results that the company says outperform its GB300 NVL72 system by up to 3.7x. The results highlight gains from new hardware, rack-scale networking and continuing software optimization.",
+      "summaryBullets": [
+        "Vera Rubin NVL72 delivered up to 3.7x higher throughput than GB300 NVL72 on Qwen3-VL.",
+        "DeepSeek-R1 throughput was up to 2.5x higher using NVIDIA TensorRT-LLM.",
+        "A four-rack GB300 NVL72 submission reached 99% scaling efficiency.",
+        "NVIDIA reported software improvements of up to 1.6x over its MLPerf Inference v6.0 results.",
+        "Nebius and 18 other partners also contributed submissions to the benchmark round."
+      ],
+      "sections": [
+        {
+          "heading": "Vera Rubin enters MLPerf Inference",
+          "paragraphs": [
+            "NVIDIA's Vera Rubin NVL72 system has made its debut in the MLPerf Inference v6.1 benchmark with preview results on DeepSeek-R1 and Qwen3-VL, two demanding workloads in the latest test suite. According to NVIDIA, the platform achieved as much as 3.7 times the throughput of GB300 NVL72 on Qwen3-VL across offline, server and interactive scenarios.",
+            "The Qwen3-VL tests used vLLM together with NVIDIA Dynamo, the company's open-source inference framework. On DeepSeek-R1, NVIDIA reported throughput gains of up to 2.5 times compared with GB300 NVL72 when using the TensorRT-LLM software library. Because these are preview submissions, the results represent an early view of the platform rather than a complete production benchmark record."
+          ]
+        },
+        {
+          "heading": "Hardware and software designed together",
+          "paragraphs": [
+            "NVIDIA attributed the performance gains to full-stack design across the Vera Rubin hardware and its inference software. The system's enhanced Tensor Cores and Transformer Engine are intended to accelerate both prefill and decode, the two main stages involved in serving generative AI models.",
+            "The company also pointed to NVFP4 precision, which reduces the memory required for model weights, attention and the key-value cache. NVIDIA says the approach increases throughput while causing minimal loss of output quality. The submitted configurations made extensive use of disaggregated serving, separating prefill from decode, and large-scale expert parallelism for mixture-of-experts models such as DeepSeek-R1 and Qwen3-VL.",
+            "At the rack level, these methods rely on the Vera Rubin NVL72 scale-up domain. NVIDIA said sixth-generation NVLink and NVLink Switch provide packet rates 10 times higher and latency three times lower than off-the-shelf Ethernet, creating the interconnect foundation for the system's rack-scale operation."
+          ]
+        },
+        {
+          "heading": "GB300 demonstrates multi-rack scaling",
+          "paragraphs": [
+            "The same MLPerf round also showed NVIDIA's GB300 NVL72 scaling from one rack to four. A DeepSeek-R1 offline submission expanded from 72 GPUs in a single rack to 288 GPUs across four racks, reaching 99% scaling efficiency, according to NVIDIA.",
+            "Scaling efficiency measures how closely throughput follows the amount of hardware added. A result near 100% indicates that the additional racks produced almost proportional gains rather than being limited by communication, orchestration or other system overhead. NVIDIA said the result depended on a combination of high-bandwidth, low-latency connections within each rack, networking between racks and request orchestration across nodes.",
+            "GB300 NVL72 also recorded results on the WAN 2.2 text-to-video benchmark. NVIDIA reported throughput of 0.65 720p videos per second at 5.7 seconds per video, describing this as nine times higher throughput and 7.5 times lower latency than a single node."
+          ]
+        },
+        {
+          "heading": "Software continues to lift results",
+          "paragraphs": [
+            "NVIDIA said its MLPerf Inference v6.1 submissions benefited from software work completed since the previous benchmark release. GB300 NVL72 performance on Qwen3-VL improved by as much as 1.6 times compared with the company's v6.0 results.",
+            "The reported gains came from several changes, including lower key-value-cache precision, additional kernel fusion, improved kernels and disaggregated serving based on vLLM and NVIDIA Dynamo. NVIDIA added that optimization continued after the v6.1 submission deadline. Further results on GPT-OSS-120B and DLRMv3 have shown additional gains, although those figures had not yet been verified by MLCommons at the time of the announcement."
+          ]
+        },
+        {
+          "heading": "Results extend to agentic and edge workloads",
+          "paragraphs": [
+            "NVIDIA also highlighted performance in workloads designed around AI agents, which reason, plan and act through multiple steps. In preview testing with the SemiAnalysis AgentX benchmark, the company said Vera Rubin NVL72 delivered 30 times the performance of GB300 NVL72. NVIDIA described the upcoming MLPerf Endpoints benchmark as a future way to standardize measurements for agentic inference workloads that are not fully represented by conventional throughput tests.",
+            "The benchmark participation extended beyond data-center systems. NVIDIA submitted Jetson AGX Thor results using TensorRT Edge-LLM on the newly introduced Edge-Agentic benchmark with Qwen3.6-27B. The company also said Nebius submitted Vera Rubin NVL72 preview results and demonstrated strong performance.",
+            "NVIDIA reported participation from 19 partners in the MLPerf round, including eight using multi-node Blackwell NVL72 systems. The listed companies included cloud providers, system manufacturers and technology partners such as ASUS, Azure, Cisco, CoreWeave, Dell Technologies, Google, HPE, Oracle Cloud Infrastructure, Red Hat, Supermicro and Wiwynn. NVIDIA presented the results as evidence that performance, scaling efficiency and software development speed are central factors in the economics of AI inference infrastructure."
+          ]
+        }
+      ],
+      "tags": [
+        "NVIDIA",
+        "Vera Rubin",
+        "NVL72",
+        "MLPerf Inference",
+        "AI inference",
+        "DeepSeek-R1",
+        "Qwen3-VL",
+        "GB300"
+      ],
+      "entities": [
+        "NVIDIA",
+        "Vera Rubin NVL72",
+        "GB300 NVL72",
+        "MLPerf Inference v6.1",
+        "DeepSeek-R1",
+        "Qwen3-VL",
+        "NVIDIA Dynamo",
+        "TensorRT-LLM",
+        "vLLM",
+        "NVLink"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 16, 2026",
+      "modifiedLabel": "September 16, 2026",
+      "readMinutes": 4,
+      "wordCount": 791
+    }
+  },
+  "datePublished": "2026-09-16T21:06:22.925639+03:00",
+  "dateModified": "2026-09-16T21:06:22.925639+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/nvidia-vera-rubin-nvl72-delivers-leading-performance-in-mlperf-inference-v6-debut/hero.webp",
+    "card": "/forum/assets/posts/2026/09/nvidia-vera-rubin-nvl72-delivers-leading-performance-in-mlperf-inference-v6-debut/card.webp",
+    "social": "/forum/assets/posts/2026/09/nvidia-vera-rubin-nvl72-delivers-leading-performance-in-mlperf-inference-v6-debut/social.jpg",
+    "alt": {
+      "ar": "إنفيديا تكشف أداء Vera Rubin NVL72 في ظهورها الأول باختبارات MLPerf",
+      "en": "NVIDIA Vera Rubin NVL72 Posts Up to 3.7x Throughput Gain"
+    },
+    "credit": "NVIDIA Blog",
+    "sourceUrl": "https://blogs.nvidia.com/wp-content/uploads/2026/09/mlperf-inference-6-1.png",
+    "sourceType": "official",
+    "generatedFallback": false
+  },
+  "sources": [
+    {
+      "name": "NVIDIA Blog",
+      "url": "https://blogs.nvidia.com/blog/vera-rubin-nvl72-mlperf-inference/",
+      "type": "official",
+      "title": "NVIDIA Vera Rubin NVL72 Delivers Leading Performance in MLPerf Inference v6.1 Debut"
+    }
+  ],
+  "sourceUrl": "https://blogs.nvidia.com/blog/vera-rubin-nvl72-mlperf-inference",
+  "sourceTitle": "NVIDIA Vera Rubin NVL72 Delivers Leading Performance in MLPerf Inference v6.1 Debut",
+  "trendScore": 129.39,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-16T18:07:08+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ]
+  },
+  "contentFile": "forum/content/2026/09/nvidia-vera-rubin-nvl72-delivers-leading-performance-in-mlperf-inference-v6-debut.json"
+}
