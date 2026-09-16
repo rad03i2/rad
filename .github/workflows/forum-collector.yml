@@ -63,6 +63,9 @@ jobs:
       - name: Finalize SEO indexability
         run: python automation/forum/seo_finalize.py
 
+      - name: Normalize canonical host across HTML
+        run: python automation/seo/normalize_html.py
+
       - name: Upload publisher audit snapshot
         if: always()
         uses: actions/upload-artifact@v4
@@ -81,6 +84,7 @@ jobs:
           git config user.name "RDWAN Tech Automation"
           git config user.email "actions@users.noreply.github.com"
           git add forum sitemap.xml automation/forum/state/*.json
+          git add -- ':(glob)**/*.html'
           if git diff --cached --quiet; then
             echo "No repository changes in this 20-minute cycle."
             exit 0
