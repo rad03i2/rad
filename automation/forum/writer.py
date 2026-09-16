@@ -166,8 +166,31 @@ def _source_text(usable: list[dict]) -> str:
     return "\n\n".join(blocks)
 
 
-def _write_locale(story: dict, usable: list[dict], locale: str) -> dict:
+def _retry_guidance(locale: str, feedback: list[str] | None) -> str:
+    if not feedback:
+        return ""
+    relevant = [str(item).split(":", 1)[-1] for item in feedback if str(item).startswith(f"{locale}:")]
+    if not relevant:
+        return ""
+    hints = {
+        "title_length": "Keep the headline inside the requested length range.",
+        "description_length": "Rewrite the SEO description inside the requested character range.",
+        "summary_bullets": "Provide at least 3 concrete summary bullets.",
+        "sections": "Provide at least 4 substantial sections.",
+        "article_too_short": "The previous draft was too short. Produce at least 650 words and make each section substantively useful without padding or repetition.",
+        "malformed_sections": "Every section must have a non-empty heading and one or more non-empty paragraphs.",
+        "model_meta_language": "Remove model/meta commentary and write only publication-ready journalism.",
+        "missing_edition": "Return the complete requested language edition.",
+    }
+    instructions = [hints.get(code, f"Correct the failed quality check: {code}.") for code in relevant]
+    if locale == "ar":
+        return "\n\nهذه إعادة محاولة بعد رفض المسودة السابقة في بوابة الجودة. التعليمات التالية إلزامية:\n- " + "\n- ".join(instructions)
+    return "\n\nThis is a retry after the previous draft failed the quality gate. The following corrections are mandatory:\n- " + "\n- ".join(instructions)
+
+
+def _write_locale(story: dict, usable: list[dict], locale: str, quality_feedback: list[str] | None = None) -> dict:
     joined_sources = _source_text(usable)
+    retry_guidance = _retry_guidance(locale, quality_feedback)
     if locale == "ar":
         prompt = f"""
 أنت محرر تقني عربي دقيق لمنصة RDWAN Tech. اكتب نسخة عربية أصلية من الخبر اعتماداً حصراً على المصادر أدناه، من دون ترجمة حرفية ومن دون اختراع أي معلومة.
@@ -192,7 +215,7 @@ def _write_locale(story: dict, usable: list[dict], locale: str) -> dict:
   "confidence_note":"ملاحظة داخلية قصيرة"
 }}
 
-الشروط: 600-1000 كلمة عربية، 4-7 أقسام، لغة صحفية تقنية طبيعية، ضع اسم الشركة أو المنتج والحدث الأساسي مبكرًا في العنوان، تجنب العناوين العامة والـClickbait، فرّق بين الحقائق وما تعلنه الشركات، لا تستخدم رأياً شخصياً، لا تضف روابط داخل الفقرات، ولا تنقل جملاً طويلة حرفياً.
+الشروط: 650-1000 كلمة عربية، 4-7 أقسام، لغة صحفية تقنية طبيعية، ضع اسم الشركة أو المنتج والحدث الأساسي مبكرًا في العنوان، تجنب العناوين العامة والـClickbait، فرّق بين الحقائق وما تعلنه الشركات، لا تستخدم رأياً شخصياً، لا تضف روابط داخل الفقرات، ولا تنقل جملاً طويلة حرفياً.{retry_guidance}
 """.strip()
     else:
         prompt = f"""
@@ -218,7 +241,7 @@ Return valid JSON only:
   "confidence_note":"Short internal note about source confidence"
 }}
 
-Requirements: 600-1000 English words, 4-7 useful sections, professional technology-news style, put the primary entity and news action early in the headline, avoid clickbait and vague headlines, clearly attribute company claims when appropriate, no first-person opinion, no links inside paragraphs, and no long copied passages.
+Requirements: 650-1000 English words, 4-7 useful sections, professional technology-news style, put the primary entity and news action early in the headline, avoid clickbait and vague headlines, clearly attribute company claims when appropriate, no first-person opinion, no links inside paragraphs, and no long copied passages.{retry_guidance}
 """.strip()
 
     article = _call_copilot(prompt)
@@ -229,8 +252,11 @@ Requirements: 600-1000 English words, 4-7 useful sections, professional technolo
     return article
 
 
-def write_article(story: dict, source_pack: list[dict], settings: dict) -> dict:
+def write_article(story: dict, source_pack: list[dict], settings: dict, quality_feedback: list[str] | None = None) -> dict:
     usable = [s for s in source_pack if s.get("ok") and (s.get("text") or s.get("feed_summary"))]
     if not usable:
         raise RuntimeError("No usable source text available")
-    return {"ar": _write_locale(story, usable, "ar"), "en": _write_locale(story, usable, "en")}
+    return {
+        "ar": _write_locale(story, usable, "ar", quality_feedback),
+        "en": _write_locale(story, usable, "en", quality_feedback),
+    }
