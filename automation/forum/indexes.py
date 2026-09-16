@@ -8,7 +8,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 FORUM = ROOT / "forum"
 SITE = "https://rdwan.dev"
-
 CATEGORY_SLUGS = ["ai", "robotics", "automation", "mobile", "computers", "apps", "web", "social", "security", "announcements"]
 
 
@@ -28,11 +27,20 @@ def _posts_map(value) -> dict[str, list[dict]]:
     return {"ar": list(value or []), "en": []}
 
 
+def _absolute(url: str | None) -> str:
+    value = str(url or "").strip()
+    if not value:
+        return ""
+    return value if value.startswith("http://") or value.startswith("https://") else SITE + (value if value.startswith("/") else "/" + value)
+
+
 def write_feed(posts: list[dict], now: datetime, locale: str) -> None:
     is_ar = locale == "ar"
     items = []
     for post in posts[:40]:
         dt = parse_dt(post.get("date")) or now
+        image = _absolute(post.get("image") or (post.get("images") or {}).get("card"))
+        enclosure = f'\n      <enclosure url="{escape(image, quote=True)}" type="image/webp" />' if image else ""
         items.append(
             "    <item>\n"
             f"      <title>{escape(str(post.get('title', '')))}</title>\n"
@@ -40,16 +48,13 @@ def write_feed(posts: list[dict], now: datetime, locale: str) -> None:
             f"      <guid isPermaLink=\"true\">{SITE}{post.get('url')}</guid>\n"
             f"      <pubDate>{format_datetime(dt.astimezone(timezone.utc), usegmt=True)}</pubDate>\n"
             f"      <category>{escape(str(post.get('category', 'Technology')))}</category>\n"
-            f"      <description>{escape(str(post.get('excerpt', '')))}</description>\n"
+            f"      <description>{escape(str(post.get('excerpt', '')))}</description>"
+            f"{enclosure}\n"
             "    </item>"
         )
     filename = f"feed-{locale}.xml"
     title = "RDWAN Tech — العربية" if is_ar else "RDWAN Tech — English"
-    description = (
-        "أخبار التقنية والذكاء الاصطناعي والروبوتات والأتمتة والهواتف والحواسيب والتطبيقات والويب."
-        if is_ar else
-        "Technology news covering AI, robotics, automation, mobile, computing, software, the web and digital platforms."
-    )
+    description = "أخبار التقنية والذكاء الاصطناعي والروبوتات والأتمتة والهواتف والحواسيب والتطبيقات والويب." if is_ar else "Technology news covering AI, robotics, automation, mobile, computing, software, the web and digital platforms."
     content = f'''<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -70,27 +75,47 @@ def write_feed(posts: list[dict], now: datetime, locale: str) -> None:
 
 def _explicit_alternates(post: dict) -> tuple[str, str]:
     alternates = post.get("alternates") or {}
-    ar_url = str(alternates.get("ar") or "").strip()
-    en_url = str(alternates.get("en") or "").strip()
-    return ar_url, en_url
+    return str(alternates.get("ar") or "").strip(), str(alternates.get("en") or "").strip()
+
+
+def _locale_links(ar_url: str, en_url: str, x_default: str) -> str:
+    return (
+        f'<xhtml:link rel="alternate" hreflang="ar" href="{SITE}{ar_url}"/>'
+        f'<xhtml:link rel="alternate" hreflang="en" href="{SITE}{en_url}"/>'
+        f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}{x_default}"/>'
+    )
+
+
+def _image_extension(post: dict) -> str:
+    images = post.get("images") or {}
+    image = _absolute(images.get("hero") or post.get("image") or images.get("card"))
+    if not image:
+        return ""
+    title = escape(str(post.get("title") or ""))
+    return f'<image:image><image:loc>{escape(image)}</image:loc><image:title>{title}</image:title></image:image>'
 
 
 def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
-        f'  <url><loc>{SITE}/forum/</loc><lastmod>{today}</lastmod><changefreq>hourly</changefreq><priority>1.0</priority>'
-        f'<xhtml:link rel="alternate" hreflang="ar" href="{SITE}/forum/ar/"/>'
-        f'<xhtml:link rel="alternate" hreflang="en" href="{SITE}/forum/en/"/>'
-        f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/forum/"/></url>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">',
+        f'  <url><loc>{SITE}/forum/</loc><lastmod>{today}</lastmod><changefreq>hourly</changefreq><priority>1.0</priority>{_locale_links("/forum/ar/", "/forum/en/", "/forum/")}</url>',
     ]
     for locale in ("ar", "en"):
-        lines.append(f'  <url><loc>{SITE}/forum/{locale}/</loc><lastmod>{today}</lastmod><changefreq>hourly</changefreq><priority>1.0</priority></url>')
+        other = "en" if locale == "ar" else "ar"
+        lines.append(
+            f'  <url><loc>{SITE}/forum/{locale}/</loc><lastmod>{today}</lastmod><changefreq>hourly</changefreq><priority>1.0</priority>'
+            f'{_locale_links("/forum/ar/", "/forum/en/", "/forum/")}</url>'
+        )
         for slug in CATEGORY_SLUGS:
-            lines.append(f'  <url><loc>{SITE}/forum/{locale}/{slug}/</loc><lastmod>{today}</lastmod><changefreq>hourly</changefreq><priority>0.9</priority></url>')
+            ar_url = f"/forum/ar/{slug}/"; en_url = f"/forum/en/{slug}/"
+            lines.append(
+                f'  <url><loc>{SITE}/forum/{locale}/{slug}/</loc><lastmod>{today}</lastmod><changefreq>hourly</changefreq><priority>0.9</priority>'
+                f'{_locale_links(ar_url, en_url, ar_url)}</url>'
+            )
 
     seen = set()
-    for locale, posts in posts_by_locale.items():
+    for _, posts in posts_by_locale.items():
         for post in posts:
             url = str(post.get("url") or "")
             if not url or url in seen:
@@ -98,17 +123,11 @@ def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
             seen.add(url)
             modified = (post.get("dateModified") or post.get("date") or today)[:10]
             ar_url, en_url = _explicit_alternates(post)
-            if ar_url and en_url:
-                lines.append(
-                    f'  <url><loc>{SITE}{url}</loc><lastmod>{modified}</lastmod><changefreq>daily</changefreq><priority>0.8</priority>'
-                    f'<xhtml:link rel="alternate" hreflang="ar" href="{SITE}{ar_url}"/>'
-                    f'<xhtml:link rel="alternate" hreflang="en" href="{SITE}{en_url}"/>'
-                    f'<xhtml:link rel="alternate" hreflang="x-default" href="{SITE}{ar_url}"/></url>'
-                )
-            else:
-                lines.append(
-                    f'  <url><loc>{SITE}{url}</loc><lastmod>{modified}</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>'
-                )
+            alternates = _locale_links(ar_url, en_url, ar_url) if ar_url and en_url else ""
+            lines.append(
+                f'  <url><loc>{SITE}{url}</loc><lastmod>{modified}</lastmod><changefreq>daily</changefreq><priority>0.8</priority>'
+                f'{alternates}{_image_extension(post)}</url>'
+            )
     lines.append("</urlset>")
     (FORUM / "sitemap.xml").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
