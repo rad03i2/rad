@@ -102,7 +102,6 @@ def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
         f'  <url><loc>{SITE}/forum/</loc><lastmod>{today}</lastmod><changefreq>hourly</changefreq><priority>1.0</priority>{_locale_links("/forum/ar/", "/forum/en/", "/forum/")}</url>',
     ]
     for locale in ("ar", "en"):
-        other = "en" if locale == "ar" else "ar"
         lines.append(
             f'  <url><loc>{SITE}/forum/{locale}/</loc><lastmod>{today}</lastmod><changefreq>hourly</changefreq><priority>1.0</priority>'
             f'{_locale_links("/forum/ar/", "/forum/en/", "/forum/")}</url>'
@@ -164,9 +163,22 @@ def write_news_sitemap(posts_by_locale: dict[str, list[dict]], now: datetime) ->
     (FORUM / "news-sitemap.xml").write_text(content, encoding="utf-8")
 
 
+def write_root_sitemap_index(now: datetime) -> None:
+    stamp = now.astimezone(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+    content = f'''<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>{SITE}/sitemap-main.xml</loc><lastmod>{stamp}</lastmod></sitemap>
+  <sitemap><loc>{SITE}/forum/sitemap.xml</loc><lastmod>{stamp}</lastmod></sitemap>
+  <sitemap><loc>{SITE}/forum/news-sitemap.xml</loc><lastmod>{stamp}</lastmod></sitemap>
+</sitemapindex>
+'''
+    (ROOT / "sitemap.xml").write_text(content, encoding="utf-8")
+
+
 def write_all(posts, now: datetime) -> None:
     mapped = _posts_map(posts)
     write_feed(mapped["ar"], now, "ar")
     write_feed(mapped["en"], now, "en")
     write_sitemap(mapped, now.date().isoformat())
     write_news_sitemap(mapped, now)
+    write_root_sitemap_index(now)
