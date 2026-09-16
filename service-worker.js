@@ -1,5 +1,7 @@
-const CACHE_VERSION='rad-portfolio-v3.15.0';
+const CACHE_VERSION='rad-portfolio-v3.16.0';
 const CORE=['./','index.html','styles.css','projects.css','script.js','enhancements.css','enhancements.js','manifest.webmanifest','offline.html','assets/images/radwan-favicon.png','assets/images/radwan-favicon-180.png','favicon.ico'];
+const UI_CLEANUP='<style id="rad-ui-cleanup">#enhHeaderControls{display:none!important}</style><script id="rad-ui-cleanup-script">(()=>{const kill=()=>document.getElementById("enhHeaderControls")?.remove();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",kill,{once:true});else kill();const o=new MutationObserver(kill);o.observe(document.documentElement,{childList:true,subtree:true});setTimeout(()=>o.disconnect(),5000)})();<\/script>';
+const patchHtml=async res=>{const text=await res.text();const body=text.includes('</head>')?text.replace('</head>',UI_CLEANUP+'</head>'):UI_CLEANUP+text;const headers=new Headers(res.headers);headers.set('content-type','text/html; charset=utf-8');return new Response(body,{status:res.status,statusText:res.statusText,headers});};
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE_VERSION).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE_VERSION).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',event=>{
@@ -8,7 +10,7 @@ self.addEventListener('fetch',event=>{
   const url=new URL(req.url);
   if(url.origin!==self.location.origin)return;
   if(req.mode==='navigate'){
-    event.respondWith(fetch(req).then(res=>{const clone=res.clone();caches.open(CACHE_VERSION).then(c=>c.put(req,clone));return res;}).catch(()=>caches.match(req).then(r=>r||caches.match('offline.html'))));
+    event.respondWith(fetch(req).then(async res=>{const raw=res.clone();caches.open(CACHE_VERSION).then(c=>c.put(req,raw));return patchHtml(res);}).catch(()=>caches.match(req).then(async r=>r?patchHtml(r):patchHtml(await caches.match('offline.html')))));
     return;
   }
   if(/\.(?:png|jpe?g|webp|svg|gif|woff2?|ttf)$/i.test(url.pathname)){
