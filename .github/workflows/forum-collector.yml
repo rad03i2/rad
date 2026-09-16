@@ -57,6 +57,9 @@ jobs:
       - name: Select trend, write and publish one article
         run: python automation/forum/publisher.py
 
+      - name: Build crawlable Arabic and English forum hubs
+        run: python automation/forum/build_locale_pages.py
+
       - name: Upload publisher audit snapshot
         if: always()
         uses: actions/upload-artifact@v4
@@ -82,36 +85,3 @@ jobs:
           git commit -m "RDWAN Tech: 20-minute automated publication"
           git pull --rebase origin main
           git push origin HEAD:main
-
-      - name: Notify IndexNow directly
-        if: success()
-        shell: bash
-        env:
-          SITE_URL: https://rdwan.dev
-          INDEXNOW_KEY: ff7de3f199bfcac8fda652aec7caabcd
-        run: |
-          python - <<'PY' > /tmp/indexnow.json
-          import xml.etree.ElementTree as ET, json, os
-          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
-          urls=[]
-          for path in ('sitemap.xml','forum/sitemap.xml'):
-              try:
-                  root=ET.parse(path).getroot()
-                  urls.extend(x.text for x in root.findall('.//s:loc',ns) if x.text)
-              except Exception:
-                  pass
-          urls=list(dict.fromkeys(urls))
-          site=os.environ['SITE_URL'].rstrip('/')
-          host=site.split('://',1)[1].split('/')[0]
-          print(json.dumps({
-            'host':host,
-            'key':os.environ['INDEXNOW_KEY'],
-            'keyLocation':site+'/'+os.environ['INDEXNOW_KEY']+'.txt',
-            'urlList':urls[:10000]
-          }))
-          PY
-          sleep 20
-          curl -fsS -X POST 'https://api.indexnow.org/indexnow' \
-            -H 'Content-Type: application/json; charset=utf-8' \
-            --data-binary @/tmp/indexnow.json \
-            || echo "IndexNow notification was not accepted this run; publication remains committed."
