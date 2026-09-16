@@ -9,6 +9,10 @@ on:
     paths:
       - '.github/workflows/forum-collector.yml'
 
+permissions:
+  contents: write
+  copilot-requests: write
+
 concurrency:
   group: rdwan-tech-hourly-publisher
   cancel-in-progress: false
@@ -17,11 +21,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     timeout-minutes: 22
-    permissions:
-      contents: write
-      copilot-requests: write
-    outputs:
-      published: ${{ steps.publication_status.outputs.published }}
     env:
       GITHUB_TOKEN: ${{ github.token }}
       COPILOT_GITHUB_TOKEN: ${{ github.token }}
@@ -58,27 +57,6 @@ jobs:
       - name: Select trend, write and publish one article
         run: python automation/forum/publisher.py
 
-      - name: Detect publication result
-        id: publication_status
-        shell: bash
-        run: |
-          STATUS=$(python - <<'PY'
-          import json
-          from pathlib import Path
-          p=Path('automation/forum/state/publisher_report.json')
-          try:
-              print(json.loads(p.read_text(encoding='utf-8')).get('status',''))
-          except Exception:
-              print('')
-          PY
-          )
-          if [ "$STATUS" = "published" ]; then
-            echo "published=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "published=false" >> "$GITHUB_OUTPUT"
-          fi
-          echo "Publisher status: $STATUS"
-
       - name: Upload publisher audit snapshot
         if: always()
         uses: actions/upload-artifact@v4
@@ -105,59 +83,13 @@ jobs:
           git pull --rebase origin main
           git push origin HEAD:main
 
-  deploy:
-    needs: publish
-    if: needs.publish.outputs.published == 'true' || github.event_name == 'push'
-    runs-on: ubuntu-latest
-    timeout-minutes: 12
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    concurrency:
-      group: pages
-      cancel-in-progress: true
-    steps:
-      - name: Checkout latest main
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 1
-
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: '.'
-      - name: Deploy latest RDWAN Tech publication
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-  notify-indexnow:
-    needs: [publish, deploy]
-    if: needs.deploy.result == 'success'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout latest main
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 1
-
-      - name: Submit site and forum URLs to IndexNow
+      - name: Notify IndexNow directly
+        if: success()
         shell: bash
         env:
           SITE_URL: https://rdwan.dev
           INDEXNOW_KEY: ff7de3f199bfcac8fda652aec7caabcd
         run: |
-          if ! curl -fsS --max-time 15 "$SITE_URL/" >/dev/null; then
-            echo "Public custom domain is not reachable; skipping IndexNow without failing."
-            exit 0
-          fi
           python - <<'PY' > /tmp/indexnow.json
           import xml.etree.ElementTree as ET, json, os
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
@@ -178,7 +110,8 @@ jobs:
             'urlList':urls[:10000]
           }))
           PY
+          sleep 20
           curl -fsS -X POST 'https://api.indexnow.org/indexnow' \
             -H 'Content-Type: application/json; charset=utf-8' \
-            --data-binary @/tmp/indexnow.json
-          echo "IndexNow submission sent for RDWAN Tech."
+            --data-binary @/tmp/indexnow.json \
+            || echo "IndexNow notification was not accepted this run; publication remains committed."
