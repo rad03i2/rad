@@ -1,0 +1,93 @@
+name: RDWAN Tech Backup Publisher
+# Independent backup scheduler. It runs ten minutes after the primary slots.
+# publisher.py enforces the minimum 20-minute gap, so this workflow only
+# publishes when the primary schedule was missed or delayed.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '12,32,52 * * * *'
+
+permissions:
+  contents: write
+  copilot-requests: write
+
+concurrency:
+  group: rdwan-tech-publication-write
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      COPILOT_GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: automation/forum/requirements.txt
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -r automation/forum/requirements.txt
+          npm install -g @github/copilot
+
+      - name: Run pipeline tests
+        run: python -m unittest discover -s automation/forum/tests -v
+
+      - name: Collect and evaluate fresh stories
+        run: python automation/forum/run.py
+
+      - name: Publish only if primary missed the due window
+        run: python automation/forum/publisher.py
+
+      - name: Build crawlable Arabic and English forum hubs
+        run: python automation/forum/build_locale_pages.py
+
+      - name: Finalize SEO indexability
+        run: python automation/forum/seo_finalize.py
+
+      - name: Normalize canonical host across HTML
+        run: python automation/seo/normalize_html.py
+
+      - name: Upload backup audit snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rdwan-tech-backup-${{ github.run_number }}
+          path: |
+            automation/forum/state/run_report.json
+            automation/forum/state/publisher_report.json
+            automation/forum/state/candidates.json
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: Commit publication and state
+        shell: bash
+        run: |
+          git config user.name "RDWAN Tech Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add forum sitemap.xml automation/forum/state/*.json
+          git add -- ':(glob)**/*.html'
+          if git diff --cached --quiet; then
+            echo "Backup watchdog completed; primary did not need recovery."
+            exit 0
+          fi
+          git commit -m "RDWAN Tech: backup publisher recovery"
+          git pull --rebase origin main
+          git push origin HEAD:main
