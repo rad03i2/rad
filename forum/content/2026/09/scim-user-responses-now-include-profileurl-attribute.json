@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 2,
+  "template": "article",
+  "id": "509b91e3e4df2739cbaa",
+  "slug": "scim-user-responses-now-include-profileurl-attribute",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/scim-user-responses-now-include-profileurl-attribute/",
+    "en": "/forum/en/ai/scim-user-responses-now-include-profileurl-attribute/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub تضيف profileUrl إلى استجابات مستخدمي SCIM",
+      "description": "أعلنت GitHub إتاحة السمة القياسية profileUrl في استجابات SCIM لتسهيل ربط الهويات الخارجية بحسابات GitHub من دون عمليات بحث إضافية.",
+      "deck": "أصبحت استجابات مستخدمي SCIM من GitHub تتضمن السمة القياسية profileUrl، بما يتيح لموفري الهوية وفرق تقنية المعلومات الوصول مباشرة إلى عنوان الحساب المرتبط بالهوية الخارجية. ويأتي التغيير بشكل إضافي لا يتطلب تعديلات على التكاملات القائمة.",
+      "summaryBullets": [
+        "السمة profileUrl تتبع المعيار المحدد في RFC 7643.",
+        "القيمة تتضمن العنوان المطلق لحساب GitHub المرتبط بالهوية الخارجية.",
+        "السمة متاحة عبر نقطة النهاية /Users في استجابات SCIM للمؤسسات وحسابات Enterprise.",
+        "لا تظهر profileUrl عندما لا تكون الهوية الخارجية مرتبطة بعد بمستخدم GitHub.",
+        "القيم الحالية للسمات الأخرى، ومنها userName، لم تتغير."
+      ],
+      "sections": [
+        {
+          "heading": "إضافة مباشرة إلى استجابات SCIM",
+          "paragraphs": [
+            "أعلنت GitHub أن استجابات مستخدمي SCIM أصبحت تتضمن السمة profileUrl، وهي سمة قياسية يحددها معيار RFC 7643. وتحمل هذه السمة العنوان المطلق لحساب GitHub المرتبط بالهوية الخارجية التي يجري التعامل معها عبر SCIM. ويمنح ذلك الأنظمة التي تقرأ استجابات SCIM مؤشراً مباشراً إلى الحساب المقابل، بدلاً من الاعتماد على خطوات إضافية لمطابقة السجل الخارجي مع حساب GitHub.",
+            "يظهر profileUrl ضمن استجابة نقطة النهاية /Users. ووفق الإعلان، يحظى هذا الدعم باتساق عبر استجابات SCIM الخاصة بالمؤسسات وكذلك استجابات SCIM على مستوى Enterprise. وتستفيد من الإضافة موفرو الهوية وفرق تقنية المعلومات التي تستخدم SCIM لتوفير الوصول إلى GitHub وإدارته، إذ يمكنها قراءة السمة عند توفرها ضمن البيانات المعادة."
+          ]
+        },
+        {
+          "heading": "تقليل الحاجة إلى البحث والاستنتاج",
+          "paragraphs": [
+            "قبل هذا التحديث، كانت مطابقة سجل SCIM مع حساب GitHub المقابل تتطلب عمليات بحث إضافية أو استنتاج العلاقة من سمات أخرى. وتقول GitHub إن profileUrl تعالج هذه الفجوة من خلال توفير عنوان الحساب في الاستجابة نفسها. وبهذا يستطيع النظام المستهلك للاستجابة استخدام قيمة موحدة للوصول إلى الحساب المرتبط، بدلاً من بناء منطق خاص للتخمين أو إجراء استعلامات مساندة.",
+            "لا يعني وجود السمة أن كل سجل SCIM سيحتوي عليها. فقد أوضحت GitHub أن profileUrl تُحذف من الاستجابة عندما لا تكون الهوية الخارجية مرتبطة بعد بمستخدم GitHub. لذلك يجب على التكاملات التعامل مع السمة باعتبارها قيمة قد تكون متاحة أو غائبة بحسب حالة الربط، من دون افتراض وجود عنوان لكل هوية خارجية."
+          ]
+        },
+        {
+          "heading": "دعم موثق في مخطط SCIM",
+          "paragraphs": [
+            "أدرجت GitHub السمة الجديدة في مخطط SCIM الخاص بواجهة OpenAPI، كما أضافتها إلى أمثلة الاستجابات. ويساعد هذا التوثيق موفري الهوية وفرق الإدارة على معرفة شكل الحقل ومكان ظهوره عند تطوير الموصلات أو مراجعة الاستجابات التي تعيدها واجهات SCIM.",
+            "ويأتي توحيد السمة داخل المخطط والأمثلة بالتوازي مع إتاحتها في نقطة النهاية /Users، ما يوفر مرجعاً واضحاً للأنظمة التي تريد الاستفادة منها. وبما أن profileUrl سمة معيارية وفق RFC 7643، فإن إضافتها تقدم بيانات الربط ضمن صيغة معروفة بدلاً من الاعتماد على حقل مخصص أو آلية خاصة بمزود واحد."
+          ]
+        },
+        {
+          "heading": "التكاملات القائمة لا تتأثر",
+          "paragraphs": [
+            "أكدت GitHub أن userName والسمات الأخرى تواصل إعادة القيم نفسها التي كانت تعيدها سابقاً. ويشمل ذلك التكاملات الحالية مع SCIM وGraphQL وأنظمة إدارة الهوية، التي لا تحتاج إلى تغيير كي تستمر في العمل. وتصف الشركة التحديث بأنه تغيير إضافي، أي أنه يوسع البيانات المتاحة من دون تعديل القيم القائمة أو فرض مسار جديد على المستهلكين الحاليين.",
+            "وبناءً على ذلك، لا يلزم اتخاذ إجراء بالنسبة إلى التكاملات الموجودة. أما الجهات التي تريد استخدام التحسين الجديد، فيمكنها بدء قراءة profileUrl عندما تكون السمة موجودة في استجابات SCIM. ويظل من الضروري أن يحتفظ منطق التكامل بالتعامل الحالي مع السجلات التي لا تتضمن السمة بسبب عدم اكتمال ربط الهوية الخارجية بحساب GitHub."
+          ]
+        },
+        {
+          "heading": "ما الذي يتغير لفرق تقنية المعلومات؟",
+          "paragraphs": [
+            "بالنسبة إلى الفرق التي توفر حسابات GitHub عبر موفري الهوية، يقدم profileUrl طريقة مباشرة لقراءة الحساب المرتبط بالهوية الخارجية من استجابة SCIM. وقد يقلل ذلك من الحاجة إلى تنفيذ عمليات مطابقة منفصلة أو استنتاج الحساب من معلومات أخرى، خصوصاً في البيئات التي تدير هويات على مستوى المؤسسة أو عبر عدة مؤسسات.",
+            "ولا يغير الإعلان سلوك توفير الوصول نفسه، ولا يذكر تعديلاً في userName أو في بقية السمات. التغيير الأساسي هو إتاحة عنوان الحساب عند وجود الربط، مع توثيق الحقل ضمن مخطط OpenAPI وأمثلة الاستجابة. وتواصل GitHub إحالة المستخدمين إلى وثائق REST API الخاصة بـ Enterprise SCIM وOrg SCIM لمراجعة التفاصيل الفنية المتعلقة بالاستجابات."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "SCIM",
+        "إدارة الهوية",
+        "توفير الوصول",
+        "profileUrl",
+        "RFC 7643",
+        "واجهات API"
+      ],
+      "entities": [
+        "GitHub",
+        "SCIM",
+        "RFC 7643",
+        "OpenAPI",
+        "GraphQL",
+        "Enterprise SCIM",
+        "Org SCIM"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "17 سبتمبر 2026",
+      "modifiedLabel": "17 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 623
+    },
+    "en": {
+      "title": "GitHub Adds profileUrl to SCIM User Responses",
+      "description": "GitHub has added the standard profileUrl attribute to SCIM user responses, giving identity teams a direct URL for linked GitHub accounts.",
+      "deck": "GitHub SCIM user responses now include the standard profileUrl attribute defined by RFC 7643. The addition gives identity providers and IT teams a direct way to identify the GitHub account connected to an external identity.",
+      "summaryBullets": [
+        "The profileUrl attribute is returned from GitHub's SCIM /Users endpoint.",
+        "It contains the absolute URL of the GitHub account linked to an external identity.",
+        "The attribute is supported in organization and enterprise SCIM responses.",
+        "profileUrl is omitted when an external identity has not yet been linked to a GitHub user.",
+        "GitHub says the additive change does not require action from existing integrations."
+      ],
+      "sections": [
+        {
+          "heading": "A direct link to the GitHub account",
+          "paragraphs": [
+            "GitHub has updated its SCIM user responses to include profileUrl, a standard attribute defined by the System for Cross-domain Identity Management specification in RFC 7643. When an external identity is linked to a GitHub user, the attribute contains the absolute URL of that GitHub account.",
+            "The change addresses a gap in the information previously available through GitHub's SCIM responses. According to GitHub, matching a SCIM record with the corresponding GitHub account could previously require additional lookups or inference. Identity providers and IT teams can now read the account URL directly when processing the response."
+          ]
+        },
+        {
+          "heading": "Available through the Users endpoint",
+          "paragraphs": [
+            "GitHub says profileUrl is returned from the SCIM /Users endpoint. The attribute is consistently supported across both organization and enterprise SCIM responses, allowing teams to use the same field when managing access at either level.",
+            "This consistency can simplify workflows that provision or manage GitHub access through an identity provider. A system receiving a SCIM user record can inspect profileUrl to establish the relationship between the external identity and the associated GitHub account, rather than relying on a separate matching process."
+          ]
+        },
+        {
+          "heading": "The field depends on identity linking",
+          "paragraphs": [
+            "profileUrl is not present in every SCIM response. GitHub states that the attribute is omitted when an external identity has not yet been linked to a GitHub user. Systems consuming the response therefore need to treat the field as conditional and continue handling records where no linked account URL is available.",
+            "The omission distinguishes an unlinked external identity from a record that already corresponds to a GitHub account. The supplied changelog does not describe any change to how identities are linked, but it makes the result of that relationship easier to read when the link exists."
+          ]
+        },
+        {
+          "heading": "Existing attributes remain unchanged",
+          "paragraphs": [
+            "GitHub says userName and other attributes continue to return the same values as before. The company characterizes the profileUrl addition as an additive change, meaning existing SCIM integrations can continue using their current fields without modification.",
+            "The changelog also says existing SCIM, GraphQL and identity management integrations are not affected. Organizations that do not need the new mapping can leave their current provisioning logic unchanged, while teams that want to use it can begin reading profileUrl whenever it is present in a response."
+          ]
+        },
+        {
+          "heading": "Documentation and next steps for adopters",
+          "paragraphs": [
+            "The new attribute has been added to GitHub's SCIM OpenAPI schema and example responses. This gives developers and administrators a documented representation of the field when reviewing or updating integrations for enterprise or organization provisioning.",
+            "For teams that want to adopt the mapping, GitHub recommends starting to read profileUrl in SCIM responses when it is available. No action is required for existing integrations, according to the company's announcement. The supplied update does not identify any additional configuration, migration, or rollout requirement.",
+            "The change is focused on making an existing identity relationship more directly discoverable in SCIM data. By exposing the linked GitHub account URL in the response, GitHub gives identity providers and IT administrators another standardized attribute for account reconciliation and access-management workflows."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "SCIM",
+        "profileUrl",
+        "RFC 7643",
+        "identity management",
+        "access provisioning",
+        "enterprise IT"
+      ],
+      "entities": [
+        "GitHub",
+        "SCIM",
+        "RFC 7643",
+        "GitHub REST API",
+        "identity providers"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 17, 2026",
+      "modifiedLabel": "September 17, 2026",
+      "readMinutes": 3,
+      "wordCount": 602
+    }
+  },
+  "datePublished": "2026-09-17T01:37:24.268243+03:00",
+  "dateModified": "2026-09-17T01:37:24.268243+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/scim-user-responses-now-include-profileurl-attribute/hero.webp",
+    "card": "/forum/assets/posts/2026/09/scim-user-responses-now-include-profileurl-attribute/card.webp",
+    "social": "/forum/assets/posts/2026/09/scim-user-responses-now-include-profileurl-attribute/social.jpg",
+    "alt": {
+      "ar": "GitHub تضيف profileUrl إلى استجابات مستخدمي SCIM",
+      "en": "GitHub Adds profileUrl to SCIM User Responses"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/themes/github-2021-child/dist/img/social-v3-improvements.jpg",
+    "sourceType": "official",
+    "generatedFallback": false
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-16-scim-user-responses-now-include-a-profileurl-attribute/",
+      "type": "official",
+      "title": "SCIM user responses now include a profileUrl attribute"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-16-scim-user-responses-now-include-a-profileurl-attribute",
+  "sourceTitle": "SCIM user responses now include a profileUrl attribute",
+  "trendScore": 115.11,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-16T22:38:01+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/scim-user-responses-now-include-profileurl-attribute.json"
+}
