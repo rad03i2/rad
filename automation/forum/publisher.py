@@ -5,6 +5,7 @@ import math
 import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from typing import Callable
 
 from common import CONFIG, STATE, load_json, now_iso, save_json
 from image_pipeline import prepare_images
@@ -107,6 +108,58 @@ def _quality_gate(story: dict, sources: list[dict], editions: dict) -> tuple[boo
     if not primary_official and len(usable) < 2:
         errors.append("journalism_requires_two_sources")
     return not errors, errors
+
+
+def _bounded_int(settings: dict, key: str, default: int, minimum: int, maximum: int) -> int:
+    try:
+        value = int(settings.get(key, default))
+    except (TypeError, ValueError):
+        value = default
+    return max(minimum, min(maximum, value))
+
+
+def _generate_qualified_editions(
+    story: dict,
+    source_pack: list[dict],
+    settings: dict,
+    writer_fn: Callable = write_article,
+) -> tuple[dict | None, list[str], list[dict], str]:
+    """Generate publication-ready bilingual editions without weakening the quality gate.
+
+    A failed draft is retried with the exact quality errors as feedback. If every
+    draft attempt fails, the caller can move on to another story instead of
+    failing the whole scheduled publishing cycle.
+    """
+    max_attempts = _bounded_int(settings, "publisherDraftAttempts", 2, 1, 3)
+    feedback: list[str] | None = None
+    attempts: list[dict] = []
+    last_errors: list[str] = []
+
+    for attempt_number in range(1, max_attempts + 1):
+        try:
+            editions = writer_fn(story, source_pack, settings, feedback)
+        except Exception as exc:
+            message = f"{type(exc).__name__}: {exc}"
+            attempts.append({"attempt": attempt_number, "status": "generation_error", "error": message})
+            last_errors = [f"generation_error:{message}"]
+            feedback = last_errors
+            continue
+
+        ok, errors = _quality_gate(story, source_pack, editions)
+        attempts.append({
+            "attempt": attempt_number,
+            "status": "passed" if ok else "quality_rejected",
+            "errors": errors,
+            "word_count_ar": _word_count(editions.get("ar", {})) if isinstance(editions, dict) else 0,
+            "word_count_en": _word_count(editions.get("en", {})) if isinstance(editions, dict) else 0,
+        })
+        if ok:
+            return editions, [], attempts, "passed"
+        last_errors = errors
+        feedback = errors
+
+    failure_type = "quality_rejected" if any(a.get("status") == "quality_rejected" for a in attempts) else "generation_error"
+    return None, last_errors, attempts, failure_type
 
 
 def _clean_sources(source_pack: list[dict]) -> list[dict]:
@@ -225,6 +278,19 @@ def _load_posts() -> dict[str, list[dict]]:
     return {"ar": list((ar_doc or {}).get("posts", [])), "en": list((en_doc or {}).get("posts", []))}
 
 
+def _mark_candidate_result(queue_doc: dict, story: dict, status: str, errors: list[str], attempts: list[dict]) -> None:
+    for item in queue_doc.get("items", []):
+        if item.get("id") != story.get("id"):
+            continue
+        item["last_publisher_status"] = status
+        item["last_publisher_at"] = now_iso()
+        item["quality_errors"] = errors
+        item["publisher_attempts"] = attempts
+        if status == "quality_rejected":
+            item["status"] = "quality_rejected"
+        break
+
+
 def main() -> int:
     settings = load_json(CONFIG / "settings.json", {})
     if not settings.get("publishingEnabled", False) or settings.get("dryRun", False):
@@ -247,20 +313,68 @@ def main() -> int:
 
     published_urls = {item.get("source_url") for item in history.get("items", []) if item.get("source_url")}
     published_ids = {item.get("story_id") for item in history.get("items", []) if item.get("story_id")}
-    queue = [item for item in queue if item.get("url") not in published_urls and item.get("id") not in published_ids and item.get("status") != "published"]
+    terminal_statuses = {"published", "quality_rejected"}
+    queue = [
+        item for item in queue
+        if item.get("url") not in published_urls
+        and item.get("id") not in published_ids
+        and item.get("status") not in terminal_statuses
+    ]
     ranked = rank_candidates(queue, settings, posts_by_locale["ar"])
     if not ranked:
         _save_report("no_candidate")
         print("Hourly publisher: no eligible trend candidate.")
         return 0
 
-    story = ranked[0]
-    source_pack = build_source_pack(story, settings)
-    editions = write_article(story, source_pack, settings)
-    ok, errors = _quality_gate(story, source_pack, editions)
-    if not ok:
-        _save_report("quality_rejected", story=story.get("title"), errors=errors)
-        raise RuntimeError("Quality gate rejected generated article: " + ", ".join(errors))
+    max_candidates = _bounded_int(settings, "publisherCandidateAttempts", 3, 1, 5)
+    candidate_reports: list[dict] = []
+    story = None
+    source_pack = None
+    editions = None
+    selected_attempts: list[dict] = []
+
+    for candidate_rank, candidate in enumerate(ranked[:max_candidates], 1):
+        try:
+            candidate_sources = build_source_pack(candidate, settings)
+        except Exception as exc:
+            report = {
+                "rank": candidate_rank,
+                "story_id": candidate.get("id"),
+                "title": candidate.get("title"),
+                "status": "source_error",
+                "errors": [f"{type(exc).__name__}: {exc}"],
+                "attempts": [],
+            }
+            candidate_reports.append(report)
+            _mark_candidate_result(queue_doc, candidate, "source_error", report["errors"], [])
+            continue
+
+        generated, errors, attempts, status = _generate_qualified_editions(candidate, candidate_sources, settings)
+        report = {
+            "rank": candidate_rank,
+            "story_id": candidate.get("id"),
+            "title": candidate.get("title"),
+            "status": status,
+            "errors": errors,
+            "attempts": attempts,
+        }
+        candidate_reports.append(report)
+
+        if generated is not None:
+            story = candidate
+            source_pack = candidate_sources
+            editions = generated
+            selected_attempts = attempts
+            break
+
+        _mark_candidate_result(queue_doc, candidate, status, errors, attempts)
+
+    if story is None or source_pack is None or editions is None:
+        queue_doc["updated_at"] = now_iso()
+        save_json(STATE / "queue.json", queue_doc)
+        _save_report("no_publishable_candidate", candidates=candidate_reports)
+        print(f"Hourly publisher: no candidate passed the quality gate after {len(candidate_reports)} candidate(s); cycle completed without publishing.")
+        return 0
 
     slug = _slugify(story.get("title", ""), story.get("id", "story"))
     category_slug = story.get("category", "apps")
@@ -275,6 +389,7 @@ def main() -> int:
     record = _make_content_record(story, editions, source_pack, slug, now, images)
     content_path = CONTENT / f"{now.year:04d}" / f"{now.month:02d}" / f"{slug}.json"
     record["contentFile"] = content_path.relative_to(ROOT).as_posix()
+    record["generation"]["attempts"] = len(selected_attempts)
     save_json(content_path, record)
 
     rendered = render_to_files(record)
@@ -296,6 +411,8 @@ def main() -> int:
             item["published_url"] = record["urls"]["ar"]
             item["published_urls"] = record["urls"]
             item["content_file"] = record["contentFile"]
+            item["last_publisher_status"] = "published"
+            item["publisher_attempts"] = selected_attempts
     queue_doc["updated_at"] = now_iso()
     save_json(STATE / "queue.json", queue_doc)
 
@@ -314,6 +431,7 @@ def main() -> int:
         trend_score=record["trendScore"], word_count_ar=record["locales"]["ar"]["wordCount"],
         word_count_en=record["locales"]["en"]["wordCount"], source_count=len(record["sources"]),
         image_source=record["images"].get("sourceUrl"), image_fallback=record["images"].get("generatedFallback"),
+        generation_attempts=selected_attempts, candidates_considered=candidate_reports,
         template="forum/templates/article.html",
     )
     print(f"Published bilingual story: {record['urls']['ar']} + {record['urls']['en']}")
