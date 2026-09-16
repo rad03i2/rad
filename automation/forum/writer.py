@@ -1,0 +1,200 @@
+from __future__ import annotations
+
+import json
+import os
+import re
+from html import unescape
+
+import requests
+from bs4 import BeautifulSoup
+
+MODEL_ENDPOINT = "https://models.github.ai/inference/chat/completions"
+
+
+def _clean_text(text: str) -> str:
+    text = unescape(text or "")
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
+
+
+def _extract_page(url: str, user_agent: str) -> dict:
+    headers = {"User-Agent": user_agent, "Accept": "text/html,application/xhtml+xml"}
+    try:
+        response = requests.get(url, headers=headers, timeout=18, allow_redirects=True)
+        response.raise_for_status()
+    except Exception as exc:
+        return {"url": url, "ok": False, "error": str(exc), "text": ""}
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    for tag in soup(["script", "style", "noscript", "svg", "nav", "footer", "header", "form", "aside"]):
+        tag.decompose()
+
+    title = _clean_text((soup.title.string if soup.title and soup.title.string else ""))
+    meta = soup.find("meta", attrs={"name": "description"}) or soup.find("meta", attrs={"property": "og:description"})
+    description = _clean_text(meta.get("content", "") if meta else "")
+
+    candidates = []
+    for selector in ["article", "main", "[role='main']", ".article-body", ".post-content", ".entry-content"]:
+        node = soup.select_one(selector)
+        if node:
+            candidates.append(node)
+    root = max(candidates, key=lambda n: len(n.get_text(" ", strip=True)), default=soup.body or soup)
+
+    paragraphs = []
+    for p in root.find_all(["p", "li", "h2", "h3"]):
+        text = _clean_text(p.get_text(" ", strip=True))
+        if len(text) >= 45:
+            paragraphs.append(text)
+    body = "\n".join(paragraphs)
+    if not body:
+        body = _clean_text(root.get_text(" ", strip=True))
+
+    return {
+        "url": response.url,
+        "ok": True,
+        "title": title,
+        "description": description,
+        "text": body[:9000],
+    }
+
+
+def build_source_pack(story: dict, settings: dict) -> list[dict]:
+    user_agent = settings.get("userAgent", "RDWAN-Tech-Publisher/1.0")
+    sources = [{
+        "name": story.get("source", {}).get("name", story.get("domain", "Primary source")),
+        "url": story.get("url"),
+        "kind": story.get("source", {}).get("type", "unknown"),
+        "feed_title": story.get("title", ""),
+        "feed_summary": story.get("summary", ""),
+    }]
+    for source in story.get("verification", {}).get("corroborating_sources", [])[:3]:
+        sources.append({
+            "name": source.get("name", source.get("domain", "Corroborating source")),
+            "url": source.get("url"),
+            "kind": "corroborating",
+            "feed_title": source.get("title", ""),
+            "feed_summary": "",
+        })
+
+    pack = []
+    seen = set()
+    for src in sources:
+        url = src.get("url")
+        if not url or url in seen:
+            continue
+        seen.add(url)
+        page = _extract_page(url, user_agent)
+        pack.append({**src, **page})
+    return pack
+
+
+def _extract_json(text: str) -> dict:
+    text = text.strip()
+    text = re.sub(r"^```(?:json)?\s*", "", text, flags=re.I)
+    text = re.sub(r"\s*```$", "", text)
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        start, end = text.find("{"), text.rfind("}")
+        if start >= 0 and end > start:
+            return json.loads(text[start:end + 1])
+        raise
+
+
+def _call_model(model: str, prompt: str) -> dict:
+    token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        raise RuntimeError("GITHUB_TOKEN is required for GitHub Models")
+
+    payload = {
+        "model": model,
+        "messages": [
+            {
+                "role": "system",
+                "content": (
+                    "أنت محرر تقني عربي دقيق يعمل لصالح RDWAN Tech. "
+                    "اكتب فقط من الحقائق الموجودة في المصادر المرفقة. لا تخترع أرقاماً أو تصريحات أو سياقاً غير موجود. "
+                    "إذا اختلفت المصادر فاذكر الاختلاف بوضوح. لا تنسخ صياغة المصدر؛ أعد بناء الخبر بأسلوب عربي أصلي."
+                ),
+            },
+            {"role": "user", "content": prompt},
+        ],
+        "temperature": 0.2,
+        "max_tokens": 3200,
+    }
+    response = requests.post(
+        MODEL_ENDPOINT,
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+        json=payload,
+        timeout=90,
+    )
+    if response.status_code >= 400:
+        raise RuntimeError(f"GitHub Models error {response.status_code}: {response.text[:600]}")
+    data = response.json()
+    content = data["choices"][0]["message"]["content"]
+    return _extract_json(content)
+
+
+def write_article(story: dict, source_pack: list[dict], settings: dict) -> dict:
+    usable = [s for s in source_pack if s.get("ok") and (s.get("text") or s.get("feed_summary"))]
+    if not usable:
+        raise RuntimeError("No usable source text available")
+
+    source_text = []
+    for index, src in enumerate(usable, 1):
+        source_text.append(
+            f"SOURCE {index}\n"
+            f"Name: {src.get('name')}\n"
+            f"Type: {src.get('kind')}\n"
+            f"URL: {src.get('url')}\n"
+            f"Feed title: {src.get('feed_title', '')}\n"
+            f"Feed summary: {src.get('feed_summary', '')}\n"
+            f"Page title: {src.get('title', '')}\n"
+            f"Page description: {src.get('description', '')}\n"
+            f"Extracted text:\n{src.get('text', '')[:7000]}"
+        )
+
+    prompt = f"""
+القصة المرشحة:
+العنوان الأصلي: {story.get('title')}
+التصنيف: {story.get('category_label')} ({story.get('category')})
+درجة الترند الداخلية: {story.get('trend', {}).get('score')}
+وقت النشر لدى المصدر: {story.get('published_at')}
+
+المصادر:
+{'\n\n'.join(source_text)}
+
+المطلوب: أنشئ مقالاً عربياً أصلياً متكاملاً مناسباً لمنصة أخبار تقنية احترافية. ركز على: ما الذي حدث، التفاصيل المؤكدة، لماذا يهم، السياق التقني، وما الذي ينبغي متابعته لاحقاً. لا تجعل المقال إعلاناً للشركة. إذا كان المصدر بياناً رسمياً فرّق بين ما تقوله الشركة وبين الحقائق الخارجية. لا تضف رأياً شخصياً.
+
+أخرج JSON فقط بهذا الشكل:
+{{
+  "title": "عنوان عربي واضح وغير مضلل، يفضل 45-85 حرفاً",
+  "description": "وصف SEO دقيق بين 120 و165 حرفاً",
+  "deck": "مقدمة قصيرة من جملة أو جملتين",
+  "summary_bullets": ["3 إلى 5 نقاط مختصرة"],
+  "sections": [
+    {{"heading": "عنوان قسم", "paragraphs": ["فقرة", "فقرة"]}}
+  ],
+  "tags": ["4 إلى 8 وسوم عربية أو أسماء كيانات"],
+  "entities": ["الشركات أو المنتجات أو التقنيات الرئيسية"],
+  "article_type": "news",
+  "confidence_note": "سطر داخلي قصير يصف مدى اعتماد المقال على مصدر رسمي أو عدة مصادر"
+}}
+
+الشروط:
+- استهدف 650 إلى 1100 كلمة عربية إجمالاً.
+- 4 إلى 7 أقسام مفيدة، بلا حشو.
+- لا تستخدم عبارات مثل «بحسب معلوماتي» أو «كمساعد».
+- لا تخترع سعراً أو تاريخ إتاحة أو مواصفات إذا لم تذكرها المصادر.
+- لا تضع روابط داخل نص الفقرات؛ روابط المصادر ستضاف آلياً.
+- لا تكرر المقدمة في الأقسام.
+""".strip()
+
+    model = settings.get("githubModel", "openai/gpt-4.1-mini")
+    article = _call_model(model, prompt)
+
+    required = ["title", "description", "deck", "summary_bullets", "sections", "tags"]
+    missing = [k for k in required if not article.get(k)]
+    if missing:
+        raise RuntimeError(f"Model output missing fields: {', '.join(missing)}")
+    return article
