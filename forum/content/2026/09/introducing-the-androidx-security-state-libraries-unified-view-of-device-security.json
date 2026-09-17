@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 2,
+  "template": "article",
+  "id": "c23c1f248651df5666c1",
+  "slug": "introducing-the-androidx-security-state-libraries-unified-view-of-device-security",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/introducing-the-androidx-security-state-libraries-unified-view-of-device-security/",
+    "en": "/forum/en/apps/introducing-the-androidx-security-state-libraries-unified-view-of-device-security/"
+  },
+  "locales": {
+    "ar": {
+      "title": "غوغل تطلق مكتبات AndroidX Security State لأمن أندرويد",
+      "description": "أعلنت غوغل الإصدار المستقر من مكتبات AndroidX Security State لتقييم حماية أجهزة أندرويد ومتابعة التحديثات على مستوى المكونات.",
+      "deck": "أعلنت غوغل الإصدار المستقر من مكتبة AndroidX Security State بالإصدار 1.1.0، إلى جانب Security State Provider 1.0.0. وتقدم المكتبتان طريقة موحدة لفهم الوضع الأمني للجهاز وتحديد التحديثات المتاحة لكل مكوّن.",
+      "summaryBullets": [
+        "تتيح المكتبة فحص مستوى التصحيح الأمني للنظام ووحداته وKernel كلٌّ على حدة.",
+        "تفرّق بين التصحيحات المثبتة، وآخر مستوى منشور، والتحديث الجاهز للتنزيل.",
+        "تساعد تطبيقات البنوك وإدارة الأجهزة على اتخاذ قرارات أمنية سياقية بدلاً من الحظر الشامل.",
+        "تتيح تقارير خاصة بالثغرات فحص معالجة ثغرات CVE الحرجة على الجهاز.",
+        "يمكن لمصنّعي الأجهزة وعملاء التحديثات عرض التحديثات المتاحة عبر آلية موحدة."
+      ],
+      "sections": [
+        {
+          "heading": "إصدارات مستقرة ورؤية موحدة",
+          "paragraphs": [
+            "أعلنت غوغل، عبر مدونة Android Developers، الإطلاق المستقر لمكتبة AndroidX Security State بالإصدار 1.1.0، ولمكتبة Security State Provider بالإصدار 1.0.0. وتهدف هذه الإصدارات إلى توفير آلية مركزية تمنح المطورين والشركاء في قطاع المؤسسات صورة أوضح عن الوضع الأمني الشامل لأجهزة أندرويد، إضافة إلى التحديثات التي ما زالت معلقة أو جاهزة للتثبيت.",
+            "تستهدف الأدوات الجديدة التطبيقات التي تتعامل مع بيانات أو عمليات حساسة، مثل تطبيقات المصارف والتقنية المالية والرعاية الصحية، وكذلك حلول إدارة الأجهزة المحمولة MDM. وبدلاً من الاعتماد على مستوى تصحيح أمني واحد يغطي الجهاز بصورة عامة، تسمح المكتبات بفحص حالة الحماية على مستوى مكونات محددة، ومعرفة ما إذا كانت هناك معالجات أمنية تنتظر التنفيذ."
+          ]
+        },
+        {
+          "heading": "ثلاثة مستويات لقياس حالة التصحيح",
+          "paragraphs": [
+            "تعتمد مكتبة androidx.security.state على التمييز بين ثلاثة مستويات رئيسية. يعبّر مستوى التصحيح المثبت على الجهاز DSPL عن آخر مستوى موجود ويعمل فعلياً لكل مكوّن من مكونات النظام، وتستعلم المكتبة عنه من خصائص الجهاز وإعداداته من دون إجراء اتصالات شبكية. أما مستوى التصحيح المنشور PSPL فهو أحدث مستوى أعلنته نشرات أمان أندرويد رسمياً لتلك المكونات.",
+            "ويشير مستوى التصحيح المتاح ASPL إلى التحديث الذي أصبح جاهزاً للتنزيل والتثبيت على جهاز محدد. وتستعلم التطبيقات عن هذه المعلومة بصورة غير متزامنة عبر اتصال بين العمليات مع عملاء التحديث الموجودين على الجهاز. ويساعد هذا الفصل بين المستويات على معرفة الفرق بين ما ثُبّت فعلاً، وما نُشر، وما يمكن تثبيته فوراً."
+          ]
+        },
+        {
+          "heading": "تفصيل بين النظام والوحدات والنواة",
+          "paragraphs": [
+            "تتعامل المكتبات مع النظام الأساسي لأندرويد بوصفه المكوّن الذي يتلقى تحديثاته عبر تحديثات النظام الهوائية القياسية أو تحديثات الشركة المصنّعة. كما تغطي وحدات النظام، وهي أجزاء معيارية من نظام التشغيل تُحدّث في الخلفية عبر تحديثات نظام غوغل بلاي ضمن مشروع Mainline.",
+            "وتشمل الرؤية أيضاً نواة النظام، وهي الطبقة التي تصل عتاد الجهاز ببرمجياته. ويُقيَّم مستوى حماية النواة عبر إصدارات الدعم طويل الأمد LTS، مثل 5.15.159 أو 6.1.91، بدلاً من ربط التقييم بتواريخ التصحيحات الشهرية فقط. وبذلك يمكن للتطبيق أو حل إدارة الأجهزة أن يحدد أي مكوّن يحتاج إلى معالجة بدقة أكبر."
+          ]
+        },
+        {
+          "heading": "قرارات أمنية أكثر سياقية للتطبيقات",
+          "paragraphs": [
+            "تتيح المقارنة بين DSPL وPSPL وASPL بناء قرارات أمنية لا تقوم على السماح أو المنع بصورة مطلقة. فعلى سبيل المثال، يستطيع تطبيق مصرفي أو مؤسسي التحقق من مستوى التصحيح الحالي قبل بدء عملية دفع مرتفعة القيمة أو تسجيل بيانات اعتماد جديدة، ثم فحص ما إذا كان تحديث مطلوب قد أصبح متاحاً ولم يُثبت بعد.",
+            "إذا كان التحديث بانتظار التثبيت، يمكن للتطبيق توجيه المستخدم إلى إعدادات النظام لإكمال العملية قبل متابعة الإجراء الحساس، بدلاً من منعه تلقائياً في كل الحالات. وتسمح المكتبة كذلك بالتحقق من معالجة ثغرات محددة، مثل الثغرات الحرجة المرتبطة بتقنيتي NFC أو Bluetooth، قبل السماح بعمليات الدفع باللمس أو مشاركة البيانات مع أجهزة قريبة.",
+            "وتوفر المكتبة فحوصاً متزامنة للوضع الأمني، بحيث تستطيع التطبيقات قراءة مستويات تصحيح النظام والوحدات والنواة عند بدء التشغيل ومقارنتها بخط الأساس الأمني الذي تتطلبه المؤسسة. كما يمكن استخدام تقارير خاصة بالجهاز من خدمة Open Source Vulnerabilities، المعروفة اختصاراً بـ OSV، للتدقيق برمجياً في معالجة ثغرات CVE محددة وحرجة."
+          ]
+        },
+        {
+          "heading": "توحيد عرض التحديثات لمصنّعي الأجهزة",
+          "paragraphs": [
+            "لا تقتصر المنظومة على مطوري التطبيقات. فمكتبة androidx.security.state.provider مخصصة لمصنّعي الأجهزة ومطوري عملاء التحديثات الهوائية، وتوفر آليات معيارية لإظهار مستوى التصحيح المتاح ASPL. وتقول غوغل إن تحديثات نظام غوغل بلاي تعرض هذه المعلومات بالفعل على أجهزة أندرويد التي تتضمن خدمات غوغل المحمولة، كما جرى ضم نظام Google Over-The-Air إلى الإطار، مع استمرار العمل مع مصنّعين حول العالم لضم عملاء التحديث لديهم.",
+            "وتذكر غوغل أن المكتبات تستطيع رفع مستوى الأمان الفعّال لمكوّن عندما لا يتضمن التحديث الشهري تهديدات جديدة تخصه. ويعني ذلك أن حالة المكوّن يمكن أن تعكس الحماية الفعلية من التهديدات المعروفة، لا مجرد وصول الجهاز إلى رقم تصحيح شهري جديد، مع استمرار ارتباط التقييم بالمعلومات الأمنية المنشورة والمعالجات المتاحة."
+          ]
+        },
+        {
+          "heading": "اعتماد التصحيحات المرحّلة في Android 17",
+          "paragraphs": [
+            "تقدم أندرويد 17، وفق إعلان غوغل، ميزة تسمح لمصنّعي الأجهزة بالإعلان عن إصلاحات أمنية محددة طُبقت فوق مستوى التصحيح الأمني SPL، وذلك عبر ملف Supplemental Patches XML. وتستهدف الميزة الحالات التي تنقل فيها الشركات إصلاحات بعينها إلى إصدارات أقدم من النظام قبل رفع مستوى التصحيح الموحد للجهاز.",
+            "وتعرض مكتبات Security State هذه المعلومات التفصيلية للتطبيقات والخدمات، بما يسمح باحتساب التصحيحات المرحّلة لحظة تطبيقها بدلاً من انتظار زيادة كاملة في مستوى SPL. وتدعو غوغل مطوري التطبيقات وحلول MDM إلى استخدام دليل فهم حالة أمان الجهاز، بينما يمكن لمصنّعي الأجهزة وعملاء التحديثات استخدام Security State Provider لإتاحة ASPL ونشر ملفات Supplemental Patches XML. كما أشارت إلى ملاحظات إصدار المكتبتين لمراجعة التغييرات وتوقيعات الواجهات البرمجية، وإلى أداة Android Issue Tracker لاستقبال الملاحظات والبلاغات."
+          ]
+        }
+      ],
+      "tags": [
+        "أندرويد",
+        "غوغل",
+        "AndroidX",
+        "الأمن السيبراني",
+        "تحديثات الأمان",
+        "إدارة الأجهزة المحمولة",
+        "تطبيقات المؤسسات"
+      ],
+      "entities": [
+        "Google",
+        "Android",
+        "AndroidX Security State",
+        "Security State Provider",
+        "Google Play system updates",
+        "Project Mainline",
+        "Android 17",
+        "Open Source Vulnerabilities"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "17 سبتمبر 2026",
+      "modifiedLabel": "17 سبتمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 803
+    },
+    "en": {
+      "title": "AndroidX Security State Libraries add unified device checks",
+      "description": "Android announced AndroidX Security State Libraries to give app developers and enterprises a component-level view of device security and pending updates.",
+      "deck": "Google has released AndroidX Security State 1.1.0 and Security State Provider 1.0.0 to help apps and enterprise tools assess device security at a component level rather than relying on a single patch marker.",
+      "summaryBullets": [
+        "Android introduced stable AndroidX Security State libraries for device security transparency.",
+        "The APIs move beyond a monolithic Security Patch Level to inspect system, modules, kernel, and CVEs.",
+        "Developers can compare current patch status with pending updates before sensitive workflows.",
+        "OEMs and OTA clients can expose update availability through a standardized framework.",
+        "The libraries also surface backported or supplemental fixes that improve a device’s effective security state."
+      ],
+      "sections": [
+        {
+          "heading": "A broader security picture for Android apps",
+          "paragraphs": [
+            "Android has announced the stable release of AndroidX Security State version 1.1.0 and AndroidX Security State Provider version 1.0.0, a pair of libraries designed to centralize how device security and pending updates are evaluated across the Android ecosystem. The company said the goal is to provide developers and enterprise partners with better visibility into the overall security posture of devices, especially where protection depends on more than a single update date or patch number.",
+            "The announcement is positioned around the needs of security-critical consumer apps, such as banking, fintech, and healthcare, as well as Mobile Device Management providers. Rather than relying on a coarse, monolithic Security Patch Level, the libraries allow applications to inspect security state per component. Android said this approach gives enterprises and app developers a more accurate view of whether a device is currently protected, whether remediations are pending, and whether specific vulnerabilities have been addressed."
+          ]
+        },
+        {
+          "heading": "Three patch states, but one security model",
+          "paragraphs": [
+            "The core framework defines three security states for a device component: Device Security Patch Level, Published Security Patch Level, and Available Security Patch Level. Device SPL refers to the security patch level currently installed and running on the device. Published SPL is the latest patch level officially listed in the Android Security Bulletin for that component. Available SPL reflects the patch level ready to be downloaded and installed on the device, as reported by update clients through inter-process communication.",
+            "Android said the framework covers the system, system modules, and kernel. The system is updated through standard or OEM system over-the-air updates. System modules are updated in the background through Google Play system updates, while the kernel is evaluated using Long-Term Support release versions rather than a monthly calendar date. This allows app developers and enterprises to consider real component-level protection instead of treating all parts of the device as if they share the same patch status."
+          ]
+        },
+        {
+          "heading": "Use cases for payment, access and compliance",
+          "paragraphs": [
+            "The libraries are intended for contextual security decisions that reflect actual device posture. Android said a banking or enterprise app can compare a device’s current security patch level to pending updates before initiating sensitive workflows, such as high-value payments or credential enrollment. If a device is waiting for a system update, an app can require the user to update before proceeding with that action. The company said this can reduce dependence on broad device access policies that may be too blunt for nuanced security decisions.",
+            "The framework also supports vulnerability-level auditing. Android said developers and enterprises can query whether specific high-risk Common Vulnerabilities and Exposures have been patched on the device, including critical fixes for NFC or Bluetooth before authorizing tap-to-pay or proximity data sharing. The company said such checks provide finer-grained control in situations where a device may appear broadly protected yet still lacks a specific fix relevant to a sensitive workflow."
+          ]
+        },
+        {
+          "heading": "Enterprise checks at launch and in-app guidance",
+          "paragraphs": [
+            "For enterprises, the libraries can help with synchronous posture checks at app launch. Android said apps can inspect installed patch levels for the system, system modules, and kernel, then compare them with the published patch state to verify whether the device meets a required baseline before unlocking sensitive corporate resources or biometric access. The design allows organizations to decide whether a device should proceed or be directed to update before access is granted.",
+            "The company also described pending update prompting as another enterprise scenario. Instead of immediately blocking an employee whose device is slightly behind on patches, an app can query Available SPL to check whether a pending system update or Google Play system update is staged and ready to install. If so, the app can display in-product guidance directing the user to System Settings to complete installation. The same mechanism can support high-assurance use cases that need to inspect whether a specific critical vulnerability has been resolved."
+          ]
+        },
+        {
+          "heading": "A standard for OEMs and OTA clients",
+          "paragraphs": [
+            "For OEMs and over-the-air client developers, the companion Security State Provider library exposes update availability through standardized mechanisms. Android said Google Play system updates already expose Available SPL across GMS Android devices and that Google Over-the-Air has been onboarded to the standardized framework. The company said it is working with OEMs worldwide to onboard their OTA clients as well.",
+            "Android also said the framework improves how backported or supplemental fixes are credited. When a monthly security update does not include new threats for a specific component, the libraries can increase the effective security state for that component so the device is properly recognized as protected against all known threats. Separately, Android 17 adds a mechanism for OEMs to declare security fixes applied above the Security Patch Level through a Supplemental Patches XML file, allowing them to prove compliance without waiting for a full monolithic SPL bump. The Security State libraries surface this information to apps and services as soon as those fixes are implemented."
+          ]
+        }
+      ],
+      "tags": [
+        "AndroidX",
+        "Android",
+        "device security",
+        "Security Patch Level",
+        "Google Play system updates",
+        "Mobile Device Management",
+        "OSV",
+        "OTA"
+      ],
+      "entities": [
+        "Android",
+        "AndroidX Security State",
+        "AndroidX Security State Provider",
+        "Google Play system updates",
+        "Mobile Device Management (MDM)",
+        "Open Source Vulnerabilities (OSV)",
+        "Google Over-the-Air (GOTA)",
+        "Android 17"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "September 17, 2026",
+      "modifiedLabel": "September 17, 2026",
+      "readMinutes": 5,
+      "wordCount": 914
+    }
+  },
+  "datePublished": "2026-09-17T23:36:20.040386+03:00",
+  "dateModified": "2026-09-17T23:36:20.040386+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/introducing-the-androidx-security-state-libraries-unified-view-of-device-security/hero.webp",
+    "card": "/forum/assets/posts/2026/09/introducing-the-androidx-security-state-libraries-unified-view-of-device-security/card.webp",
+    "social": "/forum/assets/posts/2026/09/introducing-the-androidx-security-state-libraries-unified-view-of-device-security/social.jpg",
+    "alt": {
+      "ar": "غوغل تطلق مكتبات AndroidX Security State لأمن أندرويد",
+      "en": "AndroidX Security State Libraries add unified device checks"
+    },
+    "credit": "Android Developers",
+    "sourceUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgSiqTFG-rKnMR-2Gd5GcVfhHH41U_MTW278b8cFy5g_0SkfNoJjS_CLh47SvXrpXDCvKT5xm4XLH9z9LwbNG-1mQOmB8kzys5FaiiSFoX07bjF2oej9YZgP7j_c6M_phtxoH_Hv0Dk0Wj5VY0HLntiuWvFn8B-6W10aC-H73REmv_2Vv_Ali0CuIiPlY8/s1600/AndroidX%20Security%20State%20Library_Blog.png",
+    "sourceType": "official",
+    "generatedFallback": false
+  },
+  "sources": [
+    {
+      "name": "Android Developers",
+      "url": "https://android-developers.googleblog.com/2026/09/introducing-androidx-security-state-libraries.html",
+      "type": "official",
+      "title": "Introducing the AndroidX Security State Libraries: A Unified View of Device Security"
+    }
+  ],
+  "sourceUrl": "https://android-developers.googleblog.com/2026/09/introducing-androidx-security-state-libraries.html",
+  "sourceTitle": "Introducing the AndroidX Security State Libraries: A Unified View of Device Security",
+  "trendScore": 135.38,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-17T20:36:20+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/introducing-the-androidx-security-state-libraries-unified-view-of-device-security.json"
+}
