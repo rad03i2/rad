@@ -76,10 +76,12 @@ def _entity_counter(items: list[dict], window_hours: float) -> Counter:
 def rank_candidates(items: list[dict], settings: dict, published_posts: list[dict]) -> list[dict]:
     window = float(settings.get("trendWindowHours", 24))
     min_trend = float(settings.get("minimumTrendScore", 62))
+    allow_any_verified = bool(settings.get("allowAnyVerifiedTechStory", False))
     entity_counts = _entity_counter(items, window)
     recently_published_categories = [p.get("categorySlug") for p in published_posts[:6] if p.get("categorySlug")]
 
     ranked: list[dict] = []
+    verified_fallback: list[dict] = []
     for item in items:
         age = _age_hours(item)
         if age > max(window, 36):
@@ -132,8 +134,19 @@ def rank_candidates(items: list[dict], settings: dict, published_posts: list[dic
             "entity_momentum": round(momentum_bonus, 2),
             "category_boost": category_bonus,
         }
-        if trend_score >= min_trend and verification.get("publish_eligible"):
-            ranked.append(enriched)
 
-    ranked.sort(key=lambda x: (x.get("trend", {}).get("score", 0), x.get("published_at") or ""), reverse=True)
-    return ranked
+        if verification.get("publish_eligible"):
+            verified_fallback.append(enriched)
+            if trend_score >= min_trend:
+                ranked.append(enriched)
+
+    sort_key = lambda x: (x.get("trend", {}).get("score", 0), x.get("published_at") or "")
+    ranked.sort(key=sort_key, reverse=True)
+    if ranked or not allow_any_verified:
+        return ranked
+
+    # The editorial fallback still requires a verified technology source, but it
+    # does not require the story to be unusually popular or high-trending. This
+    # keeps the 20-minute cadence moving when the news cycle is quiet.
+    verified_fallback.sort(key=sort_key, reverse=True)
+    return verified_fallback
