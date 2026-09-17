@@ -41,6 +41,34 @@ def _eligible_queue(queue_doc: dict, history: dict) -> list[dict]:
     ]
 
 
+def _compact_source_pack(source_pack: list[dict]) -> list[dict]:
+    """Persist only source metadata needed at publication time.
+
+    Full extracted source text is useful while drafting, but keeping it in the
+    repository for every prepared cycle creates large noisy commits. Images are
+    prepared before this compaction and the final article already passed the
+    quality gate, so publication only needs source attribution metadata.
+    """
+    compact = []
+    seen = set()
+    for source in source_pack:
+        url = str(source.get("url") or "").strip()
+        if not url or url in seen:
+            continue
+        seen.add(url)
+        compact.append({
+            "url": url,
+            "name": source.get("name") or source.get("domain") or "Source",
+            "domain": source.get("domain"),
+            "kind": source.get("kind") or source.get("type") or "source",
+            "type": source.get("type") or source.get("kind") or "source",
+            "feed_title": source.get("feed_title") or source.get("title") or "",
+            "title": source.get("title") or source.get("feed_title") or "",
+            "ok": True,
+        })
+    return compact
+
+
 def _prepared_is_valid(prepared: dict, queue_doc: dict, history: dict, settings: dict, now: datetime) -> bool:
     if not isinstance(prepared, dict) or prepared.get("status") != "ready":
         return False
@@ -140,7 +168,7 @@ def _prepare_next(settings: dict, queue_doc: dict, history: dict, now: datetime,
             "prepared_at": now_iso(),
             "target_publish_at": target.isoformat(),
             "story": candidate,
-            "source_pack": source_pack,
+            "source_pack": _compact_source_pack(source_pack),
             "editions": editions,
             "selected_attempts": attempts,
             "candidate_reports": candidate_reports,
