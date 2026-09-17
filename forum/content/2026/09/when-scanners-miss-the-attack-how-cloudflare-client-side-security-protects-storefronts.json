@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 2,
+  "template": "article",
+  "id": "3885c69d0e0e129d0bb5",
+  "slug": "when-scanners-miss-the-attack-how-cloudflare-client-side-security-protects-storefronts",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/when-scanners-miss-the-attack-how-cloudflare-client-side-security-protects-storefronts/",
+    "en": "/forum/en/ai/when-scanners-miss-the-attack-how-cloudflare-client-side-security-protects-storefronts/"
+  },
+  "locales": {
+    "ar": {
+      "title": "كلاودفلير تكشف هجمات JavaScript تفلت من الفحص التقليدي",
+      "description": "كشفت كلاودفلير أربع حملات JavaScript خبيثة استهدفت متاجر إلكترونية، ورصدها نموذج Page Shield ML رغم غياب معظمها عن أدوات الفحص العامة.",
+      "deck": "أعلنت كلاودفلير أن نماذج التعلم الآلي في خدمة Client-Side Security رصدت أربع عمليات خبيثة شملت ثماني حمولات JavaScript أثناء عملها على متاجر إلكترونية. وتقول الشركة إن أدوات الفحص التقليدية لم تُصدر حكماً ضاراً على معظم هذه الحمولات.",
+      "summaryBullets": [
+        "نموذج Page Shield ML رصد ثماني حمولات خبيثة في حركة مرور حية على واجهات متاجر إلكترونية.",
+        "سبع حمولات من أصل ثمانٍ لم تظهر في VirusTotal، بينما لم يصدر URLScan حكماً خبيثاً على أي منها.",
+        "الهجمات تنوعت بين اختطاف عمولات الإحالة، اعتراض النقرات، التلاعب بالتحليلات، وتحميل شيفرات عن بُعد.",
+        "تعتمد المنظومة على شبكة عصبية بيانية، ثم تستخدم نموذجاً لغوياً كبيراً ومراجعة نماذج متقدمة للتحقق."
+      ],
+      "sections": [
+        {
+          "heading": "هجمات خفية تحت واجهة متجر تبدو سليمة",
+          "paragraphs": [
+            "قالت كلاودفلير إن صفحات المتاجر الحديثة قد تبدو طبيعية تماماً للمستخدم: المنتجات تظهر، والصفحة تُحمّل، وعمليات الدفع تستمر. لكن شيفرة JavaScript تعمل في المتصفح قد تنفذ في الخلفية سلوكاً لم يصرح به مالك الموقع، مثل تحويل إيرادات الإحالة إلى جهة أخرى، أو اختطاف عمليات البحث والنقر، أو العبث ببيانات التحليلات، أو سؤال خادم بعيد عن الشيفرة التي ينبغي تنفيذها لاحقاً.",
+            "وترى الشركة أن هذه الفجوة هي المجال الذي صُمم نموذج التعلم الآلي في Client-Side Security، المعروف ضمن هذه التحقيقات باسم Page Shield ML، لكشفه. ووفقاً لما نشرته كلاودفلير، تابعت المنظومة أربع عمليات ظهرت في بيئات حقيقية، وضمت ثماني حمولات خبيثة مختلفة."
+          ]
+        },
+        {
+          "heading": "نتائج تختلف عن أدوات الفحص العامة",
+          "paragraphs": [
+            "توضح كلاودفلير أن اكتشاف الحمولات تم آلياً، ثم تحقق محللون بشريون من كل نتيجة بعد أن أطلق النظام تنبيهه. وعند فحص الحملات نفسها لاحقاً باستخدام أدوات أمنية عامة، لم تظهر سبع حمولات من أصل ثمانٍ في VirusTotal، كما لم يعرض URLScan حكماً خبيثاً لأي حمولة منها.",
+            "وتورد الشركة مثالاً على نسخة محددة من عائلة Lnkr. فقد ظلت هذه النسخة مفهرسة في URLScan قرابة عامين ونصف تحت تصنيف «لا يوجد تصنيف»، بما في ذلك أثناء فحص مباشر في يناير 2024. وتقول كلاودفلير إن VirusTotal يضع حالياً إشارة خبيثة على الشيفرة، لكن السجل العام لا يوضح متى أضيف هذا الحكم. في المقابل، رصد Page Shield ML البايتات نفسها أثناء تشغيلها على واجهة متجر إلكتروني.",
+            "وتشير هذه الحالة، بحسب الشركة، إلى أن معرفة بصمة ملف أو وجوده في قاعدة بيانات لا يعني أن الشيفرة التي يحتويها صُنفت في الوقت المناسب على أنها خبيثة. لذلك تعتمد الحماية، في تصور كلاودفلير، على تحليل سلوك JavaScript نفسها بدلاً من انتظار ظهور تصنيف أو بصمة معروفة."
+          ]
+        },
+        {
+          "heading": "لماذا يصعب اكتشاف هذه الشيفرات؟",
+          "paragraphs": [
+            "لم تشترك العمليات الأربع في توقيع موحد أو أسلوب إخفاء واحد. إحدى العمليات بقيت خاملة إلى أن تطابقت خصائص مثل نوع الجهاز أو الدولة أو الوقت أو مصدر الإحالة أو حالة المتصفح. وعملية أخرى أخفت طلب إحالة لا يتطلب نقرة داخل إطار iframe غير مرئي، بينما اعترضت عمليات أخرى النقرات أو عطلت أدوات المراقبة أو حملت شيفرة إضافية بصورة مشروطة من خوادم بعيدة.",
+            "لهذا لا يكفي فحص الصفحة مرة واحدة، وفقاً لتحليل كلاودفلير. فالسلوك الضار قد لا يظهر إلا عندما تتوافر الضحية أو الظروف المناسبة. وتحتاج عملية الرصد إلى متابعة متى تستيقظ الشيفرة، وما الذي تخفيه أو تعترضه، وما الموارد التي تجلبها بعد ذلك. وترى الشركة أن الرؤية المستمرة لما يجري في المتصفح ترفع فرص التمييز بين صفحة سليمة وهجوم ينتظر اللحظة المناسبة."
+          ]
+        },
+        {
+          "heading": "شبكة عصبية بيانية ثم تحقق بنموذج لغوي",
+          "paragraphs": [
+            "تستخدم Page Shield ML، بحسب كلاودفلير، شبكة عصبية بيانية GNN سبق أن رصدت أيضاً حزم npm خبيثة وأداة Magecart لسرقة بيانات الدفع ظهرت في الواقع. ولا تتعامل الشبكة مع JavaScript على أنها كتلة نصية مسطحة؛ بل تمثلها كرسم بياني يستند إلى شجرة البنية النحوية، ما يساعدها على تتبع العلاقات بين الرموز والوظائف، ومعرفة ما الذي يستدعيه كل جزء، وما الذي حاول المهاجم إخفاءه، وما الذي يتصل بخادم خارجي.",
+            "يساعد هذا التمثيل على التعرف إلى أنماط مشبوهة رغم التصغير وإعادة التسمية وبعض أساليب التعتيم، من دون الاعتماد على عنوان URL أو بصمة بايت معروفة. وتقول الشركة إن نسبة صغيرة فقط، أقل من 0.3% من إجمالي حركة المرور التي يجري تحليلها، تُحال بعد ذلك إلى نموذج لغوي كبير خفيف يعمل عبر Workers AI للحصول على رأي ثانٍ مباشر. وتستخدم هذه الخطوة لتقليل النتائج الإيجابية الكاذبة مع الحفاظ على قدرة الرصد، ولا يُخطر العملاء عند تأكيد النموذج اللغوي لنتيجة الشبكة العصبية."
+          ]
+        },
+        {
+          "heading": "أربع عمليات بأهداف مختلفة",
+          "paragraphs": [
+            "تصف كلاودفلير العملية الأولى بأنها اختطاف لعمولات الإحالة خارج أوقات الذروة. فعندما يستخدم متسوق هاتفاً للنقر على منتج، قد تفتح الشيفرة صفحة منتج أو حملة اختارها المهاجم في علامة تبويب جديدة، بينما تمرر التبويب الأصلي عبر مسار إحالة. وإذا اكتملت عملية الشراء حينها أو لاحقاً، قد تُنسب المبيعة والعمولة إلى حساب لم يجلب المتسوق. وقد يؤدي ذلك أيضاً إلى تحويل فضل الإحالة من شريك شرعي إلى جهة أخرى.",
+            "أما العملية الثانية فتستخدم إطاراً غير ظاهر، مع رابط مخفي يُنقر عليه تلقائياً عند الحاجة، وطلبات بحث عن عنوان IP، وحواجز زمنية، وتدوير ساعي لروابط الإحالة. وتعرض كلاودفلير العملية الثالثة باعتبارها أداة قديمة لتعطيل البحث تحولت إلى باب خلفي في المتجر؛ فهي تتبع المستخدمين وتفتح المجال لتنفيذ JavaScript عن بُعد، مع إسكات كلمات مفتاحية قديمة، وخيار انسحاب محفوظ في localStorage، وجمع بيانات تشغيلية وتحميل شيفرة من خادم خارجي.",
+            "وتستهدف العملية الرابعة زوار الهواتف الذين يصلون عبر وسوم حملات معينة. ووفق وصف الشركة، تستخدم قيوداً مرتبطة بالمضيف وحجم نافذة العرض ووسوم UTM، وقائمة تضم 325 جزءاً من عناوين IP، كما تعطل تسع أدوات للمراقبة والتحليلات وتزرع إشارات تتبع بحجم صفري. وتؤكد هذه الأمثلة أن الضرر لا يقتصر على سرقة بيانات الدفع، بل يشمل أيضاً الإسناد التجاري، وبيانات القياس، وثقة الشركاء في المتجر."
+          ]
+        },
+        {
+          "heading": "مراجعة متعددة النماذج وتغذية راجعة",
+          "paragraphs": [
+            "لتحليل الشيفرات الأكثر تعقيداً على نطاق واسع، تستخدم كلاودفلير مجموعة من نماذج الذكاء الاصطناعي المتقدمة تسميها «المعلمين». وتضم المجموعة نماذج من نحو ست عائلات مختلفة، بينها نماذج مفتوحة الأوزان تعمل عبر Workers AI. ويحلل كل نموذج الشيفرة المشبوهة في جلسة مستقلة، مع إمكانية استخدام مقيّم JavaScript مقيد لتفكيك مقاطع صغيرة وكشف سلوك مخفي. وتقول الشركة إنها ستوسع هذا المسار قريباً باستخدام Cloudflare Sandbox لتحليل أعمق داخل بيئات معزولة.",
+            "قد تختلف النماذج في تقييم الشيفرات المعقدة، لكن كلاودفلير تتعامل مع هذا الاختلاف باعتباره إشارة. ويُحوّل كل تقييم إلى تصويت موزون وفق نتيجة النموذج في Artificial Analysis Intelligence Index، لإنتاج توزيع احتمالات على أربع فئات: سليم، أو سرقة مدفوعات من نوع Magecart، أو برمجية خبيثة أخرى، أو تعدين عملات رقمية. ولا يراجع البشر إلا الشيفرات التي صُنفت خبيثة أو التي لم تحصل على أغلبية واضحة تبلغ الثلثين. ثم تُعاد توزيعات التصنيف إلى تدريب الشبكة العصبية البيانية لتحسين تمييز الحالات الدقيقة، مع بقاء جزء من الحلقة يدوياً في الوقت الحالي."
+          ]
+        }
+      ],
+      "tags": [
+        "كلاودفلير",
+        "الأمن السيبراني",
+        "JavaScript",
+        "أمن المتاجر الإلكترونية",
+        "التعلم الآلي",
+        "Page Shield",
+        "Magecart"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Cloudflare Client-Side Security",
+        "Page Shield ML",
+        "Workers AI",
+        "Cloudflare Sandbox",
+        "VirusTotal",
+        "URLScan",
+        "Artificial Analysis Intelligence Index"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "17 سبتمبر 2026",
+      "modifiedLabel": "17 سبتمبر 2026",
+      "readMinutes": 6,
+      "wordCount": 1021
+    },
+    "en": {
+      "title": "Cloudflare ML uncovers evasive storefront attacks",
+      "description": "Cloudflare says its Page Shield ML detected eight malicious JavaScript payloads that other scanning services failed to flag in live storefront traffic.",
+      "deck": "Cloudflare says its Client-Side Security system identified four malicious JavaScript operations affecting online storefronts, including attacks that diverted affiliate revenue and manipulated shopper activity. The company says seven of eight payloads were absent from VirusTotal and none received a malicious verdict from URLScan during its review.",
+      "summaryBullets": [
+        "Page Shield ML detected eight payloads across four malicious operations in live traffic.",
+        "The campaigns targeted affiliate attribution, searches, clicks, analytics and monitoring.",
+        "Cloudflare says the operations lacked one universal signature or concealment method.",
+        "A graph neural network, a lightweight LLM and human analysts are used in the detection workflow."
+      ],
+      "sections": [
+        {
+          "heading": "A storefront can look normal while the browser is compromised",
+          "paragraphs": [
+            "Cloudflare is highlighting a blind spot in website security: a modern storefront may load normally, display products and complete checkout while malicious JavaScript performs unauthorized actions in the background. According to the company, such code can siphon affiliate revenue, hijack searches and clicks, tamper with analytics or contact a remote server to determine what code should run next.",
+            "The company says its Client-Side Security machine learning model, part of Page Shield, was designed to expose this behavior by examining scripts in live browser traffic. In a review described in the Cloudflare Blog, the system uncovered four operations involving eight malicious payloads. Detection was automated, while human researchers verified the findings after the system raised alerts.",
+            "Cloudflare said subsequent checks with common security-scanning services produced a significant gap. Seven of the eight payloads were entirely absent from VirusTotal, and URLScan returned no malicious verdict for any of them. The company argues that waiting for a known hash or an external classification can leave a retailer exposed after the code is already active on its site."
+          ]
+        },
+        {
+          "heading": "Why one-time scanning misses evasive code",
+          "paragraphs": [
+            "The four operations did not share a universal signature or a single concealment technique, Cloudflare said. One remained dormant unless conditions such as the device, country, time, referrer or browser state matched its targets. Another placed a clickless affiliate request inside an invisible iframe. Other scripts intercepted clicks, suppressed monitoring or conditionally loaded more code from remote servers.",
+            "That behavior makes a single page inspection insufficient. Security teams need to observe when a script activates, what it hides, which user actions it intercepts and what it fetches afterward. Cloudflare said ongoing browser visibility is therefore important because these scripts are built to remain quiet until a qualifying visitor appears.",
+            "The company cited one version of the broader Lnkr family as an example. Although security research had documented the family years earlier, Cloudflare said a specific payload remained indexed by URLScan for nearly two and a half years with a status of no classification, including during a direct scan in January 2024. VirusTotal currently flags that script as malicious, but its public history does not show when the verdict was first assigned."
+          ]
+        },
+        {
+          "heading": "Page Shield uses a graph view of JavaScript",
+          "paragraphs": [
+            "At the center of the detection process is a graph neural network, or GNN. Cloudflare said the same model had previously detected malicious npm packages and an in-the-wild Magecart payment skimmer. Rather than treating JavaScript as a flat block of text, the GNN represents it as a graph built around the syntax tree.",
+            "This structure allows the model to reason about relationships between code symbols, including which functions call one another, what an attacker attempted to conceal and which parts of the script communicate externally. Cloudflare said that approach helps identify suspicious behavior across minification, renamed symbols and some forms of obfuscation without depending on a known URL or byte signature.",
+            "The GNN flags fewer than 0.3% of analyzed traffic as malicious, according to the company. Those scripts are then sent to a lightweight large language model running on Workers AI for a live second opinion. Cloudflare said this additional step is intended to reduce false positives while preserving detection coverage, with customer alerts issued when the LLM corroborates the GNN."
+          ]
+        },
+        {
+          "heading": "Automated judges help investigate difficult cases",
+          "paragraphs": [
+            "For more complex scripts, Cloudflare uses a group of frontier models it calls teachers. The cohort includes leading models from about six families, including open-weight models running on Workers AI. Each model is launched as an agent in a fresh, independent session to analyze the same suspicious script.",
+            "When useful, the agents can access a restricted JavaScript evaluator to unpack small snippets and expose concealed behavior. Cloudflare said it plans to extend this workflow with Cloudflare Sandbox for deeper analysis in isolated environments.",
+            "The models may disagree, particularly when scripts are intricate. Cloudflare treats that disagreement as a signal and combines the results into a probability distribution covering four labels: benign, payment skimming or Magecart, other malware and cryptomining. Each vote is weighted by the model's score in the Artificial Analysis Intelligence Index.",
+            "Human reviewers focus on scripts labeled malicious or those without a clear two-thirds majority. The resulting label distributions are fed back into GNN training so the model can improve its handling of nuanced behavior. Cloudflare acknowledged that this feedback loop remains partly manual, although some of the process is beginning to be automated."
+          ]
+        },
+        {
+          "heading": "Four operations, different objectives",
+          "paragraphs": [
+            "Cloudflare's examples illustrate why a model trained to recognize only one attack category could miss others. The company described an after-hours affiliate-commission hijacker that targeted mobile visitors and used time gates, dynamic page monitoring and click interception. When a qualifying shopper tapped a product, the script could open an attacker-selected product or campaign page in a new tab and send the original tab through an affiliate route.",
+            "The storefront could still appear to work, but a later purchase might be attributed to an account that did not earn the referral. Cloudflare said this could result in an unearned commission or divert credit from a legitimate partner, potentially damaging trust in the retailer's attribution system.",
+            "The other operations included an off-screen iframe with an auto-clicking hidden-link fallback, an older search-sabotage operation that tracked users and opened a backdoor for arbitrary remote JavaScript execution, and a campaign targeting mobile visitors that attempted to replace ads and analytics while disabling support or monitoring. The listed techniques included local storage opt-outs, remote code loading, host and viewport gates, UTM-tag conditions, IP substring matching, monitoring-tool disruption and zero-pixel tracking beacons.",
+            "Taken together, the cases show why Cloudflare is positioning Client-Side Security as continuous behavioral analysis rather than a lookup service. The company says understanding how JavaScript acts in the browser can reveal attacks that remain invisible to scanners relying on previously classified files, URLs or signatures."
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Client-Side Security",
+        "Page Shield",
+        "JavaScript security",
+        "machine learning",
+        "Magecart",
+        "Workers AI"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Page Shield",
+        "Client-Side Security",
+        "Workers AI",
+        "VirusTotal",
+        "URLScan",
+        "Artificial Analysis Intelligence Index"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 17, 2026",
+      "modifiedLabel": "September 17, 2026",
+      "readMinutes": 5,
+      "wordCount": 1073
+    }
+  },
+  "datePublished": "2026-09-17T15:00:18.026478+03:00",
+  "dateModified": "2026-09-17T15:00:18.026478+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/when-scanners-miss-the-attack-how-cloudflare-client-side-security-protects-storefronts/hero.webp",
+    "card": "/forum/assets/posts/2026/09/when-scanners-miss-the-attack-how-cloudflare-client-side-security-protects-storefronts/card.webp",
+    "social": "/forum/assets/posts/2026/09/when-scanners-miss-the-attack-how-cloudflare-client-side-security-protects-storefronts/social.jpg",
+    "alt": {
+      "ar": "كلاودفلير تكشف هجمات JavaScript تفلت من الفحص التقليدي",
+      "en": "Cloudflare ML uncovers evasive storefront attacks"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M2KNDB5B0AN8TAYZYY8JDYM9.01M2KNDCJT0A5HH2XAF6K3XM9K.png",
+    "sourceType": "official",
+    "generatedFallback": false
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/client-side-security-finds-4-malicious-campaigns/",
+      "type": "official",
+      "title": "When scanners miss the attack: how Cloudflare Client-Side Security protects storefronts"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/client-side-security-finds-4-malicious-campaigns",
+  "sourceTitle": "When scanners miss the attack: how Cloudflare Client-Side Security protects storefronts",
+  "trendScore": 104.33,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-17T12:01:22+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/when-scanners-miss-the-attack-how-cloudflare-client-side-security-protects-storefronts.json"
+}
