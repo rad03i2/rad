@@ -43,6 +43,27 @@ class TrendTests(unittest.TestCase):
         self.assertTrue(ranked[0]["verification"]["publish_eligible"])
         self.assertGreaterEqual(ranked[0]["trend"]["corroboration_count"], 1)
 
+    def test_any_verified_tech_story_can_fallback_when_quiet(self):
+        now = datetime.now(timezone.utc).isoformat()
+        items = [{
+            "id": "quiet-tech",
+            "title": "Vendor updates desktop software documentation",
+            "url": "https://vendor.example/update",
+            "domain": "vendor.example",
+            "published_at": now,
+            "category": "apps",
+            "score": 1,
+            "source": {"name": "Vendor", "type": "official"},
+            "verification": {"confidence": .95, "publish_eligible": True},
+        }]
+        ranked = rank_candidates(items, {
+            "trendWindowHours": 24,
+            "minimumTrendScore": 999,
+            "minimumVerificationConfidence": .9,
+            "allowAnyVerifiedTechStory": True,
+        }, [])
+        self.assertEqual([item["id"] for item in ranked], ["quiet-tech"])
+
 
 if __name__ == "__main__":
     unittest.main()
