@@ -1,12 +1,12 @@
 name: RDWAN Tech 20-Minute Publisher
-# Primary cloud publisher. It wakes every 10 minutes so a delayed GitHub cron
-# cannot create a long publication gap. publisher.py remains the source of
-# truth for the minimum 20-minute publication interval and duplicate controls.
+# Primary publication clock. The next story is prepared during the preceding
+# 20-minute gap, so this run should publish a ready, quality-approved draft
+# instead of starting research and writing only after the gap expires.
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '2,12,22,32,42,52 * * * *'
+    - cron: '2,22,42 * * * *'
 
 permissions:
   contents: write
@@ -53,8 +53,8 @@ jobs:
       - name: Collect and evaluate fresh stories
         run: python automation/forum/run.py
 
-      - name: Publish if 20-minute gap is due
-        run: python automation/forum/publisher.py
+      - name: Prepare during cooldown or publish ready story
+        run: python automation/forum/publisher_scheduler.py
 
       - name: Build crawlable Arabic and English forum hubs
         run: python automation/forum/build_locale_pages.py
@@ -73,11 +73,12 @@ jobs:
           path: |
             automation/forum/state/run_report.json
             automation/forum/state/publisher_report.json
+            automation/forum/state/prepared_article.json
             automation/forum/state/candidates.json
           retention-days: 14
           if-no-files-found: warn
 
-      - name: Commit publication and state
+      - name: Commit publication and preparation state
         shell: bash
         run: |
           git config user.name "RDWAN Tech Automation"
@@ -85,9 +86,9 @@ jobs:
           git add forum sitemap.xml automation/forum/state/*.json
           git add -- ':(glob)**/*.html'
           if git diff --cached --quiet; then
-            echo "Primary publisher check completed; no publication was due in this cycle."
+            echo "Primary 20-minute cycle completed; no repository changes were required."
             exit 0
           fi
-          git commit -m "RDWAN Tech: automated 20-minute publication"
+          git commit -m "RDWAN Tech: automated 20-minute publication cycle"
           git pull --rebase origin main
           git push origin HEAD:main
