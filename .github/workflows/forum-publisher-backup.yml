@@ -1,12 +1,13 @@
 name: RDWAN Tech Backup Publisher
-# Independent backup scheduler. It wakes on the five-minute offset between
-# primary checks. publisher.py enforces the minimum 20-minute publication gap,
-# so this workflow recovers missed/delayed primary runs without double-posting.
+# Preparation/recovery watchdog. These runs occupy the gap between primary
+# publication slots: they prepare and quality-check the next bilingual story,
+# retry preparation when needed, and publish only when a 20-minute slot is due
+# and the primary publisher missed it.
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '7,17,27,37,47,57 * * * *'
+    - cron: '7,12,17,27,32,37,47,52,57 * * * *'
 
 permissions:
   contents: write
@@ -53,8 +54,8 @@ jobs:
       - name: Collect and evaluate fresh stories
         run: python automation/forum/run.py
 
-      - name: Publish only if primary missed the due window
-        run: python automation/forum/publisher.py
+      - name: Prepare next story or recover a missed due slot
+        run: python automation/forum/publisher_scheduler.py
 
       - name: Build crawlable Arabic and English forum hubs
         run: python automation/forum/build_locale_pages.py
@@ -73,11 +74,12 @@ jobs:
           path: |
             automation/forum/state/run_report.json
             automation/forum/state/publisher_report.json
+            automation/forum/state/prepared_article.json
             automation/forum/state/candidates.json
           retention-days: 14
           if-no-files-found: warn
 
-      - name: Commit publication and state
+      - name: Commit publication and preparation state
         shell: bash
         run: |
           git config user.name "RDWAN Tech Automation"
@@ -85,9 +87,9 @@ jobs:
           git add forum sitemap.xml automation/forum/state/*.json
           git add -- ':(glob)**/*.html'
           if git diff --cached --quiet; then
-            echo "Backup watchdog completed; primary did not need recovery."
+            echo "Backup preparation/recovery cycle completed; no repository changes were required."
             exit 0
           fi
-          git commit -m "RDWAN Tech: backup publisher recovery"
+          git commit -m "RDWAN Tech: prepare or recover next 20-minute story"
           git pull --rebase origin main
           git push origin HEAD:main
