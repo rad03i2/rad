@@ -2,6 +2,12 @@ name: Deploy RDWAN Tech External Scheduler
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'automation/external-scheduler/cloudflare/**'
+      - '.github/workflows/deploy-cloudflare-scheduler.yml'
 
 permissions:
   contents: read
@@ -31,12 +37,10 @@ jobs:
         shell: bash
         env:
           SCHEDULER_GITHUB_TOKEN: ${{ secrets.RDWAN_SCHEDULER_GITHUB_TOKEN }}
-          MANUAL_TRIGGER_KEY: ${{ secrets.RDWAN_SCHEDULER_MANUAL_KEY }}
         run: |
           test -n "$CLOUDFLARE_API_TOKEN" || { echo "Missing CLOUDFLARE_API_TOKEN"; exit 1; }
           test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo "Missing CLOUDFLARE_ACCOUNT_ID"; exit 1; }
           test -n "$SCHEDULER_GITHUB_TOKEN" || { echo "Missing RDWAN_SCHEDULER_GITHUB_TOKEN"; exit 1; }
-          test -n "$MANUAL_TRIGGER_KEY" || { echo "Missing RDWAN_SCHEDULER_MANUAL_KEY"; exit 1; }
 
       - name: Install Wrangler
         run: npm install --no-save wrangler@latest
@@ -50,11 +54,16 @@ jobs:
           SCHEDULER_GITHUB_TOKEN: ${{ secrets.RDWAN_SCHEDULER_GITHUB_TOKEN }}
         run: printf '%s' "$SCHEDULER_GITHUB_TOKEN" | npx wrangler secret put GITHUB_TOKEN
 
-      - name: Install protected manual trigger key
+      - name: Install protected manual trigger key when configured
         shell: bash
         env:
           MANUAL_TRIGGER_KEY: ${{ secrets.RDWAN_SCHEDULER_MANUAL_KEY }}
-        run: printf '%s' "$MANUAL_TRIGGER_KEY" | npx wrangler secret put MANUAL_TRIGGER_KEY
+        run: |
+          if [ -n "$MANUAL_TRIGGER_KEY" ]; then
+            printf '%s' "$MANUAL_TRIGGER_KEY" | npx wrangler secret put MANUAL_TRIGGER_KEY
+          else
+            echo "RDWAN_SCHEDULER_MANUAL_KEY is not configured; /trigger remains disabled (401)."
+          fi
 
       - name: Confirm deployment metadata
         run: npx wrangler deployments list
