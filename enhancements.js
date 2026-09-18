@@ -177,7 +177,8 @@
     lang = next === 'en' ? 'en' : 'ar'; store.set('rad-lang', lang);
     document.documentElement.lang = I18N[lang].lang; document.documentElement.dir = I18N[lang].dir;
     const b = $('#enhLangToggle'); if (b) b.textContent = lang === 'ar' ? 'EN' : 'AR';
-    translateBase(); renderDynamicText(); renderProjectsLanguage();\n    const servicesSection = $('#services'); if (servicesSection) renderCompactService(servicesSection, servicesSection.dataset.activeService || 'web', false);
+    translateBase(); renderDynamicText(); renderProjectsLanguage();
+    const servicesSection = $('#services'); if (servicesSection) renderCompactService(servicesSection, servicesSection.dataset.activeService || 'web', false);
     showToast(lang === 'ar' ? 'تم تفعيل العربية' : 'English enabled');
   }
 
