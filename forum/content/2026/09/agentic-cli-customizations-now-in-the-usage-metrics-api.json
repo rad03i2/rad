@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 2,
+  "template": "article",
+  "id": "74fc977f691fc14677d3",
+  "slug": "agentic-cli-customizations-now-in-the-usage-metrics-api",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/agentic-cli-customizations-now-in-the-usage-metrics-api/",
+    "en": "/forum/en/ai/agentic-cli-customizations-now-in-the-usage-metrics-api/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub توسّع مؤشرات Copilot CLI لتشمل تخصيصات الوكلاء",
+      "description": "تضيف GitHub إلى واجهة مؤشرات استخدام Copilot بيانات عن مهارات CLI والوكلاء المخصصين وخوادم MCP والأوامر المائلة والإضافات.",
+      "deck": "أعلنت GitHub توسيع تغطية تقارير استخدام Copilot CLI بإضافة مؤشرات لنشاط التخصيصات الوكيلة. وتتيح البيانات الجديدة لمسؤولي المؤسسات والمنظمات معرفة الأدوات الأكثر استخدامًا واتساع تنوعها.",
+      "summaryBullets": [
+        "المؤشرات الجديدة تغطي المهارات والوكلاء المخصصين وخوادم MCP والأوامر المائلة والإضافات.",
+        "تظهر البيانات في تقارير يومية وفترات 28 يومًا، سواء على مستوى المستخدم أو بصورة إجمالية.",
+        "تسرد التقارير ما يصل إلى خمسة عناصر ذات أعلى نشاط، إلى جانب عدد العناصر المختلفة المستخدمة.",
+        "لا تعرض التقارير أسماء التخصيصات التي يعرّفها العملاء، وتجمعها ضمن تصنيفات تحمي الخصوصية.",
+        "تتوفر البيانات للمخولين بعرض مؤشرات Copilot مع تفعيل سياسة مؤشرات الاستخدام."
+      ],
+      "sections": [
+        {
+          "heading": "توسيع نطاق تقارير Copilot CLI",
+          "paragraphs": [
+            "أضافت GitHub إلى واجهة برمجة تطبيقات مؤشرات استخدام Copilot تغطية جديدة للنشاط المرتبط بتخصيصات Copilot CLI ذات الطابع الوكيلي. وتشمل الإضافة المهارات، والوكلاء المخصصين، وخوادم Model Context Protocol المعروفة اختصارًا بـ MCP، والأوامر المائلة، والإضافات. وتأتي هذه الخطوة امتدادًا لتقارير CLI الموجودة، بدل أن تكون نظام تقارير منفصلًا.",
+            "تظهر الحقول في تقارير المؤسسات والمنظمات اليومية لمدة يوم واحد، سواء في التقارير الفردية لكل مستخدم أو التقارير الإجمالية. كما تتوفر في تقارير المستخدمين الممتدة 28 يومًا، وفي إدخالات day_totals ضمن التقارير الإجمالية للفترة نفسها. وبذلك يمكن قراءة النشاط على مستوى مستخدم بعينه أو جمعه عبر المؤسسة أو المنظمة."
+          ]
+        },
+        {
+          "heading": "ما العناصر الأكثر استخدامًا؟",
+          "paragraphs": [
+            "تجيب مصفوفات totals_by_skill وtotals_by_custom_agent وtotals_by_mcp وtotals_by_slash_cmd وtotals_by_plugin عن سؤال رئيسي: ما التخصيصات التي تسجل أكبر قدر من النشاط؟ وتعرض كل مصفوفة ما يصل إلى خمسة عناصر ذات أعلى نشاط مسجل، مع قيمة interaction_count لكل عنصر.",
+            "يختلف معنى هذا العدد بحسب الفئة. فهو يحصي مرات استدعاء المهارات والأوامر المائلة ومهارات الإضافات، كما يحصي مرات بدء الوكلاء المخصصين ومحاولات الاتصال بخوادم MCP. ولا يعني عدد خادم MCP عدد مرات استخدام الأدوات بعد نجاح الاتصال؛ إذ يرتفع العداد عندما يحاول Copilot CLI الاتصال بالخادم أو إعادة الاتصال به، سواء نجحت المحاولة أو فشلت.",
+            "أما استدعاء الأدوات عدة مرات من خادم متصل بالجلسة نفسها فلا يزيد interaction_count. وتساعد هذه القاعدة على فصل نشاط الاتصال بالخادم عن كثافة استخدام أدواته."
+          ]
+        },
+        {
+          "heading": "قياس تنوع التخصيصات بمرور الوقت",
+          "paragraphs": [
+            "تتضمن التقارير كذلك حقولًا لعدد العناصر المختلفة المستخدمة: distinct_skill_use_count وdistinct_custom_agent_use_count وdistinct_mcp_use_count وdistinct_slash_cmd_use_count وdistinct_plugin_use_count. وفي التقرير الفردي يُحتسب كل عنصر استخدمه ذلك المستخدم مرة واحدة، بصرف النظر عن عدد مرات تشغيله.",
+            "في المقابل، يحصي التقرير الإجمالي كل عنصر استخدمه أي شخص داخل المؤسسة أو المنظمة مرة واحدة، وليس مرة لكل مستخدم. وتشمل هذه الأعداد العناصر التي لا تظهر في قائمة الخمسة الأوائل، ما يجعل مقارنتها عبر الزمن وسيلة لقياس ما إذا كان نطاق التخصيصات المستخدمة يتسع أو يضيق.",
+            "وتوضح GitHub أن مؤشرات الإضافات تمثل مجموعة فرعية من مؤشرات المهارات، لأنها تحصي فقط استدعاءات المهارات المرتبطة بإضافة. لذلك يظهر تفاعل الإضافة أيضًا ضمن إجمالي المهارات، بينما لا تظهر المهارات غير المرتبطة بإضافات ضمن إجمالي الإضافات، ولا ينبغي جمع العددين معًا."
+          ]
+        },
+        {
+          "heading": "الخصوصية وتصنيف الأسماء",
+          "paragraphs": [
+            "تعرض التقارير أسماء العناصر التي توفرها GitHub، لكنها لا تعرض أسماء التخصيصات التي يعرّفها العملاء، بهدف حماية الخصوصية. وتُجمع المهارات والوكلاء المخصصون وخوادم MCP والإضافات التي أنشأها العملاء تحت تصنيف other. أما الأوامر المائلة التي يعرّفها العملاء، فتستخدم لها تقارير Copilot CLI تصنيف custom، وهو التصنيف المعتمد أصلًا لهذا النوع من القياس.",
+            "وتشير المصفوفات الفارغة والقيم الصفرية إلى عدم تسجيل نشاط مطابق للفئة أو الفترة المطلوبة. أما ظهور الحقول بقيمة null أو غيابها، فيعني أن بيانات التخصيص غير متاحة. ويساعد هذا الفرق في التمييز بين غياب النشاط وتغيب البيانات نفسها عند تحليل التقارير."
+          ]
+        },
+        {
+          "heading": "صلاحيات الوصول وما الذي تستفيده الفرق",
+          "paragraphs": [
+            "تقول GitHub إن ملاك المؤسسات ومديري الفوترة، وملاك المنظمات، وأصحاب الأدوار المخصصة التي تمنح صلاحية View Copilot Metrics، سيتمكنون من الوصول إلى هذه التقارير، على أن تكون سياسة مؤشرات استخدام Copilot مفعّلة. ولا تمنح إضافة الحقول وصولًا عامًا؛ إذ يظل الاطلاع مرتبطًا بالصلاحيات وإعدادات السياسة المعتمدة.",
+            "تتيح البيانات الجديدة للمسؤولين رصد التخصيصات التي تكتسب انتشارًا، واكتشاف جوانب نقص التمكين أو التدريب، وتحديد الأتمتة التي يجدها المطورون ذات قيمة. ويظل هذا الاستخدام وصفًا لنشاط مسجل في التقارير، لا حكمًا مستقلًا على جودة كل أداة أو فاعليتها التقنية."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "GitHub Copilot",
+        "Copilot CLI",
+        "واجهات برمجة التطبيقات",
+        "الذكاء الاصطناعي الوكيلي",
+        "MCP",
+        "مؤشرات الاستخدام"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Copilot",
+        "Copilot CLI",
+        "Model Context Protocol",
+        "مديرو المؤسسات والمنظمات"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "18 سبتمبر 2026",
+      "modifiedLabel": "18 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 623
+    },
+    "en": {
+      "title": "GitHub adds CLI customization metrics to Copilot API",
+      "description": "GitHub has expanded Copilot’s usage metrics API with activity data for CLI skills, custom agents, MCP servers, slash commands and plugins.",
+      "deck": "GitHub Copilot’s usage metrics API now reports how developers use agentic CLI customizations. The update gives enterprise and organization administrators new data on adoption and activity.",
+      "summaryBullets": [
+        "New API fields cover skills, custom agents, MCP servers, slash commands and plugins.",
+        "Reports show the most-used items and the number of distinct items used.",
+        "Customer-defined customization names are grouped to protect privacy.",
+        "The data is available in selected enterprise and organization reports when the usage metrics policy is enabled."
+      ],
+      "sections": [
+        {
+          "heading": "Broader coverage for Copilot CLI activity",
+          "paragraphs": [
+            "GitHub has expanded the reporting coverage of its Copilot usage metrics API to include agentic customizations used through Copilot CLI. The new activity metrics cover skills, custom agents, Model Context Protocol (MCP) servers, slash commands and plugins.",
+            "The fields are available in enterprise and organization per-user reports, aggregate one-day reports, per-user 28-day reports and the day_totals entries in aggregate 28-day reports. In per-user reports, the metrics describe activity associated with one user. In aggregate reports, they describe activity across an enterprise or organization."
+          ]
+        },
+        {
+          "heading": "Reports identify popular customizations",
+          "paragraphs": [
+            "The API adds totals_by_skill, totals_by_custom_agent, totals_by_mcp, totals_by_slash_cmd and totals_by_plugin arrays to show which items have the most recorded activity. Each array can list up to five items. Entries include an interaction_count, with the meaning of that count depending on the customization category.",
+            "For skills, slash commands and plugin skills, interaction_count measures invocations. For custom agents, it counts starts. For MCP servers, it counts connection attempts. These lists are intended to show which customizations are attracting the most activity, while the associated distinct-use fields provide a broader view of adoption."
+          ]
+        },
+        {
+          "heading": "Distinct-use data measures variety",
+          "paragraphs": [
+            "Separate fields count the number of different items used: distinct_skill_use_count, distinct_custom_agent_use_count, distinct_mcp_use_count, distinct_slash_cmd_use_count and distinct_plugin_use_count. In a per-user report, each item used by that user counts once. In an aggregate report, each item used anywhere in the enterprise or organization counts once, rather than once per user.",
+            "The distinct-use counts include items that do not appear in the top-five arrays. GitHub says comparing these figures over time can show whether the range of customizations in use is expanding. The company also says administrators can use the data to identify which customizations are gaining traction, find enablement gaps and focus investment on automations developers value."
+          ]
+        },
+        {
+          "heading": "Privacy protections shape the labels",
+          "paragraphs": [
+            "The reports display names for recognized GitHub-provided items, but customer-defined names are not shown. Skills, custom agents, MCP servers and plugins created by customers are grouped under the label other. Copilot CLI telemetry already groups customer-defined slash commands under custom, so reports use that label for those commands.",
+            "This means the metrics can describe activity patterns without exposing customer-defined customization names. Empty arrays and zero values indicate that no matching activity was recorded. When customization data is unavailable, the fields may be null or absent."
+          ]
+        },
+        {
+          "heading": "How MCP and plugin counts are calculated",
+          "paragraphs": [
+            "MCP server activity follows a specific counting rule. The interaction_count increases when Copilot CLI attempts to connect or reconnect to a server. Both successful and failed attempts count. Repeatedly calling tools from a server that is already connected does not increase the count.",
+            "Plugin metrics are limited to skill invocations associated with a plugin. As a result, every plugin interaction also appears in the skill totals, while skill interactions that do not originate from a plugin appear only in the skill totals. GitHub cautions that plugin totals are a subset of skill totals and should not be added together."
+          ]
+        },
+        {
+          "heading": "Availability for administrators",
+          "paragraphs": [
+            "GitHub says the reports are available to enterprise owners and billing managers, organization owners, and users with a custom organization or enterprise role that grants the View Copilot Metrics permission. The Copilot usage metrics policy must also be enabled.",
+            "The company directs administrators to the Copilot usage metrics API documentation to begin using the new fields. The expansion gives organizations a more detailed way to examine how agentic CLI features are being used while retaining grouping rules for customer-defined items."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub Copilot",
+        "Copilot CLI",
+        "usage metrics",
+        "agentic AI",
+        "Model Context Protocol",
+        "developer tools"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Copilot",
+        "Copilot CLI",
+        "Model Context Protocol",
+        "MCP servers"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 18, 2026",
+      "modifiedLabel": "September 18, 2026",
+      "readMinutes": 3,
+      "wordCount": 645
+    }
+  },
+  "datePublished": "2026-09-18T04:17:07.098870+03:00",
+  "dateModified": "2026-09-18T04:17:07.098870+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/agentic-cli-customizations-now-in-the-usage-metrics-api/hero.webp",
+    "card": "/forum/assets/posts/2026/09/agentic-cli-customizations-now-in-the-usage-metrics-api/card.webp",
+    "social": "/forum/assets/posts/2026/09/agentic-cli-customizations-now-in-the-usage-metrics-api/social.jpg",
+    "alt": {
+      "ar": "GitHub توسّع مؤشرات Copilot CLI لتشمل تخصيصات الوكلاء",
+      "en": "GitHub adds CLI customization metrics to Copilot API"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/09/651495740-3ffb3913-62c3-4737-bf5c-7c146f942d00.jpeg",
+    "sourceType": "official",
+    "generatedFallback": false
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-17-agentic-cli-customizations-now-in-the-usage-metrics-api/",
+      "type": "official",
+      "title": "Agentic CLI customizations now in the usage metrics API"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-17-agentic-cli-customizations-now-in-the-usage-metrics-api",
+  "sourceTitle": "Agentic CLI customizations now in the usage metrics API",
+  "trendScore": 123.39,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-18T01:17:07+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/agentic-cli-customizations-now-in-the-usage-metrics-api.json"
+}
