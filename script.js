@@ -244,7 +244,7 @@
 (() => {
   if (document.querySelector('script[data-portfolio-enhancements]')) return;
   const s = document.createElement('script');
-  s.src = 'enhancements.js?v=20260919-stats-1';
+  s.src = 'enhancements.js?v=20260919-stats-2';
   s.defer = true;
   s.dataset.portfolioEnhancements = 'true';
   document.head.appendChild(s);
