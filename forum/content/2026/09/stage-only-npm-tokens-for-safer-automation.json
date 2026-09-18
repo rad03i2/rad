@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 2,
+  "template": "article",
+  "id": "4f937e072c6920ec30d8",
+  "slug": "stage-only-npm-tokens-for-safer-automation",
+  "categorySlug": "automation",
+  "urls": {
+    "ar": "/forum/ar/automation/stage-only-npm-tokens-for-safer-automation/",
+    "en": "/forum/en/automation/stage-only-npm-tokens-for-safer-automation/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub تطلق رموز npm للنشر المرحلي بأمان أكبر",
+      "description": "تتيح GitHub رموز npm بصلاحية النشر المرحلي فقط، لتُمكّن الأتمتة من تجهيز الإصدارات للمراجعة قبل اعتمادها ونشرها النهائي مع المصادقة الثنائية.",
+      "deck": "أضافت GitHub خيارًا جديدًا عند إنشاء رموز الوصول الدقيقة في npm يتيح تجهيز إصدارات الحزم للمراجعة من دون منح سير العمل الآلي صلاحية نشرها مباشرة. ويأتي التغيير كمسار انتقالي قبل توجه npm إلى إلغاء النشر المباشر عبر الرموز التي تتجاوز المصادقة الثنائية.",
+      "summaryBullets": [
+        "الخيار الجديد هو Read and write (stage only) لرموز npm الدقيقة.",
+        "سير العمل يستخدم npm stage publish بدلًا من npm publish لتجهيز الإصدار.",
+        "يتولى مشرف الحزمة مراجعة الإصدار واعتماده باستخدام المصادقة الثنائية.",
+        "التغيير اختياري ولا يعدّل الرموز الحالية أو قدراتها على النشر المباشر.",
+        "يتطلب الاستخدام npm CLI 11.15.0 أو أحدث وNode.js 22.14.0 أو أحدث."
+      ],
+      "sections": [
+        {
+          "heading": "صلاحية جديدة لرموز الوصول في npm",
+          "paragraphs": [
+            "أعلنت GitHub إتاحة خيار جديد عند إنشاء رمز وصول دقيق لحسابات npm، وهو Read and write (stage only)، أو القراءة والكتابة للنشر المرحلي فقط. صُمم هذا الخيار لسير العمل الآلي الذي يحتاج إلى إرسال نسخة من الحزمة إلى مرحلة المراجعة، لكنه لا يحتاج إلى امتلاك القدرة على نشر نسخة جديدة مباشرة إلى سجل npm.",
+            "وبذلك تفصل الصلاحية الجديدة بين تجهيز الإصدار واعتماده النهائي. يستطيع النظام الآلي تنفيذ خطوة الإرسال المرحلي، بينما يبقى قرار إطلاق النسخة متاحًا لمشرف الحزمة، الذي يراجعها ثم يعتمد نشرها باستخدام المصادقة الثنائية. ووفق إعلان GitHub، فإن الهدف هو تقليل أثر أي رمز تستخدمه الأتمتة إذا تعرض للكشف أو أسيء استخدامه."
+          ]
+        },
+        {
+          "heading": "كيف يعمل النشر المرحلي",
+          "paragraphs": [
+            "بعد إنشاء الرمز بصلاحية النشر المرحلي، ينبغي استبدال رمز النشر المستخدم في سير العمل الآلي، ثم تغيير الأمر من npm publish إلى npm stage publish. يرسل الأمر الإصدار إلى النشر المرحلي بدلًا من إطلاقه مباشرة على سجل npm، ما يتيح للمشرف فحص النسخة قبل اتخاذ قرار النشر.",
+            "تتعامل npm مع محاولات النشر المباشر باستخدام هذا النوع من الرموز بالرفض. وتبقى هذه الحماية قائمة حتى في حال ضبط الرمز لتجاوز المصادقة الثنائية لأغراض الأتمتة؛ أي إن تفعيل خيار تجاوز 2FA لا يحوّل الرمز المرحلي إلى رمز قادر على النشر المباشر."
+          ]
+        },
+        {
+          "heading": "صلاحيات أخرى ما زالت متاحة",
+          "paragraphs": [
+            "لا يعني تقييد النشر أن الرمز يفقد جميع صلاحيات الكتابة على الحزمة. توضح GitHub أن رموز النشر المرحلي تحتفظ بصلاحيات كتابة أخرى، من بينها نقل وسوم التوزيع dist-tags وإيقاف إصدارات أو تعليمها بأنها مهجورة عبر عملية deprecate.",
+            "ولهذا تؤكد الجهة الناشرة ضرورة حماية هذه الرموز بالدرجة نفسها المطلوبة لأي رمز كتابة آخر. فالصلاحية الجديدة تمنع النشر المباشر تحديدًا، لكنها لا تلغي القدرات الأخرى المرتبطة بإدارة الحزم والإصدارات. ويجب منح الرمز للحزم التي يحتاج إليها سير العمل فقط، مع التعامل معه باعتباره بيانات اعتماد ذات أثر تشغيلي."
+          ]
+        },
+        {
+          "heading": "تغيير اختياري يمهد لمرحلة انتقالية",
+          "paragraphs": [
+            "هذا الإصدار اختياري، ولا يغيّر الرموز الموجودة حاليًا ولا الصلاحيات التي تتيح لها النشر المباشر. لذلك لا تفرض GitHub انتقالًا فوريًا على عمليات النشر الحالية، بل توفر خيارًا يمكن للفرق اعتماده عندما تريد تقليل صلاحيات الأتمتة أو إعداد بنيتها لسياسة نشر أكثر اعتمادًا على المراجعة.",
+            "ويأتي الخيار في سياق إعلان سابق من npm يستهدف يناير 2027 موعدًا لإزالة النشر المباشر عبر الرموز التي تتجاوز المصادقة الثنائية. وبالنسبة إلى الفرق التي لا تستطيع الانتقال بعد إلى trusted publishing، تقدم الرموز المرحلية مسارًا تدريجيًا لنقل الأتمتة القائمة على الرموز إلى نموذج يتطلب موافقة بشرية قبل الإصدار النهائي."
+          ]
+        },
+        {
+          "heading": "المتطلبات والجاهزية",
+          "paragraphs": [
+            "يعمل النشر المرحلي مع حزم npm الموجودة، ولا يقتصر على الحزم الجديدة. لكن استخدامه يتطلب امتلاك صلاحية النشر على الحزمة المستهدفة، وتفعيل المصادقة الثنائية على حساب npm، وتشغيل npm CLI بالإصدار 11.15.0 أو أحدث، إلى جانب Node.js 22.14.0 أو أحدث.",
+            "لبدء الانتقال، يحتاج الفريق إلى إنشاء رمز وصول دقيق جديد بصلاحية Read and write (stage only) للحزم المطلوبة، ثم تحديث إعدادات سير العمل لاستخدام الرمز والأمر npm stage publish. بعد ذلك يراجع مشرف الحزمة النسخة المرحلية ويعتمد إصدارها باستخدام 2FA. وتشير GitHub إلى أن تفاصيل النشر المرحلي ومسائل الانتقال يمكن مناقشتها ضمن قسم مجتمع npm المخصص لذلك."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "npm",
+        "الأتمتة",
+        "أمن سلسلة التوريد",
+        "النشر المرحلي",
+        "المصادقة الثنائية"
+      ],
+      "entities": [
+        "GitHub",
+        "npm",
+        "npm CLI",
+        "Node.js",
+        "npm granular access tokens",
+        "trusted publishing"
+      ],
+      "category": "الأتمتة",
+      "dateLabel": "18 سبتمبر 2026",
+      "modifiedLabel": "18 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 589
+    },
+    "en": {
+      "title": "GitHub Adds Stage-Only npm Tokens for Safer Automation",
+      "description": "GitHub has introduced stage-only npm tokens that let automated workflows submit versions for review without directly publishing to the registry.",
+      "deck": "GitHub has added a stage-only permission for npm granular access tokens, giving automated workflows a way to submit package versions for maintainer approval. Direct publication attempts using these tokens are rejected.",
+      "summaryBullets": [
+        "Stage-only tokens allow workflows to use npm stage publish without direct release permission.",
+        "Maintainers must review and approve staged versions with two-factor authentication.",
+        "Tokens retain permissions to move dist-tags and deprecate package versions.",
+        "The opt-in feature supports migration ahead of npm’s planned January 2027 change."
+      ],
+      "sections": [
+        {
+          "heading": "A narrower permission for automated publishing",
+          "paragraphs": [
+            "GitHub says npm users can now choose Read and write (stage only) when creating a granular access token. The permission is designed for automated workflows that need to submit package versions but should not be able to publish new versions directly to the npm registry.",
+            "With a stage-only token, a workflow uses npm stage publish rather than npm publish. The submitted version is then held for review, allowing a package maintainer to decide whether to approve its release. Approval requires the maintainer to authenticate with two-factor authentication (2FA)."
+          ]
+        },
+        {
+          "heading": "Direct publication is blocked",
+          "paragraphs": [
+            "The new token type specifically separates staging from direct publication. npm rejects attempts to run npm publish with a stage-only token, including cases where the token has been configured to bypass 2FA for automation.",
+            "That restriction is intended to prevent an automated credential from completing the entire release process on its own. Instead, automation can prepare and submit a version while a maintainer remains responsible for the final approval step."
+          ]
+        },
+        {
+          "heading": "Other package permissions remain available",
+          "paragraphs": [
+            "Stage-only tokens are not read-only credentials. GitHub notes that they retain other package write permissions, including the ability to move distribution tags and deprecate versions.",
+            "Because of those capabilities, the tokens should be protected with the same care as any other write token. The stage-only setting limits direct publishing, but it does not eliminate the broader impact of a compromised credential with package write access."
+          ]
+        },
+        {
+          "heading": "An opt-in path for existing automation",
+          "paragraphs": [
+            "The release does not alter existing tokens or their current direct-publish capabilities. Teams must opt in by creating a new granular access token with Read and write (stage only) permissions for the packages their workflows require.",
+            "GitHub’s migration steps are straightforward: replace the workflow’s existing publishing token, change the command from npm publish to npm stage publish, and have a maintainer review and approve each staged version with 2FA. Staged publishing also works with existing npm packages."
+          ]
+        },
+        {
+          "heading": "Preparing for the planned token transition",
+          "paragraphs": [
+            "The feature provides a migration option for teams that rely on token-based automation and are not yet able to move to trusted publishing. GitHub says npm is targeting January 2027 to remove direct publishing through tokens that bypass 2FA.",
+            "To use staged publishing, a team needs publish access to the package, 2FA enabled on its npm account, npm CLI 11.15.0 or later, and Node.js 22.14.0 or later. These requirements apply alongside the workflow changes needed to submit and approve staged releases."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "npm",
+        "automation",
+        "software supply chain",
+        "access tokens",
+        "two-factor authentication",
+        "trusted publishing"
+      ],
+      "entities": [
+        "GitHub",
+        "npm",
+        "Node.js",
+        "npm CLI"
+      ],
+      "category": "Automation",
+      "dateLabel": "September 18, 2026",
+      "modifiedLabel": "September 18, 2026",
+      "readMinutes": 3,
+      "wordCount": 484
+    }
+  },
+  "datePublished": "2026-09-18T21:23:27.390801+03:00",
+  "dateModified": "2026-09-18T21:23:27.390801+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/stage-only-npm-tokens-for-safer-automation/hero.webp",
+    "card": "/forum/assets/posts/2026/09/stage-only-npm-tokens-for-safer-automation/card.webp",
+    "social": "/forum/assets/posts/2026/09/stage-only-npm-tokens-for-safer-automation/social.jpg",
+    "alt": {
+      "ar": "GitHub تطلق رموز npm للنشر المرحلي بأمان أكبر",
+      "en": "GitHub Adds Stage-Only npm Tokens for Safer Automation"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/09/653313824-8dc47edb-2d82-40f9-bfc5-bdf0f0e4d09f.jpg",
+    "sourceType": "official",
+    "generatedFallback": false
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-18-stage-only-npm-tokens-for-safer-automation/",
+      "type": "official",
+      "title": "Stage-only npm tokens for safer automation"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-18-stage-only-npm-tokens-for-safer-automation",
+  "sourceTitle": "Stage-only npm tokens for safer automation",
+  "trendScore": 124.32,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-18T18:23:27+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/stage-only-npm-tokens-for-safer-automation.json"
+}
