@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 2,
+  "template": "article",
+  "id": "32006e5a8d11086972b6",
+  "slug": "manage-the-code-coverage-ruleset-condition-with-the-rest-api",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/manage-the-code-coverage-ruleset-condition-with-the-rest-api/",
+    "en": "/forum/en/web/manage-the-code-coverage-ruleset-condition-with-the-rest-api/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub تتيح إدارة شرط تغطية الشيفرة عبر REST API",
+      "description": "أعلنت GitHub إتاحة إدارة شرط تغطية الشيفرة في قواعد المستودعات عبر REST API، مع دعم الحد الأدنى للتغطية أو تراجعها في طلبات السحب.",
+      "deck": "أصبح بالإمكان إدارة خيار تقييد تغطية الشيفرة في قواعد مستودعات GitHub برمجياً، بعد أن كان ضبطه متاحاً عبر واجهة الويب فقط. وتوسّع الإتاحة الجديدة إمكانات إدارة متطلبات جودة الشيفرة ضمن المستودعات وسير العمل المعتمد على البنية التحتية كرمز.",
+      "summaryBullets": [
+        "واجهة REST API أصبحت متاحة عموماً لإدارة خيار Restrict code coverage.",
+        "يمكن فرض حد أدنى لنسبة تغطية الشيفرة اعتماداً على تغطية الأسطر.",
+        "يمكن تحديد أكبر انخفاض مقبول في التغطية لطلب السحب.",
+        "يتطلب استخدام القاعدة تفعيل GitHub Code Quality وضبط رفع تقارير التغطية.",
+        "الميزة متاحة على GitHub Enterprise Cloud وGitHub Team، وليست متاحة على Enterprise Server."
+      ],
+      "sections": [
+        {
+          "heading": "إدارة برمجية لشرط تغطية الشيفرة",
+          "paragraphs": [
+            "أعلنت GitHub إتاحة استخدام REST API المتاح عموماً لإدارة خيار تقييد تغطية الشيفرة ضمن قواعد المستودعات. ويتيح هذا التغيير للمستخدمين إنشاء هذا الخيار وتحديثه وقراءة إعداداته برمجياً، إلى جانب إمكانية ضبطه من خلال واجهة GitHub على الويب.",
+            "يرتبط الخيار بقواعد المستودعات التي تفرض متطلبات محددة قبل قبول التغييرات. وبدلاً من الاقتصار على الإعداد اليدوي من واجهة المستخدم، يمكن الآن التعامل مع شرط تغطية الشيفرة باعتباره إعداداً قابلاً للإدارة من خلال الأدوات والعمليات البرمجية المعتادة."
+          ]
+        },
+        {
+          "heading": "حد أدنى للتغطية أو سقف للتراجع",
+          "paragraphs": [
+            "تسمح قاعدة Restrict code coverage بفرض حد أدنى لنسبة تغطية الشيفرة، على أن يستند القياس إلى تغطية الأسطر. وبهذا يمكن للمستودع اشتراط مستوى محدد من التغطية قبل تمرير التغيير وفق الإعداد المعتمد للقاعدة.",
+            "كما يمكن استخدام القاعدة لتحديد أكبر انخفاض مقبول في تغطية الشيفرة ضمن طلب سحب. ويمنح هذا الخيار فرق التطوير طريقة لمراقبة التراجع في التغطية، بدلاً من التركيز فقط على بلوغ نسبة ثابتة في كل تغيير.",
+            "وتجمع القاعدة بذلك بين نمطين لإدارة متطلبات التغطية: اشتراط مستوى أدنى للتغطية، أو منع طلبات السحب من تجاوز مقدار محدد من الانخفاض. ويعتمد السلوك الفعلي على الإعداد الذي يختاره المسؤول عن المستودع."
+          ]
+        },
+        {
+          "heading": "تكامل مع البنية التحتية كرمز",
+          "paragraphs": [
+            "بحسب GitHub، تجعل الإتاحة البرمجية إدارة متطلبات تغطية الشيفرة أكثر اتساقاً عبر عدد كبير من المستودعات. فبدلاً من إعادة ضبط القاعدة يدوياً في كل مستودع، يمكن تضمين الإعداد ضمن عمليات الإدارة المؤتمتة التي تستخدم REST API.",
+            "وتفيد هذه الإمكانية أيضاً في سير العمل القائم على مفهوم البنية التحتية كرمز، إذ يمكن قراءة إعداد القاعدة وإنشاؤه وتحديثه من خلال إجراءات قابلة للتكرار. ويساعد ذلك على توحيد متطلبات التغطية بين المستودعات التي تتبع سياسة جودة واحدة، مع إبقاء ضبط القاعدة قابلاً للمراجعة والإدارة ضمن العملية البرمجية المعتمدة.",
+            "ولا يعني دعم REST API إلغاء واجهة الويب؛ فالخيار كان متاحاً عبر الواجهة، بينما تضيف الإتاحة الجديدة مساراً برمجياً لإدارة الإعداد نفسه. ويأتي التغيير لتوسيع طرق التحكم في القاعدة، لا لاستبدال طريقة الضبط الحالية."
+          ]
+        },
+        {
+          "heading": "المتطلبات اللازمة لتفعيل القاعدة",
+          "paragraphs": [
+            "يتطلب استخدام شرط تغطية الشيفرة أن يكون GitHub Code Quality مفعّلاً في المستودع. كما يجب إعداد عمليات رفع تقارير تغطية الشيفرة حتى تتوافر البيانات التي تعتمد عليها القاعدة عند تقييم الحد الأدنى أو مقدار التراجع.",
+            "وبناءً على ذلك، لا يكفي إنشاء إعداد القاعدة عبر REST API وحده لتقييم التغطية؛ إذ تشير GitHub إلى ضرورة توفر تمكين Code Quality وضبط رفع بيانات التغطية أولاً. ويجب أن تتوافق عملية إعداد المستودع مع هذه المتطلبات قبل الاعتماد على الشرط في طلبات السحب.",
+            "تتيح واجهة REST API التعامل مع الخيار ضمن إدارة قواعد المستودعات، بينما تبقى نتيجة تطبيق الشرط مرتبطة بتوافر تقارير التغطية المرفوعة والإعداد الذي يحدده المستودع. وتساعد هذه العلاقة على إبقاء متطلب التغطية جزءاً من سياسة الجودة بدلاً من كونه إعداداً منفصلاً عن بيانات القياس."
+          ]
+        },
+        {
+          "heading": "نطاق الإتاحة للخطط",
+          "paragraphs": [
+            "أوضحت GitHub أن هذه الإمكانية متاحة على GitHub Enterprise Cloud وGitHub Team، وتشمل أيضاً GitHub Enterprise Cloud مع توطين البيانات. ويعني ذلك أن فرق المؤسسات والمشروعات التي تستخدم هذه الخطط تستطيع إدارة خيار تغطية الشيفرة عبر الواجهة البرمجية العامة، متى استوفت متطلبات Code Quality ورفع التقارير.",
+            "في المقابل، لا تتوفر الميزة على GitHub Enterprise Server وفق الإعلان. لذلك يختلف نطاق الاستخدام بحسب المنتج والخطة التي يعتمدها المستودع، ولا يمكن افتراض توفر الخيار نفسه في البيئات المستضافة ذاتياً على Enterprise Server.",
+            "تندرج الإتاحة ضمن دعم GitHub المتزايد لإدارة قواعد المستودعات عبر الواجهات البرمجية. وللاطلاع على بقية القواعد المدعومة وتفاصيل نقاط REST API، تحيل الشركة إلى وثائق القواعد الخاصة بمجموعات القواعد ووثائق نقاط النهاية المرتبطة بها."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "REST API",
+        "تغطية الشيفرة",
+        "قواعد المستودعات",
+        "جودة الشيفرة",
+        "GitHub Enterprise Cloud",
+        "طلبات السحب"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Code Quality",
+        "GitHub Enterprise Cloud",
+        "GitHub Team",
+        "GitHub Enterprise Server",
+        "Restrict code coverage",
+        "REST API"
+      ],
+      "category": "الويب",
+      "dateLabel": "19 سبتمبر 2026",
+      "modifiedLabel": "19 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 646
+    },
+    "en": {
+      "title": "GitHub Adds REST API Control for Code Coverage Rules",
+      "description": "GitHub now lets teams manage the Restrict code coverage repository ruleset through its generally available REST API.",
+      "deck": "GitHub has expanded programmatic control over repository rules by making the Restrict code coverage option available through its generally available REST API. The change adds API support to an option that was previously configurable only through GitHub’s web interface.",
+      "summaryBullets": [
+        "The REST API can create, update, and read the Restrict code coverage ruleset option.",
+        "Teams can enforce minimum line-coverage percentages or limit coverage drops in pull requests.",
+        "The repository must have GitHub Code Quality enabled and coverage uploads configured.",
+        "The capability is available on GitHub Enterprise Cloud and GitHub Team, but not Enterprise Server."
+      ],
+      "sections": [
+        {
+          "heading": "API management comes to code coverage rules",
+          "paragraphs": [
+            "GitHub says developers can now manage the Restrict code coverage repository ruleset option through its generally available REST API. The option was already supported in GitHub’s web interface, but API access allows teams to handle the same configuration through software and automation.",
+            "The API support covers the core lifecycle of the ruleset option. Organizations can create, update, and read the setting programmatically, giving them a way to manage code coverage requirements without relying exclusively on manual changes in repository settings."
+          ]
+        },
+        {
+          "heading": "What the ruleset can enforce",
+          "paragraphs": [
+            "The code coverage ruleset is designed to enforce a minimum code coverage percentage. GitHub’s description specifies that the threshold can be based on line coverage, allowing a repository to require a defined level of coverage before changes satisfy its configured policy.",
+            "The option can also set a maximum tolerable coverage drop for a pull request. This gives teams another way to express a coverage requirement: instead of only requiring a minimum overall percentage, a repository can limit how much coverage is allowed to decline when a pull request is evaluated."
+          ]
+        },
+        {
+          "heading": "Automation for consistent repository policies",
+          "paragraphs": [
+            "GitHub says the new capability can make it easier to manage code coverage requirements consistently across many repositories. Rather than configuring the rule separately through each repository’s web settings, teams can use the REST API to apply and inspect the option through their existing management processes.",
+            "The company also positions the change as useful for infrastructure-as-code workflows. API-based configuration can place code coverage rules alongside other repository settings that are managed through automation, although the source does not specify particular tools, configuration formats, or implementation patterns."
+          ]
+        },
+        {
+          "heading": "Required coverage setup",
+          "paragraphs": [
+            "The ruleset has prerequisites. To use it, a repository must have GitHub Code Quality enabled, and code coverage uploads must be configured. These requirements connect the policy to GitHub’s code-quality and coverage data capabilities rather than making the ruleset an independent coverage measurement system.",
+            "The source does not identify a different setup process for API users compared with users of the web interface. It does make clear that repositories need both the Code Quality feature and coverage uploads in place before the code coverage rule can be used."
+          ]
+        },
+        {
+          "heading": "Availability across GitHub plans",
+          "paragraphs": [
+            "The REST API capability is available on GitHub Enterprise Cloud and GitHub Team. GitHub also includes GitHub Enterprise Cloud with data residency in the supported availability list.",
+            "GitHub Enterprise Server is not supported for this feature, according to the company’s announcement. The availability statement applies to the Restrict code coverage ruleset option and its API management support described in the release."
+          ]
+        },
+        {
+          "heading": "A broader ruleset management workflow",
+          "paragraphs": [
+            "By adding REST API support, GitHub turns the code coverage condition into a setting that can be handled alongside other automated repository controls. The immediate change is specific: teams can now read and modify this ruleset option through an API instead of depending only on the web interface.",
+            "For teams managing multiple repositories, the change provides a more centralized way to keep coverage policies aligned. Its practical use still depends on the required Code Quality configuration and coverage uploads, as well as the repository’s GitHub plan."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "REST API",
+        "code coverage",
+        "repository rulesets",
+        "GitHub Code Quality",
+        "GitHub Enterprise Cloud",
+        "GitHub Team"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub REST API",
+        "GitHub Code Quality",
+        "GitHub Enterprise Cloud",
+        "GitHub Team",
+        "GitHub Enterprise Server"
+      ],
+      "category": "Web",
+      "dateLabel": "September 19, 2026",
+      "modifiedLabel": "September 19, 2026",
+      "readMinutes": 3,
+      "wordCount": 613
+    }
+  },
+  "datePublished": "2026-09-19T00:07:15.630511+03:00",
+  "dateModified": "2026-09-19T00:07:15.630511+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/manage-the-code-coverage-ruleset-condition-with-the-rest-api/hero.webp",
+    "card": "/forum/assets/posts/2026/09/manage-the-code-coverage-ruleset-condition-with-the-rest-api/card.webp",
+    "social": "/forum/assets/posts/2026/09/manage-the-code-coverage-ruleset-condition-with-the-rest-api/social.jpg",
+    "alt": {
+      "ar": "GitHub تتيح إدارة شرط تغطية الشيفرة عبر REST API",
+      "en": "GitHub Adds REST API Control for Code Coverage Rules"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/themes/github-2021-child/dist/img/social-v3-improvements.jpg",
+    "sourceType": "official",
+    "generatedFallback": false
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-18-manage-the-code-coverage-ruleset-condition-with-the-rest-api/",
+      "type": "official",
+      "title": "Manage the code coverage ruleset condition with the REST API"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-18-manage-the-code-coverage-ruleset-condition-with-the-rest-api",
+  "sourceTitle": "Manage the code coverage ruleset condition with the REST API",
+  "trendScore": 123.27,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-18T21:07:15+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/manage-the-code-coverage-ruleset-condition-with-the-rest-api.json"
+}
