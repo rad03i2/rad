@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 2,
+  "template": "article",
+  "id": "9550dbfcc4d908968eb7",
+  "slug": "ubuntu-26-generally-available-and-latest-migration",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/ubuntu-26-generally-available-and-latest-migration/",
+    "en": "/forum/en/apps/ubuntu-26-generally-available-and-latest-migration/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub تطرح Ubuntu 26.04 وتبدأ نقل ubuntu-latest",
+      "description": "أعلنت GitHub إتاحة صورة Ubuntu 26.04 رسميًا لـGitHub Actions، مع بدء نقل وسم ubuntu-latest تدريجيًا من 24.04 في أكتوبر المقبل.",
+      "deck": "أصبحت صورة Ubuntu 26.04 لبيئة GitHub Actions متاحة للاستخدام الإنتاجي بعد خروجها من المعاينة العامة. وستبدأ GitHub لاحقًا نقل الوسم ubuntu-latest إلى الإصدار الجديد تدريجيًا.",
+      "summaryBullets": [
+        "صورة Ubuntu 26.04 مدعومة رسميًا في مهام GitHub Actions على معماريتي x64 وarm64.",
+        "يمكن تشغيل الصورة الجديدة عبر ubuntu-26.04 أو ubuntu-26.04-arm.",
+        "سينتقل الوسم ubuntu-latest من Ubuntu 24.04 إلى Ubuntu 26.04 بين 19 أكتوبر و19 نوفمبر 2026.",
+        "قد تتأثر مهام البناء التي تعتمد على أدوات أو حزم أو إصدارات تغيرت أو أزيلت.",
+        "توصي GitHub باختبار المهام على Ubuntu 26.04 أو تثبيتها مؤقتًا على Ubuntu 24.04."
+      ],
+      "sections": [
+        {
+          "heading": "إتاحة رسمية لبيئة Ubuntu 26.04",
+          "paragraphs": [
+            "أعلنت GitHub أن صورة Ubuntu 26.04 المخصصة لعدّادات GitHub Actions أصبحت متاحة للاستخدام الإنتاجي، بعدما خرجت من مرحلة المعاينة العامة. ويشمل الدعم بيئات التشغيل التي تعتمد على معماريتي x64 وarm64، ما يتيح للمشروعات اختبار مهامها وتشغيلها على الإصدار الأحدث من نظام Ubuntu ضمن خدمات GitHub Actions.",
+            "يمثل هذا الإعلان انتقال الصورة من نطاق التجربة إلى بيئة مدعومة للاعتماد عليها في مهام سير العمل الإنتاجية. ولا يعني ذلك أن كل مهمة تعمل على صور Ubuntu السابقة ستنتقل فورًا؛ إذ يرتبط التغيير الأساسي بوسم ubuntu-latest، الذي ستبدأ GitHub تحديثه وفق جدول زمني تدريجي."
+          ]
+        },
+        {
+          "heading": "طرق تشغيل الصورة الجديدة",
+          "paragraphs": [
+            "يمكن للمستخدمين اختيار Ubuntu 26.04 مباشرة داخل ملف سير العمل باستخدام القيمة runs-on: ubuntu-26.04. أما المهام التي تستهدف بيئة arm64، فيمكن تشغيلها عبر runs-on: ubuntu-26.04-arm. ويمنح هذا التحديد أصحاب المشروعات فرصة تجربة الصورة الجديدة قبل اعتمادها تلقائيًا من خلال الوسم العام.",
+            "اختيار اسم الصورة صراحةً يساعد على فصل قرار الاختبار عن قرار الترحيل التلقائي. وبذلك يستطيع الفريق مقارنة نتائج مهامه على Ubuntu 24.04 وUbuntu 26.04، والتحقق من الأدوات والحزم المطلوبة، قبل أن يصل التغيير إلى سير العمل الذي يستخدم ubuntu-latest."
+          ]
+        },
+        {
+          "heading": "تغيير وسم ubuntu-latest",
+          "paragraphs": [
+            "ستبدأ GitHub نقل وسم ubuntu-latest من Ubuntu 24.04 إلى Ubuntu 26.04 خلال فترة تمتد من 19 أكتوبر إلى 19 نوفمبر 2026. وسيجري هذا الانتقال تدريجيًا، لذلك ستتحول مهام سير العمل التي تستخدم الوسم تلقائيًا إلى صورة Ubuntu 26.04 في أثناء نافذة الترحيل المحددة.",
+            "يعني استخدام ubuntu-latest الاعتماد على الإصدار المدعوم الأحدث الذي تحدده GitHub، بدل تثبيت رقم إصدار محدد. ومع بدء الترحيل، قد تتغير بيئة التنفيذ الفعلية للمهمة حتى لو لم يتغير ملف سير العمل نفسه، وهو ما يجعل مراجعة الاعتماد على الإصدارات المثبتة مسبقًا خطوة ضرورية قبل الموعد."
+          ]
+        },
+        {
+          "heading": "تغييرات الأدوات والحزم قد تؤثر في البناء",
+          "paragraphs": [
+            "توضح GitHub أن Ubuntu 26.04 تتضمن أدوات وإصدارات محدثة، مع إزالة بعض الأدوات أو الإصدارات الموجودة في الصور السابقة. وقد تؤدي هذه الفروقات إلى تعطل مهام تعتمد على إصدار محدد من برنامج أو حزمة مثبتة مسبقًا، أو إلى اختلاف نتائج البناء بين الصورة القديمة والجديدة.",
+            "لا تحدد المعلومات المنشورة أن كل المهام ستتأثر، بل تحذر من احتمال ظهور مشكلات في سير العمل المرتبط بمكونات تغيرت بين Ubuntu 24.04 وUbuntu 26.04. لذلك ينبغي فحص ملفات البناء والنصوص التي تستدعي أدوات النظام أو تفترض وجود حزم وإصدارات بعينها، ثم اختبار النتيجة على الصورة الجديدة قبل بدء الترحيل."
+          ]
+        },
+        {
+          "heading": "خيارات الاستعداد قبل الموعد",
+          "paragraphs": [
+            "توصي GitHub باختبار مهام سير العمل باستخدام ubuntu-26.04 قبل انطلاق الترحيل. ويسمح هذا الاختبار برصد حالات الفشل المرتبطة بتغير الأدوات أو الحزم، ومعالجة الإعدادات اللازمة ضمن المشروع بدل انتظار انتقال المهمة تلقائيًا إلى الإصدار الجديد.",
+            "أما الفرق التي لا تريد الانتقال في الوقت الحالي، فيمكنها تثبيت المهام على Ubuntu 24.04 باستخدام runs-on: ubuntu-24.04، وبذلك تبقى على الصورة الحالية بدل الاعتماد على ubuntu-latest. وتشير GitHub إلى توثيق العدّادات المستضافة لديها للحصول على معلومات الصور المتاحة، كما تحيل المستخدمين إلى مستودع runner-images للاطلاع على قائمة البرامج المضمنة أو الإبلاغ عن المشكلات المتعلقة بالصورة."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub Actions",
+        "Ubuntu 26.04",
+        "ubuntu-latest",
+        "الترحيل البرمجي",
+        "DevOps",
+        "سير العمل",
+        "بيئات البناء"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Actions",
+        "Ubuntu 26.04",
+        "Ubuntu 24.04",
+        "ubuntu-latest",
+        "runner-images"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "19 سبتمبر 2026",
+      "modifiedLabel": "19 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 558
+    },
+    "en": {
+      "title": "Ubuntu 26.04 Reaches General Availability on GitHub Actions",
+      "description": "GitHub has fully supported its Ubuntu 26.04 Actions runner for x64 and arm64, while ubuntu-latest begins migrating from Ubuntu 24.04.",
+      "deck": "GitHub has moved the Ubuntu 26.04 runner image for GitHub Actions out of public preview and into full production support. The change also begins a scheduled migration of the ubuntu-latest label.",
+      "summaryBullets": [
+        "Ubuntu 26.04 is now fully supported for GitHub Actions on x64 and arm64.",
+        "Workflows can select the new images with ubuntu-26.04 or ubuntu-26.04-arm.",
+        "The ubuntu-latest label will move from Ubuntu 24.04 to Ubuntu 26.04.",
+        "The migration will roll out gradually between October 19 and November 19, 2026.",
+        "Projects that need more time can pin workflows to ubuntu-24.04."
+      ],
+      "sections": [
+        {
+          "heading": "Ubuntu 26.04 becomes a supported runner",
+          "paragraphs": [
+            "GitHub has announced the general availability of its Ubuntu 26.04 runner image for GitHub Actions. The image is no longer in public preview and is now fully supported for production workflows running on both x64 and arm64 architectures.",
+            "The release gives workflow maintainers a new supported image option for projects that run automated builds, tests, or other GitHub Actions jobs. GitHub is presenting Ubuntu 26.04 as the latest supported Ubuntu release available through its hosted runner images."
+          ]
+        },
+        {
+          "heading": "New labels for explicit image selection",
+          "paragraphs": [
+            "Teams that want to test or adopt the new image directly can update the runs-on setting in their workflow files. GitHub specifies runs-on: ubuntu-26.04 for the x64 image and runs-on: ubuntu-26.04-arm for the arm64 image.",
+            "Using an explicit label allows maintainers to test their workflows against Ubuntu 26.04 before the broader default migration begins. This is particularly relevant for workflows that depend on a particular preinstalled package, tool, or software version."
+          ]
+        },
+        {
+          "heading": "ubuntu-latest will move from Ubuntu 24.04",
+          "paragraphs": [
+            "As part of the release, GitHub will migrate the ubuntu-latest label from Ubuntu 24.04 to Ubuntu 26.04. The change will not happen all at once: GitHub says the rollout will proceed gradually between October 19 and November 19, 2026.",
+            "During that window, workflows using ubuntu-latest will automatically begin running on the Ubuntu 26.04 image. Projects that use the moving label therefore may receive the new operating system image without a corresponding change to their workflow files."
+          ]
+        },
+        {
+          "heading": "Changed tools and package versions may affect builds",
+          "paragraphs": [
+            "GitHub warns that Ubuntu 26.04 includes updated tools and tool versions, while some tools and versions from earlier images have been removed. Workflows built around specific software versions or preinstalled packages may therefore stop working after the image change.",
+            "The company recommends reviewing the complete list of differences and testing workflows against Ubuntu 26 before the migration starts. This preparation is intended to identify dependencies that are not available, have changed versions, or behave differently on the new runner image."
+          ]
+        },
+        {
+          "heading": "How maintainers can prepare",
+          "paragraphs": [
+            "GitHub's primary recommendation is to test existing workflows with ubuntu-26.04 before the migration begins. Testing with the explicit image label gives teams an opportunity to find and correct build issues while their current default remains unchanged.",
+            "Projects that are not ready to move can instead pin their workflows to ubuntu-24.04. GitHub says this will keep those workflows on the current image rather than following the ubuntu-latest migration.",
+            "For further details, GitHub directs users to its documentation for GitHub-hosted runners. The company also points maintainers to the runner-images repository for the included software list and for reporting issues with the image."
+          ]
+        }
+      ],
+      "tags": [
+        "Ubuntu 26.04",
+        "GitHub Actions",
+        "GitHub-hosted runners",
+        "CI/CD",
+        "Ubuntu 24.04",
+        "arm64",
+        "x64"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Actions",
+        "Ubuntu 26.04",
+        "Ubuntu 24.04",
+        "ubuntu-latest",
+        "runner-images"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "September 19, 2026",
+      "modifiedLabel": "September 19, 2026",
+      "readMinutes": 3,
+      "wordCount": 522
+    }
+  },
+  "datePublished": "2026-09-19T01:41:16.354773+03:00",
+  "dateModified": "2026-09-19T01:41:16.354773+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/ubuntu-26-generally-available-and-latest-migration/hero.webp",
+    "card": "/forum/assets/posts/2026/09/ubuntu-26-generally-available-and-latest-migration/card.webp",
+    "social": "/forum/assets/posts/2026/09/ubuntu-26-generally-available-and-latest-migration/social.jpg",
+    "alt": {
+      "ar": "GitHub تطرح Ubuntu 26.04 وتبدأ نقل ubuntu-latest",
+      "en": "Ubuntu 26.04 Reaches General Availability on GitHub Actions"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/09/652466967-648c7e2e-9e06-452d-80d3-67f55b11ed39.jpg",
+    "sourceType": "official",
+    "generatedFallback": false
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-17-ubuntu-26-generally-available-and-latest-migration/",
+      "type": "official",
+      "title": "Ubuntu 26 generally available and latest migration"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-17-ubuntu-26-generally-available-and-latest-migration",
+  "sourceTitle": "Ubuntu 26 generally available and latest migration",
+  "trendScore": 107.88,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-18T22:41:16+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/ubuntu-26-generally-available-and-latest-migration.json"
+}
