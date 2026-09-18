@@ -177,7 +177,7 @@
     lang = next === 'en' ? 'en' : 'ar'; store.set('rad-lang', lang);
     document.documentElement.lang = I18N[lang].lang; document.documentElement.dir = I18N[lang].dir;
     const b = $('#enhLangToggle'); if (b) b.textContent = lang === 'ar' ? 'EN' : 'AR';
-    translateBase(); renderDynamicText(); renderProjectsLanguage();
+    translateBase(); renderDynamicText(); renderProjectsLanguage();\n    const servicesSection = $('#services'); if (servicesSection) renderCompactService(servicesSection, servicesSection.dataset.activeService || 'web', false);
     showToast(lang === 'ar' ? 'تم تفعيل العربية' : 'English enabled');
   }
 
@@ -250,28 +250,180 @@
     ['ai','AI','أدوات AI','AI tools','دمج أدوات ذكية في تجارب وبرامج إنتاجية.','AI-assisted utilities for practical productivity workflows.']
   ];
 
+  const compactServices = {
+    web: {
+      code:'WEB',
+      arTitle:'الويب والمنصات',
+      enTitle:'Web & Platforms',
+      arDesc:'مواقع سريعة ومتجاوبة تشرح فكرتك بوضوح وتحوّلها إلى تجربة احترافية.',
+      enDesc:'Fast, responsive web experiences that present your idea clearly and professionally.',
+      arPoints:['مواقع وصفحات هبوط','متاجر ولوحات تحكم','واجهات عربية RTL'],
+      enPoints:['Websites & landing pages','Stores & dashboards','Arabic RTL interfaces']
+    },
+    windows: {
+      code:'WIN',
+      arTitle:'Windows والحاسوب',
+      enTitle:'Windows & Desktop',
+      arDesc:'تطبيقات وأدوات حاسوب مخصصة للعمل اليومي وإدارة الملفات والمهام.',
+      enDesc:'Purpose-built desktop apps and utilities for files, workflows and daily operations.',
+      arPoints:['C# و.NET وWinUI','أدوات ملفات ونظام','برامج داخلية مخصصة'],
+      enPoints:['C#, .NET & WinUI','File & system tools','Custom internal software']
+    },
+    mobile: {
+      code:'APP',
+      arTitle:'تطبيقات الهاتف',
+      enTitle:'Mobile Apps',
+      arDesc:'تجارب هاتف واضحة وقابلة للتطوير للفكرة أو الخدمة التي تريد إطلاقها.',
+      enDesc:'Clear, extendable mobile experiences built around the product or service you want to launch.',
+      arPoints:['تطبيقات Android','واجهات هاتف حديثة','نماذج قابلة للتطوير'],
+      enPoints:['Android apps','Modern mobile UI','Extendable prototypes']
+    },
+    automation: {
+      code:'AUTO',
+      arTitle:'Python والأتمتة',
+      enTitle:'Python & Automation',
+      arDesc:'تحويل الخطوات المتكررة إلى أدوات وسير عمل أسرع وأكثر دقة.',
+      enDesc:'Turning repetitive steps into faster, more reliable tools and automated workflows.',
+      arPoints:['معالجة ملفات وبيانات','تقارير ونسخ احتياطي','أتمتة مهام متكررة'],
+      enPoints:['File & data processing','Reports & backups','Workflow automation']
+    },
+    ai: {
+      code:'AI',
+      arTitle:'حلول الذكاء الاصطناعي',
+      enTitle:'AI Solutions',
+      arDesc:'إضافة قدرات ذكية إلى موقعك أو برنامجك أو سير عملك بطريقة عملية.',
+      enDesc:'Practical AI capabilities integrated into your website, software or workflow.',
+      arPoints:['مساعدون وأدوات AI','معالجة نصوص ومحتوى','تكامل نماذج وخدمات ذكية'],
+      enPoints:['AI assistants & tools','Text & content workflows','Model & service integrations']
+    },
+    data: {
+      code:'DATA',
+      arTitle:'البيانات والأنظمة',
+      enTitle:'Data, APIs & IoT',
+      arDesc:'ربط البيانات والخدمات والأجهزة في نظام واحد واضح وسهل المتابعة.',
+      enDesc:'Connecting data, services and devices into one clear, manageable system.',
+      arPoints:['APIs وقواعد بيانات','لوحات بيانات وتقارير','IoT وحساسات'],
+      enPoints:['APIs & databases','Dashboards & reports','IoT & sensors']
+    }
+  };
+
+  function renderCompactService(section, id, animate=false) {
+    if (!section) return;
+    const service = compactServices[id] || compactServices.web;
+    const panel = $('.enh-service-stage', section);
+    if (!panel) return;
+    const isEn = lang === 'en';
+
+    const apply = () => {
+      section.dataset.activeService = id;
+      $$('.enh-service-tab', section).forEach(tab => {
+        const active = tab.dataset.service === id;
+        tab.classList.toggle('is-active', active);
+        tab.setAttribute('aria-selected', active ? 'true' : 'false');
+        tab.tabIndex = active ? 0 : -1;
+      });
+
+      const code = $('[data-service-code]', panel);
+      const title = $('[data-service-title]', panel);
+      const desc = $('[data-service-desc]', panel);
+      const points = $('[data-service-points]', panel);
+      const cta = $('[data-service-cta]', panel);
+
+      if (code) code.textContent = service.code;
+      if (title) title.textContent = isEn ? service.enTitle : service.arTitle;
+      if (desc) desc.textContent = isEn ? service.enDesc : service.arDesc;
+      if (points) {
+        const list = isEn ? service.enPoints : service.arPoints;
+        points.innerHTML = list.map(item => `<span>${item}</span>`).join('');
+      }
+      if (cta) cta.textContent = isEn ? 'Request this service' : 'اطلب هذه الخدمة';
+
+      const sectionSubtitle = $('.enh-services-short', section);
+      if (sectionSubtitle) sectionSubtitle.textContent = isEn
+        ? 'Choose a direction. I will shape the right solution around your idea.'
+        : 'اختر المجال فقط، وأنا أبني الحل المناسب حول فكرتك.';
+    };
+
+    if (!animate || document.documentElement.classList.contains('enh-reduce-motion') || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      apply();
+      return;
+    }
+    panel.classList.add('is-switching');
+    window.setTimeout(() => {
+      apply();
+      requestAnimationFrame(() => panel.classList.remove('is-switching'));
+    }, 180);
+  }
+
   function addServices() {
     const projectsSection = $('#projects'); if (!projectsSection || $('#services')) return;
-    const capabilities = lang==='ar' ? [
-      ['01','ويب ومنصات','مواقع شخصية وتجارية، صفحات هبوط، متاجر، لوحات تحكم، تطبيقات ويب وواجهات عربية RTL متجاوبة.'],
-      ['02','Windows والحاسوب','تطبيقات C# و.NET وWinUI، أدوات ملفات ونظام، برامج داخلية ولوحات تشغيل مخصصة.'],
-      ['03','الهاتف','تطبيقات وتجارب Android، واجهات Kotlin، ونماذج Python/Kivy قابلة للتطوير.'],
-      ['04','Python والأتمتة','معالجة ملفات وبيانات، نسخ احتياطي، تقارير، إعادة تسمية جماعية، وأتمتة خطوات وسير عمل متكرر.'],
-      ['05','الذكاء الاصطناعي','دمج خدمات ونماذج AI، أدوات نصوص ومحتوى، مساعدين ذكيين وسير عمل مدعوم بالذكاء الاصطناعي.'],
-      ['06','البيانات والأنظمة','واجهات API، قواعد بيانات، أنظمة إدارة، لوحات بيانات، IoT وحساسات وربط خدمات متعددة.'],
-      ['07','أدوات مخصصة','إضافات متصفح، PDF وصور وصوت وفيديو، محولات، QR، أدوات مطورين وبرامج مصممة لفكرة محددة.']
-    ] : [
-      ['01','Web & platforms','Portfolios, business sites, landing pages, stores, dashboards, web apps and responsive RTL interfaces.'],
-      ['02','Windows & desktop','C#, .NET and WinUI apps, file/system utilities, internal tools and custom desktop workflows.'],
-      ['03','Mobile','Android experiences, Kotlin interfaces and extendable Python/Kivy prototypes.'],
-      ['04','Python & automation','File/data processing, backups, reports, batch renaming and repeatable workflow automation.'],
-      ['05','AI solutions','AI integrations, text/content tools, smart assistants and AI-assisted workflows.'],
-      ['06','Data & systems','APIs, databases, management systems, dashboards, IoT/sensor projects and service integrations.'],
-      ['07','Custom utilities','Browser extensions, PDF/image/audio/video tools, converters, QR utilities and purpose-built software.']
-    ];
-    const sec = document.createElement('section'); sec.id = 'services'; sec.className = 'enh-services enh-section enh-snap';
-    sec.innerHTML = `<div class="enh-shell"><div class="enh-kicker" data-i18n="services">${t('services')}</div><h2 class="enh-title" data-i18n="servicesTitle">${t('servicesTitle')}</h2><p class="enh-subtitle">${lang==='ar'?'بدل أن أحصر فكرتك في قالب جاهز، أبني الحل حول الفكرة نفسها: من أداة صغيرة ذكية إلى نظام متكامل، مع اختيار التقنية المناسبة لكل مشروع.':'Rather than forcing your idea into a template, I build around the idea itself — from a focused smart utility to a complete system, using the right technology for each project.'}</p><article class="enh-capability-card enh-reveal"><div class="enh-capability-intro"><span class="enh-capability-code">BUILD / CREATE / AUTOMATE</span><h3>${lang==='ar'?'فكرتك يمكن أن تصبح منتجًا يعمل ويُستخدم.':'Your idea can become a product people can actually use.'}</h3><p>${lang==='ar'?'أستطيع تصميم الواجهة، برمجة المنطق، ربط البيانات والخدمات، أتمتة العمليات، وبناء تجربة واضحة وسريعة وقابلة للتوسع — سواء كانت الفكرة موقعًا، تطبيقًا، أداة، نظامًا داخليًا أو تجربة جديدة بالكامل.':'I can shape the interface, build the logic, connect data and services, automate workflows and deliver a clear, fast, extensible experience — whether it is a website, app, utility, internal system or something entirely new.'}</p><div class="enh-capability-tags"><span>Web</span><span>Windows</span><span>Mobile</span><span>Python</span><span>AI</span><span>Automation</span><span>Data</span><span>IoT</span><span>APIs</span><span>RTL</span></div></div><div class="enh-capability-list">${capabilities.map(([n,h,p])=>`<div class="enh-capability-row"><b>${n}</b><div><strong>${h}</strong><span>${p}</span></div></div>`).join('')}</div><div class="enh-capability-footer"><span>${lang==='ar'?'فكرتك غير موجودة ضمن الأمثلة؟ أرسلها كما هي. الهدف أن نصنع الحل المناسب لها، لا أن نجبرها على شكل جاهز.':'Do not see your exact idea in the examples? Send it as-is. The goal is to build the right solution around it, not force it into a preset shape.'}</span><div class="enh-request-row"><a class="enh-primary" id="enhOpenRequest" href="${projectRequestUrl}" target="_blank" rel="noopener noreferrer" data-i18n="request">${t('request')}</a><a class="enh-secondary" href="${consultationUrl}" target="_blank" rel="noopener noreferrer">${lang==='ar'?'احجز استشارة':'Book a consultation'}</a><a class="enh-secondary" href="${omnisendUpdates}" target="_blank" rel="noopener noreferrer">${lang==='ar'?'تحديثات المشاريع':'Project updates'}</a></div></div></article></div>`;
+    const order = ['web','windows','mobile','automation','ai','data'];
+    const sec = document.createElement('section');
+    sec.id = 'services';
+    sec.className = 'enh-services enh-section enh-snap';
+    sec.dataset.activeService = 'web';
+
+    sec.innerHTML = `
+      <div class="enh-shell">
+        <div class="enh-services-head">
+          <div>
+            <div class="enh-kicker" data-i18n="services">${t('services')}</div>
+            <h2 class="enh-title" data-i18n="servicesTitle">${t('servicesTitle')}</h2>
+          </div>
+          <p class="enh-services-short">${lang==='ar'?'اختر المجال فقط، وأنا أبني الحل المناسب حول فكرتك.':'Choose a direction. I will shape the right solution around your idea.'}</p>
+        </div>
+
+        <div class="enh-service-tabs" role="tablist" aria-label="${lang==='ar'?'الخدمات':'Services'}">
+          ${order.map((id,index)=>{
+            const s=compactServices[id];
+            return `<button type="button" class="enh-service-tab${index===0?' is-active':''}" role="tab" aria-selected="${index===0?'true':'false'}" tabindex="${index===0?'0':'-1'}" data-service="${id}"><b>${s.code}</b><span>${s.enTitle}</span></button>`;
+          }).join('')}
+        </div>
+
+        <article class="enh-service-stage enh-reveal" role="tabpanel" aria-live="polite">
+          <div class="enh-service-stage-glow" aria-hidden="true"></div>
+          <div class="enh-service-stage-copy">
+            <span class="enh-service-code" data-service-code>WEB</span>
+            <h3 data-service-title>${compactServices.web.arTitle}</h3>
+            <p data-service-desc>${compactServices.web.arDesc}</p>
+            <div class="enh-service-points" data-service-points>
+              ${compactServices.web.arPoints.map(item=>`<span>${item}</span>`).join('')}
+            </div>
+          </div>
+          <div class="enh-service-stage-action">
+            <span class="enh-service-watermark" aria-hidden="true">WEB</span>
+            <a class="enh-primary" data-service-cta href="${projectRequestUrl}" target="_blank" rel="noopener noreferrer">اطلب هذه الخدمة</a>
+          </div>
+        </article>
+      </div>`;
+
+    const tabList = $('.enh-service-tabs', sec);
+    tabList?.addEventListener('click', event => {
+      const tab = event.target.closest('.enh-service-tab');
+      if (!tab) return;
+      renderCompactService(sec, tab.dataset.service, true);
+    });
+
+    tabList?.addEventListener('keydown', event => {
+      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+      const tabs = $$('.enh-service-tab', sec);
+      if (!tabs.length) return;
+      const current = tabs.indexOf(document.activeElement);
+      let next = current < 0 ? 0 : current;
+      if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = tabs.length - 1;
+      else {
+        const rtl = document.documentElement.dir === 'rtl';
+        const forward = event.key === (rtl ? 'ArrowLeft' : 'ArrowRight');
+        next = (current + (forward ? 1 : -1) + tabs.length) % tabs.length;
+      }
+      event.preventDefault();
+      tabs[next].focus();
+      renderCompactService(sec, tabs[next].dataset.service, true);
+    });
+
     projectsSection.insertAdjacentElement('beforebegin', sec);
+    renderCompactService(sec, 'web', false);
   }
 
   function addProcess() {
