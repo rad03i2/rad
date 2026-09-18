@@ -328,8 +328,10 @@
       const desc = $('[data-service-desc]', panel);
       const points = $('[data-service-points]', panel);
       const cta = $('[data-service-cta]', panel);
+      const watermark = $('.enh-service-watermark', panel);
 
       if (code) code.textContent = service.code;
+      if (watermark) watermark.textContent = service.code;
       if (title) title.textContent = isEn ? service.enTitle : service.arTitle;
       if (desc) desc.textContent = isEn ? service.enDesc : service.arDesc;
       if (points) {
