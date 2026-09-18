@@ -226,7 +226,7 @@
   function addStatsAndTicker() {
     const hero = $('.hero'); if (!hero || $('#enhStats')) return;
     const stats = document.createElement('section'); stats.id = 'enhStats'; stats.className = 'enh-shell enh-reveal';
-    stats.innerHTML = `<div class="enh-stats"><div class="enh-stat"><strong data-count="${projects.length}">0</strong><span>${lang==='ar'?'مشروعًا معروضًا':'projects displayed'}</span></div><div class="enh-stat"><strong>Web</strong><span>${lang==='ar'?'واجهات ومواقع ويب':'interfaces & websites'}</span></div><div class="enh-stat"><strong>Desktop</strong><span>${lang==='ar'?'أدوات وتطبيقات حاسوب':'desktop tools'}</span></div><div class="enh-stat"><strong>Automation</strong><span>${lang==='ar'?'أتمتة وسير عمل':'automated workflows'}</span></div></div>`;
+    stats.innerHTML = `<div class="enh-stats"><div class="enh-stat enh-stat--projects"><div class="enh-stat-dual"><div class="enh-stat-pane"><strong data-count="${projects.length}">0</strong><span data-stat-label="displayed">${lang==='ar'?'مشروعًا معروضًا':'projects displayed'}</span></div><span class="enh-stat-divider" aria-hidden="true"></span><div class="enh-stat-pane enh-stat-pane--github"><strong id="githubRepoCount" data-github-count>—</strong><span data-stat-label="github">${lang==='ar'?'مستودعات GitHub':'GitHub repositories'}</span></div></div></div><div class="enh-stat enh-stat--dynamic" data-stat-group="web" data-stat-index="0" data-ghost="WEB"><div class="enh-stat-copy"><strong data-stat-title>Web</strong><span data-stat-desc>${lang==='ar'?'واجهات ومواقع ويب':'interfaces & websites'}</span></div><small class="enh-stat-index"><b data-stat-current>01</b>/10</small></div><div class="enh-stat enh-stat--dynamic" data-stat-group="desktop" data-stat-index="0" data-ghost="DESKTOP"><div class="enh-stat-copy"><strong data-stat-title>Desktop</strong><span data-stat-desc>${lang==='ar'?'أدوات وتطبيقات حاسوب':'desktop tools'}</span></div><small class="enh-stat-index"><b data-stat-current>01</b>/10</small></div><div class="enh-stat enh-stat--dynamic" data-stat-group="automation" data-stat-index="0" data-ghost="AUTO"><div class="enh-stat-copy"><strong data-stat-title>Automation</strong><span data-stat-desc>${lang==='ar'?'أتمتة وسير عمل':'automated workflows'}</span></div><small class="enh-stat-index"><b data-stat-current>01</b>/10</small></div></div>`;
     hero.insertAdjacentElement('afterend', stats);
     const tech = document.createElement('div'); tech.className = 'enh-tech-strip enh-reveal'; tech.setAttribute('aria-label','Programming languages and technologies');
     tech.innerHTML = '<div class="enh-tech-track" id="programmingIconTicker" aria-hidden="true"></div>';
@@ -523,4 +523,199 @@
   const observer=new MutationObserver(fixAccessibleNames);
   observer.observe(document.documentElement,{childList:true,subtree:true});
   setTimeout(()=>observer.disconnect(),5000);
+})();
+
+
+/* STATS-LIVE-V1 */
+(() => {
+  'use strict';
+
+  const OWNER = 'rad03i2';
+  const ROTATE_MS = 3000;
+  const CACHE_KEY = 'rad-github-public-repos-v1';
+  const CACHE_TTL = 6 * 60 * 60 * 1000;
+
+  const slides = {
+    web: [
+      ['Web','واجهات ومواقع ويب','Interfaces & websites','WEB',205],
+      ['Android','إنشاء تطبيقات أندرويد','Android applications','ANDROID',186],
+      ['Dashboards','لوحات تحكم تفاعلية','Interactive dashboards','DASH',270],
+      ['E-Commerce','متاجر إلكترونية','E-commerce experiences','SHOP',24],
+      ['Landing Pages','صفحات هبوط تسويقية','High-converting landing pages','LAND',340],
+      ['RTL UI','واجهات عربية RTL','Arabic RTL interfaces','RTL',115],
+      ['PWA','تطبيقات ويب قابلة للتثبيت','Installable progressive web apps','PWA',45],
+      ['APIs','ربط الأنظمة وواجهات API','API and system integrations','API',198],
+      ['Portfolio','مواقع شخصية وأعمال','Portfolio and personal websites','PORT',320],
+      ['Booking','أنظمة حجز ومواعيد','Booking and appointment systems','BOOK',160]
+    ],
+    desktop: [
+      ['Desktop','أدوات وتطبيقات حاسوب','Desktop tools & applications','DESKTOP',133],
+      ['Windows Apps','تطبيقات Windows حديثة','Modern Windows applications','WIN',150],
+      ['File Tools','إدارة ومعالجة الملفات','File management & processing','FILES',210],
+      ['PDF Center','أدوات PDF متقدمة','Advanced PDF utilities','PDF',18],
+      ['Media Tools','صور وصوت وفيديو','Image, audio & video tools','MEDIA',292],
+      ['System Tools','أدوات النظام والتخزين','System & storage utilities','SYSTEM',52],
+      ['Data Apps','تطبيقات بيانات وتقارير','Data and reporting applications','DATA',190],
+      ['IoT','لوحات حساسات وإنترنت الأشياء','IoT and sensor dashboards','IOT',230],
+      ['Utilities','أدوات إنتاجية سريعة','Fast productivity utilities','UTIL',96],
+      ['Dev Tools','أدوات للمطورين','Developer tools','DEV',330]
+    ],
+    automation: [
+      ['Automation','أتمتة وسير عمل','Automation & workflows','AUTO',35],
+      ['Python','أتمتة وسكربتات Python','Python scripts & automation','PY',48],
+      ['AI Workflows','عمليات مدعومة بالذكاء الاصطناعي','AI-assisted workflows','AI',278],
+      ['Browser','أتمتة مهام المتصفح','Browser task automation','BROWSER',204],
+      ['Scheduler','مهام مجدولة تلقائيًا','Scheduled automated tasks','SCHEDULE',12],
+      ['Data Flow','معالجة بيانات تلقائية','Automated data processing','FLOW',168],
+      ['Backup','نسخ احتياطي ومزامنة','Backup and synchronization','BACKUP',110],
+      ['Reports','تقارير وتصدير آلي','Automated reports & exports','REPORT',315],
+      ['Bots','بوتات وتكاملات','Bots and integrations','BOTS',250],
+      ['GitHub','أتمتة GitHub والنشر','GitHub and deployment automation','GITHUB',194]
+    ]
+  };
+
+  const isEnglish = () => (document.documentElement.lang || '').toLowerCase().startsWith('en');
+
+  function paintCard(card, index, animate = true) {
+    const list = slides[card.dataset.statGroup];
+    if (!list?.length) return;
+    const safeIndex = ((index % list.length) + list.length) % list.length;
+    const [title, ar, en, ghost, hue] = list[safeIndex];
+    const apply = () => {
+      card.dataset.statIndex = String(safeIndex);
+      card.dataset.ghost = ghost;
+      card.style.setProperty('--stat-hue', String(hue));
+      const titleEl = card.querySelector('[data-stat-title]');
+      const descEl = card.querySelector('[data-stat-desc]');
+      const currentEl = card.querySelector('[data-stat-current]');
+      if (titleEl) titleEl.textContent = title;
+      if (descEl) descEl.textContent = isEnglish() ? en : ar;
+      if (currentEl) currentEl.textContent = String(safeIndex + 1).padStart(2, '0');
+    };
+
+    if (!animate) { apply(); return; }
+    card.classList.add('is-switching');
+    window.setTimeout(() => {
+      apply();
+      requestAnimationFrame(() => card.classList.remove('is-switching'));
+    }, 170);
+  }
+
+  function renderLanguage() {
+    const root = document.getElementById('enhStats');
+    if (!root) return;
+    const displayed = root.querySelector('[data-stat-label="displayed"]');
+    const github = root.querySelector('[data-stat-label="github"]');
+    if (displayed) displayed.textContent = isEnglish() ? 'projects displayed' : 'مشروعًا معروضًا';
+    if (github) github.textContent = isEnglish() ? 'GitHub repositories' : 'مستودعات GitHub';
+    root.querySelectorAll('[data-stat-group]').forEach(card => {
+      paintCard(card, Number(card.dataset.statIndex || 0), false);
+    });
+    root.setAttribute('aria-label', isEnglish() ? 'Project statistics and capabilities' : 'إحصاءات ومجالات العمل');
+  }
+
+  function startRotationWhenVisible(root) {
+    let timer = 0;
+    const start = () => {
+      if (timer) return;
+      timer = window.setInterval(() => {
+        if (document.hidden) return;
+        root.querySelectorAll('[data-stat-group]').forEach(card => {
+          paintCard(card, Number(card.dataset.statIndex || 0) + 1, true);
+        });
+      }, ROTATE_MS);
+    };
+
+    if (!('IntersectionObserver' in window)) { start(); return; }
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        start();
+        observer.disconnect();
+      }
+    }, { threshold: .28, rootMargin: '0px 0px -8% 0px' });
+    observer.observe(root);
+  }
+
+  function animateRepoCount(el, target) {
+    if (!el || el.dataset.animated === '1') return;
+    el.dataset.animated = '1';
+    if (document.documentElement.classList.contains('enh-reduce-motion') ||
+        matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = String(target);
+      return;
+    }
+    const started = performance.now();
+    const duration = 1050;
+    const tick = now => {
+      const progress = Math.min(1, (now - started) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = String(Math.round(target * eased));
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  function bindRepoCounterVisibility(root, el, target) {
+    el.textContent = '0';
+    if (!('IntersectionObserver' in window)) {
+      animateRepoCount(el, target);
+      return;
+    }
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      animateRepoCount(el, target);
+      observer.disconnect();
+    }, { threshold: .58, rootMargin: '0px 0px -5% 0px' });
+    observer.observe(root);
+  }
+
+  async function hydrateGithubRepoCount(root) {
+    const el = root.querySelector('[data-github-count]');
+    if (!el) return;
+
+    let cached = null;
+    try { cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null'); } catch {}
+    const useCount = value => {
+      const count = Number(value);
+      if (!Number.isFinite(count) || count < 0) return false;
+      bindRepoCounterVisibility(root, el, Math.round(count));
+      return true;
+    };
+
+    if (cached && Date.now() - Number(cached.at || 0) < CACHE_TTL && useCount(cached.count)) return;
+
+    try {
+      const response = await fetch(`https://api.github.com/users/${OWNER}`, {
+        headers: { Accept: 'application/vnd.github+json' }
+      });
+      if (!response.ok) throw new Error(`GitHub API ${response.status}`);
+      const data = await response.json();
+      const count = Number(data.public_repos);
+      if (!Number.isFinite(count)) throw new Error('Invalid repository count');
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ count, at: Date.now() })); } catch {}
+      useCount(count);
+    } catch {
+      if (cached) useCount(cached.count);
+      else {
+        el.textContent = '—';
+        el.title = isEnglish() ? 'Repository count is temporarily unavailable' : 'تعذر جلب عدد المستودعات مؤقتًا';
+      }
+    }
+  }
+
+  function init() {
+    const root = document.getElementById('enhStats');
+    if (!root || root.dataset.liveStatsReady === '1') return;
+    root.dataset.liveStatsReady = '1';
+    renderLanguage();
+    root.querySelectorAll('[data-stat-group]').forEach(card => paintCard(card, 0, false));
+    startRotationWhenVisible(root);
+    hydrateGithubRepoCount(root);
+
+    const languageObserver = new MutationObserver(renderLanguage);
+    languageObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['lang', 'dir'] });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else init();
 })();
