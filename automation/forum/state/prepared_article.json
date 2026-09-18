@@ -1,5 +1,251 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-09-18T23:23:35+00:00",
-  "last_published_story_id": "88391dbee63d21574dda"
+  "status": "ready",
+  "prepared_at": "2026-09-18T23:26:33+00:00",
+  "target_publish_at": "2026-09-19T02:43:35.038053+03:00",
+  "story": {
+    "title": "Saving another 100TB of RAM with math (and Rust)",
+    "url": "https://blog.cloudflare.com/saving-100-tb-of-ram-with-math",
+    "domain": "blog.cloudflare.com",
+    "summary": "Cloudflare's global network is immense but not limitless. As we look for small ways to trim our resource usage, we sometimes get lucky and we can cut significantly more. Here’s how we reduced one of our Pingora-based service's RAM usage with statistics.",
+    "published_at": "2026-09-18T17:23:58+00:00",
+    "discovered_at": "2026-09-18T18:22:51+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "web",
+    "category_label": "الويب",
+    "score": 61,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "2b8896639e820b562d15",
+    "last_publisher_status": "prepared",
+    "last_publisher_at": "2026-09-18T18:34:49+00:00",
+    "publisher_attempts": [
+      {
+        "attempt": 1,
+        "status": "passed",
+        "errors": [],
+        "word_count_ar": 791,
+        "word_count_en": 937
+      }
+    ],
+    "trend": {
+      "score": 108.65,
+      "age_hours": 6.03,
+      "corroboration_count": 0,
+      "entity_momentum": 6.0,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/saving-100-tb-of-ram-with-math/",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Saving another 100TB of RAM with math (and Rust)",
+      "title": "Saving another 100TB of RAM with math (and Rust) | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "Cloudflare تستعيد أكثر من 100 تيرابايت من الذاكرة",
+      "description": "تشرح Cloudflare كيف خفّض تعديل رياضي في خوارزمية التجزئة المتسقة استهلاك ذاكرة خدمة Pingora Backend Router بأكثر من 100 تيرابايت.",
+      "deck": "أعلنت Cloudflare استعادة أكثر من 100 تيرابايت من ذاكرة الوصول العشوائي على نطاق شبكتها، بعد معالجة استهلاك زائد في خدمة داخلية مبنية على Pingora. وجاء الحل من مراجعة خوارزمية التجزئة المتسقة باستخدام الإحصاء وبعض أدوات Rust.",
+      "summary_bullets": [
+        "المشكلة ظهرت في خدمة Pingora Backend Router، وتحديداً في هياكل مرتبطة بمكتبة pingora-ketama.",
+        "تستخدم Cloudflare التجزئة المتسقة لتوجيه الطلبات القابلة للتخزين المؤقت إلى خوادم محددة عبر عناوين URL.",
+        "توزيع الخوادم على نطاق التجزئة قد ينتج مناطق بأحجام مختلفة، ما يؤدي إلى تفاوت في أحجام الحمل والذاكرة.",
+        "إضافة تجزئات متعددة لكل خادم تساعد على موازنة المناطق وتقليل التفاوت الإحصائي.",
+        "استعادت الشركة أكثر من 100 تيرابايت من الذاكرة عالمياً، بعد خفض سابق مماثل تقريباً حققه فريق DNS."
+      ],
+      "sections": [
+        {
+          "heading": "تحسين صغير على شبكة بحجم Cloudflare",
+          "paragraphs": [
+            "تدير Cloudflare شبكة عالمية تضم آلاف الخوادم، مع بيتابايتات من ذاكرة الوصول العشوائي وملايين أنوية المعالجة. ورغم ضخامة هذه الموارد، فإنها محدودة عملياً، خصوصاً عندما تحتاج الخدمات إلى العمل على كل عقدة في الشبكة. لذلك يمكن لتحسينات تبدو صغيرة على مستوى خدمة واحدة أن تتحول إلى وفورات كبيرة عند تطبيقها على نطاق عالمي.",
+            "تقول الشركة إن تعديل خوارزمية واحدة خفّض بصمة الذاكرة لإحدى خدماتها المبنية على Pingora بدرجة كبيرة، ومكّنها من استعادة أكثر من 100 تيرابايت من الذاكرة على مستوى الشبكة. وتأتي هذه النتيجة فوق نحو 100 تيرابايت أخرى تمكّن فريق DNS من توفيرها في الشهر السابق، وفق ما ذكرته Cloudflare."
+          ]
+        },
+        {
+          "heading": "بلاغ عن استهلاك زائد في Pingora",
+          "paragraphs": [
+            "بدأت القصة بتذكرة سجّلها موظف يُدعى Ivan، بعد رصد استهلاك مفرط للذاكرة في مكتبة pingora-ketama ضمن خدمة Pingora Backend Router، التي تختصرها Cloudflare إلى PBR. وكانت الملاحظة الأساسية أن الخدمة تستهلك ذاكرة أكثر بكثير مما كان متوقعاً، ولا سيما في البنى المرتبطة بالمكتبة.",
+            "تستخدم pingora-ketama، وهي مكتبة مفتوحة المصدر، أسلوب التجزئة المتسقة. وتحتاج Cloudflare إلى هذا الأسلوب في PBR لتوجيه الطلبات القابلة للتخزين المؤقت إلى الخوادم اعتماداً على عناوين URL. وبهذه الطريقة يمكن الاحتفاظ بنسخة واحدة فقط من الملف داخل مركز البيانات، مع توفير طريقة مستقرة للعثور على موقعه عند وصول الطلبات."
+          ]
+        },
+        {
+          "heading": "كيف توزّع التجزئة المتسقة الطلبات؟",
+          "paragraphs": [
+            "تقبل دوال التجزئة أنواعاً مختلفة من المدخلات، لكنها تنتج قيمة عددية محدودة، قد تكون بعرض 32 أو 64 أو 128 بتاً بحسب الدالة المستخدمة. ويمكن وضع هذه القيم على خط أعداد أو على حلقة متصلة تعود من القيمة القصوى إلى الصفر. في نموذج مبسط، تُحوَّل هوية كل خادم، مثل عنوان IP، وكل مهمة، مثل مفتاح التخزين المؤقت، إلى قيمة على هذا النطاق.",
+            "يُسند كل طلب إلى أول خادم يقع إلى يساره على خط الأعداد، مع التعامل مع الجزء الأخير على أنه يلتف إلى البداية. وبذلك تصبح منطقة كل خادم هي مجموعة قيم التجزئة التي ستصل إليه. الفكرة بسيطة، لكن حجم هذه المناطق لا يكون متساوياً بالضرورة، لأن القيم الناتجة شبه عشوائية.",
+            "إذا كانت منطقة خادم أكبر من مناطق الخوادم الأخرى، فسيتولى ذلك الخادم نسبة أكبر من الطلبات. وقد يؤدي هذا التفاوت إلى توزيع غير متوازن للحمل، كما يفسر جزءاً من سبب تضخم استهلاك الذاكرة في الهياكل التي تعتمد على هذه الخوارزمية."
+          ]
+        },
+        {
+          "heading": "الإحصاء يشرح مصدر التفاوت",
+          "paragraphs": [
+            "لتقدير مقدار عدم اليقين في أحجام المناطق، لجأت Cloudflare إلى مفهومين إحصائيين: القيمة المتوقعة والانحراف المعياري. تمثل القيمة المتوقعة النقطة التي تتمركز حولها القياسات الناتجة عن توزيع معين، بينما يوضح الانحراف المعياري مدى قرب معظم القياسات من ذلك المركز.",
+            "في مثال يتضمن 100 خادم، تشير الحسابات إلى أن المنطقة المخصصة لكل خادم تتمركز حول 0.99% من النطاق الكلي، وأن معظم أطوال المناطق تقع ضمن نسبة تقارب 1% من القيمة المتوقعة. لكن مقارنة هذا الانحراف بالقيمة المتوقعة نفسها تكشف أن الخطأ النسبي ليس صغيراً كما قد يبدو للوهلة الأولى. وتُسمى هذه النسبة معامل الاختلاف، وهي تساعد في تقدير مقدار التفاوت مقارنة بالحجم المستهدف لكل خادم."
+          ]
+        },
+        {
+          "heading": "المزيد من التجزئات، وذاكرة أقل",
+          "paragraphs": [
+            "الحل الذي تتيحه التجزئة المتسقة هو تمثيل الخادم الواحد بعدة قيم تجزئة بدلاً من قيمة واحدة. عند جمع المناطق الناتجة عن هذه القيم، يمكن أن تعوّض المنطقة القصيرة منطقة أطول، فتقترب الحصة الإجمالية لكل خادم من التوزيع المتوازن. لا يوجد ضمان ثابت لمقدار التحسن عند إضافة عدد صغير من القيم، لأن النتائج تعتمد على الطبيعة العشوائية للتوزيع، لكن زيادة عدد القطاعات تجعل التفاوت أقل وفقاً لفكرة قانون الأعداد الكبيرة.",
+            "توضح Cloudflare أن NGINX يضع افتراضياً 160 تجزئة لكل خادم، وأن Pingora يستخدم القيمة الافتراضية نفسها. ومن خلال مراجعة الطريقة التي تُنشأ بها هذه البنى والتعامل معها، تمكّن فريق الأداء من معالجة الاستهلاك الزائد في PBR. وتعرض الشركة القصة أيضاً بوصفها مثالاً على اجتماع التحليل الرياضي مع البرمجة بلغة Rust للوصول إلى خفض ملموس في الموارد، من دون تغيير الغرض الأساسي من الخدمة."
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Pingora",
+        "Rust",
+        "التجزئة المتسقة",
+        "إدارة الذاكرة",
+        "هندسة البرمجيات",
+        "الأداء",
+        "مراكز البيانات"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Pingora Backend Router",
+        "pingora-ketama",
+        "Pingora",
+        "NGINX",
+        "فريق الأداء في Cloudflare"
+      ],
+      "article_type": "news",
+      "confidence_note": "المادة مبنية حصراً على النص المستخرج من مدونة Cloudflare؛ لم تُضف تفاصيل تنفيذية غير واردة في المصدر."
+    },
+    "en": {
+      "title": "Cloudflare Reclaims 100TB of RAM With Math and Rust",
+      "description": "Cloudflare says a statistical redesign of consistent hashing cut more than 100TB of RAM from a Pingora-based service across its global network.",
+      "deck": "Cloudflare says it reclaimed more than 100TB of RAM globally by reducing the memory footprint of a Pingora-based service. The change focused on the consistent-hashing structures used by its internal Pingora Backend Router.",
+      "summary_bullets": [
+        "Cloudflare says the optimization recovered more than 100TB of RAM across its network.",
+        "The work targeted pingora-ketama, an open-source consistent-hashing library used by Pingora Backend Router.",
+        "The company used statistical reasoning to examine how many hashes were needed for balanced workloads.",
+        "The change followed a Performance team investigation into unexpectedly high memory use."
+      ],
+      "sections": [
+        {
+          "heading": "A small algorithmic change at global scale",
+          "paragraphs": [
+            "Cloudflare operates thousands of servers with petabytes of RAM and millions of CPU cores, according to the company. Because its services must run across every node, even small reductions in resource use can have a significant effect when multiplied across the network.",
+            "In a blog post, Cloudflare said changes to a single algorithm reduced the memory footprint of one of its Pingora-based services enough to reclaim more than 100TB of RAM globally. The recovery came on top of 100TB of memory that the company's DNS team had previously been able to shed, according to the post."
+          ]
+        },
+        {
+          "heading": "The investigation began with Pingora Backend Router",
+          "paragraphs": [
+            "The work started with an internal ticket from an engineer named Ivan, who identified excessive memory usage in pingora-ketama within Pingora Backend Router, or PBR. Cloudflare describes PBR as an internal load-balancing service, while pingora-ketama is its open-source library for consistent hashing.",
+            "The company's Performance team investigated the issue as part of Cloudflare's effort to keep resources shared equitably between teams. The finding was that structures associated with pingora-ketama were consuming significantly more memory than expected."
+          ]
+        },
+        {
+          "heading": "Why Cloudflare uses consistent hashing",
+          "paragraphs": [
+            "Consistent hashing distributes tasks across servers while limiting the changes required when servers are added or removed. Cloudflare uses the technique to route cacheable requests to servers by URL. This lets the company keep one copy of a file per data center while maintaining a stable way to locate that file.",
+            "The method maps both servers and tasks to values produced by a hash function. Although hash functions can accept many forms of input, their output is a bounded unsigned integer, such as a 32-, 64- or 128-bit value. Consistent-hashing explanations often visualize those values on a circular ring, where the range assigned to a server wraps from the maximum value back to zero."
+          ]
+        },
+        {
+          "heading": "Random ranges can create uneven workloads",
+          "paragraphs": [
+            "At its simplest, a task is assigned to the first server to the left of its position on the hash number line. The portion of the line associated with each server determines the share of work it receives. Because hash outputs behave like random values, those portions are not automatically equal.",
+            "Cloudflare used expected value and standard deviation to describe the uncertainty in each server's assigned range. With 100 servers, the expected range for each server is close to 0.99% of the total, but the variation around that expectation can still be meaningful. The company also examined the coefficient of variation, which expresses the standard deviation as a fraction of the target size."
+          ]
+        },
+        {
+          "heading": "More hashes improve balance, but use memory",
+          "paragraphs": [
+            "The standard way to reduce imbalance is to represent each server with multiple hashes rather than a single hash. The individual ranges remain random, but adding more ranges gives unusually short and unusually long segments more opportunities to offset one another. Cloudflare described this as an effect associated with the law of large numbers.",
+            "The approach has a direct resource cost: every additional hash requires storage. The post says NGINX uses a baseline of 160 hashes per server, and Pingora uses the same value by default. That setting can improve the distribution of requests, but it also contributes to the memory consumed by the hashing structures."
+          ]
+        },
+        {
+          "heading": "Statistics guided the memory reduction",
+          "paragraphs": [
+            "Cloudflare's optimization treated the number of hashes as a balance between workload uniformity and memory use. Rather than assuming that the default was necessary in every case, the team used statistical analysis to understand how the distribution changes as more hashes are added.",
+            "The result was a reduction in the memory footprint of the Pingora-based service while preserving the consistent-hashing approach used for request routing. Cloudflare presents the work as an example of how mathematical analysis and implementation changes in Rust can uncover large savings from a system that already appeared to be using a conventional algorithm.",
+            "The company said the recovered capacity matters because Cloudflare's infrastructure, despite its scale, remains finite. The episode also illustrates why resource work at hyperscale can produce outsized results: a modest per-process improvement, repeated across a large fleet, can become tens of terabytes of reclaimed memory."
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Pingora",
+        "Rust",
+        "consistent hashing",
+        "memory optimization",
+        "load balancing",
+        "distributed systems"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Pingora Backend Router",
+        "pingora-ketama",
+        "Pingora",
+        "NGINX",
+        "Rust"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence: based solely on Cloudflare's official blog post and supplied extracted text; implementation details beyond the excerpt are not inferred."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 717,
+      "word_count_en": 770
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "2b8896639e820b562d15",
+      "title": "Saving another 100TB of RAM with math (and Rust)",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 717,
+          "word_count_en": 770
+        }
+      ]
+    }
+  ],
+  "slug": "saving-another-100tb-of-ram-with-math-and-rust",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/saving-another-100tb-of-ram-with-math-and-rust/hero.webp",
+    "card": "/forum/assets/posts/2026/09/saving-another-100tb-of-ram-with-math-and-rust/card.webp",
+    "social": "/forum/assets/posts/2026/09/saving-another-100tb-of-ram-with-math-and-rust/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تستعيد أكثر من 100 تيرابايت من الذاكرة",
+      "en": "Cloudflare Reclaims 100TB of RAM With Math and Rust"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M2PFY1FZ7AH3P8JEQCDM9YWH.01M2PFY2XJ3KBV9JD78JMJK88K.png",
+    "sourceType": "official",
+    "generatedFallback": false
+  }
 }
