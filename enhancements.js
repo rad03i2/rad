@@ -226,7 +226,7 @@
   function addStatsAndTicker() {
     const hero = $('.hero'); if (!hero || $('#enhStats')) return;
     const stats = document.createElement('section'); stats.id = 'enhStats'; stats.className = 'enh-shell enh-reveal';
-    stats.innerHTML = `<div class="enh-stats"><div class="enh-stat enh-stat--projects"><div class="enh-stat-dual"><div class="enh-stat-pane"><strong data-count="${projects.length}">0</strong><span data-stat-label="displayed">${lang==='ar'?'مشروعًا معروضًا':'projects displayed'}</span></div><span class="enh-stat-divider" aria-hidden="true"></span><div class="enh-stat-pane enh-stat-pane--github"><strong id="githubRepoCount" data-github-count>—</strong><span data-stat-label="github">${lang==='ar'?'مستودعات GitHub':'GitHub repositories'}</span></div></div></div><div class="enh-stat enh-stat--dynamic" data-stat-group="web" data-stat-index="0" data-ghost="WEB"><div class="enh-stat-copy"><strong data-stat-title>Web</strong><span data-stat-desc>${lang==='ar'?'واجهات ومواقع ويب':'interfaces & websites'}</span></div><small class="enh-stat-index"><b data-stat-current>01</b>/10</small></div><div class="enh-stat enh-stat--dynamic" data-stat-group="desktop" data-stat-index="0" data-ghost="DESKTOP"><div class="enh-stat-copy"><strong data-stat-title>Desktop</strong><span data-stat-desc>${lang==='ar'?'أدوات وتطبيقات حاسوب':'desktop tools'}</span></div><small class="enh-stat-index"><b data-stat-current>01</b>/10</small></div><div class="enh-stat enh-stat--dynamic" data-stat-group="automation" data-stat-index="0" data-ghost="AUTO"><div class="enh-stat-copy"><strong data-stat-title>Automation</strong><span data-stat-desc>${lang==='ar'?'أتمتة وسير عمل':'automated workflows'}</span></div><small class="enh-stat-index"><b data-stat-current>01</b>/10</small></div></div>`;
+    stats.innerHTML = `<div class="enh-stats"><div class="enh-stat enh-stat--projects"><div class="enh-stat-dual"><div class="enh-stat-pane"><strong data-count="${projects.length}">0</strong><span data-stat-label="displayed">${lang==='ar'?'مشروعًا معروضًا':'projects displayed'}</span></div><span class="enh-stat-divider" aria-hidden="true"></span><div class="enh-stat-pane enh-stat-pane--github"><strong id="githubRepoCount" data-github-count>—</strong><span data-stat-label="github">${lang==='ar'?'مستودعات GitHub':'GitHub repositories'}</span></div></div></div><div class="enh-stat enh-stat--dynamic" data-stat-group="web" data-stat-index="0" data-ghost="WEB"><div class="enh-stat-copy"><strong data-stat-title>Websites</strong><span data-stat-desc>مواقع شخصية وتجارية متجاوبة</span></div></div><div class="enh-stat enh-stat--dynamic" data-stat-group="desktop" data-stat-index="0" data-ghost="WIN"><div class="enh-stat-copy"><strong data-stat-title>Windows Apps</strong><span data-stat-desc>تطبيقات وأدوات Windows مخصصة</span></div></div><div class="enh-stat enh-stat--dynamic" data-stat-group="automation" data-stat-index="0" data-ghost="AUTO"><div class="enh-stat-copy"><strong data-stat-title>Automation</strong><span data-stat-desc>أتمتة المهام وسير العمل المتكرر</span></div></div></div>`;
     hero.insertAdjacentElement('afterend', stats);
     const tech = document.createElement('div'); tech.className = 'enh-tech-strip enh-reveal'; tech.setAttribute('aria-label','Programming languages and technologies');
     tech.innerHTML = '<div class="enh-tech-track" id="programmingIconTicker" aria-hidden="true"></div>';
@@ -537,40 +537,40 @@
 
   const slides = {
     web: [
-      ['Web','واجهات ومواقع ويب','Interfaces & websites','WEB',205],
-      ['Android','إنشاء تطبيقات أندرويد','Android applications','ANDROID',186],
-      ['Dashboards','لوحات تحكم تفاعلية','Interactive dashboards','DASH',270],
-      ['E-Commerce','متاجر إلكترونية','E-commerce experiences','SHOP',24],
-      ['Landing Pages','صفحات هبوط تسويقية','High-converting landing pages','LAND',340],
-      ['RTL UI','واجهات عربية RTL','Arabic RTL interfaces','RTL',115],
-      ['PWA','تطبيقات ويب قابلة للتثبيت','Installable progressive web apps','PWA',45],
-      ['APIs','ربط الأنظمة وواجهات API','API and system integrations','API',198],
-      ['Portfolio','مواقع شخصية وأعمال','Portfolio and personal websites','PORT',320],
-      ['Booking','أنظمة حجز ومواعيد','Booking and appointment systems','BOOK',160]
+      ['Websites','مواقع شخصية وتجارية متجاوبة','WEB',205],
+      ['Landing Pages','صفحات هبوط احترافية للمشاريع والخدمات','LAND',334],
+      ['E-Commerce','متاجر إلكترونية وتجارب شراء واضحة','SHOP',24],
+      ['Web Apps','تطبيقات ويب سريعة وقابلة للتوسع','WEBAPP',188],
+      ['RTL Interfaces','واجهات عربية RTL متجاوبة وحديثة','RTL',112],
+      ['Dashboards','لوحات تحكم وواجهات بيانات تفاعلية','DASH',265],
+      ['Mobile Apps','تطبيقات وتجارب هاتف قابلة للتطوير','MOBILE',292],
+      ['Android Apps','تطبيقات وواجهات Android عملية','ANDROID',150],
+      ['Business Sites','مواقع تعريفية وتجارية للأنشطة والخدمات','BIZ',44],
+      ['Responsive UI','واجهات تعمل بسلاسة على الهاتف والحاسوب','UI',218]
     ],
     desktop: [
-      ['Desktop','أدوات وتطبيقات حاسوب','Desktop tools & applications','DESKTOP',133],
-      ['Windows Apps','تطبيقات Windows حديثة','Modern Windows applications','WIN',150],
-      ['File Tools','إدارة ومعالجة الملفات','File management & processing','FILES',210],
-      ['PDF Center','أدوات PDF متقدمة','Advanced PDF utilities','PDF',18],
-      ['Media Tools','صور وصوت وفيديو','Image, audio & video tools','MEDIA',292],
-      ['System Tools','أدوات النظام والتخزين','System & storage utilities','SYSTEM',52],
-      ['Data Apps','تطبيقات بيانات وتقارير','Data and reporting applications','DATA',190],
-      ['IoT','لوحات حساسات وإنترنت الأشياء','IoT and sensor dashboards','IOT',230],
-      ['Utilities','أدوات إنتاجية سريعة','Fast productivity utilities','UTIL',96],
-      ['Dev Tools','أدوات للمطورين','Developer tools','DEV',330]
+      ['Windows Apps','تطبيقات C# و.NET وWinUI مخصصة','WIN',146],
+      ['Desktop Tools','أدوات سطح مكتب عملية حسب احتياجك','TOOLS',124],
+      ['File Tools','إدارة الملفات ومعالجتها وتنظيمها','FILES',207],
+      ['System Utilities','أدوات للنظام والتخزين والإنتاجية','SYSTEM',54],
+      ['Internal Tools','برامج داخلية ولوحات تشغيل مخصصة','INTERNAL',182],
+      ['PDF Tools','أدوات PDF للتحويل والمعالجة والتنظيم','PDF',15],
+      ['Media Tools','أدوات للصور والصوت والفيديو','MEDIA',296],
+      ['Developer Tools','أدوات ومساعدات مخصصة للمطورين','DEV',326],
+      ['Custom Software','برامج مصممة حول فكرة أو سير عمل محدد','CUSTOM',86],
+      ['Data Apps','تطبيقات بيانات وتقارير وواجهات تشغيل','DATA',192]
     ],
     automation: [
-      ['Automation','أتمتة وسير عمل','Automation & workflows','AUTO',35],
-      ['Python','أتمتة وسكربتات Python','Python scripts & automation','PY',48],
-      ['AI Workflows','عمليات مدعومة بالذكاء الاصطناعي','AI-assisted workflows','AI',278],
-      ['Browser','أتمتة مهام المتصفح','Browser task automation','BROWSER',204],
-      ['Scheduler','مهام مجدولة تلقائيًا','Scheduled automated tasks','SCHEDULE',12],
-      ['Data Flow','معالجة بيانات تلقائية','Automated data processing','FLOW',168],
-      ['Backup','نسخ احتياطي ومزامنة','Backup and synchronization','BACKUP',110],
-      ['Reports','تقارير وتصدير آلي','Automated reports & exports','REPORT',315],
-      ['Bots','بوتات وتكاملات','Bots and integrations','BOTS',250],
-      ['GitHub','أتمتة GitHub والنشر','GitHub and deployment automation','GITHUB',194]
+      ['Automation','أتمتة المهام وسير العمل المتكرر','AUTO',35],
+      ['Python Automation','سكربتات Python للملفات والبيانات والمهام','PY',48],
+      ['AI Integration','دمج خدمات ونماذج الذكاء الاصطناعي','AI',278],
+      ['AI Assistants','مساعدون وأدوات ذكية للإنتاجية والمحتوى','ASSIST',304],
+      ['API Integration','ربط الأنظمة والخدمات عبر واجهات API','API',198],
+      ['Databases','قواعد بيانات وأنظمة إدارة وربط معلومات','DB',164],
+      ['Data Dashboards','لوحات بيانات وتقارير ومؤشرات تفاعلية','REPORT',220],
+      ['IoT Systems','مشاريع IoT وحساسات وربط أجهزة وبيانات','IOT',236],
+      ['Browser Extensions','إضافات متصفح وأدوات تسهّل العمل','EXT',262],
+      ['Backup & Reports','نسخ احتياطي وتقارير وعمليات تلقائية','BACKUP',108]
     ]
   };
 
@@ -580,17 +580,15 @@
     const list = slides[card.dataset.statGroup];
     if (!list?.length) return;
     const safeIndex = ((index % list.length) + list.length) % list.length;
-    const [title, ar, en, ghost, hue] = list[safeIndex];
+    const [title, ar, ghost, hue] = list[safeIndex];
     const apply = () => {
       card.dataset.statIndex = String(safeIndex);
       card.dataset.ghost = ghost;
       card.style.setProperty('--stat-hue', String(hue));
       const titleEl = card.querySelector('[data-stat-title]');
       const descEl = card.querySelector('[data-stat-desc]');
-      const currentEl = card.querySelector('[data-stat-current]');
       if (titleEl) titleEl.textContent = title;
-      if (descEl) descEl.textContent = isEnglish() ? en : ar;
-      if (currentEl) currentEl.textContent = String(safeIndex + 1).padStart(2, '0');
+      if (descEl) descEl.textContent = ar;
     };
 
     if (!animate) { apply(); return; }
@@ -598,7 +596,7 @@
     window.setTimeout(() => {
       apply();
       requestAnimationFrame(() => card.classList.remove('is-switching'));
-    }, 170);
+    }, 300);
   }
 
   function renderLanguage() {
