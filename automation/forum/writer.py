@@ -127,6 +127,82 @@ def _extract_json(text: str) -> dict:
         raise
 
 
+def _call_openai_compatible(prompt: str, api_key: str, endpoint: str, model: str, provider: str, extra_headers: dict | None = None) -> dict:
+    if not api_key:
+        raise RuntimeError(f"{provider} API key is not configured")
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+        "User-Agent": "RDWAN-Tech-Publisher/1.0",
+    }
+    if extra_headers:
+        headers.update(extra_headers)
+
+    payload = {
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.35,
+        "max_tokens": 8192,
+    }
+
+    last_error = None
+    for _ in range(2):
+        try:
+            response = requests.post(endpoint, headers=headers, json=payload, timeout=180)
+            if response.status_code >= 400:
+                last_error = f"{provider} API failed ({response.status_code}): {response.text[:1600]}"
+                continue
+
+            data = response.json()
+            choices = data.get("choices") or []
+            if not choices:
+                last_error = f"{provider} returned no choices: {json.dumps(data)[:1200]}"
+                continue
+
+            message = choices[0].get("message") or {}
+            text = message.get("content")
+            if isinstance(text, list):
+                text = "\n".join(
+                    str(part.get("text", ""))
+                    for part in text
+                    if isinstance(part, dict) and part.get("text")
+                )
+            text = str(text or "").strip()
+            if not text:
+                last_error = f"{provider} returned no text: {json.dumps(data)[:1200]}"
+                continue
+            return _extract_json(text)
+        except Exception as exc:
+            last_error = f"{provider} request failed: {type(exc).__name__}: {exc}"
+
+    raise RuntimeError(last_error or f"{provider} API failed")
+
+
+def _call_groq(prompt: str, model: str) -> dict:
+    return _call_openai_compatible(
+        prompt=prompt,
+        api_key=os.environ.get("GROQ_API_KEY", "").strip(),
+        endpoint="https://api.groq.com/openai/v1/chat/completions",
+        model=model,
+        provider="Groq",
+    )
+
+
+def _call_openrouter(prompt: str, model: str) -> dict:
+    return _call_openai_compatible(
+        prompt=prompt,
+        api_key=os.environ.get("OPENROUTER_API_KEY", "").strip(),
+        endpoint="https://openrouter.ai/api/v1/chat/completions",
+        model=model,
+        provider="OpenRouter",
+        extra_headers={
+            "HTTP-Referer": "https://rdwan.dev/forum/",
+            "X-Title": "RDWAN Tech",
+        },
+    )
+
+
 def _call_gemini(prompt: str, model: str) -> dict:
     api_key = os.environ.get("GEMINI_API_KEY", "").strip()
     if not api_key:
@@ -214,14 +290,28 @@ def _call_copilot(prompt: str) -> dict:
 def _call_model(prompt: str, settings: dict) -> dict:
     errors = []
 
-    # Gemini is the primary writer whenever its secret is configured.
+    # Primary: Groq. Fast OpenAI-compatible inference and first choice for RDWAN Tech.
+    if os.environ.get("GROQ_API_KEY", "").strip():
+        try:
+            return _call_groq(prompt, settings.get("groqModel", "llama-3.3-70b-versatile"))
+        except Exception as exc:
+            errors.append(f"Groq: {exc}")
+
+    # Secondary: OpenRouter free router. It can choose an available free model.
+    if os.environ.get("OPENROUTER_API_KEY", "").strip():
+        try:
+            return _call_openrouter(prompt, settings.get("openRouterModel", "openrouter/free"))
+        except Exception as exc:
+            errors.append(f"OpenRouter: {exc}")
+
+    # Third: Gemini. Keep it available once the current Google auth issue is resolved.
     if os.environ.get("GEMINI_API_KEY", "").strip():
         try:
-            return _call_gemini(prompt, settings.get("geminiModel", "gemini-2.5-flash"))
+            return _call_gemini(prompt, settings.get("geminiModel", "gemini-3.1-flash-lite"))
         except Exception as exc:
             errors.append(f"Gemini: {exc}")
 
-    # Keep Copilot as a compatibility fallback rather than a single point of failure.
+    # Last-resort compatibility fallback.
     try:
         return _call_copilot(prompt)
     except Exception as exc:
