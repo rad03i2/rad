@@ -66,7 +66,7 @@ class PublisherQualityTests(unittest.TestCase):
 
     def test_inline_links_are_required_when_configured(self):
         story = self._story()
-        source_url = story["url"]
+        source_url = self._sources()[0]["url"]
         editions = self._editions()
         for locale in ("ar", "en"):
             first = editions[locale]["sections"][0]["paragraphs"][0]
