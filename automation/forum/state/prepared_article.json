@@ -1,5 +1,237 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-09-19T01:16:08+00:00",
-  "last_published_story_id": "76b87e6c9b5821f48a0f"
+  "status": "ready",
+  "prepared_at": "2026-09-19T01:18:11+00:00",
+  "target_publish_at": "2026-09-19T04:36:08.280792+03:00",
+  "story": {
+    "title": "Automate SSO authorization for classic PATs and SSH keys",
+    "url": "https://github.blog/changelog/2026-09-16-automate-sso-authorization-for-classic-pats-and-ssh-keys",
+    "domain": "github.blog",
+    "summary": "Enterprise admins can now automate SSO authorization for existing classic personal access tokens (PATs) and SSH keys for organizations in GitHub Enterprise Cloud, replacing manual per-organization authorization by your developers.&#8230; The post Automate SSO authorization for classic PATs and SSH keys appeared first on The GitHub Blog .",
+    "published_at": "2026-09-16T20:20:16+00:00",
+    "discovered_at": "2026-09-16T21:23:06+00:00",
+    "source": {
+      "name": "GitHub Changelog",
+      "feed": "https://github.blog/changelog/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "web"
+    },
+    "category": "web",
+    "category_label": "الويب",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "c9cdd1ff5261c95b9d46",
+    "trend": {
+      "score": 84.41,
+      "age_hours": 52.96,
+      "corroboration_count": 0,
+      "entity_momentum": 0,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://github.blog/changelog/2026-09-16-automate-sso-authorization-for-classic-pats-and-ssh-keys/",
+      "name": "GitHub Changelog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Automate SSO authorization for classic PATs and SSH keys",
+      "title": "Automate SSO authorization for classic PATs and SSH keys - GitHub Changelog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "GitHub تتيح أتمتة تفويض SSO للرموز ومفاتيح SSH",
+      "description": "تتيح GitHub Enterprise Cloud لمسؤولي المؤسسات تفويض الرموز الشخصية الكلاسيكية ومفاتيح SSH عبر SSO لعدد يصل إلى 50 منظمة دفعة واحدة.",
+      "deck": "أعلنت GitHub إتاحة إعداد مؤسسي جديد في GitHub Enterprise Cloud يسهّل أتمتة تفويض الدخول الموحد لبيانات الاعتماد القائمة. ويستهدف التحديث المؤسسات التي تدير عدداً كبيراً من المنظمات المحمية عبر SSO.",
+      "summary_bullets": [
+        "يمكن لتطبيقات GitHub Apps المثبتة على المؤسسة تفويض رمز شخصي كلاسيكي أو مفتاح SSH لما يصل إلى 50 منظمة في طلب واحد.",
+        "يتطلب التفويض تفعيل إعداد مؤسسي ومنح التطبيق صلاحية enterprise_credentials:write.",
+        "تستخدم الواجهة البرمجية معرّف الرمز غير السري أو بصمة مفتاح SSH، من دون تمرير أسرار بيانات الاعتماد إلى التطبيق.",
+        "تتحقق GitHub مسبقاً من ارتباط المنظمات بالمؤسسة وعضوية مالك بيانات الاعتماد واستخدام SSO على مستوى المؤسسة.",
+        "تتجاوز العملية المنظمات التي تملك تفويضاً نشطاً، ما يدعم تدوير الرموز وإضافة منظمات جديدة بكفاءة."
+      ],
+      "sections": [
+        {
+          "heading": "تفويض مركزي بدلاً من الإجراء اليدوي",
+          "paragraphs": [
+            "أعلنت GitHub ميزة جديدة لمؤسسات GitHub Enterprise Cloud تتيح لمسؤولي المؤسسة أتمتة تفويض المصادقة عبر الدخول الموحد، أو SSO، للرموز الشخصية الكلاسيكية ومفاتيح SSH الموجودة مسبقاً. وتستبدل هذه الإمكانية الإجراء اليدوي الذي كان يفرض على المطورين اعتماد بيانات الاعتماد لكل منظمة على حدة.",
+            "تظهر أهمية التحديث في البيئات التي تضم عدة منظمات محمية بواسطة SSO. فالتعامل مع كل منظمة بصورة منفصلة يضيف خطوات تشغيلية متكررة ويزيد العبء على فرق التطوير والإدارة. ووفقاً لإعلان GitHub، قد يدفع هذا الاحتكاك بعض الفرق إلى الاحتفاظ برموز طويلة العمر لتفادي تكرار عمليات التدوير والتفويض، بدلاً من إدارة دورة حياة بيانات الاعتماد بصورة أكثر انتظاماً."
+          ]
+        },
+        {
+          "heading": "إعداد مؤسسي وصلاحية مخصصة للتطبيقات",
+          "paragraphs": [
+            "تمنح الميزة مسؤولي المؤسسة خيار تفعيل إعداد جديد يسمح بتفويض بيانات الاعتماد من خلال تطبيقات GitHub Apps المثبتة على المؤسسة. ولكي ينفذ التطبيق هذا النوع من العمليات، يجب أن يمتلك الصلاحية enterprise_credentials:write، وهي الصلاحية التي تمكّنه من استدعاء الواجهة البرمجية المخصصة لتفويض بيانات الاعتماد على نطاق جماعي.",
+            "بهذا التصميم، لا يحتاج المطور إلى الدخول في مسار تفويض منفصل لكل منظمة مستهدفة. ويمكن للمؤسسة ربط آلية التفويض بأدواتها الداخلية أو بخدمات الأتمتة التي تدير حسابات الخدمة وبيانات اعتماد العمليات، مع بقاء قرار تفعيل الإمكانية ومنح الصلاحية ضمن نطاق إدارة المؤسسة."
+          ]
+        },
+        {
+          "heading": "تفويض ما يصل إلى 50 منظمة في طلب واحد",
+          "paragraphs": [
+            "تتيح الواجهة البرمجية الجديدة لتطبيق GitHub App تفويض رمز شخصي كلاسيكي أو مفتاح SSH لعدد يصل إلى 50 منظمة ضمن طلب واحد. ويمنح ذلك المؤسسات طريقة جماعية لمعالجة بيانات الاعتماد المرتبطة بعدة منظمات، بدلاً من تكرار الاستدعاء أو الإجراء نفسه لكل منظمة على حدة.",
+            "تعتمد العملية على تعريف بيانات الاعتماد باستخدام معرّف الرمز غير السري أو بصمة مفتاح SSH. ولا تُرسل أسرار الرمز أو المفتاح إلى تطبيق GitHub، وهو فصل مهم بين تحديد بيانات الاعتماد وتنفيذ التفويض. وبذلك يستطيع التطبيق الإشارة إلى العنصر المطلوب مع تجنب تمرير قيم سرية ضمن الطلب."
+          ]
+        },
+        {
+          "heading": "تحققات قبل منح التفويض",
+          "paragraphs": [
+            "قبل منح أي تفويض، تتحقق GitHub من مجموعة من الشروط المرتبطة بنطاق العملية. وتشمل هذه التحققات التأكد من أن كل منظمة مستهدفة تنتمي إلى المؤسسة المعنية، وأن مالك بيانات الاعتماد عضو في كل منظمة يجري طلب التفويض لها، إضافة إلى التحقق من أن المؤسسة تستخدم SSO على مستوى المؤسسة.",
+            "تمنع هذه الخطوات تنفيذ تفويض جماعي على منظمات لا ترتبط بالمؤسسة أو على حساب لا يملك العضوية المطلوبة. كما تضيف فحصاً مسبقاً للسياق المؤسسي قبل إجراء التغيير، بدلاً من الاكتفاء بمعالجة قائمة المنظمات دون التحقق من علاقتها ببيانات الاعتماد وبإعدادات المؤسسة."
+          ]
+        },
+        {
+          "heading": "تجاوز التفويضات النشطة ودعم التدوير",
+          "paragraphs": [
+            "إذا كانت هناك صلاحية تفويض نشطة لبيانات الاعتماد في إحدى المنظمات المستهدفة، تتجاوز GitHub تلك المنظمة بأمان بدلاً من إنشاء تفويض نشط مكرر. ويساعد هذا السلوك على جعل الطلبات الجماعية قابلة لإعادة التنفيذ عند الحاجة، من دون مطالبة أدوات الأتمتة بإزالة الحالات القائمة أو معالجتها يدوياً.",
+            "تقترح GitHub استخدام الواجهة البرمجية عندما تدير المؤسسة تفويض SSO لحسابات الخدمة أو لبيانات اعتماد الأتمتة عبر عدد كبير من المنظمات. ويمكن لتطبيق المؤسسة استدعاء الواجهة عند تدوير رمز أو مفتاح، وكذلك عند إضافة مجموعة من المنظمات الجديدة، بدلاً من تفويض كل منظمة يدوياً. وتقول الشركة إن الميزة متاحة حالياً لحسابات GitHub Enterprise Cloud."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "GitHub Enterprise Cloud",
+        "SSO",
+        "الرموز الشخصية",
+        "مفاتيح SSH",
+        "GitHub Apps",
+        "واجهات GitHub البرمجية"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Enterprise Cloud",
+        "GitHub Apps",
+        "SSO",
+        "classic personal access tokens",
+        "SSH keys"
+      ],
+      "article_type": "news",
+      "confidence_note": "المحتوى مبني حصراً على إعلان GitHub Changelog المؤرخ 16 سبتمبر 2026."
+    },
+    "en": {
+      "title": "GitHub Automates SSO Authorization for PATs and SSH Keys",
+      "description": "GitHub Enterprise Cloud admins can now bulk-authorize classic PATs and SSH keys across up to 50 SSO-protected organizations.",
+      "deck": "GitHub Enterprise Cloud now lets enterprise administrators automate SSO authorization for existing classic personal access tokens and SSH keys. The change is designed to replace repeated, manual authorization by developers across organizations.",
+      "summary_bullets": [
+        "Enterprise admins can opt in to credential delegation through enterprise-installed GitHub Apps.",
+        "Apps with the enterprise_credentials:write permission can authorize credentials for up to 50 organizations in one request.",
+        "The API uses a token ID or SSH key fingerprint instead of exposing credential secrets.",
+        "Existing active authorizations are skipped, and GitHub checks enterprise and organization eligibility before authorization."
+      ],
+      "sections": [
+        {
+          "heading": "Bulk authorization for enterprise credentials",
+          "paragraphs": [
+            "GitHub has introduced an option for enterprise administrators to automate single sign-on authorization for existing classic personal access tokens, or PATs, and SSH keys. The capability is available for organizations using GitHub Enterprise Cloud and is intended for enterprises that manage credentials across multiple SSO-protected organizations.",
+            "Under the new process, an enterprise-installed GitHub App can call a new API to authorize a classic PAT or SSH key for multiple organizations in a single request. The request can cover up to 50 organizations, removing the need for developers to repeat the authorization process separately for every organization."
+          ]
+        },
+        {
+          "heading": "An alternative to manual organization-by-organization work",
+          "paragraphs": [
+            "GitHub said that manually authorizing credentials one organization at a time creates friction and administrative overhead when an enterprise has several organizations protected by SSO. That burden can also encourage the use of long-lived tokens to avoid repeated authorization and rotation work.",
+            "The new capability moves that administrative task to an automated enterprise workflow. Rather than asking developers to authorize a credential whenever it needs access to another organization, an enterprise can use an approved GitHub App to apply authorization across the relevant organization set."
+          ]
+        },
+        {
+          "heading": "Enterprise opt-in and GitHub App permission",
+          "paragraphs": [
+            "The feature is not enabled automatically by the announcement. Enterprise administrators can opt in to a new enterprise setting that permits credential delegation through GitHub Apps installed on the enterprise.",
+            "The GitHub App must have the enterprise_credentials:write permission to use the new authorization API. This permission provides the mechanism for the app to submit bulk authorization requests on behalf of the enterprise, while the enterprise setting controls whether that delegation is allowed."
+          ]
+        },
+        {
+          "heading": "Credential secrets are not passed to the app",
+          "paragraphs": [
+            "The API identifies a classic PAT by its non-secret token ID and identifies an SSH key by its fingerprint. GitHub said this means credential secrets do not need to be passed to the GitHub App during the authorization request.",
+            "Using identifiers rather than secret values allows an automation system to select the credential that should be authorized without placing the token or private-key material in the app workflow. The source describes the token ID and SSH fingerprint as the identifiers used for this purpose; it does not indicate that the API creates, rotates, or reveals credentials."
+          ]
+        },
+        {
+          "heading": "Checks before authorization",
+          "paragraphs": [
+            "Before granting authorization, GitHub confirms that every target organization belongs to the enterprise and that the credential owner belongs to each organization. It also verifies that the enterprise uses enterprise-level SSO.",
+            "The API safely skips organizations where an active authorization already exists. This allows an enterprise automation process to include a broader organization list without attempting to replace an authorization that is already active."
+          ]
+        },
+        {
+          "heading": "Use cases for service accounts and automation",
+          "paragraphs": [
+            "GitHub positioned the capability for enterprises that manage SSO authorization for service accounts or other automation credentials across many organizations. An enterprise can have its GitHub App call the API when a token is rotated or when new organizations are added to the set requiring access.",
+            "That workflow can reduce the manual steps associated with credential changes and organization expansion. GitHub said the feature is available now for GitHub Enterprise Cloud accounts and directed administrators to its documentation for the REST API endpoints for enterprise credential authorizations and for installing a GitHub App on an enterprise."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "GitHub Enterprise Cloud",
+        "single sign-on",
+        "classic personal access tokens",
+        "SSH keys",
+        "GitHub Apps",
+        "enterprise administration"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Enterprise Cloud",
+        "GitHub Apps",
+        "classic personal access tokens",
+        "SSH keys",
+        "SSO"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence: based solely on the supplied official GitHub Changelog announcement."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 610,
+      "word_count_en": 633
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "c9cdd1ff5261c95b9d46",
+      "title": "Automate SSO authorization for classic PATs and SSH keys",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 610,
+          "word_count_en": 633
+        }
+      ]
+    }
+  ],
+  "slug": "automate-sso-authorization-for-classic-pats-and-ssh-keys",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/automate-sso-authorization-for-classic-pats-and-ssh-keys/hero.webp",
+    "card": "/forum/assets/posts/2026/09/automate-sso-authorization-for-classic-pats-and-ssh-keys/card.webp",
+    "social": "/forum/assets/posts/2026/09/automate-sso-authorization-for-classic-pats-and-ssh-keys/social.jpg",
+    "alt": {
+      "ar": "GitHub تتيح أتمتة تفويض SSO للرموز ومفاتيح SSH",
+      "en": "GitHub Automates SSO Authorization for PATs and SSH Keys"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/themes/github-2021-child/dist/img/social-v3-new-releases.jpg",
+    "sourceType": "official",
+    "generatedFallback": false
+  }
 }
