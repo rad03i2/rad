@@ -73,6 +73,8 @@ def _compact_source_pack(source_pack: list[dict]) -> list[dict]:
 def _prepared_is_valid(prepared: dict, queue_doc: dict, history: dict, settings: dict, now: datetime) -> bool:
     if not isinstance(prepared, dict) or prepared.get("status") != "ready":
         return False
+    if int(prepared.get("content_format_version") or 0) < 3:
+        return False
     story = prepared.get("story")
     editions = prepared.get("editions")
     if not isinstance(story, dict) or not story.get("id") or not story.get("url"):
@@ -166,6 +168,7 @@ def _prepare_next(settings: dict, queue_doc: dict, history: dict, now: datetime,
 
         prepared = {
             "status": "ready",
+            "content_format_version": 3,
             "prepared_at": now_iso(),
             "target_publish_at": target.isoformat(),
             "story": candidate,
@@ -194,6 +197,9 @@ def _prepare_next(settings: dict, queue_doc: dict, history: dict, now: datetime,
             target_publish_at=target.isoformat(),
             title_ar=editions["ar"].get("title"),
             title_en=editions["en"].get("title"),
+            inline_image_count=len(images.get("inline") or []),
+            inline_links_ar=publisher._inline_link_count(editions.get("ar", {})),
+            inline_links_en=publisher._inline_link_count(editions.get("en", {})),
             candidates_considered=candidate_reports,
         )
         print(f"20-minute pipeline: prepared next story for {target.isoformat()}.")
