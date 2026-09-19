@@ -64,6 +64,20 @@ class PublisherQualityTests(unittest.TestCase):
         ok, errors = _quality_gate(self._story(), self._sources(), self._editions())
         self.assertTrue(ok, errors)
 
+    def test_trusted_single_source_journalism_passes_source_gate(self):
+        story = self._story()
+        story["source"] = {"type": "journalism"}
+        story["verification"] = {
+            "confidence": 0.86,
+            "reason": "trusted_journalism_single_source",
+            "official": False,
+            "single_source_trusted": True,
+            "publish_eligible": True,
+        }
+        sources = [{"ok": True, "text": "verified source page text", "url": "https://news.example/story", "kind": "journalism"}]
+        ok, errors = _quality_gate(story, sources, self._editions())
+        self.assertTrue(ok, errors)
+
     def test_missing_english_fails(self):
         ok, errors = _quality_gate(self._story(), self._sources(), {"ar": self._article_ar()})
         self.assertFalse(ok)
