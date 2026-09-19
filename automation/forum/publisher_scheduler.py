@@ -6,6 +6,7 @@ import publisher
 from common import CONFIG, STATE, load_json, now_iso, save_json
 
 PREPARED_PATH = STATE / "prepared_article.json"
+FORCE_PATH = STATE / "force_publish_once.json"
 
 
 def _elapsed_seconds(last: datetime | None, now: datetime) -> float:
@@ -279,12 +280,18 @@ def main() -> int:
     minimum_gap = int(settings.get("minimumMinutesBetweenPosts", 20))
     target = _target_publish_at(last, now, minimum_gap)
     due = _is_due(last, now, minimum_gap)
+    force_state = load_json(FORCE_PATH, {})
+    force_publish = bool(force_state.get("enabled", False))
 
     prepared = load_json(PREPARED_PATH, {})
     if not _prepared_is_valid(prepared, queue_doc, history, settings, now):
         if prepared:
             save_json(PREPARED_PATH, {"status": "empty", "cleared_at": now_iso(), "reason": "invalid_or_stale"})
         prepared = _prepare_next(settings, queue_doc, history, now, target)
+
+    if force_publish and prepared:
+        due = True
+        print("20-minute pipeline: one-time immediate publication requested.")
 
     if not due:
         if prepared:
@@ -296,7 +303,20 @@ def main() -> int:
         print("20-minute pipeline: publication is due, but no quality-approved prepared story is available.")
         return 0
 
-    return _publish_prepared(prepared)
+    result = _publish_prepared(prepared)
+
+    if force_publish:
+        history_after = load_json(STATE / "published.json", {"items": []})
+        latest_after = (history_after.get("items") or [{}])[0]
+        if latest_after.get("story_id") == prepared.get("story", {}).get("id"):
+            save_json(FORCE_PATH, {
+                "enabled": False,
+                "consumed_at": now_iso(),
+                "story_id": prepared.get("story", {}).get("id"),
+            })
+            print("20-minute pipeline: immediate publication request consumed; normal 20-minute cadence resumed.")
+
+    return result
 
 
 if __name__ == "__main__":
