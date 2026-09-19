@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><script id="canonical-host-redirect">(()=>{const h=location.hostname.toLowerCase();if(h==='www.rdwan.dev'||location.protocol==='http:'){location.replace('https://rdwan.dev'+location.pathname+location.search+location.hash)}})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#10130f">
+  <title>نشر نماذج Hugging Face على SageMaker AI باستخدام وكلاء البرمجة</title>
+  <meta name="description" content="تعرّف على كيفية نشر نماذج Hugging Face عبر أمازون SageMaker AI باستخدام تقنيات وكلاء البرمجة الذكية لضمان بيئات عمل احترافية ومستقرة.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://rdwan.dev/forum/ar/ai/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/">
+  <link rel="alternate" hreflang="ar" href="https://rdwan.dev/forum/ar/ai/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/">
+  <link rel="alternate" hreflang="en" href="https://rdwan.dev/forum/en/ai/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/">
+  <link rel="alternate" hreflang="x-default" href="https://rdwan.dev/forum/">
+  <link rel="stylesheet" href="../../../../styles.css">
+  <link rel="stylesheet" href="../../../forum.css">
+  <link rel="icon" type="image/png" href="../../../../assets/images/radwan-favicon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="RDWAN Tech">
+  <meta property="og:locale" content="ar_IQ">
+  <meta property="og:title" content="نشر نماذج Hugging Face على SageMaker AI باستخدام وكلاء البرمجة">
+  <meta property="og:description" content="تعرّف على كيفية نشر نماذج Hugging Face عبر أمازون SageMaker AI باستخدام تقنيات وكلاء البرمجة الذكية لضمان بيئات عمل احترافية ومستقرة.">
+  <meta property="og:url" content="https://rdwan.dev/forum/ar/ai/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/">
+  <meta property="og:image" content="https://rdwan.dev/forum/assets/posts/2026/09/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/social.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-09-19T18:58:31.245815+03:00">
+  <meta property="article:modified_time" content="2026-09-19T18:58:31.245815+03:00">
+  <meta property="article:author" content="Radwan Abdulhadi">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="نشر نماذج Hugging Face على SageMaker AI باستخدام وكلاء البرمجة">
+  <meta name="twitter:description" content="تعرّف على كيفية نشر نماذج Hugging Face عبر أمازون SageMaker AI باستخدام تقنيات وكلاء البرمجة الذكية لضمان بيئات عمل احترافية ومستقرة.">
+  <meta name="twitter:image" content="https://rdwan.dev/forum/assets/posts/2026/09/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/social.jpg">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"NewsArticle","@id":"https://rdwan.dev/forum/ar/ai/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/#article","headline":"نشر نماذج Hugging Face على SageMaker AI باستخدام وكلاء البرمجة","description":"تعرّف على كيفية نشر نماذج Hugging Face عبر أمازون SageMaker AI باستخدام تقنيات وكلاء البرمجة الذكية لضمان بيئات عمل احترافية ومستقرة.","datePublished":"2026-09-19T18:58:31.245815+03:00","dateModified":"2026-09-19T18:58:31.245815+03:00","inLanguage":"ar","mainEntityOfPage":"https://rdwan.dev/forum/ar/ai/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/","image":["https://rdwan.dev/forum/assets/posts/2026/09/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/social.jpg"],"author":{"@type":"Person","name":"رضوان عبدالهادي","url":"https://rdwan.dev/forum/authors/radwan-abdulhadi/"},"publisher":{"@type":"NewsMediaOrganization","@id":"https://rdwan.dev/forum/#publisher","name":"RDWAN Tech","url":"https://rdwan.dev/forum/","logo":{"@type":"ImageObject","url":"https://rdwan.dev/assets/images/radwan-favicon.png"},"founder":{"@type":"Person","name":"Radwan Abdulhadi","url":"https://rdwan.dev/forum/authors/radwan-abdulhadi/"}},"articleSection":"الذكاء الاصطناعي","keywords":["الذكاء الاصطناعي","AWS","SageMaker","Hugging Face","تعلم الآلة","أتمتة البرمجيات","وكلاء البرمجة"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"RDWAN Tech","item":"https://rdwan.dev/forum/ar/"},{"@type":"ListItem","position":2,"name":"الذكاء الاصطناعي","item":"https://rdwan.dev/forum/ar/ai/"},{"@type":"ListItem","position":3,"name":"نشر نماذج Hugging Face على SageMaker AI باستخدام وكلاء البرمجة"}]}]}</script>
+</head>
+<body class="rt-locale-ar">
+  <a class="skip-link" href="#article">انتقل إلى المقال</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../../../" aria-label="رضوان عبدالهادي، الرئيسية">
+        <span class="brand-mark">ر.</span>
+        <span class="brand-text">رضوان عبدالهادي<small lang="en" dir="ltr">DEVELOPER PORTFOLIO</small></span>
+      </a>
+      <button class="menu-button" type="button" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="navigation">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <nav class="nav-links" id="navigation" aria-label="التنقل الرئيسي">
+        <a href="../../../../#home">الرئيسية</a>
+        <a href="../../../../#about">عنّي</a>
+        <a href="../../../../#projects">المشاريع</a>
+        <a class="rad-nav-forum" href="../../">المنتدى</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="rt-article" id="article">
+    <article class="rt-article-shell">
+      <nav class="rt-breadcrumbs" aria-label="مسار التنقل">
+        <a href="../../">RDWAN Tech</a><span>›</span><a href="../">الذكاء الاصطناعي</a><span>›</span><span>نشر نماذج Hugging Face على SageMaker AI باستخدام وكلاء البرمجة</span>
+      </nav>
+      <header class="rt-article-head">
+        <span class="rt-label">الذكاء الاصطناعي</span>
+        <h1>نشر نماذج Hugging Face على SageMaker AI باستخدام وكلاء البرمجة</h1>
+        <p class="rt-deck">أطلقت أمازون AWS مجموعة من الأدوات البرمجية المعتمدة على الذكاء الاصطناعي لتبسيط وتسريع عمليات نشر نماذج Hugging Face على منصة SageMaker AI.</p>
+        <div class="rt-byline">
+          <a class="rt-author" href="/forum/authors/radwan-abdulhadi/">
+            <span class="rt-avatar">ر</span>
+            <span><strong>رضوان عبدالهادي</strong><small>مؤسس ومحرر RDWAN Tech</small></span>
+          </a>
+          <div class="rt-dates">نُشر: 19 سبتمبر 2026<br>آخر تحديث: 19 سبتمبر 2026 · 3 دقائق قراءة</div>
+        </div>
+      </header>
+
+      <figure class="rt-article-media">
+        <picture>
+          <source media="(max-width: 720px)" srcset="https://rdwan.dev/forum/assets/posts/2026/09/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/card.webp">
+          <img src="https://rdwan.dev/forum/assets/posts/2026/09/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/hero.webp" alt="نشر نماذج Hugging Face على SageMaker AI باستخدام وكلاء البرمجة" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async">
+        </picture>
+        <figcaption>الصورة: <a href="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/15/ML-21283-featured-image.png" rel="nofollow noopener noreferrer">AWS Machine Learning Blog</a></figcaption>
+      </figure>
+
+      <aside class="rt-summary">
+        <h2>الخلاصة</h2>
+        <ul><li>اعتماد 6 مهارات برمجية مفتوحة المصدر لأتمتة دورة حياة نشر النماذج.</li><li>تجاوز عقبات اختيار حاويات التشغيل وإعدادات التوسع التلقائي عبر وكلاء الأتمتة.</li><li>ضمان توافق النماذج مع البنية التحتية لـ AWS وتقليل أخطاء النشر غير المقصودة.</li><li>دعم خيارات نشر متنوعة تشمل الاستدلال اللحظي، والحوسبة بدون خادم (Serverless)، والمعالجة الدفعية.</li></ul>
+      </aside>
+
+      <div class="rt-article-body">
+        <h2>تحديات نشر النماذج في بيئات الإنتاج</h2><p>تتطلب عملية نقل نماذج الذكاء الاصطناعي من المختبر إلى بيئة الإنتاج اتخاذ سلسلة من القرارات التقنية المعقدة، مثل تحديد حاوية الخدمة المناسبة لهيكلية النموذج، ومطابقة نوع مثيل الحوسبة (Instance) مع بصمة الذاكرة المطلوبة. كما تشمل هذه العملية ضبط ميزات التوسع التلقائي لضمان الكفاءة المالية، وإعداد تنبيهات Amazon CloudWatch لرصد الإخفاقات التقنية بشكل استباقي.</p><p>وعلى الرغم من قدرة منصة Amazon SageMaker AI على اختصار هذه المهام، إلا أن الاعتماد الكلي على وكلاء البرمجة (Coding Agents) دون إرشادات محددة قد يؤدي إلى نتائج غير مستقرة. فقد أظهرت التجارب أن الوكلاء قد يختارون حاويات تشغيل لا تتوافق مع النماذج الحديثة، مما يؤدي إلى فشل النشر أو استنزاف موارد الحوسبة دون تقديم فائدة فعلية.</p><h2>تعزيز أداء وكلاء البرمجة بالمهارات التقنية</h2><p>لمعالجة مشكلة نقص المعرفة التقنية المحدّثة لدى وكلاء البرمجة، قدمت AWS ست مهارات (Skills) مفتوحة المصدر يمكن دمجها مع أدوات مثل Kiro أو Claude Code. هذه المهارات تعمل كدليل إرشادي يمنع الوكيل من ارتكاب الأخطاء الشائعة أثناء اختيار حاويات AWS Deep Learning Containers أو عند التعامل مع مكتبات Python الحديثة التي قد لا تكون مدعومة بالكامل.</p><p>تعتمد هذه المهارات على هيكلية تعتمد على ملفات محددة (SKILL.md) تتضمن تعليمات واضحة للوكيل حول كيفية تنفيذ المهمة بدقة. وبدلاً من الاعتماد على المعلومات العامة التي قد تكون قديمة، يقرأ الوكيل المهارة المطلوبة فور الحاجة إليها، مما يضمن اتخاذ قرارات متوافقة مع أحدث معايير AWS.</p><h2>دورة العمل المؤتمتة بالكامل</h2><p>تغطي المهارات الست المتاحة على مستودع Hugging Face Skills دورة حياة النشر بالكامل. تبدأ العملية بمهارة «المخطط» (Planner) التي تنسق بين المهام الأخرى، بدءاً من اكتشاف سياق AWS (مثل المنطقة والحساب)، وصولاً إلى إعداد بيئة Python معزولة، والتحقق من صلاحيات IAM، وانتهاءً بإنشاء نقطة النهاية (Endpoint) وإجراء اختبارات السلامة.</p><p>تتيح هذه الأدوات للمطورين الحصول على نقطة نهاية جاهزة للإنتاج تدعم التوسع التلقائي، وتنبيهات CloudWatch، وتضمن اختيار الحاوية الصحيحة من فهرس AWS DLC. كما توفر المهارات مساراً معتمداً لإلغاء النشر (Teardown) لضمان عدم استهلاك الموارد دون داعٍ، وهو أمر حيوي عند التعامل مع الحوسبة اللحظية.</p><h2>مرونة الخيارات وتوافق الأنظمة</h2><p>على الرغم من أن الاستدلال اللحظي (Real-time Inference) هو الخيار الافتراضي، إلا أن المهارات الجديدة تدعم مجموعة واسعة من استراتيجيات التشغيل، بما في ذلك الاستدلال اللحظي مع توسع يصل إلى الصفر (Scale-to-zero)، والخدمات بدون خادم، والاستدلال غير المتزامن، ومعالجة الدفعات، بالإضافة إلى استيراد النماذج المخصصة إلى Amazon Bedrock.</p><p>تتميز هذه الأدوات بأنها تعتمد فقط على Python وواجهة أوامر AWS (AWS CLI)، مما يجعلها تعمل بسلاسة على أنظمة macOS وLinux وWindows دون الحاجة لتغييرات إضافية. ويُنصح المطورون باستخدام إصدارات Python من 3.10 إلى 3.12، حيث إن الإصدارات الأحدث قد تواجه تحديات في توافق مكتبات التعلم الآلي.</p>
+        <h2>المصادر</h2>
+        <ul class="rt-source-list"><li><a href="https://aws.amazon.com/blogs/machine-learning/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/" rel="nofollow noopener noreferrer">AWS Machine Learning Blog</a><small>Deploy Hugging Face models on Amazon SageMaker AI with coding agents</small></li></ul>
+      </div>
+
+      <footer class="rt-article-footer">
+        <div class="rt-article-tags"><span>الذكاء الاصطناعي</span><span>AWS</span><span>SageMaker</span><span>Hugging Face</span><span>تعلم الآلة</span><span>أتمتة البرمجيات</span><span>وكلاء البرمجة</span></div>
+        <p class="rt-source-note">صيغ هذا الخبر اعتمادًا على المصادر المدرجة أعلاه، مع فصل المعلومات المؤكدة عن ادعاءات الشركات أو التقديرات.</p>
+      </footer>
+    </article>
+<!-- SEO_RELATED_START -->
+<section class="rt-article-shell rt-related" aria-label="أخبار مرتبطة"><header class="rt-section-head"><div><h2>أخبار مرتبطة</h2><p>مواضيع أخرى مرتبطة قد تهمك.</p></div></header><div class="rt-feed"><a class="rt-feed-item" href="/forum/ar/ai/android-bench-pushing-the-frontier-with-challenging-long-horizon-tasks/"><div class="rt-feed-copy"><div class="rt-feed-kicker"><span>الذكاء الاصطناعي</span></div><h3>جوجل تطلق Android Bench 2.0 لاختبار مهام أندرويد المعقدة</h3><p>أطلقت جوجل Android Bench 2.0 لتقييم نماذج الذكاء الاصطناعي ووكلائه في مهام أندرويد طويلة ومعقدة، مع اعتماد درجات مستمرة وتقييمات عملية.</p><div class="rt-feed-time">19 سبتمبر 2026</div></div><div class="rt-thumb"><img src="/forum/assets/posts/2026/09/android-bench-pushing-the-frontier-with-challenging-long-horizon-tasks/card.webp" alt="جوجل تطلق Android Bench 2.0 لاختبار مهام أندرويد المعقدة" width="800" height="450" loading="lazy" decoding="async"></div></a><a class="rt-feed-item" href="/forum/ar/ai/github-copilot-weekly-releases-september-14/"><div class="rt-feed-copy"><div class="rt-feed-kicker"><span>الذكاء الاصطناعي</span></div><h3>GitHub Copilot يوسّع اختيار النماذج ومراجعة الشيفرة</h3><p>تعلن GitHub تحديثات أسبوعية لـCopilot تشمل اختيار النماذج، مراجعة الشيفرة، تكامل Sentry، أدوات الوكلاء، وتقارير الاستخدام والإدارة.</p><div class="rt-feed-time">19 سبتمبر 2026</div></div><div class="rt-thumb"><img src="/forum/assets/posts/2026/09/github-copilot-weekly-releases-september-14/card.webp" alt="GitHub Copilot يوسّع اختيار النماذج ومراجعة الشيفرة" width="800" height="450" loading="lazy" decoding="async"></div></a><a class="rt-feed-item" href="/forum/ar/ai/introducing-the-australian-youth-safety-blueprint/"><div class="rt-feed-copy"><div class="rt-feed-kicker"><span>الذكاء الاصطناعي</span></div><h3>OpenAI تطلق خارطة طريق لتعزيز سلامة الشباب في أستراليا</h3><p>أطلقت OpenAI مبادرة &#x27;مخطط سلامة الشباب الأسترالي&#x27; المكون من ست ركائز لضمان تجارب ذكاء اصطناعي آمنة ومسؤولة تدعم مهارات وقدرات الجيل الجديد.</p><div class="rt-feed-time">19 سبتمبر 2026</div></div><div class="rt-thumb"><img src="/forum/assets/posts/2026/09/introducing-the-australian-youth-safety-blueprint/card.webp" alt="OpenAI تطلق خارطة طريق لتعزيز سلامة الشباب في أستراليا" width="800" height="450" loading="lazy" decoding="async"></div></a></div></section>
+<!-- SEO_RELATED_END -->
+
+  </main>
+
+  <footer class="rt-footer">
+    <div class="rt-shell rt-footer-grid">
+      <div class="rt-footer-brand"><strong>RDWAN Tech</strong><p>منصة تقنية عربية وإنجليزية ضمن rdwan.dev.</p></div>
+      <div><h3>عن المنصة</h3><div class="rt-footer-links"><a href="/forum/about/">عن RDWAN Tech</a><a href="/forum/editorial-policy/">السياسة التحريرية</a></div></div>
+      <div><h3>الثقة</h3><div class="rt-footer-links"><a href="/forum/corrections/">التصحيحات</a><a href="/forum/ai-policy/">سياسة AI</a></div></div>
+    </div>
+    <div class="rt-shell rt-copyright">© <span data-year></span> RDWAN Tech</div>
+  </footer>
+  <script src="../../../forum.js" defer></script>
+</body>
+</html>
