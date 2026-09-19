@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from collector import collect
 from common import CONFIG, STATE, load_json, now_iso, save_json
 from deduplicator import deduplicate
-from verifier import verify_and_score
+from verifier import refresh_queue_verification, verify_and_score
 
 
 def main() -> int:
@@ -33,6 +33,7 @@ def main() -> int:
     )
 
     queue_items.extend(fresh)
+    queue_items = refresh_queue_verification(queue_items, settings)
     queue_items.sort(
         key=lambda item: (item.get("score", 0), item.get("published_at") or item.get("discovered_at") or ""),
         reverse=True,
@@ -48,6 +49,7 @@ def main() -> int:
     candidates = [
         item for item in queue_items
         if item.get("verification", {}).get("publish_eligible")
+        and item.get("status") not in {"published", "quality_rejected"}
     ]
     candidates.sort(key=lambda x: x.get("score", 0), reverse=True)
     save_json(STATE / "candidates.json", {
