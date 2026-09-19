@@ -33,6 +33,51 @@ def _age_hours(iso: str | None) -> float | None:
         return None
 
 
+def _verification_policy(source: dict, settings: dict) -> dict:
+    source_type = source.get("type", "journalism")
+    trust = float(source.get("trust", 0.7))
+    min_conf = float(settings.get("minimumVerificationConfidence", 0.90))
+    allow_single = bool(settings.get("allowTrustedJournalismSingleSource", True))
+    single_threshold = float(settings.get("trustedJournalismSingleSourceThreshold", 0.84))
+
+    if source_type == "official":
+        confidence = max(0.94, trust)
+        return {
+            "confidence": round(confidence, 3),
+            "reason": "official_source",
+            "official": True,
+            "single_source_trusted": True,
+            "publish_eligible": confidence >= min_conf,
+            "corroborating_sources": [],
+        }
+
+    confidence = min(0.92, trust)
+    single_source_trusted = allow_single and trust >= single_threshold
+    return {
+        "confidence": round(confidence, 3),
+        "reason": "trusted_journalism_single_source" if single_source_trusted else "trusted_journalism",
+        "official": False,
+        "single_source_trusted": single_source_trusted,
+        "publish_eligible": confidence >= min_conf or single_source_trusted,
+        "corroborating_sources": [],
+    }
+
+
+def refresh_queue_verification(items: list[dict], settings: dict) -> list[dict]:
+    """Refresh verification policy for queued stories after editorial policy changes."""
+    for item in items:
+        if item.get("status") in {"published", "quality_rejected"}:
+            continue
+        source = item.get("source", {})
+        existing = dict(item.get("verification", {}))
+        refreshed = _verification_policy(source, settings)
+        # Preserve corroboration discovered during ranking when present.
+        if existing.get("corroborating_sources"):
+            refreshed["corroborating_sources"] = existing["corroborating_sources"]
+        item["verification"] = refreshed
+    return items
+
+
 def verify_and_score(stories: list[dict], settings: dict) -> tuple[list[dict], int]:
     categories = load_json(CONFIG / "categories.json", {"categories": {}}).get("categories", {})
     blocked = {d.lower().removeprefix("www.") for d in load_json(CONFIG / "blocked_domains.json", {"domains": []}).get("domains", [])}
@@ -59,12 +104,8 @@ def verify_and_score(stories: list[dict], settings: dict) -> tuple[list[dict], i
         priority = int(source.get("priority", 10))
         category, category_label, keyword_hits = _classify(story, categories)
 
-        if source_type == "official":
-            confidence = max(0.94, trust)
-            verification_reason = "official_source"
-        else:
-            confidence = min(0.92, trust)
-            verification_reason = "trusted_journalism"
+        verification = _verification_policy(source, settings)
+        confidence = float(verification["confidence"])
 
         freshness_bonus = 0
         if age is not None:
@@ -84,13 +125,7 @@ def verify_and_score(stories: list[dict], settings: dict) -> tuple[list[dict], i
         story["category"] = category
         story["category_label"] = category_label
         story["score"] = score
-        story["verification"] = {
-            "confidence": round(confidence, 3),
-            "reason": verification_reason,
-            "official": source_type == "official",
-            "publish_eligible": confidence >= min_conf,
-            "corroborating_sources": []
-        }
+        story["verification"] = verification
         story["status"] = "incoming"
         accepted.append(story)
 
