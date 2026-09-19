@@ -206,7 +206,7 @@ def _prepare_next(settings: dict, queue_doc: dict, history: dict, now: datetime,
     return None
 
 
-def _publish_prepared(prepared: dict) -> int:
+def _publish_prepared(prepared: dict, ignore_cooldown: bool = False) -> int:
     story = prepared["story"]
     source_pack = prepared["source_pack"]
     editions = prepared["editions"]
@@ -245,7 +245,7 @@ def _publish_prepared(prepared: dict) -> int:
     publisher._slugify = prepared_slugify
     publisher.prepare_images = prepared_images
     try:
-        result = publisher.main()
+        result = publisher.main(ignore_cooldown=ignore_cooldown)
     finally:
         publisher.rank_candidates = original_rank
         publisher.build_source_pack = original_build_sources
@@ -303,7 +303,7 @@ def main() -> int:
         print("20-minute pipeline: publication is due, but no quality-approved prepared story is available.")
         return 0
 
-    result = _publish_prepared(prepared)
+    result = _publish_prepared(prepared, ignore_cooldown=force_publish)
 
     if force_publish:
         history_after = load_json(STATE / "published.json", {"items": []})
