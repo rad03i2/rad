@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 2,
+  "template": "article",
+  "id": "7a2491fd9c2082b1f0b3",
+  "slug": "workflow-execution-protections-in-github-actions-generally-available",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/workflow-execution-protections-in-github-actions-generally-available/",
+    "en": "/forum/en/ai/workflow-execution-protections-in-github-actions-generally-available/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub تعلن الإتاحة العامة لحماية تنفيذ سير العمل",
+      "description": "أصبحت حماية تنفيذ سير العمل في GitHub Actions متاحة عموماً، مع سياسات أدق للملفات وواجهة REST وقاعدة افتراضية للحد من مخاطر pull_request_target.",
+      "deck": "أعلنت GitHub إتاحة حماية تنفيذ سير العمل في GitHub Actions لجميع عملاء GitHub Enterprise والمؤسسات والمستودعات. وتمنح الميزة فرق التطوير أدوات للتحكم في الجهات والأحداث التي يمكنها تشغيل سير العمل، مع إمكان مراجعة أثر السياسات قبل تطبيقها.",
+      "summaryBullets": [
+        "حماية تنفيذ سير العمل أصبحت متاحة عموماً بعد فترة المعاينة العامة.",
+        "يمكن تقييد السياسات وفق ملفات سير عمل محددة، بدلاً من تطبيقها على المستودع بأكمله.",
+        "تتيح Insights وواجهة REST مراجعة القواعد وإدارتها برمجياً وعلى نطاق واسع.",
+        "تطرح GitHub قاعدة افتراضية لتعطيل pull_request_target في المستودعات العامة المتأثرة.",
+        "يبدأ تطبيق القاعدة الافتراضية تلقائياً في 2 نوفمبر 2026 بعد فترة التقييم."
+      ],
+      "sections": [
+        {
+          "heading": "إتاحة عامة بعد المعاينة",
+          "paragraphs": [
+            "أعلنت GitHub أن حماية تنفيذ سير العمل في GitHub Actions انتقلت من مرحلة المعاينة العامة إلى الإتاحة العامة. وتشمل الإتاحة الجديدة GitHub Enterprise، والمؤسسات، والمستودعات، بحيث تستطيع الجهات المسؤولة وضع قواعد تحدد من يملك صلاحية تشغيل سير عمل Actions، وما الأحداث التي يمكن أن تبدأ تشغيله.",
+            "تعتمد الحماية على نوعين من القواعد. قواعد الجهات تحدد هوية الطرف المسموح له بتشغيل سير العمل، بينما تحدد قواعد الأحداث الظروف أو الأحداث التي يمكن أن تؤدي إلى التشغيل. وقبل بدء أي تشغيل، تقيّم Actions النوعين معاً لتقرر ما إذا كان التشغيل يطابق السياسة المعتمدة."
+          ]
+        },
+        {
+          "heading": "سياسات مختلفة لكل ملف سير عمل",
+          "paragraphs": [
+            "تضيف الإتاحة العامة إمكانية استهداف ملفات سير عمل بعينها عند وضع قواعد الحماية. وبذلك لم تعد السياسة مضطرة إلى تغطية المستودع بأكمله بالطريقة نفسها؛ إذ يمكن للمستودع تطبيق ضوابط مختلفة على ملف النشر وملفات التكامل المستمر، وفق طبيعة كل عملية وحساسيتها.",
+            "توضح GitHub أن هذا الأسلوب يسمح، على سبيل المثال، بقصر تشغيل ملف deploy.yml على فريق محدد، مع إبقاء سير عمل التكامل المستمر متاحاً لجميع المساهمين. ويمنح استهداف الملف فرق الإدارة مساحة أكبر للفصل بين العمليات التي قد تؤثر في بيئات النشر وتلك المستخدمة للفحص أو الاختبار."
+          ]
+        },
+        {
+          "heading": "رؤى وواجهة لإدارة السياسات",
+          "paragraphs": [
+            "تتضمن الإتاحة العامة ميزة Insights، التي تعرض كيفية تقييم Actions للقواعد وتطبيقها عبر مستوى المؤسسة أو المنظمة أو المستودعات. وتتيح هذه البيانات تدقيق أثر السياسة ومعرفة عمليات التشغيل التي تتأثر بها، سواء قبل تفعيل القاعدة أو بعد بدء فرضها، بما يساعد على ضبط الإعدادات وفق النتائج الفعلية.",
+            "كما توفر GitHub واجهة REST لإدارة حماية التنفيذ برمجياً على مستوى المؤسسة والمنظمة والمستودع. وتشمل العمليات إنشاء القواعد وقراءتها وتحديثها وحذفها، بما في ذلك الشروط المرتبطة بمسار ملف سير العمل. وبهذا يمكن التعامل مع سياسات Actions باعتبارها شيفرة، وتوحيدها عبر مئات المستودعات، وربط فرضها بأدوات الحوكمة القائمة بدلاً من إدارتها يدوياً من صفحات الإعدادات."
+          ]
+        },
+        {
+          "heading": "التقييم قبل فرض القواعد",
+          "paragraphs": [
+            "تحتفظ الإتاحة العامة بوضع Evaluate الذي كان متاحاً خلال المعاينة. يعمل هذا الوضع كطبقة مراقبة لا تمنع التشغيل فوراً، لكنه يعرض عمليات سير العمل التي كانت ستُحظر لو كانت القاعدة مفروضة. وتمنح هذه الآلية الفرق فرصة لفهم التأثير المتوقع ومعالجة الاعتماديات قبل الانتقال إلى التنفيذ الإلزامي.",
+            "توصي GitHub بالاستفادة من Insights لمراجعة نتائج التقييم، خصوصاً عند إعداد قواعد تستهدف أحداثاً أو ملفات محددة. وتسمح المراجعة المسبقة بتمييز عمليات التشغيل الضرورية من تلك التي لا ينبغي أن تبدأ وفق السياسة، من دون التسبب مباشرة في تعطيل عمليات قائمة أثناء مرحلة الإعداد."
+          ]
+        },
+        {
+          "heading": "حماية افتراضية ضد pull_request_target",
+          "paragraphs": [
+            "تربط GitHub الإعلان أيضاً بطرح قاعدة حماية افتراضية للحد من مخاطر عمليات pull_request_target. وتقول الشركة إن الثغرات المرتبطة بهذا النوع من سير العمل، ومنها ما يُعرف باسم Pwn Requests، من أكثر الثغرات استغلالاً في سير عمل Actions. ويعمل pull_request_target في سياق المستودع الأساسي مع إمكانية الوصول إلى أسراره، ولذلك قد يؤدي تنفيذ شيفرة غير موثوقة قادمة من تفرع خارجي إلى تسميم مسار العمل أو استخراج الأسرار.",
+            "بالنسبة إلى المستودعات العامة التي لا تملك سياسة أحداث منطبقة بالفعل، تطرح GitHub قاعدة افتراضية تعطل أحداث pull_request_target. ولا تشمل هذه القاعدة المستودعات الخاصة أو الداخلية، كما تبدأ أولاً في وضع التقييم لعرض عمليات التشغيل التي ستتأثر قبل بدء المنع. ومن المقرر أن تفرض GitHub القاعدة تلقائياً في 2 نوفمبر 2026 على المستودعات المتأثرة التي كانت تستخدم السياسة الافتراضية لـ pull_request_target قبل الإتاحة العامة.",
+            "أمام الفرق خياران عند مراجعة النتائج: إبقاء القاعدة لمنع pull_request_target، أو السماح بالحدث صراحة عبر سياسة أحداث Actions مناسبة إذا كانت سير العمل تعتمد عليه. ويمكن كذلك استخدام استهداف ملفات سير العمل الجديد لإضافة ملفات محددة إلى قائمة السماح بدلاً من فتح الحدث على نطاق المستودع كله."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "GitHub Actions",
+        "الأمن السيبراني",
+        "DevOps",
+        "أتمتة سير العمل",
+        "أمن سلسلة التوريد البرمجية"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Actions",
+        "GitHub Enterprise",
+        "Insights",
+        "REST API",
+        "pull_request_target"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "19 سبتمبر 2026",
+      "modifiedLabel": "19 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 663
+    },
+    "en": {
+      "title": "GitHub makes Actions workflow protections generally available",
+      "description": "GitHub has moved Actions workflow execution protections to general availability, adding file-level policies, insights and REST API management.",
+      "deck": "GitHub has made workflow execution protections for GitHub Actions generally available across Enterprise, organizations and repositories. The controls let administrators decide who can trigger workflows, which events can start them and which workflow files specific policies cover.",
+      "summaryBullets": [
+        "Execution protections now support workflow-file targeting for different repository policies.",
+        "Insights show how rules are evaluated across enterprises, organizations and repositories.",
+        "A REST API enables programmatic management of execution protection rules.",
+        "GitHub is introducing a default rule to disable pull_request_target in affected public repositories.",
+        "The default rule is scheduled for automatic enforcement on November 2, 2026."
+      ],
+      "sections": [
+        {
+          "heading": "Actions protections leave preview",
+          "paragraphs": [
+            "GitHub announced on September 17 that workflow execution protections for GitHub Actions have moved from public preview to general availability. The feature is available for GitHub Enterprise, organizations and repositories, giving administrators a way to define an allowlist for workflow execution.",
+            "The protections evaluate both the actor attempting to start a workflow and the event that would trigger it. Actor rules determine who is permitted to initiate a run, while event rules determine which types of events may start one. GitHub Actions evaluates both categories before a workflow run begins."
+          ]
+        },
+        {
+          "heading": "Policies can target individual workflows",
+          "paragraphs": [
+            "General availability adds workflow file targeting, allowing an execution protection policy to apply to specific workflow files instead of an entire repository. This enables different workflows in the same repository to operate under different rules.",
+            "GitHub gives deployment as an example: an organization could restrict deploy.yml to a designated team while leaving continuous integration workflows available to all contributors. The file-level option is also intended to support more precise control as teams decide which workflows need additional restrictions."
+          ]
+        },
+        {
+          "heading": "Insights and API support governance",
+          "paragraphs": [
+            "The release also adds Insights for reviewing how Actions evaluates and enforces execution protection rules across an enterprise, organization and repositories. GitHub says the information can help teams audit the effect of policies and adjust them before or after enforcement.",
+            "A REST API provides programmatic control at the enterprise, organization and repository levels. Administrators can create, read, update and delete rules, including conditions based on workflow paths. That allows teams to manage Actions policies as code, keep settings consistent across many repositories and connect enforcement to existing governance tools."
+          ]
+        },
+        {
+          "heading": "Evaluate mode remains available",
+          "paragraphs": [
+            "The generally available feature retains evaluate mode from the public preview. In this mode, organizations can run rules in shadow mode and inspect which workflow runs would be blocked without immediately preventing those runs.",
+            "GitHub positions the mode as a way to assess policy impact before enforcement. Teams can use the resulting information to identify workflows that depend on a restricted actor or event, then adjust their policies or workflow configuration before a rule becomes active."
+          ]
+        },
+        {
+          "heading": "Default protection targets pull_request_target",
+          "paragraphs": [
+            "GitHub is also rolling out a default protection rule for pull_request_target events. The company describes vulnerabilities in pull_request_target workflows, including Pwn Requests, as among the most commonly exploited vulnerabilities in Actions workflows.",
+            "The trigger runs with access to secrets in the context of the base repository. GitHub warns that when code from a fork is executed, untrusted code could poison the pipeline and exfiltrate secrets. For public repositories without an applicable event policy, the new default disables pull_request_target. The default does not apply to private or internal repositories."
+          ]
+        },
+        {
+          "heading": "Enforcement begins in November",
+          "paragraphs": [
+            "The new default rule initially runs in evaluate mode, allowing affected repositories to use Insights to see which workflow runs would be affected. GitHub says this will show teams which runs are expected to fail once enforcement starts.",
+            "On November 2, 2026, GitHub plans to automatically enforce the default rule for affected repositories that were using the default pull_request_target policy before general availability. Teams can leave the rule in place to block the trigger, or explicitly allow pull_request_target through an applicable Actions event policy if their workflows still require it. Specific workflows can be allow-listed with workflow file targeting."
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub Actions",
+        "GitHub",
+        "workflow security",
+        "CI/CD",
+        "DevOps",
+        "pull_request_target",
+        "GitHub Enterprise"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Actions",
+        "GitHub Enterprise",
+        "REST API",
+        "pull_request_target"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 19, 2026",
+      "modifiedLabel": "September 19, 2026",
+      "readMinutes": 3,
+      "wordCount": 639
+    }
+  },
+  "datePublished": "2026-09-19T03:31:09.469963+03:00",
+  "dateModified": "2026-09-19T03:31:09.469963+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/workflow-execution-protections-in-github-actions-generally-available/hero.webp",
+    "card": "/forum/assets/posts/2026/09/workflow-execution-protections-in-github-actions-generally-available/card.webp",
+    "social": "/forum/assets/posts/2026/09/workflow-execution-protections-in-github-actions-generally-available/social.jpg",
+    "alt": {
+      "ar": "GitHub تعلن الإتاحة العامة لحماية تنفيذ سير العمل",
+      "en": "GitHub makes Actions workflow protections generally available"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/09/653308119-1cfbe127-7fb9-4458-b69e-253a12abee39.jpeg",
+    "sourceType": "official",
+    "generatedFallback": false
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-17-workflow-execution-protections-in-github-actions-generally-available/",
+      "type": "official",
+      "title": "Workflow execution protections in GitHub Actions generally available"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-17-workflow-execution-protections-in-github-actions-generally-available",
+  "sourceTitle": "Workflow execution protections in GitHub Actions generally available",
+  "trendScore": 92.87,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-19T00:31:09+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/workflow-execution-protections-in-github-actions-generally-available.json"
+}
