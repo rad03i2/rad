@@ -132,13 +132,13 @@ def _call_gemini(prompt: str, model: str) -> dict:
     if not api_key:
         raise RuntimeError("GEMINI_API_KEY is not configured")
 
-    endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    # Interactions API is Google's recommended Gemini API surface for new work.
+    endpoint = "https://generativelanguage.googleapis.com/v1beta/interactions"
     payload = {
-        "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-        "generationConfig": {
-            "responseMimeType": "application/json",
-            "temperature": 0.35,
-            "maxOutputTokens": 8192,
+        "model": model,
+        "input": prompt,
+        "generation_config": {
+            "max_output_tokens": 8192,
         },
     }
 
@@ -156,26 +156,32 @@ def _call_gemini(prompt: str, model: str) -> dict:
                 timeout=180,
             )
             if response.status_code >= 400:
-                body = response.text[:1200]
-                last_error = f"Gemini API failed ({response.status_code}): {body}"
+                body = response.text[:1600]
+                last_error = f"Gemini Interactions API failed ({response.status_code}): {body}"
                 continue
 
             data = response.json()
-            candidates = data.get("candidates") or []
-            if not candidates:
-                last_error = f"Gemini returned no candidates: {json.dumps(data)[:900]}"
+            if data.get("status") not in (None, "completed"):
+                last_error = f"Gemini interaction did not complete: {json.dumps(data)[:1200]}"
                 continue
 
-            parts = candidates[0].get("content", {}).get("parts", [])
-            text = "\n".join(str(part.get("text", "")) for part in parts if part.get("text")).strip()
+            text_parts = []
+            for step in data.get("steps") or []:
+                if step.get("type") != "model_output":
+                    continue
+                for part in step.get("content") or []:
+                    if part.get("type") == "text" and part.get("text"):
+                        text_parts.append(str(part["text"]))
+
+            text = "\n".join(text_parts).strip()
             if not text:
-                last_error = f"Gemini returned no text: {json.dumps(data)[:900]}"
+                last_error = f"Gemini returned no text: {json.dumps(data)[:1200]}"
                 continue
             return _extract_json(text)
         except Exception as exc:
             last_error = f"Gemini request failed: {type(exc).__name__}: {exc}"
 
-    raise RuntimeError(last_error or "Gemini API failed")
+    raise RuntimeError(last_error or "Gemini Interactions API failed")
 
 
 def _call_copilot(prompt: str) -> dict:
