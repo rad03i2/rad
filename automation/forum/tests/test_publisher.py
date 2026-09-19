@@ -177,7 +177,7 @@ class PublisherQualityTests(unittest.TestCase):
         sources = [{"name": "Example", "url": story["url"], "kind": "official", "feed_title": story["title"]}]
         images = {"hero": "/forum/assets/test/hero.webp", "card": "/forum/assets/test/card.webp", "social": "/forum/assets/test/social.jpg", "alt": {"ar": "صورة", "en": "Image"}, "credit": "Example", "sourceUrl": story["url"]}
         record = _make_content_record(story, self._editions(), sources, "example-ai-platform-launch", datetime(2026, 9, 16, 14, 0, tzinfo=timezone.utc), images)
-        self.assertEqual(record["schemaVersion"], 2)
+        self.assertEqual(record["schemaVersion"], 3)
         self.assertEqual(record["template"], "article")
         self.assertEqual(record["urls"]["ar"], "/forum/ar/ai/example-ai-platform-launch/")
         self.assertEqual(record["urls"]["en"], "/forum/en/ai/example-ai-platform-launch/")
