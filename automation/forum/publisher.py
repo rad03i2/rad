@@ -100,6 +100,104 @@ def _allowed_link_urls(sources: list[dict]) -> set[str]:
     return allowed
 
 
+def _link_targets(sources: list[dict]) -> list[dict]:
+    targets = []
+    seen = set()
+    for source in sources:
+        source_url = str(source.get("url") or "").strip()
+        source_name = str(source.get("name") or source.get("domain") or "Source").strip()
+        if source_url.startswith(("http://", "https://")):
+            key = (source_name.casefold(), source_url)
+            if key not in seen:
+                seen.add(key)
+                targets.append({"text": source_name, "url": source_url})
+        for item in source.get("link_candidates") or []:
+            label = str(item.get("text") or "").strip()
+            url = str(item.get("url") or "").strip()
+            if not label or not url.startswith(("http://", "https://")):
+                continue
+            key = (label.casefold(), url)
+            if key in seen:
+                continue
+            seen.add(key)
+            targets.append({"text": label, "url": url})
+    return targets
+
+
+def _ensure_inline_links(article: dict, sources: list[dict], locale: str, minimum_inline_links: int) -> dict:
+    if minimum_inline_links <= 0 or not isinstance(article, dict):
+        return article
+
+    allowed_urls = _allowed_link_urls(sources)
+    targets = _link_targets(sources)
+    sections = article.get("sections")
+    if not isinstance(sections, list) or not targets:
+        return article
+
+    # Normalize model-provided link metadata and discard invented/malformed URLs
+    # instead of wasting a full LLM retry for a presentation-level issue.
+    existing = 0
+    paragraph_refs = []
+    for section in sections:
+        if not isinstance(section, dict):
+            continue
+        paragraphs = section.get("paragraphs")
+        if not isinstance(paragraphs, list):
+            continue
+        for index, paragraph in enumerate(paragraphs):
+            text = _paragraph_text(paragraph)
+            cleaned_links = []
+            if isinstance(paragraph, dict):
+                for link in _paragraph_links(paragraph):
+                    if not isinstance(link, dict):
+                        continue
+                    label = str(link.get("text") or "").strip()
+                    url = str(link.get("url") or "").strip()
+                    if label and label in text and url in allowed_urls:
+                        cleaned_links.append({"text": label, "url": url})
+                paragraphs[index] = {"text": text, "links": cleaned_links}
+            else:
+                paragraphs[index] = {"text": text, "links": []}
+            existing += len(cleaned_links)
+            paragraph_refs.append(paragraphs[index])
+
+    if existing >= minimum_inline_links:
+        return article
+
+    target_index = 0
+    for paragraph in paragraph_refs:
+        if existing >= minimum_inline_links:
+            break
+        text = str(paragraph.get("text") or "")
+        links = paragraph.setdefault("links", [])
+
+        # Prefer a target already mentioned naturally in the paragraph.
+        chosen = None
+        for offset in range(len(targets)):
+            candidate = targets[(target_index + offset) % len(targets)]
+            if candidate["text"] and candidate["text"] in text and all(link.get("url") != candidate["url"] or link.get("text") != candidate["text"] for link in links):
+                chosen = candidate
+                target_index = (target_index + offset + 1) % len(targets)
+                break
+
+        # If no useful entity is already present, add a short editorial attribution.
+        if chosen is None:
+            chosen = targets[target_index % len(targets)]
+            target_index = (target_index + 1) % len(targets)
+            label = chosen["text"]
+            if locale == "ar":
+                sentence = f" ويمكن الرجوع إلى {label} للاطلاع على التفاصيل الأصلية للمصدر."
+            else:
+                sentence = f" Further details are available from {label} in the original source material."
+            text = (text.rstrip() + sentence).strip()
+            paragraph["text"] = text
+
+        links.append({"text": chosen["text"], "url": chosen["url"]})
+        existing += 1
+
+    return article
+
+
 def _normalize_sections(article: dict) -> list[dict]:
     normalized = []
     for section in article.get("sections", []):
@@ -226,6 +324,13 @@ def _generate_qualified_editions(
     for attempt_number in range(1, max_attempts + 1):
         try:
             editions = writer_fn(story, source_pack, settings, feedback)
+            minimum_inline_links = max(0, int(settings.get("minimumInlineLinks", 0)))
+            if isinstance(editions, dict):
+                for locale in ("ar", "en"):
+                    if isinstance(editions.get(locale), dict):
+                        editions[locale] = _ensure_inline_links(
+                            editions[locale], source_pack, locale, minimum_inline_links
+                        )
         except Exception as exc:
             message = f"{type(exc).__name__}: {exc}"
             attempts.append({"attempt": attempt_number, "status": "generation_error", "error": message})
