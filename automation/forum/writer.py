@@ -127,6 +127,57 @@ def _extract_json(text: str) -> dict:
         raise
 
 
+def _call_gemini(prompt: str, model: str) -> dict:
+    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError("GEMINI_API_KEY is not configured")
+
+    endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    payload = {
+        "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "responseMimeType": "application/json",
+            "temperature": 0.35,
+            "maxOutputTokens": 8192,
+        },
+    }
+
+    last_error = None
+    for _ in range(2):
+        try:
+            response = requests.post(
+                endpoint,
+                headers={
+                    "x-goog-api-key": api_key,
+                    "Content-Type": "application/json",
+                    "User-Agent": "RDWAN-Tech-Publisher/1.0",
+                },
+                json=payload,
+                timeout=180,
+            )
+            if response.status_code >= 400:
+                body = response.text[:1200]
+                last_error = f"Gemini API failed ({response.status_code}): {body}"
+                continue
+
+            data = response.json()
+            candidates = data.get("candidates") or []
+            if not candidates:
+                last_error = f"Gemini returned no candidates: {json.dumps(data)[:900]}"
+                continue
+
+            parts = candidates[0].get("content", {}).get("parts", [])
+            text = "\n".join(str(part.get("text", "")) for part in parts if part.get("text")).strip()
+            if not text:
+                last_error = f"Gemini returned no text: {json.dumps(data)[:900]}"
+                continue
+            return _extract_json(text)
+        except Exception as exc:
+            last_error = f"Gemini request failed: {type(exc).__name__}: {exc}"
+
+    raise RuntimeError(last_error or "Gemini API failed")
+
+
 def _call_copilot(prompt: str) -> dict:
     if not shutil.which("copilot"):
         raise RuntimeError("GitHub Copilot CLI is not installed")
@@ -152,6 +203,25 @@ def _call_copilot(prompt: str) -> dict:
         except Exception as exc:
             last_error = f"Copilot returned invalid JSON: {exc}; output={proc.stdout[:900]}"
     raise RuntimeError(last_error or "Copilot CLI failed")
+
+
+def _call_model(prompt: str, settings: dict) -> dict:
+    errors = []
+
+    # Gemini is the primary writer whenever its secret is configured.
+    if os.environ.get("GEMINI_API_KEY", "").strip():
+        try:
+            return _call_gemini(prompt, settings.get("geminiModel", "gemini-2.5-flash"))
+        except Exception as exc:
+            errors.append(f"Gemini: {exc}")
+
+    # Keep Copilot as a compatibility fallback rather than a single point of failure.
+    try:
+        return _call_copilot(prompt)
+    except Exception as exc:
+        errors.append(f"Copilot: {exc}")
+
+    raise RuntimeError("All article generation providers failed: " + " | ".join(errors))
 
 
 def _source_text(usable: list[dict]) -> str:
@@ -188,7 +258,7 @@ def _retry_guidance(locale: str, feedback: list[str] | None) -> str:
     return "\n\nThis is a retry after the previous draft failed the quality gate. The following corrections are mandatory:\n- " + "\n- ".join(instructions)
 
 
-def _write_locale(story: dict, usable: list[dict], locale: str, quality_feedback: list[str] | None = None) -> dict:
+def _write_locale(story: dict, usable: list[dict], locale: str, settings: dict, quality_feedback: list[str] | None = None) -> dict:
     joined_sources = _source_text(usable)
     retry_guidance = _retry_guidance(locale, quality_feedback)
     if locale == "ar":
@@ -244,11 +314,11 @@ Return valid JSON only:
 Requirements: 650-1000 English words, 4-7 useful sections, professional technology-news style, put the primary entity and news action early in the headline, avoid clickbait and vague headlines, clearly attribute company claims when appropriate, no first-person opinion, no links inside paragraphs, and no long copied passages.{retry_guidance}
 """.strip()
 
-    article = _call_copilot(prompt)
+    article = _call_model(prompt, settings)
     required = ["title", "description", "deck", "summary_bullets", "sections", "tags"]
     missing = [key for key in required if not article.get(key)]
     if missing:
-        raise RuntimeError(f"Copilot {locale} output missing fields: {', '.join(missing)}")
+        raise RuntimeError(f"Generated {locale} output missing fields: {', '.join(missing)}")
     return article
 
 
@@ -257,6 +327,6 @@ def write_article(story: dict, source_pack: list[dict], settings: dict, quality_
     if not usable:
         raise RuntimeError("No usable source text available")
     return {
-        "ar": _write_locale(story, usable, "ar", quality_feedback),
-        "en": _write_locale(story, usable, "en", quality_feedback),
+        "ar": _write_locale(story, usable, "ar", settings, quality_feedback),
+        "en": _write_locale(story, usable, "en", settings, quality_feedback),
     }
