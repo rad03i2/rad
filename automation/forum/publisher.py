@@ -292,7 +292,7 @@ def _mark_candidate_result(queue_doc: dict, story: dict, status: str, errors: li
         break
 
 
-def main() -> int:
+def main(ignore_cooldown: bool = False) -> int:
     settings = load_json(CONFIG / "settings.json", {})
     if not settings.get("publishingEnabled", False) or settings.get("dryRun", False):
         _save_report("publishing_disabled")
@@ -307,7 +307,7 @@ def main() -> int:
     now = datetime.now(TZ)
     last = _parse_dt(history.get("last_published_at"))
     minimum_gap = int(settings.get("minimumMinutesBetweenPosts", 55))
-    if last and (now.astimezone(timezone.utc) - last.astimezone(timezone.utc)).total_seconds() < minimum_gap * 60:
+    if (not ignore_cooldown) and last and (now.astimezone(timezone.utc) - last.astimezone(timezone.utc)).total_seconds() < minimum_gap * 60:
         _save_report("cooldown", last_published_at=history.get("last_published_at"))
         print("Hourly publisher: cooldown active; no post published.")
         return 0
