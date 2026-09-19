@@ -45,6 +45,104 @@ def _ea(value) -> str:
     return escape(str(value or ""), quote=True)
 
 
+def _safe_http_url(value: str | None) -> str:
+    value = str(value or "").strip()
+    parsed = urlparse(value)
+    return value if parsed.scheme in {"http", "https"} and parsed.netloc else ""
+
+
+def _render_paragraph(paragraph) -> str:
+    if not isinstance(paragraph, dict):
+        return _e(paragraph)
+
+    text = str(paragraph.get("text") or "")
+    links = paragraph.get("links") if isinstance(paragraph.get("links"), list) else []
+    placements = []
+    occupied = []
+
+    for link in links:
+        if not isinstance(link, dict):
+            continue
+        label = str(link.get("text") or "").strip()
+        url = _safe_http_url(link.get("url"))
+        if not label or not url:
+            continue
+        start = text.find(label)
+        while start >= 0 and any(not (start + len(label) <= a or start >= b) for a, b in occupied):
+            start = text.find(label, start + len(label))
+        if start < 0:
+            continue
+        end = start + len(label)
+        occupied.append((start, end))
+        placements.append((start, end, label, url))
+
+    placements.sort(key=lambda item: item[0])
+    if not placements:
+        return _e(text)
+
+    pieces = []
+    cursor = 0
+    for start, end, label, url in placements:
+        pieces.append(_e(text[cursor:start]))
+        pieces.append(
+            f'<a href="{_ea(url)}" rel="noopener noreferrer" target="_blank">{_e(label)}</a>'
+        )
+        cursor = end
+    pieces.append(_e(text[cursor:]))
+    return "".join(pieces)
+
+
+def _localized_value(value, locale: str, fallback: str = "") -> str:
+    if isinstance(value, dict):
+        return str(value.get(locale) or value.get("en") or value.get("ar") or fallback)
+    return str(value or fallback)
+
+
+def _render_inline_figure(image: dict, locale: str) -> str:
+    src = _absolute(image.get("src"))
+    if not src:
+        return ""
+    alt = _localized_value(image.get("alt"), locale, "")
+    caption = _localized_value(image.get("caption"), locale, "")
+    credit = str(image.get("credit") or "").strip()
+    source_url = _safe_http_url(image.get("sourceUrl"))
+    width = int(image.get("width") or 1200)
+    height = int(image.get("height") or 675)
+
+    caption_bits = []
+    if caption:
+        caption_bits.append(_e(caption))
+    if credit:
+        prefix = "المصدر: " if locale == "ar" else "Source: "
+        if source_url:
+            caption_bits.append(
+                f'{_e(prefix)}<a href="{_ea(source_url)}" rel="nofollow noopener noreferrer" target="_blank">{_e(credit)}</a>'
+            )
+        else:
+            caption_bits.append(_e(prefix + credit))
+    figcaption = f'<figcaption>{" · ".join(caption_bits)}</figcaption>' if caption_bits else ""
+    return (
+        f'<figure class="rt-inline-media">'
+        f'<img src="{_ea(src)}" alt="{_ea(alt)}" width="{width}" height="{height}" loading="lazy" decoding="async">'
+        f'{figcaption}</figure>'
+    )
+
+
+def _inline_media_slots(section_count: int, image_count: int) -> dict[int, list[int]]:
+    slots: dict[int, list[int]] = {}
+    if section_count <= 0 or image_count <= 0:
+        return slots
+    last_slot = -1
+    for image_index in range(image_count):
+        raw = round((image_index + 1) * section_count / (image_count + 1)) - 1
+        slot = max(0, min(section_count - 1, raw))
+        if slot <= last_slot and last_slot < section_count - 1:
+            slot = last_slot + 1
+        last_slot = slot
+        slots.setdefault(slot, []).append(image_index)
+    return slots
+
+
 def _absolute(value: str | None) -> str:
     value = str(value or "")
     if value.startswith("http://") or value.startswith("https://"):
@@ -78,7 +176,13 @@ def _url(record: dict, locale: str) -> str:
 def _schema(record: dict, locale: str, view: dict) -> dict:
     canonical = SITE + _url(record, locale)
     tags = view.get("tags", [])
-    image = _absolute((record.get("images") or {}).get("social") or record.get("image") or "/assets/social/home.jpg")
+    images = record.get("images") or {}
+    image = _absolute(images.get("social") or record.get("image") or "/assets/social/home.jpg")
+    schema_images = [image]
+    for item in images.get("inline") or []:
+        inline_src = _absolute(item.get("src"))
+        if inline_src and inline_src not in schema_images:
+            schema_images.append(inline_src)
     author_name = LOCALE_UI[locale]["authorName"]
     category = view.get("category") or record.get("category") or record.get("categorySlug")
     return {
@@ -93,7 +197,7 @@ def _schema(record: dict, locale: str, view: dict) -> dict:
                 "dateModified": record.get("dateModified", record["datePublished"]),
                 "inLanguage": locale,
                 "mainEntityOfPage": canonical,
-                "image": [image],
+                "image": schema_images,
                 "author": {"@type": "Person", "name": author_name, "url": SITE + "/forum/authors/radwan-abdulhadi/"},
                 "publisher": {
                     "@type": "NewsMediaOrganization",
@@ -126,11 +230,18 @@ def render_record(record: dict, locale: str = "ar") -> str:
     template = Template(TEMPLATE.read_text(encoding="utf-8"))
 
     summary_html = "".join(f"<li>{_e(item)}</li>" for item in view.get("summaryBullets", []))
+    images = record.get("images") or {}
+    inline_images = list(images.get("inline") or [])
+    sections = list(view.get("sections", []))
+    media_slots = _inline_media_slots(len(sections), len(inline_images))
+
     body = []
-    for section in view.get("sections", []):
+    for section_index, section in enumerate(sections):
         body.append(f"<h2>{_e(section.get('heading'))}</h2>")
         for paragraph in section.get("paragraphs", []):
-            body.append(f"<p>{_e(paragraph)}</p>")
+            body.append(f"<p>{_render_paragraph(paragraph)}</p>")
+        for image_index in media_slots.get(section_index, []):
+            body.append(_render_inline_figure(inline_images[image_index], locale))
 
     sources_html = []
     for src in record.get("sources", []):
@@ -147,7 +258,6 @@ def render_record(record: dict, locale: str = "ar") -> str:
     canonical = SITE + _url(record, locale)
     ar_url = SITE + _url(record, "ar")
     en_url = SITE + _url(record, "en")
-    images = record.get("images") or {}
     hero_image = _absolute(images.get("hero") or record.get("image") or "/assets/social/home.jpg")
     card_image = _absolute(images.get("card") or images.get("hero") or record.get("image") or "/assets/social/home.jpg")
     social_image = _absolute(images.get("social") or images.get("hero") or record.get("image") or "/assets/social/home.jpg")
