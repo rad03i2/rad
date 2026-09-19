@@ -103,9 +103,10 @@ def _quality_gate(story: dict, sources: list[dict], editions: dict) -> tuple[boo
 
     usable = [source for source in sources if source.get("ok") and (source.get("text") or source.get("feed_summary"))]
     primary_official = story.get("source", {}).get("type") == "official"
+    trusted_single_source = bool(story.get("verification", {}).get("single_source_trusted"))
     if primary_official and len(usable) < 1:
         errors.append("missing_primary_source")
-    if not primary_official and len(usable) < 2:
+    if not primary_official and len(usable) < 2 and not (trusted_single_source and len(usable) >= 1):
         errors.append("journalism_requires_two_sources")
     return not errors, errors
 
