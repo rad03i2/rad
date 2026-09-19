@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head><script id="canonical-host-redirect">(()=>{const h=location.hostname.toLowerCase();if(h==='www.rdwan.dev'||location.protocol==='http:'){location.replace('https://rdwan.dev'+location.pathname+location.search+location.hash)}})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#10130f">
+  <title>AWS Details Vector Store Options for Bedrock Knowledge Bases</title>
+  <meta name="description" content="Amazon Web Services compares OpenSearch, Aurora PostgreSQL, and S3 Vectors for RAG applications with benchmarks and selection guidance.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://rdwan.dev/forum/en/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/">
+  <link rel="alternate" hreflang="ar" href="https://rdwan.dev/forum/ar/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/">
+  <link rel="alternate" hreflang="en" href="https://rdwan.dev/forum/en/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/">
+  <link rel="alternate" hreflang="x-default" href="https://rdwan.dev/forum/">
+  <link rel="stylesheet" href="../../../../styles.css">
+  <link rel="stylesheet" href="../../../forum.css">
+  <link rel="icon" type="image/png" href="../../../../assets/images/radwan-favicon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="RDWAN Tech">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="AWS Details Vector Store Options for Bedrock Knowledge Bases">
+  <meta property="og:description" content="Amazon Web Services compares OpenSearch, Aurora PostgreSQL, and S3 Vectors for RAG applications with benchmarks and selection guidance.">
+  <meta property="og:url" content="https://rdwan.dev/forum/en/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/">
+  <meta property="og:image" content="https://rdwan.dev/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/social.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-09-19T22:18:30.138939+03:00">
+  <meta property="article:modified_time" content="2026-09-19T22:18:30.138939+03:00">
+  <meta property="article:author" content="Radwan Abdulhadi">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AWS Details Vector Store Options for Bedrock Knowledge Bases">
+  <meta name="twitter:description" content="Amazon Web Services compares OpenSearch, Aurora PostgreSQL, and S3 Vectors for RAG applications with benchmarks and selection guidance.">
+  <meta name="twitter:image" content="https://rdwan.dev/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/social.jpg">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"NewsArticle","@id":"https://rdwan.dev/forum/en/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/#article","headline":"AWS Details Vector Store Options for Bedrock Knowledge Bases","description":"Amazon Web Services compares OpenSearch, Aurora PostgreSQL, and S3 Vectors for RAG applications with benchmarks and selection guidance.","datePublished":"2026-09-19T22:18:30.138939+03:00","dateModified":"2026-09-19T22:18:30.138939+03:00","inLanguage":"en","mainEntityOfPage":"https://rdwan.dev/forum/en/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/","image":["https://rdwan.dev/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/social.jpg","https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2024/01/18/2024-bedrock-kb-aurora-2.png","https://d2908q01vomqb2.cloudfront.net/887309d048beef83ad3eabf2a79a64a389ab1c9f/2025/02/14/DBBLOG-4241-part1_self_managed_arch-1024x624.jpg"],"author":{"@type":"Person","name":"Radwan Abdulhadi","url":"https://rdwan.dev/forum/authors/radwan-abdulhadi/"},"publisher":{"@type":"NewsMediaOrganization","@id":"https://rdwan.dev/forum/#publisher","name":"RDWAN Tech","url":"https://rdwan.dev/forum/","logo":{"@type":"ImageObject","url":"https://rdwan.dev/assets/images/radwan-favicon.png"},"founder":{"@type":"Person","name":"Radwan Abdulhadi","url":"https://rdwan.dev/forum/authors/radwan-abdulhadi/"}},"articleSection":"Apps & Software","keywords":["Amazon Web Services","Amazon Bedrock","Knowledge Bases","Vector Database","RAG","OpenSearch","Aurora PostgreSQL","S3 Vectors"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"RDWAN Tech","item":"https://rdwan.dev/forum/en/"},{"@type":"ListItem","position":2,"name":"Apps & Software","item":"https://rdwan.dev/forum/en/apps/"},{"@type":"ListItem","position":3,"name":"AWS Details Vector Store Options for Bedrock Knowledge Bases"}]}]}</script>
+</head>
+<body class="rt-locale-en">
+  <a class="skip-link" href="#article">Skip to article</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../../../" aria-label="Radwan Abdulhadi, home">
+        <span class="brand-mark">ر.</span>
+        <span class="brand-text">رضوان عبدالهادي<small lang="en" dir="ltr">DEVELOPER PORTFOLIO</small></span>
+      </a>
+      <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="navigation">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <nav class="nav-links" id="navigation" aria-label="Main navigation">
+        <a href="../../../../#home">Home</a>
+        <a href="../../../../#about">About</a>
+        <a href="../../../../#projects">Projects</a>
+        <a class="rad-nav-forum" href="../../">Tech News</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="rt-article" id="article">
+    <article class="rt-article-shell">
+      <nav class="rt-breadcrumbs" aria-label="Breadcrumb">
+        <a href="../../">RDWAN Tech</a><span>›</span><a href="../">Apps &amp; Software</a><span>›</span><span>AWS Details Vector Store Options for Bedrock Knowledge Bases</span>
+      </nav>
+      <header class="rt-article-head">
+        <span class="rt-label">Apps &amp; Software</span>
+        <h1>AWS Details Vector Store Options for Bedrock Knowledge Bases</h1>
+        <p class="rt-deck">Amazon Web Services has published a detailed comparison of three vector store backends for Amazon Bedrock Knowledge Bases, offering performance benchmarks and a practical framework for selecting the right option across different retrieval-augmented generation use cases.</p>
+        <div class="rt-byline">
+          <a class="rt-author" href="/forum/authors/radwan-abdulhadi/">
+            <span class="rt-avatar">ر</span>
+            <span><strong>Radwan Abdulhadi</strong><small>Founder and editor, RDWAN Tech</small></span>
+          </a>
+          <div class="rt-dates">Published: September 19, 2026<br>Updated: September 19, 2026 · 4 min read</div>
+        </div>
+      </header>
+
+      <figure class="rt-article-media">
+        <picture>
+          <source media="(max-width: 720px)" srcset="https://rdwan.dev/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/card.webp">
+          <img src="https://rdwan.dev/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/hero.webp" alt="AWS Details Vector Store Options for Bedrock Knowledge Bases" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async">
+        </picture>
+        <figcaption>Image: <a href="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/09/ML-19758-featured-image.png" rel="nofollow noopener noreferrer">AWS Machine Learning Blog</a></figcaption>
+      </figure>
+
+      <aside class="rt-summary">
+        <h2>Key points</h2>
+        <ul><li>Amazon Bedrock Knowledge Bases supports three customer-managed vector stores: OpenSearch Service, Aurora PostgreSQL with pgvector, and S3 Vectors</li><li>OpenSearch Serverless recommended for ecommerce product search due to hybrid search and low-millisecond latency</li><li>S3 Vectors claims up to 90% storage cost reduction versus traditional vector databases</li><li>Aurora PostgreSQL with pgvector supports vectors up to 2,000 dimensions with multiple indexing methods</li><li>OpenSearch Serverless NextGen collections not yet compatible with Bedrock Knowledge Bases Retrieve API</li></ul>
+      </aside>
+
+      <div class="rt-article-body">
+        <h2>AWS Publishes Vector Store Selection Guide</h2><p>Amazon Web Services has released a comprehensive comparison of vector store backends for Amazon Bedrock Knowledge Bases, targeting developers building retrieval-augmented generation (RAG) applications. The guidance focuses on the customer-managed configuration path, where users select their own vector database rather than using the fully managed option. For additional detail, see <a href="https://aws.amazon.com/blogs/machine-learning/selecting-a-vector-store-for-amazon-bedrock-knowledge-bases/" rel="noopener noreferrer" target="_blank">AWS Machine Learning Blog</a>.</p><p>The analysis examines three supported backends: Amazon OpenSearch Service, Amazon Aurora PostgreSQL with pgvector, and Amazon S3 Vectors. Each option is evaluated across distinct RAG use cases with accompanying benchmarks, though specific numerical results were not disclosed in the announcement. For additional detail, see <a href="https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-create.html" rel="noopener noreferrer" target="_blank">Amazon Bedrock Knowledge Bases</a>.</p><h2>Three Vector Store Architectures Compared</h2><p><a href="https://aws.amazon.com/opensearch-service/" rel="noopener noreferrer" target="_blank">Amazon OpenSearch Service</a> provides high-speed results from in-memory data, supporting both managed cluster and serverless deployment models. The service features k-nearest neighbor (k-NN) search and hybrid search that combines lexical and vector approaches. Bedrock Knowledge Bases supports both OpenSearch Managed Clusters and OpenSearch Serverless as backends. For additional detail, see Amazon OpenSearch Service.</p><p>Amazon Aurora PostgreSQL with pgvector integrates the relational database capabilities of Aurora with pgvector&#x27;s similarity search functionality. It supports multiple indexing methods including IVFFlat and HNSW, various distance metrics such as L2, cosine, and inner product, and handles vectors up to 2,000 dimensions in single precision.</p><p>Amazon S3 Vectors adds native vector support to the AWS object storage service, designed for cost-effective storage and querying of embeddings at scale. AWS states the service delivers sub-second query performance for similarity searches while reducing vector storage costs by up to 90 percent compared to traditional vector databases.</p><figure class="rt-inline-media"><img src="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2024/01/18/2024-bedrock-kb-aurora-2.png" alt="Vector database setup options in Amazon Bedrock" width="1024" height="1024" loading="lazy" decoding="async"><figcaption>Vector store setup options in the Amazon Bedrock console. · Source: <a href="https://aws.amazon.com/blogs/aws/knowledge-bases-for-amazon-bedrock-now-supports-amazon-aurora-postgresql-and-cohere-embedding-models/" rel="nofollow noopener noreferrer" target="_blank">AWS News Blog</a></figcaption></figure><h2>Ecommerce Product Search Use Case</h2><p>For ecommerce platforms requiring natural language product search across large catalogs with high concurrent query volumes, AWS recommends Amazon OpenSearch Serverless. The service&#x27;s hybrid search capabilities combine semantic understanding with traditional keyword matching, which the company says is valuable for product catalog scenarios.</p><p>OpenSearch Serverless handles vector search with query latency in the low milliseconds range. Built-in support for complex filtering and aggregations powers faceted navigation such as filtering by price, brand, or color. Multiple distance metrics including cosine similarity and Euclidean distance allow fine-tuning of product similarity calculations.</p><h2>OpenSearch Performance Optimization Details</h2><p>The AWS post details several configuration options for OpenSearch Serverless Classic collections that affect vector index performance and cost. Vector embedding size presents a trade-off: larger vectors contain more semantic information but increase resource consumption.</p><p>Compression and quantization options are available to balance cost and search quality. The benchmarks referenced in the guidance were conducted on Serverless Classic collections, which require explicit configuration of engine, mode, and HNSW parameters. Managed Clusters offer additional tuning options including auto-optimize, GPU-accelerated indexing, and configurable instance sizing that may produce different results.</p><figure class="rt-inline-media"><img src="https://d2908q01vomqb2.cloudfront.net/887309d048beef83ad3eabf2a79a64a389ab1c9f/2025/02/14/DBBLOG-4241-part1_self_managed_arch-1024x624.jpg" alt="Vector search architecture using Amazon Aurora and Amazon Bedrock" width="1024" height="624" loading="lazy" decoding="async"><figcaption>An AWS example of a vector-search architecture connecting Aurora with AI services. · Source: <a href="https://aws.amazon.com/blogs/database/self-managed-multi-tenant-vector-search-with-amazon-aurora-postgresql/" rel="nofollow noopener noreferrer" target="_blank">AWS Database Blog</a></figcaption></figure><h2>NextGen Collections and Availability Notes</h2><p>Amazon OpenSearch Serverless NextGen collections became generally available in May 2026 but are not yet compatible with the Amazon Bedrock Knowledge Bases Retrieve API. NextGen simplifies index creation by removing engine and mode parameters from index mappings, defaults to 32× compression with GPU-accelerated index builds, and supports scale-to-zero functionality.</p><p>For broader guidance across all AWS vector solutions, the company references additional resources including &quot;AWS vector solutions: Build agentic AI where your data lives,&quot; &quot;The role of vector datastores in generative AI applications,&quot; and &quot;Choosing an AWS vector database for RAG use cases.&quot;</p><h2>RAG Architecture Context</h2><p>The guidance situates vector stores within the broader RAG architecture, where documents are chunked, embedded, and stored during ingestion. At query time, user queries are converted to vector embeddings, similar chunks are retrieved from the vector database, and passed to a large language model as context for response generation.</p><p>The vector database serves as the bridge between raw information and contextual understanding, transforming unstructured data into a searchable, semantically meaningful knowledge space. Vector indexes enable rapid, high-dimensional semantic searches and near-instantaneous retrieval of semantically similar information.</p>
+        <h2>Sources</h2>
+        <ul class="rt-source-list"><li><a href="https://aws.amazon.com/blogs/machine-learning/selecting-a-vector-store-for-amazon-bedrock-knowledge-bases/" rel="nofollow noopener noreferrer">AWS Machine Learning Blog</a><small>Selecting a vector store for Amazon Bedrock Knowledge Bases</small></li></ul>
+      </div>
+
+      <footer class="rt-article-footer">
+        <div class="rt-article-tags"><span>Amazon Web Services</span><span>Amazon Bedrock</span><span>Knowledge Bases</span><span>Vector Database</span><span>RAG</span><span>OpenSearch</span><span>Aurora PostgreSQL</span><span>S3 Vectors</span></div>
+        <p class="rt-source-note">This report was produced from the sources listed above, separating confirmed information from company claims or estimates.</p>
+      </footer>
+    </article>
+<!-- SEO_RELATED_START -->
+<section class="rt-article-shell rt-related" aria-label="Related stories"><header class="rt-section-head"><div><h2>Related stories</h2><p>More coverage related to this story.</p></div></header><div class="rt-feed"><a class="rt-feed-item" href="/forum/en/apps/ubuntu-26-generally-available-and-latest-migration/"><div class="rt-feed-copy"><div class="rt-feed-kicker"><span>Apps &amp; Software</span></div><h3>Ubuntu 26.04 Reaches General Availability on GitHub Actions</h3><p>GitHub has fully supported its Ubuntu 26.04 Actions runner for x64 and arm64, while ubuntu-latest begins migrating from Ubuntu 24.04.</p><div class="rt-feed-time">September 19, 2026</div></div><div class="rt-thumb"><img src="/forum/assets/posts/2026/09/ubuntu-26-generally-available-and-latest-migration/card.webp" alt="Ubuntu 26.04 Reaches General Availability on GitHub Actions" width="800" height="450" loading="lazy" decoding="async"></div></a><a class="rt-feed-item" href="/forum/en/apps/introducing-the-androidx-security-state-libraries-unified-view-of-device-security/"><div class="rt-feed-copy"><div class="rt-feed-kicker"><span>Apps &amp; Software</span></div><h3>AndroidX Security State Libraries add unified device checks</h3><p>Android announced AndroidX Security State Libraries to give app developers and enterprises a component-level view of device security and pending updates.</p><div class="rt-feed-time">September 17, 2026</div></div><div class="rt-thumb"><img src="/forum/assets/posts/2026/09/introducing-the-androidx-security-state-libraries-unified-view-of-device-security/card.webp" alt="AndroidX Security State Libraries add unified device checks" width="800" height="450" loading="lazy" decoding="async"></div></a><a class="rt-feed-item" href="/forum/en/ai/introducing-kimi-k3-on-amazon-bedrock/"><div class="rt-feed-copy"><div class="rt-feed-kicker"><span>Artificial Intelligence</span></div><h3>Moonshot AI Launches Kimi K3 on Amazon Bedrock</h3><p>Kimi K3 from Moonshot AI is now on Amazon Bedrock, offering 2.8T parameters, native vision, and explicit prompt caching for coding workflows.</p><div class="rt-feed-time">September 19, 2026</div></div><div class="rt-thumb"><img src="/forum/assets/posts/2026/09/introducing-kimi-k3-on-amazon-bedrock/card.webp" alt="Moonshot AI Launches Kimi K3 on Amazon Bedrock" width="800" height="450" loading="lazy" decoding="async"></div></a></div></section>
+<!-- SEO_RELATED_END -->
+
+  </main>
+
+  <footer class="rt-footer">
+    <div class="rt-shell rt-footer-grid">
+      <div class="rt-footer-brand"><strong>RDWAN Tech</strong><p>A bilingual technology publication within rdwan.dev.</p></div>
+      <div><h3>Publication</h3><div class="rt-footer-links"><a href="/forum/about/">About RDWAN Tech</a><a href="/forum/editorial-policy/">Editorial policy</a></div></div>
+      <div><h3>Trust</h3><div class="rt-footer-links"><a href="/forum/corrections/">Corrections</a><a href="/forum/ai-policy/">AI policy</a></div></div>
+    </div>
+    <div class="rt-shell rt-copyright">© <span data-year></span> RDWAN Tech</div>
+  </footer>
+  <script src="../../../forum.js" defer></script>
+</body>
+</html>

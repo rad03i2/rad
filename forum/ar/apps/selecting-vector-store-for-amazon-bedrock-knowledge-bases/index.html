@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><script id="canonical-host-redirect">(()=>{const h=location.hostname.toLowerCase();if(h==='www.rdwan.dev'||location.protocol==='http:'){location.replace('https://rdwan.dev'+location.pathname+location.search+location.hash)}})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#10130f">
+  <title>اختيار مخزن الأبعاد لأجل Bedrock Knowledge Bases يحدد الأداء والتكلفة</title>
+  <meta name="description" content="توضح مقالة من AWS Machine Learning Blog مقارنة بين خيارات OpenSearch، Aurora PostgreSQL مع pgvector، و S3 Vectors لتحديد الخيار الأنسب لتطبيقات RAG في Amazon Bedrock.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://rdwan.dev/forum/ar/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/">
+  <link rel="alternate" hreflang="ar" href="https://rdwan.dev/forum/ar/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/">
+  <link rel="alternate" hreflang="en" href="https://rdwan.dev/forum/en/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/">
+  <link rel="alternate" hreflang="x-default" href="https://rdwan.dev/forum/">
+  <link rel="stylesheet" href="../../../../styles.css">
+  <link rel="stylesheet" href="../../../forum.css">
+  <link rel="icon" type="image/png" href="../../../../assets/images/radwan-favicon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="RDWAN Tech">
+  <meta property="og:locale" content="ar_IQ">
+  <meta property="og:title" content="اختيار مخزن الأبعاد لأجل Bedrock Knowledge Bases يحدد الأداء والتكلفة">
+  <meta property="og:description" content="توضح مقالة من AWS Machine Learning Blog مقارنة بين خيارات OpenSearch، Aurora PostgreSQL مع pgvector، و S3 Vectors لتحديد الخيار الأنسب لتطبيقات RAG في Amazon Bedrock.">
+  <meta property="og:url" content="https://rdwan.dev/forum/ar/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/">
+  <meta property="og:image" content="https://rdwan.dev/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/social.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-09-19T22:18:30.138939+03:00">
+  <meta property="article:modified_time" content="2026-09-19T22:18:30.138939+03:00">
+  <meta property="article:author" content="Radwan Abdulhadi">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="اختيار مخزن الأبعاد لأجل Bedrock Knowledge Bases يحدد الأداء والتكلفة">
+  <meta name="twitter:description" content="توضح مقالة من AWS Machine Learning Blog مقارنة بين خيارات OpenSearch، Aurora PostgreSQL مع pgvector، و S3 Vectors لتحديد الخيار الأنسب لتطبيقات RAG في Amazon Bedrock.">
+  <meta name="twitter:image" content="https://rdwan.dev/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/social.jpg">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"NewsArticle","@id":"https://rdwan.dev/forum/ar/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/#article","headline":"اختيار مخزن الأبعاد لأجل Bedrock Knowledge Bases يحدد الأداء والتكلفة","description":"توضح مقالة من AWS Machine Learning Blog مقارنة بين خيارات OpenSearch، Aurora PostgreSQL مع pgvector، و S3 Vectors لتحديد الخيار الأنسب لتطبيقات RAG في Amazon Bedrock.","datePublished":"2026-09-19T22:18:30.138939+03:00","dateModified":"2026-09-19T22:18:30.138939+03:00","inLanguage":"ar","mainEntityOfPage":"https://rdwan.dev/forum/ar/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/","image":["https://rdwan.dev/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/social.jpg","https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2024/01/18/2024-bedrock-kb-aurora-2.png","https://d2908q01vomqb2.cloudfront.net/887309d048beef83ad3eabf2a79a64a389ab1c9f/2025/02/14/DBBLOG-4241-part1_self_managed_arch-1024x624.jpg"],"author":{"@type":"Person","name":"رضوان عبدالهادي","url":"https://rdwan.dev/forum/authors/radwan-abdulhadi/"},"publisher":{"@type":"NewsMediaOrganization","@id":"https://rdwan.dev/forum/#publisher","name":"RDWAN Tech","url":"https://rdwan.dev/forum/","logo":{"@type":"ImageObject","url":"https://rdwan.dev/assets/images/radwan-favicon.png"},"founder":{"@type":"Person","name":"Radwan Abdulhadi","url":"https://rdwan.dev/forum/authors/radwan-abdulhadi/"}},"articleSection":"التطبيقات والبرامج","keywords":["Amazon Bedrock","RAG","Vector Store","OpenSearch","Aurora PostgreSQL","S3 Vectors","AWS"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"RDWAN Tech","item":"https://rdwan.dev/forum/ar/"},{"@type":"ListItem","position":2,"name":"التطبيقات والبرامج","item":"https://rdwan.dev/forum/ar/apps/"},{"@type":"ListItem","position":3,"name":"اختيار مخزن الأبعاد لأجل Bedrock Knowledge Bases يحدد الأداء والتكلفة"}]}]}</script>
+</head>
+<body class="rt-locale-ar">
+  <a class="skip-link" href="#article">انتقل إلى المقال</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../../../" aria-label="رضوان عبدالهادي، الرئيسية">
+        <span class="brand-mark">ر.</span>
+        <span class="brand-text">رضوان عبدالهادي<small lang="en" dir="ltr">DEVELOPER PORTFOLIO</small></span>
+      </a>
+      <button class="menu-button" type="button" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="navigation">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <nav class="nav-links" id="navigation" aria-label="التنقل الرئيسي">
+        <a href="../../../../#home">الرئيسية</a>
+        <a href="../../../../#about">عنّي</a>
+        <a href="../../../../#projects">المشاريع</a>
+        <a class="rad-nav-forum" href="../../">المنتدى</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="rt-article" id="article">
+    <article class="rt-article-shell">
+      <nav class="rt-breadcrumbs" aria-label="مسار التنقل">
+        <a href="../../">RDWAN Tech</a><span>›</span><a href="../">التطبيقات والبرامج</a><span>›</span><span>اختيار مخزن الأبعاد لأجل Bedrock Knowledge Bases يحدد الأداء والتكلفة</span>
+      </nav>
+      <header class="rt-article-head">
+        <span class="rt-label">التطبيقات والبرامج</span>
+        <h1>اختيار مخزن الأبعاد لأجل Bedrock Knowledge Bases يحدد الأداء والتكلفة</h1>
+        <p class="rt-deck">تسلط الضوء على مقارنة الأداء والتكلفة بين خيارات المخازن البيانية المدعومة من Amazon Bedrock Knowledge Bases.</p>
+        <div class="rt-byline">
+          <a class="rt-author" href="/forum/authors/radwan-abdulhadi/">
+            <span class="rt-avatar">ر</span>
+            <span><strong>رضوان عبدالهادي</strong><small>مؤسس ومحرر RDWAN Tech</small></span>
+          </a>
+          <div class="rt-dates">نُشر: 19 سبتمبر 2026<br>آخر تحديث: 19 سبتمبر 2026 · 4 دقائق قراءة</div>
+        </div>
+      </header>
+
+      <figure class="rt-article-media">
+        <picture>
+          <source media="(max-width: 720px)" srcset="https://rdwan.dev/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/card.webp">
+          <img src="https://rdwan.dev/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/hero.webp" alt="اختيار مخزن الأبعاد لأجل Bedrock Knowledge Bases يحدد الأداء والتكلفة" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async">
+        </picture>
+        <figcaption>الصورة: <a href="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/09/ML-19758-featured-image.png" rel="nofollow noopener noreferrer">AWS Machine Learning Blog</a></figcaption>
+      </figure>
+
+      <aside class="rt-summary">
+        <h2>الخلاصة</h2>
+        <ul><li>مقارنة بين OpenSearch، Aurora PostgreSQL مع pgvector، و S3 Vectors</li><li>تحليل الأداء والتكلفة في حالات استخدام RAG</li><li>إطار عمل عملي لاختيار المخزن المناسب</li><li>تأثير اختيار المخزن على الترميز والتكلفة</li><li>دعم Amazon Bedrock Knowledge Bases للخيارات الجديدة مثل S3 Vectors</li></ul>
+      </aside>
+
+      <div class="rt-article-body">
+        <h2>مقدمة: دور المخازن البيانية في بنية RAG</h2><p>تُعتبر بنية استخراج التوليد المعزز (RAG) أحد الحلول الفعّالة لدمج قدرات نماذج اللغة الكبيرة (LLMs) مع أنظمة البحث عن المعلومات، مما يحسن الدقة والحداثة والملاءمة السياقية في المناهج. يعتمد هذا النهج على تحويل النصوص إلى متجهات رياضية تُخزّن في قواعد بيانات متجهات، حيث يُجرى البحث عبر مقارنة المعاني بدلاً من المطابقة الكلمية. وللمزيد من التفاصيل، يمكن الرجوع إلى <a href="https://aws.amazon.com/blogs/machine-learning/selecting-a-vector-store-for-amazon-bedrock-knowledge-bases/" rel="noopener noreferrer" target="_blank">AWS Machine Learning Blog</a>.</p><p>تلعب قاعدة المخازن البيانية المتجهة دور الجسر الأساسي بين البيانات الخام والفهم السياقي، حيث تُحوِّل البيانات غير المنظمة إلى مساحة معرفية قابلة للبحث، مما يسمح للنماذج بتقديم ردود أكثر دقة وصلة. وللمزيد من التفاصيل، يمكن الرجوع إلى <a href="https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-create.html" rel="noopener noreferrer" target="_blank">Amazon Bedrock Knowledge Bases</a>.</p><h2>لمحة عن خيارات Amazon Bedrock Knowledge Bases</h2><p>تقدم Amazon Bedrock Knowledge Bases خيارين: إصدارًا مدفوعًا بالكامل (fully managed) وخيارًا يُدار من قبل العميل حيث يُختار المخزن البياني المتجه. تركز هذه المقالة على المسار غير المدفوع، حيث تُقارن ثلاثة خلفيات مخزن متجهات مدعومة: <a href="https://aws.amazon.com/opensearch-service/" rel="noopener noreferrer" target="_blank">Amazon OpenSearch Service</a>، وAmazon Aurora PostgreSQL مع pgvector، و Amazon S3 Vectors. وللمزيد من التفاصيل، يمكن الرجوع إلى Amazon OpenSearch Service.</p><p>تُقدّم هذه المخازن حلولًا مختلفة تتوافق مع متطلبات التكلفة والأداء، مثل تحسين الفئات (E-commerce) أو تخزين البيانات الضخمة، مع توفير إطار عمل عملي لاختيار الأنسب.</p><figure class="rt-inline-media"><img src="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2024/01/18/2024-bedrock-kb-aurora-2.png" alt="خيارات إعداد قاعدة بيانات متجهات في Amazon Bedrock" width="1024" height="1024" loading="lazy" decoding="async"><figcaption>خيارات إعداد مخزن متجهات في واجهة Amazon Bedrock. · المصدر: <a href="https://aws.amazon.com/blogs/aws/knowledge-bases-for-amazon-bedrock-now-supports-amazon-aurora-postgresql-and-cohere-embedding-models/" rel="nofollow noopener noreferrer" target="_blank">AWS News Blog</a></figcaption></figure><h2>تحليل المخازن البيانية: OpenSearch، Aurora، و S3 Vectors</h2><p>يقدّم Amazon OpenSearch Service أداءً سريعًا عبر تخزين البيانات في الذاكرة، مع دعم البحث باستخدام k-NN وخيارات النشر المُدارة واللاًسويس. أما Aurora PostgreSQL مع pgvector فيجمع بين قدرات قاعدة البيانات العلائقية وإمكانات البحث عن التشابه عبر تنفيذ تداخلات متعددة (IVFFlat و HNSW). أخيرًا، يقدّم S3 Vectors تخزينًا اقتصاديًا للمتجهات مع استجابة في الوقت الفوري، خاصة في البيانات الضخمة.</p><p>تُظهر النتائج أن اختيار المخزن يعتمد على سياق التطبيق، مثل حجم البيانات، ومتطلبات الفئات (Filtering)، أو حجم الأبعاد (Vector Dimensions).</p><h2>حالة استخدام E-commerce: لماذا يُفضَّى OpenSearch؟</h2><p>في منصات التجارة الإلكترونية، تتطلب أدوات البحث عن المنتجات فهم الاستعلامات الطبيعية وقدرة توسعية عالية أثناء فترات الذروة، مع الحفاظ على روابط منخفضة (Low Latency). يُبرز Amazon OpenSearch Serverless ميزته في دمج البحث الدلالي مع المطابقة الكلمية عبر خاصية البحث المُدمج (Hybrid Search)، مما يسمح بتطبيق فلاتر معقدة مثل الفئات أو الأسعار.</p><p>كما يدعم OpenSearch Serverless خيارات تحسين مثل الضغط (Compression) وتحسين الفهرسة، مما يحقق استجابة في المائةات من المليثانية، بالإضافة إلى إمكانية اختيار مقاييس المسافة مثل التشابه الجيبي (Cosine) أو أوريثيدي (Euclidean).</p><figure class="rt-inline-media"><img src="https://d2908q01vomqb2.cloudfront.net/887309d048beef83ad3eabf2a79a64a389ab1c9f/2025/02/14/DBBLOG-4241-part1_self_managed_arch-1024x624.jpg" alt="بنية بحث متجهي تعتمد Amazon Aurora وAmazon Bedrock" width="1024" height="624" loading="lazy" decoding="async"><figcaption>مثال من AWS لبنية بحث متجهي تربط Aurora بخدمات الذكاء الاصطناعي. · المصدر: <a href="https://aws.amazon.com/blogs/database/self-managed-multi-tenant-vector-search-with-amazon-aurora-postgresql/" rel="nofollow noopener noreferrer" target="_blank">AWS Database Blog</a></figcaption></figure><h2>تحسينات OpenSearch Serverless وتحديات التكلفة</h2><p>تتيح إعدادات OpenSearch Serverless مزيجًا بين الأداء والتكلفة، حيث تُحدّد خاصية &#x27;Size of vector embeddings&#x27; توازنًا بين الدقة والموارد. كما تُقدّم خيارات مثل &#x27;Classic collections&#x27; تُحسّن استهلاك الذاكرة عبر ضغط البيانات، مع إمكانية ضبط معلمات FAISS لتحسين البحث.</p><p>تشير البيانات إلى أن استخدام NextGen collections (من إصدار 2026) قد يحسّن الأداء عبر دعم GPU وتخزين مُحسّن، لكنه لم يُدمج بالكامل مع واجهة Bedrock بعد.</p><h2>الخاتمة: إطار اختيار عملي للمخازن البيانية</h2><p>يُظهر التحليل أن اختيار المخزن البياني المناسب يعتمد على معايير مثل حجم البيانات، وتوقعات الوقت (Latency)، وتكلفة التخزين. فمثلاً، يُنصح باستخدام OpenSearch في حالات الحاجة إلى فلاتر معقدة وبحث سريع، بينما يُفضَّى Aurora PostgreSQL عند الحاجة إلى دمج البيانات المتجهة مع البيانات النسبية. أما S3 Vectors فيُعد خيارًا مثاليًا لتخزين البيانات الضخمة بتكلفة منخفضة.</p><p>يتضح من المقالة أن AWS تقدّم مسارًا مرنًا يدعم اختيار العملاء، مع توفير أدوات لضبط الأداء وفق احتياجات التطبيق.</p>
+        <h2>المصادر</h2>
+        <ul class="rt-source-list"><li><a href="https://aws.amazon.com/blogs/machine-learning/selecting-a-vector-store-for-amazon-bedrock-knowledge-bases/" rel="nofollow noopener noreferrer">AWS Machine Learning Blog</a><small>Selecting a vector store for Amazon Bedrock Knowledge Bases</small></li></ul>
+      </div>
+
+      <footer class="rt-article-footer">
+        <div class="rt-article-tags"><span>Amazon Bedrock</span><span>RAG</span><span>Vector Store</span><span>OpenSearch</span><span>Aurora PostgreSQL</span><span>S3 Vectors</span><span>AWS</span></div>
+        <p class="rt-source-note">صيغ هذا الخبر اعتمادًا على المصادر المدرجة أعلاه، مع فصل المعلومات المؤكدة عن ادعاءات الشركات أو التقديرات.</p>
+      </footer>
+    </article>
+<!-- SEO_RELATED_START -->
+<section class="rt-article-shell rt-related" aria-label="أخبار مرتبطة"><header class="rt-section-head"><div><h2>أخبار مرتبطة</h2><p>مواضيع أخرى مرتبطة قد تهمك.</p></div></header><div class="rt-feed"><a class="rt-feed-item" href="/forum/ar/apps/ubuntu-26-generally-available-and-latest-migration/"><div class="rt-feed-copy"><div class="rt-feed-kicker"><span>التطبيقات والبرامج</span></div><h3>GitHub تطرح Ubuntu 26.04 وتبدأ نقل ubuntu-latest</h3><p>أعلنت GitHub إتاحة صورة Ubuntu 26.04 رسميًا لـGitHub Actions، مع بدء نقل وسم ubuntu-latest تدريجيًا من 24.04 في أكتوبر المقبل.</p><div class="rt-feed-time">19 سبتمبر 2026</div></div><div class="rt-thumb"><img src="/forum/assets/posts/2026/09/ubuntu-26-generally-available-and-latest-migration/card.webp" alt="GitHub تطرح Ubuntu 26.04 وتبدأ نقل ubuntu-latest" width="800" height="450" loading="lazy" decoding="async"></div></a><a class="rt-feed-item" href="/forum/ar/apps/introducing-the-androidx-security-state-libraries-unified-view-of-device-security/"><div class="rt-feed-copy"><div class="rt-feed-kicker"><span>التطبيقات والبرامج</span></div><h3>غوغل تطلق مكتبات AndroidX Security State لأمن أندرويد</h3><p>أعلنت غوغل الإصدار المستقر من مكتبات AndroidX Security State لتقييم حماية أجهزة أندرويد ومتابعة التحديثات على مستوى المكونات.</p><div class="rt-feed-time">17 سبتمبر 2026</div></div><div class="rt-thumb"><img src="/forum/assets/posts/2026/09/introducing-the-androidx-security-state-libraries-unified-view-of-device-security/card.webp" alt="غوغل تطلق مكتبات AndroidX Security State لأمن أندرويد" width="800" height="450" loading="lazy" decoding="async"></div></a><a class="rt-feed-item" href="/forum/ar/ai/introducing-kimi-k3-on-amazon-bedrock/"><div class="rt-feed-copy"><div class="rt-feed-kicker"><span>الذكاء الاصطناعي</span></div><h3>إطلاق نموذج Kimi K3 من Moonshot AI عبر منصة Amazon Bedrock</h3><p>أطلقت AWS نموذج Kimi K3 من Moonshot AI عبر Amazon Bedrock، وهو أول نموذج مفتوح الأوزان بـ 2.8 تريليون بارامتر، ويدعم ذاكرة مؤقتة للمطالبات لتحسين الكفاءة.</p><div class="rt-feed-time">19 سبتمبر 2026</div></div><div class="rt-thumb"><img src="/forum/assets/posts/2026/09/introducing-kimi-k3-on-amazon-bedrock/card.webp" alt="إطلاق نموذج Kimi K3 من Moonshot AI عبر منصة Amazon Bedrock" width="800" height="450" loading="lazy" decoding="async"></div></a></div></section>
+<!-- SEO_RELATED_END -->
+
+  </main>
+
+  <footer class="rt-footer">
+    <div class="rt-shell rt-footer-grid">
+      <div class="rt-footer-brand"><strong>RDWAN Tech</strong><p>منصة تقنية عربية وإنجليزية ضمن rdwan.dev.</p></div>
+      <div><h3>عن المنصة</h3><div class="rt-footer-links"><a href="/forum/about/">عن RDWAN Tech</a><a href="/forum/editorial-policy/">السياسة التحريرية</a></div></div>
+      <div><h3>الثقة</h3><div class="rt-footer-links"><a href="/forum/corrections/">التصحيحات</a><a href="/forum/ai-policy/">سياسة AI</a></div></div>
+    </div>
+    <div class="rt-shell rt-copyright">© <span data-year></span> RDWAN Tech</div>
+  </footer>
+  <script src="../../../forum.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,356 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "caa079bc52c86f18f9cb",
+  "slug": "selecting-vector-store-for-amazon-bedrock-knowledge-bases",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/",
+    "en": "/forum/en/apps/selecting-vector-store-for-amazon-bedrock-knowledge-bases/"
+  },
+  "locales": {
+    "ar": {
+      "title": "اختيار مخزن الأبعاد لأجل Bedrock Knowledge Bases يحدد الأداء والتكلفة",
+      "description": "توضح مقالة من AWS Machine Learning Blog مقارنة بين خيارات OpenSearch، Aurora PostgreSQL مع pgvector، و S3 Vectors لتحديد الخيار الأنسب لتطبيقات RAG في Amazon Bedrock.",
+      "deck": "تسلط الضوء على مقارنة الأداء والتكلفة بين خيارات المخازن البيانية المدعومة من Amazon Bedrock Knowledge Bases.",
+      "summaryBullets": [
+        "مقارنة بين OpenSearch، Aurora PostgreSQL مع pgvector، و S3 Vectors",
+        "تحليل الأداء والتكلفة في حالات استخدام RAG",
+        "إطار عمل عملي لاختيار المخزن المناسب",
+        "تأثير اختيار المخزن على الترميز والتكلفة",
+        "دعم Amazon Bedrock Knowledge Bases للخيارات الجديدة مثل S3 Vectors"
+      ],
+      "sections": [
+        {
+          "heading": "مقدمة: دور المخازن البيانية في بنية RAG",
+          "paragraphs": [
+            {
+              "text": "تُعتبر بنية استخراج التوليد المعزز (RAG) أحد الحلول الفعّالة لدمج قدرات نماذج اللغة الكبيرة (LLMs) مع أنظمة البحث عن المعلومات، مما يحسن الدقة والحداثة والملاءمة السياقية في المناهج. يعتمد هذا النهج على تحويل النصوص إلى متجهات رياضية تُخزّن في قواعد بيانات متجهات، حيث يُجرى البحث عبر مقارنة المعاني بدلاً من المطابقة الكلمية. وللمزيد من التفاصيل، يمكن الرجوع إلى AWS Machine Learning Blog.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/selecting-a-vector-store-for-amazon-bedrock-knowledge-bases/"
+                }
+              ]
+            },
+            {
+              "text": "تلعب قاعدة المخازن البيانية المتجهة دور الجسر الأساسي بين البيانات الخام والفهم السياقي، حيث تُحوِّل البيانات غير المنظمة إلى مساحة معرفية قابلة للبحث، مما يسمح للنماذج بتقديم ردود أكثر دقة وصلة. وللمزيد من التفاصيل، يمكن الرجوع إلى Amazon Bedrock Knowledge Bases.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Knowledge Bases",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-create.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "لمحة عن خيارات Amazon Bedrock Knowledge Bases",
+          "paragraphs": [
+            {
+              "text": "تقدم Amazon Bedrock Knowledge Bases خيارين: إصدارًا مدفوعًا بالكامل (fully managed) وخيارًا يُدار من قبل العميل حيث يُختار المخزن البياني المتجه. تركز هذه المقالة على المسار غير المدفوع، حيث تُقارن ثلاثة خلفيات مخزن متجهات مدعومة: Amazon OpenSearch Service، وAmazon Aurora PostgreSQL مع pgvector، و Amazon S3 Vectors. وللمزيد من التفاصيل، يمكن الرجوع إلى Amazon OpenSearch Service.",
+              "links": [
+                {
+                  "text": "Amazon OpenSearch Service",
+                  "url": "https://aws.amazon.com/opensearch-service/"
+                }
+              ]
+            },
+            {
+              "text": "تُقدّم هذه المخازن حلولًا مختلفة تتوافق مع متطلبات التكلفة والأداء، مثل تحسين الفئات (E-commerce) أو تخزين البيانات الضخمة، مع توفير إطار عمل عملي لاختيار الأنسب.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحليل المخازن البيانية: OpenSearch، Aurora، و S3 Vectors",
+          "paragraphs": [
+            {
+              "text": "يقدّم Amazon OpenSearch Service أداءً سريعًا عبر تخزين البيانات في الذاكرة، مع دعم البحث باستخدام k-NN وخيارات النشر المُدارة واللاًسويس. أما Aurora PostgreSQL مع pgvector فيجمع بين قدرات قاعدة البيانات العلائقية وإمكانات البحث عن التشابه عبر تنفيذ تداخلات متعددة (IVFFlat و HNSW). أخيرًا، يقدّم S3 Vectors تخزينًا اقتصاديًا للمتجهات مع استجابة في الوقت الفوري، خاصة في البيانات الضخمة.",
+              "links": []
+            },
+            {
+              "text": "تُظهر النتائج أن اختيار المخزن يعتمد على سياق التطبيق، مثل حجم البيانات، ومتطلبات الفئات (Filtering)، أو حجم الأبعاد (Vector Dimensions).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حالة استخدام E-commerce: لماذا يُفضَّى OpenSearch؟",
+          "paragraphs": [
+            {
+              "text": "في منصات التجارة الإلكترونية، تتطلب أدوات البحث عن المنتجات فهم الاستعلامات الطبيعية وقدرة توسعية عالية أثناء فترات الذروة، مع الحفاظ على روابط منخفضة (Low Latency). يُبرز Amazon OpenSearch Serverless ميزته في دمج البحث الدلالي مع المطابقة الكلمية عبر خاصية البحث المُدمج (Hybrid Search)، مما يسمح بتطبيق فلاتر معقدة مثل الفئات أو الأسعار.",
+              "links": []
+            },
+            {
+              "text": "كما يدعم OpenSearch Serverless خيارات تحسين مثل الضغط (Compression) وتحسين الفهرسة، مما يحقق استجابة في المائةات من المليثانية، بالإضافة إلى إمكانية اختيار مقاييس المسافة مثل التشابه الجيبي (Cosine) أو أوريثيدي (Euclidean).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات OpenSearch Serverless وتحديات التكلفة",
+          "paragraphs": [
+            {
+              "text": "تتيح إعدادات OpenSearch Serverless مزيجًا بين الأداء والتكلفة، حيث تُحدّد خاصية 'Size of vector embeddings' توازنًا بين الدقة والموارد. كما تُقدّم خيارات مثل 'Classic collections' تُحسّن استهلاك الذاكرة عبر ضغط البيانات، مع إمكانية ضبط معلمات FAISS لتحسين البحث.",
+              "links": []
+            },
+            {
+              "text": "تشير البيانات إلى أن استخدام NextGen collections (من إصدار 2026) قد يحسّن الأداء عبر دعم GPU وتخزين مُحسّن، لكنه لم يُدمج بالكامل مع واجهة Bedrock بعد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الخاتمة: إطار اختيار عملي للمخازن البيانية",
+          "paragraphs": [
+            {
+              "text": "يُظهر التحليل أن اختيار المخزن البياني المناسب يعتمد على معايير مثل حجم البيانات، وتوقعات الوقت (Latency)، وتكلفة التخزين. فمثلاً، يُنصح باستخدام OpenSearch في حالات الحاجة إلى فلاتر معقدة وبحث سريع، بينما يُفضَّى Aurora PostgreSQL عند الحاجة إلى دمج البيانات المتجهة مع البيانات النسبية. أما S3 Vectors فيُعد خيارًا مثاليًا لتخزين البيانات الضخمة بتكلفة منخفضة.",
+              "links": []
+            },
+            {
+              "text": "يتضح من المقالة أن AWS تقدّم مسارًا مرنًا يدعم اختيار العملاء، مع توفير أدوات لضبط الأداء وفق احتياجات التطبيق.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "RAG",
+        "Vector Store",
+        "OpenSearch",
+        "Aurora PostgreSQL",
+        "S3 Vectors",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Bedrock Knowledge Bases",
+        "Amazon OpenSearch Service",
+        "Amazon Aurora PostgreSQL",
+        "pgvector",
+        "Amazon S3 Vectors",
+        "AWS Machine Learning Blog"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "19 سبتمبر 2026",
+      "modifiedLabel": "19 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 576
+    },
+    "en": {
+      "title": "AWS Details Vector Store Options for Bedrock Knowledge Bases",
+      "description": "Amazon Web Services compares OpenSearch, Aurora PostgreSQL, and S3 Vectors for RAG applications with benchmarks and selection guidance.",
+      "deck": "Amazon Web Services has published a detailed comparison of three vector store backends for Amazon Bedrock Knowledge Bases, offering performance benchmarks and a practical framework for selecting the right option across different retrieval-augmented generation use cases.",
+      "summaryBullets": [
+        "Amazon Bedrock Knowledge Bases supports three customer-managed vector stores: OpenSearch Service, Aurora PostgreSQL with pgvector, and S3 Vectors",
+        "OpenSearch Serverless recommended for ecommerce product search due to hybrid search and low-millisecond latency",
+        "S3 Vectors claims up to 90% storage cost reduction versus traditional vector databases",
+        "Aurora PostgreSQL with pgvector supports vectors up to 2,000 dimensions with multiple indexing methods",
+        "OpenSearch Serverless NextGen collections not yet compatible with Bedrock Knowledge Bases Retrieve API"
+      ],
+      "sections": [
+        {
+          "heading": "AWS Publishes Vector Store Selection Guide",
+          "paragraphs": [
+            {
+              "text": "Amazon Web Services has released a comprehensive comparison of vector store backends for Amazon Bedrock Knowledge Bases, targeting developers building retrieval-augmented generation (RAG) applications. The guidance focuses on the customer-managed configuration path, where users select their own vector database rather than using the fully managed option. For additional detail, see AWS Machine Learning Blog.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/selecting-a-vector-store-for-amazon-bedrock-knowledge-bases/"
+                }
+              ]
+            },
+            {
+              "text": "The analysis examines three supported backends: Amazon OpenSearch Service, Amazon Aurora PostgreSQL with pgvector, and Amazon S3 Vectors. Each option is evaluated across distinct RAG use cases with accompanying benchmarks, though specific numerical results were not disclosed in the announcement. For additional detail, see Amazon Bedrock Knowledge Bases.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Knowledge Bases",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-create.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Three Vector Store Architectures Compared",
+          "paragraphs": [
+            {
+              "text": "Amazon OpenSearch Service provides high-speed results from in-memory data, supporting both managed cluster and serverless deployment models. The service features k-nearest neighbor (k-NN) search and hybrid search that combines lexical and vector approaches. Bedrock Knowledge Bases supports both OpenSearch Managed Clusters and OpenSearch Serverless as backends. For additional detail, see Amazon OpenSearch Service.",
+              "links": [
+                {
+                  "text": "Amazon OpenSearch Service",
+                  "url": "https://aws.amazon.com/opensearch-service/"
+                }
+              ]
+            },
+            {
+              "text": "Amazon Aurora PostgreSQL with pgvector integrates the relational database capabilities of Aurora with pgvector's similarity search functionality. It supports multiple indexing methods including IVFFlat and HNSW, various distance metrics such as L2, cosine, and inner product, and handles vectors up to 2,000 dimensions in single precision.",
+              "links": []
+            },
+            {
+              "text": "Amazon S3 Vectors adds native vector support to the AWS object storage service, designed for cost-effective storage and querying of embeddings at scale. AWS states the service delivers sub-second query performance for similarity searches while reducing vector storage costs by up to 90 percent compared to traditional vector databases.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Ecommerce Product Search Use Case",
+          "paragraphs": [
+            {
+              "text": "For ecommerce platforms requiring natural language product search across large catalogs with high concurrent query volumes, AWS recommends Amazon OpenSearch Serverless. The service's hybrid search capabilities combine semantic understanding with traditional keyword matching, which the company says is valuable for product catalog scenarios.",
+              "links": []
+            },
+            {
+              "text": "OpenSearch Serverless handles vector search with query latency in the low milliseconds range. Built-in support for complex filtering and aggregations powers faceted navigation such as filtering by price, brand, or color. Multiple distance metrics including cosine similarity and Euclidean distance allow fine-tuning of product similarity calculations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "OpenSearch Performance Optimization Details",
+          "paragraphs": [
+            {
+              "text": "The AWS post details several configuration options for OpenSearch Serverless Classic collections that affect vector index performance and cost. Vector embedding size presents a trade-off: larger vectors contain more semantic information but increase resource consumption.",
+              "links": []
+            },
+            {
+              "text": "Compression and quantization options are available to balance cost and search quality. The benchmarks referenced in the guidance were conducted on Serverless Classic collections, which require explicit configuration of engine, mode, and HNSW parameters. Managed Clusters offer additional tuning options including auto-optimize, GPU-accelerated indexing, and configurable instance sizing that may produce different results.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "NextGen Collections and Availability Notes",
+          "paragraphs": [
+            {
+              "text": "Amazon OpenSearch Serverless NextGen collections became generally available in May 2026 but are not yet compatible with the Amazon Bedrock Knowledge Bases Retrieve API. NextGen simplifies index creation by removing engine and mode parameters from index mappings, defaults to 32× compression with GPU-accelerated index builds, and supports scale-to-zero functionality.",
+              "links": []
+            },
+            {
+              "text": "For broader guidance across all AWS vector solutions, the company references additional resources including \"AWS vector solutions: Build agentic AI where your data lives,\" \"The role of vector datastores in generative AI applications,\" and \"Choosing an AWS vector database for RAG use cases.\"",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "RAG Architecture Context",
+          "paragraphs": [
+            {
+              "text": "The guidance situates vector stores within the broader RAG architecture, where documents are chunked, embedded, and stored during ingestion. At query time, user queries are converted to vector embeddings, similar chunks are retrieved from the vector database, and passed to a large language model as context for response generation.",
+              "links": []
+            },
+            {
+              "text": "The vector database serves as the bridge between raw information and contextual understanding, transforming unstructured data into a searchable, semantically meaningful knowledge space. Vector indexes enable rapid, high-dimensional semantic searches and near-instantaneous retrieval of semantically similar information.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Knowledge Bases",
+        "Vector Database",
+        "RAG",
+        "OpenSearch",
+        "Aurora PostgreSQL",
+        "S3 Vectors"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock Knowledge Bases",
+        "Amazon OpenSearch Service",
+        "Amazon Aurora PostgreSQL",
+        "Amazon S3 Vectors",
+        "pgvector"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "September 19, 2026",
+      "modifiedLabel": "September 19, 2026",
+      "readMinutes": 4,
+      "wordCount": 741
+    }
+  },
+  "datePublished": "2026-09-19T22:18:30.138939+03:00",
+  "dateModified": "2026-09-19T22:18:30.138939+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/hero.webp",
+    "card": "/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/card.webp",
+    "social": "/forum/assets/posts/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases/social.jpg",
+    "alt": {
+      "ar": "اختيار مخزن الأبعاد لأجل Bedrock Knowledge Bases يحدد الأداء والتكلفة",
+      "en": "AWS Details Vector Store Options for Bedrock Knowledge Bases"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/09/ML-19758-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2024/01/18/2024-bedrock-kb-aurora-2.png",
+        "width": 1024,
+        "height": 1024,
+        "alt": {
+          "ar": "خيارات إعداد قاعدة بيانات متجهات في Amazon Bedrock",
+          "en": "Vector database setup options in Amazon Bedrock"
+        },
+        "caption": {
+          "ar": "خيارات إعداد مخزن متجهات في واجهة Amazon Bedrock.",
+          "en": "Vector store setup options in the Amazon Bedrock console."
+        },
+        "credit": "AWS News Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/aws/knowledge-bases-for-amazon-bedrock-now-supports-amazon-aurora-postgresql-and-cohere-embedding-models/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2024/01/18/2024-bedrock-kb-aurora-2.png"
+      },
+      {
+        "src": "https://d2908q01vomqb2.cloudfront.net/887309d048beef83ad3eabf2a79a64a389ab1c9f/2025/02/14/DBBLOG-4241-part1_self_managed_arch-1024x624.jpg",
+        "width": 1024,
+        "height": 624,
+        "alt": {
+          "ar": "بنية بحث متجهي تعتمد Amazon Aurora وAmazon Bedrock",
+          "en": "Vector search architecture using Amazon Aurora and Amazon Bedrock"
+        },
+        "caption": {
+          "ar": "مثال من AWS لبنية بحث متجهي تربط Aurora بخدمات الذكاء الاصطناعي.",
+          "en": "An AWS example of a vector-search architecture connecting Aurora with AI services."
+        },
+        "credit": "AWS Database Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/database/self-managed-multi-tenant-vector-search-with-amazon-aurora-postgresql/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/887309d048beef83ad3eabf2a79a64a389ab1c9f/2025/02/14/DBBLOG-4241-part1_self_managed_arch-1024x624.jpg"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/selecting-a-vector-store-for-amazon-bedrock-knowledge-bases/",
+      "type": "official",
+      "title": "Selecting a vector store for Amazon Bedrock Knowledge Bases"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/selecting-a-vector-store-for-amazon-bedrock-knowledge-bases",
+  "sourceTitle": "Selecting a vector store for Amazon Bedrock Knowledge Bases",
+  "trendScore": 97.28,
+  "verification": {
+    "confidence": 1,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-19T19:18:30+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/selecting-vector-store-for-amazon-bedrock-knowledge-bases.json"
+}
