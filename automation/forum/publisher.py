@@ -57,16 +57,74 @@ def _slugify(title: str, fallback: str) -> str:
     return slug[:92] if slug else f"story-{fallback[:12]}"
 
 
+def _paragraph_text(paragraph) -> str:
+    if isinstance(paragraph, dict):
+        return str(paragraph.get("text") or "").strip()
+    return str(paragraph or "").strip()
+
+
+def _paragraph_links(paragraph) -> list[dict]:
+    if not isinstance(paragraph, dict):
+        return []
+    links = paragraph.get("links")
+    return links if isinstance(links, list) else []
+
+
 def _word_count(article: dict) -> int:
     parts = [str(article.get("deck", ""))]
     parts.extend(str(x) for x in article.get("summary_bullets", []))
     for section in article.get("sections", []):
         parts.append(str(section.get("heading", "")))
-        parts.extend(str(x) for x in section.get("paragraphs", []))
+        parts.extend(_paragraph_text(x) for x in section.get("paragraphs", []))
     return len(re.findall(r"\S+", " ".join(parts)))
 
 
-def _quality_gate_locale(locale: str, article: dict) -> list[str]:
+def _inline_link_count(article: dict) -> int:
+    count = 0
+    for section in article.get("sections", []):
+        for paragraph in section.get("paragraphs", []):
+            count += len(_paragraph_links(paragraph))
+    return count
+
+
+def _allowed_link_urls(sources: list[dict]) -> set[str]:
+    allowed = set()
+    for source in sources:
+        url = str(source.get("url") or "").strip()
+        if url.startswith(("http://", "https://")):
+            allowed.add(url)
+        for item in source.get("link_candidates") or []:
+            link_url = str(item.get("url") or "").strip()
+            if link_url.startswith(("http://", "https://")):
+                allowed.add(link_url)
+    return allowed
+
+
+def _normalize_sections(article: dict) -> list[dict]:
+    normalized = []
+    for section in article.get("sections", []):
+        if not isinstance(section, dict):
+            continue
+        paragraphs = []
+        for paragraph in section.get("paragraphs", []):
+            if isinstance(paragraph, dict):
+                text = _paragraph_text(paragraph)
+                links = []
+                for link in _paragraph_links(paragraph):
+                    if not isinstance(link, dict):
+                        continue
+                    label = str(link.get("text") or "").strip()
+                    url = str(link.get("url") or "").strip()
+                    if label and url:
+                        links.append({"text": label, "url": url})
+                paragraphs.append({"text": text, "links": links})
+            else:
+                paragraphs.append(str(paragraph))
+        normalized.append({"heading": str(section.get("heading") or "").strip(), "paragraphs": paragraphs})
+    return normalized
+
+
+def _quality_gate_locale(locale: str, article: dict, allowed_urls: set[str] | None = None, minimum_inline_links: int = 0) -> list[str]:
     errors = []
     title = str(article.get("title", "")).strip()
     description = str(article.get("description", "")).strip()
@@ -85,6 +143,32 @@ def _quality_gate_locale(locale: str, article: dict) -> list[str]:
         errors.append(f"{locale}:article_too_short")
     if any(not isinstance(section, dict) or not section.get("heading") or not section.get("paragraphs") for section in sections):
         errors.append(f"{locale}:malformed_sections")
+    inline_count = 0
+    malformed_inline = False
+    allowed_urls = allowed_urls or set()
+    for section in sections if isinstance(sections, list) else []:
+        if not isinstance(section, dict):
+            continue
+        for paragraph in section.get("paragraphs", []):
+            text = _paragraph_text(paragraph)
+            for link in _paragraph_links(paragraph):
+                if not isinstance(link, dict):
+                    malformed_inline = True
+                    continue
+                label = str(link.get("text") or "").strip()
+                url = str(link.get("url") or "").strip()
+                if not label or not url.startswith(("http://", "https://")) or label not in text:
+                    malformed_inline = True
+                    continue
+                if allowed_urls and url not in allowed_urls:
+                    malformed_inline = True
+                    continue
+                inline_count += 1
+    if minimum_inline_links > 0 and inline_count < minimum_inline_links:
+        errors.append(f"{locale}:inline_links")
+    if malformed_inline:
+        errors.append(f"{locale}:malformed_inline_links")
+
     forbidden = ["كمساعد", "لا أستطيع التحقق", "حسب معلوماتي", "as an ai", "i cannot verify", "i can't verify"]
     joined = json.dumps(article, ensure_ascii=False).lower()
     if any(phrase in joined for phrase in forbidden):
@@ -92,14 +176,17 @@ def _quality_gate_locale(locale: str, article: dict) -> list[str]:
     return errors
 
 
-def _quality_gate(story: dict, sources: list[dict], editions: dict) -> tuple[bool, list[str]]:
+def _quality_gate(story: dict, sources: list[dict], editions: dict, settings: dict | None = None) -> tuple[bool, list[str]]:
     errors = []
+    settings = settings or {}
+    allowed_urls = _allowed_link_urls(sources)
+    minimum_inline_links = max(0, int(settings.get("minimumInlineLinks", 0)))
     for locale in ("ar", "en"):
         article = editions.get(locale)
         if not isinstance(article, dict):
             errors.append(f"{locale}:missing_edition")
             continue
-        errors.extend(_quality_gate_locale(locale, article))
+        errors.extend(_quality_gate_locale(locale, article, allowed_urls, minimum_inline_links))
 
     usable = [source for source in sources if source.get("ok") and (source.get("text") or source.get("feed_summary"))]
     primary_official = story.get("source", {}).get("type") == "official"
@@ -146,7 +233,7 @@ def _generate_qualified_editions(
             feedback = last_errors
             continue
 
-        ok, errors = _quality_gate(story, source_pack, editions)
+        ok, errors = _quality_gate(story, source_pack, editions, settings)
         attempts.append({
             "attempt": attempt_number,
             "status": "passed" if ok else "quality_rejected",
@@ -188,7 +275,7 @@ def _locale_record(article: dict, locale: str, category_slug: str, now: datetime
         "description": str(article.get("description", "")).strip(),
         "deck": str(article.get("deck", "")).strip(),
         "summaryBullets": [str(x).strip() for x in article.get("summary_bullets", []) if str(x).strip()],
-        "sections": article.get("sections", []),
+        "sections": _normalize_sections(article),
         "tags": [str(x).strip() for x in article.get("tags", []) if str(x).strip()][:8],
         "entities": [str(x).strip() for x in article.get("entities", []) if str(x).strip()][:12],
         "category": (AR_CATEGORIES if locale == "ar" else EN_CATEGORIES).get(category_slug, category_slug),
@@ -204,7 +291,7 @@ def _make_content_record(story: dict, editions: dict, source_pack: list[dict], s
     ar = _locale_record(editions["ar"], "ar", category_slug, now)
     en = _locale_record(editions["en"], "en", category_slug, now)
     return {
-        "schemaVersion": 2,
+        "schemaVersion": 3,
         "template": "article",
         "id": story.get("id"),
         "slug": slug,
@@ -231,6 +318,7 @@ def _make_content_record(story: dict, editions: dict, source_pack: list[dict], s
             "mode": "automated-bilingual",
             "contentSource": "structured-json",
             "languages": ["ar", "en"],
+            "features": ["inline-links", "inline-images"],
         },
     }
 
@@ -432,6 +520,8 @@ def main(ignore_cooldown: bool = False) -> int:
         trend_score=record["trendScore"], word_count_ar=record["locales"]["ar"]["wordCount"],
         word_count_en=record["locales"]["en"]["wordCount"], source_count=len(record["sources"]),
         image_source=record["images"].get("sourceUrl"), image_fallback=record["images"].get("generatedFallback"),
+        inline_image_count=len(record["images"].get("inline") or []),
+        inline_links_ar=_inline_link_count(editions.get("ar", {})), inline_links_en=_inline_link_count(editions.get("en", {})),
         generation_attempts=selected_attempts, candidates_considered=candidate_reports,
         template="forum/templates/article.html",
     )
