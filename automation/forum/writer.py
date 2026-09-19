@@ -26,13 +26,121 @@ def _meta_content(soup: BeautifulSoup, *queries: tuple[str, str]) -> str:
     return ""
 
 
+BAD_MEDIA_TOKENS = (
+    "logo", "favicon", "icon", "avatar", "sprite", "badge", "emoji", "tracking", "pixel",
+    "author", "profile", "newsletter", "advert", "ads/", "banner-cookie",
+)
+
+
+def _positive_int(value) -> int:
+    try:
+        return max(0, int(str(value or "").strip()))
+    except (TypeError, ValueError):
+        return 0
+
+
+def _srcset_best(value: str | None) -> str:
+    best_url = ""
+    best_score = -1
+    for item in str(value or "").split(","):
+        bits = item.strip().split()
+        if not bits:
+            continue
+        url = bits[0].strip()
+        score = 0
+        if len(bits) > 1:
+            descriptor = bits[-1].lower()
+            try:
+                if descriptor.endswith("w"):
+                    score = int(float(descriptor[:-1]))
+                elif descriptor.endswith("x"):
+                    score = int(float(descriptor[:-1]) * 1000)
+            except ValueError:
+                score = 0
+        if score >= best_score:
+            best_score = score
+            best_url = url
+    return best_url
+
+
+def _clean_http_url(base_url: str, value: str | None) -> str:
+    value = str(value or "").strip()
+    if not value or value.startswith(("data:", "blob:", "javascript:", "mailto:", "#")):
+        return ""
+    absolute = urljoin(base_url, value)
+    if not absolute.startswith(("http://", "https://")):
+        return ""
+    return absolute
+
+
+def _extract_media_candidates(root, base_url: str, limit: int = 16) -> list[dict]:
+    items = []
+    seen = set()
+    for img in root.find_all("img"):
+        raw = (
+            img.get("data-src")
+            or img.get("data-original")
+            or img.get("data-lazy-src")
+            or _srcset_best(img.get("srcset"))
+            or img.get("src")
+        )
+        url = _clean_http_url(base_url, raw)
+        low = url.lower()
+        if not url or url in seen or any(token in low for token in BAD_MEDIA_TOKENS):
+            continue
+
+        width = _positive_int(img.get("width"))
+        height = _positive_int(img.get("height"))
+        alt = _clean_text(img.get("alt") or img.get("title") or "")
+        caption = ""
+        figure = img.find_parent("figure")
+        if figure:
+            figcaption = figure.find("figcaption")
+            if figcaption:
+                caption = _clean_text(figcaption.get_text(" ", strip=True))
+        if not caption:
+            caption = _clean_text(img.get("data-caption") or "")
+        if width and height and (width < 480 or height < 240):
+            continue
+
+        seen.add(url)
+        items.append({
+            "url": url,
+            "alt": alt[:220],
+            "caption": caption[:320],
+            "width": width,
+            "height": height,
+        })
+        if len(items) >= limit:
+            break
+    return items
+
+
+def _extract_link_candidates(root, base_url: str, limit: int = 18) -> list[dict]:
+    items = []
+    seen = set()
+    for anchor in root.find_all("a", href=True):
+        label = _clean_text(anchor.get_text(" ", strip=True))
+        url = _clean_http_url(base_url, anchor.get("href"))
+        if not url or not label or len(label) < 2 or len(label) > 90:
+            continue
+        key = (label.casefold(), url)
+        if key in seen:
+            continue
+        seen.add(key)
+        items.append({"text": label, "url": url})
+        if len(items) >= limit:
+            break
+    return items
+
+
 def _extract_page(url: str, user_agent: str) -> dict:
     headers = {"User-Agent": user_agent, "Accept": "text/html,application/xhtml+xml"}
     try:
         response = requests.get(url, headers=headers, timeout=18, allow_redirects=True)
         response.raise_for_status()
     except Exception as exc:
-        return {"url": url, "ok": False, "error": str(exc), "text": "", "image_url": ""}
+        return {"url": url, "ok": False, "error": str(exc), "text": "", "image_url": "", "images": [], "link_candidates": []}
 
     soup = BeautifulSoup(response.text, "html.parser")
     title = _clean_text((soup.title.string if soup.title and soup.title.string else ""))
@@ -63,6 +171,9 @@ def _extract_page(url: str, user_agent: str) -> dict:
             candidates.append(node)
     root = max(candidates, key=lambda n: len(n.get_text(" ", strip=True)), default=soup.body or soup)
 
+    inline_images = _extract_media_candidates(root, response.url)
+    link_candidates = _extract_link_candidates(root, response.url)
+
     paragraphs = []
     for p in root.find_all(["p", "li", "h2", "h3"]):
         text = _clean_text(p.get_text(" ", strip=True))
@@ -81,6 +192,8 @@ def _extract_page(url: str, user_agent: str) -> dict:
         "image_url": image_url,
         "image_width": image_width,
         "image_height": image_height,
+        "images": inline_images,
+        "link_candidates": link_candidates,
     }
 
 
@@ -327,7 +440,12 @@ def _source_text(usable: list[dict]) -> str:
             f"SOURCE {index}\nName: {src.get('name')}\nType: {src.get('kind')}\nURL: {src.get('url')}\n"
             f"Feed title: {src.get('feed_title', '')}\nFeed summary: {src.get('feed_summary', '')}\n"
             f"Page title: {src.get('title', '')}\nPage description: {src.get('description', '')}\n"
-            f"Extracted text:\n{src.get('text', '')[:7000]}"
+            f"Allowed link targets (use ONLY these exact URLs for inline links):\n"
+            + "\n".join(
+                [f"- {src.get('name')}: {src.get('url')}"]
+                + [f"- {item.get('text')}: {item.get('url')}" for item in (src.get('link_candidates') or [])[:10]]
+            )
+            + f"\nExtracted text:\n{src.get('text', '')[:7000]}"
         )
     return "\n\n".join(blocks)
 
@@ -346,6 +464,8 @@ def _retry_guidance(locale: str, feedback: list[str] | None) -> str:
         "article_too_short": "The previous draft was too short. Produce at least 650 words and make each section substantively useful without padding or repetition.",
         "malformed_sections": "Every section must have a non-empty heading and one or more non-empty paragraphs.",
         "model_meta_language": "Remove model/meta commentary and write only publication-ready journalism.",
+        "inline_links": "Add at least 2 natural inline link placements in the article body. Use only exact URLs listed in Allowed link targets and attach links to meaningful source, company, product, or report names.",
+        "malformed_inline_links": "Every inline link must contain non-empty text and an exact http(s) URL from the supplied allowed link targets.",
         "missing_edition": "Return the complete requested language edition.",
     }
     instructions = [hints.get(code, f"Correct the failed quality check: {code}.") for code in relevant]
@@ -374,14 +494,14 @@ def _write_locale(story: dict, usable: list[dict], locale: str, settings: dict, 
   "description":"وصف SEO دقيق وجذاب من 115-155 حرفاً يشرح الخبر بلا حشو",
   "deck":"مقدمة قصيرة من جملة أو جملتين",
   "summary_bullets":["3 إلى 5 نقاط"],
-  "sections":[{{"heading":"عنوان قسم","paragraphs":["فقرة","فقرة"]}}],
+  "sections":[{{"heading":"عنوان قسم","paragraphs":[{{"text":"فقرة صحفية طبيعية تتضمن عند الحاجة اسم مصدر أو شركة","links":[{{"text":"اسم المصدر أو الكيان كما يظهر حرفياً في text","url":"رابط مسموح به حرفياً من Allowed link targets"}}]}}]}}],
   "tags":["4 إلى 8 وسوم"],
   "entities":["الكيانات الرئيسية"],
   "article_type":"news",
   "confidence_note":"ملاحظة داخلية قصيرة"
 }}
 
-الشروط: 650-1000 كلمة عربية، 4-7 أقسام، لغة صحفية تقنية طبيعية، ضع اسم الشركة أو المنتج والحدث الأساسي مبكرًا في العنوان، تجنب العناوين العامة والـClickbait، فرّق بين الحقائق وما تعلنه الشركات، لا تستخدم رأياً شخصياً، لا تضف روابط داخل الفقرات، ولا تنقل جملاً طويلة حرفياً.{retry_guidance}
+الشروط: 650-1000 كلمة عربية، 4-7 أقسام، لغة صحفية تقنية طبيعية، ضع اسم الشركة أو المنتج والحدث الأساسي مبكرًا في العنوان، تجنب العناوين العامة والـClickbait، فرّق بين الحقائق وما تعلنه الشركات، لا تستخدم رأياً شخصياً، ولا تنقل جملاً طويلة حرفياً. اجعل كل فقرة كائناً يحوي text وlinks. أدرج 2-4 روابط مضمّنة طبيعية داخل متن المقال على الأقل، ويفضل توزيعها على أقسام مختلفة. يجب أن يكون نص الرابط موجوداً حرفياً داخل text وأن يكون url مطابقاً تماماً لأحد Allowed link targets أعلاه. لا تخترع أي رابط ولا تضع الرابط خاماً في النص.{retry_guidance}
 """.strip()
     else:
         prompt = f"""
@@ -400,14 +520,14 @@ Return valid JSON only:
   "description":"Accurate compelling SEO description of 120-155 characters",
   "deck":"One or two concise opening sentences",
   "summary_bullets":["3 to 5 concise points"],
-  "sections":[{{"heading":"Section heading","paragraphs":["Paragraph","Paragraph"]}}],
+  "sections":[{{"heading":"Section heading","paragraphs":[{{"text":"Natural news paragraph that can mention a source, company, product or report","links":[{{"text":"Exact anchor text as it appears in text","url":"Exact URL copied from Allowed link targets"}}]}}]}}],
   "tags":["4 to 8 useful tags or entity names"],
   "entities":["Main companies, products or technologies"],
   "article_type":"news",
   "confidence_note":"Short internal note about source confidence"
 }}
 
-Requirements: 650-1000 English words, 4-7 useful sections, professional technology-news style, put the primary entity and news action early in the headline, avoid clickbait and vague headlines, clearly attribute company claims when appropriate, no first-person opinion, no links inside paragraphs, and no long copied passages.{retry_guidance}
+Requirements: 650-1000 English words, 4-7 useful sections, professional technology-news style, put the primary entity and news action early in the headline, avoid clickbait and vague headlines, clearly attribute company claims when appropriate, no first-person opinion, and no long copied passages. Every paragraph must be an object with text and links. Add at least 2-4 natural inline link placements across the article body, preferably in different sections. Each link text must appear verbatim in the paragraph text, and each URL must exactly match one of the Allowed link targets above. Never invent a URL and never paste raw URLs into prose.{retry_guidance}
 """.strip()
 
     article = _call_model(prompt, settings)
