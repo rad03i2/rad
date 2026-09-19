@@ -64,6 +64,62 @@ class PublisherQualityTests(unittest.TestCase):
         ok, errors = _quality_gate(self._story(), self._sources(), self._editions())
         self.assertTrue(ok, errors)
 
+    def test_inline_links_are_required_when_configured(self):
+        story = self._story()
+        source_url = story["url"]
+        editions = self._editions()
+        for locale in ("ar", "en"):
+            first = editions[locale]["sections"][0]["paragraphs"][0]
+            second = editions[locale]["sections"][1]["paragraphs"][0]
+            editions[locale]["sections"][0]["paragraphs"][0] = {
+                "text": f"{first} Example source confirms the announcement.",
+                "links": [{"text": "Example source", "url": source_url}],
+            }
+            editions[locale]["sections"][1]["paragraphs"][0] = {
+                "text": f"{second} Example report provides the technical details.",
+                "links": [{"text": "Example report", "url": source_url}],
+            }
+        ok, errors = _quality_gate(
+            story,
+            self._sources(),
+            editions,
+            {"minimumInlineLinks": 2},
+        )
+        self.assertTrue(ok, errors)
+
+        no_links = self._editions()
+        ok, errors = _quality_gate(
+            story,
+            self._sources(),
+            no_links,
+            {"minimumInlineLinks": 2},
+        )
+        self.assertFalse(ok)
+        self.assertIn("ar:inline_links", errors)
+        self.assertIn("en:inline_links", errors)
+
+    def test_inline_link_url_must_come_from_source_pack(self):
+        story = self._story()
+        editions = self._editions()
+        for locale in ("ar", "en"):
+            editions[locale]["sections"][0]["paragraphs"][0] = {
+                "text": "Example source explains the release in detail.",
+                "links": [{"text": "Example source", "url": "https://untrusted.example/fake"}],
+            }
+            editions[locale]["sections"][1]["paragraphs"][0] = {
+                "text": "Example source also describes the rollout.",
+                "links": [{"text": "Example source", "url": "https://untrusted.example/fake"}],
+            }
+        ok, errors = _quality_gate(
+            story,
+            self._sources(),
+            editions,
+            {"minimumInlineLinks": 2},
+        )
+        self.assertFalse(ok)
+        self.assertIn("ar:malformed_inline_links", errors)
+        self.assertIn("en:malformed_inline_links", errors)
+
     def test_trusted_single_source_journalism_passes_source_gate(self):
         story = self._story()
         story["source"] = {"type": "journalism"}
