@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from common import ROOT, load_json
-from renderer import render_content_file
+from common import load_json
+from renderer import ROOT as REPO_ROOT, render_content_file
 
-CONTENT = ROOT / "forum" / "content"
+CONTENT = REPO_ROOT / "forum" / "content"
 
 
 def main() -> int:
