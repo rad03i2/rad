@@ -1,0 +1,384 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "39325f0179a7e74752bf",
+  "slug": "serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/",
+    "en": "/forum/en/web/serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/"
+  },
+  "locales": {
+    "ar": {
+      "title": "AWS تطلق لوحة مقاييس Git باستخدام Amazon QuickSight",
+      "description": "يشرح المقال كيفية بناء خط أنابيب خالٍ من الخوادم يجمع مقاييس Git من GitHub وGitLab ويعرضها في لوحات Amazon QuickSight التفاعلية، مما يوفر تحليلات شبه فورية بتكلفة منخفضة.",
+      "deck": "توفر لوحة التحكم الجديدة من AWS نظرة فورية على نشاط Git عبر المستودعات، مما يساعد الفرق على قياس الإنتاجية والكشف عن التغييرات بسرعة.",
+      "summaryBullets": [
+        "خط أنابيب خالٍ من الخوادم يجمع مقاييس Git تلقائياً من GitHub وGitLab.",
+        "يستخدم Amazon QuickSight لإنشاء لوحات تحكم تفاعلية توفر تحليلات شبه فورية.",
+        "يدعم المستودعات المتعددة مع التجميع التكيّفي وتحميل البيانات الكامل والتزايدي.",
+        "يقلل التكلفة ويوفر قابلية توسع عالية مع إدارة البنية التحتية عبر خدمات AWS مثل EventBridge وStep Functions وLambda."
+      ],
+      "sections": [
+        {
+          "heading": "ما هي لوحة مقاييس Git الخالية من الخوادم؟",
+          "paragraphs": [
+            {
+              "text": "تتيح لوحة التحكم التي قدمتها AWS، كما هو موضح في [AWS Machine Learning Blog](https://aws.amazon.com/blogs/machine-learning/a-serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/), الفرق الهندسية جمع مقاييس نشاط Git بشكل مستمر دون الحاجة إلى إدارة الخوادم. يقوم خط الأنابيب تلقائياً بسحب بيانات الدفع، وطلبات السحب، والقضايا، وتغييرات المساهمين من GitHub وGitLab، وتخزينها في Amazon S3، ثم عرضها في لوحات Amazon QuickSight التفاعلية. وهذا يوفر للفرق رؤية فورية حول سرعة التطوير، والاستعداد للإصدارات، وأنماط التعاون عبر المستودعات.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/a-serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "كيف يعمل خط الأنابيب؟",
+          "paragraphs": [
+            {
+              "text": "يعتمد الحل على ست خدمات أساسية من AWS لبناء عملية دفع مدفوعة بالأحداث. تبدأ [Amazon EventBridge Scheduler](https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html) الجدول الزمني الذي يشغل سير العمل على فترات محددة مسبقاً. تقوم آلة حالة [AWS Step Functions](https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html) بتنسيق التدفق بالكامل: تبدأ بكاشف التغييرات، ثم تقرر بين التحميل الكامل أو التزايدي، وتقوم بتقسيم المستودعات إلى أجزاء متوازية باستخدام حالة خريطة Step Functions عندما يتجاوز العدد عتبة التجميع (افتراضياً 20). تقوم دوال Lambda بتنفيذ عمليات الكشف عن التغييرات وجمع المقاييس، بينما تخزن Amazon S3 النتائج المشفرة والمُصدَّقة. وأخيراً، يقوم Amazon QuickSight بقراءة بيانات CSV من S3 أو عبر Amazon Athena لإنشاء لوحات تحكم تفاعلية.",
+              "links": [
+                {
+                  "text": "Amazon EventBridge Scheduler",
+                  "url": "https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html"
+                },
+                {
+                  "text": "AWS Step Functions",
+                  "url": "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html"
+                },
+                {
+                  "text": "Amazon QuickSight",
+                  "url": "https://aws.amazon.com/quick/quicksight/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الميزات الرئيسية: الكشف الذكي عن التغييرات والتجميع التكيّفي",
+          "paragraphs": [
+            {
+              "text": "يراقب كاشف التغييرات، وهو دالة Lambda تُسمى github-change-detector، خلاصات نشاط GitHub وGitLab بحثاً عن الدفعات، وطلبات السحب، والقضايا، وإنشاء المستودعات أو حذفها، وتغييرات المساهمين. إذا لم يتم اكتشاف أي أحداث ذات صلة منذ الفحص الأخير، يتم إنهاء سير العمل مبكراً لتوفير الموارد. وبالنسبة للمنظمات التي تدير أكثر من 20 مستودعاً، تقوم الميزة التلقائية للتجميع بتقسيم عبء العمل إلى أجزاء متوازية ومعالجة كل جزء بشكل مستقل باستخدام حالة خريطة Step Functions، مما يضمن قابلية التوسع دون تدخل يدوي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خطوات التنفيذ",
+          "paragraphs": [
+            {
+              "text": "لبدء الاستخدام، تحتاج إلى حساب AWS نشط مع أذونات مناسبة. أنشئ stack CloudFormation باستخدام القالب المقدم، والذي ينشئ جميع الموارد المطلوبة تلقائياً. قم بتكوين جدول زمني باستخدام تعبير rate() أو cron() في CloudFormation لتحديد تكرار جمع البيانات. بعد النشر، قم بتشغيل المجموعة الأولى لجمع البيانات بالكامل، ثم اسمح للتشغيل اللاحق باستخدام المنطق التزايدي الذي يجلب التغييرات فقط. يمكنك مراقبة سير العمل عبر لوحة تحكم CloudWatch، وتعديل عتبة التجميع، أو ربط لوحات QuickSight بلوحات التحكم الحالية الخاصة بك. يدعم الحل التكامل مع مستودعات [GitHub](https://github.com/) و[GitLab](https://about.gitlab.com/).",
+              "links": [
+                {
+                  "text": "GitHub",
+                  "url": "https://github.com/"
+                },
+                {
+                  "text": "GitLab",
+                  "url": "https://about.gitlab.com/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الفوائد واعتبارات التكلفة",
+          "paragraphs": [
+            {
+              "text": "من خلال التخلص من الخوادم، تدفع فقط مقابل الموارد التي تستخدمها، مثل عمليات Lambda واستعلامات S3 وخدمة QuickSight، مما يجعل التحليلات في الوقت الفعلي ميسورة التكلفة حتى مع وجود العديد من المستودعات. توفر التحليلات شبه الفورية للفرق رؤية فورية حول سرعة السبرنت، والاستعداد للإصدارات، وأنماط النشاط، مما يدعم إطار عمل دورة حياة التطوير المدعوم بالذكاء الاصطناعي (AI-DLC) من AWS. يمكنك الاطلاع على المزيد من التفاصيل حول هذا الإطار عبر [AWS AI-Driven Development Lifecycle](https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-accelerate-software-dev-lifecycle-gen-ai/introduction.html).",
+              "links": [
+                {
+                  "text": "AWS AI-Driven Development Lifecycle",
+                  "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-accelerate-software-dev-lifecycle-gen-ai/introduction.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الأسئلة الشائعة والتحديات المحتملة",
+          "paragraphs": [
+            {
+              "text": "يتساءل المستخدمون غالباً عن خصوصية الرموز وكيفية حمايتها. يقوم الحل بتخزين رموز الوصول إلى Git بشكل آمن في AWS Secrets Manager، وتقوم دوال Lambda باستردادها عند التشغيل، مما يمنع الترميز الثابت. بالنسبة للمنظمات التي لديها سياسات صارمة للتدقيق، يمكن تعطيل التحميل الكامل التلقائي كل 24 ساعة والاعتماد على التحميل التزايدي فقط. كما يمكن تخصيص الجدول الزمني ليتناسب مع نطاقات التحديث الخاصة بفريق التطوير، مما يوفر المرونة لتقليل تكاليف الاستعلام مع الحفاظ على حداثة التحليلات. يمكن إدارة البنية التحتية بالكامل عبر [AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html) لضمان قابلية التكرار.",
+              "links": [
+                {
+                  "text": "AWS CloudFormation",
+                  "url": "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon QuickSight",
+        "Git",
+        "DevOps",
+        "Serverless",
+        "CI/CD",
+        "AI-DLC"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon QuickSight",
+        "GitHub",
+        "GitLab",
+        "AWS AI-Driven Development Lifecycle",
+        "AWS Step Functions",
+        "Amazon S3",
+        "Amazon EventBridge Scheduler"
+      ],
+      "category": "الويب",
+      "dateLabel": "20 سبتمبر 2026",
+      "modifiedLabel": "20 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 587
+    },
+    "en": {
+      "title": "AWS Introduces Serverless Git Metrics Dashboard Solution",
+      "description": "Learn how to build a serverless pipeline that automates Git metrics collection from GitHub and GitLab for visualization in Amazon Quick Sight dashboards.",
+      "deck": "A new architectural framework enables engineering teams to gain near-real-time visibility into development analytics without managing dedicated infrastructure.",
+      "summaryBullets": [
+        "Automates Git metrics collection from GitHub and GitLab using a serverless pipeline.",
+        "Utilizes AWS Step Functions and Lambda to handle concurrent data processing.",
+        "Provides interactive visualizations through Amazon Quick Sight.",
+        "Supports incremental data loading to optimize API usage and costs."
+      ],
+      "sections": [
+        {
+          "heading": "Modernizing Engineering Analytics",
+          "paragraphs": [
+            {
+              "text": "Engineering teams often rely on Git activity as a primary source of data for measuring development productivity. However, collecting this data at scale has traditionally required complex, manually maintained extract, transform, and load (ETL) infrastructure. To address this, a new guide on the AWS Machine Learning Blog details how to deploy a serverless pipeline that automatically gathers metrics from repositories hosted on GitHub and GitLab.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/a-serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/"
+                },
+                {
+                  "text": "GitHub",
+                  "url": "https://github.com/"
+                },
+                {
+                  "text": "GitLab",
+                  "url": "https://about.gitlab.com/"
+                }
+              ]
+            },
+            {
+              "text": "This solution is designed to align with the AWS AI-Driven Development Lifecycle framework, which emphasizes the necessity of data-backed insights when adopting new coding tools. Without a clear baseline and ongoing monitoring, teams may struggle to determine if AI integrations are actually accelerating delivery or inadvertently introducing quality risks.",
+              "links": [
+                {
+                  "text": "AWS AI-Driven Development Lifecycle",
+                  "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-accelerate-software-dev-lifecycle-gen-ai/introduction.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Serverless Pipeline Architecture",
+          "paragraphs": [
+            {
+              "text": "The architecture leverages a suite of AWS services to ensure the pipeline remains cost-effective and fully managed. At the core of the workflow is Amazon EventBridge Scheduler, which triggers the collection process based on configurable cron or rate expressions. This eliminates the need for manual intervention, ensuring consistent data capture across the development lifecycle.",
+              "links": [
+                {
+                  "text": "Amazon EventBridge Scheduler",
+                  "url": "https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html"
+                }
+              ]
+            },
+            {
+              "text": "Orchestration is handled by AWS Step Functions, which manages the intelligence behind the data collection. A detector function first scans repository activity to identify changes in pull requests, commits, or issues. If no new activity is detected since the last run, the system terminates the process to save resources. For larger organizations, the workflow utilizes Map states to divide repository workloads into smaller chunks, allowing for parallel processing and faster execution times.",
+              "links": [
+                {
+                  "text": "AWS Step Functions",
+                  "url": "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html"
+                },
+                {
+                  "text": "Map states",
+                  "url": "https://docs.aws.amazon.com/step-functions/latest/dg/state-map.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Data Storage and Visualization",
+          "paragraphs": [
+            {
+              "text": "Once collected, the processed data is stored in Amazon Simple Storage Service (Amazon S3). This storage layer serves as a durable repository, maintaining both structured JSON files for historical reference and flattened CSV files optimized for analytical processing. By utilizing versioning and encryption, the solution ensures that sensitive Git metrics remain secure while remaining cost-effective for large datasets.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service",
+                  "url": "https://aws.amazon.com/pm/serv-s3"
+                }
+              ]
+            },
+            {
+              "text": "For the final step of the pipeline, Amazon Quick Sight provides the interface for data visualization. By loading the refined CSV data into its in-memory engine, SPICE, the platform allows users to build interactive dashboards. These dashboards can visualize trends such as sprint velocity, pull request activity, and contributor metrics, providing stakeholders with near-real-time visibility into their development ecosystem.",
+              "links": [
+                {
+                  "text": "Amazon Quick Sight",
+                  "url": "https://aws.amazon.com/quick/quicksight/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Operational Benefits",
+          "paragraphs": [
+            {
+              "text": "The implementation relies on AWS CloudFormation to define and deploy the necessary resources, ensuring reproducibility across different environments. By automating the transition from full loads to incremental loads, the system balances data accuracy with performance. A full repository refresh occurs every 24 hours, while intermediate runs only capture delta changes, significantly reducing the number of required API calls to external hosting providers.",
+              "links": [
+                {
+                  "text": "AWS CloudFormation",
+                  "url": "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Serverless",
+        "Git Metrics",
+        "Data Engineering",
+        "DevOps",
+        "Amazon Quick Sight",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Quick Sight",
+        "GitHub",
+        "GitLab",
+        "Amazon S3",
+        "AWS Lambda",
+        "AWS Step Functions"
+      ],
+      "category": "Web",
+      "dateLabel": "September 20, 2026",
+      "modifiedLabel": "September 20, 2026",
+      "readMinutes": 3,
+      "wordCount": 489
+    }
+  },
+  "datePublished": "2026-09-20T04:01:17.887733+03:00",
+  "dateModified": "2026-09-20T04:01:17.887733+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/hero.webp",
+    "card": "/forum/assets/posts/2026/09/serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/card.webp",
+    "social": "/forum/assets/posts/2026/09/serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/social.jpg",
+    "alt": {
+      "ar": "AWS تطلق لوحة مقاييس Git باستخدام Amazon QuickSight",
+      "en": "AWS Introduces Serverless Git Metrics Dashboard Solution"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/11/ML-21183-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/inline-01.webp",
+        "width": 1400,
+        "height": 800,
+        "alt": {
+          "ar": "AWS تطلق لوحة مقاييس Git باستخدام Amazon QuickSight",
+          "en": "Architecture of the serverless Git metrics pipeline from EventBridge and Step Functions to S3 and Amazon Quick Sight"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/a-serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/11/ML-21183-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/inline-02.webp",
+        "width": 1280,
+        "height": 571,
+        "alt": {
+          "ar": "AWS تطلق لوحة مقاييس Git باستخدام Amazon QuickSight",
+          "en": "GitHub developer settings page for generating a personal access token"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/a-serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/11/ML-21183-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/inline-03.webp",
+        "width": 1400,
+        "height": 804,
+        "alt": {
+          "ar": "AWS تطلق لوحة مقاييس Git باستخدام Amazon QuickSight",
+          "en": "AWS CloudFormation Create stack page with the pipeline parameters filled in"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/a-serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/11/ML-21183-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/inline-04.webp",
+        "width": 1400,
+        "height": 597,
+        "alt": {
+          "ar": "AWS تطلق لوحة مقاييس Git باستخدام Amazon QuickSight",
+          "en": "Amazon Quick Sight console Data sources page with Create data source highlighted"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/a-serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/11/ML-21183-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/a-serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight/",
+      "type": "official",
+      "title": "A serverless, data-driven Git metrics dashboard using Amazon Quick Sight"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/a-serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight",
+  "sourceTitle": "A serverless, data-driven Git metrics dashboard using Amazon Quick Sight",
+  "trendScore": 91.81,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-20T01:01:17+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/serverless-data-driven-git-metrics-dashboard-using-amazon-quick-sight.json"
+}
