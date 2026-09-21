@@ -208,16 +208,6 @@
     const track = $('#programmingIconTicker') || $('.enh-tech-track');
     if (!track || track.dataset.iconsReady === '1') return;
 
-    const mobileLite = matchMedia('(max-width:760px)').matches || navigator.connection?.saveData === true;
-    if (mobileLite) {
-      const labels = techIcons.slice(0,8).map(([,label]) =>
-        `<span class="enh-tech-chip">${label}</span>`
-      ).join('');
-      track.innerHTML = `<div class="enh-tech-sequence enh-tech-sequence--lite">${labels}</div>`;
-      track.dataset.iconsReady = '1';
-      return;
-    }
-
     if (!document.querySelector('link[data-devicon]')) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
@@ -656,28 +646,21 @@
   }
 
   function boot(){
-    const mobileLite = matchMedia('(max-width:760px)').matches || navigator.connection?.saveData === true;
-
     // Keep first paint small and stable; the loader is intentionally skipped.
     injectHead(); addProgressBar(); addHeaderControls(); renderFirstLanguage(); addAvailability(); addAccessibility(); applyImagePerf(); setupInternalActionLoader();
 
-    // Project behavior is useful early, but mobile gets a little more breathing room.
-    setTimeout(() => { try { bootProjects(); } catch (e) { console.warn(e); } }, mobileLite ? 220 : 90);
+    // Project behavior is useful early, but does not need to block first paint.
+    setTimeout(() => { try { bootProjects(); } catch (e) { console.warn(e); } }, 90);
 
-    // Mobile builds only user-facing essentials. Desktop keeps the full enhancement set.
-    const tasks = mobileLite
-      ? [addStatsAndTicker,addFeaturedSinax,addServices,addProcess,addRequestModal,addFaqIfMissing,addContact,addBottomNav,addQrPwa,revealOnScroll,animateCounters]
-      : [hydrateTechIconTicker,addStatsAndTicker,addFeaturedSinax,addServices,addProcess,addRequestModal,addFaqIfMissing,addContact,addGithubActivity,addCommandPalette,addBottomNav,addFloatingButtons,addWelcomeAndLastProject,addQrPwa,addUpdateControl,addOpenGraphRuntime,addStructuredDataRuntime,addServiceDeepLinkOnCards,revealOnScroll,animateCounters];
-
+    // Build below-the-fold enhancements one small task at a time.
+    const tasks=[hydrateTechIconTicker,addStatsAndTicker,addFeaturedSinax,addServices,addProcess,addRequestModal,addFaqIfMissing,addContact,addGithubActivity,addCommandPalette,addBottomNav,addFloatingButtons,addWelcomeAndLastProject,addQrPwa,addUpdateControl,addOpenGraphRuntime,addStructuredDataRuntime,addServiceDeepLinkOnCards,revealOnScroll,animateCounters];
     const step=()=>{
       const fn=tasks.shift(); if(!fn) return;
       try { fn(); } catch(e) { console.warn(e); }
       if(!tasks.length) return;
-      if('requestIdleCallback' in window) requestIdleCallback(step,{timeout:mobileLite?700:350});
-      else setTimeout(step,mobileLite?70:28);
+      if('requestIdleCallback' in window) requestIdleCallback(step,{timeout:350}); else setTimeout(step,28);
     };
-    if('requestIdleCallback' in window) requestIdleCallback(step,{timeout:mobileLite?900:500});
-    else setTimeout(step,mobileLite?260:180);
+    if('requestIdleCallback' in window) requestIdleCallback(step,{timeout:500}); else setTimeout(step,180);
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
@@ -880,18 +863,7 @@
     renderLanguage();
     root.querySelectorAll('[data-stat-group]').forEach(card => paintCard(card, 0, false));
     startRotationWhenVisible(root);
-
-    const loadGithubCount = () => hydrateGithubRepoCount(root);
-    if ('IntersectionObserver' in window) {
-      const githubObserver = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        githubObserver.disconnect();
-        loadGithubCount();
-      }, { threshold: .15, rootMargin: '180px 0px' });
-      githubObserver.observe(root);
-    } else {
-      loadGithubCount();
-    }
+    hydrateGithubRepoCount(root);
 
     const languageObserver = new MutationObserver(renderLanguage);
     languageObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['lang', 'dir'] });
