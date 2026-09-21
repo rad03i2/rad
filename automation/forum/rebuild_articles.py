@@ -19,7 +19,7 @@ def main() -> int:
             continue
         render_to_file(record)
         rebuilt += 1
-    print(f"RDWAN Tech rebuild: rebuilt={rebuilt} skipped={skipped} template=forum/templates/article.html")
+    print(f"Mikhbar rebuild: rebuilt={rebuilt} skipped={skipped} template=forum/templates/article.html")
     return 0
 
 
