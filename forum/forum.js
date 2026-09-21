@@ -38,7 +38,7 @@ function brandAssets(){
   let fav=document.querySelector('link[rel="icon"]');
   if(!fav){fav=document.createElement('link');fav.rel='icon';fav.type='image/png';document.head.appendChild(fav)}
   fav.href=favicon;
-  $('link[rel*="icon"]').forEach(link=>{if(link!==fav)link.remove()});
+  $$('link[rel*="icon"]').forEach(link=>{if(link!==fav)link.remove()});
   if(!document.querySelector('.rt-site-header')){
     const legacy=document.querySelector('.site-header');
     if(legacy){
