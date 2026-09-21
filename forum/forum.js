@@ -10,10 +10,11 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const locale=(document.body.dataset.locale||document.documentElement.lang||'ar').toLowerCase().startsWith('en')?'en':'ar';
 const isAr=locale==='ar';
 function brandAssets(){
-  const icon='/assets/images/mikhbar-favicon.png?v=20260921-brand1';
+  const mark='/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png';
+  const favicon='/assets/brand/mikhbar/06-web-ready/favicon/favicon.ico';
   let fav=document.querySelector('link[rel~="icon"]');
-  if(!fav){fav=document.createElement('link');fav.rel='icon';fav.type='image/png';document.head.appendChild(fav)}
-  fav.href=icon;
+  if(!fav){fav=document.createElement('link');fav.rel='icon';fav.type='image/x-icon';document.head.appendChild(fav)}
+  fav.href=favicon;
   if(!document.querySelector('.rt-site-header')){
     const legacy=document.querySelector('.site-header');
     if(legacy){
