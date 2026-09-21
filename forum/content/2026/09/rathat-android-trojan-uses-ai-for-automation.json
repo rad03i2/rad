@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "e93e863384f738935d96",
+  "slug": "rathat-android-trojan-uses-ai-for-automation",
+  "categorySlug": "security",
+  "urls": {
+    "ar": "/forum/ar/security/rathat-android-trojan-uses-ai-for-automation/",
+    "en": "/forum/en/security/rathat-android-trojan-uses-ai-for-automation/"
+  },
+  "locales": {
+    "ar": {
+      "title": "برمجية RatHat الخبيثة: طفرة في استغلال الذكاء الاصطناعي لاختراق أندرويد",
+      "description": "كشفت شركة Zimperium عن برمجية RatHat التي تهاجم أجهزة أندرويد، مستخدمة الذكاء الاصطناعي للتنقل التلقائي وسرقة البيانات الحساسة وتجاوز إجراءات الحماية.",
+      "deck": "تستخدم برمجية RatHat تقنيات الذكاء الاصطناعي التوليدي للتحكم الفعلي في واجهات التطبيقات، مما يمنح المهاجمين قدرة غير مسبوقة على تنفيذ عمليات احتيالية وسرقة الهوية.",
+      "summaryBullets": [
+        "اعتماد RatHat على الذكاء الاصطناعي التوليدي في التفاعل مع واجهة المستخدم في الوقت الفعلي.",
+        "استخدام تقنيات متطورة لتجاوز وضع الحماية (Sandbox) والوصول إلى صلاحيات تنفيذ الأوامر (Shell).",
+        "آليات سرقة بيانات متقدمة تشمل تتبع اللمس وتسجيل ضربات المفاتيح على مستوى الأجهزة.",
+        "تصميم البرمجية لضمان البقاء في النظام عبر خدمات خفية تعيد تثبيت نفسها تلقائياً."
+      ],
+      "sections": [
+        {
+          "heading": "تهديد جديد بذكاء اصطناعي فائق",
+          "paragraphs": [
+            {
+              "text": "رصدت شركة أمن الهواتف [Zimperium](https://zimperium.com/blog/rathat-ai-powered-mobile-threat-is-here-for-your-credentials-bank-accounts) برمجية خبيثة جديدة من نوع طروادة تستهدف نظام أندرويد، وتتميز بقدرات تقنية متقدمة بفضل دمج الذكاء الاصطناعي التوليدي. وتعمل هذه البرمجية، التي أُطلق عليها اسم [RatHat](https://zimperium.com/blog/rathat-ai-powered-mobile-threat-is-here-for-your-credentials-bank-accounts)، على تغيير قواعد اللعبة في مجال الهجمات البرمجية من خلال تحويل الهاتف إلى أداة ذاتية التنفيذ تتبع تعليمات دقيقة بدلاً من مجرد انتظار أوامر المهاجم التقليدية.",
+              "links": [
+                {
+                  "text": "Zimperium",
+                  "url": "https://zimperium.com/blog/rathat-ai-powered-mobile-threat-is-here-for-your-credentials-bank-accounts"
+                },
+                {
+                  "text": "RatHat",
+                  "url": "https://zimperium.com/blog/rathat-ai-powered-mobile-threat-is-here-for-your-credentials-bank-accounts"
+                }
+              ]
+            },
+            {
+              "text": "تنتشر هذه البرمجية عبر أساليب التصيد الاحتيالي والرسائل النصية الخبيثة (Smishing) والإعلانات الضارة (Malvertising). وبمجرد وصولها إلى الجهاز، تبدأ في سلسلة من عمليات التثبيت المتعددة المراحل التي تتجاوز قيود نظام أندرويد الأساسية، لتنتقل من مجرد تطبيق وصوله محدود إلى أداة تمتلك صلاحيات كاملة للتنفيذ على مستوى النظام (Shell-level execution)، مما يجعلها واحدة من أخطر التهديدات التي واجهت مستخدمي الهواتف الذكية مؤخراً وفقاً لما ذكره تقرير [SecurityWeek](https://www.securityweek.com/rathat-android-trojan-uses-ai-for-automation/).",
+              "links": [
+                {
+                  "text": "SecurityWeek",
+                  "url": "https://www.securityweek.com/rathat-android-trojan-uses-ai-for-automation/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "هيكلية الهجوم وآليات التخفي",
+          "paragraphs": [
+            {
+              "text": "تتكون البنية التحتية لـ RatHat من ثلاثة عناصر متكاملة: تطبيق أندرويد خبيث، عميل مكتوب بلغة Go، ووكيل FRP. يعمل التطبيق كواجهة أولية تطلب صلاحيات النظام الحساسة وتستخدم ملفات HTML مضللة لخداع المستخدم ومنحه صلاحيات الوصول (Accessibility Services). هذا المستوى من الوصول يتيح للبرمجية تنفيذ عمليات 'حقن' لواجهات مزيفة فوق تطبيقات البنوك الحقيقية، حيث يتم اعتراض البيانات والرموز السرية قبل وصولها إلى التطبيق الأصلي.",
+              "links": []
+            },
+            {
+              "text": "ما يميز هذه البرمجية هو تواصلها الدائم مع مساعد ذكاء اصطناعي يقوم بتحويل شجرة واجهة المستخدم (Accessibility tree) إلى ملفات XML، حيث يقرأ الذكاء الاصطناعي محتويات الشاشة ويحدد العناصر اللازمة للضغط عليها والتفاعل معها تلقائياً. هذه القدرة على التنقل الذاتي تمنح المهاجمين ميزة هائلة في محاكاة السلوك البشري الطبيعي أثناء سحب الأموال أو تغيير إعدادات الأمان في الجهاز.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاستمرارية والسيطرة على مستوى الأجهزة",
+          "paragraphs": [
+            {
+              "text": "لا تكتفي RatHat بسرقة المعلومات، بل تضمن بقاءها داخل الجهاز لفترات طويلة. حتى لو حاول المستخدم حذف التطبيق، تظل هناك خدمة خلفية خفية تعمل بنظام 'shell' تراقب وجود التطبيق بشكل دوري وتعيد تثبيته فور اكتشاف حذفه. هذا النهج يضمن للمهاجمين استدامة طويلة الأمد، وهو ما يشبه في تعقيده تهديدات أخرى مثل [New BTMOB Android Malware Enables Full Device Takeover](https://www.securityweek.com/new-btmob-android-malware-enables-full-device-takeover/).",
+              "links": [
+                {
+                  "text": "New BTMOB Android Malware Enables Full Device Takeover",
+                  "url": "https://www.securityweek.com/new-btmob-android-malware-enables-full-device-takeover/"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد البرمجية أيضاً على أدوات متخصصة في تسجيل المفاتيح (Keylogging). لا تقتصر هذه العملية على رصد الأحداث النصية فقط، بل يقوم عميل Go بقراءة إحداثيات اللمس الفعلية على مستوى الأجهزة (Hardware level) عبر أداة تصحيح أخطاء أندرويد 'getevent'. ومن خلال مقارنة هذه الإحداثيات مع تخطيط لوحة المفاتيح، يمكن للمهاجم إعادة بناء أرقام التعريف الشخصية (PIN) والأنماط الهندسية بدقة متناهية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مؤشرات على المصدر والتحليل التقني",
+          "paragraphs": [
+            {
+              "text": "تشير الموجهات (Prompts) المستخدمة داخل الكود الخاص بالذكاء الاصطناعي لـ RatHat إلى احتمال كبير بوقوف جهات تهديد صينية خلف هذا المشروع. إن استخدام واجهات برمجة تطبيقات 'SessionInstaller' لتجاوز قيود التثبيت، والاعتماد على 'WebView overlay' لتقديم واجهات زائفة، يعكس مستوى عالٍ من الاحترافية التقنية في تطوير البرمجيات الخبيثة. ويعد هذا التحليل جزءاً من سلسلة تقارير أمنية تغطي تنامي التهديدات، كما أشار المحلل [Ionut Arghire](https://www.securityweek.com/contributors/ionut-arghire/) في تغطياته المستمرة.",
+              "links": [
+                {
+                  "text": "Ionut Arghire",
+                  "url": "https://www.securityweek.com/contributors/ionut-arghire/"
+                }
+              ]
+            },
+            {
+              "text": "إن التهديد لا يقتصر على سرقة بيانات الاعتماد فقط، بل يمتد إلى التحكم الكامل في وظائف النظام والقدرة على مسح الجهاز عن بُعد بفضل صلاحيات المسؤول التي تمنحها البرمجية لنفسها. يشدد الباحثون على أن الجمع بين الذكاء الاصطناعي والقدرات التقليدية للطروادة يجعل من الصعب على أنظمة الدفاع التقليدية اكتشاف هذه البرمجية، خاصة أنها لا تعتمد على توقيعات برمجية ثابتة بل على سلوك ديناميكي متغير.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمن الهواتف",
+        "أندرويد",
+        "RatHat",
+        "ذكاء اصطناعي",
+        "برمجيات خبيثة",
+        "الخصوصية",
+        "الأمن السيبراني"
+      ],
+      "entities": [
+        "RatHat",
+        "Zimperium",
+        "Android",
+        "Go",
+        "FRP"
+      ],
+      "category": "الأمن التقني",
+      "dateLabel": "21 سبتمبر 2026",
+      "modifiedLabel": "21 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 588
+    },
+    "en": {
+      "title": "RatHat Android Trojan Leverages AI for Device Control",
+      "description": "The new RatHat Android trojan uses generative AI for real-time device navigation, credential theft, and persistent access, according to Zimperium.",
+      "deck": "A sophisticated new Android threat identified by security researchers utilizes generative AI to autonomously navigate infected devices and exfiltrate sensitive user data.",
+      "summaryBullets": [
+        "RatHat uses generative AI to analyze device screens and autonomously interact with interface elements.",
+        "The malware employs a complex three-part architecture including a Go-based agent and a reverse-proxy client.",
+        "Keylogging capabilities allow the trojan to reconstruct passwords and PINs at the hardware level.",
+        "The trojan achieves system-level persistence, enabling it to reinstall itself even after uninstallation attempts."
+      ],
+      "sections": [
+        {
+          "heading": "Advanced AI-Driven Android Threat Identified",
+          "paragraphs": [
+            {
+              "text": "A sophisticated new Android trojan has been discovered that incorporates generative AI to enhance its ability to navigate and control compromised hardware. According to details provided by the mobile security firm Zimperium, the malware—identified as [RatHat](https://zimperium.com/blog/rathat-ai-powered-mobile-threat-is-here-for-your-credentials-bank-accounts)—uses its AI capabilities to read on-screen content and layout by serializing the device’s live Accessibility tree into XML. This allows the threat actor to interact with banking applications and other interfaces in real time, moving beyond simple automated scripts.",
+              "links": [
+                {
+                  "text": "RatHat",
+                  "url": "https://zimperium.com/blog/rathat-ai-powered-mobile-threat-is-here-for-your-credentials-bank-accounts"
+                }
+              ]
+            },
+            {
+              "text": "Researchers at [SecurityWeek](https://www.securityweek.com/rathat-android-trojan-uses-ai-for-automation/) report that the malware relies on an automated, multi-stage infection pipeline. Once initial contact is made via smishing or malvertising, the trojan executes a series of steps to break out of the standard Android application sandbox, ultimately gaining shell-level execution.",
+              "links": [
+                {
+                  "text": "SecurityWeek",
+                  "url": "https://www.securityweek.com/rathat-android-trojan-uses-ai-for-automation/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Technical Architecture and Infection Chain",
+          "paragraphs": [
+            {
+              "text": "The architecture of this threat is highly modular, consisting of three primary components: a malicious Android application, a Go-based agent, and an FRP client. The initial application serves as the entry point, gaining critical system permissions and utilizing a localized HTML lure to trick users into granting access to Accessibility Services. Once these privileges are secured, the app uses a dynamic configuration to enable various activity aliases while serving fake overlays of popular applications to steal user credentials.",
+              "links": []
+            },
+            {
+              "text": "The second component, an agent written in Go, acts as the command-and-control brain of the operation. By gaining a shell via the local ADB daemon, the agent establishes persistent system-level control. The third component, a reverse-proxy client derived from fatedier/frp, creates a secure, persistent reverse tunnel. This allows attackers to bypass typical security barriers and maintain long-term access to the device’s debugging tools.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Hardware-Level Monitoring and Keylogging",
+          "paragraphs": [
+            {
+              "text": "RatHat does not rely solely on software intercepts; it monitors user behavior at the hardware level. The malware employs three distinct mechanisms to capture sensitive information. First, it tracks accessibility text-change events to log what users type. Second, it monitors browser address bars to identify current activity. Finally, the Go agent records raw touch coordinates at the hardware level, comparing them against the keypad layout to reconstruct passwords, PIN codes, and unlock patterns.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Persistence Mechanisms and Evasion",
+          "paragraphs": [
+            {
+              "text": "One of the most concerning features of the malware is its ability to evade removal. Even if an end-user attempts to uninstall the application, the underlying shell service remains active. This service periodically checks for the presence of the malicious app and automatically reinstalls it if missing. By leveraging native SessionInstaller APIs, the trojan effectively bypasses standard Android installation restrictions, while AI prompts suggest the tool was developed by a threat actor based in China.",
+              "links": []
+            },
+            {
+              "text": "The security landscape continues to face challenges from automated and evasive malware. Industry analysts have tracked similar trends, such as [Deceptive Android Apps Exploit Google Play Early Access to Evade Reviews](https://www.securityweek.com/deceptive-android-apps-exploit-google-play-early-access-to-evade-reviews/), which demonstrates how attackers constantly adapt to platform-level security measures to maintain their foothold in the ecosystem.",
+              "links": [
+                {
+                  "text": "Deceptive Android Apps Exploit Google Play Early Access to Evade Reviews",
+                  "url": "https://www.securityweek.com/deceptive-android-apps-exploit-google-play-early-access-to-evade-reviews/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Android Security",
+        "Malware",
+        "RatHat",
+        "Generative AI",
+        "Cyber Espionage",
+        "Zimperium"
+      ],
+      "entities": [
+        "RatHat",
+        "Zimperium",
+        "Android",
+        "Go",
+        "FRP"
+      ],
+      "category": "Cybersecurity",
+      "dateLabel": "September 21, 2026",
+      "modifiedLabel": "September 21, 2026",
+      "readMinutes": 3,
+      "wordCount": 552
+    }
+  },
+  "datePublished": "2026-09-21T16:16:22.648292+03:00",
+  "dateModified": "2026-09-21T16:16:22.648292+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/rathat-android-trojan-uses-ai-for-automation/hero.webp",
+    "card": "/forum/assets/posts/2026/09/rathat-android-trojan-uses-ai-for-automation/card.webp",
+    "social": "/forum/assets/posts/2026/09/rathat-android-trojan-uses-ai-for-automation/social.jpg",
+    "alt": {
+      "ar": "برمجية RatHat الخبيثة: طفرة في استغلال الذكاء الاصطناعي لاختراق أندرويد",
+      "en": "RatHat Android Trojan Leverages AI for Device Control"
+    },
+    "credit": "SecurityWeek",
+    "sourceUrl": "https://www.securityweek.com/wp-content/uploads/2024/11/android-banking-malware.png",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "SecurityWeek",
+      "url": "https://www.securityweek.com/rathat-android-trojan-uses-ai-for-automation/",
+      "type": "journalism",
+      "title": "RatHat Android Trojan Uses AI for Automation"
+    }
+  ],
+  "sourceUrl": "https://www.securityweek.com/rathat-android-trojan-uses-ai-for-automation",
+  "sourceTitle": "RatHat Android Trojan Uses AI for Automation",
+  "trendScore": 103.78,
+  "verification": {
+    "confidence": 0.87,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-09-21T13:16:22+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/rathat-android-trojan-uses-ai-for-automation.json"
+}
