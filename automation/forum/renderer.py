@@ -205,7 +205,7 @@ def _schema(record: dict, locale: str, view: dict) -> dict:
                     "name": "مِخبار" if locale == "ar" else "Mikhbar",
                     "alternateName": "Mikhbar" if locale == "ar" else "مِخبار",
                     "url": SITE + "/forum/",
-                    "logo": {"@type": "ImageObject", "url": SITE + "/assets/images/mikhbar-favicon.png"},
+                    "logo": {"@type": "ImageObject", "url": SITE + "/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"},
                     "founder": {"@type": "Person", "name": "Radwan Abdulhadi", "url": SITE + "/forum/authors/radwan-abdulhadi/"},
                 },
                 "articleSection": category,
