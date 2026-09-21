@@ -91,7 +91,8 @@
 
   // Subtle code-stream background
   const stream = $('#codeStream');
-  if (stream && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const mobilePerformanceMode = window.matchMedia('(max-width: 760px)').matches || navigator.connection?.saveData === true;
+  if (stream && !mobilePerformanceMode && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const lines = [
       "import { createServer } from 'http';",
       "const app = createServer((req, res) => {",
@@ -243,9 +244,27 @@
 // [portfolio-enhancements-loader]
 (() => {
   if (document.querySelector('script[data-portfolio-enhancements]')) return;
-  const s = document.createElement('script');
-  s.src = 'enhancements.js?v=20260919-services-2';
-  s.defer = true;
-  s.dataset.portfolioEnhancements = 'true';
-  document.head.appendChild(s);
+
+  const loadEnhancements = () => {
+    if (document.querySelector('script[data-portfolio-enhancements]')) return;
+    const s = document.createElement('script');
+    s.src = 'enhancements.js?v=20260921-mobile-perf-1';
+    s.defer = true;
+    s.dataset.portfolioEnhancements = 'true';
+    document.head.appendChild(s);
+  };
+
+  const mobileLite = window.matchMedia('(max-width: 760px)').matches || navigator.connection?.saveData === true;
+  if (!mobileLite) {
+    loadEnhancements();
+    return;
+  }
+
+  const schedule = () => {
+    if ('requestIdleCallback' in window) requestIdleCallback(loadEnhancements, { timeout: 1200 });
+    else setTimeout(loadEnhancements, 450);
+  };
+
+  if (document.readyState === 'complete') schedule();
+  else window.addEventListener('load', schedule, { once: true });
 })();
