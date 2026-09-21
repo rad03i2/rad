@@ -20,10 +20,10 @@ function brandAssets(){
     if(legacy){
       const site=isAr?'مِخبار':'Mikhbar',home=isAr?'الرئيسية':'Home',latest=isAr?'أحدث الأخبار':'Latest',about=isAr?'عن مِخبار':'About Mikhbar',lang=isAr?'EN':'عربي';
       const homeUrl=isAr?'/forum/ar/':'/forum/en/',langUrl=isAr?'/forum/en/':'/forum/ar/';
-      legacy.outerHTML='<header class="rt-site-header"><div class="rt-navbar"><a class="mikhbar-brand" href="'+homeUrl+'" aria-label="'+site+'"><span class="mikhbar-brand-mark"><img src="'+icon+'" alt="" width="64" height="64"></span><span class="mikhbar-brand-copy"><strong>'+site+'</strong><small dir="ltr">MIKHBAR</small></span></a><button class="menu-button rt-menu-button" type="button" aria-label="'+(isAr?'فتح قائمة التنقل':'Open navigation')+'" aria-expanded="false" aria-controls="navigation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><nav class="nav-links rt-platform-nav" id="navigation" aria-label="'+(isAr?'التنقل الرئيسي':'Main navigation')+'"><a href="'+homeUrl+'">'+home+'</a><a href="'+homeUrl+'#latest">'+latest+'</a><a href="/forum/about/">'+about+'</a><a class="rt-lang-switch" href="'+langUrl+'">'+lang+'</a></nav></div></header>';
+      legacy.outerHTML='<header class="rt-site-header"><div class="rt-navbar"><a class="mikhbar-brand" href="'+homeUrl+'" aria-label="'+site+'"><span class="mikhbar-brand-mark"><img src="'+mark+'" alt="" width="64" height="64"></span><span class="mikhbar-brand-copy"><strong>'+site+'</strong><small dir="ltr">MIKHBAR</small></span></a><button class="menu-button rt-menu-button" type="button" aria-label="'+(isAr?'فتح قائمة التنقل':'Open navigation')+'" aria-expanded="false" aria-controls="navigation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><nav class="nav-links rt-platform-nav" id="navigation" aria-label="'+(isAr?'التنقل الرئيسي':'Main navigation')+'"><a href="'+homeUrl+'">'+home+'</a><a href="'+homeUrl+'#latest">'+latest+'</a><a href="/forum/about/">'+about+'</a><a class="rt-lang-switch" href="'+langUrl+'">'+lang+'</a></nav></div></header>';
     }
   }
-  $$('.mikhbar-brand-mark').forEach(mark=>{if(!mark.querySelector('img'))mark.innerHTML='<img src="'+icon+'" alt="" width="64" height="64">';});
+  $$('.mikhbar-brand-mark').forEach(mark=>{if(!mark.querySelector('img'))mark.innerHTML='<img src="'+mark+'" alt="" width="64" height="64">';});
 }
 const dict={
  ar:{count:n=>`${n} منشور`,fallbackCat:'تقنية',emptyNow:'ستظهر هنا الموضوعات الأحدث فور بدء النشر اليومي.',read:'',imgAlt:'صورة الخبر'},
