@@ -96,5 +96,14 @@ jobs:
             exit 0
           fi
           git commit -m "Mikhbar: automated 20-minute publication cycle"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "Repository update pushed successfully on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Push raced with another main update; retrying safely (attempt ${attempt}/4)."
+            sleep $((attempt * 3))
+          done
+          echo "Unable to push after 4 safe rebase retries."
+          exit 1
