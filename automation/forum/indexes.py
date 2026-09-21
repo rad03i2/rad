@@ -160,7 +160,7 @@ def write_news_sitemap(posts_by_locale: dict[str, list[dict]], now: datetime) ->
                 "  <url>"
                 f"<loc>{loc}</loc>"
                 "<news:news>"
-                f"<news:publication><news:name>{"مِخبار" if locale == "ar" else "Mikhbar"}</news:name><news:language>{locale}</news:language></news:publication>"
+                f"<news:publication><news:name>{'مِخبار' if locale == 'ar' else 'Mikhbar'}</news:name><news:language>{locale}</news:language></news:publication>"
                 f"<news:publication_date>{pub}</news:publication_date>"
                 f"<news:title>{title}</news:title>"
                 "</news:news>"
