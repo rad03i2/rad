@@ -9,12 +9,36 @@ const $=(s,r=document)=>r.querySelector(s);const $$=(s,r=document)=>Array.from(r
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const locale=(document.body.dataset.locale||document.documentElement.lang||'ar').toLowerCase().startsWith('en')?'en':'ar';
 const isAr=locale==='ar';
+function normalizePlatformNav(){
+  const nav=$('#navigation');
+  if(!nav)return;
+  const forbidden=new Set([
+    'المنتدى','اطلب مشروعك','احجز استشارة',
+    'Forum','Request a project','Request your project','Book consultation','Book a consultation'
+  ]);
+  $$('a',nav).forEach(a=>{if(forbidden.has((a.textContent||'').trim()))a.remove()});
+  const homeUrl=isAr?'/forum/ar/':'/forum/en/';
+  const items=[
+    ['sections',homeUrl+'#sections',isAr?'الأقسام':'Sections'],
+    ['top',homeUrl+'#top-stories',isAr?'الأهم الآن':'Top stories'],
+    ['newsletter',homeUrl+'#newsletter',isAr?'النشرة':'Newsletter']
+  ];
+  const lang=$('.rt-lang-switch',nav);
+  const about=$$('a',nav).find(a=>(a.getAttribute('href')||'')==='/forum/about/');
+  items.forEach(([key,href,label])=>{
+    if(nav.querySelector('[data-mikhbar-nav="'+key+'"]'))return;
+    const a=document.createElement('a');
+    a.dataset.mikhbarNav=key;a.href=href;a.textContent=label;
+    nav.insertBefore(a,about||lang||null);
+  });
+}
 function brandAssets(){
   const mark='/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png';
-  const favicon='/assets/brand/mikhbar/06-web-ready/favicon/favicon.ico';
-  let fav=document.querySelector('link[rel~="icon"]');
-  if(!fav){fav=document.createElement('link');fav.rel='icon';fav.type='image/x-icon';document.head.appendChild(fav)}
+  const favicon='/assets/brand/mikhbar/06-web-ready/favicon/favicon.svg?v=20260922-tab2';
+  let fav=document.querySelector('link[rel="icon"][type="image/svg+xml"]');
+  if(!fav){fav=document.createElement('link');fav.rel='icon';fav.type='image/svg+xml';document.head.appendChild(fav)}
   fav.href=favicon;
+  $$('link[rel="icon"]').forEach(link=>{if(link!==fav)link.rel='alternate icon'});
   if(!document.querySelector('.rt-site-header')){
     const legacy=document.querySelector('.site-header');
     if(legacy){
@@ -23,7 +47,10 @@ function brandAssets(){
       legacy.outerHTML='<header class="rt-site-header"><div class="rt-navbar"><a class="mikhbar-brand" href="'+homeUrl+'" aria-label="'+site+'"><span class="mikhbar-brand-mark"><img src="'+mark+'" alt="" width="64" height="64"></span><span class="mikhbar-brand-copy"><strong>'+site+'</strong><small dir="ltr">MIKHBAR</small></span></a><button class="menu-button rt-menu-button" type="button" aria-label="'+(isAr?'فتح قائمة التنقل':'Open navigation')+'" aria-expanded="false" aria-controls="navigation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><nav class="nav-links rt-platform-nav" id="navigation" aria-label="'+(isAr?'التنقل الرئيسي':'Main navigation')+'"><a href="'+homeUrl+'">'+home+'</a><a href="'+homeUrl+'#latest">'+latest+'</a><a href="/forum/about/">'+about+'</a><a class="rt-lang-switch" href="'+langUrl+'">'+lang+'</a></nav></div></header>';
     }
   }
-  $$('.mikhbar-brand-mark').forEach(mark=>{if(!mark.querySelector('img'))mark.innerHTML='<img src="'+mark+'" alt="" width="64" height="64">';});
+  $$('.mikhbar-brand-mark').forEach(el=>{if(!el.querySelector('img'))el.innerHTML='<img src="'+mark+'" alt="" width="64" height="64">'});
+  normalizePlatformNav();
+  setTimeout(normalizePlatformNav,350);
+  setTimeout(normalizePlatformNav,1400);
 }
 const dict={
  ar:{count:n=>`${n} منشور`,fallbackCat:'تقنية',emptyNow:'ستظهر هنا الموضوعات الأحدث فور بدء النشر اليومي.',read:'',imgAlt:'صورة الخبر'},
