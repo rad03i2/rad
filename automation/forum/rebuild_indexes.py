@@ -12,7 +12,7 @@ def main() -> int:
     ar_posts = list(load_json(FORUM / "posts-ar.json", load_json(FORUM / "posts.json", {"posts": []})).get("posts", []))
     en_posts = list(load_json(FORUM / "posts-en.json", {"posts": []}).get("posts", []))
     write_all({"ar": ar_posts, "en": en_posts}, datetime.now(TZ))
-    print(f"RDWAN Tech indexes rebuilt: ar={len(ar_posts)} en={len(en_posts)}")
+    print(f"Mikhbar indexes rebuilt: ar={len(ar_posts)} en={len(en_posts)}")
     return 0
 
 
