@@ -1,5 +1,348 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-09-21T21:06:23+00:00",
-  "last_published_story_id": "10538c022345675d1abd"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-09-21T21:09:51+00:00",
+  "target_publish_at": "2026-09-22T00:26:23.399679+03:00",
+  "story": {
+    "title": "Open-Sourcing Rebalancer: A Generic, High-Performance Library for Solving Assignment Problems",
+    "url": "https://engineering.fb.com/2026/09/21/open-source/open-sourcing-rebalancer-a-generic-high-performance-library-for-solving-assignment-problems",
+    "domain": "engineering.fb.com",
+    "summary": "We&#8217;re open-sourcing Rebalancer, the assignment-problem solver that has been used to solve resource allocation problems throughout Meta for over nine years. Rebalancer separates several related concerns: how to specify an assignment problem, how to store it efficiently in memory, how to solve it, and how to debug it. This separation of concerns is crucial to [...] Read More... The post Open-Sourcing Rebalancer: A Generic, High-Performance Library for Solving Assignment Problems appeared first on Engineering at Meta .",
+    "published_at": "2026-09-21T16:00:37+00:00",
+    "discovered_at": "2026-09-21T16:01:56+00:00",
+    "source": {
+      "name": "Meta Engineering",
+      "feed": "https://engineering.fb.com/feed/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "social"
+    },
+    "category": "apps",
+    "category_label": "التطبيقات والبرامج",
+    "score": 61,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "9376884578bcf2048380",
+    "trend": {
+      "score": 104.0,
+      "age_hours": 5.14,
+      "corroboration_count": 0,
+      "entity_momentum": 6.0,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://engineering.fb.com/2026/09/21/open-source/rebalancer-generic-high-performance-library-assignment-problems/",
+      "name": "Meta Engineering",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Open-Sourcing Rebalancer: A Generic, High-Performance Library for Solving Assignment Problems",
+      "title": "Open-Sourcing Rebalancer: A Generic, High-Performance Library for Solving Assignment Problems - Engineering at Meta",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "ميتا تفتح المصدر لمكتبة Rebalancer لحل مشكلات التخصيص",
+      "description": "كشفت ميتا عن Rebalancer، مكتبة برمجية عالية الأداء مصممة لحل معضلات تخصيص الموارد المعقدة في مراكز البيانات، معتمدة على منهجية فصل المهام لتعزيز القابلية للتوسع.",
+      "deck": "تتيح ميتا أداة Rebalancer مفتوحة المصدر التي اعتمدت عليها داخلياً لأكثر من تسع سنوات في إدارة موارد بنيتها التحتية العملاقة.",
+      "summary_bullets": [
+        "إتاحة مكتبة Rebalancer للمجتمع التقني كحل مرن وقابل للتوسع لمشكلات التخصيص (Assignment Problems).",
+        "تعتمد الأداة على فصل منطق صياغة المشكلة عن خوارزميات الحل، مما يسهل عمليات التطوير والتنقيح.",
+        "دعم تكامل واسع مع محركات حل رياضية تجارية ومفتوحة المصدر مثل Gurobi وHiGHS.",
+        "استخدام ناجح للتقنية في إدارة مراكز البيانات وتوزيع المهام وتوجيه حركة مرور البيانات عالمياً."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات التخصيص في البنية التحتية",
+          "paragraphs": [
+            {
+              "text": "أعلنت Meta Engineering عن طرح مكتبة Rebalancer كأداة مفتوحة المصدر، وهي المحرك البرمجي الذي استندت إليه الشركة لأكثر من تسع سنوات في معالجة مشكلات تخصيص الموارد المعقدة. تبرز أهمية هذه الأداة في قدرتها على الإجابة على السؤال الجوهري في إدارة النظم: كيف يتم تخصيص مجموعة من الكائنات إلى مجموعة من الحاويات بطريقة تحسن الأهداف المحددة مع الالتزام بالقيود التشغيلية الصارمة؟",
+              "links": [
+                {
+                  "text": "Meta Engineering",
+                  "url": "https://engineering.fb.com/2026/09/21/open-source/rebalancer-generic-high-performance-library-assignment-problems/"
+                }
+              ]
+            },
+            {
+              "text": "تظهر هذه المعضلات في كل طبقة من طبقات البنية التحتية لدى ميتا، بدءاً من وضع الأجهزة في مراكز البيانات لضمان التوزيع الأمثل عبر نطاقات الأعطال الكهربائية، وصولاً إلى توجيه حركة مرور بيانات مليارات المستخدمين عبر مراكز بيانات موزعة جغرافياً. تكمن الصعوبة الرئيسية في أن هذه المسائل غالباً ما تندرج تحت فئة NP-hard، مما يجعل حلها بطرق تقليدية أمراً غير مجدٍ من الناحية الحسابية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "منهجية الفصل في Rebalancer",
+          "paragraphs": [
+            {
+              "text": "تعتمد الأداة فلسفة تصميمية تقوم على فصل المهام المتعلقة ببعضها، وهي: كيفية تحديد معطيات المشكلة، وكيفية تخزينها بكفاءة في الذاكرة، وآليات الحل، وطرق التصحيح. هذا النهج يضمن تعزيز قابلية التوسع والمرونة، حيث يواجه المطورون عادة صعوبة في تحويل السياسات الواقعية إلى صيغ رياضية دقيقة، وهو ما تعالجه هذه المكتبة عبر لغة برمجية موحدة.",
+              "links": []
+            },
+            {
+              "text": "تستخدم الأداة نموذجاً بيانياً يُعرف بـ \"رسم التعبير\" (expression graph)؛ حيث تتحول المشكلة بعد وصفها باستخدام الكائنات والقيود والأهداف إلى هذا الرسم الموجه الذي يمثل العلاقات بين المتغيرات. هذا الرسم يتيح للمكتبة إما تصميم خوارزمية بحث محلي (local search heuristic) أو بناء برنامج أعداد صحيحة مختلط (MIP) قابل للحل عبر أدوات متخصصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بيئة الحل الرياضي والتكامل",
+          "paragraphs": [
+            {
+              "text": "تتميز المكتبة بدعمها الواسع لمحركات الحل الرياضي، مما يمنح المطورين حرية الاختيار بناءً على طبيعة المشكلة وحجمها. يمكن لمستخدمي النظام الاعتماد على حلول تجارية قوية مثل FICO Xpress أو Gurobi، أو التوجه نحو حلول مفتوحة المصدر مثل HiGHS.",
+              "links": [
+                {
+                  "text": "FICO Xpress",
+                  "url": "https://www.fico.com/en/latest-thinking/solution-sheet/fico-xpress-solver"
+                },
+                {
+                  "text": "Gurobi",
+                  "url": "https://www.gurobi.com/product"
+                },
+                {
+                  "text": "HiGHS",
+                  "url": "https://highs.dev/"
+                }
+              ]
+            },
+            {
+              "text": "في الحالات التي تكون فيها المشكلات ضخمة جداً بحيث يتعذر حلها بواسطة خوارزميات MIP، توفر Rebalancer خيار 'البحث المحلي' الذي يعمل مباشرة على رسم التعبير، مما يسمح باستكشاف النطاق المحيط بالحل الحالي وتعديله عبر نقل الكائنات إلى حاويات أخرى للوصول إلى توزيع أمثل، وهي تقنية أثبتت كفاءة عالية في بيئات الإنتاج الكبرى.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التجريد وسهولة الاستخدام",
+          "paragraphs": [
+            {
+              "text": "لرفع مستوى التجريد وتسهيل التعامل مع الأداة، تتبع المكتبة نهجاً من ثلاث خطوات. يبدأ الأمر بتعريف مكونات النمذجة الأساسية مثل 'الأبعاد' (خصائص الكائنات والحاويات)، و'التقسيمات' (مجموعات الكائنات)، و'النطاقات' (مجموعات الحاويات). بعد ذلك، توفر المكتبة واجهة برمجة تطبيقات (API) لدمج هذه العناصر.",
+              "links": []
+            },
+            {
+              "text": "في المرحلة النهائية، تقدم المكتبة 'مواصفات عالية المستوى' (High-level specs) التي تعمل كوصفات جاهزة للمشكلات الشائعة. ويمكن للمهتمين استكشاف المزيد من هذه المواصفات عبر قائمة تفصيلية متاحة في التوثيق الرسمي لضمان فهم أعمق لكيفية تطبيق هذه النماذج في مشاريعهم الخاصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الأثر التشغيلي وخبرة ميتا",
+          "paragraphs": [
+            {
+              "text": "استند تطوير الأداة على عقود من الخبرة في إدارة مراكز البيانات الضخمة، حيث استخدمت ميتا حلولاً مشابهة في مشاريع بنية تحتية حيوية أخرى، مثل نظام إدارة الأجزاء Shard Manager ونظام تخصيص الموارد عبر المناطق RAS، بالإضافة إلى نظام إدارة حركة المرور العالمية Taiji.",
+              "links": [
+                {
+                  "text": "Shard Manager",
+                  "url": "https://engineering.fb.com/2020/08/24/production-engineering/scaling-services-with-shard-manager/"
+                },
+                {
+                  "text": "RAS",
+                  "url": "https://research.facebook.com/publications/ras-continuously-optimized-region-wide-datacenter-resource-allocation/"
+                },
+                {
+                  "text": "Taiji",
+                  "url": "https://research.facebook.com/publications/taiji-managing-global-user-traffic-for-large-scale-internet-services-at-the-edge/"
+                }
+              ]
+            },
+            {
+              "text": "من خلال دمج هذه التقنيات وتطويرها في إطار عمل Rebalancer، تهدف ميتا إلى مساعدة المؤسسات الأخرى على التعامل مع تعقيدات البنية التحتية المتزايدة، معتبرة أن هذه المكتبة تمثل جسراً بين التعقيد الرياضي والتطبيق الهندسي الملموس. يظل مفتاح نجاح الأداة هو قدرتها على التكيف مع تغير المهام، مع الحفاظ على الأداء العالي في أوقات الذروة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "ميتا",
+        "برمجيات مفتوحة المصدر",
+        "تخصيص الموارد",
+        "Rebalancer",
+        "البنية التحتية",
+        "مراكز البيانات"
+      ],
+      "entities": [
+        "Meta",
+        "Rebalancer",
+        "Gurobi",
+        "HiGHS",
+        "FICO Xpress"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة المقال استناداً حصرياً للمصادر المذكورة، مع التركيز على الجانب التقني الوظيفي للأداة دون إضافة معلومات خارجية، والالتزام الكامل بالروابط المحددة."
+    },
+    "en": {
+      "title": "Meta Open-Sources Rebalancer to Solve Complex Resource Allocation",
+      "description": "Meta has released Rebalancer, a high-performance library used internally for over nine years to manage complex resource allocation and assignment problems.",
+      "deck": "After nine years of internal use, Meta has open-sourced its assignment-problem solver, Rebalancer, providing developers with a generic framework for optimizing infrastructure at scale.",
+      "summary_bullets": [
+        "Rebalancer enables developers to solve complex assignment problems by separating problem specification from solution logic.",
+        "The tool supports both optimal Mixed Integer Programming (MIP) solvers and high-performance local search heuristics.",
+        "It has been used internally by Meta to optimize hardware placement, service allocation, and global traffic routing.",
+        "The library integrates with established solvers including FICO Xpress, Gurobi, and HiGHS."
+      ],
+      "sections": [
+        {
+          "heading": "Solving Infrastructure Complexity",
+          "paragraphs": [
+            {
+              "text": "Meta has officially announced the open-sourcing of Rebalancer, a powerful library designed to handle assignment-problem solvers across diverse technical landscapes. For over nine years, this technology has been fundamental to Meta’s operations, managing complex resource allocation tasks that arise across its massive infrastructure stack. By separating the concerns of how a problem is specified, stored, solved, and debugged, the library offers a modular approach to optimization.",
+              "links": [
+                {
+                  "text": "Rebalancer",
+                  "url": "https://engineering.fb.com/2026/09/21/open-source/rebalancer-generic-high-performance-library-assignment-problems/"
+                }
+              ]
+            },
+            {
+              "text": "At its core, Rebalancer addresses the fundamental question of how to assign a set of objects to a set of bins while optimizing specific objectives and adhering to strict constraints. This process is essential for everything from hardware placement in datacenters to complex traffic routing, ensuring that global services maintain both efficiency and fault tolerance.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Addressing Scalability and Usability",
+          "paragraphs": [
+            {
+              "text": "One of the primary challenges in designing optimization frameworks is balancing usability with scalability. Practitioners often struggle to translate real-world policy requirements into the complex mathematical formulas required by standard optimization tools. Simultaneously, the NP-hard nature of these problems frequently exceeds the capacity of many commercial solvers.",
+              "links": []
+            },
+            {
+              "text": "Rebalancer mitigates these obstacles by allowing users to describe problems using objects, bins, constraints, and objectives. Once specified, the library transforms these definitions into a directed-acyclic graph known as an expression graph. This graph serves as the basis for either designing a local search heuristic or constructing a Mixed Integer Program (MIP) that can be processed by tools like FICO Xpress, Gurobi, or HiGHS.",
+              "links": [
+                {
+                  "text": "FICO Xpress",
+                  "url": "https://www.fico.com/en/latest-thinking/solution-sheet/fico-xpress-solver"
+                },
+                {
+                  "text": "Gurobi",
+                  "url": "https://www.gurobi.com/product"
+                },
+                {
+                  "text": "HiGHS",
+                  "url": "https://highs.dev/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "A Hierarchical Approach to Modeling",
+          "paragraphs": [
+            {
+              "text": "To improve user accessibility, the library employs a three-step approach to abstraction. It begins with essential modeling constructs—such as dimensions, partitions, and scopes—that represent real-world attributes and groupings. Following this, the system provides an API for recursive transformations and aggregations, such as SUM, MAX, or SQUARE, to manipulate these data points.",
+              "links": []
+            },
+            {
+              "text": "Finally, Rebalancer leverages these components to provide a high-level spec API, which functions as a collection of predefined recipes for common objectives and constraints. Developers can find an exhaustive list of Rebalancer specs in the docs to understand how these building blocks can be combined to solve specific placement or routing challenges.",
+              "links": [
+                {
+                  "text": "exhaustive list of Rebalancer specs in the docs",
+                  "url": "https://facebook.github.io/rebalancer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Optimizing Through Two Solvers",
+          "paragraphs": [
+            {
+              "text": "The library offers two distinct methods for finding solutions. The Optimal Solver translates the expression graph into a format compatible with traditional MIP solvers. To manage performance, Rebalancer employs techniques like variable aggregation, interchangeability, and symmetry breaking, which help reduce the model size, as the worst-case scenario can otherwise grow to a quadratic complexity of O(|objects| * |bins|).",
+              "links": []
+            },
+            {
+              "text": "When the problem size becomes too large for traditional MIP solvers, the Local Search Solver serves as an alternative. It works directly on the expression graph, exploring the local neighborhood around the current assignment by iteratively moving objects between bins. This flexibility ensures that developers can tackle massive-scale infrastructure challenges without hitting the ceiling often associated with formal mathematical solvers.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Meta",
+        "Open Source",
+        "Optimization",
+        "Infrastructure",
+        "Resource Allocation",
+        "Rebalancer",
+        "Algorithms"
+      ],
+      "entities": [
+        "Meta",
+        "Rebalancer",
+        "FICO Xpress",
+        "Gurobi",
+        "HiGHS"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly follows the provided source text and constraints. No external knowledge or facts were added."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 332,
+      "word_count_en": 658
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 591,
+      "word_count_en": 552
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "9376884578bcf2048380",
+      "title": "Open-Sourcing Rebalancer: A Generic, High-Performance Library for Solving Assignment Problems",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 332,
+          "word_count_en": 658
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 591,
+          "word_count_en": 552
+        }
+      ]
+    }
+  ],
+  "slug": "open-sourcing-rebalancer-generic-high-performance-library-for-solving-assignment-problems",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/open-sourcing-rebalancer-generic-high-performance-library-for-solving-assignment-problems/hero.webp",
+    "card": "/forum/assets/posts/2026/09/open-sourcing-rebalancer-generic-high-performance-library-for-solving-assignment-problems/card.webp",
+    "social": "/forum/assets/posts/2026/09/open-sourcing-rebalancer-generic-high-performance-library-for-solving-assignment-problems/social.jpg",
+    "alt": {
+      "ar": "ميتا تفتح المصدر لمكتبة Rebalancer لحل مشكلات التخصيص",
+      "en": "Meta Open-Sources Rebalancer to Solve Complex Resource Allocation"
+    },
+    "credit": "Meta Engineering",
+    "sourceUrl": "https://engineering.fb.com/wp-content/uploads/2026/09/Meta-Rebalancer.webp",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
