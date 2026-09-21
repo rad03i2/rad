@@ -123,7 +123,7 @@ def main() -> int:
         write_all({"ar": ar_posts, "en": en_posts}, datetime.now(published.tzinfo or timezone.utc))
         migrated += 1
 
-    print(f"RDWAN Tech legacy migration: migrated={migrated}")
+    print(f"Mikhbar legacy migration: migrated={migrated}")
     return 0
 
 
