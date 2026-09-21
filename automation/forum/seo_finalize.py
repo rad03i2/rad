@@ -24,7 +24,7 @@ RELATED_END = "<!-- SEO_RELATED_END -->"
 PERSON_PUBLISHER = '"publisher":{"@type":"Person","name":"Radwan Abdulhadi","url":"https://rdwan.dev/"}'
 ORG_PUBLISHER = (
     '"publisher":{"@type":"NewsMediaOrganization","@id":"https://rdwan.dev/forum/#publisher",'
-    '"name":"RDWAN Tech","url":"https://rdwan.dev/forum/",'
+    '"name":"Mikhbar","alternateName":"مِخبار","url":"https://rdwan.dev/forum/",'
     '"logo":{"@type":"ImageObject","url":"https://rdwan.dev/assets/images/radwan-favicon.png"},'
     '"founder":{"@type":"Person","name":"Radwan Abdulhadi",'
     '"url":"https://rdwan.dev/forum/authors/radwan-abdulhadi/"}}'
