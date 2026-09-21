@@ -1,5 +1,352 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-09-21T19:16:32+00:00",
-  "last_published_story_id": "cf5f5478a2ce33792417"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-09-21T19:22:30+00:00",
+  "target_publish_at": "2026-09-21T22:36:31.958358+03:00",
+  "story": {
+    "title": "How Benchling secured multi-tenant AI agents with Amazon Bedrock AgentCore",
+    "url": "https://aws.amazon.com/blogs/machine-learning/how-benchling-secured-multi-tenant-ai-agents-with-amazon-bedrock-agentcore",
+    "domain": "aws.amazon.com",
+    "summary": "Learn how Benchling built a defense-in-depth security architecture to run untrusted, AI agent-generated scientific code across thousands of life sciences tenants using Amazon Bedrock AgentCore Code Interpreter in VPC mode, combined with Amazon Route 53 Resolver DNS Firewall and VPC endpoint policies to block data exfiltration, including through DNS.",
+    "published_at": "2026-09-21T16:27:34+00:00",
+    "discovered_at": "2026-09-21T16:31:46+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 69,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "4f34f6c24e9c2c7378ba",
+    "trend": {
+      "score": 116.38,
+      "age_hours": 2.9,
+      "corroboration_count": 0,
+      "entity_momentum": 9.51,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-benchling-secured-multi-tenant-ai-agents-with-amazon-bedrock-agentcore/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How Benchling secured multi-tenant AI agents with Amazon Bedrock AgentCore",
+      "title": "How Benchling secured multi-tenant AI agents with Amazon Bedrock AgentCore | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "Benchling تعزز أمان وكلاء الذكاء الاصطناعي عبر Amazon Bedrock AgentCore",
+      "description": "تستعرض منصة Benchling استراتيجية دفاعية متقدمة لتأمين تنفيذ الأكواد العلمية عبر وكلاء الذكاء الاصطناعي، باستخدام تقنيات العزل الشبكي لمنع تسريب البيانات.",
+      "deck": "اعتمدت Benchling بنية أمنية متعددة الطبقات لحماية بيئاتها السحابية، مما يتيح تشغيل أكواد برمجية غير موثوقة في بيئة معزولة لآلاف المستخدمين بكفاءة وأمان.",
+      "summary_bullets": [
+        "اعتماد بيئة معزولة تماماً لتشغيل الأكواد البرمجية الناتجة عن وكلاء الذكاء الاصطناعي.",
+        "استخدام Amazon Route 53 Resolver DNS Firewall للتحكم الدقيق في استعلامات DNS ومنع تسريب البيانات.",
+        "تجاوز عقبة تعقيدات إدارة أدوار IAM عبر حقن الصلاحيات المؤقتة لكل مهمة على حدة.",
+        "تحقيق سجل أداء خالٍ من الحوادث الأمنية لأكثر من 600 جلسة تنفيذ يومياً."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي الأمان في بيئات العمل متعددة المستأجرين",
+          "paragraphs": [
+            {
+              "text": "تواجه الشركات التي تعتمد على الذكاء الاصطناعي التوليدي تحدياً تقنياً كبيراً يتمثل في كيفية تنفيذ الأكواد البرمجية التي ينشئها الوكلاء في بيئات متعددة المستأجرين (Multi-tenant) بشكل آمن. واجهت شركة Benchling هذا التحدي عند سعيها لتشغيل أكواد علمية معقدة عبر آلاف الحسابات لقطاع علوم الحياة، حيث لم تعد طرق الحماية التقليدية كافية لمواجهة المخاطر المحتملة. وقد دفع هذا الفريق الهندسي في الشركة إلى ابتكار بنية دفاعية عميقة باستخدام منصة Amazon Bedrock AgentCore التي توفر أدوات متطورة لبناء وتشغيل الوكلاء على نطاق واسع.",
+              "links": [
+                {
+                  "text": "Benchling",
+                  "url": "https://www.benchling.com/"
+                },
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "من الناحية التشغيلية، كان الهدف هو عزل الأكواد البرمجية غير الموثوقة عن البنية التحتية الرئيسية، مع ضمان عدم تداخل البيانات بين المستأجرين. وبحسب توثيق العمليات في مدونة AWS Machine Learning Blog، فإن البنية الجديدة تتيح معالجة مئات الجلسات يومياً دون أي حوادث أمنية، وذلك عبر الانتقال من قيود الشبكة العامة إلى سياسات تحكم صارمة يمتلك فيها فريق الأمن السيطرة الكاملة على نقاط الوصول والبيانات.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "البنية التحتية والعزل الشبكي",
+          "paragraphs": [
+            {
+              "text": "تعتمد Benchling على استخدام ميزة Code Interpreter ضمن بيئة سحابية خاصة (Amazon Virtual Private Cloud). لقد صممت الشركة بنية شبكية تعتمد فلسفة «المنع افتراضياً ما لم يُسمح صراحةً»، حيث لا تحتوي البيئة المخصصة لتنفيذ الأكواد على بوابات إنترنت أو بوابات NAT، مما يقطع أي طريق للاتصال المباشر بالعالم الخارجي. هذا العزل يضمن أن أي محاولة اتصال خارج نطاق المصرح به سيتم رصدها وإحباطها فوراً.",
+              "links": []
+            },
+            {
+              "text": "تعتبر هذه الطبقة الأمنية حاسمة لمنع تسريب البيانات، حيث لا يقتصر الأمر على حظر منافذ الخروج، بل يمتد ليشمل فحص استعلامات نظام أسماء النطاقات (DNS). ومن خلال الدمج بين سياسات نقاط النهاية (VPC endpoint policies) واستراتيجيات الفحص المتقدمة، استطاعت الشركة ضمان أن كل عملية تنفيذ لأكود الذكاء الاصطناعي تبقى ضمن نطاق عملها المحدد، دون المساس بسلامة البيانات المخزنة في Amazon Simple Storage Service.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استراتيجية الدفاع ضد تسريب البيانات عبر DNS",
+          "paragraphs": [
+            {
+              "text": "تمثل استعلامات DNS ثغرة أمنية خفية في معظم البيئات السحابية؛ فهي غالباً ما تكون مسموحاً بها وتصعب مراقبتها. لمعالجة هذا الأمر، استخدمت Benchling نظام Amazon Route 53 Resolver DNS Firewall لتطبيق سياسة دقيقة تعتمد على ثلاث أولويات: حظر النطاقات الخبيثة المعروفة، السماح فقط بنقاط النهاية المدرجة في القائمة البيضاء، ثم حظر كافة الاستعلامات الأخرى افتراضياً. هذه الآلية تمنع الوكلاء من إجراء اتصالات غير مصرح بها حتى في حال محاولة تجاوز القيود التقليدية.",
+              "links": []
+            },
+            {
+              "text": "علاوة على ذلك، توفر هذه الطبقة الدفاعية قدرات مراقبة عالية، حيث يتم تسجيل أي محاولة لاستعلام نطاق محظور، مما يتيح للفريق الأمني تحليل التهديدات بفعالية. وبحسب المعلومات الواردة في دليل Code Interpreter documentation، فإن هذا النهج يقلل من مخاطر الهجمات التي تستهدف استغلال بروتوكولات الشبكة لنقل البيانات خارج البيئة المحمية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الصلاحيات والتحجيم الديناميكي",
+          "paragraphs": [
+            {
+              "text": "من أكبر التحديات في الأنظمة متعددة المستأجرين هو تجنب \"تضخم الأدوار\" (Role Sprawl) عند محاولة منح كل مستخدم صلاحيات IAM خاصة به. لقد تجاوزت الشركة هذا العائق عبر حقن صلاحيات مؤقتة لكل مهمة تنفيذ بشكل ديناميكي باستخدام AWS Security Token Service (STS). هذه العملية تضمن أن الكود البرمجي الذي يتم تنفيذه يمتلك صلاحية الوصول إلى بيانات المستأجر المعني فقط، ولا يمكنه الوصول إلى بيانات مستأجرين آخرين، مما يحقق مبدأ الحد الأدنى من الامتيازات (Principle of Least Privilege).",
+              "links": []
+            },
+            {
+              "text": "بالإضافة إلى ذلك، توفر منصة Benchling AI بيئة متكاملة تدمج أدوات التنفيذ هذه مع سير عمل الباحثين. ومن خلال الاستعانة بـ VPC configuration guide، استطاعت الشركة بناء بيئة توازن بين سهولة الاستخدام للمطورين وبين القيود الأمنية الصارمة المطلوبة في قطاع الأدوية والعلوم الحيوية، حيث تخضع كل عملية تنفيذ لاختبارات تحقق مستمرة تحاكي محاولات تسريب البيانات للتأكد من صمود النظام.",
+              "links": [
+                {
+                  "text": "Benchling AI",
+                  "url": "https://www.benchling.com/ai"
+                },
+                {
+                  "text": "VPC configuration guide",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-vpc.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "الأمن السيبراني",
+        "AWS",
+        "الحوسبة السحابية",
+        "Benchling",
+        "أمن البيانات"
+      ],
+      "entities": [
+        "Benchling",
+        "Amazon Bedrock",
+        "Amazon VPC",
+        "Amazon Route 53",
+        "AWS IAM"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة المحتوى بناءً على مدونة AWS التقنية الرسمية مع الالتزام التام بالروابط المحددة والبيانات الواردة في المصادر دون إضافات خارجية."
+    },
+    "en": {
+      "title": "Benchling Secures Multi-Tenant AI Agents with AWS Bedrock",
+      "description": "Benchling implements a new defense-in-depth security architecture using Amazon Bedrock AgentCore to isolate AI-generated scientific code execution.",
+      "deck": "The life sciences software provider has successfully deployed a secure, multi-tenant environment for executing untrusted AI-generated code while preventing data exfiltration.",
+      "summary_bullets": [
+        "Benchling manages over 600 daily code execution sessions across more than 250 tenants using isolated AWS infrastructure.",
+        "The security architecture utilizes Amazon Bedrock AgentCore Code Interpreter within a restricted Virtual Private Cloud.",
+        "A custom DNS Firewall policy and dynamic credential injection prevent cross-tenant data access and unauthorized network connectivity.",
+        "The system avoids IAM role sprawl by using AWS STS for per-job credential scoping."
+      ],
+      "sections": [
+        {
+          "heading": "Addressing the Challenge of Untrusted Code at Scale",
+          "paragraphs": [
+            {
+              "text": "Benchling recently detailed the implementation of a robust security framework designed to handle AI agent-generated scientific code for its life sciences clients. As [Benchling](https://www.benchling.com/) expanded its [Benchling AI](https://www.benchling.com/ai) capabilities, the company required a way to execute code safely across thousands of tenants without risking cross-tenant data exposure or malicious exfiltration.",
+              "links": [
+                {
+                  "text": "Benchling",
+                  "url": "https://www.benchling.com/"
+                },
+                {
+                  "text": "Benchling AI",
+                  "url": "https://www.benchling.com/ai"
+                }
+              ]
+            },
+            {
+              "text": "Traditional sandboxing methods proved insufficient for the company's specific threat model. Security teams sought a solution that offered full control over network isolation beyond standard system defaults, ensuring that every session remained contained and that no unauthorized network connections could be established.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Isolation Strategy",
+          "paragraphs": [
+            {
+              "text": "To achieve this level of security, Benchling built a defense-in-depth architecture leveraging [Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/). The primary component is the [Code Interpreter documentation](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/code-interpreter-tool.html) implementation, which runs within a dedicated and isolated [Amazon Virtual Private Cloud (VPC)](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/vpc-tkv.html).",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                },
+                {
+                  "text": "Code Interpreter documentation",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/code-interpreter-tool.html"
+                },
+                {
+                  "text": "Amazon Virtual Private Cloud (VPC)",
+                  "url": "https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/vpc-tkv.html"
+                }
+              ]
+            },
+            {
+              "text": "The architecture strictly adheres to a 'nothing unless explicitly allowed' philosophy. By utilizing a separate 'Untrusted Code Account' for execution, the production environment remains isolated from the compute environment. This ensures that even if an execution session encounters an issue, the primary customer data store in [Amazon Simple Storage Service (Amazon S3)](https://aws.amazon.com/s3/) remains protected.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Network Controls and DNS Exfiltration Defense",
+          "paragraphs": [
+            {
+              "text": "Network security within the execution environment is enforced through a combination of restrictive Security Groups and Amazon Route 53 Resolver DNS Firewall policies. The VPC configuration lacks an internet gateway or NAT gateway, effectively cutting off direct paths to the public internet.",
+              "links": []
+            },
+            {
+              "text": "The DNS Firewall acts as a critical line of defense, utilizing a three-priority policy. The first priority blocks known malicious domains, the second permits only explicitly approved endpoints, and the final priority denies all other queries. According to the [AWS Machine Learning Blog](https://aws.amazon.com/blogs/machine-learning/how-benchling-secured-multi-tenant-ai-agents-with-amazon-bedrock-agentcore/), this setup allows Benchling to maintain observability while proactively rejecting hostile traffic patterns.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-benchling-secured-multi-tenant-ai-agents-with-amazon-bedrock-agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Credential Management and Scalability",
+          "paragraphs": [
+            {
+              "text": "One of the significant operational hurdles Benchling faced was avoiding the administrative burden of maintaining one IAM role per tenant. Instead of creating thousands of static roles, the team implemented a dynamic credential injection process. Credentials are provided via AWS Security Token Service (STS) on a per-job basis, which ensures that each session only has access to the specific data required for that operation.",
+              "links": []
+            },
+            {
+              "text": "This granular scoping, combined with continuous integration testing that simulates exfiltration attempts, provides a validated security posture. By owning these controls end-to-end, Benchling reports that the system successfully processes hundreds of execution sessions daily with zero reported security incidents since deployment.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Benchling",
+        "AWS",
+        "Bedrock",
+        "Cybersecurity",
+        "Cloud Computing",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "Benchling",
+        "Amazon Web Services",
+        "Amazon Bedrock AgentCore",
+        "Amazon S3",
+        "Route 53"
+      ],
+      "article_type": "news",
+      "confidence_note": "The content is derived strictly from the provided source document which describes Benchling's architecture on AWS."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 380,
+      "word_count_en": 615
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 629,
+      "word_count_en": 491
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "4f34f6c24e9c2c7378ba",
+      "title": "How Benchling secured multi-tenant AI agents with Amazon Bedrock AgentCore",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 380,
+          "word_count_en": 615
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 629,
+          "word_count_en": 491
+        }
+      ]
+    }
+  ],
+  "slug": "how-benchling-secured-multi-tenant-ai-agents-with-amazon-bedrock-agentcore",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/how-benchling-secured-multi-tenant-ai-agents-with-amazon-bedrock-agentcore/hero.webp",
+    "card": "/forum/assets/posts/2026/09/how-benchling-secured-multi-tenant-ai-agents-with-amazon-bedrock-agentcore/card.webp",
+    "social": "/forum/assets/posts/2026/09/how-benchling-secured-multi-tenant-ai-agents-with-amazon-bedrock-agentcore/social.jpg",
+    "alt": {
+      "ar": "Benchling تعزز أمان وكلاء الذكاء الاصطناعي عبر Amazon Bedrock AgentCore",
+      "en": "Benchling Secures Multi-Tenant AI Agents with AWS Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-21025-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/how-benchling-secured-multi-tenant-ai-agents-with-amazon-bedrock-agentcore/inline-01.webp",
+        "width": 1400,
+        "height": 534,
+        "alt": {
+          "ar": "Benchling تعزز أمان وكلاء الذكاء الاصطناعي عبر Amazon Bedrock AgentCore",
+          "en": "Benchling Secures Multi-Tenant AI Agents with AWS Bedrock"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-benchling-secured-multi-tenant-ai-agents-with-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/Benchling-agentcore-ci-revised.drawio.png"
+      }
+    ]
+  }
 }
