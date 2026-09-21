@@ -1,10 +1,10 @@
-# RDWAN Tech Automation
+# Mikhbar Automation
 
-This directory powers the automated RDWAN Tech publishing pipeline.
+This directory powers the automated Mikhbar publishing pipeline.
 
 ## Publishing model
 
-RDWAN Tech now uses a template-driven static publishing architecture:
+Mikhbar now uses a template-driven static publishing architecture:
 
 1. collect and verify a technology story
 2. generate structured Arabic article data
