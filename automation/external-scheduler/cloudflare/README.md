@@ -1,4 +1,4 @@
-# RDWAN Tech External Scheduler
+# Mikhbar External Scheduler
 
 This Worker wakes the GitHub publisher every five minutes. GitHub remains the source of truth for the publication cadence: `publisher_scheduler.py` prepares during the cooldown and publishes only when the configured 20-minute gap is due.
 
@@ -13,7 +13,7 @@ The deployment workflow expects these GitHub Actions repository secrets:
 
 ## Deployment
 
-Run the GitHub Actions workflow **Deploy RDWAN Tech External Scheduler** after the four secrets exist. The workflow deploys the Worker, installs its secrets, and attaches the cron trigger from `wrangler.toml`.
+Run the GitHub Actions workflow **Deploy Mikhbar External Scheduler** after the four secrets exist. The workflow deploys the Worker, installs its secrets, and attaches the cron trigger from `wrangler.toml`.
 
 ## Schedule
 
