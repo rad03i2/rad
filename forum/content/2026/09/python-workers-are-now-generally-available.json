@@ -1,0 +1,381 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "6b297dd5acbf219033be",
+  "slug": "python-workers-are-now-generally-available",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/python-workers-are-now-generally-available/",
+    "en": "/forum/en/web/python-workers-are-now-generally-available/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cloudflare تطلق Python Workers رسمياً وتدعم الأطر البرمجية",
+      "description": "أعلنت Cloudflare عن التوفر العام لـ Python Workers، مما يتيح للمطورين تشغيل تطبيقات بايثون وأطر العمل الشهيرة محلياً دون الحاجة لكتابة كود JavaScript إضافي.",
+      "deck": "دخلت بايثون أخيراً كعنصر أساسي في منظومة Cloudflare للمطورين، لتوفر بيئة تنفيذ متكاملة وقابلة للتوسع عالمياً.",
+      "summaryBullets": [
+        "اعتماد Python كإحدى اللغات الأساسية والمدعومة كلياً في منصة Cloudflare.",
+        "إمكانية تشغيل أطر العمل الشهيرة مثل FastAPI وDjango وFlask مباشرة.",
+        "تحسين تجربة الربط مع خدمات Cloudflare عبر تقنية تحويل الأنواع التلقائي.",
+        "دعم قواعد البيانات عبر تكامل Hyperdrive بفضل تقنيات الربط المبتكرة."
+      ],
+      "sections": [
+        {
+          "heading": "التحول نحو الاستقرار والتوفر العام",
+          "paragraphs": [
+            {
+              "text": "بعد عامين من التطوير المستمر والاختبارات المكثفة، أعلنت Cloudflare Blog عن التوفر العام لـ Python Workers. هذا الإعلان لا يمثل مجرد تحديث تقني، بل يكرس بايثون كجزء لا يتجزأ من منصة المطورين لديهم، مما يسمح للمطورين بتوظيف خبراتهم البرمجية السابقة في تصميماتهم على الحافة (Edge) دون الحاجة لتعلم تقنيات معقدة أو إجراء تغييرات جذرية في بنية مشاريعهم البرمجية التي يخططون لـ run Python applications من خلالها.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/python-workers-ga/"
+                },
+                {
+                  "text": "run Python applications",
+                  "url": "https://blog.cloudflare.com/python-workers/"
+                }
+              ]
+            },
+            {
+              "text": "الهدف الأساسي من هذه الخطوة هو تقليص الفجوة بين لغات البرمجة المختلفة، فبعد أن دعمت المنصة تقنيات WebAssembly since 2018، أصبحت البيئة مهيأة لتشغيل مترجم بايثون معقد داخل حاوية معزولة. وقد لعبت تقنية Pyodide دوراً محورياً في هذا التحول، حيث وفرت الأساس اللازم لتشغيل تطبيقات بايثون بكفاءة عالية وبأداء يقارب ما يختبره المطورون في البيئات المحلية التقليدية.",
+              "links": [
+                {
+                  "text": "WebAssembly since 2018",
+                  "url": "https://blog.cloudflare.com/webassembly-on-cloudflare-workers/"
+                },
+                {
+                  "text": "Pyodide",
+                  "url": "https://pyodide.org/en/stable/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تجربة تطوير برمجية خالية من «كود الغراء»",
+          "paragraphs": [
+            {
+              "text": "كان التحدي الأكبر الذي يواجه المطورين سابقاً هو الحاجة إلى كتابة كود برمجي إضافي للربط بين بيئة بايثون وخدمات Cloudflare الأخرى، وهو ما كان يُعرف بـ \"كود الغراء\". كان يتوجب على المطورين تحويل كائنات بايثون إلى كائنات متوافقة مع TypeScript عند حدود الاستدعاء عن بُعد. ولحل هذه المعضلة، نجح فريق الهندسة في الشركة في إجراء تحديثات جوهرية حيث encapsulated the entire type conversion process داخل نظام التشغيل (Runtime) ومكتبة بايثون البرمجية.",
+              "links": [
+                {
+                  "text": "encapsulated the entire type conversion process",
+                  "url": "https://blog.cloudflare.com/python-workers-rpc/"
+                }
+              ]
+            },
+            {
+              "text": "نتيجة لهذا التغيير، لم يعد المطورون بحاجة لكتابة سطر واحد من JavaScript عند التعامل مع Bindings الخاصة بـ Cloudflare. أصبح بإمكان المطور التعامل مع قواعد البيانات مثل D1 أو خدمات التخزين R2 أو حتى أدوات الذكاء الاصطناعي Workers AI بأسلوب \"بايثوني\" بحت. هذا التكامل السلس يقلل من احتمالية حدوث أخطاء برمجية ويجعل عملية الانتقال إلى السحابة أكثر انسيابية للمشاريع البرمجية الحالية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تشغيل أطر عمل الويب العالمية",
+          "paragraphs": [
+            {
+              "text": "تسمح هذه التحديثات الآن بتشغيل أطر عمل الويب الشهيرة مثل FastAPI، Django، وFlask دون عناء. بدلاً من الحاجة إلى خوادم ويب تقليدية، قامت Cloudflare بتقديم موصلات (Connectors) مبنية خصيصاً لهذه الغاية. بالنسبة للأطر التي تعتمد على معيار WSGI، توفر الشركة حزمة متخصصة تعمل كجسر خفيف ومحسّن للطلبات الواردة، ونفس الأمر ينطبق على الأطر الأحدث التي تعتمد معيار ASGI.",
+              "links": [
+                {
+                  "text": "WSGI",
+                  "url": "https://peps.python.org/pep-3333/"
+                },
+                {
+                  "text": "ASGI",
+                  "url": "https://asgi.readthedocs.io/en/latest/"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد هذه الموصلات على تحويل طلبات JavaScript الواردة إلى هياكل بيانات تفهمها تطبيقات بايثون، ثم تقوم برد الاستجابة بكفاءة عالية. هذا التصميم يغني المطورين عن إعداد خوادم معقدة، حيث تتولى منصة Cloudflare مهام موازنة الأحمال والتحجيم التلقائي. للمزيد من التفاصيل حول الإعدادات الفنية لكل إطار، يمكن للمطورين مراجعة Python Workers documentation المتاحة عبر الموقع الرسمي.",
+              "links": [
+                {
+                  "text": "Python Workers documentation",
+                  "url": "https://developers.cloudflare.com/workers/languages/python/packages/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تكامل قواعد البيانات والاتصال المباشر",
+          "paragraphs": [
+            {
+              "text": "لطالما كان الوصول إلى قواعد البيانات يمثل عقبة أمام تطبيقات بايثون في بيئة WebAssembly بسبب افتقارها لدعم مآخذ التوصيل (TCP Sockets). لكن مع التحديث الجديد، أصبح بإمكان المطورين استخدام Hyperdrive للاتصال بقواعد بيانات مثل PostgreSQL وMySQL. قامت الشركة بتنفيذ محاكي لاستدعاءات النظام (System Calls) يقوم بترجمة عمليات الشبكة في بايثون إلى نداءات JavaScript التي يفهمها بيئة تنفيذ Workers.",
+              "links": [
+                {
+                  "text": "Hyperdrive",
+                  "url": "https://developers.cloudflare.com/hyperdrive/"
+                }
+              ]
+            },
+            {
+              "text": "هذه البنية التحتية تجعل التعامل مع قواعد البيانات يبدو طبيعياً تماماً. بمجرد إعداد Hyperdrive وربطه في ملفات التهيئة (Wrangler Config)، يمكن للمطور استخدام مكتبات القيادة المعتادة للغة بايثون دون أن يدرك أن خلف الكواليس تتم عمليات ترجمة معقدة. هذا الابتكار يفتح الباب أمام تطبيقات بايثون الضخمة لتنتقل بالكامل إلى شبكة Cloudflare مع ضمان سرعة استجابة فائقة واتصال آمن بقواعد البيانات البعيدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آفاق المستقبل والتوسع",
+          "paragraphs": [
+            {
+              "text": "تتطلع الشركة إلى تعزيز منظومة المكتبات المتاحة عبر جعل عملية التوافق مع WebAssembly معيارية وسهلة. وبينما كانت الحزم التي تتضمن إضافات C/C++/Rust تمثل تحدياً في السابق بسبب الحاجة للترجمة المتقاطعة اليدوية، فإن الهدف القادم هو تمكين المجتمع البرمجي من إنتاج مكتبات تتوافق تلقائياً مع بيئة Workers. إن الاستثمار في هذه الأدوات يؤكد التزام الشركة بجعل منصة الويب مكاناً مرناً لا يتقيد بلغة برمجة واحدة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Python",
+        "Workers",
+        "برمجة الويب",
+        "WebAssembly",
+        "تطوير السحابة"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Python",
+        "FastAPI",
+        "Django",
+        "Pyodide"
+      ],
+      "category": "الويب",
+      "dateLabel": "21 سبتمبر 2026",
+      "modifiedLabel": "21 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 633
+    },
+    "en": {
+      "title": "Cloudflare Python Workers Are Now Generally Available",
+      "description": "Cloudflare introduces production-ready Python support for its Workers platform, allowing developers to run frameworks like FastAPI and Django seamlessly.",
+      "deck": "Cloudflare has officially transitioned its Python Workers to general availability, positioning Python as a first-class language within its serverless ecosystem.",
+      "summaryBullets": [
+        "Python Workers now support native integration with Cloudflare platform bindings like R2, D1, and Workers AI.",
+        "Developers can use familiar frameworks such as FastAPI, Django, and Flask without writing JavaScript glue code.",
+        "New socket support enables the use of standard Python database drivers via Hyperdrive.",
+        "The platform leverages WebAssembly and Pyodide to run Python applications with native-like performance."
+      ],
+      "sections": [
+        {
+          "heading": "A First-Class Language for the Cloudflare Platform",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has announced that Python Workers are now generally available, marking a significant milestone in the company’s efforts to treat Python as a first-class citizen alongside TypeScript. By leveraging its infrastructure, Cloudflare aims to enable developers to run Python applications and AI orchestration libraries natively within the Workers runtime. This production-ready release allows for the deployment of scalable applications that integrate directly with the wider Cloudflare ecosystem, including R2, D1, and Workers AI, without the need for cumbersome JavaScript interoperability layers.",
+              "links": [
+                {
+                  "text": "Python Workers are now generally available",
+                  "url": "https://blog.cloudflare.com/python-workers-ga/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Seamless Integration and Type Conversion",
+          "paragraphs": [
+            {
+              "text": "A primary focus of this release is removing the friction historically associated with integrating Python code into a JavaScript-centric runtime. Previously, developers were often required to manually convert Python objects into TypeScript objects to facilitate communication at the RPC boundary. Cloudflare has addressed this by having the platform effectively encapsulated the entire type conversion process within the Workers runtime and the Python SDK. This development allows developers to utilize platform bindings in a purely Pythonic manner, removing the requirement to maintain separate JavaScript glue code for standard tasks.",
+              "links": [
+                {
+                  "text": "encapsulated the entire type conversion process",
+                  "url": "https://blog.cloudflare.com/python-workers-rpc/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Support for Popular Web Frameworks",
+          "paragraphs": [
+            {
+              "text": "The general availability update brings native support for popular Python web frameworks, including FastAPI, Django, and Flask. Because Cloudflare’s global network manages load balancing and scaling, the need to manage individual web servers inside the worker is eliminated. Instead, Cloudflare provides specialized connectors that act as a bridge between the network and the application logic. By utilizing the WSGI and ASGI standards, developers can deploy applications that are essentially server-agnostic, allowing them to benefit from the platform's automatic scaling and global distribution without needing to configure a traditional server environment.",
+              "links": [
+                {
+                  "text": "WSGI",
+                  "url": "https://peps.python.org/pep-3333/"
+                },
+                {
+                  "text": "ASGI",
+                  "url": "https://asgi.readthedocs.io/en/latest/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Database Connectivity and Hyperdrive Integration",
+          "paragraphs": [
+            {
+              "text": "Database interaction in a serverless environment has traditionally been difficult for Python due to the underlying constraints of WebAssembly, which usually prohibits standard POSIX networking system calls. To overcome this, Cloudflare implemented a specialized socket bridge that translates standard Python socket operations into the runtime's own connect API. This allows developers to use standard database drivers—such as those required for PostgreSQL or MySQL—to connect to their data stores. This innovation makes it possible to integrate Hyperdrive directly into Python Workers, providing a performant way to manage database connections globally.",
+              "links": [
+                {
+                  "text": "connect",
+                  "url": "https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/"
+                },
+                {
+                  "text": "Hyperdrive",
+                  "url": "https://developers.cloudflare.com/hyperdrive/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Foundations in WebAssembly and Pyodide",
+          "paragraphs": [
+            {
+              "text": "The ability to execute Python within the Cloudflare environment is built upon the company’s long-standing support for WebAssembly, which has been integrated into Workers since 2018. By utilizing Pyodide, a project that brings the Python runtime to the browser and server-side via WebAssembly, Cloudflare is able to run a compiled interpreter directly within its sandbox. This architecture ensures that Python applications maintain high performance while adhering to the security and isolation requirements of the Workers platform. For developers looking to get started, comprehensive details regarding packages and configuration can be found in the official Python Workers documentation.",
+              "links": [
+                {
+                  "text": "Pyodide",
+                  "url": "https://pyodide.org/en/stable/"
+                },
+                {
+                  "text": "Python Workers documentation",
+                  "url": "https://developers.cloudflare.com/workers/languages/python/packages/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Python",
+        "Serverless",
+        "WebAssembly",
+        "Pyodide",
+        "Web Development",
+        "FastAPI",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Python",
+        "Workers",
+        "Pyodide",
+        "FastAPI",
+        "Django",
+        "Flask",
+        "Hyperdrive"
+      ],
+      "category": "Web",
+      "dateLabel": "September 21, 2026",
+      "modifiedLabel": "September 21, 2026",
+      "readMinutes": 3,
+      "wordCount": 550
+    }
+  },
+  "datePublished": "2026-09-21T16:43:05.314692+03:00",
+  "dateModified": "2026-09-21T16:43:05.314692+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/python-workers-are-now-generally-available/hero.webp",
+    "card": "/forum/assets/posts/2026/09/python-workers-are-now-generally-available/card.webp",
+    "social": "/forum/assets/posts/2026/09/python-workers-are-now-generally-available/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تطلق Python Workers رسمياً وتدعم الأطر البرمجية",
+      "en": "Cloudflare Python Workers Are Now Generally Available"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M2V34BA05P39V3QCVSXF412X.01M2V34C4FZEN00M4XFVXH4W2K.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/python-workers-are-now-generally-available/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "Cloudflare تطلق Python Workers رسمياً وتدعم الأطر البرمجية",
+          "en": "Python Workers are now generally available"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/python-workers-ga/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M31JM2B4K28B7C67PCT5PB2R.01M31JM35NW9707QDHV86F68M9.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/python-workers-are-now-generally-available/inline-02.webp",
+        "width": 1400,
+        "height": 636,
+        "alt": {
+          "ar": "Cloudflare تطلق Python Workers رسمياً وتدعم الأطر البرمجية",
+          "en": "BLOG-3512 2.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/python-workers-ga/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M2V34B98AFHX986KP70WF54Y.01M2V34CGNFYXX59FZ2MPKEKWK.png&w=1430&h=650&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/python-workers-are-now-generally-available/inline-03.webp",
+        "width": 1400,
+        "height": 713,
+        "alt": {
+          "ar": "Cloudflare تطلق Python Workers رسمياً وتدعم الأطر البرمجية",
+          "en": "BLOG-3512 5.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/python-workers-ga/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M2V34FR0NPET1PKA1YGE6QS7.01M2V34GSM4JXGX4DMA1H393CS.png&w=1430&h=728&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/python-workers-are-now-generally-available/inline-04.webp",
+        "width": 1330,
+        "height": 956,
+        "alt": {
+          "ar": "Cloudflare تطلق Python Workers رسمياً وتدعم الأطر البرمجية",
+          "en": "BLOG-3512 6.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/python-workers-ga/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M2V34GW5EXQCQW27RV0EWYEH.01M2V34J33FCM8TBEM9TXQ098T.png&w=1430&h=1028&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/python-workers-ga/",
+      "type": "official",
+      "title": "Python Workers are now generally available"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/python-workers-ga",
+  "sourceTitle": "Python Workers are now generally available",
+  "trendScore": 132.37,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-21T13:43:05+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/python-workers-are-now-generally-available.json"
+}
