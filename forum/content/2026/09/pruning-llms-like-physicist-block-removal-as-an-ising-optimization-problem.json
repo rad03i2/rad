@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "ae2a66f3c360fd1788ea",
+  "slug": "pruning-llms-like-physicist-block-removal-as-an-ising-optimization-problem",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/pruning-llms-like-physicist-block-removal-as-an-ising-optimization-problem/",
+    "en": "/forum/en/ai/pruning-llms-like-physicist-block-removal-as-an-ising-optimization-problem/"
+  },
+  "locales": {
+    "ar": {
+      "title": "ضغط نماذج LLMs عبر الفيزياء: نهج جديد لتقليم الكتل البرمجية",
+      "description": "كشفت MultiverseComputingCAI عن طريقة مبتكرة لتقليم نماذج اللغة الضخمة LLMs عبر صياغة اختيار الكتل كمشكلة فيزيائية باستخدام تحسين الثنائي المقيد.",
+      "deck": "تستخدم تقنية جديدة مستوحاة من فيزياء الأنظمة الدوارة لحل معضلة اختيار الكتل البرمجية في النماذج الضخمة، مما يحقق تفوقاً ملموساً في الأداء مقارنة بالأساليب التقليدية.",
+      "summaryBullets": [
+        "تحويل عملية حذف كتل المحولات (Transformer blocks) إلى مشكلة تحسين ثنائي مقيد (CBO).",
+        "استخدام فيزياء زجاج الإيسينغ (Ising glass) لنمذجة التفاعلات المتبادلة بين كتل النموذج.",
+        "تحقيق مكاسب في أداء نموذج Llama-3.3-70B تصل إلى 23 نقطة مئوية في اختبارات MMLU.",
+        "الاعتماد على solvers كلاسيكية ومستوحاة من الكم لإيجاد تكوينات التقليم المثلى بسرعة فائقة."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي تقليم النماذج: ما وراء التخلص من الكتل",
+          "paragraphs": [
+            {
+              "text": "تعتبر عملية حذف كتل المحولات بالكامل، والمعروفة بـ block removal، واحدة من أكثر الطرق فاعلية لتسريع نماذج اللغة الكبيرة (LLMs). هذه العملية لا تكتفي بتقليل استهلاك الذاكرة فحسب، بل تمنح سرعة استنتاج متوقعة لأن النموذج يصبح أقصر فعلياً. ورغم بساطة المفهوم، إلا أن تحديد الكتل التي يجب التخلص منها يمثل تحدياً هندسياً معقداً؛ فإزالة الكتل الخاطئة قد تؤدي إلى انهيار دقة النموذج، كما أن تأثير إزالة كتلة معينة يعتمد بشكل مباشر على الكتل الأخرى التي يتم حذفها بالتزامن. تشير الأبحاث المنشورة عبر [Hugging Face Blog](https://huggingface.co/blog/MultiverseComputingCAI/pruning-llms-like-a-physicist-block-removal-as-an) إلى أن هذا التفاعل يجعل من التقليم مشكلة توافقية (Combinatorial) معقدة وليست مجرد عملية ترتيب بسيطة.",
+              "links": []
+            },
+            {
+              "text": "في النماذج العميقة وغير المتجانسة، تتجاهل معظم الطرق التقليدية التفاعلات بين الكتل، حيث تعتمد على 'متوسطات الحقل' (Mean-field methods) التي تقيم أهمية كل كتلة بمعزل عن الأخريات. هذا التبسيط يؤدي غالباً إلى فقدان جودة النموذج، خاصة عند محاولة ضغط النموذج بشكل مكثف. يوضح فريق [MultiverseComputingCAI](https://huggingface.co/MultiverseComputingCAI) أن تجاهل هذه الاقترانات (Couplings) يترك فرصاً ضائعة لتحسين الأداء، وهو ما دفعهم للبحث عن حلول مستمدة من الفيزياء الإحصائية.",
+              "links": [
+                {
+                  "text": "MultiverseComputingCAI",
+                  "url": "https://huggingface.co/MultiverseComputingCAI"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الفيزياء في خدمة الذكاء الاصطناعي: محاكاة زجاج الإيسينغ",
+          "paragraphs": [
+            {
+              "text": "لحل معضلة التفاعلات، أعاد الباحثون صياغة مشكلة اختيار الكتل كمسألة تحسين ثنائي مقيد (CBO). في هذا النموذج، يتم تخصيص متغير ثنائي لكل كتلة (0 للاحتفاظ، 1 للحذف)، وهو ما يحاكي نظاماً فيزيائياً من 'الدوران' (Spin). ومن خلال إجراء توسيع تايلور من الدرجة الثانية لخسارة النموذج، استطاع الفريق استخراج مصفوفة هسيان (Hessian matrix) تقريبية، حيث يمثل القطر أهمية الكتلة الفردية، بينما تمثل المداخل خارج القطر التفاعلات المتبادلة بين الكتل.",
+              "links": []
+            },
+            {
+              "text": "هذا التحويل الرياضي، الموثق في ورقة [LLM Compression by Block Removal with Constrained Binary Optimization](https://huggingface.co/papers/2602.00161)، يسمح بمعاملة النموذج كـ 'زجاج إيسينغ' (Ising glass)، حيث ترتبط الكتل جميعها ببعضها البعض. الطاقة الناتجة عن هذا النظام الفيزيائي تعمل كوكيل قوي وقليل التكلفة لجودة النموذج بعد التقليم. بعبارة أخرى، حالات الطاقة المنخفضة في هذا النظام الفيزيائي تتوافق مع حالات الأداء العالي للنموذج المقلّم، مما يلغي الحاجة إلى إجراء اختبارات أداء (Benchmarking) مكلفة لكل احتمالية.",
+              "links": [
+                {
+                  "text": "LLM Compression by Block Removal with Constrained Binary Optimization",
+                  "url": "https://huggingface.co/papers/2602.00161"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الكفاءة الحسابية: السرعة دون التضحية بالدقة",
+          "paragraphs": [
+            {
+              "text": "من المزايا الجوهرية لهذا النهج هي تكلفته المنخفضة. يتم حساب مصفوفة الهسيان مرة واحدة فقط باستخدام مجموعة بيانات معايرة صغيرة عبر تمريرات أمامية وخلفية. بعد ذلك، تصبح عملية تقييم أي تكوين مقترح مجرد حساب طاقة بسيط وسريع. لا يتطلب هذا النهج تشغيل النموذج الفعلي لاختباره، كما يمكن إعادة استخدام نفس مصفوفة الهسيان لاستكشاف قيم مختلفة لعدد الكتل المراد حذفها، مما يجعله مرناً للغاية في سيناريوهات الضغط المتفاوت.",
+              "links": []
+            },
+            {
+              "text": "فيما يتعلق بـ [block removal](https://huggingface.co/papers/2602.00161)، يتيح هذا النموذج إمكانية استكشاف مليارات التكوينات في وقت قياسي. بالنسبة للنماذج ذات الحجم المتوسط، يمكن استخدام الحوسبة بالقوة الغاشمة (Brute-force) على معالج رسوميات واحد، بينما في الحالات الأكثر تعقيداً، يتم الانتقال إلى حلول متقدمة مثل البحث الممنوع (Tabu search) أو خوارزميات مستوحاة من الكم، مما يوفر أدوات قوية للتعامل مع مساحات الاحتمالات الضخمة التي لا يمكن حصرها يدوياً.",
+              "links": [
+                {
+                  "text": "block removal",
+                  "url": "https://huggingface.co/papers/2602.00161"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "النتائج والآفاق المستقبلية في ضغط النماذج",
+          "paragraphs": [
+            {
+              "text": "حقق تطبيق هذه التقنية على نموذج Llama-3.3-70B-Instruct نتائج مبهرة، حيث تفوق على أفضل الطرق المنافسة في تقليم الكتل بنسبة 23 نقطة مئوية في اختبارات MMLU عند مستوى ضغط 50%. الأهم من ذلك، يرى الباحثون أن الوصول إلى 'الحالة الأرضية' (Ground state) للطاقة ليس الغاية القصوى؛ بل إن استكشاف حالات الطاقة المنخفضة يعطي مجموعة متنوعة من النماذج المقلمة عالية الجودة، مما يتيح للمهندسين اختيار التوازن الأمثل بين السرعة والدقة حسب متطلبات التطبيق.",
+              "links": []
+            },
+            {
+              "text": "إن هذا الدمج بين الفيزياء الإحصائية وهندسة النماذج اللغوية يفتح آفاقاً جديدة؛ فبدلاً من الاعتماد على التجربة والخطأ، أصبح لدينا إطار رياضي صلب يمكنه التنبؤ بسلوك النماذج تحت ظروف الضغط. ومع استمرار نمو النماذج اللغوية، ستصبح هذه الأدوات التي توفرها فرق مثل [MultiverseComputingCAI](https://huggingface.co/MultiverseComputingCAI) حيوية لجعل النماذج فائقة الضخامة متاحة للعمل على أجهزة ذات موارد محدودة، مع الحفاظ على كفاءة استدلال لا تضحي بجودة المخرجات.",
+              "links": [
+                {
+                  "text": "MultiverseComputingCAI",
+                  "url": "https://huggingface.co/MultiverseComputingCAI"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "LLM",
+        "ضغط النماذج",
+        "فيزياء",
+        "تحسين",
+        "Llama"
+      ],
+      "entities": [
+        "Multiverse Computing",
+        "Hugging Face",
+        "Llama-3.3-70B-Instruct"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "21 سبتمبر 2026",
+      "modifiedLabel": "21 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 676
+    },
+    "en": {
+      "title": "Multiverse Computing Applies Ising Physics to LLM Pruning",
+      "description": "Multiverse Computing introduces a novel method for LLM compression using constrained binary optimization to select blocks for removal via Ising systems.",
+      "deck": "Researchers at Multiverse Computing have developed a physics-inspired approach to large language model (LLM) pruning. By treating transformer block removal as an Ising optimization problem, the team has successfully improved compression efficiency and model performance.",
+      "summaryBullets": [
+        "Multiverse Computing addresses the combinatorial complexity of LLM depth pruning by mapping block selection to an Ising glass model.",
+        "The method utilizes second-order Taylor expansion to identify pairwise couplings between blocks, surpassing traditional mean-field approaches.",
+        "Energy minimization serves as a highly accurate proxy for model performance, allowing for massive configuration evaluation without costly benchmarking.",
+        "The technique scales effectively to complex models like Llama-3.3-70B, achieving significant MMLU gains compared to standard pruning heuristics."
+      ],
+      "sections": [
+        {
+          "heading": "The Challenge of LLM Depth Pruning",
+          "paragraphs": [
+            {
+              "text": "The rapid expansion of large language models has led researchers to explore increasingly efficient ways to minimize computational overhead. One of the most direct methods is block removal, or depth pruning, which reduces the model's footprint by deleting entire transformer blocks. While this approach offers predictable inference speedups and stacks well with quantization, determining which specific blocks to remove remains a significant challenge. According to the recent [Hugging Face Blog](https://huggingface.co/blog/MultiverseComputingCAI/pruning-llms-what-is-the-physics-of-spin-systems) post, the interaction between blocks means that removing the wrong components can lead to catastrophic model collapse.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/MultiverseComputingCAI/pruning-llms-like-a-physicist-block-removal-as-an"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Mapping LLMs to Spin Systems",
+          "paragraphs": [
+            {
+              "text": "Traditional pruning methods often rely on mean-field heuristics, which evaluate each block's importance independently. Multiverse Computing argues that this approach ignores the crucial coupling—the impact that the removal of one block has on another—that defines the model's structural integrity. Their research, detailed in [LLM Compression by Block Removal with Constrained Binary Optimization](https://huggingface.co/papers/2602.00161), redefines block selection as a constrained binary optimization (CBO) problem. By mapping these dependencies onto an Ising glass, the team captures the all-to-all interactions inherent in a disordered spin system.",
+              "links": [
+                {
+                  "text": "LLM Compression by Block Removal with Constrained Binary Optimization",
+                  "url": "https://huggingface.co/papers/2602.00161"
+                }
+              ]
+            },
+            {
+              "text": "In this framework, each transformer block is assigned a binary variable, representing 'keep' or 'remove' states, analogous to 'up' or 'down' spins. By performing a second-order Taylor expansion of the model's loss, the researchers derive a Hessian matrix. The diagonal entries quantify individual block importance, while off-diagonal entries represent the pairwise couplings between blocks. This physics-based formulation allows for the calculation of an energy score that serves as a high-fidelity proxy for downstream performance, enabling the selection of optimal block configurations without the need for extensive retraining or benchmarking.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Efficiency and Performance Gains",
+          "paragraphs": [
+            {
+              "text": "The primary advantage of this [block removal](https://huggingface.co/papers/2602.00161) strategy lies in its computational efficiency. The Hessian matrix is computed once using a small calibration dataset, after which testing thousands of potential pruning configurations becomes a matter of simple energy calculations. This allows practitioners to explore vastly larger configuration spaces than brute-force methods would otherwise permit. When applied to Llama-3.3-70B-Instruct at 50% compression, the method reportedly yielded a 23 percentage point improvement on the MMLU benchmark compared to existing competitive pruning techniques.",
+              "links": [
+                {
+                  "text": "block removal",
+                  "url": "https://huggingface.co/papers/2602.00161"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Leveraging Quantum-Inspired Solvers",
+          "paragraphs": [
+            {
+              "text": "While simple configurations can be solved via brute force on a single GPU, more complex scenarios require more robust mathematical machinery. The research team leverages the equivalence between their CBO problem and Quadratic Unconstrained Binary Optimization (QUBO) to utilize a variety of classical, quantum, and quantum-inspired solvers. Tools such as tabu search and specialized branch-and-bound algorithms can identify low-energy states in seconds, even for the most difficult model configurations. This flexibility allows the researchers to scale the pruning process to depths that were previously computationally prohibitive.",
+              "links": []
+            },
+            {
+              "text": "Rather than seeking a single 'perfect' ground state, the team emphasizes the utility of finding a spectrum of low-energy configurations. Because the energy function provides such a strong approximation of quality, these low-lying excited states offer a set of high-performing candidates for final deployment. This strategy mitigates the risk of overfitting to a single model variation and provides a more resilient approach to deep compression in large-scale AI systems.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AI",
+        "LLM Compression",
+        "Physics",
+        "Multiverse Computing",
+        "Ising Models",
+        "Deep Learning",
+        "Llama-3.3"
+      ],
+      "entities": [
+        "Multiverse Computing",
+        "Llama-3.3-70B-Instruct",
+        "Hugging Face",
+        "MMLU"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 21, 2026",
+      "modifiedLabel": "September 21, 2026",
+      "readMinutes": 3,
+      "wordCount": 618
+    }
+  },
+  "datePublished": "2026-09-21T17:06:21.958854+03:00",
+  "dateModified": "2026-09-21T17:06:21.958854+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/pruning-llms-like-physicist-block-removal-as-an-ising-optimization-problem/hero.webp",
+    "card": "/forum/assets/posts/2026/09/pruning-llms-like-physicist-block-removal-as-an-ising-optimization-problem/card.webp",
+    "social": "/forum/assets/posts/2026/09/pruning-llms-like-physicist-block-removal-as-an-ising-optimization-problem/social.jpg",
+    "alt": {
+      "ar": "ضغط نماذج LLMs عبر الفيزياء: نهج جديد لتقليم الكتل البرمجية",
+      "en": "Multiverse Computing Applies Ising Physics to LLM Pruning"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/693c2a4eb0871ba57155b4ed/q4gZV9ENtfFwge7H3Q7YJ.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/MultiverseComputingCAI/pruning-llms-like-a-physicist-block-removal-as-an",
+      "type": "official",
+      "title": "Pruning LLMs Like a Physicist: Block Removal as an Ising Optimization Problem"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/MultiverseComputingCAI/pruning-llms-like-a-physicist-block-removal-as-an",
+  "sourceTitle": "Pruning LLMs Like a Physicist: Block Removal as an Ising Optimization Problem",
+  "trendScore": 121.5,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-21T14:06:21+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/pruning-llms-like-physicist-block-removal-as-an-ising-optimization-problem.json"
+}
