@@ -111,3 +111,57 @@ body{background-image:none!important}
   .mikhbar-brand-mark{width:46px!important;height:46px!important;flex-basis:46px!important}
   .mikhbar-brand-mark img{width:46px!important;height:46px!important}
 }
+
+
+/* Mikhbar About transition */
+.mikhbar-about-transition{
+  position:fixed;
+  inset:0;
+  z-index:2147483000;
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+  background:transparent!important;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .14s ease,visibility 0s linear .14s;
+}
+.mikhbar-about-transition.is-visible{
+  opacity:1;
+  visibility:visible;
+  pointer-events:all;
+  transition:opacity .14s ease;
+}
+.mikhbar-about-transition.is-leaving{
+  opacity:0;
+}
+.mikhbar-about-transition__mark{
+  display:block;
+  width:clamp(190px,24vw,300px);
+  height:auto;
+  max-height:56vh;
+  object-fit:contain;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  filter:drop-shadow(0 12px 28px rgba(1,71,150,.16));
+  transform:scale(.94);
+  opacity:0;
+  transition:transform .18s cubic-bezier(.22,1,.36,1),opacity .14s ease;
+}
+.mikhbar-about-transition.is-visible .mikhbar-about-transition__mark{
+  transform:scale(1);
+  opacity:1;
+}
+.mikhbar-about-transition.is-leaving .mikhbar-about-transition__mark{
+  transform:scale(1.035);
+  opacity:0;
+}
+@media(max-width:760px){
+  .mikhbar-about-transition__mark{width:clamp(170px,48vw,230px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .mikhbar-about-transition,
+  .mikhbar-about-transition__mark{transition:none!important}
+}
