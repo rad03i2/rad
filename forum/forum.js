@@ -1,3 +1,6 @@
+/* Mikhbar permanent light theme */
+(()=>{document.documentElement.style.colorScheme='light';let m=document.querySelector('meta[name="theme-color"]');if(!m){m=document.createElement('meta');m.name='theme-color';document.head.appendChild(m)}m.content='#ffffff';})();
+
 (()=>{
 'use strict';
 document.documentElement.classList.add('js');
