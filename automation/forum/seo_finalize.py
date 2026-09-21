@@ -25,7 +25,7 @@ PERSON_PUBLISHER = '"publisher":{"@type":"Person","name":"Radwan Abdulhadi","url
 ORG_PUBLISHER = (
     '"publisher":{"@type":"NewsMediaOrganization","@id":"https://rdwan.dev/forum/#publisher",'
     '"name":"Mikhbar","alternateName":"مِخبار","url":"https://rdwan.dev/forum/",'
-    '"logo":{"@type":"ImageObject","url":"https://rdwan.dev/assets/images/mikhbar-favicon.png"},'
+    '"logo":{"@type":"ImageObject","url":"https://rdwan.dev/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"},'
     '"founder":{"@type":"Person","name":"Radwan Abdulhadi",'
     '"url":"https://rdwan.dev/forum/authors/radwan-abdulhadi/"}}'
 )
