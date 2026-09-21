@@ -102,7 +102,7 @@ def _header(locale: str, depth: int) -> str:
     latest_url = home_url + "#latest"
     lang_url = "/forum/en/" if locale == "ar" else "/forum/ar/"
     return f'''<header class="rt-site-header"><div class="rt-navbar">
-<a class="mikhbar-brand" href="{home_url}" aria-label="{site_name}"><span class="mikhbar-brand-mark"><img src="/assets/images/mikhbar-favicon.png" alt="" width="64" height="64"></span><span class="mikhbar-brand-copy"><strong>{site_name}</strong><small dir="ltr">MIKHBAR</small></span></a>
+<a class="mikhbar-brand" href="{home_url}" aria-label="{site_name}"><span class="mikhbar-brand-mark"><img src="/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png" alt="" width="64" height="64"></span><span class="mikhbar-brand-copy"><strong>{site_name}</strong><small dir="ltr">MIKHBAR</small></span></a>
 <button class="menu-button rt-menu-button" type="button" aria-label="{ui['menu']}" aria-expanded="false" aria-controls="navigation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
 <nav class="nav-links rt-platform-nav" id="navigation" aria-label="{ui['nav']}"><a href="{home_url}">{home_label}</a><a href="{latest_url}">{latest_label}</a><a href="/forum/about/">{about_label}</a><a class="rt-lang-switch" href="{lang_url}" lang="{'en' if locale == 'ar' else 'ar'}">{lang_label}</a></nav>
 </div></header>'''
@@ -128,7 +128,7 @@ def _schemas(locale: str, path: str, posts: list[dict], page_name: str) -> str:
     site_name = "مِخبار" if locale == "ar" else "Mikhbar"
     item_list = [{"@type": "ListItem", "position": i + 1, "url": SITE + str(p.get("url") or ""), "name": str(p.get("title") or "")} for i, p in enumerate(posts[:20]) if p.get("url")]
     graph = [
-        {"@type": "NewsMediaOrganization", "@id": SITE + "/forum/#publisher", "name": site_name, "alternateName": "Mikhbar" if locale == "ar" else "مِخبار", "url": SITE + "/forum/", "logo": {"@type": "ImageObject", "url": SITE + "/assets/images/mikhbar-favicon.png"}, "founder": {"@type": "Person", "name": "Radwan Abdulhadi", "url": SITE + "/"}},
+        {"@type": "NewsMediaOrganization", "@id": SITE + "/forum/#publisher", "name": site_name, "alternateName": "Mikhbar" if locale == "ar" else "مِخبار", "url": SITE + "/forum/", "logo": {"@type": "ImageObject", "url": SITE + "/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"}, "founder": {"@type": "Person", "name": "Radwan Abdulhadi", "url": SITE + "/"}},
         {"@type": "CollectionPage", "@id": SITE + path + "#page", "url": SITE + path, "name": page_name, "inLanguage": locale, "publisher": {"@id": SITE + "/forum/#publisher"}},
     ]
     if item_list:
@@ -154,7 +154,7 @@ def _home_page(locale: str, posts: list[dict]) -> str:
     topics = "".join(f'<a class="rt-category-box" href="./{slug}/"><span>{i:02d} · {slug.upper()}</span><h3>{escape(CATEGORIES[slug][locale][0])}</h3><p>{escape(CATEGORIES[slug][locale][1])}</p></a>' for i, slug in enumerate(("ai","robotics","automation","mobile","computers","apps","web","social","security"), 1))
     schema = _schemas(locale, f"/forum/{locale}/", posts, title)
     return f'''<!DOCTYPE html><html lang="{locale}" dir="{ui['dir']}"><head>{_head(locale, f'/forum/{locale}/', title, desc, lead_img)}
-<link rel="stylesheet" href="../../styles.css"><link rel="stylesheet" href="../forum.css"><link rel="stylesheet" href="../forum-media.css"><link rel="icon" type="image/png" href="../../assets/images/mikhbar-favicon.png"><script type="application/ld+json">{schema}</script></head>
+<link rel="stylesheet" href="../../styles.css"><link rel="stylesheet" href="../forum.css"><link rel="stylesheet" href="../forum-media.css"><link rel="icon" type="image/png" href="../../assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png"><script type="application/ld+json">{schema}</script></head>
 <body class="rt-locale-{locale}" data-locale="{locale}"><a class="skip-link" href="#main">{ui['skip']}</a>{_header(locale,2)}<main class="rt-main" id="main">
 <div class="rt-topline"><div class="rt-shell rt-topline-inner"><span class="rt-live">{ui['coverage']}</span><span class="rt-edition" dir="ltr">{site_name} · {ui['edition']}</span></div></div>
 <section class="rt-brandline"><div class="rt-shell rt-brandrow"><div class="rt-wordmark"><strong>{site_name}</strong><b>{"أخبار التقنية" if locale == "ar" else "TECH"}</b></div><p class="rt-tagline">{ui['tagline']}</p></div></section>
@@ -174,7 +174,7 @@ def _category_page(locale: str, slug: str, all_posts: list[dict]) -> str:
     title = (f"{label}: أحدث الأخبار والشروحات | مِخبار" if locale == "ar" else f"{label} News, Updates & Analysis | Mikhbar")
     path = f"/forum/{locale}/{slug}/"; root = "../../../"; feed = "".join(_card(p, locale) for p in posts[:20]); schema = _schemas(locale, path, posts, title)
     return f'''<!DOCTYPE html><html lang="{locale}" dir="{ui['dir']}"><head>{_head(locale,path,title,desc)}
-<link rel="stylesheet" href="{root}styles.css"><link rel="stylesheet" href="../../forum.css"><link rel="stylesheet" href="../../forum-media.css"><link rel="icon" type="image/png" href="{root}assets/images/radwan-favicon.png"><script type="application/ld+json">{schema}</script></head>
+<link rel="stylesheet" href="{root}styles.css"><link rel="stylesheet" href="../../forum.css"><link rel="stylesheet" href="../../forum-media.css"><link rel="icon" type="image/png" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon.ico"><script type="application/ld+json">{schema}</script></head>
 <body class="rt-locale-{locale}" data-locale="{locale}" data-category="{slug}"><a class="skip-link" href="#main">{ui['skip']}</a>{_header(locale,3)}<main class="rt-main" id="main">
 <nav class="rt-categories" aria-label="Sections"><div class="rt-shell rt-category-scroll">{_category_nav(locale,'../',slug)}</div></nav><div class="rt-shell"><section class="rt-category-hero"><nav class="rt-breadcrumbs"><a href="../">{site_name}</a><span>›</span><span>{escape(label)}</span></nav><div class="rt-category-title"><span class="rt-label">{slug.upper()}</span><h1>{escape(label)}</h1><p>{escape(desc)}</p></div></section>
 <div class="rt-toolbar"><label class="rt-search"><input id="rtSearch" type="search" autocomplete="off" placeholder="{ui['search']}" aria-label="{ui['search']}"></label><span class="rt-view-note">{ui['searchNote']}</span></div>
@@ -185,7 +185,7 @@ def _category_page(locale: str, slug: str, all_posts: list[dict]) -> str:
 def _router_page(posts_ar: list[dict], posts_en: list[dict]) -> str:
     del posts_ar, posts_en
     schema = json.dumps({"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Mikhbar","alternateName":"مِخبار","url":SITE+"/forum/","inLanguage":["ar","en"]},{"@type":"NewsMediaOrganization","name":"Mikhbar","alternateName":"مِخبار","url":SITE+"/forum/","founder":{"@type":"Person","name":"Radwan Abdulhadi","url":SITE+"/"}}]}, ensure_ascii=False, separators=(",",":"))
-    return f'''<!DOCTYPE html><html lang="en" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10130f">
+    return f'''<!DOCTYPE html><html lang="en" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff">
 <title>Mikhbar | Technology News</title><meta name="description" content="Mikhbar technology news in Arabic and English."><meta name="robots" content="index,follow"><link rel="canonical" href="{SITE}/forum/"><link rel="alternate" hreflang="ar" href="{SITE}/forum/ar/"><link rel="alternate" hreflang="en" href="{SITE}/forum/en/"><link rel="alternate" hreflang="x-default" href="{SITE}/forum/"><script>(()=>{{const lang=String((navigator.languages&&navigator.languages[0])||navigator.language||'en').toLowerCase();const edition=lang.startsWith('ar')?'ar':'en';const target='{SITE}/forum/'+edition+'/'+location.search+location.hash;if(location.href!==target)location.replace(target)}})();</script><script type="application/ld+json">{schema}</script></head><body><noscript><p><a href="/forum/ar/" lang="ar" dir="rtl">النسخة العربية</a> · <a href="/forum/en/" lang="en">English Edition</a></p></noscript></body></html>'''
 
 
