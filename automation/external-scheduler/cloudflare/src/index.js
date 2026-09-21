@@ -42,8 +42,8 @@ export default {
   async scheduled(_controller, env, ctx) {
     ctx.waitUntil(
       triggerPublisher(env).then(
-        (result) => console.log("RDWAN Tech wakeup dispatched", result),
-        (error) => console.error("RDWAN Tech wakeup failed", error),
+        (result) => console.log("Mikhbar wakeup dispatched", result),
+        (error) => console.error("Mikhbar wakeup failed", error),
       ),
     );
   },
@@ -54,7 +54,7 @@ export default {
     if (url.pathname === "/health") {
       return Response.json({
         ok: true,
-        service: "rdwan-tech-publisher-wakeup",
+        service: "mikhbar-publisher-wakeup",
         role: "wakeup-only",
         repository: `${OWNER}/${REPO}`,
         workflow: WORKFLOW_PATH,
@@ -82,7 +82,7 @@ export default {
       }
     }
 
-    return new Response("RDWAN Tech scheduler is running. Use /health for status.", {
+    return new Response("Mikhbar scheduler is running. Use /health for status.", {
       status: 200,
       headers: { "content-type": "text/plain; charset=utf-8" },
     });
