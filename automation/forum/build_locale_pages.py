@@ -75,7 +75,7 @@ def _head(locale: str, path: str, title: str, description: str, image: str = "/a
     en_path = path.replace(f"/forum/{locale}/", "/forum/en/")
     return f'''<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#10130f">
+<meta name="theme-color" content="#ffffff">
 <title>{escape(title)}</title>
 <meta name="description" content="{escape(description, quote=True)}">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
