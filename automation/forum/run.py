@@ -10,7 +10,7 @@ from verifier import refresh_queue_verification, verify_and_score
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="RDWAN Tech collection pipeline")
+    parser = argparse.ArgumentParser(description="Mikhbar collection pipeline")
     parser.add_argument("--dry-run", action="store_true", help="Collect and evaluate only; never publish")
     args = parser.parse_args()
 
@@ -84,7 +84,7 @@ def main() -> int:
     }
     save_json(STATE / "run_report.json", report)
 
-    print("RDWAN Tech collector")
+    print("Mikhbar collector")
     print(f"status={status} fetched={report['fetched']} new={len(fresh)} duplicates={duplicates} rejected={rejected}")
     print(f"queue={len(queue_items)} publish_eligible={len(candidates)} mode={report['mode']}")
     if collection_report["errors"]:
