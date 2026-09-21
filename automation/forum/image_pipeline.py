@@ -178,7 +178,7 @@ def _fallback_visual(category_slug: str, seed: str) -> Image.Image:
 
     draw.rounded_rectangle((90, 90, 1510, 810), radius=42, outline=(*accent, 80), width=2)
     draw.rectangle((90, 740, 1510, 810), fill=(7, 10, 8, 165))
-    draw.text((122, 760), "RDWAN TECH  /  " + category_slug.upper(), fill=(232, 238, 229, 205))
+    draw.text((122, 760), "MIKHBAR  /  " + category_slug.upper(), fill=(232, 238, 229, 205))
     return base.filter(ImageFilter.GaussianBlur(radius=0.3))
 
 
@@ -212,7 +212,7 @@ def prepare_images(story: dict, source_pack: list[dict], slug: str, published_ye
         visual = _fallback_visual(category_slug, f"{story.get('id')}|{title_en}|{title_ar}")
         variants = _save_variants(visual, directory)
         image_source_url = ""
-        credit = "RDWAN Tech"
+        credit = "Mikhbar"
         source_type = "generated-fallback"
         generated = True
 
