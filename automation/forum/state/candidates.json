@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-21T14:11:39+00:00",
+  "updated_at": "2026-09-21T14:21:16+00:00",
   "publishing_enabled": true,
   "dry_run": false,
   "items": [
@@ -81,7 +81,32 @@
         "corroborating_sources": []
       },
       "status": "incoming",
-      "id": "d2871d486c61275aa183"
+      "id": "d2871d486c61275aa183",
+      "last_publisher_status": "prepared",
+      "last_publisher_at": "2026-09-21T14:20:30+00:00",
+      "publisher_attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: All article generation providers failed: Groq: Groq API failed (404): {\"error\":{\"message\":\"The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.\",\"type\":\"invalid_request_error\",\"code\":\"model_not_found\"}}\n | OpenRouter: OpenRouter API failed (429): {\"error\":{\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day\",\"code\":429,\"metadata\":{\"headers\":{\"X-RateLimit-Limit\":\"50\",\"X-RateLimit-Remaining\":\"0\",\"X-RateLimit-Reset\":\"1790035200000\"},\"limit_source\":\"openrouter_free_tier_daily\",\"remedy_hint\":\"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.\",\"provider_name\":null,\"previous_errors\":[{\"code\":429,\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day\"},{\"code\":429,\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day\"},{\"code\":429,\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day\"},{\"code\":429,\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day\"},{\"code\":429,\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day\"},{\"code\":429,\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day\"},{\"code\":429,\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day\"}]}},\"user_id\":\"user_3DHQ81wrA8aF1wTapwQ4diUdpfs\"} | Gemini: Gemini Interactions API failed (503): {\"error\":{\"message\":\"gemini-3.1-flash-lite is currently experiencing high demand, spikes in demand are usually temporary. Please try again later.\",\"code\":\"service_unavailable\"}} | Copilot: Copilot CLI failed (1): \nYou have exceeded your monthly quota (Request ID: 5426:B6C18:2C1C1:314C3:6AB13C2F)\n"
+        },
+        {
+          "attempt": 2,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 397,
+          "word_count_en": 629
+        },
+        {
+          "attempt": 3,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 644,
+          "word_count_en": 624
+        }
+      ]
     },
     {
       "title": "Perplexity Portable Computer Is Now Available on Windows, Powered by NVIDIA RTX",
