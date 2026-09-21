@@ -17,21 +17,21 @@ LOCALE_UI = {
     "ar": {
         "dir": "rtl", "og": "ar_IQ", "skip": "انتقل إلى المقال", "brandAria": "رضوان عبدالهادي، الرئيسية",
         "menuAria": "فتح قائمة التنقل", "navAria": "التنقل الرئيسي", "home": "الرئيسية", "about": "عنّي",
-        "projects": "المشاريع", "forum": "المنتدى", "breadcrumbAria": "مسار التنقل", "published": "نُشر",
+        "projects": "المشاريع", "forum": "مِخبار", "breadcrumbAria": "مسار التنقل", "published": "نُشر",
         "updated": "آخر تحديث", "read": "دقائق قراءة", "summary": "الخلاصة", "sources": "المصادر",
         "sourceNote": "صيغ هذا الخبر اعتمادًا على المصادر المدرجة أعلاه، مع فصل المعلومات المؤكدة عن ادعاءات الشركات أو التقديرات.",
-        "authorName": "رضوان عبدالهادي", "authorRole": "مؤسس ومحرر RDWAN Tech",
-        "footerDesc": "منصة تقنية عربية وإنجليزية ضمن rdwan.dev.", "aboutPlatform": "عن المنصة", "aboutRdwan": "عن RDWAN Tech",
+        "authorName": "رضوان عبدالهادي", "authorRole": "مؤسس ومحرر مِخبار",
+        "footerDesc": "منصة تقنية عربية وإنجليزية ضمن rdwan.dev.", "aboutPlatform": "عن المنصة", "aboutRdwan": "عن مِخبار",
         "editorial": "السياسة التحريرية", "trust": "الثقة", "corrections": "التصحيحات", "aiPolicy": "سياسة AI",
     },
     "en": {
         "dir": "ltr", "og": "en_US", "skip": "Skip to article", "brandAria": "Radwan Abdulhadi, home",
         "menuAria": "Open navigation", "navAria": "Main navigation", "home": "Home", "about": "About",
-        "projects": "Projects", "forum": "Tech News", "breadcrumbAria": "Breadcrumb", "published": "Published",
+        "projects": "Projects", "forum": "Mikhbar", "breadcrumbAria": "Breadcrumb", "published": "Published",
         "updated": "Updated", "read": "min read", "summary": "Key points", "sources": "Sources",
         "sourceNote": "This report was produced from the sources listed above, separating confirmed information from company claims or estimates.",
-        "authorName": "Radwan Abdulhadi", "authorRole": "Founder and editor, RDWAN Tech",
-        "footerDesc": "A bilingual technology publication within rdwan.dev.", "aboutPlatform": "Publication", "aboutRdwan": "About RDWAN Tech",
+        "authorName": "Radwan Abdulhadi", "authorRole": "Founder and editor, Mikhbar",
+        "footerDesc": "A bilingual technology publication within rdwan.dev.", "aboutPlatform": "Publication", "aboutRdwan": "About Mikhbar",
         "editorial": "Editorial policy", "trust": "Trust", "corrections": "Corrections", "aiPolicy": "AI policy",
     },
 }
@@ -202,7 +202,8 @@ def _schema(record: dict, locale: str, view: dict) -> dict:
                 "publisher": {
                     "@type": "NewsMediaOrganization",
                     "@id": SITE + "/forum/#publisher",
-                    "name": "RDWAN Tech",
+                    "name": "مِخبار" if locale == "ar" else "Mikhbar",
+                    "alternateName": "Mikhbar" if locale == "ar" else "مِخبار",
                     "url": SITE + "/forum/",
                     "logo": {"@type": "ImageObject", "url": SITE + "/assets/images/radwan-favicon.png"},
                     "founder": {"@type": "Person", "name": "Radwan Abdulhadi", "url": SITE + "/forum/authors/radwan-abdulhadi/"},
@@ -213,7 +214,7 @@ def _schema(record: dict, locale: str, view: dict) -> dict:
             {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
-                    {"@type": "ListItem", "position": 1, "name": "RDWAN Tech", "item": SITE + f"/forum/{locale}/"},
+                    {"@type": "ListItem", "position": 1, "name": "مِخبار" if locale == "ar" else "Mikhbar", "item": SITE + f"/forum/{locale}/"},
                     {"@type": "ListItem", "position": 2, "name": category, "item": SITE + f"/forum/{locale}/{record['categorySlug']}/"},
                     {"@type": "ListItem", "position": 3, "name": view["title"]},
                 ],
@@ -277,6 +278,8 @@ def render_record(record: dict, locale: str = "ar") -> str:
     return template.substitute(
         LANG=locale,
         DIR=ui["dir"],
+        SITE_NAME=_e("مِخبار" if locale == "ar" else "Mikhbar"),
+        SITE_NAME_ATTR=_ea("مِخبار" if locale == "ar" else "Mikhbar"),
         OG_LOCALE=ui["og"],
         TITLE=_e(view["title"]),
         TITLE_ATTR=_ea(view["title"]),
