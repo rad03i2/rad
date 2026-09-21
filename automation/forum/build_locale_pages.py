@@ -90,15 +90,22 @@ def _head(locale: str, path: str, title: str, description: str, image: str = "/a
 
 
 def _header(locale: str, depth: int) -> str:
+    del depth
     ui = UI[locale]
-    root = "../" * depth
-    forum_root = "../" if depth > 2 else "./"
-    return f'''<header class="site-header"><div class="container header-inner">
-<a class="brand" href="{root}" aria-label="{'رضوان عبدالهادي، الرئيسية' if locale == 'ar' else 'Radwan Abdulhadi, home'}"><span class="brand-mark">ر.</span><span class="brand-text">رضوان عبدالهادي<small lang="en" dir="ltr">DEVELOPER PORTFOLIO</small></span></a>
-<button class="menu-button" type="button" aria-label="{ui['menu']}" aria-expanded="false" aria-controls="navigation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-<nav class="nav-links" id="navigation" aria-label="{ui['nav']}"><a href="{root}#home">{ui['home']}</a><a href="{root}#about">{ui['about']}</a><a href="{root}#projects">{ui['projects']}</a><a class="rad-nav-forum" href="{forum_root}" aria-current="page">{ui['forum']}</a></nav>
+    site_name = "مِخبار" if locale == "ar" else "Mikhbar"
+    mark = "م" if locale == "ar" else "M"
+    home_label = "الرئيسية" if locale == "ar" else "Home"
+    latest_label = "أحدث الأخبار" if locale == "ar" else "Latest"
+    about_label = "عن مِخبار" if locale == "ar" else "About Mikhbar"
+    lang_label = "EN" if locale == "ar" else "عربي"
+    home_url = f"/forum/{locale}/"
+    latest_url = home_url + "#latest"
+    lang_url = "/forum/en/" if locale == "ar" else "/forum/ar/"
+    return f'''<header class="rt-site-header"><div class="rt-navbar">
+<a class="mikhbar-brand" href="{home_url}" aria-label="{site_name}"><span class="mikhbar-brand-mark">{mark}</span><span class="mikhbar-brand-copy"><strong>{site_name}</strong><small dir="ltr">MIKHBAR</small></span></a>
+<button class="menu-button rt-menu-button" type="button" aria-label="{ui['menu']}" aria-expanded="false" aria-controls="navigation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+<nav class="nav-links rt-platform-nav" id="navigation" aria-label="{ui['nav']}"><a href="{home_url}">{home_label}</a><a href="{latest_url}">{latest_label}</a><a href="/forum/about/">{about_label}</a><a class="rt-lang-switch" href="{lang_url}" lang="{'en' if locale == 'ar' else 'ar'}">{lang_label}</a></nav>
 </div></header>'''
-
 
 def _card(post: dict, locale: str) -> str:
     url = escape(str(post.get("url") or "#"), quote=True)
