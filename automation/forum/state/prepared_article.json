@@ -1,5 +1,389 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-09-21T18:31:29+00:00",
-  "last_published_story_id": "e92dddaa918149b7af27"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-09-21T18:36:39+00:00",
+  "target_publish_at": "2026-09-21T21:51:29.345375+03:00",
+  "story": {
+    "title": "How BMW Group detects cost anomalies across 14,000 cloud accounts",
+    "url": "https://aws.amazon.com/blogs/machine-learning/how-bmw-group-detects-cost-anomalies-across-14000-cloud-accounts",
+    "domain": "aws.amazon.com",
+    "summary": "BMW Group operates CLEA, a FinOps platform monitoring more than 14,000 cloud accounts. This post shows how BMW added automated daily cost anomaly detection, moving from reactive dashboards to proactive alerts using Prophet forecasting, AWS Step Functions, and a serverless pipeline that processes every account for about $50 per month.",
+    "published_at": "2026-09-21T16:36:10+00:00",
+    "discovered_at": "2026-09-21T16:41:24+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "automation",
+    "category_label": "الأتمتة",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "e456ad33f99c6f888c6b",
+    "trend": {
+      "score": 125.22,
+      "age_hours": 2.0,
+      "corroboration_count": 0,
+      "entity_momentum": 12.0,
+      "category_boost": 8
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-bmw-group-detects-cost-anomalies-across-14000-cloud-accounts/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How BMW Group detects cost anomalies across 14,000 cloud accounts",
+      "title": "How BMW Group detects cost anomalies across 14,000 cloud accounts | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "كيف طورت بي إم دبليو نظاماً ذكياً لرصد تكاليف سحابة AWS",
+      "description": "تستعرض مجموعة BMW كيفية تحولها من لوحات المراقبة التفاعلية إلى نظام استباقي لرصد الانحرافات المالية في 14 ألف حساب سحابي عبر تقنيات الذكاء الاصطناعي.",
+      "deck": "اعتمدت مجموعة BMW تقنيات التنبؤ الآلي لتعزيز كفاءة الإنفاق السحابي، متحولةً من الرصد اليدوي إلى التنبيهات الاستباقية الفورية.",
+      "summary_bullets": [
+        "مراقبة أكثر من 14 ألف حساب سحابي باستخدام منصة CLEA المبتكرة.",
+        "استخدام مكتبة Prophet للتنبؤ بالإنفاق وتحديد الفجوات المالية بدقة.",
+        "تطبيق مرشحات ذكية لتقليل التنبيهات الكاذبة وتخصيص معايير الرصد.",
+        "تحقيق كفاءة تشغيلية بتكلفة لا تتجاوز 50 دولاراً شهرياً لكل حساب في البنية الأساسية."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات مراقبة 14 ألف حساب سحابي",
+          "paragraphs": [
+            {
+              "text": "تواجه الشركات الكبرى تحديات معقدة في إدارة التكاليف السحابية عند توسع نطاق عملياتها. تدير مجموعة BMW ما يزيد عن 14,000 حساب سحابي، وهو ما استدعى تطوير نظام داخلي يُعرف باسم Cloud Efficiency Analytics (CLEA) بالتعاون مع Data Reply، حيث يعتمد هذا النظام على بيئة ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-bmw-group-detects-cost-anomalies-across-14000-cloud-accounts/"
+                }
+              ]
+            },
+            {
+              "text": "في بداياتها، اعتمدت المنصة على لوحات معلومات ثابتة عبر ويمكن الرجوع إلى Artificial Intelligence للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            },
+            {
+              "text": "لتوفير رؤية للإنفاق. ومع ذلك، كان هذا النهج تفاعلياً بطبيعته؛ إذ لا تظهر التكاليف إلا بعد حدوثها وبشرط أن يقوم أحد الموظفين بمراجعة اللوحة، مما دفع الشركة للبحث عن حلول استباقية تستند إلى التنبؤ الآلي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية جمع البيانات والمعالجة السحابية",
+          "paragraphs": [
+            {
+              "text": "تعتمد منصة CLEA على استيعاب بيانات الفواتير بشكل يومي من",
+              "links": []
+            },
+            {
+              "text": "، بالإضافة إلى تقارير من مزودي خدمات آخرين. تتم معالجة ما يقرب من 3 مليارات صف من البيانات شهرياً، حيث يتم تحويلها إلى وحدة موحدة للتحليل تشمل التكلفة اليومية لكل حساب مقابل كل خدمة سحابية مستخدمة.",
+              "links": []
+            },
+            {
+              "text": "يتم تحليل البيانات بفاصل زمني يوم واحد (T-1) لضمان دقة التقارير. ونظراً لأن كل حساب قد يستخدم خدمات متنوعة مثل",
+              "links": []
+            },
+            {
+              "text": "أو",
+              "links": []
+            },
+            {
+              "text": "، فإن إجمالي المجموعات المحللة يصل إلى مئات الآلاف، وهو ما يتطلب معالجة مستقلة لكل منها عبر بنية تحتية لا خادمة (Serverless) عالية الكفاءة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاستعانة بالذكاء الاصطناعي للتنبؤ",
+          "paragraphs": [
+            {
+              "text": "لبناء أساس للإنفاق المتوقع، استخدمت المجموعة مكتبة Prophet من Meta للتنبؤ بالسلاسل الزمنية للتكاليف. يعمل النظام على تدريب النموذج بناءً على تاريخ إنفاق يمتد لـ 365 يوماً لكل زوج من الحساب والخدمة.",
+              "links": []
+            },
+            {
+              "text": "تتم عملية التنسيق اليومي باستخدام",
+              "links": []
+            },
+            {
+              "text": "، حيث يتم توزيع المهام على 500 دالة Lambda متزامنة. هذه الهندسة تتيح إنهاء عملية المسح والتحليل لـ 14,000 حساب في غضون 20 دقيقة فقط، بتكلفة تشغيلية منخفضة جداً للجانب الحاسوبي لا تتجاوز 50 دولاراً شهرياً لكل حساب.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تصفية التنبيهات ومنع التنبيهات الخاطئة",
+          "paragraphs": [
+            {
+              "text": "التحدي الأكبر كان في تجنب «الضجيج» الناتج عن القواعد الثابتة. لذا، يعتمد نظام CLEA على المقارنة الديناميكية؛ فبدلاً من وضع حد أدنى ثابت للتنبيه، يتعلم النظام المسار الطبيعي لكل حساب.",
+              "links": []
+            },
+            {
+              "text": "يطبق النظام عدة فلاتر للحد من التنبيهات، منها استثناء الخدمات ذات الإنفاق المنخفض جداً، وتطبيق عتبة انحراف لا تقل عن 40%. كما توجد مرشحات خاصة لخدمات مثل",
+              "links": []
+            },
+            {
+              "text": "و",
+              "links": []
+            },
+            {
+              "text": "، حيث يتم رفع عتبة الانحراف إلى 60% نظراً لطبيعة عمل هذه الخدمات التي تسبب تقلبات طبيعية في التكاليف، مما يضمن أن التنبيهات المرسلة لأصحاب الحسابات تعكس حالات شذوذ حقيقية وليست مجرد أنماط عمل اعتيادية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "BMW Group",
+        "FinOps",
+        "Cloud Computing",
+        "AWS",
+        "الأتمتة",
+        "الذكاء الاصطناعي",
+        "إدارة التكاليف"
+      ],
+      "entities": [
+        "BMW Group",
+        "AWS",
+        "Meta",
+        "Data Reply"
+      ],
+      "article_type": "news",
+      "confidence_note": "الخبر يعتمد كلياً على تدوينة تقنية رسمية من مدونة AWS Machine Learning، مع إعادة صياغة الحقائق التقنية بأسلوب صحفي."
+    },
+    "en": {
+      "title": "BMW Scales Cloud FinOps with Automated Anomaly Detection",
+      "description": "BMW Group utilizes a serverless AWS pipeline to proactively monitor costs across 14,000 cloud accounts, replacing reactive dashboards with AI-driven alerts.",
+      "deck": "BMW Group has evolved its Cloud Efficiency Analytics (CLEA) platform to move beyond static dashboard reporting, implementing an automated, AI-powered system that monitors cloud expenditures in real-time.",
+      "summary_bullets": [
+        "BMW Group’s CLEA platform now monitors 14,000 cloud accounts using daily automated anomaly detection.",
+        "The system utilizes Prophet forecasting to establish cost baselines and identify deviations.",
+        "A serverless pipeline processes 3 billion rows of data daily for approximately $50 in compute costs.",
+        "Custom filtering logic reduces false positives by accounting for service volatility and account-specific usage patterns."
+      ],
+      "sections": [
+        {
+          "heading": "Moving Beyond Reactive Dashboards",
+          "paragraphs": [
+            {
+              "text": "Managing cloud costs at the scale of 14,000 accounts presents a significant operational challenge. For BMW Group, the journey began with the Cloud Efficiency Analytics (CLEA) platform, an in-house FinOps initiative developed in collaboration with Reply. Initially, CLEA relied on visualization tools like Amazon Quick Sight to provide employees with visibility into their cloud usage. However, the team realized that dashboards are inherently reactive; they only show what has already transpired, and only when a user actively chooses to examine the data.",
+              "links": [
+                {
+                  "text": "Amazon Quick Sight",
+                  "url": "https://aws.amazon.com/quicksight/"
+                }
+              ]
+            },
+            {
+              "text": "To address this visibility gap, BMW and its partners sought to transition from static reporting to a proactive alerting model. According to the AWS Machine Learning Blog, the updated architecture now runs automated anomaly detection on a daily basis. By comparing actual spending against predicted trends, the system can automatically notify account owners when costs depart from expected patterns, allowing for faster intervention.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-bmw-group-detects-cost-anomalies-across-14000-cloud-accounts/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Data Pipeline and Forecasting Architecture",
+          "paragraphs": [
+            {
+              "text": "The scale of the operation is immense, processing approximately 3 billion rows of data across 500 columns each month. CLEA ingests billing information from AWS Cost and Usage Reports, ensuring data consistency by aggregating it into a daily cost per account per service. Because the pipeline is scheduled only after the delivery of billing reports is confirmed, the system maintains high data integrity with a one-day analysis lag.",
+              "links": [
+                {
+                  "text": "AWS Cost and Usage Reports",
+                  "url": "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
+                }
+              ]
+            },
+            {
+              "text": "With thousands of accounts utilizing services such as Amazon Elastic Compute Cloud (Amazon EC2) and Amazon Simple Storage Service (Amazon S3), the volume of potential time series data is vast. To manage this, BMW employs Prophet, an open-source forecasting library developed by Meta, to establish baselines for each account-service combination based on 365 days of historical data. This approach allows the system to generate expected spend metrics that adapt to historical seasonal trends.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Orchestrating Scalable Analysis",
+          "paragraphs": [
+            {
+              "text": "Efficiency was a primary design requirement, resulting in a serverless architecture that completes the entire analysis for 14,000 accounts in roughly 20 minutes for approximately $50 per month. The process is orchestrated by AWS Step Functions. The workflow begins with a Lambda function that identifies active accounts and saves a list to storage. A Distributed Map then triggers concurrent Lambda functions to forecast costs for each account, ensuring the system remains performant as usage grows.",
+              "links": [
+                {
+                  "text": "AWS Step Functions",
+                  "url": "https://aws.amazon.com/step-functions/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Refining Alerts to Minimize Noise",
+          "paragraphs": [
+            {
+              "text": "A primary challenge in implementing automated alerts is avoiding 'alert fatigue' caused by false positives. BMW discovered that fixed-dollar thresholds were insufficient because smaller accounts would be ignored while larger, evolving accounts would trigger constant, unnecessary notifications. Instead, CLEA uses a multi-layered filtering approach that accounts for the specific trajectory of each service.",
+              "links": []
+            },
+            {
+              "text": "The detection logic calculates the 'impact'—the difference between actual and expected spend—and flags anomalies that fall outside the confidence intervals produced by the Prophet model. From there, additional filters are applied. These include account-cluster filtering, which requires a minimum dollar impact based on the account's historical scale, and service-specific thresholds for volatile workloads. For instance, services like AWS Glue and Amazon Athena often exhibit higher variance by design, and thus they are subject to a 60% deviation threshold rather than the standard 40%.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "BMW Group",
+        "FinOps",
+        "Cloud Computing",
+        "AWS",
+        "Automation",
+        "Data Analytics",
+        "Prophet",
+        "Machine Learning"
+      ],
+      "entities": [
+        "BMW Group",
+        "AWS",
+        "Meta",
+        "Reply",
+        "Amazon Quick Sight",
+        "AWS Lambda",
+        "Amazon EC2",
+        "Amazon S3",
+        "AWS Glue",
+        "Amazon Athena",
+        "AWS Step Functions"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly follows the provided source text from the AWS Machine Learning Blog regarding BMW Group's CLEA platform."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 450,
+      "word_count_en": 598
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "e456ad33f99c6f888c6b",
+      "title": "How BMW Group detects cost anomalies across 14,000 cloud accounts",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 450,
+          "word_count_en": 598
+        }
+      ]
+    }
+  ],
+  "slug": "how-bmw-group-detects-cost-anomalies-across-14-000-cloud-accounts",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/how-bmw-group-detects-cost-anomalies-across-14-000-cloud-accounts/hero.webp",
+    "card": "/forum/assets/posts/2026/09/how-bmw-group-detects-cost-anomalies-across-14-000-cloud-accounts/card.webp",
+    "social": "/forum/assets/posts/2026/09/how-bmw-group-detects-cost-anomalies-across-14-000-cloud-accounts/social.jpg",
+    "alt": {
+      "ar": "كيف طورت بي إم دبليو نظاماً ذكياً لرصد تكاليف سحابة AWS",
+      "en": "BMW Scales Cloud FinOps with Automated Anomaly Detection"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/16/ML-21627-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/how-bmw-group-detects-cost-anomalies-across-14-000-cloud-accounts/inline-01.webp",
+        "width": 1400,
+        "height": 580,
+        "alt": {
+          "ar": "كيف طورت بي إم دبليو نظاماً ذكياً لرصد تكاليف سحابة AWS",
+          "en": "A funnel narrowing left to right across three filtering stages, labeled high false positives at the wide left end and low at the narrow right end. Stage one, anomaly detection, builds a Prophet forecast with seasonality"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-bmw-group-detects-cost-anomalies-across-14000-cloud-accounts/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/16/ML-21627-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/how-bmw-group-detects-cost-anomalies-across-14-000-cloud-accounts/inline-02.webp",
+        "width": 667,
+        "height": 1050,
+        "alt": {
+          "ar": "كيف طورت بي إم دبليو نظاماً ذكياً لرصد تكاليف سحابة AWS",
+          "en": "An anomaly alert email as an account owner receives it. It names the account and the recipient’s role, states that costs exceeded expected spending by $1,775.13, and notes that anomalies are detected from spending spikes"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-bmw-group-detects-cost-anomalies-across-14000-cloud-accounts/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/16/ML-21627-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/how-bmw-group-detects-cost-anomalies-across-14-000-cloud-accounts/inline-03.webp",
+        "width": 1400,
+        "height": 724,
+        "alt": {
+          "ar": "كيف طورت بي إم دبليو نظاماً ذكياً لرصد تكاليف سحابة AWS",
+          "en": "Two bar charts of daily cost for one account from early May to mid-June 2026. The left chart plots daily usage cost by operation, where RunInstances dominates and a single day reaches about $2,600 against a baseline near"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-bmw-group-detects-cost-anomalies-across-14000-cloud-accounts/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/16/ML-21627-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/how-bmw-group-detects-cost-anomalies-across-14-000-cloud-accounts/inline-04.webp",
+        "width": 800,
+        "height": 525,
+        "alt": {
+          "ar": "كيف طورت بي إم دبليو نظاماً ذكياً لرصد تكاليف سحابة AWS",
+          "en": "Architecture diagram with three grouped areas. In the Cloud Efficiency Analytics Provider area, a dbt job reads a source anomaly detection dataset and writes a target dataset, a daily time-based event starts an AWS Step"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-bmw-group-detects-cost-anomalies-across-14000-cloud-accounts/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/16/ML-21627-4.png"
+      }
+    ]
+  }
 }
