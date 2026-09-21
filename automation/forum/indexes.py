@@ -57,7 +57,7 @@ def write_feed(posts: list[dict], now: datetime, locale: str) -> None:
             "    </item>"
         )
     filename = f"feed-{locale}.xml"
-    title = "RDWAN Tech — العربية" if is_ar else "RDWAN Tech — English"
+    title = "مِخبار — العربية" if is_ar else "Mikhbar — English"
     description = "أخبار التقنية والذكاء الاصطناعي والروبوتات والأتمتة والهواتف والحواسيب والتطبيقات والويب." if is_ar else "Technology news covering AI, robotics, automation, mobile, computing, software, the web and digital platforms."
     content = f'''<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -160,7 +160,7 @@ def write_news_sitemap(posts_by_locale: dict[str, list[dict]], now: datetime) ->
                 "  <url>"
                 f"<loc>{loc}</loc>"
                 "<news:news>"
-                f"<news:publication><news:name>RDWAN Tech</news:name><news:language>{locale}</news:language></news:publication>"
+                f"<news:publication><news:name>{"مِخبار" if locale == "ar" else "Mikhbar"}</news:name><news:language>{locale}</news:language></news:publication>"
                 f"<news:publication_date>{pub}</news:publication_date>"
                 f"<news:title>{title}</news:title>"
                 "</news:news>"
@@ -177,9 +177,9 @@ def write_news_sitemap(posts_by_locale: dict[str, list[dict]], now: datetime) ->
 
 def write_llms(posts_by_locale: dict[str, list[dict]], now: datetime) -> None:
     lines = [
-        "# RDWAN Tech",
+        "# مِخبار / Mikhbar",
         "",
-        "Official bilingual technology publication within rdwan.dev.",
+        "Official bilingual technology publication: Mikhbar (مِخبار), within rdwan.dev.",
         "Arabic and English coverage of artificial intelligence, robotics, automation, mobile, computers, software, the web, social platforms and security.",
         "",
         "## Primary URLs",
