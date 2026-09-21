@@ -97,14 +97,20 @@ def _header(locale: str, depth: int) -> str:
     home_label = "الرئيسية" if locale == "ar" else "Home"
     latest_label = "أحدث الأخبار" if locale == "ar" else "Latest"
     about_label = "عن مِخبار" if locale == "ar" else "About Mikhbar"
+    sections_label = "الأقسام" if locale == "ar" else "Sections"
+    top_label = "الأهم الآن" if locale == "ar" else "Top stories"
+    newsletter_label = "النشرة" if locale == "ar" else "Newsletter"
     lang_label = "EN" if locale == "ar" else "عربي"
     home_url = f"/forum/{locale}/"
     latest_url = home_url + "#latest"
+    sections_url = home_url + "#sections"
+    top_url = home_url + "#top-stories"
+    newsletter_url = home_url + "#newsletter"
     lang_url = "/forum/en/" if locale == "ar" else "/forum/ar/"
     return f'''<header class="rt-site-header"><div class="rt-navbar">
 <a class="mikhbar-brand" href="{home_url}" aria-label="{site_name}"><span class="mikhbar-brand-mark"><img src="/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png" alt="" width="64" height="64"></span><span class="mikhbar-brand-copy"><strong>{site_name}</strong><small dir="ltr">MIKHBAR</small></span></a>
 <button class="menu-button rt-menu-button" type="button" aria-label="{ui['menu']}" aria-expanded="false" aria-controls="navigation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-<nav class="nav-links rt-platform-nav" id="navigation" aria-label="{ui['nav']}"><a href="{home_url}">{home_label}</a><a href="{latest_url}">{latest_label}</a><a href="/forum/about/">{about_label}</a><a class="rt-lang-switch" href="{lang_url}" lang="{'en' if locale == 'ar' else 'ar'}">{lang_label}</a></nav>
+<nav class="nav-links rt-platform-nav" id="navigation" aria-label="{ui['nav']}"><a href="{home_url}">{home_label}</a><a href="{latest_url}">{latest_label}</a><a data-mikhbar-nav="sections" href="{sections_url}">{sections_label}</a><a data-mikhbar-nav="top" href="{top_url}">{top_label}</a><a data-mikhbar-nav="newsletter" href="{newsletter_url}">{newsletter_label}</a><a href="/forum/about/">{about_label}</a><a class="rt-lang-switch" href="{lang_url}" lang="{'en' if locale == 'ar' else 'ar'}">{lang_label}</a></nav>
 </div></header>'''
 
 def _card(post: dict, locale: str) -> str:
@@ -158,13 +164,13 @@ def _home_page(locale: str, posts: list[dict]) -> str:
 <body class="rt-locale-{locale}" data-locale="{locale}"><a class="skip-link" href="#main">{ui['skip']}</a>{_header(locale,2)}<main class="rt-main" id="main">
 <div class="rt-topline"><div class="rt-shell rt-topline-inner"><span class="rt-live">{ui['coverage']}</span><span class="rt-edition" dir="ltr">{site_name} · {ui['edition']}</span></div></div>
 <section class="rt-brandline"><div class="rt-shell rt-brandrow"><div class="rt-wordmark"><strong>{site_name}</strong><b>{"أخبار التقنية" if locale == "ar" else "TECH"}</b></div><p class="rt-tagline">{ui['tagline']}</p></div></section>
-<nav class="rt-categories" aria-label="Sections"><div class="rt-shell rt-category-scroll">{_category_nav(locale)}</div></nav><div class="rt-shell">
+<nav class="rt-categories" id="sections" aria-label="Sections"><div class="rt-shell rt-category-scroll">{_category_nav(locale)}</div></nav><div class="rt-shell">
 <section class="rt-hero" aria-label="Top content"><a class="rt-lead" id="rtLead" href="{lead_url}"><img class="rt-lead-media" id="rtLeadImage" src="{escape(lead_img, quote=True)}" alt="{escape(str(featured.get('title') or site_name), quote=True)}" width="1600" height="900" fetchpriority="high" decoding="async"><span class="rt-label" id="rtLeadCategory">{lead_category}</span><h1 id="rtLeadTitle">{lead_title}</h1><p id="rtLeadExcerpt">{lead_excerpt}</p><div class="rt-story-meta"><span id="rtLeadDate">{lead_date}</span><span id="rtLeadRead">{lead_read}</span><span>Radwan Abdulhadi</span></div></a>
-<aside class="rt-side"><section class="rt-side-panel"><div class="rt-panel-head"><h2>{ui['important']}</h2><a href="#latest">{ui['allNews']}</a></div><div class="rt-now-list" id="rtNowList">{now}</div></section><section class="rt-side-panel"><div class="rt-panel-head"><h2>{ui['explore']}</h2></div><div class="rt-topic-grid"><a class="rt-topic-card" href="./ai/"><b>{CATEGORIES['ai'][locale][0]}</b><span>AI</span></a><a class="rt-topic-card" href="./robotics/"><b>{CATEGORIES['robotics'][locale][0]}</b><span>ROBOTICS</span></a><a class="rt-topic-card" href="./mobile/"><b>{CATEGORIES['mobile'][locale][0]}</b><span>MOBILE</span></a><a class="rt-topic-card" href="./apps/"><b>{CATEGORIES['apps'][locale][0]}</b><span>APPS</span></a></div></section></aside></section>
+<aside class="rt-side"><section class="rt-side-panel" id="top-stories"><div class="rt-panel-head"><h2>{ui['important']}</h2><a href="#latest">{ui['allNews']}</a></div><div class="rt-now-list" id="rtNowList">{now}</div></section><section class="rt-side-panel"><div class="rt-panel-head"><h2>{ui['explore']}</h2></div><div class="rt-topic-grid"><a class="rt-topic-card" href="./ai/"><b>{CATEGORIES['ai'][locale][0]}</b><span>AI</span></a><a class="rt-topic-card" href="./robotics/"><b>{CATEGORIES['robotics'][locale][0]}</b><span>ROBOTICS</span></a><a class="rt-topic-card" href="./mobile/"><b>{CATEGORIES['mobile'][locale][0]}</b><span>MOBILE</span></a><a class="rt-topic-card" href="./apps/"><b>{CATEGORIES['apps'][locale][0]}</b><span>APPS</span></a></div></section></aside></section>
 <div class="rt-toolbar"><label class="rt-search"><input id="rtSearch" type="search" autocomplete="off" placeholder="{ui['search']}" aria-label="{ui['search']}"></label><span class="rt-view-note">{ui['searchNote']}</span></div>
 <section class="rt-section" id="latest"><header class="rt-section-head"><div><h2>{ui['latest']}</h2><p>{ui['latestDesc']}</p></div><span class="rt-count" id="rtCount">{len(posts)} {ui['posts']}</span></header><div class="rt-feed" id="rtFeed">{feed}</div><div class="rt-feed-empty" id="rtEmpty" hidden><b>{ui['noResults']}</b><p>{ui['tryDifferent']}</p></div><button class="rt-load-more" id="rtLoadMore" type="button">{ui['more']}</button></section>
 <section class="rt-section"><header class="rt-section-head"><div><h2>{ui['topics']}</h2><p>{ui['topicsDesc']}</p></div></header><div class="rt-category-showcase">{topics}</div></section>
-<section class="rt-newsletter"><div><h2>{ui['newsletter']}</h2><p>{ui['newsletterDesc']}</p></div><a href="https://omniform1.com/forms/v1/landingPage/6aa951449b0f973742e3f90d/6aa9b7a1f85082d5ccd3f79c">{ui['subscribe']}</a></section></div></main>
+<section class="rt-newsletter" id="newsletter"><div><h2>{ui['newsletter']}</h2><p>{ui['newsletterDesc']}</p></div><a href="https://omniform1.com/forms/v1/landingPage/6aa951449b0f973742e3f90d/6aa9b7a1f85082d5ccd3f79c">{ui['subscribe']}</a></section></div></main>
 <footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> {site_name}</div></footer><script src="../forum.js" defer></script></body></html>'''
 
 
