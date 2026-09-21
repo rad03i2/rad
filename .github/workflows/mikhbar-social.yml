@@ -30,9 +30,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      METRICOOL_USER_TOKEN: \${{ secrets.METRICOOL_USER_TOKEN }}
-      METRICOOL_USER_ID: \${{ secrets.METRICOOL_USER_ID }}
-      METRICOOL_BLOG_ID: \${{ secrets.METRICOOL_BLOG_ID }}
+      METRICOOL_USER_TOKEN: ${{ secrets.METRICOOL_USER_TOKEN }}
+      METRICOOL_USER_ID: ${{ secrets.METRICOOL_USER_ID }}
+      METRICOOL_BLOG_ID: ${{ secrets.METRICOOL_BLOG_ID }}
     steps:
       - name: Checkout latest website state
         uses: actions/checkout@v4
@@ -52,20 +52,20 @@ jobs:
         id: mode
         shell: bash
         run: |
-          if [[ "\${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "value=\${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "value=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
           else
             echo "value=live" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Run Mikhbar social pipeline
-        run: python automation/social/pipeline.py --mode "\${{ steps.mode.outputs.value }}"
+        run: python automation/social/pipeline.py --mode "${{ steps.mode.outputs.value }}"
 
       - name: Upload social audit snapshot
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mikhbar-social-\${{ github.run_number }}
+          name: mikhbar-social-${{ github.run_number }}
           path: automation/social/state/*.json
           retention-days: 30
           if-no-files-found: warn
@@ -84,10 +84,10 @@ jobs:
           for attempt in 1 2 3 4; do
             git pull --rebase origin main
             if git push origin HEAD:main; then
-              echo "Social state pushed safely on attempt \${attempt}."
+              echo "Social state pushed safely on attempt ${attempt}."
               exit 0
             fi
-            echo "Social state push raced with another update; retrying (\${attempt}/4)."
+            echo "Social state push raced with another update; retrying (${attempt}/4)."
             sleep $((attempt * 3))
           done
           echo "Unable to push social state after safe retries."

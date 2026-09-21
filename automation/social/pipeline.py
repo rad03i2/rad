@@ -484,19 +484,28 @@ def process_queue(mode: str, rules: dict[str, Any], queue_state: dict[str, Any],
 
         item["updated_at"] = now_local().isoformat()
         states = [v.get("status") for v in (item.get("platforms") or {}).values()]
-        if states and all(s in {"scheduled", "published", "skipped", "media_pending"} for s in states):
-            if any(s == "scheduled" for s in states):
-                item["status"] = "scheduled"
-                if item["story_id"] not in existing_published_ids:
-                    completed_records.append({
-                        "story_id": item["story_id"],
-                        "canonical_url": item["canonical_url"],
-                        "social_score": item["social_score"],
-                        "social_priority": item["social_priority"],
-                        "platforms": item["platforms"],
-                        "recorded_at": now_local().isoformat(),
-                    })
-                    existing_published_ids.add(item["story_id"])
+        if any(s == "scheduled" for s in states):
+            terminal = {"scheduled", "published", "skipped", "media_pending"}
+            item["status"] = "scheduled" if all(s in terminal for s in states) else "partial"
+            record_payload = {
+                "story_id": item["story_id"],
+                "canonical_url": item["canonical_url"],
+                "social_score": item["social_score"],
+                "social_priority": item["social_priority"],
+                "platforms": item["platforms"],
+                "recorded_at": now_local().isoformat(),
+            }
+            existing_record = next(
+                (x for x in published_state.get("items", []) if x.get("story_id") == item["story_id"]),
+                None,
+            )
+            if existing_record is not None:
+                existing_record.update(record_payload)
+            else:
+                completed_records.append(record_payload)
+                existing_published_ids.add(item["story_id"])
+        elif states and all(s in {"skipped", "media_pending"} for s in states):
+            item["status"] = "media_pending" if "media_pending" in states else "skipped"
         report["details"].append({
             "story_id": item["story_id"],
             "score": item["social_score"],
