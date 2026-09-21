@@ -311,7 +311,7 @@ def _call_openrouter(prompt: str, model: str) -> dict:
         provider="OpenRouter",
         extra_headers={
             "HTTP-Referer": "https://rdwan.dev/forum/",
-            "X-Title": "RDWAN Tech",
+            "X-Title": "Mikhbar",
         },
     )
 
@@ -403,7 +403,7 @@ def _call_copilot(prompt: str) -> dict:
 def _call_model(prompt: str, settings: dict) -> dict:
     errors = []
 
-    # Primary: Groq. Fast OpenAI-compatible inference and first choice for RDWAN Tech.
+    # Primary: Groq. Fast OpenAI-compatible inference and first choice for Mikhbar.
     if os.environ.get("GROQ_API_KEY", "").strip():
         try:
             return _call_groq(prompt, settings.get("groqModel", "llama-3.3-70b-versatile"))
@@ -479,7 +479,7 @@ def _write_locale(story: dict, usable: list[dict], locale: str, settings: dict, 
     retry_guidance = _retry_guidance(locale, quality_feedback)
     if locale == "ar":
         prompt = f"""
-أنت محرر تقني عربي دقيق لمنصة RDWAN Tech. اكتب نسخة عربية أصلية من الخبر اعتماداً حصراً على المصادر أدناه، من دون ترجمة حرفية ومن دون اختراع أي معلومة.
+أنت محرر تقني عربي دقيق لمنصة مِخبار. اكتب نسخة عربية أصلية من الخبر اعتماداً حصراً على المصادر أدناه، من دون ترجمة حرفية ومن دون اختراع أي معلومة.
 
 القصة: {story.get('title')}
 التصنيف: {story.get('category_label')} ({story.get('category')})
@@ -505,7 +505,7 @@ def _write_locale(story: dict, usable: list[dict], locale: str, settings: dict, 
 """.strip()
     else:
         prompt = f"""
-You are the English technology editor for RDWAN Tech. Write an original English news article based ONLY on the supplied source material. Do not translate the Arabic edition and do not invent facts, prices, dates, specifications, quotes, or context that is absent from the sources.
+You are the English technology editor for Mikhbar. Write an original English news article based ONLY on the supplied source material. Do not translate the Arabic edition and do not invent facts, prices, dates, specifications, quotes, or context that is absent from the sources.
 
 Candidate story: {story.get('title')}
 Category: {story.get('category')} / {story.get('category_label')}
