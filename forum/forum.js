@@ -6,6 +6,13 @@ const $=(s,r=document)=>r.querySelector(s);const $$=(s,r=document)=>Array.from(r
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const locale=(document.body.dataset.locale||document.documentElement.lang||'ar').toLowerCase().startsWith('en')?'en':'ar';
 const isAr=locale==='ar';
+function brandAssets(){
+  const icon='/assets/images/mikhbar-favicon.png?v=20260921-brand1';
+  let fav=document.querySelector('link[rel~="icon"]');
+  if(!fav){fav=document.createElement('link');fav.rel='icon';fav.type='image/png';document.head.appendChild(fav)}
+  fav.href=icon;
+  $('.mikhbar-brand-mark').forEach(mark=>{if(!mark.querySelector('img'))mark.innerHTML='<img src="'+icon+'" alt="" width="64" height="64">';});
+}
 const dict={
  ar:{count:n=>`${n} منشور`,fallbackCat:'تقنية',emptyNow:'ستظهر هنا الموضوعات الأحدث فور بدء النشر اليومي.',read:'',imgAlt:'صورة الخبر'},
  en:{count:n=>`${n} ${n===1?'post':'posts'}`,fallbackCat:'Technology',emptyNow:'The latest and most important stories will appear here as they are published.',read:'',imgAlt:'Story image'}
@@ -29,5 +36,5 @@ function renderCategory(){const slug=document.body.dataset.category;if(!slug)ret
 async function load(){const urls=locale==='ar'?['/forum/posts-ar.json','/forum/posts.json']:['/forum/posts-en.json'];for(const url of urls){try{const r=await fetch(url,{cache:'no-store'});if(!r.ok)continue;const data=await r.json();allPosts=(Array.isArray(data)?data:(data.posts||[])).slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));renderHome();renderFeed();renderCategory();return}catch{}}renderFeed()}
 function bind(){const search=$('#rtSearch');if(search)search.addEventListener('input',()=>{visibleCount=12;renderFeed()});$$('[data-filter]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();currentFilter=b.dataset.filter||'all';visibleCount=12;$$('[data-filter]').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','page');renderFeed()}));}
 function year(){$$('[data-year]').forEach(e=>e.textContent=new Date().getFullYear())}
-menu();bind();year();load();
+brandAssets();menu();bind();year();load();
 })();
