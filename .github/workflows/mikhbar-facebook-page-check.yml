@@ -1,0 +1,33 @@
+name: Mikhbar Facebook Page Check
+
+on:
+  push:
+    paths:
+      - 'automation/social/facebook_page_check_trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  page-check:
+    runs-on: ubuntu-latest
+    env:
+      FACEBOOK_USER_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+    steps:
+      - name: List managed Facebook pages safely
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os
+          from urllib.request import Request, urlopen
+          from urllib.parse import urlencode
+
+          token = os.environ["FACEBOOK_USER_ACCESS_TOKEN"]
+          url = "https://graph.facebook.com/me/accounts?" + urlencode({"fields": "id,name,tasks"})
+          req = Request(url, headers={"Authorization": "Bearer " + token})
+          with urlopen(req, timeout=30) as r:
+              data = json.loads(r.read().decode())
+          safe = [{"id": x.get("id"), "name": x.get("name"), "tasks": x.get("tasks", [])} for x in data.get("data", [])]
+          print(json.dumps({"managed_pages": safe}, ensure_ascii=False))
+          PY
