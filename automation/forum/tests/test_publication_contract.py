@@ -24,15 +24,15 @@ class PublicationContractTests(unittest.TestCase):
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("trigger:", workflow)
         self.assertIn("required: true", workflow)
-        self.assertIn("cron: '0,20,40 * * * *'", workflow)
+        self.assertIn("cron: '2,22,42 * * * *'", workflow)
         self.assertIn("group: mikhbar-publication-write", workflow)
         self.assertIn("python automation/forum/publisher_scheduler.py", workflow)
 
     def test_external_wakeup_matches_twenty_minute_publication_clock(self) -> None:
         wrangler = self._read("automation/external-scheduler/cloudflare/wrangler.toml")
         worker = self._read("automation/external-scheduler/cloudflare/src/index.js")
-        self.assertIn('crons = ["0,20,40 * * * *"]', wrangler)
-        self.assertIn('const CRON = "0,20,40 * * * *";', worker)
+        self.assertIn('crons = ["2,22,42 * * * *"]', wrangler)
+        self.assertIn('const CRON = "2,22,42 * * * *";', worker)
         self.assertIn('inputs: { trigger: "external-20m" }', worker)
         self.assertIn("publication_cadence_source", worker)
 
