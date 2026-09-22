@@ -72,7 +72,7 @@ jobs:
           state.setdefault('published_story_ids', []).append(story_id)
           state['last_success'] = {'story_id': story_id, 'facebook_post_id': result.get('id'), 'page_id': os.environ['FACEBOOK_PAGE_ID']}
           state_path.parent.mkdir(parents=True, exist_ok=True)
-          state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')
+          state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           print(json.dumps({'status':'published','story_id':story_id,'facebook_post_id':result.get('id'),'page_id':os.environ['FACEBOOK_PAGE_ID']}, ensure_ascii=False))
           PY
       - name: Commit social state only
