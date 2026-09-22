@@ -4,15 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'Execution mode'
+        description: Execution mode
         required: true
-        default: 'dry-run'
+        default: dry-run
         type: choice
-        options:
-          - dry-run
-          - live
+        options: [dry-run, live]
   workflow_run:
-    workflows: ["Mikhbar 20-Minute Publisher"]
+    workflows: ['Mikhbar 20-Minute Publisher']
     types: [completed]
 
 permissions:
@@ -24,71 +22,67 @@ concurrency:
 
 jobs:
   social:
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success'
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      METRICOOL_USER_TOKEN: ${{ secrets.METRICOOL_USER_TOKEN }}
-      METRICOOL_USER_ID: ${{ secrets.METRICOOL_USER_ID }}
-      METRICOOL_BLOG_ID: ${{ secrets.METRICOOL_BLOG_ID }}
+      FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+      FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
     steps:
       - name: Checkout latest website state
         uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
-      - name: Run social unit tests
-        run: python -m unittest discover -s automation/social/tests -v
-
-      - name: Resolve execution mode
-        id: mode
+      - name: Publish new Mikhbar story to Facebook
+        if: github.event_name == 'workflow_run' || inputs.mode == 'live'
         shell: bash
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "value=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
-          else
-            echo "value=live" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Run Mikhbar social pipeline
-        run: python automation/social/pipeline.py --mode "${{ steps.mode.outputs.value }}"
-
-      - name: Upload social audit snapshot
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: mikhbar-social-${{ github.run_number }}
-          path: automation/social/state/*.json
-          retention-days: 30
-          if-no-files-found: warn
-
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+          root = Path('.')
+          history = json.loads((root / 'automation/forum/state/published.json').read_text(encoding='utf-8'))
+          item = history['items'][0]
+          article = json.loads((root / item['content_file']).read_text(encoding='utf-8'))
+          ar = article.get('locales', {}).get('ar', {})
+          title = ar.get('title') or item.get('title') or 'خبر جديد'
+          description = ar.get('description') or ar.get('deck') or ''
+          path = article.get('urls', {}).get('ar') or item.get('published_url')
+          link = 'https://rdwan.dev' + path if str(path).startswith('/') else str(path)
+          link += ('&' if '?' in link else '?') + 'utm_source=facebook&utm_medium=social&utm_campaign=mikhbar_social'
+          story_id = str(item.get('story_id') or article.get('id') or link.split('?', 1)[0])
+          state_path = root / 'automation/social/state/facebook.json'
+          state = json.loads(state_path.read_text(encoding='utf-8')) if state_path.exists() else {'published_story_ids': []}
+          if story_id in state.get('published_story_ids', []):
+              print(json.dumps({'status':'skipped_duplicate','story_id':story_id}, ensure_ascii=False))
+              raise SystemExit(0)
+          message = f'{title}\\n\\n{description}\\n\\nاقرأ التفاصيل على مِخبار:\\n{link}\\n\\n#مخبار'
+          endpoint = f"https://graph.facebook.com/{os.environ['FACEBOOK_PAGE_ID']}/feed"
+          data = urlencode({'message': message, 'link': link}).encode()
+          req = Request(endpoint, data=data, method='POST', headers={'Authorization': 'Bearer ' + os.environ['FACEBOOK_PAGE_ACCESS_TOKEN']})
+          with urlopen(req, timeout=30) as response:
+              result = json.loads(response.read().decode())
+          state.setdefault('published_story_ids', []).append(story_id)
+          state['last_success'] = {'story_id': story_id, 'facebook_post_id': result.get('id'), 'page_id': os.environ['FACEBOOK_PAGE_ID']}
+          state_path.parent.mkdir(parents=True, exist_ok=True)
+          state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')
+          print(json.dumps({'status':'published','story_id':story_id,'facebook_post_id':result.get('id'),'page_id':os.environ['FACEBOOK_PAGE_ID']}, ensure_ascii=False))
+          PY
       - name: Commit social state only
+        if: always() && (github.event_name == 'workflow_run' || inputs.mode == 'live')
         shell: bash
         run: |
-          git config user.name "Mikhbar Social Automation"
-          git config user.email "actions@users.noreply.github.com"
-          git add automation/social/state/*.json
-          if git diff --cached --quiet; then
-            echo "No social state changes to commit."
-            exit 0
-          fi
-          git commit -m "Mikhbar: update social automation state"
-          for attempt in 1 2 3 4; do
-            git pull --rebase origin main
-            if git push origin HEAD:main; then
-              echo "Social state pushed safely on attempt ${attempt}."
-              exit 0
-            fi
-            echo "Social state push raced with another update; retrying (${attempt}/4)."
-            sleep $((attempt * 3))
-          done
-          echo "Unable to push social state after safe retries."
-          exit 1
+          git config user.name 'Mikhbar Social Automation'
+          git config user.email 'actions@users.noreply.github.com'
+          git add automation/social/state/facebook.json
+          if git diff --cached --quiet; then echo 'No social state changes to commit.'; exit 0; fi
+          git commit -m 'Mikhbar: record Facebook publishing state'
+          git pull --rebase origin main
+          git push origin HEAD:main
