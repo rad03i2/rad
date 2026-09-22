@@ -463,7 +463,6 @@ def _call_model(prompt: str, settings: dict) -> dict:
         "qwen/qwen3.6-27b",
         "qwen/qwen3.8-27b",
         "llama-3.1-8b-instant",
-        "llama-3.3-70b-versatile",
     )
     if os.environ.get("GROQ_API_KEY", "").strip():
         try:
