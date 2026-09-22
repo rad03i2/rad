@@ -1,5 +1,350 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-09-22T15:26:22+00:00",
-  "last_published_story_id": "dad7e77a5585a71c3fd3"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-09-22T15:32:40+00:00",
+  "target_publish_at": "2026-09-22T18:46:22.169966+03:00",
+  "story": {
+    "title": "How Trane gets building insights 60x faster with Amazon Bedrock AgentCore",
+    "url": "https://aws.amazon.com/blogs/machine-learning/how-trane-gets-building-insights-60x-faster-with-amazon-bedrock-agentcore",
+    "domain": "aws.amazon.com",
+    "summary": "In about four weeks, Trane Technologies built an AI-powered agentic solution on Amazon Bedrock AgentCore that reduced a 20-minute, multi-screen building diagnostic workflow to a 20-second natural language interaction, a 60x improvement in time-to-insight. This post shares the architectural approach and key design decisions behind the solution.",
+    "published_at": "2026-09-22T15:30:34+00:00",
+    "discovered_at": "2026-09-22T15:31:35+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "93f0faebbba659127029",
+    "trend": {
+      "score": 121.5,
+      "age_hours": 0.02,
+      "corroboration_count": 0,
+      "entity_momentum": 15.51,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-trane-gets-building-insights-60x-faster-with-amazon-bedrock-agentcore/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How Trane gets building insights 60x faster with Amazon Bedrock AgentCore",
+      "title": "How Trane gets building insights 60x faster with Amazon Bedrock AgentCore | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "Trane تسرع تحليل بيانات المباني 60 ضعفاً عبر Amazon Bedrock AgentCore",
+      "description": "نجحت شركة Trane Technologies في تطوير حل ذكاء اصطناعي لتقليص زمن تشخيص أعطال أنظمة التدفئة والتبريد من 20 دقيقة إلى 20 ثانية باستخدام Amazon Bedrock AgentCore.",
+      "deck": "وظفت شركة Trane Technologies تقنيات الوكلاء الأذكياء لتحويل مهام التشخيص المعقدة إلى تفاعلات لغوية فورية، مما يعزز كفاءة إدارة المرافق الحيوية عالمياً.",
+      "summary_bullets": [
+        "تطوير حل ذكاء اصطناعي خلال 4 أسابيع قلص زمن تشخيص الأعطال بنسبة 60 ضعفاً.",
+        "اعتماد منصة Amazon Bedrock AgentCore كركيزة تقنية أساسية لإدارة البيانات والربط بين الأدوات.",
+        "استخدام بنية الوكلاء المتعددين لتقديم إجابات مخصصة لكل من الفنيين ومديري المرافق.",
+        "دمج النظام مع Trane Cloud لضمان وصول فوري ومباشر لبيانات القياس عن بُعد (Telemetry)."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات البيانات في إدارة الأصول الضخمة",
+          "paragraphs": [
+            {
+              "text": "تدير شركة Trane Technologies ملايين الأصول المرتبطة بأنظمة التدفئة والتهوية وتكييف الهواء (HVAC) على مستوى العالم، وهو نطاق تشغيلي واسع يتطلب دقة فائقة في الصيانة والتشغيل. كانت العملية التقليدية لاستخراج معلومة تشغيلية واحدة تتطلب من الفنيين والمهندسين التنقل بين لوحات تحكم متعددة، والبحث في قوائم متداخلة، وهي عملية قد تستغرق ما يزيد عن 20 دقيقة. هذا الاحتكاك الرقمي لم يؤدِ فقط إلى إبطاء العمليات، بل تسبب في تأخير اتخاذ القرارات التصحيحية، مما خلق تأثيراً ملموساً على إنتاجية المؤسسة وفعالية صيانة المرافق مثل مراكز البيانات والمستشفيات.",
+              "links": [
+                {
+                  "text": "Trane Technologies",
+                  "url": "https://www.tranetechnologies.com/en/index.html"
+                }
+              ]
+            },
+            {
+              "text": "في قلب هذا النظام يبرز Trane Cloud، وهو المركز الرقمي الذي يجمع بيانات الأداء الفوري من ملايين الأنظمة. ومع ذلك، وعلى الرغم من توفر البيانات، كان التحدي يكمن في تحويل هذه التدفقات الهائلة من المعلومات الخام إلى رؤى قابلة للتنفيذ دون إضاعة الوقت في البحث اليدوي. تدرك الشركة أن الفنيين في الميدان يحتاجون إلى دقة تشخيصية، بينما يتطلب مديرو الحسابات رؤى استراتيجية، ويسعى ملاك المباني للحصول على وضوح تنفيذي حول الاستدامة وكفاءة الطاقة.",
+              "links": [
+                {
+                  "text": "Trane Cloud",
+                  "url": "https://www.trane.com/commercial/north-america/us/en/products-systems/smart-building-technology/digital-platform.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التحول نحو الأتمتة الذكية عبر Amazon Bedrock AgentCore",
+          "paragraphs": [
+            {
+              "text": "استجابةً لهذه التحديات، قام فريق الهندسة في الشركة بتطوير حل قائم على الوكلاء الأذكياء (Agentic AI) خلال فترة زمنية قياسية لم تتجاوز أربعة أسابيع. يعتمد هذا الحل بشكل أساسي على Amazon Bedrock AgentCore، وهو ما مكن الشركة من اختصار سير عمل تشخيصي معقد كان يستغرق 20 دقيقة إلى محادثة طبيعية لا تتعدى 20 ثانية. هذا التحسن النوعي يمثل قفزة بمقدار 60 ضعفاً في سرعة الوصول إلى الرؤى (Time-to-insight)، مما يساهم بشكل مباشر في نقل العمليات من نهج الاستجابة التفاعلية للأعطال إلى نهج استباقي قائم على البيانات.",
+              "links": []
+            },
+            {
+              "text": "لتحقيق هذه النتيجة، استخدم الفريق تقنية Strands framework كطبقة عمل للوكيل، مما وفر أدوات تطوير برمجية (SDK) ومنطق تنسيق لبناء سلوكيات الوكيل المتخصصة. بينما تولت منصة Amazon Bedrock AgentCore إدارة وقت التشغيل والذاكرة وبوابة الأدوات والبنية التحتية للإنتاج. وقد تم نشر البنية التحتية ككود باستخدام AWS Cloud Development Kit (AWS CDK)، مما يضمن المرونة والقابلية للتوسع مستقبلاً.",
+              "links": [
+                {
+                  "text": "Strands framework",
+                  "url": "https://strandsagents.com/"
+                },
+                {
+                  "text": "AWS Cloud Development Kit (AWS CDK)",
+                  "url": "https://aws.amazon.com/cdk/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "بنية الوكلاء المتعددين والمهام المتخصصة",
+          "paragraphs": [
+            {
+              "text": "بدلاً من تصميم وكيل واحد عملاق (Monolithic)، اعتمد فريق التطوير بنية الوكلاء المتعددين (Multi-agent architecture). يختص كل وكيل بمجال محدد، مما يحافظ على تركيزه ويضمن تقديم أدق المعلومات. يضم النظام خمسة وكلاء رئيسيين: وكيل الموارد الذي يسترجع الملخصات والوثائق، وكيل المعرفة الذي يجيب عن الاستفسارات التقنية العميقة حول أداء المعدات، وكيل تحليلات البيانات الذي يراقب القياسات الحية لكشف فرص تحسين الكفاءة، وكيل المستشار الخبير الذي يساعد في اختيار الحلول المناسبة، وأخيراً وكيل الملاحة الذي يوجه المستخدمين إلى الروابط والأدوات الدقيقة.",
+              "links": []
+            },
+            {
+              "text": "تم تصميم هذه البنية لتكون قابلة للتطوير (Extensible). بفضل واجهة AgentCore Gateway التي توفرها Amazon Bedrock AgentCore، يمكن للفرق دمج أنظمة إضافية مثل برمجيات إدارة أوامر العمل أو أنظمة علاقات العملاء (CRM) بسهولة. هذا التكامل يضمن بقاء النظام متوافقاً مع أحدث تقنيات الذكاء الاصطناعي وتوسيع قدراته لتشمل أنظمة مبانٍ أخرى في المستقبل، مما يدعم رؤية الشركة في تعزيز الذكاء الاصطناعي (Artificial Intelligence) في قطاع إدارة المنشآت والمرافق الحيوية.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الآفاق المستقبلية واستدامة التشغيل",
+          "paragraphs": [
+            {
+              "text": "إن التحدي الأكبر في عمليات المباني الذكية لا يتمثل في جمع البيانات فحسب، بل في تحويل حجم ضخم من البيانات الناتجة عن ملايين الأصول المتصلة إلى قرارات تشغيلية ذكية. ومن خلال تقليل تعقيد واجهات المستخدم، تمكنت Trane من تمكين الموظفين بمختلف أدوارهم—سواء كانوا فنيين ميدانيين أو مديري تشغيل—من الحصول على الإجابات التي يحتاجونها فوراً. هذا النهج يقلل من الوقت الضائع في التنقل بين القوائم والبحث في الوثائق التقنية، مما يسمح للفنيين بالتركيز على إصلاح الأعطال وتحسين أداء المعدات فعلياً.",
+              "links": []
+            },
+            {
+              "text": "تعتبر هذه التجربة نموذجاً لكيفية دمج الوكلاء الأذكياء في بيئات العمل الصناعية المعقدة. ومع استمرار تطور تقنيات الحوسبة السحابية، تظل الشركة ملتزمة بتوسيع هذه القدرات لضمان أعلى معايير الاستدامة وكفاءة الطاقة، مع الحفاظ على خصوصية وأمن البيانات. إن الاعتماد على بنية برمجية مستقلة لكل وكيل يضمن أن أي تحديثات مستقبلية أو إضافات لن تسبب اختناقات تشغيلية، مما يجعل النظام قادراً على النمو مع توسع المحفظة العقارية والأنظمة التقنية المرتبطة بها.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Amazon Bedrock",
+        "المباني الذكية",
+        "إنترنت الأشياء",
+        "تحليل البيانات",
+        "Trane Technologies",
+        "التحول الرقمي"
+      ],
+      "entities": [
+        "Trane Technologies",
+        "Amazon Bedrock AgentCore",
+        "AWS",
+        "Trane Cloud"
+      ],
+      "article_type": "news",
+      "confidence_note": "تم صياغة الخبر بناءً على المدونة الرسمية لـ AWS، مع الالتزام التام بالحقائق المذكورة حول تقليص الوقت من 20 دقيقة إلى 20 ثانية وبنية الوكلاء المتعددين."
+    },
+    "en": {
+      "title": "Trane Technologies Cuts Diagnostic Time by 60x with AI",
+      "description": "Trane Technologies has leveraged Amazon Bedrock AgentCore to reduce complex HVAC diagnostic workflows from 20 minutes to just 20 seconds.",
+      "deck": "The engineering team at Trane Technologies has successfully deployed an AI-powered agentic solution that slashes the time required to extract operational insights from millions of connected HVAC assets.",
+      "summary_bullets": [
+        "Trane Technologies reduced a 20-minute manual diagnostic workflow to a 20-second natural language interaction.",
+        "The solution utilizes Amazon Bedrock AgentCore for managing runtime, memory, and infrastructure.",
+        "A multi-agent architecture was implemented to provide specialized support across distinct operational roles.",
+        "The project was completed in approximately four weeks, marking a 60x improvement in time-to-insight."
+      ],
+      "sections": [
+        {
+          "heading": "The Challenge of HVAC Operational Scale",
+          "paragraphs": [
+            {
+              "text": "As a global leader in climate innovation, Trane Technologies manages millions of connected heating, ventilation, and air conditioning (HVAC) assets across the globe. While the company maintains an extensive network of data centers, hospitals, and manufacturing facilities, extracting operational intelligence from these systems has historically been a time-intensive process. According to the AWS Machine Learning Blog, operators were previously required to cross-reference multiple dashboards and navigate complex menu hierarchies for 20 minutes or more to reach a single conclusion.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-trane-gets-building-insights-60x-faster-with-amazon-bedrock-agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "At the center of this ecosystem is Trane Cloud, which aggregates real-time telemetry from vast fleets of equipment. While this platform provides the necessary data for predictive maintenance and energy optimization, the sheer volume of information often created friction for stakeholders. Different users, ranging from field technicians to account managers, require highly specific views of the same data, and traditional, monolithic interfaces failed to provide the necessary agility for proactive building management.",
+              "links": [
+                {
+                  "text": "Trane Cloud",
+                  "url": "https://www.trane.com/commercial/north-america/us/en/products-systems/smart-building-technology/digital-platform.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Architecting an AI-Powered Diagnostic Shift",
+          "paragraphs": [
+            {
+              "text": "To address these operational bottlenecks, the engineering team at Trane Technologies developed a new agentic solution in approximately four weeks. By deploying this system on Amazon Bedrock AgentCore, the company was able to replace manual, multi-screen navigation with a streamlined 20-second natural language interaction. This shift represents a 60x improvement in time-to-insight, enabling the organization to move from reactive maintenance to a data-driven, proactive model of facility operations.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "The technical foundation of the solution relies on the Strands framework, which was selected for its ability to provide the developer SDK and orchestration logic required for complex agent behavior. By managing the underlying infrastructure through the AWS Cloud Development Kit (AWS CDK), the team ensured that the system remained scalable and maintainable. This approach allows the platform to evolve alongside emerging artificial intelligence capabilities without falling into the traps associated with traditional, monolithic software design.",
+              "links": [
+                {
+                  "text": "Strands framework",
+                  "url": "https://strandsagents.com/"
+                },
+                {
+                  "text": "AWS Cloud Development Kit (AWS CDK)",
+                  "url": "https://aws.amazon.com/cdk/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Multi-Agent Design for Specialized Needs",
+          "paragraphs": [
+            {
+              "text": "The solution avoids a 'one-size-fits-all' approach by utilizing a multi-agent architecture. Each assistant is governed by its own system prompt, allowing it to maintain a narrow focus on a specific capability domain. The Resources Assistant, for instance, is dedicated to retrieving reference material and manuals, while the Knowledge Assistant is tasked with synthesizing technical parameters about how equipment functions.",
+              "links": []
+            },
+            {
+              "text": "Beyond basic maintenance, the Analytics Insights Assistant is designed to interrogate live telemetry to identify efficiency opportunities and flag potential faults. Meanwhile, the Expert Advisor provides high-level support for product solutions and customer value maximization, and the Navigation Assistant ensures that users can quickly locate the specific tools or forms they require for their immediate task. This modular design ensures that the AI can effectively cater to the disparate needs of field technicians, account managers, and building owners.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Future-Proofing Building Operations",
+          "paragraphs": [
+            {
+              "text": "The extensibility of the system is a key design priority for Trane Technologies. By utilizing the AgentCore Gateway, the development team has ensured that additional building systems and external integrations, such as customer relationship management (CRM) software or work order management platforms, can be added to the ecosystem as needed. This flexibility is supported by adherence to open standards, ensuring that the infrastructure remains robust as the company expands its digital footprint.",
+              "links": [
+                {
+                  "text": "Trane Technologies",
+                  "url": "https://www.tranetechnologies.com/en/index.html"
+                }
+              ]
+            },
+            {
+              "text": "As the organization continues to refine its digital strategies, the ability to translate millions of data points into actionable intelligence remains paramount. The success of this implementation highlights the potential for AI to resolve long-standing workflow inefficiencies, providing a scalable framework for future building intelligence projects that can adapt to the evolving demands of the global HVAC industry.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Trane Technologies",
+        "Amazon Bedrock",
+        "Generative AI",
+        "HVAC",
+        "Cloud Computing",
+        "Digital Transformation",
+        "Smart Buildings"
+      ],
+      "entities": [
+        "Trane Technologies",
+        "Amazon Bedrock AgentCore",
+        "Trane Cloud",
+        "AWS"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is based entirely on the provided text from the AWS Machine Learning Blog regarding Trane Technologies' implementation of Amazon Bedrock AgentCore. No external facts or opinions were added."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 399,
+      "word_count_en": 563
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 696,
+      "word_count_en": 662
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "93f0faebbba659127029",
+      "title": "How Trane gets building insights 60x faster with Amazon Bedrock AgentCore",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 399,
+          "word_count_en": 563
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 696,
+          "word_count_en": 662
+        }
+      ]
+    }
+  ],
+  "slug": "how-trane-gets-building-insights-60x-faster-with-amazon-bedrock-agentcore",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/how-trane-gets-building-insights-60x-faster-with-amazon-bedrock-agentcore/hero.webp",
+    "card": "/forum/assets/posts/2026/09/how-trane-gets-building-insights-60x-faster-with-amazon-bedrock-agentcore/card.webp",
+    "social": "/forum/assets/posts/2026/09/how-trane-gets-building-insights-60x-faster-with-amazon-bedrock-agentcore/social.jpg",
+    "alt": {
+      "ar": "Trane تسرع تحليل بيانات المباني 60 ضعفاً عبر Amazon Bedrock AgentCore",
+      "en": "Trane Technologies Cuts Diagnostic Time by 60x with AI"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/16/ML-21136-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/how-trane-gets-building-insights-60x-faster-with-amazon-bedrock-agentcore/inline-01.webp",
+        "width": 1349,
+        "height": 1037,
+        "alt": {
+          "ar": "Trane تسرع تحليل بيانات المباني 60 ضعفاً عبر Amazon Bedrock AgentCore",
+          "en": "Trane’s multi-agent architecture on Amazon Bedrock AgentCore, with specialized assistants connecting through AgentCore Gateway to Trane Cloud data"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-trane-gets-building-insights-60x-faster-with-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/16/ML-21136-1.png"
+      }
+    ]
+  }
 }
