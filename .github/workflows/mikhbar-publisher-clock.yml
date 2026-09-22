@@ -1,0 +1,74 @@
+name: Mikhbar Publisher Clock
+
+# Independent wakeup/watchdog for the website publisher.
+# It never edits publication or social state itself; it only dispatches the
+# primary publisher when the last published story is approaching/past 20 min.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mikhbar-publisher-clock.yml'
+  schedule:
+    - cron: '5,25,45 * * * *'
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: mikhbar-publisher-clock
+  cancel-in-progress: true
+
+jobs:
+  wake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Dispatch publisher only when useful
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          history_path = Path("automation/forum/state/published.json")
+          history = json.loads(history_path.read_text(encoding="utf-8")) if history_path.exists() else {}
+          raw = history.get("last_published_at")
+          age_minutes = None
+
+          if raw:
+              dt = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+              age_minutes = (datetime.now(timezone.utc) - dt.astimezone(timezone.utc)).total_seconds() / 60
+
+          if age_minutes is not None and age_minutes < 18:
+              print(f"Latest Mikhbar story is only {age_minutes:.1f} minutes old; no publisher wakeup needed.")
+              raise SystemExit(0)
+
+          repository = os.environ["GITHUB_REPOSITORY"]
+          endpoint = f"repos/{repository}/actions/workflows/forum-collector.yml/dispatches"
+          payload = '{"ref":"main","inputs":{"trigger":"github-native-clock"}}'
+          subprocess.run(
+              [
+                  "gh", "api",
+                  "--method", "POST",
+                  endpoint,
+                  "--input", "-"
+              ],
+              input=payload,
+              text=True,
+              check=True,
+              env=os.environ,
+          )
+          print("Primary Mikhbar publisher dispatched by independent GitHub clock.")
+          PY
