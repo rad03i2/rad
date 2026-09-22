@@ -3,7 +3,7 @@ const REPO = "rad";
 const WORKFLOW = "forum-collector.yml";
 const WORKFLOW_PATH = ".github/workflows/forum-collector.yml";
 const BRANCH = "main";
-const CRON = "*/5 * * * *";
+const CRON = "0,20,40 * * * *";
 
 async function triggerPublisher(env) {
   if (!env.GITHUB_TOKEN) {
@@ -20,7 +20,7 @@ async function triggerPublisher(env) {
       "User-Agent": "RDWAN-Tech-External-Scheduler/1.0",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ ref: BRANCH }),
+    body: JSON.stringify({ ref: BRANCH, inputs: { trigger: "external-20m" } }),
   });
 
   if (response.status === 204) {
