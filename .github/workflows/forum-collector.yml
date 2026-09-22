@@ -5,6 +5,11 @@ name: Mikhbar 20-Minute Publisher
 
 on:
   workflow_dispatch:
+    inputs:
+      trigger:
+        description: "Explicit manual/external trigger marker"
+        required: true
+        type: string
   push:
     paths:
       - 'automation/forum/state/force_publish_once.json'
