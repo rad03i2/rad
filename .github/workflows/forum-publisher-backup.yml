@@ -6,10 +6,6 @@ name: Mikhbar Backup Publisher
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/forum-publisher-backup.yml'
   schedule:
     - cron: '7,12,17,27,32,37,47,52,57 * * * *'
 
@@ -19,7 +15,7 @@ permissions:
 
 concurrency:
   group: mikhbar-publication-write
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   publish:
