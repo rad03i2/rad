@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "3822e53281df1dc0922d",
+  "slug": "deprecation-notice-all-platform-codeql-bundle",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/deprecation-notice-all-platform-codeql-bundle/",
+    "en": "/forum/en/apps/deprecation-notice-all-platform-codeql-bundle/"
+  },
+  "locales": {
+    "ar": {
+      "title": "جيت هب تعلن رسمياً عن إيقاف حزمة CodeQL لجميع المنصات",
+      "description": "أعلنت منصة جيت هب عن بدء تهميش حزمة CodeQL الموحدة لجميع المنصات بدءاً من الإصدار 2.27.0، مع توجيه المطورين لاعتماد الحزم الخاصة بكل نظام تشغيل.",
+      "deck": "تتجه جيت هب نحو تحديث آلية توزيع أدوات CodeQL لتعزيز الكفاءة البرمجية، وذلك عبر إنهاء دعم الحزم الشاملة التي تجمع ملفات التشغيل لكافة المنصات.",
+      "summaryBullets": [
+        "اعتبار حزمة CodeQL الشاملة (All-platform bundle) مهملة رسمياً بدءاً من إصدار CodeQL CLI 2.27.0.",
+        "تحديد موعد منتصف مارس 2027 لإزالة الحزمة الموحدة نهائياً من مستودعات التوزيع.",
+        "توجيه المستخدمين للتحول نحو تحميل الحزم المخصصة لكل نظام تشغيل ومعمارية محددة.",
+        "استثناء ملفات Linux ARM64 من الحزمة الموحدة لضمان توافق أفضل عبر التحميلات الفردية."
+      ],
+      "sections": [
+        {
+          "heading": "تغييرات جوهرية في توزيع CodeQL",
+          "paragraphs": [
+            {
+              "text": "في خطوة تنظيمية تهدف إلى تحسين تجربة المطورين وتبسيط إدارة الأدوات البرمجية، أصدرت منصة جيت هب إشعاراً رسمياً عبر GitHub Changelog حول التغييرات القادمة في أداة تحليل الكود الشهيرة. وتأتي هذه التغييرات بدءاً من إطلاق CodeQL CLI 2.27.0، حيث قررت الشركة وضع حزمة CodeQL الموحدة لكافة المنصات (All-platform CodeQL bundle) في قائمة الميزات المهملة.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-22-deprecation-notice-all-platform-codeql-bundle/"
+                },
+                {
+                  "text": "CodeQL CLI 2.27.0",
+                  "url": "https://github.com/github/codeql-cli-binaries/releases/tag/v2.27.0"
+                }
+              ]
+            },
+            {
+              "text": "تاريخياً، كانت هذه الحزمة التي تأتي بصيغتي codeql-bundle.tar.gz و codeql-bundle.tar.zst، توفر للمستخدمين مجموعة شاملة من ملفات التشغيل الثنائية التي تغطي كافة المنصات المدعومة. ومع ذلك، فإن التحول الحالي يعكس رؤية جديدة تعتمد على تخصيص الأدوات وفقاً لبيئة العمل الفعلية لكل مستخدم، مما يسهم في تقليل حجم التنزيلات غير الضرورية وضمان استقرار أداء الأدوات البرمجية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خارطة طريق الإزالة والدعم",
+          "paragraphs": [
+            {
+              "text": "حددت الشركة جدولاً زمنياً واضحاً لهذا الانتقال التقني، حيث من المقرر أن يتم سحب حزمة CodeQL الشاملة نهائياً من منصاتها بحلول منتصف شهر مارس 2027. هذا الإطار الزمني يمنح المطورين وفرق العمل فترة انتقالية كافية لتعديل مسارات التكامل المستمر (CI) وسير عمل الأتمتة لديهم لتتوافق مع الطريقة الجديدة في الحصول على الأدوات.",
+              "links": []
+            },
+            {
+              "text": "بدلاً من الحزمة الشاملة، يتعين على الفرق التقنية الآن التوجه نحو تحميل الحزم الخاصة بكل منصة على حدة، والتي تم تصميمها لتناسب نظام التشغيل ومعمارية المعالج التي يستخدمونها بالفعل. توفر هذه الطريقة ضمانات أكبر بالتوافقية وتحد من احتمالية حدوث تعارضات ناتجة عن حزم الملفات الضخمة التي كانت تحتوي على ملفات ثنائية قد لا يحتاجها المستخدم في بيئته البرمجية الحالية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات الأنظمة وخصائص ARM64",
+          "paragraphs": [
+            {
+              "text": "تشدد التوجيهات الجديدة على ضرورة الالتزام بالمعايير المحدثة التي توفرها المنصة، حيث أن ملفات Linux ARM64 لم تكن مشمولة سابقاً في الحزمة العامة، وهي متاحة فقط عبر التحميلات المخصصة لكل منصة. ولضمان فهم أعمق لهذه القيود التقنية والمتطلبات الجديدة، توفر جيت هب وثائق مفصلة توضح كافة التفاصيل المتعلقة بـ the documentation about supported platforms، والتي ينبغي على مسؤولي البنية التحتية مراجعتها بدقة.",
+              "links": [
+                {
+                  "text": "the documentation about supported platforms",
+                  "url": "https://codeql.github.com/docs/codeql-overview/system-requirements/#supported-platforms"
+                }
+              ]
+            },
+            {
+              "text": "إن الاعتماد على الحزم المخصصة (Platform-specific bundles) ليس مجرد تغيير في أسلوب التحميل، بل هو انتقال نحو هندسة برمجية أكثر دقة. فمن خلال عزل الملفات الثنائية، تضمن جيت هب أن المطور يحصل فقط على الأدوات التي يحتاجها لنظام تشغيله، مما يقلل من المساحة التخزينية المطلوبة ويسرع من عمليات النشر والإعداد داخل بيئات التطوير المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تداعيات التغيير على أمن التطبيقات",
+          "paragraphs": [
+            {
+              "text": "يعتبر هذا التغيير جزءاً من إستراتيجية أوسع تتبعها جيت هب لتطوير أدوات أمن التطبيقات. فعند النظر إلى التحديثات الأخيرة في النظام البيئي للمنصة، نجد تركيزاً مكثفاً على تحسين الأداء ومرونة الأدوات. إن الانتقال إلى تحميلات أكثر دقة يساعد فرق الأمان على ضبط بيئات الفحص البرمجي بشكل أسرع وأكثر أماناً دون الحاجة لاستيراد مكتبات ضخمة لا تتناسب مع متطلبات الأمان المحلية لكل نظام.",
+              "links": []
+            },
+            {
+              "text": "إن هذه الخطوة تتماشى مع جهود الشركة المتواصلة لتقديم أدوات أمنية أكثر فعالية، حيث تسعى جيت هب دائماً إلى تقليل التعقيد في إدارة الأدوات الأمنية، مما يساعد المطورين على التركيز على كتابة أكواد آمنة بدلاً من الانشغال بإدارة الحزم البرمجية الثقيلة والمعقدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خاتمة التغييرات التقنية",
+          "paragraphs": [
+            {
+              "text": "في النهاية، يمثل إنهاء دعم حزمة CodeQL الشاملة مرحلة انتقالية هامة لمستخدمي أدوات تحليل الأكواد على جيت هب. ومن الضروري أن تبدأ المؤسسات في التخطيط لهذا التحول قبل حلول الموعد النهائي في مارس 2027، لضمان استمرارية سير عمل مشاريعهم دون انقطاع. توفر هذه الإجراءات، رغم كونها إجرائية، حجر الأساس لبنية تحتية تقنية أكثر استدامة وتوافقية مع متطلبات المعالجات الحديثة وأنظمة التشغيل المتنوعة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "جيت هب",
+        "CodeQL",
+        "أمن البرمجيات",
+        "تطوير البرامج",
+        "أدوات المطورين",
+        "تغييرات تقنية"
+      ],
+      "entities": [
+        "GitHub",
+        "CodeQL CLI"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "22 سبتمبر 2026",
+      "modifiedLabel": "22 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 597
+    },
+    "en": {
+      "title": "GitHub Deprecates All-Platform CodeQL Bundle",
+      "description": "GitHub has officially deprecated the all-platform CodeQL bundle, directing users to adopt platform-specific binaries starting with version 2.27.0.",
+      "deck": "The change, which takes effect starting with the latest release, marks a transition toward more granular, platform-specific distribution methods for CodeQL users.",
+      "summaryBullets": [
+        "The all-platform CodeQL bundle is now officially deprecated as of CLI version 2.27.0.",
+        "GitHub plans to completely remove the all-platform bundle in mid-March 2027.",
+        "Developers are encouraged to switch to platform-specific bundles tailored to their OS and architecture.",
+        "Linux ARM64 support is restricted to platform-specific downloads and was never included in the legacy all-platform bundle."
+      ],
+      "sections": [
+        {
+          "heading": "An Shift in Distribution Strategy",
+          "paragraphs": [
+            {
+              "text": "GitHub has officially announced a significant change in how it distributes its security analysis tools. As of the release of CodeQL CLI 2.27.0, the company has marked its all-platform CodeQL bundle as deprecated. This bundle, traditionally distributed as codeql-bundle.tar.gz and codeql-bundle.tar.zst, served as a comprehensive package containing binaries for all supported platforms. The details of this transition were recently shared via the official GitHub Changelog.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-22-deprecation-notice-all-platform-codeql-bundle/"
+                }
+              ]
+            },
+            {
+              "text": "The deprecation notice signals the end of a long-standing convenience feature for developers who rely on a single file to manage their security tooling across heterogeneous environments. By moving away from this omnibus approach, GitHub is prioritizing a more modular distribution strategy that aligns with modern CI/CD requirements and system-specific optimization needs. Users currently utilizing these bundles are advised to begin planning their migration to avoid disruption in their development workflows.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Implementation and Timeline",
+          "paragraphs": [
+            {
+              "text": "The deprecation process is not instantaneous, providing a grace period for teams to update their automated build processes. According to the official announcement for CodeQL CLI 2.27.0, the current version is the starting point for this transition. While the bundles remain available for the time being, the company has set a firm expiration date for this distribution method. GitHub plans to remove the all-platform CodeQL bundle entirely by mid-March 2027.",
+              "links": [
+                {
+                  "text": "CodeQL CLI 2.27.0",
+                  "url": "https://github.com/github/codeql-cli-binaries/releases/tag/v2.27.0"
+                }
+              ]
+            },
+            {
+              "text": "Organizations and individual developers should not wait until the final removal date to adapt their systems. Instead, the recommended practice is to immediately shift toward using the specific bundles designed for their individual operating systems and hardware architectures. This proactive approach ensures that build pipelines remain resilient and continue to receive the latest security updates without relying on legacy distribution packages.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Understanding Supported Platforms",
+          "paragraphs": [
+            {
+              "text": "A key component of this shift involves a better understanding of what constitutes a 'supported platform.' GitHub provides extensive documentation regarding supported platforms to help developers determine which specific binaries are required for their infrastructure. It is important to note that the legacy all-platform bundle was never a universal catch-all; for example, Linux ARM64 binaries have always been available exclusively through platform-specific downloads. These binaries were never included in the multi-platform bundles, and they will remain accessible only via the updated distribution model.",
+              "links": []
+            },
+            {
+              "text": "By moving strictly to platform-specific bundles, GitHub is standardizing the acquisition process across all architectures, including specialized environments like ARM-based Linux servers. Developers who are currently managing complex, cross-platform build environments should review their system architectures against these updated guidelines to ensure they select the correct binaries for their specific requirements.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Broader Ecosystem Context",
+          "paragraphs": [
+            {
+              "text": "The deprecation of the all-platform CodeQL bundle is part of a broader, ongoing effort by GitHub to refine and modernize its application security tools. This initiative complements recent developments across the platform, such as enhancements in enterprise management tools and new features that simplify security auditing. As security teams face increasing pressure to automate vulnerability detection, GitHub’s move towards cleaner, more specific tool distribution helps in maintaining a more robust security posture.",
+              "links": [
+                {
+                  "text": "enterprise management tools",
+                  "url": "https://github.blog/changelog/2026/?label=enterprise-management-tools"
+                }
+              ]
+            },
+            {
+              "text": "While this specific change focuses on the packaging of CodeQL, it reflects a wider trend toward tightening dependencies and improving the reliability of the tools within the GitHub Advanced Security ecosystem. Other recent changes, such as enabling AI-driven scanning without requiring default setup, underscore a platform-wide commitment to reducing technical debt while increasing the ease of use for complex security operations. Users interested in the latest developments in this space can continue to follow the updates posted to the changelog to remain informed about upcoming improvements to application security workflows.",
+              "links": [
+                {
+                  "text": "application security",
+                  "url": "https://github.blog/changelog/2026/?label=application-security"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Steps for Migration",
+          "paragraphs": [
+            {
+              "text": "For teams currently relying on the deprecated bundle, the migration process is straightforward but requires configuration updates in build scripts. First, teams must identify the target OS and architecture for each of their build runners. Once identified, they should replace the link or path to the all-platform bundle with the direct link for their specific OS from the latest release of the CodeQL CLI. By testing this transition now, organizations can avoid any potential friction when the bundle is fully removed in mid-March 2027.",
+              "links": []
+            },
+            {
+              "text": "As with any shift in tooling infrastructure, communication is key. DevOps engineers should notify their internal security and build teams about the upcoming changes to ensure that all automated CI pipelines are updated concurrently. GitHub continues to provide resources and documentation for developers looking to optimize their security scanning setups, and users can return to the changelog periodically to check for further updates regarding this transition.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "CodeQL",
+        "CLI",
+        "Software Development",
+        "DevOps",
+        "Security",
+        "Automation",
+        "Tech News"
+      ],
+      "entities": [
+        "GitHub",
+        "CodeQL"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "September 22, 2026",
+      "modifiedLabel": "September 22, 2026",
+      "readMinutes": 4,
+      "wordCount": 807
+    }
+  },
+  "datePublished": "2026-09-22T13:36:23.900947+03:00",
+  "dateModified": "2026-09-22T13:36:23.900947+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/deprecation-notice-all-platform-codeql-bundle/hero.webp",
+    "card": "/forum/assets/posts/2026/09/deprecation-notice-all-platform-codeql-bundle/card.webp",
+    "social": "/forum/assets/posts/2026/09/deprecation-notice-all-platform-codeql-bundle/social.jpg",
+    "alt": {
+      "ar": "جيت هب تعلن رسمياً عن إيقاف حزمة CodeQL لجميع المنصات",
+      "en": "GitHub Deprecates All-Platform CodeQL Bundle"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/09/codeql-bundle-deprecation.jpeg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-22-deprecation-notice-all-platform-codeql-bundle/",
+      "type": "official",
+      "title": "Deprecation notice: All-platform CodeQL bundle"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-22-deprecation-notice-all-platform-codeql-bundle",
+  "sourceTitle": "Deprecation notice: All-platform CodeQL bundle",
+  "trendScore": 109.64,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-22T10:36:23+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/deprecation-notice-all-platform-codeql-bundle.json"
+}
