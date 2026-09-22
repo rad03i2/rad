@@ -1,5 +1,392 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-09-22T13:11:38+00:00",
-  "last_published_story_id": "5fb1bfea354559fe4edc"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-09-22T13:17:28+00:00",
+  "target_publish_at": "2026-09-22T16:31:38.340033+03:00",
+  "story": {
+    "title": "Introducing Worker Previews: isolated preview environments for every change your agent makes",
+    "url": "https://blog.cloudflare.com/worker-previews",
+    "domain": "blog.cloudflare.com",
+    "summary": "Worker Previews gives every branch its own URL, configuration, state, and observability, so you and your agents can test changes in parallel without affecting production.",
+    "published_at": "2026-09-22T13:00:00+00:00",
+    "discovered_at": "2026-09-22T13:06:22+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 64,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "a82a98e9c62e3715d0b5",
+    "trend": {
+      "score": 126.89,
+      "age_hours": 0.28,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/worker-previews/",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Introducing Worker Previews: isolated preview environments for every change your agent makes",
+      "title": "Introducing Worker Previews: isolated preview environments for every change your agent makes | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "كلاود فلير تطلق Worker Previews لتعزيز بيئات الاختبار المعزولة",
+      "description": "أعلنت شركة كلاود فلير عن إطلاق ميزة Worker Previews التي تتيح للمطورين والوكلاء البرمجين إنشاء بيئات اختبار معزولة لكل فرع برمجياً، مما يضمن كفاءة أعلى في التطوير.",
+      "deck": "تتيح هذه الميزة الجديدة لكل فرع في مستودع الكود بيئة تشغيل متكاملة، مما يسهل اختبار التغييرات بشكل متوازٍ دون التأثير على نسخة الإنتاج.",
+      "summary_bullets": [
+        "توفير بيئة اختبار معزولة لكل فرع برمجياً مع إمكانية الوصول لرابط URL خاص.",
+        "دعم تكوينات مستقلة ومتغيرات بيئة منفصلة لكل عملية معاينة.",
+        "تعزيز دور الوكلاء البرمجين في دورة حياة التطوير من خلال اختبارات دقيقة.",
+        "توفير أدوات مراقبة وتحليل متكاملة لكل معاينة على حدة."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الاختبار في دورة حياة البرمجيات",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق التطوير تحديات مستمرة عند محاولة مطابقة بيئات الاختبار مع بيئات الإنتاج، حيث غالباً ما تظهر سلوكيات غير متوقعة عند الانتقال من مرحلة التجريب إلى الإطلاق الفعلي. ولمعالجة هذه الفجوة، قدمت Cloudflare Blog ميزة Worker Previews التي تهدف إلى منح المطورين بيئة تشغيل تحاكي بيئة الإنتاج إلى أقصى حد ممكن، مما يسمح باختبار التغييرات والتحقق من صحتها بدقة قبل دمجها.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/worker-previews/"
+                }
+              ]
+            },
+            {
+              "text": "مع تزايد الاعتماد على الوكلاء البرمجيين لتسريع كتابة الأكواد، أصبح من الضروري توفير أدوات تضمن إجراء الاختبارات دون إبطاء وتيرة العمل. وهذا النهج، الذي لا يقلل من سرعة الوكلاء (that doesn’t slow agents down)، يمنح المطورين قدرات أكبر للتحكم في دورة حياة التطوير بشكل أكثر مرونة واستقلالية.",
+              "links": [
+                {
+                  "text": "that doesn’t slow agents down",
+                  "url": "https://blog.cloudflare.com/agent-development-lifecycle/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "بيئات معزولة لكل فرع برمجياً",
+          "paragraphs": [
+            {
+              "text": "تعتمد الميزة الجديدة على منح كل فرع Git بيئة تشغيل مستقلة تتضمن الكود الخاص به، الإعدادات، والموارد المرتبطة. عند البدء في استخدام Worker Previews، يحصل المطور على رابط URL ثابت للفرع، مما يسمح بإرسال الطلبات واختبار واجهات المستخدم والتحقق من الاستجابات البرمجية بشكل معزول تماماً عن الترافيك المباشر في الإنتاج.",
+              "links": [
+                {
+                  "text": "Worker Previews",
+                  "url": "https://developers.cloudflare.com/workers/previews"
+                }
+              ]
+            },
+            {
+              "text": "تبدأ كل بيئة معاينة استناداً إلى \"قاعدة التكوين\" (base configuration) التي يحددها المطور، والتي تنقل المتغيرات والأسرار والإعدادات الأولية للفرع الجديد، تماماً كما يتم اشتقاق فرع الكود من الفرع الرئيسي. علاوة على ذلك، يمكن للمطورين تجاوز هذه التكوينات عند الحاجة، مثل توجيه البيئة نحو قاعدة بيانات تجريبية أو مفتاح واجهة برمجة تطبيقات مختلف، وذلك دون المساس بإعدادات بيئة الإنتاج.",
+              "links": [
+                {
+                  "text": "base configuration",
+                  "url": "https://developers.cloudflare.com/workers/previews/configuration/#setting-your-previews-base-configuration"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الحالة والموارد في البيئات المعزولة",
+          "paragraphs": [
+            {
+              "text": "واحدة من أكبر العقبات في الاختبار هي إدارة البيانات والحالة (State). نظراً لأن الكائنات المتينة (Durable Objects) تعتمد على نموذج فريد (singleton model)، فإن مشاركتها بين بيئة الإنتاج وبيئات الاختبار قد تؤدي إلى تضارب في البيانات أو تعديلات غير مقصودة في الوقت الفعلي. لذا، تعمل ميزة المعاينة على إنشاء مساحة اسم (namespace) جديدة ومنفصلة لكل عملية تشغيل.",
+              "links": [
+                {
+                  "text": "singleton model",
+                  "url": "https://developers.cloudflare.com/durable-objects/platform/known-issues/#global-uniqueness"
+                }
+              ]
+            },
+            {
+              "text": "تتم إدارة هذه الحالة من خلال تصدير الفئات المطلوبة وتمريرها عبر المعالج البرمجي باستخدام ctx.exports. في بيئة الإنتاج، يتم حل هذه الاستدعاءات إلى مساحة اسم الإنتاج، بينما في بيئة المعاينة، يتم توجيهها تلقائياً إلى مساحة الاسم الخاصة بذلك الفرع، مما يوفر بيئة اختبار آمنة للتجارب والتحقق من العمليات المعقدة.",
+              "links": [
+                {
+                  "text": "ctx.exports",
+                  "url": "https://developers.cloudflare.com/workers/runtime-apis/context/#exports"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "المراقبة والتحقق الآلي",
+          "paragraphs": [
+            {
+              "text": "توفر الأداة أيضاً إمكانيات مراقبة متكاملة. يمكن للمطورين فحص السجلات والأخطاء والمقاييس والمسارات لكل معاينة على حدة. وبمجرد تدفق الترافيك إلى رابط المعاينة، سواء من خلال الأوامر البرمجية أو عبر إجراء \"اختبار من CI\" (probe from CI)، تظهر جميع أدوات المراقبة المتاحة للعمال (Workers) مرتبطة بهذه البيئة المحددة، مما يسهل اكتشاف الأخطاء ومعالجتها قبل وصول التغييرات إلى المستخدم النهائي.",
+              "links": [
+                {
+                  "text": "probe from CI",
+                  "url": "https://developers.cloudflare.com/workers/previews/examples/#probe-the-preview"
+                }
+              ]
+            },
+            {
+              "text": "بالنسبة للاختبارات التي تتطلب محاكاة تفاعل المستخدم، يمكن للوكلاء البرمجين فتح روابط المعاينة في متصفح دون واجهة رسومية، والقيام بخطوات مثل تسجيل الدخول، ثم \"التقاط لقطة شاشة\" (capture a screenshot) أو تسجيل الجلسة كأحداث متكررة يمكن إعادة تشغيلها، مما يمنح المطورين أدلة قوية وملموسة حول أداء التغييرات البرمجية وسلوكها في بيئة مشابهة تماماً للواقع.",
+              "links": [
+                {
+                  "text": "capture a screenshot",
+                  "url": "https://developers.cloudflare.com/workers/previews/examples/#capture-a-screenshot"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "كلاود فلير",
+        "الذكاء الاصطناعي",
+        "تطوير البرمجيات",
+        "بيئات الاختبار",
+        "Worker Previews",
+        "Cloudflare",
+        "الحوسبة السحابية"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Git",
+        "Durable Objects",
+        "Workers"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصراً من المدونة الرسمية لشركة كلاود فلير الخاصة بميزة Worker Previews."
+    },
+    "en": {
+      "title": "Cloudflare Launches Worker Previews for Isolated Environments",
+      "description": "Cloudflare introduces Worker Previews, providing developers and AI agents with isolated, production-like environments for testing code changes in parallel.",
+      "deck": "The new feature enables developers to spin up unique URLs for every Git branch, ensuring that testing, observability, and state management occur without impacting production traffic.",
+      "summary_bullets": [
+        "Worker Previews allow each Git branch to operate with its own unique URL, configuration, and observability tools.",
+        "The system automatically isolates Durable Objects and Containers to prevent test data from bleeding into live production instances.",
+        "Developers can define a base configuration for Previews, while still allowing for per-branch overrides during testing.",
+        "The toolset facilitates an 'Agent Development Lifecycle,' allowing AI agents to deploy, test, and debug code independently."
+      ],
+      "sections": [
+        {
+          "heading": "Bridging the Gap Between Staging and Production",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has officially announced the launch of Worker Previews, a new capability designed to eliminate the discrepancies often found between testing environments and live production. By providing a production-like space for every Git branch, the tool allows developers to validate code changes in an environment that mirrors the final deployment state, ensuring that behavioral nuances are caught long before they impact end-users.",
+              "links": [
+                {
+                  "text": "Worker Previews",
+                  "url": "https://developers.cloudflare.com/workers/previews"
+                }
+              ]
+            },
+            {
+              "text": "The platform is built to support the modern developer workflow, which increasingly relies on automated systems to handle larger code changes. Cloudflare noted that the goal is to provide a testing environment in a way that doesn’t slow agents down, allowing them to participate more actively in the full development lifecycle without the bottleneck of shared staging sites.",
+              "links": [
+                {
+                  "text": "that doesn’t slow agents down",
+                  "url": "https://blog.cloudflare.com/agent-development-lifecycle/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Isolated Environments and Configuration Control",
+          "paragraphs": [
+            {
+              "text": "With the introduction of this feature, developers can trigger a new environment using npx wrangler preview. Each instance receives its own unique variables, secrets, and bindings, which are kept entirely separate from production traffic. To maintain consistency, users can define a base configuration that acts as a template for all new previews, similar to how a code branch is created from the main branch.",
+              "links": [
+                {
+                  "text": "base configuration",
+                  "url": "https://developers.cloudflare.com/workers/previews/configuration/#setting-your-previews-base-configuration"
+                }
+              ]
+            },
+            {
+              "text": "This setup allows for significant flexibility. If a specific branch requires a unique database or a different set of API keys for migration testing, those configurations can be overridden locally. Furthermore, the dashboard simplifies management by allowing users to toggle between different previews, offering a more integrated experience than traditional Wrangler environments, which often require the management of separate Workers.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "State Management and Durable Objects",
+          "paragraphs": [
+            {
+              "text": "A critical challenge in testing stateful applications is ensuring that data from test runs does not overwrite production data. Since Durable Objects operate on a singleton model—where a single instance owns its storage—Cloudflare has implemented an automated isolation mechanism. Whenever a preview is initiated, the system creates a new Durable Object namespace and Container application specific to that branch.",
+              "links": [
+                {
+                  "text": "singleton model",
+                  "url": "https://developers.cloudflare.com/durable-objects/platform/known-issues/#global-uniqueness"
+                }
+              ]
+            },
+            {
+              "text": "Developers can interact with these stateful resources using ctx.exports, ensuring that migrations and schema changes are scoped strictly to the preview. This architecture prevents catastrophic failures that might occur if test branches inadvertently modified live traffic sessions.",
+              "links": [
+                {
+                  "text": "ctx.exports",
+                  "url": "https://developers.cloudflare.com/workers/runtime-apis/context/#exports"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Observability and Agent Integration",
+          "paragraphs": [
+            {
+              "text": "Once a preview environment is live, developers can direct traffic to the unique URL via standard methods or even perform a probe from CI to verify specific behaviors. The observability suite available for production Workers is fully compatible with these preview environments, allowing for the inspection of logs, metrics, and traces on a per-branch basis.",
+              "links": [
+                {
+                  "text": "probe from CI",
+                  "url": "https://developers.cloudflare.com/workers/previews/examples/#probe-the-preview"
+                }
+              ]
+            },
+            {
+              "text": "For teams leveraging AI agents, the capability extends to automated visual and functional testing. Agents can be instructed to open these preview URLs in headless browsers to perform tasks like clicking through UI flows. Developers can then capture a screenshot of the session or analyze replayable DOM events to debug failures. This feedback loop ensures that both humans and agents have the necessary evidence to identify, fix, and verify deployments before they are merged into the main production branch.",
+              "links": [
+                {
+                  "text": "capture a screenshot",
+                  "url": "https://developers.cloudflare.com/workers/previews/examples/#capture-a-screenshot"
+                },
+                {
+                  "text": "replayable DOM events",
+                  "url": "https://developers.cloudflare.com/browser-run/features/session-recording/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Workers",
+        "DevOps",
+        "AI",
+        "CI/CD",
+        "Software Development",
+        "Automation"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Workers",
+        "Wrangler",
+        "Durable Objects"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is based entirely on the provided Cloudflare blog post regarding the launch of Worker Previews. All links and claims correspond directly to the source text."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 387,
+      "word_count_en": 648
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 522,
+      "word_count_en": 589
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "a82a98e9c62e3715d0b5",
+      "title": "Introducing Worker Previews: isolated preview environments for every change your agent makes",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 387,
+          "word_count_en": 648
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 522,
+          "word_count_en": 589
+        }
+      ]
+    }
+  ],
+  "slug": "introducing-worker-previews-isolated-preview-environments-for-every-change-your-agent-makes",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/introducing-worker-previews-isolated-preview-environments-for-every-change-your-agent-makes/hero.webp",
+    "card": "/forum/assets/posts/2026/09/introducing-worker-previews-isolated-preview-environments-for-every-change-your-agent-makes/card.webp",
+    "social": "/forum/assets/posts/2026/09/introducing-worker-previews-isolated-preview-environments-for-every-change-your-agent-makes/social.jpg",
+    "alt": {
+      "ar": "كلاود فلير تطلق Worker Previews لتعزيز بيئات الاختبار المعزولة",
+      "en": "Cloudflare Launches Worker Previews for Isolated Environments"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M31XD8PJ2SDSWTWFPP0GSF3Z.01M31XD9GVMHJJD2RAVT50XFTF.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/introducing-worker-previews-isolated-preview-environments-for-every-change-your-agent-makes/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "كلاود فلير تطلق Worker Previews لتعزيز بيئات الاختبار المعزولة",
+          "en": "Introducing Worker Previews: isolated preview environments for every change your agent makes"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/worker-previews/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M31XDPCKA9WGNB1E6TT9XNFN.01M31XDQDKHJVR4XKHJ3NDFNJK.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/introducing-worker-previews-isolated-preview-environments-for-every-change-your-agent-makes/inline-02.webp",
+        "width": 1400,
+        "height": 958,
+        "alt": {
+          "ar": "كلاود فلير تطلق Worker Previews لتعزيز بيئات الاختبار المعزولة",
+          "en": "ch1.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/worker-previews/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M34CH43HNSVTGF35HCX27P94.01M34CH5TM485DEM2WZHKYG4N8.png&w=1430&h=980&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
