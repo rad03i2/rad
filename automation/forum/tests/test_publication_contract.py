@@ -22,15 +22,18 @@ class PublicationContractTests(unittest.TestCase):
     def test_primary_publisher_keeps_all_wakeup_paths(self) -> None:
         workflow = self._read(".github/workflows/forum-collector.yml")
         self.assertIn("workflow_dispatch:", workflow)
+        self.assertIn("trigger:", workflow)
+        self.assertIn("required: true", workflow)
         self.assertIn("cron: '0,20,40 * * * *'", workflow)
         self.assertIn("group: mikhbar-publication-write", workflow)
         self.assertIn("python automation/forum/publisher_scheduler.py", workflow)
 
-    def test_external_wakeup_stays_frequent_but_not_the_publication_clock(self) -> None:
+    def test_external_wakeup_matches_twenty_minute_publication_clock(self) -> None:
         wrangler = self._read("automation/external-scheduler/cloudflare/wrangler.toml")
         worker = self._read("automation/external-scheduler/cloudflare/src/index.js")
-        self.assertIn('crons = ["*/5 * * * *"]', wrangler)
-        self.assertIn('const CRON = "*/5 * * * *";', worker)
+        self.assertIn('crons = ["0,20,40 * * * *"]', wrangler)
+        self.assertIn('const CRON = "0,20,40 * * * *";', worker)
+        self.assertIn('inputs: { trigger: "external-20m" }', worker)
         self.assertIn("publication_cadence_source", worker)
 
     def test_backup_publisher_remains_independent_and_serialized(self) -> None:
