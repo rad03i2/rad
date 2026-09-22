@@ -1,0 +1,297 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "689d78c6e007ab8e2c4f",
+  "slug": "transformers-now-runs-llama-cpp-quants",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/transformers-now-runs-llama-cpp-quants/",
+    "en": "/forum/en/ai/transformers-now-runs-llama-cpp-quants/"
+  },
+  "locales": {
+    "ar": {
+      "title": "مكتبة Transformers تتيح تشغيل نماذج GGUF محلياً بكفاءة عالية",
+      "description": "أعلنت Hugging Face عن دعم نماذج GGUF عبر مكتبة Transformers، مما يتيح للمطورين تشغيل نماذج الذكاء الاصطناعي الضخمة على أجهزتهم المحلية بسهولة وتكامل تام.",
+      "deck": "خطوة جديدة لتعزيز الاستدلال المحلي للذكاء الاصطناعي عبر دمج تقنيات llama.cpp داخل بيئة العمل المألوفة للمطورين في Transformers.",
+      "summaryBullets": [
+        "إمكانية تحميل وتشغيل ملفات GGUF مباشرة باستخدام واجهة برمجة تطبيقات from_pretrained.",
+        "استخدام نوى ggml لضمان أداء يقترب من سرعة محرك llama.cpp في الاستدلال المحلي.",
+        "دعم كامل لتشغيل النماذج على معالجات Apple Silicon مع إمكانية التوسع لاحقاً.",
+        "توفير بيئة مرنة للمطورين لتقييم النماذج المكممة وتطوير مهام برمجية مخصصة."
+      ],
+      "sections": [
+        {
+          "heading": "طفرة في الاستدلال المحلي",
+          "paragraphs": [
+            {
+              "text": "تخطو منصة Hugging Face خطوة محورية نحو جعل تشغيل نماذج الذكاء الاصطناعي محلياً واقعاً ملموساً للمطورين، حيث أعلنت رسمياً عن إضافة دعم تنسيق GGUF إلى مكتبة Transformers الشهيرة. هذا التحديث يهدف إلى سد الفجوة بين نماذج الذكاء الاصطناعي الضخمة وبين الموارد المحدودة لأجهزة الحاسوب المحمولة، مما يتيح للمستخدمين الاستفادة من النماذج المُكممة (Quantized) دون الحاجة إلى بنية تحتية سحابية مكلفة.",
+              "links": [
+                {
+                  "text": "GGUF",
+                  "url": "https://github.com/ggml-org/ggml/blob/master/docs/gguf.md"
+                }
+              ]
+            },
+            {
+              "text": "يعد تنسيق GGUF، الذي طُور بواسطة فريق مشروع llama.cpp، المعيار الأكثر انتشاراً لتشغيل النماذج محلياً، نظراً لقدرته على تغليف أوزان النموذج وبياناته الوصفية في ملف واحد مضغوط. ومع هذا التكامل الجديد، أصبح بإمكان المستخدمين تحميل هذه النماذج مباشرة من المنصة وبدء توليد النصوص على أجهزتهم الخاصة عبر واجهات برمجة التطبيقات التي يفضلونها في Transformers، وهو ما يمنح تجربة تطوير أكثر سلاسة وكفاءة.",
+              "links": [
+                {
+                  "text": "llama.cpp",
+                  "url": "https://github.com/ggml-org/llama.cpp"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الاستفادة من تقنيات التكميم",
+          "paragraphs": [
+            {
+              "text": "يعتمد النجاح في تشغيل النماذج محلياً على تقنية التكميم (Quantization)، التي تسمح بتقليل استهلاك الذاكرة عبر تقليص دقة الأوزان. توفر مكتبة Transformers الآن دعماً لهذه النماذج، حيث تعيد استخدام نوى ggml عبر مكتبة kernels لتقليل العبء الحسابي أثناء توليد النصوص. التركيز الأولي لهذا التكامل ينصب على أجهزة Apple Silicon، حيث يتم استغلال الأداء العالي لهذه الرقائق لتشغيل نماذج متطورة مثل Qwen3.5، مما يجعل تجربة المستخدم قريبة جداً من الأداء المباشر لمحرك الاستدلال الأصلي.",
+              "links": []
+            },
+            {
+              "text": "بالإضافة إلى الأداء، توفر هذه الخطوة مرونة في اختيار حجم النموذج المناسب للذاكرة المتاحة في الجهاز. المستخدمون لديهم الآن خيارات متعددة تتراوح بين مستويات تكميم مختلفة، مثل Q4_K_M الذي يعد توازناً مثالياً بين الحجم والدقة، أو خيارات أكثر تحفظاً مثل Q6_K لمزيد من الدقة. هذا التنوع يضمن للمطورين الحصول على أداء مخصص يتناسب مع قدرات عتادهم دون التضحية بجودة المخرجات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تكامل تقني وتبسيط لسير العمل",
+          "paragraphs": [
+            {
+              "text": "من الناحية التقنية، لا يتطلب تفعيل هذا الدعم إعدادات معقدة. يكفي تمرير معرف النموذج (model_id) واسم الملف (filename) إلى دالة from_pretrained، وستقوم مكتبة Transformers تلقائياً باختيار نوى ggml المناسبة للتعامل مع النماذج المكممة. هذا التبسيط يغني المطورين عن البحث عن حلول وسيطة أو برمجيات إضافية لتشغيل النماذج التي تم تحويلها مسبقاً إلى تنسيق GGUF.",
+              "links": []
+            },
+            {
+              "text": "يضيف هذا التحديث أيضاً إمكانية استخدام transformers serve لتشغيل خادم محلي متوافق مع واجهة برمجة تطبيقات OpenAI، مما يتيح ربط أدوات خارجية مثل Jan أو غيرها بواجهات المحادثة التي تعمل محلياً على جهاز المستخدم. تعكس هذه الخطوة رؤية Hugging Face في دمج الأدوات التي تدعم الاستدلال الفعال مع أدوات تعريف النماذج، مما يقلل من التجزئة في منظومة العمل البرمجي للمطورين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آفاق المستقبل وتوسيع نطاق الدعم",
+          "paragraphs": [
+            {
+              "text": "لا تقتصر أهمية هذا التطور على تشغيل النماذج فحسب، بل تمتد لتسهيل مهام تقييم النماذج (Evaluation) وتصحيح عمليات التحويل، حيث يتيح تحميل الملفات الأصلية والمكممة في بيئة واحدة للمطورين فحص أوزان النماذج والتحقق من دقتها بسهولة. إن الجمع بين قوة التكميم في GGUF ومرونة التكوين في Transformers يفتح الباب أمام ابتكارات جديدة في مجال معالجة اللغات الطبيعية محلياً.",
+              "links": []
+            },
+            {
+              "text": "تؤكد المنصة أن مشروع llama.cpp سيظل المحرك الموصى به للمستخدمين الذين يضعون أولوية قصوى لكفاءة الاستدلال المحلي بفضل تنوع الأجهزة التي يدعمها. ومع ذلك، فإن هذا التكامل يمثل فرصة هائلة للمطورين لتجربة تقنيات decoding جديدة، وتطوير طبقات مخصصة (Custom Layers)، أو حتى ضبط النماذج (Fine-tuning) باستخدام سير العمل المعتاد في بيئة Python، مما يعزز من قدرة المجتمع على ابتكار حلول ذكاء اصطناعي محلية تتجاوز الحدود التقليدية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Hugging Face",
+        "GGUF",
+        "Transformers",
+        "الاستدلال المحلي",
+        "Apple Silicon",
+        "llama.cpp"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Transformers",
+        "llama.cpp",
+        "Apple Silicon",
+        "GGUF",
+        "ggml"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "22 سبتمبر 2026",
+      "modifiedLabel": "22 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 576
+    },
+    "en": {
+      "title": "Hugging Face Transformers Now Supports llama.cpp GGUF Models",
+      "description": "Hugging Face has added native support for GGUF model files to its Transformers library, enabling developers to run quantized AI locally.",
+      "deck": "The Transformers library can now load GGUF checkpoints directly, bridging the gap between efficient local inference and the standard PyTorch-based ecosystem.",
+      "summaryBullets": [
+        "Transformers now supports loading GGUF models directly using the familiar 'from_pretrained' API.",
+        "The integration utilizes underlying ggml kernels to bring performance levels close to llama.cpp.",
+        "Initial support focuses on local inference for the Qwen3.5 architecture on Apple Silicon.",
+        "Developers can now perform tasks like model inspection, custom layer prototyping, and evaluation on quantized models within the Transformers framework."
+      ],
+      "sections": [
+        {
+          "heading": "Democratizing Local Inference",
+          "paragraphs": [
+            {
+              "text": "Hugging Face has announced a major update to its Transformers library, introducing support for running GGUF models. By enabling the loading of checkpoints specifically sized for local hardware, the company aims to make powerful artificial intelligence models accessible on standard consumer laptops. This development builds upon the success of [llama.cpp](https://github.com/ggml-org/llama.cpp), which has become a cornerstone of the local AI ecosystem, powering widely used tools such as Ollama, LM Studio, and Jan.",
+              "links": [
+                {
+                  "text": "llama.cpp",
+                  "url": "https://github.com/ggml-org/llama.cpp"
+                }
+              ]
+            },
+            {
+              "text": "The GGUF format, developed by the team behind llama.cpp, is designed for efficiency and ease of use, packaging model weights, metadata, and tokenizer information into a single file. By supporting various quantization levels, it allows users to trade off model precision for a smaller memory footprint. According to the [Hugging Face Blog](https://huggingface.co/blog/transformers-llama-cpp-quants), this integration allows users to pick a GGUF file from the Hub and load it directly using the standard Transformers API.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/transformers-llama-cpp-quants"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Bridging Transformers and GGUF",
+          "paragraphs": [
+            {
+              "text": "To achieve performance competitive with dedicated inference engines, the Transformers library now reuses the underlying ggml kernels through the kernels library. This approach reduces generation overhead, with an initial focus on supporting the Qwen3.5 architecture for users running Apple Silicon devices. The integration is designed to be seamless; when weights remain packed on the Metal backend, Transformers automatically detects and loads the compatible layer kernels.",
+              "links": []
+            },
+            {
+              "text": "If a compatible kernel is unavailable, the system is designed to gracefully fall back to the standard dequantization process. For those looking for further details or wishing to view the technical implementation, an [Update on GitHub](https://github.com/huggingface/blog/blob/main/transformers-llama-cpp-quants.md) provides comprehensive insights into the codebase updates and requirements for developers, such as utilizing the latest versions of PyTorch.",
+              "links": [
+                {
+                  "text": "Update on GitHub",
+                  "url": "https://github.com/huggingface/blog/blob/main/transformers-llama-cpp-quants.md"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Expanding Development Workflows",
+          "paragraphs": [
+            {
+              "text": "While llama.cpp remains the recommended engine for production-grade, highly efficient local inference due to its specialized memory management and broader hardware support, this new integration offers significant advantages for researchers and developers. By working with GGUF checkpoints inside the Transformers environment, developers can now inspect intermediate activations with hooks, modify a model's forward pass, or prototype custom layers using the familiar PyTorch toolset.",
+              "links": []
+            },
+            {
+              "text": "This compatibility also simplifies model validation and fine-tuning. Users can now load original checkpoints alongside their quantized GGUF versions to measure quantization error, or they can dequantize weights to resume standard fine-tuning workflows. Furthermore, the library supports the use of Transformers serve to expose an OpenAI-compatible API, allowing developers to connect local model instances to various client interfaces, including Jan or custom AI agents.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Quantization and Future Outlook",
+          "paragraphs": [
+            {
+              "text": "The GGUF ecosystem offers several quantization variants, such as Q4_K_M, which balances performance and precision by mixing tensor precisions. Hugging Face suggests that users start with these balanced profiles before experimenting with more aggressive quantization, which may be necessary to fit larger models into limited system memory. Because the quality trade-offs are highly dependent on the specific model and target task, the company emphasizes the importance of evaluating performance based on actual use cases.",
+              "links": []
+            },
+            {
+              "text": "Looking ahead, the integration highlights the complementary roles of [MLX](https://github.com/ml-explore/mlx) and the broader Hugging Face ecosystem. By bringing the performance benefits of ggml to a wider array of model architectures, the development team hopes to accelerate operations that were previously unsupported. For developers interested in tracking the latest discussions or contributing to this ongoing effort, [Upvote -](https://huggingface.io/login?next=%2Fblog%2Ftransformers-llama-cpp-quants) remains an option for authenticated users on the platform.",
+              "links": [
+                {
+                  "text": "MLX",
+                  "url": "https://github.com/ml-explore/mlx"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Hugging Face",
+        "Transformers",
+        "GGUF",
+        "llama.cpp",
+        "Quantization",
+        "Artificial Intelligence",
+        "Local Inference"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Transformers",
+        "llama.cpp",
+        "Qwen3.5",
+        "PyTorch",
+        "Apple Silicon"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 22, 2026",
+      "modifiedLabel": "September 22, 2026",
+      "readMinutes": 3,
+      "wordCount": 624
+    }
+  },
+  "datePublished": "2026-09-22T13:56:36.803573+03:00",
+  "dateModified": "2026-09-22T13:56:36.803573+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/transformers-now-runs-llama-cpp-quants/hero.webp",
+    "card": "/forum/assets/posts/2026/09/transformers-now-runs-llama-cpp-quants/card.webp",
+    "social": "/forum/assets/posts/2026/09/transformers-now-runs-llama-cpp-quants/social.jpg",
+    "alt": {
+      "ar": "مكتبة Transformers تتيح تشغيل نماذج GGUF محلياً بكفاءة عالية",
+      "en": "Hugging Face Transformers Now Supports llama.cpp GGUF Models"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/transformers_llama_cpp_quants/thumbnail.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/transformers-now-runs-llama-cpp-quants/inline-01.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "مكتبة Transformers تتيح تشغيل نماذج GGUF محلياً بكفاءة عالية",
+          "en": "Hugging Face Transformers Now Supports llama.cpp GGUF Models"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/transformers-llama-cpp-quants",
+        "originalUrl": "https://huggingface.co/blog/assets/thinkingmachines-inkling/thumbnail.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/transformers-now-runs-llama-cpp-quants/inline-02.webp",
+        "width": 1400,
+        "height": 692,
+        "alt": {
+          "ar": "مكتبة Transformers تتيح تشغيل نماذج GGUF محلياً بكفاءة عالية",
+          "en": "Hugging Face Transformers Now Supports llama.cpp GGUF Models"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/transformers-llama-cpp-quants",
+        "originalUrl": "https://huggingface.co/blog/assets/native-speed-vllm-transformers-backend/thumbnail.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/transformers-llama-cpp-quants",
+      "type": "official",
+      "title": "Transformers now runs llama.cpp quants"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/transformers-llama-cpp-quants",
+  "sourceTitle": "Transformers now runs llama.cpp quants",
+  "trendScore": 98.35,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-22T10:56:36+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/transformers-now-runs-llama-cpp-quants.json"
+}
