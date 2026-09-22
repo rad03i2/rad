@@ -292,14 +292,65 @@ def _call_openai_compatible(prompt: str, api_key: str, endpoint: str, model: str
     raise RuntimeError(last_error or f"{provider} API failed")
 
 
-def _call_groq(prompt: str, model: str) -> dict:
-    return _call_openai_compatible(
-        prompt=prompt,
-        api_key=os.environ.get("GROQ_API_KEY", "").strip(),
-        endpoint="https://api.groq.com/openai/v1/chat/completions",
-        model=model,
-        provider="Groq",
-    )
+def _unique_models(*models: str) -> list[str]:
+    seen = set()
+    result = []
+    for model in models:
+        model = str(model or "").strip()
+        if model and model not in seen:
+            seen.add(model)
+            result.append(model)
+    return result
+
+
+def _groq_available_models(api_key: str) -> set[str]:
+    if not api_key:
+        return set()
+    try:
+        response = requests.get(
+            "https://api.groq.com/openai/v1/models",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+                "User-Agent": "RDWAN-Tech-Publisher/1.0",
+            },
+            timeout=20,
+        )
+        if response.status_code >= 400:
+            return set()
+        data = response.json()
+        return {
+            str(item.get("id") or "").strip()
+            for item in (data.get("data") or [])
+            if str(item.get("id") or "").strip()
+        }
+    except Exception:
+        return set()
+
+
+def _call_groq(prompt: str, models: list[str]) -> dict:
+    api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError("Groq API key is not configured")
+
+    available = _groq_available_models(api_key)
+    candidates = [model for model in models if not available or model in available]
+    if not candidates:
+        candidates = list(models)
+
+    errors = []
+    for model in candidates:
+        try:
+            return _call_openai_compatible(
+                prompt=prompt,
+                api_key=api_key,
+                endpoint="https://api.groq.com/openai/v1/chat/completions",
+                model=model,
+                provider=f"Groq/{model}",
+            )
+        except Exception as exc:
+            errors.append(str(exc))
+    raise RuntimeError("No Groq model succeeded: " + " | ".join(errors))
 
 
 def _call_openrouter(prompt: str, model: str) -> dict:
@@ -316,61 +367,65 @@ def _call_openrouter(prompt: str, model: str) -> dict:
     )
 
 
-def _call_gemini(prompt: str, model: str) -> dict:
+def _call_gemini(prompt: str, models: list[str]) -> dict:
     api_key = os.environ.get("GEMINI_API_KEY", "").strip()
     if not api_key:
         raise RuntimeError("GEMINI_API_KEY is not configured")
 
-    # Interactions API is Google's recommended Gemini API surface for new work.
     endpoint = "https://generativelanguage.googleapis.com/v1beta/interactions"
-    payload = {
-        "model": model,
-        "input": prompt,
-        "generation_config": {
-            "max_output_tokens": 8192,
-        },
-    }
-
-    last_error = None
-    for _ in range(2):
-        try:
-            response = requests.post(
-                endpoint,
-                headers={
-                    "x-goog-api-key": api_key,
-                    "Content-Type": "application/json",
-                    "User-Agent": "RDWAN-Tech-Publisher/1.0",
-                },
-                json=payload,
-                timeout=180,
-            )
-            if response.status_code >= 400:
-                body = response.text[:1600]
-                last_error = f"Gemini Interactions API failed ({response.status_code}): {body}"
-                continue
-
-            data = response.json()
-            if data.get("status") not in (None, "completed"):
-                last_error = f"Gemini interaction did not complete: {json.dumps(data)[:1200]}"
-                continue
-
-            text_parts = []
-            for step in data.get("steps") or []:
-                if step.get("type") != "model_output":
+    errors = []
+    for model in models:
+        payload = {
+            "model": model,
+            "input": prompt,
+            "generation_config": {
+                "max_output_tokens": 8192,
+            },
+        }
+        last_error = None
+        for _ in range(2):
+            try:
+                response = requests.post(
+                    endpoint,
+                    headers={
+                        "x-goog-api-key": api_key,
+                        "Content-Type": "application/json",
+                        "User-Agent": "RDWAN-Tech-Publisher/1.0",
+                    },
+                    json=payload,
+                    timeout=180,
+                )
+                if response.status_code >= 400:
+                    body = response.text[:1600]
+                    last_error = f"{model} failed ({response.status_code}): {body}"
+                    # Quota/service pressure can be model-specific, so try the next model.
+                    if response.status_code in (404, 429, 500, 502, 503, 504):
+                        break
                     continue
-                for part in step.get("content") or []:
-                    if part.get("type") == "text" and part.get("text"):
-                        text_parts.append(str(part["text"]))
 
-            text = "\n".join(text_parts).strip()
-            if not text:
-                last_error = f"Gemini returned no text: {json.dumps(data)[:1200]}"
-                continue
-            return _extract_json(text)
-        except Exception as exc:
-            last_error = f"Gemini request failed: {type(exc).__name__}: {exc}"
+                data = response.json()
+                if data.get("status") not in (None, "completed"):
+                    last_error = f"{model} did not complete: {json.dumps(data)[:1200]}"
+                    continue
 
-    raise RuntimeError(last_error or "Gemini Interactions API failed")
+                text_parts = []
+                for step in data.get("steps") or []:
+                    if step.get("type") != "model_output":
+                        continue
+                    for part in step.get("content") or []:
+                        if part.get("type") == "text" and part.get("text"):
+                            text_parts.append(str(part["text"]))
+
+                text = "\n".join(text_parts).strip()
+                if not text:
+                    last_error = f"{model} returned no text: {json.dumps(data)[:1200]}"
+                    continue
+                return _extract_json(text)
+            except Exception as exc:
+                last_error = f"{model} request failed: {type(exc).__name__}: {exc}"
+        errors.append(last_error or f"{model} failed")
+
+    raise RuntimeError("No Gemini model succeeded: " + " | ".join(errors))
 
 
 def _call_copilot(prompt: str) -> dict:
@@ -403,28 +458,39 @@ def _call_copilot(prompt: str) -> dict:
 def _call_model(prompt: str, settings: dict) -> dict:
     errors = []
 
-    # Primary: Groq. Fast OpenAI-compatible inference and first choice for Mikhbar.
+    groq_models = _unique_models(
+        settings.get("groqModel"),
+        "qwen/qwen3.6-27b",
+        "qwen/qwen3.8-27b",
+        "llama-3.1-8b-instant",
+        "llama-3.3-70b-versatile",
+    )
     if os.environ.get("GROQ_API_KEY", "").strip():
         try:
-            return _call_groq(prompt, settings.get("groqModel", "llama-3.3-70b-versatile"))
+            return _call_groq(prompt, groq_models)
         except Exception as exc:
             errors.append(f"Groq: {exc}")
 
-    # Secondary: OpenRouter free router. It can choose an available free model.
+    # Gemini comes before the rate-limited free OpenRouter fallback. Model-level
+    # fallback avoids stopping publication when one Flash tier is under pressure.
+    gemini_models = _unique_models(
+        settings.get("geminiModel"),
+        "gemini-3.5-flash-lite",
+        "gemini-2.5-flash-lite",
+        "gemini-3.6-flash",
+    )
+    if os.environ.get("GEMINI_API_KEY", "").strip():
+        try:
+            return _call_gemini(prompt, gemini_models)
+        except Exception as exc:
+            errors.append(f"Gemini: {exc}")
+
     if os.environ.get("OPENROUTER_API_KEY", "").strip():
         try:
             return _call_openrouter(prompt, settings.get("openRouterModel", "openrouter/free"))
         except Exception as exc:
             errors.append(f"OpenRouter: {exc}")
 
-    # Third: Gemini. Keep it available once the current Google auth issue is resolved.
-    if os.environ.get("GEMINI_API_KEY", "").strip():
-        try:
-            return _call_gemini(prompt, settings.get("geminiModel", "gemini-3.1-flash-lite"))
-        except Exception as exc:
-            errors.append(f"Gemini: {exc}")
-
-    # Last-resort compatibility fallback.
     try:
         return _call_copilot(prompt)
     except Exception as exc:
