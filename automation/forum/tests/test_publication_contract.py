@@ -41,6 +41,7 @@ class PublicationContractTests(unittest.TestCase):
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("group: mikhbar-publication-write", workflow)
         self.assertIn("python automation/forum/publisher_scheduler.py", workflow)
+        self.assertIn("cron: '8,13,18,28,33,38,48,53,58 * * * *'", workflow)
 
     def test_social_automation_cannot_commit_forum_publication_files(self) -> None:
         social_path = ROOT / ".github/workflows/mikhbar-social.yml"
