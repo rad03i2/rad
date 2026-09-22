@@ -1,0 +1,32 @@
+name: Mikhbar Facebook Token Check
+
+on:
+  push:
+    paths:
+      - 'automation/social/facebook_token_check_trigger.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  token-check:
+    runs-on: ubuntu-latest
+    env:
+      FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+    steps:
+      - name: Verify Facebook token identity
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os
+          from urllib.request import Request, urlopen
+          from urllib.parse import urlencode
+
+          token = os.environ["FACEBOOK_PAGE_ACCESS_TOKEN"]
+          url = "https://graph.facebook.com/me?" + urlencode({"fields": "id,name"})
+          req = Request(url, headers={"Authorization": "Bearer " + token})
+          with urlopen(req, timeout=30) as r:
+              data = json.loads(r.read().decode())
+          print(json.dumps({"facebook_identity": data}, ensure_ascii=False))
+          PY
