@@ -3,7 +3,7 @@ const REPO = "rad";
 const WORKFLOW = "forum-collector.yml";
 const WORKFLOW_PATH = ".github/workflows/forum-collector.yml";
 const BRANCH = "main";
-const CRON = "*/5 * * * *";
+const CRON = "0,20,40 * * * *";
 
 async function triggerPublisher(env) {
   if (!env.GITHUB_TOKEN) {
