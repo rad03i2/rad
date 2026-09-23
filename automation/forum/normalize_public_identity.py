@@ -13,6 +13,9 @@ DISCOVERY_FILES = {
     "feed-en.xml",
     "robots.txt",
     "llms.txt",
+    "posts.json",
+    "posts-ar.json",
+    "posts-en.json",
 }
 
 
