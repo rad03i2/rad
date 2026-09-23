@@ -7,6 +7,8 @@ on:
     paths:
       - 'automation/forum/**'
       - 'forum/article/**'
+      - 'forum/article-map.json'
+      - 'cloudflare/mikhbar-site/**'
       - '.github/workflows/forum-collector.yml'
       - '.github/workflows/forum-publisher-backup.yml'
       - '.github/workflows/forum-ci.yml'
@@ -21,7 +23,7 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -35,8 +37,19 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check -r automation/forum/requirements.txt
       - name: Compile publisher modules
-        run: python -m py_compile automation/forum/writer.py automation/forum/publisher.py automation/forum/publisher_scheduler.py automation/forum/data_only_scheduler.py automation/forum/build_article_map.py automation/forum/trend.py
+        run: python -m py_compile automation/forum/writer.py automation/forum/publisher.py automation/forum/publisher_scheduler.py automation/forum/data_only_scheduler.py automation/forum/build_article_map.py automation/forum/audit_dynamic_articles.py automation/forum/trend.py
       - name: Validate dynamic article JavaScript
-        run: node --check forum/article/article.js
+        run: |
+          node --check forum/article/article.js
+          node --check cloudflare/mikhbar-site/src/article.js
+          node --check cloudflare/mikhbar-site/src/index.js
+      - name: Rebuild dynamic article map
+        run: python automation/forum/build_article_map.py
+      - name: Audit JSON coverage before static article removal
+        run: python automation/forum/audit_dynamic_articles.py
       - name: Run forum automation tests
         run: python -m unittest discover -s automation/forum/tests -v
+      - name: Build Cloudflare static assets
+        run: python cloudflare/mikhbar-site/build.py
+      - name: Validate Cloudflare Worker bundle
+        run: npx --yes wrangler@latest deploy --dry-run --config cloudflare/mikhbar-site/wrangler.preview.toml
