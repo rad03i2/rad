@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "cf4f876c079667faff55",
+  "slug": "opentelemetry-in-the-github-copilot-app",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/opentelemetry-in-the-github-copilot-app/",
+    "en": "/forum/en/ai/opentelemetry-in-the-github-copilot-app/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub Copilot يدعم OpenTelemetry لمراقبة أداء الوكلاء",
+      "description": "أضافت GitHub تطبيق Copilot دعمًا لإعدادات OpenTelemetry عبر سياسات المؤسسات، مما يتيح للمديرين مراقبة تفاعلات الوكلاء مع النماذج والأدوات وتحليل الأداء بشكل مركزي.",
+      "deck": "أصبح بإمكان مسؤولي المؤسسات الآن تفعيل إطار OpenTelemetry في تطبيق GitHub Copilot لمراقبة نشاط الوكلاء الذكيين وتحليل تفاعلاتهم مع النماذج اللغوية والأدوات البرمجية.",
+      "summaryBullets": [
+        "دعم جديد لإطار OpenTelemetry (OTel) في تطبيق GitHub Copilot عبر إعدادات إدارة المؤسسات.",
+        "إمكانية تحليل جلسات الوكلاء وتتبع الطلبات المرسلة إلى نماذج الذكاء الاصطناعي والأدوات المستخدمة.",
+        "تتبع خطوات التنفيذ خطوة بخطوة لاستكشاف السلوك غير المتوقع داخل أدوات المراقبة الحالية.",
+        "إدارة مركزية لسياسات المراقبة عبر الفرق دون الحاجة إلى إعدادات فردية لكل مطور.",
+        "استبعاد محتوى الأوامر والاستجابات بشكل افتراضي لضمان الخصوصية، مع إمكانية التفعيل عبر سياسات محددة."
+      ],
+      "sections": [
+        {
+          "heading": "إدماج إطار المراقبة المفتوح المصدر",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة GitHub عن إضافة دعم رسمي لإطار OpenTelemetry (OTel) في تطبيق GitHub Copilot، وهو إطار عمل مفتوح المصدر مصمم لمراقبة الأداء والقياسات في الأنظمة الموزعة. يأتي هذا التحديث ليمنح مسؤولي المؤسسات أدوات دقيقة لفهم كيفية أداء وكلاء Copilot الذكيين وتفاعلاتهم مع نماذج الذكاء الاصطناعي والأدوات البرمجية المختلفة. من خلال هذا التكامل، يمكن للمؤسسات إرسال بيانات نشاط الوكلاء مباشرة إلى أدوات المراقبة المتوافقة مع بنية OTel الخاصة بها، مما يوفر رؤية شاملة للعمليات التقنية دون الحاجة إلى حلول مغلقة أو مخصصة. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-22-opentelemetry-in-the-github-copilot-app/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحليل جلسات الوكلاء وتتبع التفاعلات",
+          "paragraphs": [
+            {
+              "text": "يوفر هذا التحديث ميزة أساسية تتمثل في القدرة على تحليل جلسات الوكلاء (Agent Sessions) بشكل مفصل. يمكن للمطورين والمهندسين الآن تتبع تدفق الجلسة بالكامل، بدءًا من الطلبات المرسلة إلى نماذج الذكاء الاصطناعي، مرورًا بالأدوات التي يستخدمها الوكيل لتنفيذ المهام، وصولاً إلى النتائج النهائية. هذا المستوى من التفصيل يساعد الفرق الهندسية على فهم آلية اتخاذ القرارات داخل الوكيل، وتحديد أي نقاط قد تكون غير فعالة أو تستهلك موارد زائدة. كما يتيح النظام مراجعة مسارات التنفيذ خطوة بخطوة (Step-by-step traces) داخل أدوات المراقبة القائمة لدى المؤسسة، مما يسهل استكشاف السلوك غير المتوقع أو الأخطاء التي قد تحدث أثناء تنفيذ المهام المعقدة. ويمكن الرجوع إلى Back to changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الإدارة المركزية لسياسات المراقبة",
+          "paragraphs": [
+            {
+              "text": "من أبرز مزايا هذا التحديث هو الانتقال من الإعدادات الفردية إلى الإدارة المركزية. بدلاً من مطالبة كل مطور بإعداد أدوات المراقبة بشكل مستقل، يمكن للمسؤولين تطبيق إعدادات التلبيمة (Telemetry) على مستوى المؤسسة بأكملها أو على فرق محددة. يتم ذلك من خلال ملف managed-settings.json الخاص بالمؤسسة، حيث يمكن تحديد نقطة النهاية (Endpoint) التي ستستقبل بيانات المراقبة. هذا النهج يضمن اتساق سياسات المراقبة عبر جميع الفرق، ويقلل من العبء الإداري على المطورين، مع تعزيز الامتثال للمعايير الأمنية والتقنية المعتمدة داخل المنظمة. كما يسهل هذا التكامل دمج بيانات Copilot مع أنظمة المراقبة الحالية التي تستخدمها فرق العمليات (DevOps) والهندسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الخصوصية واستبعاد المحتوى الحساس",
+          "paragraphs": [
+            {
+              "text": "تولي GitHub أهمية كبيرة لخصوصية البيانات، ولذلك يتم استبعاد محتوى الأوامر (Prompts) والاستجابات (Responses) بشكل افتراضي من بيانات المراقبة التي يتم إرسالها عبر OpenTelemetry. هذا الإجراء يضمن عدم تسرب المعلومات الحساسة أو الكود الخاص بالمستخدمين إلى خوادم المراقبة الخارجية دون إذن صريح. ومع ذلك، توفر المنصة إمكانية تعديل هذه الإعدادات عبر سياسات التقاط المحتوى (Content-capture settings) إذا رأت المؤسسة حاجة ماسة إلى تحليل المحتوى لأغراض محددة. يُنصح المسؤولون بمراجعة هذه الإعدادات بعناية قبل تفعيل أي خيارات إضافية، للتأكد من توافقها مع سياسات الخصوصية والأمان المعتمدة داخل مؤسستهم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "القيمة المضافة للمؤسسات التقنية",
+          "paragraphs": [
+            {
+              "text": "يمثل هذا التحديث خطوة مهمة نحو نضج أدوات الذكاء الاصطناعي في بيئات المؤسسات. من خلال توفير رؤية شفافة حول أداء الوكلاء، يمكن للشركات تحسين استخدام موارد الحوسبة السحابية، وتقليل تكاليف الاستدعاءات غير الضرورية للنماذج، وتحسين جودة النتائج النهائية. كما يساعد هذا التكامل في بناء ثقافة هندسية تعتمد على البيانات (Data-driven) لتحسين عمليات التطوير. مع تزايد اعتماد الشركات على وكلاء الذكاء الاصطناعي لأتمتة المهام البرمجية، تصبح مراقبة الأداء والاستقرار أمراً حيوياً لضمان موثوقية هذه الأدوات في بيئات الإنتاج الحرجة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub Copilot",
+        "OpenTelemetry",
+        "الذكاء الاصطناعي",
+        "مراقبة الأداء",
+        "إدارة المؤسسات",
+        "DevOps",
+        "الوكلاء الذكيون"
+      ],
+      "entities": [
+        "GitHub",
+        "Copilot",
+        "OpenTelemetry",
+        "OTel"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "23 سبتمبر 2026",
+      "modifiedLabel": "23 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 573
+    },
+    "en": {
+      "title": "GitHub Copilot App Adds OpenTelemetry Support",
+      "description": "The GitHub Copilot app now supports OpenTelemetry configuration via enterprise-managed settings, letting organizations track agent activity and performance.",
+      "deck": "The GitHub Copilot app introduces support for OpenTelemetry configuration through enterprise-managed settings, empowering administrators to monitor agent performance, model interactions, and tool usage across their organizations.",
+      "summaryBullets": [
+        "The GitHub Copilot app now supports OpenTelemetry (OTel) configuration via enterprise-managed settings.",
+        "Administrators can forward agent activity data to compatible monitoring tools using the open-source observability framework.",
+        "Features include analyzing agent sessions, investigating unexpected behavior through execution traces, and managing monitoring centrally.",
+        "Prompt and response content are excluded by default, requiring a review of content-capture settings before enablement."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to OpenTelemetry in GitHub Copilot",
+          "paragraphs": [
+            {
+              "text": "The GitHub Copilot app has introduced support for OpenTelemetry (OTel) configuration through enterprise-managed settings, providing engineering teams with deeper visibility into how Copilot agents perform and interact with various models and tools. As organizations scale their adoption of AI coding assistants, understanding the operational flow of agent-driven workflows becomes increasingly critical. OpenTelemetry serves as an open-source observability framework that bridges this gap, allowing enterprises to capture and analyze telemetry data directly from their development environments. Further details are available from GitHub Changelog in the original source material.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-22-opentelemetry-in-the-github-copilot-app/"
+                }
+              ]
+            },
+            {
+              "text": "By integrating this framework into the GitHub Copilot ecosystem, GitHub is giving enterprise administrators the architectural tools needed to monitor telemetry data at scale. Rather than relying on isolated local configurations, organizations can now route detailed execution data straight to their existing, compatible enterprise monitoring solutions. This centralized approach ensures consistent observability standards across multiple development teams and departments. Further details are available from Back to changelog in the original source material.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Core Capabilities and Monitoring Benefits",
+          "paragraphs": [
+            {
+              "text": "The integration of OpenTelemetry brings several key operational advantages to enterprise engineering environments. First, teams can analyze complete agent sessions by following the step-by-step flow of execution, which includes tracking specific requests sent to underlying AI models as well as evaluating the exact tools utilized by the agent during a given task.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, engineering organizations can effectively investigate unexpected behavior or execution errors. By reviewing granular traces of agent execution within their preferred monitoring dashboards, developers and administrators can pinpoint anomalies, debug workflow bottlenecks, and ensure that AI assistants are operating reliably and efficiently.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Centralized Enterprise Administration",
+          "paragraphs": [
+            {
+              "text": "Managing observability settings across a large enterprise can present significant logistical challenges if handled on a developer-by-developer basis. To address this, the new functionality enables centralized monitoring management. Administrators can apply unified telemetry policies and settings across all teams in the organization, removing the need for individual developers to manually configure their local environments.",
+              "links": []
+            },
+            {
+              "text": "To activate this capability, administrators must configure the specific telemetry property within their enterprise's managed-settings.json file. This configuration step enables the export mechanism and explicitly defines the designated endpoint that will receive the telemetry data stream. Detailed guidelines on setting up these parameters can be found through official administrative documentation.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Data Privacy and Content Capture Considerations",
+          "paragraphs": [
+            {
+              "text": "When deploying observability frameworks that interact with artificial intelligence models and developer workflows, data privacy and security remain top priorities for enterprise stakeholders. To protect sensitive information, prompt and response content are entirely excluded by default when OpenTelemetry is initialized within the GitHub Copilot app.",
+              "links": []
+            },
+            {
+              "text": "Organizations that wish to capture deeper conversational or code content for analysis must carefully review their specific content-capture settings before modifying default configurations. This ensures that enterprise compliance standards, internal security policies, and regulatory requirements are fully met prior to broadcasting any extended telemetry data to external monitoring platforms.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Broader Ecosystem Context",
+          "paragraphs": [
+            {
+              "text": "The introduction of OpenTelemetry support represents part of a broader, continuous wave of updates across the GitHub Copilot platform. As enterprise requirements evolve to demand higher transparency, better debugging tools, and tighter administrative controls, features that bridge AI workflows with standard enterprise observability pipelines are becoming foundational components of modern software development life cycles.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub Copilot",
+        "OpenTelemetry",
+        "Observability",
+        "Enterprise",
+        "AI Agents",
+        "Developer Tools"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Copilot",
+        "OpenTelemetry"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 23, 2026",
+      "modifiedLabel": "September 23, 2026",
+      "readMinutes": 3,
+      "wordCount": 612
+    }
+  },
+  "datePublished": "2026-09-23T08:52:27.989502+03:00",
+  "dateModified": "2026-09-23T08:52:27.989502+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/opentelemetry-in-the-github-copilot-app/hero.webp",
+    "card": "/forum/assets/posts/2026/09/opentelemetry-in-the-github-copilot-app/card.webp",
+    "social": "/forum/assets/posts/2026/09/opentelemetry-in-the-github-copilot-app/social.jpg",
+    "alt": {
+      "ar": "GitHub Copilot يدعم OpenTelemetry لمراقبة أداء الوكلاء",
+      "en": "GitHub Copilot App Adds OpenTelemetry Support"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/09/656868336-bd15df17-d1d9-4a64-a109-cef31a4a41c0.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/opentelemetry-in-the-github-copilot-app/inline-01.webp",
+        "width": 1080,
+        "height": 700,
+        "alt": {
+          "ar": "GitHub Copilot يدعم OpenTelemetry لمراقبة أداء الوكلاء",
+          "en": "Animated screen recording showing a GitHub Copilot conversation in Copilot app, followed by Splunk Observability Cloud’s Trace Analyzer displaying a selected trace, expanded span hierarchy, and span details."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من GitHub Changelog",
+          "en": "Image related to the report from GitHub Changelog"
+        },
+        "credit": "GitHub Changelog",
+        "sourceUrl": "https://github.blog/changelog/2026-09-22-opentelemetry-in-the-github-copilot-app/",
+        "originalUrl": "https://github.com/user-attachments/assets/27220bc7-5d8e-48b6-8ec3-09459ec17b4d"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-22-opentelemetry-in-the-github-copilot-app/",
+      "type": "official",
+      "title": "OpenTelemetry in the GitHub Copilot app"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-22-opentelemetry-in-the-github-copilot-app",
+  "sourceTitle": "OpenTelemetry in the GitHub Copilot app",
+  "trendScore": 120.53,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-23T05:52:27+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/opentelemetry-in-the-github-copilot-app.json"
+}
