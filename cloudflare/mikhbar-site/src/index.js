@@ -58,6 +58,12 @@ export default {
       return Response.redirect(canonical.toString(), 308);
     }
 
+    if (isArticlePath(url.pathname) && !url.pathname.endsWith("/")) {
+      const canonical = canonicalUrl(url);
+      canonical.pathname = url.pathname + "/";
+      return Response.redirect(canonical.toString(), 308);
+    }
+
     if (isArticlePath(url.pathname)) {
       const article = await renderDynamicArticle(request, env, url.pathname);
       if (article) return withHeaders(article);
