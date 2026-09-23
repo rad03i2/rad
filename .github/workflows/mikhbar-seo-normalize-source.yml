@@ -1,11 +1,12 @@
 name: Mikhbar SEO Source Normalize
-# v2: hardened standalone Mikhbar identity cleanup
+# v3: apply standalone identity cleanup plus search topic-hub enhancements
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
+      - 'automation/forum/enhance_category_seo.py'
       - '.github/workflows/mikhbar-seo-normalize-source.yml'
 
 permissions:
@@ -31,27 +32,30 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Enhance Mikhbar search topic hubs
+        run: python automation/forum/enhance_category_seo.py
+
       - name: Normalize public Mikhbar identity
         run: python automation/forum/normalize_public_identity.py
 
-      - name: Commit normalized public files
+      - name: Commit enhanced public files
         shell: bash
         run: |
           git config user.name "Mikhbar SEO Automation"
           git config user.email "actions@users.noreply.github.com"
           git add forum
           if git diff --cached --quiet; then
-            echo "Mikhbar source identity is already normalized."
+            echo "Mikhbar SEO source is already enhanced and normalized."
             exit 0
           fi
-          git commit -m "Mikhbar SEO: normalize public source identity"
+          git commit -m "Mikhbar SEO: enhance public topic hubs"
           for attempt in 1 2 3 4; do
             git pull --rebase origin main
             if git push origin HEAD:main; then
-              echo "Normalized Mikhbar source pushed successfully."
+              echo "Enhanced Mikhbar source pushed successfully."
               exit 0
             fi
             sleep $((attempt * 3))
           done
-          echo "Unable to push normalized source after retries." >&2
+          echo "Unable to push enhanced source after retries." >&2
           exit 1
