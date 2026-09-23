@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "bf57ce3f2e77f3951dbe",
+  "slug": "know-who-spoke-when-build-real-time-multi-speaker-ai-with-nvidia-nemotron-diarization",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/know-who-spoke-when-build-real-time-multi-speaker-ai-with-nvidia-nemotron-diarization/",
+    "en": "/forum/en/ai/know-who-spoke-when-build-real-time-multi-speaker-ai-with-nvidia-nemotron-diarization/"
+  },
+  "locales": {
+    "ar": {
+      "title": "نفيديا تطلق نموذج Nemotron 3 لفصل المتكلمين بدقة فائقة",
+      "description": "أعلنت نفيديا عن نموذج Nemotron 3 Diarization مفتوح الأوزان، الذي يتصدر تصنيفات VoiceArena بفئة أخطاء 14.72%، ويدعم حتى 8 متحدثين في الوقت الفعلي.",
+      "deck": "يقدّم نموذج Nemotron 3 Diarization من نفيديا حلاً متقدماً لتحديد هوية المتكلمين في المحادثات المتداخلة، مما يعزز دقة أنظمة الذكاء الاصطناعي الصوتية.",
+      "summaryBullets": [
+        "يتصدر النموذج قائمة VoiceArena Diarization-Bench بمعدل خطأ 14.72%.",
+        "يدعم النموذج حتى 8 متحدثين في نفس الوقت مع معالجة الكلام المتداخل.",
+        "يعمل النموذج في وضعي التسجيل المسبق والبث المباشر مع إمكانية ضبط زمن الاستجابة.",
+        "يجمع بين بيانات مرخصة من David AI لتحسين الأداء في 21 لغة مختلفة."
+      ],
+      "sections": [
+        {
+          "heading": "تصدر تصنيفات الدقة العالمية",
+          "paragraphs": [
+            {
+              "text": "أطلقت شركة نفيديا نموذجاً جديداً مفتوح الأوزان باسم Nemotron 3 Diarization، مصمماً خصيصاً لتحديد هوية المتكلمين في المحادثات الصوتية. يتفوق هذا النموذج، الذي يضم 100 مليون معامل، على المنافسين بتصدّره قائمة VoiceArena Diarization-Bench بمعدل خطأ (DER) قدره 14.72%، مما يجعله الخيار الأمثل للتطبيقات التي تتطلب دقة عالية في ربط الكلمات بالمتحدثين. ويمكن الرجوع إلى Hugging Face Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "نفيديا",
+                  "url": "https://huggingface.co/nvidia"
+                },
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/nvidia/nemotron-diarization"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحدي تحديد المتحدث في المحادثات",
+          "paragraphs": [
+            {
+              "text": "تواجه أنظمة التعرف على الصوت تحدياً كبيراً في تمييز من قال ماذا، خاصة في الاجتماعات أو المكالمات التي يتداخل فيها الكلام. بينما تلتقط أنظمة التعرف الآلي على الكلام (ASR) الكلمات بدقة، فإنها غالباً تفشل في إسناد هذه الكلمات إلى المتحدث الصحيح. يؤدي هذا النقص إلى تقليل فائدة الملخصات التلقائية، وعناصر العمل، وتحليلات المحادثات، حيث يصبح من الصعب تتبع من اتخذ قراراً أو من اعترض على نقطة معينة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل النموذج وتقنياته",
+          "paragraphs": [
+            {
+              "text": "يعتمد Nemotron 3 Diarization على نهج Sortformer لترتيب المتحدثين بناءً على وقت ظهورهم الأول في المحادثة. هذا الترتيب الزمني يضمن استقرار التسميات العامة للمتحدثين عبر المقاطع الصوتية المتتالية، مما يلغي الحاجة لحل معادلات إعادة ترتيب المتحدثين في كل مقطع جديد. يستقبل النموذج صوتاً بتكرار 16 كيلوهيرتز ويحوّله إلى ميزات طيفية (Mel-spectrogram) مع خطوة إطار 10 مللي ثانية، ثم يجمعها في إطارات مدتها 80 مللي ثانية لمعالجتها بواسطة مشفر Transformer من 31 طبقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الدعم للبث المباشر والتسجيلات الطويلة",
+          "paragraphs": [
+            {
+              "text": "يتميز النموذج بقدرته على العمل في وضعي التسجيل المسبق والبث المباشر. في وضع البث، يستخدم النموذج ذاكرتين: ذاكرة وصول مرتبة حسب الوصول (AOSC) لتتبع المتحدثين السابقين، وذاكرة FIFO لتوفير سياق الإطارات الأخيرة. يسمح هذا التصميم بمعالجة المقاطع الصوتية الطويلة دون حدود زمنية صارمة، مع إمكانية ضبط زمن الاستجابة (Latency) بين 0.32 ثانية و30.4 ثانية حسب متطلبات التطبيق، مما يوفر مرونة عالية في الأداء.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسين التدريب بالبيانات المرخصة",
+          "paragraphs": [
+            {
+              "text": "تم تدريب النموذج باستخدام بيانات صوتية عامة ومرخصة، بما في ذلك محادثات حقيقية متعددة المتحدثين من شركة David AI. ساهمت إضافة هذه البيانات في خفض معدل خطأ الفصل المركب (DER) بمقدار 0.77 نقطة مئوية، من 11.19% إلى 10.42%، في كل من نقاط التشغيل المسبقة ومنخفضة الكمون. كما شملت البيانات المرخصة خلطات محاكاة واسعة النطاق تغطي 21 لغة، مما عزز قدرة النموذج على التعامل مع التنوع اللغوي والصوتي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الفرق بين الفصل والتعرف على الكلام",
+          "paragraphs": [
+            {
+              "text": "من المهم التمييز بين مهمة الفصل (Diarization) ومهمة التعرف على الكلام (ASR). ينتج الفصل عن النموذج فترات زمنية لنشاط كل متحدث، بينما ينتج ASR النص المكتوب. للحصول على نص منسوب للمتحدثين، يجب دمج المخرجات في خط أنابيب واحد. يجب على المطورين تقييم كل مكون على حدة بالإضافة إلى النظام المدمج، حيث أن أخطاء الفصل (مثل فقدان الكلام أو سوء الإسناد) مختلفة عن أخطاء ASR (مثل أخطاء النطق).",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "نفيديا",
+        "ذكاء اصطناعي",
+        "معالجة الصوت",
+        "Nemotron 3",
+        "فصل المتحدثين",
+        "بث مباشر"
+      ],
+      "entities": [
+        "نفيديا",
+        "Nemotron 3 Diarization",
+        "VoiceArena",
+        "David AI",
+        "Sortformer"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "23 سبتمبر 2026",
+      "modifiedLabel": "23 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 494
+    },
+    "en": {
+      "title": "NVIDIA Launches Nemotron 3 Diarization Open-Weight Model",
+      "description": "NVIDIA introduces Nemotron 3 Diarization, a 100M-parameter open-weight model topping VoiceArena's leaderboard for real-time multi-speaker AI.",
+      "deck": "NVIDIA has released Nemotron 3 Diarization, an open-weight, 100M-parameter model designed to turn overlapping conversations into speaker-aware data for real-time and recorded applications.",
+      "summaryBullets": [
+        "Nemotron 3 Diarization ranks #1 on VoiceArena's Diarization-Bench leaderboard with a 14.72% Diarization Error Rate (DER).",
+        "The 100M-parameter open-weight model supports up to eight speakers across live and recorded conversations.",
+        "It utilizes an Arrival-Order Speaker Cache (AOSC) and FIFO context to power streaming inference across multiple latency configurations.",
+        "Training data included public and licensed speech data from David AI, spanning 21 languages and reducing the compound DER."
+      ],
+      "sections": [
+        {
+          "heading": "Understanding Speaker Diarization and NVIDIA's New Model",
+          "paragraphs": [
+            {
+              "text": "Every conversation carries two layers of information: what was said and who said it. While speech recognition captures and transcribes words, speaker diarization classifies who spoke when, helping applications connect what was said to the right participant. Without attribution, meeting transcripts, customer calls, and podcasts lose essential context regarding commitments, objections, and interruptions. Further details are available from Hugging Face Blog in the original source material.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/nvidia/nemotron-diarization"
+                }
+              ]
+            },
+            {
+              "text": "To address this challenge, NVIDIA announced the release of its new model through the Hugging Face Blog, detailing its architecture and benchmark achievements. According to official details shared by NVIDIA, the system identifies the time intervals during which each speaker is active, including overlapping speech intervals, to create speaker-attributed transcripts when combined with automatic speech recognition.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/nvidia/nemotron-diarization"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Leaderboard Performance and Architecture Improvements",
+          "paragraphs": [
+            {
+              "text": "NVIDIA Nemotron 3 Diarization is an open-weight, 100M-parameter model that ranks #1 on VoiceArena's Diarization-Bench leaderboard with a 14.72% Diarization Error Rate (DER). Building upon earlier iterations like NVIDIA Streaming Sortformer, which established baseline approaches for four-speaker diarization, Nemotron 3 expands support to handle up to eight speaker channels simultaneously.",
+              "links": []
+            },
+            {
+              "text": "The model accepts 16 kHz, single-channel audio, converting it into Mel-spectrogram features with a 10 ms frame step. These features are stacked by a factor of eight to produce 80 ms frames, which are then processed by a 31-layer Transformer encoder equipped with rotary positional embeddings. A subsequent Conv1D layer upsamples predictions to the input-feature resolution, yielding a floating-point tensor that represents speaker activity probabilities over time.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Handling Offline and Streaming Conversations",
+          "paragraphs": [
+            {
+              "text": "Diarization systems must detect speech, assign it to correct speakers, and preserve those assignments consistently across silences, interruptions, or long gaps. While offline models can inspect entire recordings at once, streaming systems receive only small chunks of audio with limited context. Nemotron 3 Diarization addresses this by ordering output speakers based on when they first appear in the conversation.",
+              "links": []
+            },
+            {
+              "text": "This arrival-time ordering ensures that generic speaker labels remain stable across chunks, removing the need to resolve new speaker permutations continuously. For streaming inference, the model relies on two primary memory mechanisms: the Arrival-Order Speaker Cache to retain historical speaker data and a first-in, first-out queue supplying recent frame context.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Multilingual Training Data and Error Reduction",
+          "paragraphs": [
+            {
+              "text": "The development of Nemotron 3 Diarization involved training on a combination of public and licensed speech data. This included multispeaker-annotated real-world conversations licensed from David AI, alongside simulated English and multilingual mixtures spanning 21 languages.",
+              "links": []
+            },
+            {
+              "text": "According to the evaluation data, incorporating David AI's licensed audio decreased the compound diarization error rate by 0.77 absolute points, reducing it from 11.19% to 10.42% across both offline-style and ultra-low-latency operating points. The model's anonymous channel outputs can be mapped to real-world identities by downstream applications using meeting metadata or active speaker verification models.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Separating Diarization from Speaker-Attributed ASR",
+          "paragraphs": [
+            {
+              "text": "Standalone diarization produces speaker activity timestamps rather than transcribed words, whereas automatic speech recognition provides text without inherent speaker attribution. A complete speaker-attributed transcription pipeline combines both outputs to map spoken text to specific participants. Engineers must evaluate diarization errors, such as missed speech and boundary issues, separately from ASR word errors when designing practical voice-agent and conversation analytics systems.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "NVIDIA",
+        "Nemotron",
+        "Speaker Diarization",
+        "Artificial Intelligence",
+        "VoiceArena",
+        "Machine Learning",
+        "Audio Processing"
+      ],
+      "entities": [
+        "NVIDIA",
+        "VoiceArena",
+        "David AI",
+        "Hugging Face"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 23, 2026",
+      "modifiedLabel": "September 23, 2026",
+      "readMinutes": 3,
+      "wordCount": 616
+    }
+  },
+  "datePublished": "2026-09-23T23:30:32.974196+03:00",
+  "dateModified": "2026-09-23T23:30:32.974196+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/know-who-spoke-when-build-real-time-multi-speaker-ai-with-nvidia-nemotron-diarization/hero.webp",
+    "card": "/forum/assets/posts/2026/09/know-who-spoke-when-build-real-time-multi-speaker-ai-with-nvidia-nemotron-diarization/card.webp",
+    "social": "/forum/assets/posts/2026/09/know-who-spoke-when-build-real-time-multi-speaker-ai-with-nvidia-nemotron-diarization/social.jpg",
+    "alt": {
+      "ar": "نفيديا تطلق نموذج Nemotron 3 لفصل المتكلمين بدقة فائقة",
+      "en": "NVIDIA Launches Nemotron 3 Diarization Open-Weight Model"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/688d4bdfdeb55432d90e546d/d_xBvPVTwTB_Rt9yxmp_0.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/nvidia/nemotron-diarization",
+      "type": "official",
+      "title": "**Know Who Spoke When: Build Real-Time, Multi-Speaker AI with NVIDIA Nemotron 3 Diarization**"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/nvidia/nemotron-diarization",
+  "sourceTitle": "**Know Who Spoke When: Build Real-Time, Multi-Speaker AI with NVIDIA Nemotron 3 Diarization**",
+  "trendScore": 115.19,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-23T20:30:32+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/know-who-spoke-when-build-real-time-multi-speaker-ai-with-nvidia-nemotron-diarization.json"
+}
