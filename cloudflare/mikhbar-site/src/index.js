@@ -1,3 +1,5 @@
+import { isArticlePath, renderDynamicArticle } from "./article.js";
+
 const CANONICAL_HOST = "mikhbar.website";
 
 function canonicalUrl(url) {
@@ -43,6 +45,7 @@ export default {
         ok: true,
         service: "mikhbar",
         canonicalHost: CANONICAL_HOST,
+        articleMode: "single-template-ssr",
         now: new Date().toISOString(),
       }, {
         headers: { "Cache-Control": "no-store" },
@@ -53,6 +56,11 @@ export default {
       const canonical = canonicalUrl(url);
       canonical.pathname = url.pathname === "/forum" ? "/" : url.pathname.slice("/forum".length) || "/";
       return Response.redirect(canonical.toString(), 308);
+    }
+
+    if (isArticlePath(url.pathname)) {
+      const article = await renderDynamicArticle(request, env, url.pathname);
+      if (article) return withHeaders(article);
     }
 
     let response = await env.ASSETS.fetch(request);
