@@ -126,3 +126,49 @@ jobs:
 
           echo "Deploying Mikhbar target=$DEPLOY_TARGET config=$CONFIG"
           npx --yes wrangler@latest deploy --config "$CONFIG"
+
+      - name: Verify live production SSR and internal links
+        shell: bash
+        env:
+          DEPLOY_TARGET: ${{ steps.target.outputs.value }}
+        run: |
+          if [ "$DEPLOY_TARGET" != "production" ]; then
+            echo "Preview deployment selected; skipping production-domain smoke test."
+            exit 0
+          fi
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
+            echo "Cloudflare credentials were unavailable; no new production deployment was attempted."
+            exit 0
+          fi
+
+          curl -fsS --retry 5 --retry-delay 2 --retry-all-errors https://mikhbar.website/healthz | grep -q '"ok":true'
+
+          ARTICLE_PATH="$(python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path('dist/mikhbar/posts-en.json').read_text(encoding='utf-8'))
+          posts = payload.get('posts', []) if isinstance(payload, dict) else payload
+          for post in posts:
+              if str(post.get('categorySlug') or '') != 'ai':
+                  continue
+              path = str(post.get('url') or '')
+              if path.startswith('/forum/'):
+                  path = path[len('/forum'):]
+              if path.startswith('/en/ai/'):
+                  print(path)
+                  break
+          PY
+          )"
+          test -n "$ARTICLE_PATH"
+
+          curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website${ARTICLE_PATH}" -o /tmp/mikhbar-live-article.html
+          grep -q 'data-ssr-rendered="true"' /tmp/mikhbar-live-article.html
+          grep -q 'class="rt-section rt-related-stories"' /tmp/mikhbar-live-article.html
+          grep -q 'Related stories' /tmp/mikhbar-live-article.html
+          grep -Fq "rel=\"canonical\" href=\"https://mikhbar.website${ARTICLE_PATH}\"" /tmp/mikhbar-live-article.html
+          if grep -q 'rdwan.dev' /tmp/mikhbar-live-article.html; then
+            echo "Legacy rdwan.dev identity appeared in live article HTML." >&2
+            exit 1
+          fi
+          echo "Live Mikhbar SSR smoke test passed for ${ARTICLE_PATH}"
