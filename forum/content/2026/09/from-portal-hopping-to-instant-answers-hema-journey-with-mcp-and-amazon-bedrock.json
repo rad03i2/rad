@@ -1,0 +1,360 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "b45d69150568a41c7c8d",
+  "slug": "from-portal-hopping-to-instant-answers-hema-journey-with-mcp-and-amazon-bedrock",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/from-portal-hopping-to-instant-answers-hema-journey-with-mcp-and-amazon-bedrock/",
+    "en": "/forum/en/ai/from-portal-hopping-to-instant-answers-hema-journey-with-mcp-and-amazon-bedrock/"
+  },
+  "locales": {
+    "ar": {
+      "title": "HEMA تبني مساعدًا ذكيًا عبر Amazon Bedrock لربط المعرفة الداخلية",
+      "description": "تحوّل المتجر الهولندي HEMA من البحث المتقطع في البوابات إلى إجابات فورية عبر بناء مساعد HAL الذكي باستخدام Amazon Bedrock AgentCore وبروتوكول MCP.",
+      "deck": "اعتمدت مجموعة HEMA على بنية تحتية موحدة لدمج المعرفة التقنية المبعثرة، مما سمح للمهندسين بالحصول على إجابات دقيقة من داخل أدواتهم اليومية دون الحاجة للتنقل بين أنظمة متعددة.",
+      "summaryBullets": [
+        "واجهت HEMA تحديًا في الوصول للمعرفة الإجرائية المبعثرة بين ويكيات وبوابات IT متعددة.",
+        "اعتمدت الشركة على Amazon Bedrock AgentCore لبناء مساعد HAL الذكي الذي يجمع المعرفة في مصدر موحد.",
+        "استخدمت بروتوكول Model Context Protocol (MCP) لتوزيع المعرفة داخل أدوات العمل الحالية مثل Kiro وClaude.",
+        "اعتمدت البنية الأمنية على Microsoft Entra ID لضمان عدم وجود بيانات اعتماد AWS على أجهزة العملاء.",
+        "تضمنت البنية استخدام Gateway لتحويل مواصفات OpenAPI إلى أدوات MCP دون كتابة كود خادم مخصص."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي التشتت المعرفي في بيئة تقنية واسعة",
+          "paragraphs": [
+            {
+              "text": "على الرغم من عمرها الممتد لعشرة عقود، واجهت مجموعة HEMA الهولندية تحديًا تقنيًا متزايدًا مع نمو فريقها الهندسي. كانت المعرفة التقنية موزعة بين كتالوجات خدمات، ويكيات، وبوابات IT منفصلة، مما أجبر المهندسين على قضاء ساعات في التنقل بين هذه الأنظمة للعثور على إجابة بسيطة. هذا التشتت أدى إلى بطء عملية دمج الموظفين الجدد، وتفاوت في جودة الإجابات المقدمة، وتبديد كبير للتركيز بعيدًا عن المهام الأساسية. المشكلة لم تكن غياب المعرفة، بل صعوبة الوصول إليها بشكل منظم وسريع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بناء طبقة معرفية موحدة عبر Amazon Bedrock AgentCore",
+          "paragraphs": [
+            {
+              "text": "لحل هذه المشكلة، قررت HEMA بناء مساعد ذكي داخلي يحمل اسم HAL، مستندًا إلى منصة Amazon Bedrock AgentCore. تهدف هذه الخطوة إلى تجميع المعرفة المبعثرة في مصدر حقيقة واحد يخضع للإدارة. تتيح هذه المنصة بناء وكلاء ذكاء اصطناعي على نطاق واسع دون الحاجة لتشغيل بنية تحتية مخصصة، مما يوفر مرونة عالية في التكامل مع الأنظمة الحالية. يعتمد المساعد على إطار عمل Strands لتسهيل تطوير الوكلاء، مع استضافة حاوية Linux/ARM64 على بيئة التشغيل الخاصة بالمنصة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تفعيل الوصول الفوري عبر بروتوكول Model Context Protocol",
+          "paragraphs": [
+            {
+              "text": "بعد بناء الأساس المعرفي، ركزت HEMA على توزيع هذه المعرفة حيث يعمل الموظفون بالفعل. استخدمت الشركة بروتوكول Model Context Protocol (MCP) كواجهة قياسية بين عملاء الذكاء الاصطناعي والقدرات الخلفية. بدلاً من بناء تكاملات مخصصة لكل أداة، تم تعريض كل مصدر معرفة كأداة MCP واحدة. هذا يتيح لعملاء متوافقين مثل Kiro وClaude ومحادثة HAL الوصول إلى نفس الأدوات دون أي عمل هندسي إضافي، مما يجعل الوصول إلى المعرفة عملية سلسة ومباشرة من داخل بيئة التطوير.",
+              "links": [
+                {
+                  "text": "Model Context Protocol",
+                  "url": "https://modelcontextprotocol.io/docs/getting-started/intro"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل: من البحث الدلالي إلى البيانات الحية",
+          "paragraphs": [
+            {
+              "text": "يعمل مساعد HAL عبر مسارين رئيسيين للوصول إلى المعلومات. المسار الأول يعتمد على أدوات بحث دلالي محلية تتصل مباشرة بقواعد المعرفة عبر واجهة Amazon Bedrock Retrieve API، وهو ما يوفر إجابات سريعة على الأسئلة العامة. أما المسار الثاني فيتعامل مع البيانات الحية والاستعلامات الديناميكية، حيث يتصل الوكيل عبر MCP ببوابة Gateway الخاصة بـ AgentCore. تقوم هذه البوابة بتحويل مواصفات OpenAPI ودوال AWS Lambda إلى أدوات MCP قابلة للاستخدام، مما يسمح بالوصول إلى كتالوجات الخدمات وبيانات الفرق دون الحاجة لكتابة كود خادم مخصص.",
+              "links": [
+                {
+                  "text": "Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-building.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الأمان والحوكمة عبر Microsoft Entra ID",
+          "paragraphs": [
+            {
+              "text": "يعد الأمان ركيزة أساسية في بنية HAL، حيث تم تصميم النظام لضمان عدم وجود أي بيانات اعتماد AWS على أجهزة العملاء. تعتمد البنية على Microsoft Entra ID لإدارة المصادقة، مع استخدام OAuth2 للتحقق من هوية المستخدمين. يوفر مكون Identity في AgentCore مصادقة JWT للإدخال، وOAuth2 للإخراج نحو الواجهات الداخلية، مما يضمن أن الوصول إلى المعرفة محكوم بمجموعات Active Directory الموجودة مسبقًا. هذا النهج يجعل النظام آمنًا بما يكفي للكشف عن معرفة داخلية حقيقية مع الحفاظ على صلاحيات القراءة فقط حاليًا.",
+              "links": [
+                {
+                  "text": "Identity",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-oauth.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "النتائج: من البحث المتقطع إلى الإجابات الفورية",
+          "paragraphs": [
+            {
+              "text": "أدى تطبيق هذا الحل إلى تحويل عملية البحث عن المعلومات من مهمة تستغرق ساعات إلى عملية تستغرق ثوانٍ. لم يعد المهندسون بحاجة للتنقل بين ثلاث أو أربع بوابات مختلفة، بل يمكنهم الحصول على الإجابات من داخل بيئة التطوير المتكامل (IDE) أو نافذة المحادثة. كما ساهم النظام في تسريع عملية دمج الموظفين الجدد، وتقليل التبديل المستمر بين السياقات، مما عزز الإنتاجية العامة للفريق. تخطط HEMA الآن لتوسيع دور HAL من مجرد طبقة معرفية للقراءة فقط، إلى طبقة تنفيذية قادرة على أداء إجراءات محددة في المستقبل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Amazon Bedrock",
+        "MCP",
+        "HEMA",
+        "أتمتة المعرفة",
+        "بنية تحتية سحابية",
+        "Microsoft Entra ID"
+      ],
+      "entities": [
+        "HEMA",
+        "Amazon Bedrock AgentCore",
+        "Model Context Protocol",
+        "Microsoft Entra ID",
+        "Kiro",
+        "Claude",
+        "Strands framework"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "24 سبتمبر 2026",
+      "modifiedLabel": "24 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 618
+    },
+    "en": {
+      "title": "HEMA Builds HAL Assistant with MCP and Bedrock",
+      "description": "Discover how 100-year-old Dutch retailer HEMA built HAL using Amazon Bedrock AgentCore and Model Context Protocol to eliminate developer portal-hopping.",
+      "deck": "The 100-year-old Dutch retailer HEMA has transformed its internal engineering knowledge access by developing HAL, an AI assistant built on Amazon Bedrock AgentCore.",
+      "summaryBullets": [
+        "HEMA faced significant knowledge fragmentation across internal wikis, service catalogs, and IT portals.",
+        "The retailer built an internal AI assistant named HAL using Amazon Bedrock AgentCore and Model Context Protocol (MCP).",
+        "Security is anchored in Microsoft Entra ID with no AWS credentials required on the client side.",
+        "HAL evolved from a standalone web chat interface into an integrated tool accessible across platforms like Kiro and Claude."
+      ],
+      "sections": [
+        {
+          "heading": "Overcoming Portal-Hopping and Fragmentation",
+          "paragraphs": [
+            {
+              "text": "For years, engineers and teams navigating the technology landscape at HEMA faced significant operational friction. As a 100-year-old Dutch retailer operating over 750 stores across multiple countries, the company relies on a technology organization spanning engineers, product owners, and business analysts to drive digital transformation. However, finding answers often required portal-hopping across disconnected wikis, service catalogs, and IT portals.",
+              "links": [
+                {
+                  "text": "HEMA",
+                  "url": "https://corporate.hema.com/en/about-us/"
+                }
+              ]
+            },
+            {
+              "text": "While HEMA maintained a structured service catalog mapping people to teams, services, and business capabilities, procedural questions regarding how to perform specific tasks lacked a single home. Informal communication channels stopped scaling as the organization grew, creating slow onboarding for new joiners and inconsistent answers across different internal sources.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Introducing HAL and Model Context Protocol",
+          "paragraphs": [
+            {
+              "text": "To solve these challenges, HEMA developed HAL, an internal AI assistant designed to consolidate fragmented knowledge into a single governed source of truth. By leveraging Model Context Protocol, the architecture delivers relevant knowledge directly inside the daily tools teams already use, such as the HAL chat interface, Kiro, and other developer environments.",
+              "links": [
+                {
+                  "text": "Model Context Protocol",
+                  "url": "https://modelcontextprotocol.io/docs/getting-started/intro"
+                },
+                {
+                  "text": "Kiro",
+                  "url": "https://kiro.dev/"
+                }
+              ]
+            },
+            {
+              "text": "The protocol provides a standardized interface between AI clients and backend capabilities, ensuring that HEMA did not need to build bespoke integrations for every separate knowledge source and client application.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Leveraging Amazon Bedrock AgentCore",
+          "paragraphs": [
+            {
+              "text": "The technology stack behind HAL relies heavily on Amazon Bedrock AgentCore, which allowed HEMA to build, connect, and optimize agents at scale without managing custom server infrastructure. Key capabilities included the Gateway feature, which translates OpenAPI specifications and AWS Lambda functions directly into tools.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                },
+                {
+                  "text": "Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-building.html"
+                },
+                {
+                  "text": "AWS Lambda functions",
+                  "url": "https://aws.amazon.com/lambda/"
+                }
+              ]
+            },
+            {
+              "text": "Additionally, the platform's Identity management handles incoming JSON Web Token authentication alongside outbound OAuth2 to internal APIs, while the Runtime hosts the internal agent container. Security remains securely anchored in Microsoft Entra ID without exposing AWS credentials on the client side.",
+              "links": [
+                {
+                  "text": "Identity",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-oauth.html"
+                },
+                {
+                  "text": "Runtime",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agents-tools-runtime.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Evolution of the Assistant Architecture",
+          "paragraphs": [
+            {
+              "text": "HAL was developed in two deliberate phases. The initial iteration functioned as a self-contained web chat user interface built with Next.js, backed by an agent capable of answering queries from knowledge bases. Once this foundation proved reliable, the team expanded its reach.",
+              "links": []
+            },
+            {
+              "text": "Integration with external clients like Claude enabled teams to query structured and unstructured data seamlessly from their primary working environments, shifting procedural knowledge retrieval from a time-consuming chore into an instantaneous process.",
+              "links": [
+                {
+                  "text": "Claude",
+                  "url": "https://claude.ai/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "HEMA",
+        "Amazon Bedrock AgentCore",
+        "Model Context Protocol",
+        "AI Assistant",
+        "Retail Technology",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "HEMA",
+        "Amazon",
+        "Microsoft"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 24, 2026",
+      "modifiedLabel": "September 24, 2026",
+      "readMinutes": 3,
+      "wordCount": 457
+    }
+  },
+  "datePublished": "2026-09-24T02:09:12.112595+03:00",
+  "dateModified": "2026-09-24T02:09:12.112595+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/from-portal-hopping-to-instant-answers-hema-journey-with-mcp-and-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/09/from-portal-hopping-to-instant-answers-hema-journey-with-mcp-and-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/09/from-portal-hopping-to-instant-answers-hema-journey-with-mcp-and-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "HEMA تبني مساعدًا ذكيًا عبر Amazon Bedrock لربط المعرفة الداخلية",
+      "en": "HEMA Builds HAL Assistant with MCP and Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21352-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/from-portal-hopping-to-instant-answers-hema-journey-with-mcp-and-amazon-bedrock/inline-01.webp",
+        "width": 1400,
+        "height": 328,
+        "alt": {
+          "ar": "HEMA تبني مساعدًا ذكيًا عبر Amazon Bedrock لربط المعرفة الداخلية",
+          "en": "Diagram of the fragmented sources a HEMA user consulted before HAL: wikis, service catalogs, and IT portals"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/from-portal-hopping-to-instant-answers-hemas-journey-with-mcp-and-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21352-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/from-portal-hopping-to-instant-answers-hema-journey-with-mcp-and-amazon-bedrock/inline-02.webp",
+        "width": 1400,
+        "height": 581,
+        "alt": {
+          "ar": "HEMA تبني مساعدًا ذكيًا عبر Amazon Bedrock لربط المعرفة الداخلية",
+          "en": "Architecture of HAL as a standalone assistant, with the HAL chat UI and agent on AgentCore reaching Knowledge Bases and internal APIs"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/from-portal-hopping-to-instant-answers-hemas-journey-with-mcp-and-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21352-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/from-portal-hopping-to-instant-answers-hema-journey-with-mcp-and-amazon-bedrock/inline-03.webp",
+        "width": 1400,
+        "height": 791,
+        "alt": {
+          "ar": "HEMA تبني مساعدًا ذكيًا عبر Amazon Bedrock لربط المعرفة الداخلية",
+          "en": "Architecture of HAL opened to external MCP clients such as Kiro and Claude through a second Entra ID-authenticated AgentCore Gateway"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/from-portal-hopping-to-instant-answers-hemas-journey-with-mcp-and-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21352-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/from-portal-hopping-to-instant-answers-hema-journey-with-mcp-and-amazon-bedrock/inline-04.webp",
+        "width": 1400,
+        "height": 1026,
+        "alt": {
+          "ar": "HEMA تبني مساعدًا ذكيًا عبر Amazon Bedrock لربط المعرفة الداخلية",
+          "en": "Sequence diagram of the OAuth and Dynamic Client Registration handshake between an MCP client and the auth proxy"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/from-portal-hopping-to-instant-answers-hemas-journey-with-mcp-and-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21352-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/from-portal-hopping-to-instant-answers-hemas-journey-with-mcp-and-amazon-bedrock/",
+      "type": "official",
+      "title": "From portal-hopping to instant answers: HEMA’s journey with MCP and Amazon Bedrock"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/from-portal-hopping-to-instant-answers-hemas-journey-with-mcp-and-amazon-bedrock",
+  "sourceTitle": "From portal-hopping to instant answers: HEMA’s journey with MCP and Amazon Bedrock",
+  "trendScore": 119.11,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-23T23:09:12+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/from-portal-hopping-to-instant-answers-hema-journey-with-mcp-and-amazon-bedrock.json"
+}
