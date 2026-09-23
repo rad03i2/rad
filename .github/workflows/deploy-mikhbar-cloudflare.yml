@@ -75,8 +75,10 @@ jobs:
           grep -q 'https://mikhbar.website/corrections/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/ai-policy/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/authors/radwan-abdulhadi/' dist/mikhbar/sitemap.xml
-          if grep -RIl --exclude='*.webp' --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.ico' 'rdwan.dev' dist/mikhbar | grep -q .; then
-            echo 'Legacy rdwan.dev identity remains in Mikhbar deployment output.' >&2
+          LEGACY_FILES="$(grep -RIl --exclude='*.webp' --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.ico' 'rdwan.dev' dist/mikhbar || true)"
+          if [ -n "$LEGACY_FILES" ]; then
+            echo 'Legacy rdwan.dev identity remains in these Mikhbar deployment files:' >&2
+            printf '%s\n' "$LEGACY_FILES" >&2
             exit 1
           fi
           grep -q 'https://mikhbar.website' dist/mikhbar/sitemap.xml
