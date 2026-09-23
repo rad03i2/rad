@@ -20,6 +20,7 @@ on:
       - 'automation/forum/normalize_public_identity.py'
       - 'automation/forum/enhance_category_seo.py'
       - 'automation/forum/audit_search_quality.py'
+      - 'automation/forum/audit_deployed_sitemap.py'
       - 'assets/brand/mikhbar/**'
       - 'assets/images/**'
       - 'assets/social/**'
@@ -62,6 +63,9 @@ jobs:
 
       - name: Build Mikhbar static distribution
         run: python cloudflare/mikhbar-site/build.py
+
+      - name: Audit deployed sitemap completeness
+        run: python automation/forum/audit_deployed_sitemap.py
 
       - name: Validate standalone Mikhbar search output
         shell: bash
