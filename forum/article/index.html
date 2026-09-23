@@ -107,6 +107,13 @@
   </footer>
 
   <script src="/forum/forum.js?v=20260923-dynamic-article2" defer></script>
-  <script src="/forum/article/article.js?v=20260923-dynamic-article2" defer></script>
+  <script>
+    if (document.body.dataset.ssrRendered !== 'true') {
+      const articleRuntime = document.createElement('script');
+      articleRuntime.src = '/forum/article/article.js?v=20260923-dynamic-article2';
+      articleRuntime.defer = true;
+      document.body.appendChild(articleRuntime);
+    }
+  </script>
 </body>
 </html>
