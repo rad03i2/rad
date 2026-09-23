@@ -13,6 +13,7 @@ FORUM = ROOT / "forum"
 LOCALES = ("ar", "en")
 CATEGORIES = {"ai", "robotics", "automation", "mobile", "computers", "apps", "web", "social", "security", "announcements"}
 ROUTE_RE = re.compile(r"^/forum/(ar|en)/([a-z0-9-]+)/([a-z0-9-]+)/$")
+LEGACY_STATIC_URLS = {"/forum/announcements/rdwan-tech-launch/"}
 
 
 def load_posts(locale: str) -> list[dict]:
@@ -39,15 +40,27 @@ def normalized_title(value: str) -> str:
 def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
+    legacy: list[str] = []
     by_locale = {locale: load_posts(locale) for locale in LOCALES}
-    all_posts = [post for locale in LOCALES for post in by_locale[locale]]
 
     urls: list[str] = []
     titles_by_locale: dict[str, list[str]] = {locale: [] for locale in LOCALES}
-    route_sets = {locale: {str(p.get("url") or "") for p in by_locale[locale]} for locale in LOCALES}
+    route_sets = {
+        locale: {
+            str(p.get("url") or "")
+            for p in by_locale[locale]
+            if str(p.get("url") or "") not in LEGACY_STATIC_URLS
+        }
+        for locale in LOCALES
+    }
 
     for locale, posts in by_locale.items():
         for index, post in enumerate(posts, start=1):
+            url = str(post.get("url") or "")
+            if url in LEGACY_STATIC_URLS:
+                legacy.append(url)
+                continue
+
             label = f"{locale}[{index}] {post.get('slug') or post.get('id') or '<unknown>'}"
             required = ("id", "title", "slug", "url", "category", "categorySlug", "date", "excerpt", "contentFile", "sourceUrl")
             for field in required:
@@ -71,7 +84,6 @@ def main() -> int:
                 elif len(excerpt) > 220:
                     warnings.append(f"{label}: excerpt/meta description is long ({len(excerpt)} chars)")
 
-            url = str(post.get("url") or "")
             if url:
                 urls.append(url)
                 match = ROUTE_RE.fullmatch(url)
@@ -139,9 +151,14 @@ def main() -> int:
         if duplicates:
             errors.append(f"duplicate {locale} titles: " + ", ".join(duplicates[:10]))
 
-    # A bilingual article pair should resolve to the same structured content file.
-    en_by_url = {str(p.get("url") or ""): p for p in by_locale["en"]}
+    en_by_url = {
+        str(p.get("url") or ""): p
+        for p in by_locale["en"]
+        if str(p.get("url") or "") not in LEGACY_STATIC_URLS
+    }
     for ar_post in by_locale["ar"]:
+        if str(ar_post.get("url") or "") in LEGACY_STATIC_URLS:
+            continue
         en_url = str((ar_post.get("alternates") or {}).get("en") or "")
         en_post = en_by_url.get(en_url)
         if not en_post:
@@ -149,10 +166,13 @@ def main() -> int:
         if str(ar_post.get("contentFile") or "") != str(en_post.get("contentFile") or ""):
             errors.append(f"bilingual pair uses different content files: {ar_post.get('url')} / {en_url}")
 
+    unique_legacy = sorted(set(legacy))
     print(
         f"Mikhbar search-quality audit: ar={len(by_locale['ar'])} en={len(by_locale['en'])} "
-        f"errors={len(errors)} warnings={len(warnings)}"
+        f"errors={len(errors)} warnings={len(warnings)} legacy_static={len(unique_legacy)}"
     )
+    for legacy_url in unique_legacy:
+        print(f"LEGACY_STATIC: {legacy_url}")
     for warning in warnings[:80]:
         print(f"WARNING: {warning}")
     if len(warnings) > 80:
