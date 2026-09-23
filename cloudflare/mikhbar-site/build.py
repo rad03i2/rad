@@ -33,13 +33,24 @@ CANONICAL_SCRIPT = (
 
 # Mikhbar is a standalone search/publisher entity. Historical source pages used
 # Radwan's personal identity as the NewsMediaOrganization founder. Keep factual
-# per-article author attribution, but remove that personal relationship from the
-# site-level publisher entity in the deployable build.
-PUBLISHER_FOUNDER_RE = re.compile(
-    r',\s*"founder"\s*:\s*\{\s*"@type"\s*:\s*"Person"\s*,\s*'
-    r'"name"\s*:\s*"Radwan Abdulhadi"\s*,\s*'
-    r'"url"\s*:\s*"https://rdwan\.dev/"\s*\}',
-    re.I,
+# per-article author attribution, but remove that relationship from the site-level
+# publisher entity in the deployable Mikhbar build.
+PUBLISHER_FOUNDER_PATTERNS = (
+    re.compile(
+        r',\s*"founder"\s*:\s*\{\s*"@type"\s*:\s*"Person"\s*,\s*'
+        r'"name"\s*:\s*"Radwan Abdulhadi"\s*,\s*'
+        r'"url"\s*:\s*"https://(?:rdwan\.dev|mikhbar\.website)/"\s*\}',
+        re.I,
+    ),
+    re.compile(
+        r',\s*"founder"\s*:\s*\{\s*"@id"\s*:\s*'
+        r'"https://mikhbar\.website/authors/radwan-abdulhadi/#person"\s*\}',
+        re.I,
+    ),
+)
+NEWS_PUBLISHER_FOUNDER_RE = re.compile(
+    r'"@type"\s*:\s*"NewsMediaOrganization".{0,1400}?"founder"\s*:',
+    re.I | re.S,
 )
 
 ABSOLUTE_REPLACEMENTS = (
@@ -72,7 +83,54 @@ STANDALONE_COPY_REPLACEMENTS = (
     ("Official bilingual technology publication: Mikhbar (مِخبار), within rdwan.dev.", "Official independent bilingual technology publication: Mikhbar (مِخبار)."),
     ("مِخبار منصة أخبار ومحتوى تقني ضمن موقع rdwan.dev،", "مِخبار منصة أخبار ومحتوى تقني مستقلة،"),
     ("© <span data-year></span> RDWAN Tech", "© <span data-year></span> Mikhbar"),
+    (
+        '<h2>المشاريع البرمجية</h2><p>يمكن الاطلاع على المشاريع والأعمال البرمجية من <a href="../../../">الصفحة الرئيسية rdwan.dev</a>، بينما يخصص مِخبار للأخبار والتحليلات والشروحات التقنية.</p>',
+        "",
+    ),
 )
+
+ROOT_INDEX_HTML = f'''<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Mikhbar | مِخبار — Technology News</title>
+<meta name="description" content="Mikhbar is an independent bilingual technology publication covering AI, cybersecurity, software, mobile, computing, robotics and the web in Arabic and English.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="{PUBLIC_ORIGIN}/">
+<link rel="alternate" hreflang="ar" href="{PUBLIC_ORIGIN}/ar/">
+<link rel="alternate" hreflang="en" href="{PUBLIC_ORIGIN}/en/">
+<link rel="alternate" hreflang="x-default" href="{PUBLIC_ORIGIN}/">
+<link rel="alternate" type="application/rss+xml" title="مِخبار — العربية" href="{PUBLIC_ORIGIN}/feed-ar.xml">
+<link rel="alternate" type="application/rss+xml" title="Mikhbar — English" href="{PUBLIC_ORIGIN}/feed-en.xml">
+<link rel="icon" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/brand/mikhbar/06-web-ready/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/assets/brand/mikhbar/06-web-ready/favicon/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mikhbar">
+<meta property="og:title" content="Mikhbar | مِخبار">
+<meta property="og:description" content="Independent technology news and analysis in Arabic and English.">
+<meta property="og:url" content="{PUBLIC_ORIGIN}/">
+<meta property="og:image" content="{PUBLIC_ORIGIN}/assets/social/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mikhbar | مِخبار">
+<meta name="twitter:description" content="Independent technology news and analysis in Arabic and English.">
+<meta name="twitter:image" content="{PUBLIC_ORIGIN}/assets/social/home.jpg">
+<script type="application/ld+json">{{"@context":"https://schema.org","@graph":[{{"@type":"WebSite","@id":"{PUBLIC_ORIGIN}/#website","url":"{PUBLIC_ORIGIN}/","name":"Mikhbar","alternateName":["مِخبار","mikhbar.website"],"inLanguage":["ar","en"],"publisher":{{"@id":"{PUBLIC_ORIGIN}/#publisher"}}}},{{"@type":"NewsMediaOrganization","@id":"{PUBLIC_ORIGIN}/#publisher","name":"Mikhbar","alternateName":"مِخبار","url":"{PUBLIC_ORIGIN}/","logo":{{"@type":"ImageObject","url":"{PUBLIC_ORIGIN}/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"}},"description":"Independent technology news and analysis in Arabic and English.","publishingPrinciples":"{PUBLIC_ORIGIN}/editorial-policy/"}}]}}</script>
+<style>html{{color-scheme:light}}body{{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f7f7f5;color:#151515;min-height:100vh;display:grid;place-items:center}}main{{width:min(760px,calc(100% - 40px));text-align:center}}img{{width:84px;height:84px;object-fit:contain}}h1{{font-size:clamp(2.2rem,7vw,4.5rem);margin:.45rem 0 .3rem}}p{{font-size:1.05rem;line-height:1.8;color:#565656;max-width:650px;margin:.4rem auto 1.5rem}}nav{{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}}a{{display:inline-flex;align-items:center;justify-content:center;min-width:150px;padding:13px 20px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid #d8d8d4;color:#151515;background:#fff}}a:first-child{{background:#151515;color:#fff;border-color:#151515}}small{{display:block;margin-top:1.4rem;color:#777}}</style>
+</head>
+<body>
+<main>
+<img src="/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png" width="84" height="84" alt="Mikhbar logo">
+<h1>Mikhbar <span lang="ar" dir="rtl">| مِخبار</span></h1>
+<p>Independent technology news and analysis in Arabic and English.<br><span lang="ar" dir="rtl">منصة تقنية مستقلة للأخبار والتحليلات بالعربية والإنجليزية.</span></p>
+<nav aria-label="Choose edition"><a href="/ar/" lang="ar" dir="rtl">النسخة العربية</a><a href="/en/" lang="en">English Edition</a></nav>
+<small>mikhbar.website</small>
+</main>
+</body>
+</html>'''
 
 
 def refresh_article_map() -> None:
@@ -97,7 +155,8 @@ def rewrite_text(text: str, suffix: str, relative_path: str) -> str:
     for old, new in STANDALONE_COPY_REPLACEMENTS:
         text = text.replace(old, new)
 
-    text = PUBLISHER_FOUNDER_RE.sub("", text)
+    for pattern in PUBLISHER_FOUNDER_PATTERNS:
+        text = pattern.sub("", text)
 
     if suffix == ".html":
         text = CANONICAL_SCRIPT_RE.sub(CANONICAL_SCRIPT, text)
@@ -193,6 +252,24 @@ def validate_article_runtime() -> None:
         )
 
 
+def validate_root_search_identity() -> None:
+    text = (OUT / "index.html").read_text(encoding="utf-8")
+    required = (
+        '"@type":"WebSite"',
+        '"name":"Mikhbar"',
+        '"alternateName":["مِخبار","mikhbar.website"]',
+        f'"url":"{PUBLIC_ORIGIN}/"',
+        'hreflang="x-default"',
+        'href="/ar/"',
+        'href="/en/"',
+    )
+    missing = [needle for needle in required if needle not in text]
+    if missing:
+        raise SystemExit("Root search identity is incomplete: " + ", ".join(missing))
+    if "navigator.language" in text or "location.replace" in text:
+        raise SystemExit("Root x-default page must remain crawlable and must not auto-redirect by browser language")
+
+
 def validate_output() -> None:
     required = [
         OUT / "index.html",
@@ -221,7 +298,7 @@ def validate_output() -> None:
             stale.append(str(path.relative_to(OUT)))
             if len(stale) >= 20:
                 break
-        if PUBLISHER_FOUNDER_RE.search(text):
+        if NEWS_PUBLISHER_FOUNDER_RE.search(text):
             publisher_identity_leaks.append(str(path.relative_to(OUT)))
             if len(publisher_identity_leaks) >= 20:
                 break
@@ -233,6 +310,7 @@ def validate_output() -> None:
             + ", ".join(publisher_identity_leaks)
         )
 
+    validate_root_search_identity()
     validate_article_runtime()
 
     payload = json.loads((OUT / "article-map.json").read_text(encoding="utf-8"))
@@ -258,6 +336,9 @@ def validate_output() -> None:
 
 
 def write_platform_files() -> None:
+    # Keep / as a stable x-default landing page. The two language editions are
+    # linked explicitly instead of being selected with a client-side redirect.
+    (OUT / "index.html").write_text(ROOT_INDEX_HTML, encoding="utf-8")
     (OUT / "robots.txt").write_text(
         "User-agent: *\nAllow: /\n\n"
         f"Sitemap: {PUBLIC_ORIGIN}/sitemap.xml\n"
