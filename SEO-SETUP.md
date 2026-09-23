@@ -1,18 +1,18 @@
-# SEO deployment checklist
+# Mikhbar SEO deployment checklist
 
-The canonical public domain for this portfolio is **https://rdwan.dev/**.
+Canonical production origin: **https://mikhbar.website/**
 
-## Search engines
-- Add and verify `https://rdwan.dev/` in Google Search Console.
-- Submit `https://rdwan.dev/sitemap.xml` in Search Console.
-- Add/verify the same domain in Bing Webmaster Tools.
-- IndexNow is configured in `.github/workflows/indexnow.yml` and targets `https://rdwan.dev`.
+## Search and discovery
+- Arabic: `https://mikhbar.website/ar/`
+- English: `https://mikhbar.website/en/`
+- Sitemap: `https://mikhbar.website/sitemap.xml`
+- News sitemap: `https://mikhbar.website/news-sitemap.xml`
+- RSS Arabic: `https://mikhbar.website/feed-ar.xml`
+- RSS English: `https://mikhbar.website/feed-en.xml`
+- LLM discovery: `https://mikhbar.website/llms.txt`
 
-## Canonical identity
-All canonical URLs, Open Graph URLs, Schema.org URLs, project pages, sitemap entries, RSS links and discovery files should use `https://rdwan.dev` as the primary public URL.
+## Canonical rules
+All new article canonical URLs, Open Graph URLs, schema identifiers, feeds and sitemaps must use `https://mikhbar.website` as the public origin. Legacy `https://rdwan.dev/forum/...` links will be handled separately as migration redirects.
 
-## Social previews
-The site includes Open Graph and Twitter Card metadata plus 1200×630 preview images under `assets/social/` for the homepage and project pages.
-
-## Important
-Sitemaps, IndexNow and manual submission can speed up discovery, but Google, Bing and social platforms control their own crawl, indexing, ranking and cache timing. No implementation can guarantee instant indexing or first-place rankings.
+## Hosting
+Production hosting is Cloudflare Workers + Static Assets. GitHub remains the source of truth for article generation and automation.
