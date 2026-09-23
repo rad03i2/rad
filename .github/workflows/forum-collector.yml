@@ -1,7 +1,6 @@
 name: Mikhbar 20-Minute Publisher
-# Primary publication clock. The next story is prepared during the preceding
-# 20-minute gap, so this run should publish a ready, quality-approved draft
-# instead of starting research and writing only after the gap expires.
+# Primary publication clock. Articles are stored as structured JSON data.
+# Per-article HTML rendering is intentionally disabled in data-only mode.
 
 on:
   workflow_dispatch:
@@ -64,20 +63,11 @@ jobs:
       - name: Collect and evaluate fresh stories
         run: python automation/forum/run.py
 
-      - name: Prepare during cooldown or publish ready story
-        run: python automation/forum/publisher_scheduler.py
+      - name: Prepare or publish structured article data
+        run: python automation/forum/data_only_scheduler.py
 
-      - name: Rebuild all published article pages with current branding
-        run: python automation/forum/rebuild_articles.py
-
-      - name: Build crawlable Arabic and English forum hubs
+      - name: Build lightweight Arabic and English hubs
         run: python automation/forum/build_locale_pages.py
-
-      - name: Finalize SEO indexability
-        run: python automation/forum/seo_finalize.py
-
-      - name: Normalize canonical host across HTML
-        run: python automation/seo/normalize_html.py
 
       - name: Upload publisher audit snapshot
         if: always()
@@ -92,18 +82,17 @@ jobs:
           retention-days: 14
           if-no-files-found: warn
 
-      - name: Commit publication and preparation state
+      - name: Commit publication data and lightweight indexes
         shell: bash
         run: |
           git config user.name "Mikhbar Automation"
           git config user.email "actions@users.noreply.github.com"
           git add forum automation/forum/state/*.json
-          git add -- ':(glob)**/*.html'
           if git diff --cached --quiet; then
             echo "Primary 20-minute cycle completed; no repository changes were required."
             exit 0
           fi
-          git commit -m "Mikhbar: automated 20-minute publication cycle"
+          git commit -m "Mikhbar: publish structured article data"
           for attempt in 1 2 3 4; do
             git pull --rebase origin main
             if git push origin HEAD:main; then
