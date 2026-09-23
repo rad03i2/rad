@@ -28,6 +28,7 @@ class PublicationContractTests(unittest.TestCase):
         self.assertIn("cron: '2,22,42 * * * *'", workflow)
         self.assertIn("group: mikhbar-publication-write", workflow)
         self.assertIn("python automation/forum/data_only_scheduler.py", workflow)
+        self.assertIn("python automation/forum/build_article_map.py", workflow)
         self.assertNotIn("python automation/forum/rebuild_articles.py", workflow)
         self.assertNotIn("python automation/forum/seo_finalize.py", workflow)
         self.assertNotIn("python automation/seo/normalize_html.py", workflow)
@@ -38,6 +39,26 @@ class PublicationContractTests(unittest.TestCase):
         self.assertIn("publisher.render_to_files = _data_only_render", entrypoint)
         self.assertIn("return {}", entrypoint)
         self.assertIn("publisher.render_to_files = original_render", entrypoint)
+
+    def test_dynamic_article_shell_is_single_reusable_template(self) -> None:
+        template = self._read("forum/article/index.html")
+        runtime = self._read("forum/article/article.js")
+        self.assertIn('data-dynamic-article-shell="true"', template)
+        self.assertIn('id="article-title"', template)
+        self.assertIn('id="article-body"', template)
+        self.assertIn('article.js', template)
+        self.assertIn('article-map.json', runtime)
+        self.assertIn('posts-${locale}.json', runtime)
+        self.assertIn('record.locales', runtime)
+        self.assertIn('record.sources', runtime)
+        self.assertIn('record.images', runtime)
+
+    def test_dynamic_article_map_only_points_to_structured_json(self) -> None:
+        builder = self._read("automation/forum/build_article_map.py")
+        self.assertIn('OUTPUT = FORUM / "article-map.json"', builder)
+        self.assertIn('FORUM / "content"', builder)
+        self.assertIn('candidate.suffix.lower() != ".json"', builder)
+        self.assertNotIn('index.html', builder)
 
     def test_external_wakeup_matches_twenty_minute_publication_clock(self) -> None:
         wrangler = self._read("automation/external-scheduler/cloudflare/wrangler.toml")
@@ -52,6 +73,7 @@ class PublicationContractTests(unittest.TestCase):
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("group: mikhbar-publication-write", workflow)
         self.assertIn("python automation/forum/data_only_scheduler.py", workflow)
+        self.assertIn("python automation/forum/build_article_map.py", workflow)
         self.assertIn("cron: '8,13,18,28,33,38,48,53,58 * * * *'", workflow)
         self.assertNotIn("python automation/forum/rebuild_articles.py", workflow)
         self.assertNotIn("python automation/forum/seo_finalize.py", workflow)
