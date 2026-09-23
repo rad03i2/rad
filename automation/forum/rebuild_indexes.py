@@ -24,8 +24,16 @@ def main() -> int:
     ar_posts = list(ar_payload.get("posts", []) if isinstance(ar_payload, dict) else ar_payload or [])
     en_posts = list(en_payload.get("posts", []) if isinstance(en_payload, dict) else en_payload or [])
     write_all({"ar": ar_posts, "en": en_posts}, datetime.now(TZ))
-    checked, changed = normalize_public_identity()
-    print(f"Mikhbar indexes rebuilt: ar={len(ar_posts)} en={len(en_posts)} normalized={changed}/{checked}")
+
+    # rebuild_indexes is used for public discovery/deployment output, so its
+    # working-tree copies of posts*.json are normalized to root public routes.
+    # Publisher workflows use the normalizer without this flag and preserve the
+    # repository's internal /forum/... contract.
+    checked, changed = normalize_public_identity(include_post_indexes=True)
+    print(
+        f"Mikhbar indexes rebuilt: ar={len(ar_posts)} en={len(en_posts)} "
+        f"normalized={changed}/{checked} deployment_indexes=true"
+    )
     return 0
 
 
