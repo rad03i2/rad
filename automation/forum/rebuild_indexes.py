@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from indexes import FORUM, write_all
+from normalize_public_identity import normalize_public_identity
 
 TZ = timezone(timedelta(hours=3))
 
@@ -23,7 +24,8 @@ def main() -> int:
     ar_posts = list(ar_payload.get("posts", []) if isinstance(ar_payload, dict) else ar_payload or [])
     en_posts = list(en_payload.get("posts", []) if isinstance(en_payload, dict) else en_payload or [])
     write_all({"ar": ar_posts, "en": en_posts}, datetime.now(TZ))
-    print(f"Mikhbar indexes rebuilt: ar={len(ar_posts)} en={len(en_posts)}")
+    checked, changed = normalize_public_identity()
+    print(f"Mikhbar indexes rebuilt: ar={len(ar_posts)} en={len(en_posts)} normalized={changed}/{checked}")
     return 0
 
 
