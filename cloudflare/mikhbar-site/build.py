@@ -30,6 +30,32 @@ CANONICAL_SCRIPT = (
     "</script>"
 )
 
+ABSOLUTE_REPLACEMENTS = (
+    ("https://www.rdwan.dev/forum/", f"{PUBLIC_ORIGIN}/"),
+    ("https://rdwan.dev/forum/", f"{PUBLIC_ORIGIN}/"),
+    ("http://www.rdwan.dev/forum/", f"{PUBLIC_ORIGIN}/"),
+    ("http://rdwan.dev/forum/", f"{PUBLIC_ORIGIN}/"),
+    ("https://www.rdwan.dev/forum", PUBLIC_ORIGIN),
+    ("https://rdwan.dev/forum", PUBLIC_ORIGIN),
+    ("http://www.rdwan.dev/forum", PUBLIC_ORIGIN),
+    ("http://rdwan.dev/forum", PUBLIC_ORIGIN),
+    ("https://www.rdwan.dev/assets/", f"{PUBLIC_ORIGIN}/assets/"),
+    ("https://rdwan.dev/assets/", f"{PUBLIC_ORIGIN}/assets/"),
+    ("http://www.rdwan.dev/assets/", f"{PUBLIC_ORIGIN}/assets/"),
+    ("http://rdwan.dev/assets/", f"{PUBLIC_ORIGIN}/assets/"),
+)
+
+# These are output URL migrations, not safe JavaScript rewrites. JavaScript uses
+# literal `/forum/` strings as routing guards; rewriting those changes program
+# semantics (for example startsWith('/forum/') -> startsWith('/')).
+PATH_REPLACEMENTS = (
+    ('"/forum/', '"/'),
+    ("'/forum/", "'/"),
+    ("url(/forum/", "url(/"),
+    ("url('/forum/", "url('/"),
+    ('url("/forum/', 'url("/'),
+)
+
 
 def refresh_article_map() -> None:
     subprocess.run(
@@ -39,29 +65,18 @@ def refresh_article_map() -> None:
     )
 
 
-def rewrite_text(text: str) -> str:
-    replacements = (
-        ("https://www.rdwan.dev/forum/", f"{PUBLIC_ORIGIN}/"),
-        ("https://rdwan.dev/forum/", f"{PUBLIC_ORIGIN}/"),
-        ("http://www.rdwan.dev/forum/", f"{PUBLIC_ORIGIN}/"),
-        ("http://rdwan.dev/forum/", f"{PUBLIC_ORIGIN}/"),
-        ("https://www.rdwan.dev/forum", PUBLIC_ORIGIN),
-        ("https://rdwan.dev/forum", PUBLIC_ORIGIN),
-        ("http://www.rdwan.dev/forum", PUBLIC_ORIGIN),
-        ("http://rdwan.dev/forum", PUBLIC_ORIGIN),
-        ("https://www.rdwan.dev/assets/", f"{PUBLIC_ORIGIN}/assets/"),
-        ("https://rdwan.dev/assets/", f"{PUBLIC_ORIGIN}/assets/"),
-        ("http://www.rdwan.dev/assets/", f"{PUBLIC_ORIGIN}/assets/"),
-        ("http://rdwan.dev/assets/", f"{PUBLIC_ORIGIN}/assets/"),
-        ('"/forum/', '"/'),
-        ("'/forum/", "'/"),
-        ("url(/forum/", "url(/"),
-        ("url('/forum/", "url('/"),
-        ('url("/forum/', 'url("/'),
-    )
-    for old, new in replacements:
+def rewrite_text(text: str, suffix: str) -> str:
+    for old, new in ABSOLUTE_REPLACEMENTS:
         text = text.replace(old, new)
-    text = CANONICAL_SCRIPT_RE.sub(CANONICAL_SCRIPT, text)
+
+    # Preserve JavaScript routing/control-flow literals exactly. Generated
+    # content files can still migrate repository-era `/forum/` URLs to root.
+    if suffix != ".js":
+        for old, new in PATH_REPLACEMENTS:
+            text = text.replace(old, new)
+
+    if suffix == ".html":
+        text = CANONICAL_SCRIPT_RE.sub(CANONICAL_SCRIPT, text)
     return text
 
 
@@ -76,7 +91,7 @@ def rewrite_output() -> tuple[int, int]:
             original = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
-        updated = rewrite_text(original)
+        updated = rewrite_text(original, path.suffix.lower())
         if updated != original:
             path.write_text(updated, encoding="utf-8")
             changed += 1
@@ -124,6 +139,35 @@ def prune_oversized_assets() -> list[str]:
     return removed
 
 
+def validate_article_runtime() -> None:
+    runtime = OUT / "article" / "article.js"
+    if not runtime.exists():
+        raise SystemExit("Article runtime is missing from Cloudflare output")
+
+    text = runtime.read_text(encoding="utf-8")
+    required_guards = (
+        "location.pathname.startsWith('/forum/') ? SOURCE_PREFIX : ''",
+        "out.startsWith('/forum/')",
+    )
+    missing = [guard for guard in required_guards if guard not in text]
+    if missing:
+        raise SystemExit(
+            "Article runtime routing guards were mutated during build: "
+            + ", ".join(missing)
+        )
+
+    corrupted = (
+        "location.pathname.startsWith('/') ? SOURCE_PREFIX : ''",
+        "if (out.startsWith('/')) out = out.slice('/forum'.length)",
+    )
+    found = [needle for needle in corrupted if needle in text]
+    if found:
+        raise SystemExit(
+            "Corrupted article runtime routing logic found in Cloudflare output: "
+            + ", ".join(found)
+        )
+
+
 def validate_output() -> None:
     required = [
         OUT / "index.html",
@@ -153,6 +197,8 @@ def validate_output() -> None:
                 break
     if stale:
         raise SystemExit("Legacy rdwan.dev/forum URLs remain in output: " + ", ".join(stale))
+
+    validate_article_runtime()
 
     payload = json.loads((OUT / "article-map.json").read_text(encoding="utf-8"))
     leftovers = []
