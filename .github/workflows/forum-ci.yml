@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check -r automation/forum/requirements.txt
       - name: Compile publisher modules
-        run: python -m py_compile automation/forum/writer.py automation/forum/publisher.py automation/forum/publisher_scheduler.py automation/forum/data_only_scheduler.py automation/forum/build_article_map.py automation/forum/audit_dynamic_articles.py automation/forum/trend.py
+        run: python -m py_compile automation/forum/writer.py automation/forum/publisher.py automation/forum/publisher_scheduler.py automation/forum/data_only_scheduler.py automation/forum/build_article_map.py automation/forum/audit_dynamic_articles.py automation/forum/audit_deployed_sitemap.py automation/forum/trend.py
       - name: Validate dynamic article JavaScript
         run: |
           node --check forum/article/article.js
@@ -51,5 +51,7 @@ jobs:
         run: python -m unittest discover -s automation/forum/tests -v
       - name: Build Cloudflare static assets
         run: python cloudflare/mikhbar-site/build.py
+      - name: Audit deployed sitemap completeness
+        run: python automation/forum/audit_deployed_sitemap.py
       - name: Validate Cloudflare Worker bundle
         run: npx --yes wrangler@latest deploy --dry-run --config cloudflare/mikhbar-site/wrangler.preview.toml
