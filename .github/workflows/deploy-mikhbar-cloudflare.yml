@@ -70,7 +70,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "value=${{ inputs.target }}" >> "$GITHUB_OUTPUT"
           else
-            echo "value=preview" >> "$GITHUB_OUTPUT"
+            echo "value=production" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Deploy Worker and static assets when Cloudflare credentials exist
