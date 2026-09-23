@@ -1,0 +1,11 @@
+name = "mikhbar-legacy-forum-redirect"
+main = "src/index.js"
+compatibility_date = "2026-09-24"
+workers_dev = false
+
+# The wildcard is required so /forum URLs with query strings are matched.
+# The Worker itself redirects only /forum and /forum/...; lookalike paths are
+# passed through to the existing rdwan.dev origin unchanged.
+[[routes]]
+pattern = "rdwan.dev/forum*"
+zone_name = "rdwan.dev"
