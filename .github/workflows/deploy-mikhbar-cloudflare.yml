@@ -17,6 +17,7 @@ on:
       - 'forum/**'
       - 'automation/forum/indexes.py'
       - 'automation/forum/rebuild_indexes.py'
+      - 'automation/forum/normalize_public_identity.py'
       - 'automation/forum/audit_search_quality.py'
       - 'assets/brand/mikhbar/**'
       - 'assets/images/**'
@@ -58,7 +59,7 @@ jobs:
       - name: Build Mikhbar static distribution
         run: python cloudflare/mikhbar-site/build.py
 
-      - name: Validate canonical migration output
+      - name: Validate standalone Mikhbar search output
         shell: bash
         run: |
           test -f dist/mikhbar/index.html
@@ -74,8 +75,8 @@ jobs:
           grep -q 'https://mikhbar.website/corrections/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/ai-policy/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/authors/radwan-abdulhadi/' dist/mikhbar/sitemap.xml
-          if grep -RIl --exclude='*.webp' --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.ico' 'rdwan.dev/forum' dist/mikhbar | grep -q .; then
-            echo 'Legacy rdwan.dev/forum URLs remain in deployment output.' >&2
+          if grep -RIl --exclude='*.webp' --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.ico' 'rdwan.dev' dist/mikhbar | grep -q .; then
+            echo 'Legacy rdwan.dev identity remains in Mikhbar deployment output.' >&2
             exit 1
           fi
           grep -q 'https://mikhbar.website' dist/mikhbar/sitemap.xml
