@@ -21,6 +21,7 @@ on:
       - 'automation/forum/enhance_category_seo.py'
       - 'automation/forum/audit_search_quality.py'
       - 'automation/forum/audit_deployed_sitemap.py'
+      - 'automation/forum/prune_legacy_article_html.py'
       - 'assets/brand/mikhbar/**'
       - 'assets/images/**'
       - 'assets/social/**'
@@ -54,6 +55,9 @@ jobs:
 
       - name: Audit Mikhbar search quality
         run: python automation/forum/audit_search_quality.py
+
+      - name: Reject covered legacy article HTML
+        run: python automation/forum/prune_legacy_article_html.py --check-clean
 
       - name: Enhance Mikhbar search topic hubs
         run: python automation/forum/enhance_category_seo.py
