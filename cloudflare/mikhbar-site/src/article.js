@@ -4,13 +4,13 @@ const UI = {
   ar: {
     dir: "rtl", site: "مِخبار", home: "الرئيسية", latest: "أحدث الأخبار", sections: "الأقسام", top: "الأهم الآن", newsletter: "النشرة", about: "عن مِخبار", lang: "EN",
     breadcrumb: "مسار التنقل", published: "نُشر", updated: "آخر تحديث", read: "دقائق قراءة", summary: "الخلاصة", sources: "المصادر",
-    author: "رضوان عبدالهادي", role: "مؤسس ومحرر مِخبار", sourceNote: "صيغ هذا الخبر اعتمادًا على المصادر المدرجة أعلاه، مع فصل المعلومات المؤكدة عن ادعاءات الشركات أو التقديرات.",
+    author: "رضوان عبدالهادي", role: "محرر وكاتب تقني", sourceNote: "صيغ هذا الخبر اعتمادًا على المصادر المدرجة أعلاه، مع فصل المعلومات المؤكدة عن ادعاءات الشركات أو التقديرات.",
     footerDesc: "منصة تقنية عربية وإنجليزية مستقلة.", publication: "عن المنصة", editorial: "السياسة التحريرية", trust: "الثقة", corrections: "التصحيحات", ai: "سياسة AI"
   },
   en: {
     dir: "ltr", site: "Mikhbar", home: "Home", latest: "Latest", sections: "Sections", top: "Top stories", newsletter: "Newsletter", about: "About Mikhbar", lang: "عربي",
     breadcrumb: "Breadcrumb", published: "Published", updated: "Updated", read: "min read", summary: "Key points", sources: "Sources",
-    author: "Radwan Abdulhadi", role: "Founder and editor, Mikhbar", sourceNote: "This report was produced from the sources listed above, separating confirmed information from company claims or estimates.",
+    author: "Radwan Abdulhadi", role: "Editor and technology writer", sourceNote: "This report was produced from the sources listed above, separating confirmed information from company claims or estimates.",
     footerDesc: "An independent bilingual technology publication.", publication: "Publication", editorial: "Editorial policy", trust: "Trust", corrections: "Corrections", ai: "AI policy"
   }
 };
