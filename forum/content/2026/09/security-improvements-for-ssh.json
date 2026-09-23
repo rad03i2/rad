@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "01037b2410289b4f9f5f",
+  "slug": "security-improvements-for-ssh",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/security-improvements-for-ssh/",
+    "en": "/forum/en/apps/security-improvements-for-ssh/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub يحسّن أمان SSH بإزالة خوارزميات قديمة وإضافة خوارزمية مقاومة للكم",
+      "description": "تعلن GitHub عن تحديثات أمنية جذرية لبروتوكول SSH تشمل إزالة خوارزميات ضعيفة وإضافة دعم لخوارزمية ما بعد الكم، مع اشتراط حجم أكبر لمفاتيح RSA لتعزيز الأمان.",
+      "deck": "تستعد منصة GitHub لإجراء تغييرات واسعة على بروتوكول SSH لتعزيز الأمان، حيث تتضمن هذه التحديثات إزالة خوارزميات قديمة وإضافة خوارزمية جديدة مقاومة لهجمات الحواسيب الكمومية.",
+      "summaryBullets": [
+        "إزالة دعم مفاتيح RSA التي تستخدم خوارزمية SHA-1 الضعيفة.",
+        "إزالة آلية تبادل المفاتيح diffie-hellman-group-exchange-sha256.",
+        "إلزامية استخدام مفاتيح RSA بحجم 3072 بت على الأقل للمفاتيح الجديدة.",
+        "إضافة دعم لخوارزمية mlkem768x25519-sha256 المقاومة للكم.",
+        "التغييرات ستدخل حيز التنفيذ تدريجياً بين أكتوبر 2026 ويناير 2027."
+      ],
+      "sections": [
+        {
+          "heading": "تحديثات أمنية شاملة لبروتوكول SSH",
+          "paragraphs": [
+            {
+              "text": "أعلنت GitHub عن مجموعة من التحسينات الأمنية الجوهرية لبروتوكول SSH، تهدف إلى تعزيز حماية الاتصالات بين المستخدمين والمنصة. تشمل هذه التغييرات إزالة عدة خوارزميات قديمة، وإضافة خوارزمية جديدة متقدمة، وفرض متطلبات صارمة على حجم مفاتيح RSA المستخدمة. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-22-security-improvements-for-ssh/"
+                }
+              ]
+            },
+            {
+              "text": "تأتي هذه الخطوة في إطار جهود GitHub المستمرة لتحسين أمان التطبيقات، حيث تهدف الشركة إلى مواكبة المعايير الحديثة للأمان السيبراني والتكيف مع التهديدات الناشئة، بما في ذلك تهديدات الحوسبة الكمومية المستقبلية. ويمكن الرجوع إلى Back to changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إزالة الخوارزميات الضعيفة",
+          "paragraphs": [
+            {
+              "text": "ستقوم GitHub بإزالة القدرة على استخدام مفاتيح RSA التي تعتمد على خوارزمية SHA-1 في بروتوكول SSH. يشمل هذا الإزالة نوع التوقيع ssh-rsa، بما في ذلك شهادات ssh-rsa-cert-v01@openssh.com التي تستخدم SHA-1. كما سيتم إزالة آلية تبادل المفاتيح diffie-hellman-group-exchange-sha256، وهي خوارزمية بطيئة ونادراً ما تُستخدم، وقد تتعرض للاختراق مع تقدم تقنيات الحوسبة الكمومية.",
+              "links": []
+            },
+            {
+              "text": "يوضح فريق GitHub أن إزالة استخدام SHA-1 لمفاتيح RSA ترجع إلى كونها خوارزمية معروفة بضعفها الأمني. كما تهدف زيادة أحجام المفاتيح إلى التوافق مع متطلبات الأمان التي توفر حماية بمستوى 128 بت، مما يعزز من صعوبة هجمات القوة الغاشمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إضافة خوارزمية مقاومة للكم",
+          "paragraphs": [
+            {
+              "text": "إلى جانب إزالة الخوارزميات القديمة، ستضيف GitHub دعمًا لطريقة تبادل المفاتيح المقاومة للكم mlkem768x25519-sha256 لجلسات SSH على github.com و GitHub Enterprise Cloud مع خاصية Data Residency، باستثناء المنطقة الأمريكية. يسمح هذا الإضافة بتقديم طريقة تبادل مفاتيح أحدث وأكثر أداءً، وآمنة ضد هجمات الحواسيب الكمومية.",
+              "links": []
+            },
+            {
+              "text": "لا تتطلب إضافة خوارزمية ML-KEM أي تغييرات من المستخدمين. ستقوم عملاء SSH تلقائياً باستخدام الخوارزمية الجديدة كافتراضي إذا تم تفضيلها في الإعدادات. أما المستخدمون الذين يستخدمون عملاء SSH أقدم، فسيتم تحويلهم تلقائياً إلى خوارزمية تبادل مفاتيح أقدم، مما يضمن استمرارية الخدمة دون انقطاع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات جديدة لمفاتيح RSA",
+          "paragraphs": [
+            {
+              "text": "سيتم تطبيق متطلبات جديدة على حجم مفاتيح RSA. يجب أن تكون جميع مفاتيح RSA الجديدة التي يتم رفعها بعد 14 أكتوبر 2026 بحجم 3072 بت على الأقل، سواء للتوقيع أو المصادقة. يهدف هذا الإجراء إلى ضمان مستوى أمان كافٍ في مواجهة التهديدات المستقبلية.",
+              "links": []
+            },
+            {
+              "text": "للمستخدمين الذين يستخدمون مفاتيح RSA موجودة مسبقاً، يوصي فريق GitHub بالتحقق من استخدام RSA مع SHA-2، أي أنواع التوقيع rsa-sha2-256 و rsa-sha2-512. لا حاجة لتوليد مفتاح جديد، حيث أن جميع مفاتيح RSA قادرة على التوقيع بجميع خوارزميات التجزئة. طالما يدعم برنامج SSH أو المكتبة المستخدمة RSA مع SHA-2، يمكن الاستمرار في استخدام المفتاح نفسه دون مشاكل، حيث ستختار معظم تطبيقات SSH هذه الخيارات تلقائياً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الجدول الزمني للتنفيذ",
+          "paragraphs": [
+            {
+              "text": "ستدخل هذه التغييرات حيز التنفيذ على مراحل زمنية محددة. في 14 أكتوبر 2026، ستصبح متطلبات حجم مفاتيح RSA الجديدة سارية المفعول، وسيتم تفعيل خوارزمية mlkem768x25519-sha256 على github.com و GitHub Enterprise Cloud مع Data Residency (باستثناء المنطقة الأمريكية).",
+              "links": []
+            },
+            {
+              "text": "في 4 نوفمبر 2026، ستقوم GitHub بإجراء اختبار انقطاع (brownout) لإزالة نوع التوقيع ssh-rsa (مفاتيح RSA باستخدام SHA-1) وخوارزمية تبادل المفاتيح diffie-hellman-group-exchange-sha256. سيتكرر هذا الاختبار في 9 ديسمبر 2026. أخيراً، في 13 يناير 2027، سيتم إزالة هذه الخوارزميات نهائياً. بالنسبة لـ GitHub Enterprise Server، ستدخل هذه التغييرات حيز التنفيذ في الإصدار 3.25، باستثناء إضافة mlkem768x25519-sha256 التي ستدخل حيز التنفيذ في الإصدار 3.24.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توصيات للمستخدمين",
+          "paragraphs": [
+            {
+              "text": "المستخدمون المتأثرون بهذه التغييرات هم فقط أولئك الذين يتصلون عبر SSH باستخدام عميل Git، أو أولئك الذين يستخدمون بروتوكول Git غير المصادق عليه في GitHub Enterprise Server. إذا كانت عناوين Git remotes الخاصة بك تبدأ بـ https://، فلن تؤثر هذه التغييرات عليك.",
+              "links": []
+            },
+            {
+              "text": "للتحقق من توافق برامجك، يُنصح بالاطلاع على قائمة البرامج الشائعة التي تستخدم SSH للاتصال بـ GitHub والإصدارات اللازمة لدعم RSA مع SHA-2 بشكل قوي مع الإعدادات الافتراضية. إذا كنت تستخدم برامج أقدم ولا تستطيع ترحيلها، يمكنك استخدام مفاتيح Ed25519 أو ECDSA بدلاً من ذلك. جميع مفاتيح Ed25519 و ECDSA المدعومة قوية وآمنة، وستستمر في العمل بشكل دائم.",
+              "links": []
+            },
+            {
+              "text": "لتوليد مفاتيح جديدة، يوصي فريق GitHub باستخدام مفتاح Ed25519 كلما أمكن ذلك. ومع ذلك، إذا كنت لا تزال بحاجة إلى مفتاح RSA للتوافق مع خدمات أخرى، يمكنك توليد واحد طالما كان حجمه 3072 بت على الأقل. يوفر هذا التوجيه للمستخدمين خيارات مرنة للتكيف مع المتطلبات الأمنية الجديدة دون تعطيل سير عملهم.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "SSH",
+        "الأمان",
+        "RSA",
+        "الحوسبة الكمومية",
+        "تطوير البرمجيات"
+      ],
+      "entities": [
+        "GitHub",
+        "SSH",
+        "RSA",
+        "SHA-1",
+        "SHA-2",
+        "ML-KEM",
+        "Ed25519",
+        "ECDSA"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "23 سبتمبر 2026",
+      "modifiedLabel": "23 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 709
+    },
+    "en": {
+      "title": "GitHub Announces Major Security Improvements for SSH",
+      "description": "GitHub is removing several outdated SSH algorithms, adding a post-quantum key exchange method, and requiring larger RSA SSH keys for improved security.",
+      "deck": "GitHub has announced a series of critical security updates for SSH, targeting legacy algorithms and setting higher key size requirements.",
+      "summaryBullets": [
+        "Removal of RSA keys using SHA-1 (ssh-rsa signature type) and diffie-hellman-group-exchange-sha256.",
+        "New RSA SSH keys uploaded after October 14, 2026, must be at least 3072 bits in size.",
+        "Addition of the post-quantum key exchange method mlkem768x25519-sha256 for GitHub.com and GitHub Enterprise Cloud.",
+        "Changes take effect across GitHub Enterprise Server in version 3.25, with mlkem768x25519-sha256 arriving in version 3.24."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of Security Updates",
+          "paragraphs": [
+            {
+              "text": "GitHub has announced comprehensive updates to its platform's cryptographic posture via the [GitHub Changelog](https://github.blog/changelog/2026-09-22-security-improvements-for-ssh/), detailing plans to remove several legacy SSH algorithms, introduce a novel post-quantum key exchange mechanism, and enforce stricter key length mandates for RSA configurations. Further details are available from GitHub Changelog in the original source material.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-22-security-improvements-for-ssh/"
+                },
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-22-security-improvements-for-ssh/"
+                }
+              ]
+            },
+            {
+              "text": "These updates are designed to safeguard user connections and modernize the cryptographic standards utilized across the infrastructure. The company is actively phasing out older technologies that are known to be weak or susceptible to advanced computational threats, including upcoming developments in quantum computing.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Algorithm Removals and Key Restrictions",
+          "paragraphs": [
+            {
+              "text": "As part of the deprecation schedule, GitHub is removing the ability to use RSA keys that rely on SHA-1 in SSH. This encompasses the ssh-rsa signature type, along with any associated ssh-rsa-cert-v01@openssh.com certificates utilizing SHA-1. Additionally, the platform is eliminating the diffie-hellman-group-exchange-sha256 key exchange mechanism due to its slow performance and vulnerability to future quantum computing advances.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, all newly uploaded RSA SSH keys created after October 14, 2026, must feature a minimum size of 3072 bits for both signing and authentication purposes. This adjustment is intended to align platform security configurations with modern 128-bit security requirements.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Adoption of Post-Quantum Cryptography",
+          "paragraphs": [
+            {
+              "text": "To address future cryptographic threats, GitHub is introducing support for the post-quantum key exchange method known as mlkem768x25519-sha256. This method will be deployed for SSH sessions across github.com and GitHub Enterprise Cloud with Data Residency, with the exception of the U.S. region.",
+              "links": []
+            },
+            {
+              "text": "The integration of ML-KEM provides users with a newer, high-performance key exchange alternative designed specifically to remain secure against attacks mounted by quantum computers. Users utilizing standard compliant clients should experience this transition seamlessly, as most updated SSH software will automatically adopt or negotiate the enhanced mechanisms without requiring manual intervention.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Timeline and Enterprise Server Rollout",
+          "paragraphs": [
+            {
+              "text": "The transition schedule begins on October 14, 2026, when the new RSA key size requirements take effect and mlkem768x25519-sha256 is enabled. To help administrators and developers identify compatibility issues, GitHub has scheduled brownouts for the removal of the ssh-rsa signature type and the diffie-hellman-group-exchange-sha256 algorithm on November 4, 2026, and again on December 9, 2026. The definitive removal is scheduled for January 13, 2026.",
+              "links": []
+            },
+            {
+              "text": "For GitHub Enterprise Server deployments, these modifications will be integrated into version 3.25. The sole exception is the incorporation of the mlkem768x25519-sha256 algorithm, which will arrive slightly earlier in version 3.24.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Impact on Developers and Git Clients",
+          "paragraphs": [
+            {
+              "text": "The modifications will specifically impact users connecting via a Git client over SSH or those utilizing the unauthenticated Git protocol on GitHub Enterprise Server. Developers whose Git remotes initiate with HTTPS will remain completely unaffected by the security updates.",
+              "links": []
+            },
+            {
+              "text": "Developers currently leveraging existing RSA keys are advised to verify that their systems utilize RSA with SHA-2 options, such as rsa-sha2-256 and rsa-sha2-512 signature types. Users do not need to generate entirely new keys because all RSA keys retain the capability to sign with multiple hash algorithms, provided that the underlying SSH implementation supports RSA with SHA-2.",
+              "links": []
+            },
+            {
+              "text": "For those unable to upgrade older software environments, alternative key types such as Ed25519 or ECDSA are recommended, as they remain strong and fully supported. For generating brand new credentials, GitHub recommends using Ed25519 keys where possible, or ensuring that any newly minted RSA keys meet the updated 3072-bit minimum threshold.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "SSH",
+        "Security",
+        "Cryptography",
+        "RSA",
+        "Post-Quantum",
+        "Git"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Enterprise Cloud",
+        "GitHub Enterprise Server"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "September 23, 2026",
+      "modifiedLabel": "September 23, 2026",
+      "readMinutes": 3,
+      "wordCount": 627
+    }
+  },
+  "datePublished": "2026-09-23T04:04:57.751854+03:00",
+  "dateModified": "2026-09-23T04:04:57.751854+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/security-improvements-for-ssh/hero.webp",
+    "card": "/forum/assets/posts/2026/09/security-improvements-for-ssh/card.webp",
+    "social": "/forum/assets/posts/2026/09/security-improvements-for-ssh/social.jpg",
+    "alt": {
+      "ar": "GitHub يحسّن أمان SSH بإزالة خوارزميات قديمة وإضافة خوارزمية مقاومة للكم",
+      "en": "GitHub Announces Major Security Improvements for SSH"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/themes/github-2021-child/dist/img/social-v3-deprecations.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-22-security-improvements-for-ssh/",
+      "type": "official",
+      "title": "Security improvements for SSH"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-22-security-improvements-for-ssh",
+  "sourceTitle": "Security improvements for SSH",
+  "trendScore": 120.7,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-23T01:04:57+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/security-improvements-for-ssh.json"
+}
