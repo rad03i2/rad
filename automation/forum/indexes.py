@@ -133,9 +133,11 @@ def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
                 f'{alternates}</url>'
             )
 
+    # Trust/policy pages are stable. Do not fabricate a fresh lastmod on every
+    # publication cycle; omit it unless we have a real per-page modification date.
     for path, priority in TRUST_PATHS:
         lines.append(
-            f'  <url><loc>{SITE}{path}</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>{priority}</priority></url>'
+            f'  <url><loc>{SITE}{path}</loc><changefreq>monthly</changefreq><priority>{priority}</priority></url>'
         )
 
     seen = set()
