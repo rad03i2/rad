@@ -1,4 +1,4 @@
-name: RDWAN Tech Article Rebuild
+name: Mikhbar Article Rebuild
 # Maintenance-only rebuild. Normal automated publishing already rebuilds the
 # required pages, indexes and SEO output, so this workflow is intentionally
 # manual to avoid duplicate write jobs and noisy push-trigger failures.
@@ -11,7 +11,7 @@ permissions:
   copilot-requests: write
 
 concurrency:
-  group: rdwan-tech-publication-write
+  group: mikhbar-publication-write
   cancel-in-progress: false
 
 jobs:
@@ -69,14 +69,14 @@ jobs:
       - name: Commit rebuilt publication
         shell: bash
         run: |
-          git config user.name "RDWAN Tech Automation"
+          git config user.name "Mikhbar Automation"
           git config user.email "actions@users.noreply.github.com"
-          git add forum sitemap.xml
+          git add forum
           git add -- ':(glob)**/*.html'
           if git diff --cached --quiet; then
             echo "Publication already matches bilingual templates and canonical host rules."
             exit 0
           fi
-          git commit -m "RDWAN Tech: rebuild bilingual publication and normalize canonical host"
+          git commit -m "Mikhbar: rebuild bilingual publication"
           git pull --rebase origin main
           git push origin HEAD:main

@@ -1,0 +1,94 @@
+name: Mikhbar Cloudflare Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Deploy target"
+        required: true
+        default: preview
+        type: choice
+        options:
+          - preview
+          - production
+  push:
+    branches: [main]
+    paths:
+      - 'forum/**'
+      - 'assets/brand/mikhbar/**'
+      - 'assets/images/**'
+      - 'assets/social/**'
+      - 'cloudflare/mikhbar-site/**'
+      - '.github/workflows/deploy-mikhbar-cloudflare.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mikhbar-cloudflare-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build Mikhbar static distribution
+        run: python cloudflare/mikhbar-site/build.py
+
+      - name: Validate canonical migration output
+        shell: bash
+        run: |
+          test -f dist/mikhbar/index.html
+          test -f dist/mikhbar/ar/index.html
+          test -f dist/mikhbar/en/index.html
+          test -f dist/mikhbar/sitemap.xml
+          test -f dist/mikhbar/robots.txt
+          if grep -RIl --exclude='*.webp' --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.ico' 'rdwan.dev/forum' dist/mikhbar | grep -q .; then
+            echo 'Legacy rdwan.dev/forum URLs remain in deployment output.' >&2
+            exit 1
+          fi
+          grep -q 'https://mikhbar.website' dist/mikhbar/sitemap.xml
+
+      - name: Select deployment target
+        id: target
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "value=${{ inputs.target }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=preview" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy Worker and static assets when Cloudflare credentials exist
+        working-directory: cloudflare/mikhbar-site
+        shell: bash
+        env:
+          DEPLOY_TARGET: ${{ steps.target.outputs.value }}
+        run: |
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
+            echo "::notice title=Cloudflare deploy skipped::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID is not configured. Build validation succeeded, but no remote deployment was attempted."
+            exit 0
+          fi
+
+          if [ "$DEPLOY_TARGET" = "production" ]; then
+            CONFIG="wrangler.production.toml"
+          else
+            CONFIG="wrangler.preview.toml"
+          fi
+
+          echo "Deploying Mikhbar target=$DEPLOY_TARGET config=$CONFIG"
+          npx --yes wrangler@latest deploy --config "$CONFIG"
