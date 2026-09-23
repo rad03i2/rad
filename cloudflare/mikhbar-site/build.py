@@ -16,6 +16,7 @@ PUBLIC_ORIGIN = "https://mikhbar.website"
 INDEXNOW_KEY = "ff7de3f199bfcac8fda652aec7caabcd"
 TEXT_SUFFIXES = {".html", ".xml", ".json", ".js", ".css", ".txt", ".webmanifest"}
 MAX_WORKER_ASSET_BYTES = 24 * 1024 * 1024
+ARTICLE_RUNTIME_PATH = "article/article.js"
 
 CANONICAL_SCRIPT_RE = re.compile(
     r'<script\s+id=["\']canonical-host-redirect["\'][^>]*>.*?</script>',
@@ -45,15 +46,21 @@ ABSOLUTE_REPLACEMENTS = (
     ("http://rdwan.dev/assets/", f"{PUBLIC_ORIGIN}/assets/"),
 )
 
-# These are output URL migrations, not safe JavaScript rewrites. JavaScript uses
-# literal `/forum/` strings as routing guards; rewriting those changes program
-# semantics (for example startsWith('/forum/') -> startsWith('/')).
 PATH_REPLACEMENTS = (
     ('"/forum/', '"/'),
     ("'/forum/", "'/"),
     ("url(/forum/", "url(/"),
     ("url('/forum/", "url('/"),
     ('url("/forum/', 'url("/'),
+)
+
+# Visible copy left from the pre-split RDWAN Tech era. These replacements are
+# intentionally narrow so historical article text and source names remain intact.
+STANDALONE_COPY_REPLACEMENTS = (
+    ("A bilingual technology publication within rdwan.dev.", "An independent bilingual technology publication."),
+    ("Official bilingual technology publication: Mikhbar (مِخبار), within rdwan.dev.", "Official independent bilingual technology publication: Mikhbar (مِخبار)."),
+    ("مِخبار منصة أخبار ومحتوى تقني ضمن موقع rdwan.dev،", "مِخبار منصة أخبار ومحتوى تقني مستقلة،"),
+    ("© <span data-year></span> RDWAN Tech", "© <span data-year></span> Mikhbar"),
 )
 
 
@@ -65,15 +72,19 @@ def refresh_article_map() -> None:
     )
 
 
-def rewrite_text(text: str, suffix: str) -> str:
+def rewrite_text(text: str, suffix: str, relative_path: str) -> str:
     for old, new in ABSOLUTE_REPLACEMENTS:
         text = text.replace(old, new)
 
-    # Preserve JavaScript routing/control-flow literals exactly. Generated
-    # content files can still migrate repository-era `/forum/` URLs to root.
-    if suffix != ".js":
+    # The article fallback runtime deliberately understands both repository-era
+    # /forum routes and root production routes. Preserve those guards. Other JS
+    # (notably forum.js) is a deployable site asset and must use root paths.
+    if relative_path != ARTICLE_RUNTIME_PATH:
         for old, new in PATH_REPLACEMENTS:
             text = text.replace(old, new)
+
+    for old, new in STANDALONE_COPY_REPLACEMENTS:
+        text = text.replace(old, new)
 
     if suffix == ".html":
         text = CANONICAL_SCRIPT_RE.sub(CANONICAL_SCRIPT, text)
@@ -91,7 +102,8 @@ def rewrite_output() -> tuple[int, int]:
             original = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
-        updated = rewrite_text(original, path.suffix.lower())
+        relative_path = path.relative_to(OUT).as_posix()
+        updated = rewrite_text(original, path.suffix.lower(), relative_path)
         if updated != original:
             path.write_text(updated, encoding="utf-8")
             changed += 1
@@ -140,7 +152,7 @@ def prune_oversized_assets() -> list[str]:
 
 
 def validate_article_runtime() -> None:
-    runtime = OUT / "article" / "article.js"
+    runtime = OUT / ARTICLE_RUNTIME_PATH
     if not runtime.exists():
         raise SystemExit("Article runtime is missing from Cloudflare output")
 
