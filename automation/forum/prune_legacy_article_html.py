@@ -71,10 +71,18 @@ def remove_empty_parents(path: Path) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Remove only legacy per-article HTML files already covered by structured JSON + dynamic SSR."
+        description="Remove or detect legacy per-article HTML already covered by structured JSON + dynamic SSR."
     )
-    parser.add_argument("--apply", action="store_true", help="Actually delete files. Default is audit-only dry run.")
+    parser.add_argument("--apply", action="store_true", help="Actually delete covered legacy HTML files.")
+    parser.add_argument(
+        "--check-clean",
+        action="store_true",
+        help="Fail if any covered legacy article HTML exists; intended for CI regression protection.",
+    )
     args = parser.parse_args()
+
+    if args.apply and args.check_clean:
+        parser.error("--apply and --check-clean are mutually exclusive")
 
     routes = load_map()
     candidates, errors = candidate_indexes(routes)
@@ -97,7 +105,7 @@ def main() -> int:
             removed += 1
 
     remaining = [path for path in candidates if path.is_file()]
-    mode = "apply" if args.apply else "dry-run"
+    mode = "apply" if args.apply else ("check-clean" if args.check_clean else "dry-run")
     print(
         "Mikhbar legacy article HTML cleanup: "
         f"mode={mode} dynamic_routes={len(routes)} candidate_paths={len(candidates)} "
@@ -107,6 +115,13 @@ def main() -> int:
     if args.apply and remaining:
         for path in remaining[:20]:
             print(f"ERROR: legacy article HTML remained: {path.relative_to(ROOT)}", file=sys.stderr)
+        return 1
+
+    if args.check_clean and existing:
+        for path in existing[:20]:
+            print(f"ERROR: covered legacy article HTML reappeared: {path.relative_to(ROOT)}", file=sys.stderr)
+        if len(existing) > 20:
+            print(f"ERROR: {len(existing) - 20} additional covered legacy HTML files omitted", file=sys.stderr)
         return 1
 
     if not protected.exists():
