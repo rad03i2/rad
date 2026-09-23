@@ -1,0 +1,70 @@
+name: Mikhbar Legacy HTML Cleanup
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'automation/forum/prune_legacy_article_html.py'
+      - '.github/workflows/mikhbar-prune-legacy-html.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mikhbar-publication-write
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify structured coverage before cleanup
+        run: python automation/forum/audit_dynamic_articles.py
+
+      - name: Preview covered legacy HTML cleanup
+        run: python automation/forum/prune_legacy_article_html.py
+
+      - name: Remove covered legacy article HTML only
+        run: python automation/forum/prune_legacy_article_html.py --apply
+
+      - name: Verify structured coverage and protected legacy page after cleanup
+        run: |
+          python automation/forum/audit_dynamic_articles.py
+          test -f forum/announcements/rdwan-tech-launch/index.html
+          python automation/forum/prune_legacy_article_html.py
+
+      - name: Commit guarded cleanup
+        shell: bash
+        run: |
+          git config user.name "Mikhbar Migration"
+          git config user.email "actions@users.noreply.github.com"
+          git add -u forum
+          if git diff --cached --quiet; then
+            echo "No covered legacy article HTML remained."
+            exit 0
+          fi
+          git commit -m "Mikhbar: remove covered legacy article HTML"
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "Guarded legacy HTML cleanup pushed successfully."
+              exit 0
+            fi
+            echo "Cleanup push raced with another main update; retrying safely (${attempt}/4)."
+            sleep $((attempt * 3))
+          done
+          echo "Unable to push cleanup after safe retries." >&2
+          exit 1
