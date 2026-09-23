@@ -17,6 +17,7 @@ on:
       - 'forum/**'
       - 'automation/forum/indexes.py'
       - 'automation/forum/rebuild_indexes.py'
+      - 'automation/forum/audit_search_quality.py'
       - 'assets/brand/mikhbar/**'
       - 'assets/images/**'
       - 'assets/social/**'
@@ -47,6 +48,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Audit Mikhbar search quality
+        run: python automation/forum/audit_search_quality.py
 
       - name: Rebuild Mikhbar search discovery files
         run: python automation/forum/rebuild_indexes.py
