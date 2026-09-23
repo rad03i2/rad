@@ -15,6 +15,7 @@ OUT = ROOT / "dist" / "mikhbar"
 PUBLIC_ORIGIN = "https://mikhbar.website"
 INDEXNOW_KEY = "ff7de3f199bfcac8fda652aec7caabcd"
 TEXT_SUFFIXES = {".html", ".xml", ".json", ".js", ".css", ".txt", ".webmanifest"}
+MAX_WORKER_ASSET_BYTES = 24 * 1024 * 1024
 
 CANONICAL_SCRIPT_RE = re.compile(
     r'<script\s+id=["\']canonical-host-redirect["\'][^>]*>.*?</script>',
@@ -107,6 +108,22 @@ def prune_dynamic_article_html() -> int:
     return removed
 
 
+def prune_oversized_assets() -> list[str]:
+    removed: list[str] = []
+    for path in OUT.rglob("*"):
+        if not path.is_file():
+            continue
+        try:
+            size = path.stat().st_size
+        except OSError:
+            continue
+        if size <= MAX_WORKER_ASSET_BYTES:
+            continue
+        removed.append(f"{path.relative_to(OUT).as_posix()} ({size / 1024 / 1024:.1f} MiB)")
+        path.unlink()
+    return removed
+
+
 def validate_output() -> None:
     required = [
         OUT / "index.html",
@@ -150,6 +167,14 @@ def validate_output() -> None:
     if leftovers:
         raise SystemExit("Per-article static HTML still exists for dynamic routes: " + ", ".join(leftovers))
 
+    oversized = [
+        str(path.relative_to(OUT))
+        for path in OUT.rglob("*")
+        if path.is_file() and path.stat().st_size > MAX_WORKER_ASSET_BYTES
+    ]
+    if oversized:
+        raise SystemExit("Oversized Worker assets remain: " + ", ".join(oversized[:20]))
+
 
 def write_platform_files() -> None:
     (OUT / "robots.txt").write_text(
@@ -188,13 +213,17 @@ def main() -> int:
 
     scanned, changed = rewrite_output()
     pruned = prune_dynamic_article_html()
+    oversized = prune_oversized_assets()
     write_platform_files()
     validate_output()
     files = sum(1 for path in OUT.rglob("*") if path.is_file())
     print(
         f"Mikhbar Cloudflare build complete: files={files} text_scanned={scanned} "
-        f"text_rewritten={changed} static_article_dirs_pruned={pruned} output={OUT.relative_to(ROOT)}"
+        f"text_rewritten={changed} static_article_dirs_pruned={pruned} "
+        f"oversized_assets_pruned={len(oversized)} output={OUT.relative_to(ROOT)}"
     )
+    for item in oversized:
+        print(f"Pruned oversized source asset: {item}")
     return 0
 
 
