@@ -64,6 +64,9 @@ jobs:
       - name: Build lightweight Arabic and English hubs
         run: python automation/forum/build_locale_pages.py
 
+      - name: Normalize Mikhbar public SEO identity
+        run: python automation/forum/normalize_public_identity.py
+
       - name: Upload backup audit snapshot
         if: always()
         uses: actions/upload-artifact@v4
