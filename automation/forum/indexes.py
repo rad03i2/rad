@@ -9,6 +9,14 @@ ROOT = Path(__file__).resolve().parents[2]
 FORUM = ROOT / "forum"
 SITE = "https://rdwan.dev"
 CATEGORY_SLUGS = ["ai", "robotics", "automation", "mobile", "computers", "apps", "web", "social", "security", "announcements"]
+TRUST_PATHS = [
+    ("/forum/about/", "0.7"),
+    ("/forum/contact/", "0.7"),
+    ("/forum/editorial-policy/", "0.7"),
+    ("/forum/corrections/", "0.6"),
+    ("/forum/ai-policy/", "0.6"),
+    ("/forum/authors/radwan-abdulhadi/", "0.8"),
+]
 
 
 def parse_dt(value: str | None) -> datetime | None:
@@ -125,6 +133,11 @@ def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
                 f'{alternates}</url>'
             )
 
+    for path, priority in TRUST_PATHS:
+        lines.append(
+            f'  <url><loc>{SITE}{path}</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>{priority}</priority></url>'
+        )
+
     seen = set()
     for _, posts in posts_by_locale.items():
         for post in posts:
@@ -179,7 +192,7 @@ def write_llms(posts_by_locale: dict[str, list[dict]], now: datetime) -> None:
     lines = [
         "# مِخبار / Mikhbar",
         "",
-        "Official bilingual technology publication: Mikhbar (مِخبار), within rdwan.dev.",
+        "Official independent bilingual technology publication: Mikhbar (مِخبار).",
         "Arabic and English coverage of artificial intelligence, robotics, automation, mobile, computers, software, the web, social platforms and security.",
         "",
         "## Primary URLs",
@@ -187,6 +200,7 @@ def write_llms(posts_by_locale: dict[str, list[dict]], now: datetime) -> None:
         f"- Arabic edition: {SITE}/forum/ar/",
         f"- English edition: {SITE}/forum/en/",
         f"- About: {SITE}/forum/about/",
+        f"- Contact: {SITE}/forum/contact/",
         f"- Author: {SITE}/forum/authors/radwan-abdulhadi/",
         f"- Editorial policy: {SITE}/forum/editorial-policy/",
         f"- Corrections policy: {SITE}/forum/corrections/",
