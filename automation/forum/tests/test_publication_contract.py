@@ -16,17 +16,28 @@ class PublicationContractTests(unittest.TestCase):
         settings = json.loads(self._read("automation/forum/config/settings.json"))
         self.assertIs(settings.get("publishingEnabled"), True)
         self.assertIs(settings.get("dryRun"), False)
+        self.assertEqual(settings.get("articleDeliveryMode"), "data-only")
         self.assertEqual(settings.get("minimumMinutesBetweenPosts"), 20)
         self.assertEqual(settings.get("maxPostsPerRun"), 1)
 
-    def test_primary_publisher_keeps_all_wakeup_paths(self) -> None:
+    def test_primary_publisher_keeps_all_wakeup_paths_and_uses_data_only_entrypoint(self) -> None:
         workflow = self._read(".github/workflows/forum-collector.yml")
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("trigger:", workflow)
         self.assertIn("required: true", workflow)
         self.assertIn("cron: '2,22,42 * * * *'", workflow)
         self.assertIn("group: mikhbar-publication-write", workflow)
-        self.assertIn("python automation/forum/publisher_scheduler.py", workflow)
+        self.assertIn("python automation/forum/data_only_scheduler.py", workflow)
+        self.assertNotIn("python automation/forum/rebuild_articles.py", workflow)
+        self.assertNotIn("python automation/forum/seo_finalize.py", workflow)
+        self.assertNotIn("python automation/seo/normalize_html.py", workflow)
+
+    def test_data_only_entrypoint_disables_per_article_html_rendering(self) -> None:
+        entrypoint = self._read("automation/forum/data_only_scheduler.py")
+        self.assertIn('mode != "data-only"', entrypoint)
+        self.assertIn("publisher.render_to_files = _data_only_render", entrypoint)
+        self.assertIn("return {}", entrypoint)
+        self.assertIn("publisher.render_to_files = original_render", entrypoint)
 
     def test_external_wakeup_matches_twenty_minute_publication_clock(self) -> None:
         wrangler = self._read("automation/external-scheduler/cloudflare/wrangler.toml")
@@ -36,12 +47,15 @@ class PublicationContractTests(unittest.TestCase):
         self.assertIn('inputs: { trigger: "external-20m" }', worker)
         self.assertIn("publication_cadence_source", worker)
 
-    def test_backup_publisher_remains_independent_and_serialized(self) -> None:
+    def test_backup_publisher_remains_independent_serialized_and_data_only(self) -> None:
         workflow = self._read(".github/workflows/forum-publisher-backup.yml")
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("group: mikhbar-publication-write", workflow)
-        self.assertIn("python automation/forum/publisher_scheduler.py", workflow)
+        self.assertIn("python automation/forum/data_only_scheduler.py", workflow)
         self.assertIn("cron: '8,13,18,28,33,38,48,53,58 * * * *'", workflow)
+        self.assertNotIn("python automation/forum/rebuild_articles.py", workflow)
+        self.assertNotIn("python automation/forum/seo_finalize.py", workflow)
+        self.assertNotIn("python automation/seo/normalize_html.py", workflow)
 
     def test_social_automation_cannot_commit_forum_publication_files(self) -> None:
         social_path = ROOT / ".github/workflows/mikhbar-social.yml"
