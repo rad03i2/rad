@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import json
 import re
 import shutil
+import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -25,6 +28,14 @@ CANONICAL_SCRIPT = (
     "}})();"
     "</script>"
 )
+
+
+def refresh_article_map() -> None:
+    subprocess.run(
+        [sys.executable, str(ROOT / "automation" / "forum" / "build_article_map.py")],
+        cwd=ROOT,
+        check=True,
+    )
 
 
 def rewrite_text(text: str) -> str:
@@ -71,11 +82,38 @@ def rewrite_output() -> tuple[int, int]:
     return scanned, changed
 
 
+def prune_dynamic_article_html() -> int:
+    map_path = OUT / "article-map.json"
+    if not map_path.exists():
+        raise SystemExit("article-map.json is missing from Cloudflare output")
+    payload = json.loads(map_path.read_text(encoding="utf-8"))
+    routes = payload.get("routes", {}) if isinstance(payload, dict) else {}
+    removed = 0
+    seen_dirs: set[Path] = set()
+
+    for route in routes:
+        parts = [part for part in str(route).strip("/").split("/") if part]
+        if len(parts) != 3 or parts[0] not in {"ar", "en"}:
+            continue
+        locale, category, slug = parts
+        for directory in (OUT / locale / category / slug, OUT / category / slug):
+            if directory in seen_dirs:
+                continue
+            seen_dirs.add(directory)
+            if directory.is_dir():
+                shutil.rmtree(directory)
+                removed += 1
+
+    return removed
+
+
 def validate_output() -> None:
     required = [
         OUT / "index.html",
         OUT / "ar" / "index.html",
         OUT / "en" / "index.html",
+        OUT / "article" / "index.html",
+        OUT / "article-map.json",
         OUT / "sitemap.xml",
         OUT / "feed-ar.xml",
         OUT / "feed-en.xml",
@@ -98,6 +136,19 @@ def validate_output() -> None:
                 break
     if stale:
         raise SystemExit("Legacy rdwan.dev/forum URLs remain in output: " + ", ".join(stale))
+
+    payload = json.loads((OUT / "article-map.json").read_text(encoding="utf-8"))
+    leftovers = []
+    for route in payload.get("routes", {}):
+        parts = [part for part in str(route).strip("/").split("/") if part]
+        if len(parts) != 3 or parts[0] not in {"ar", "en"}:
+            continue
+        if (OUT / parts[0] / parts[1] / parts[2] / "index.html").exists():
+            leftovers.append(route)
+            if len(leftovers) >= 20:
+                break
+    if leftovers:
+        raise SystemExit("Per-article static HTML still exists for dynamic routes: " + ", ".join(leftovers))
 
 
 def write_platform_files() -> None:
@@ -123,6 +174,9 @@ def write_platform_files() -> None:
 def main() -> int:
     if not SOURCE.exists():
         raise SystemExit("forum/ source directory is missing")
+
+    refresh_article_map()
+
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.parent.mkdir(parents=True, exist_ok=True)
@@ -133,12 +187,13 @@ def main() -> int:
         shutil.copytree(WELL_KNOWN, OUT / ".well-known", dirs_exist_ok=True)
 
     scanned, changed = rewrite_output()
+    pruned = prune_dynamic_article_html()
     write_platform_files()
     validate_output()
     files = sum(1 for path in OUT.rglob("*") if path.is_file())
     print(
         f"Mikhbar Cloudflare build complete: files={files} text_scanned={scanned} "
-        f"text_rewritten={changed} output={OUT.relative_to(ROOT)}"
+        f"text_rewritten={changed} static_article_dirs_pruned={pruned} output={OUT.relative_to(ROOT)}"
     )
     return 0
 
