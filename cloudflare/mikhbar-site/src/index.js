@@ -1,6 +1,7 @@
 import { isArticlePath, renderDynamicArticle } from "./article.js";
 
 const CANONICAL_HOST = "mikhbar.website";
+const ARTICLE_PARTS = /^\/(ar|en)\/([a-z0-9-]+)\/([^/]+)\/$/i;
 
 function canonicalUrl(url) {
   const next = new URL(url.toString());
@@ -8,6 +9,91 @@ function canonicalUrl(url) {
   next.hostname = CANONICAL_HOST;
   next.port = "";
   return next;
+}
+
+function publicPath(value) {
+  let path = String(value || "/").trim();
+  if (path.startsWith("/forum/")) path = path.slice("/forum".length);
+  if (!path.startsWith("/")) path = "/" + path;
+  return path;
+}
+
+function esc(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+async function assetJson(env, request, path) {
+  const url = new URL(path, request.url);
+  const response = await env.ASSETS.fetch(new Request(url, request));
+  if (!response.ok) return null;
+  try { return await response.json(); } catch { return null; }
+}
+
+export function selectRelatedPosts(posts, pathname, limit = 4) {
+  const match = String(pathname || "").match(ARTICLE_PARTS);
+  if (!match || !Array.isArray(posts)) return [];
+  const [, locale, category] = match;
+  const current = publicPath(pathname);
+
+  return posts
+    .filter((post) => {
+      if (String(post?.locale || locale).toLowerCase() !== locale.toLowerCase()) return false;
+      if (String(post?.categorySlug || "") !== category) return false;
+      const url = publicPath(post?.url || "");
+      return url && url !== current;
+    })
+    .sort((a, b) => {
+      const aTime = Date.parse(String(a?.dateModified || a?.date || "")) || 0;
+      const bTime = Date.parse(String(b?.dateModified || b?.date || "")) || 0;
+      return bTime - aTime;
+    })
+    .slice(0, Math.max(0, limit));
+}
+
+function relatedHtml(posts, pathname) {
+  const match = String(pathname || "").match(ARTICLE_PARTS);
+  if (!match || !posts.length) return "";
+  const [, locale, category] = match;
+  const isAr = locale.toLowerCase() === "ar";
+  const title = isAr ? "أخبار مرتبطة" : "Related stories";
+  const more = isAr ? "المزيد من هذا القسم" : "More from this section";
+  const categoryUrl = `/${locale}/${category}/`;
+
+  const cards = posts.map((post) => {
+    const href = publicPath(post?.url || "");
+    const postTitle = String(post?.title || "").trim();
+    const excerpt = String(post?.excerpt || "").trim();
+    const date = String(post?.dateLabel || "").trim();
+    if (!href || !postTitle) return "";
+    return `<a class="rt-feed-item" href="${esc(href)}"><div class="rt-feed-copy"><h3>${esc(postTitle)}</h3>${excerpt ? `<p>${esc(excerpt)}</p>` : ""}${date ? `<div class="rt-feed-time">${esc(date)}</div>` : ""}</div></a>`;
+  }).filter(Boolean).join("");
+
+  if (!cards) return "";
+  return `<section class="rt-section rt-related-stories" aria-labelledby="related-stories-title"><header class="rt-section-head"><div><h2 id="related-stories-title">${esc(title)}</h2></div><a href="${esc(categoryUrl)}">${esc(more)}</a></header><div class="rt-feed">${cards}</div></section>`;
+}
+
+class AppendHtmlHandler {
+  constructor(html) { this.html = html; }
+  element(element) { element.append(this.html, { html: true }); }
+}
+
+async function addRelatedStories(response, request, env, pathname) {
+  const match = String(pathname || "").match(ARTICLE_PARTS);
+  if (!match || !response?.ok) return response;
+  const locale = match[1].toLowerCase();
+  const payload = await assetJson(env, request, `/posts-${locale}.json`);
+  const posts = Array.isArray(payload) ? payload : (Array.isArray(payload?.posts) ? payload.posts : []);
+  const related = selectRelatedPosts(posts, pathname, 4);
+  const html = relatedHtml(related, pathname);
+  if (!html) return response;
+  return new HTMLRewriter()
+    .on("#article-body", new AppendHtmlHandler(html))
+    .transform(response);
 }
 
 function withHeaders(response) {
@@ -66,7 +152,10 @@ export default {
 
     if (isArticlePath(url.pathname)) {
       const article = await renderDynamicArticle(request, env, url.pathname);
-      if (article) return withHeaders(article);
+      if (article) {
+        const enriched = await addRelatedStories(article, request, env, url.pathname);
+        return withHeaders(enriched);
+      }
     }
 
     let response = await env.ASSETS.fetch(request);
