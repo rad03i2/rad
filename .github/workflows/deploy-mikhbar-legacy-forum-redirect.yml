@@ -1,0 +1,50 @@
+name: Mikhbar Legacy Forum Redirect
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'cloudflare/legacy-forum-redirect/**'
+      - '.github/workflows/deploy-mikhbar-legacy-forum-redirect.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mikhbar-legacy-forum-redirect
+  cancel-in-progress: true
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate redirect worker syntax
+        run: node --check cloudflare/legacy-forum-redirect/src/index.js
+
+      - name: Test isolated URL mapping
+        run: node cloudflare/legacy-forum-redirect/test.mjs
+
+      - name: Deploy only the legacy /forum migration route
+        working-directory: cloudflare/legacy-forum-redirect
+        shell: bash
+        run: |
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
+            echo "::error title=Cloudflare credentials missing::Legacy redirect was tested but not deployed."
+            exit 1
+          fi
+          npx --yes wrangler@latest deploy --config wrangler.toml
