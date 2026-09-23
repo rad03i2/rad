@@ -66,10 +66,16 @@ jobs:
           test -f dist/mikhbar/index.html
           test -f dist/mikhbar/ar/index.html
           test -f dist/mikhbar/en/index.html
+          test -f dist/mikhbar/ar/ai/index.html
+          test -f dist/mikhbar/en/ai/index.html
           test -f dist/mikhbar/sitemap.xml
           test -f dist/mikhbar/news-sitemap.xml
           test -f dist/mikhbar/robots.txt
           test -f dist/mikhbar/contact/index.html
+          grep -q 'أخبار الذكاء الاصطناعي وأدوات AI وتطبيقاته' dist/mikhbar/ar/ai/index.html
+          grep -q 'أخبار وأدوات الذكاء الاصطناعي في مكان واحد' dist/mikhbar/ar/ai/index.html
+          grep -q 'Artificial Intelligence News Updates & AI Tools' dist/mikhbar/en/ai/index.html
+          grep -q 'Artificial intelligence news, tools and model updates' dist/mikhbar/en/ai/index.html
           grep -q 'https://mikhbar.website/contact/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/about/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/editorial-policy/' dist/mikhbar/sitemap.xml
