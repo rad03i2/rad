@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "30aa7c0acfe7f3809f1c",
+  "slug": "how-to-use-nvidia-warp-and-mjwarp-to-accelerate-robotics-simulation-and",
+  "categorySlug": "robotics",
+  "urls": {
+    "ar": "/forum/ar/robotics/how-to-use-nvidia-warp-and-mjwarp-to-accelerate-robotics-simulation-and/",
+    "en": "/forum/en/robotics/how-to-use-nvidia-warp-and-mjwarp-to-accelerate-robotics-simulation-and/"
+  },
+  "locales": {
+    "ar": {
+      "title": "NVIDIA تسرّع محاكاة الروبوتات عبر Warp و MJWarp",
+      "description": "تقدّم NVIDIA إطار Warp وأداة MJWarp لتسريع محاكاة الروبوتات على وحدات معالجة الرسوميات، مما يتيح تشغيل آلاف البيئات المتوازية لدعم التعلم المعزز.",
+      "deck": "تستعرض NVIDIA كيفية الانتقال من محاكاة CPU التقليدية إلى بيئات GPU واسعة النطاق باستخدام MJWarp، مع التركيز على زيادة الإنتاجية الإجمالية بدلاً من تقليل زمن الاستجابة الفردي.",
+      "summaryBullets": [
+        "يحوّل MJWarp نماذج MuJoCo المتوافقة إلى بيئات GPU قابلة للتوسع لتشغيل حتى 2048 بيئة متوازية.",
+        "يعتمد النظام على NVIDIA Warp لكتابة نواة Python عالية الأداء تُترجم إلى CUDA.",
+        "الهدف الرئيسي هو تحسين الإنتاجية الإجمالية (عدد الخطوات في الثانية) لدعم التعلم المعزز.",
+        "يشمل المقال خطوات التحقق من صحة الانتقال من CPU إلى GPU باستخدام ذراع SO-101."
+      ],
+      "sections": [
+        {
+          "heading": "الانتقال من المعالجة المركزية إلى الرسوميات",
+          "paragraphs": [
+            {
+              "text": "توفر محاكاة MuJoCo التقليدية أداءً سريعاً على المعالج المركزي لتطوير وتحكم الروبوتات، لكنها تواجه تحديات عند توسيع نطاق أحمال التعلم. مع نمو متطلبات البيانات، يصبح السؤال الأساسي ليس سرعة تشغيل بيئة واحدة، بل عدد البيئات التي يمكن تشغيلها في وقت واحد. هنا تدخل تقنية تسريع GPU للعبة، حيث تتيح NVIDIA من خلال إطارها Warp وأداة MuJoCo Warp (MJWarp) نقل النماذج المتوافقة إلى نطاق GPU واسع، مما يسمح بتقدم هذه البيئات في دفعات كبيرة مع إبقاء بيانات المحاكاة والتعلم قريبة من الجهاز.",
+              "links": [
+                {
+                  "text": "MuJoCo Warp (MJWarp)",
+                  "url": "https://mujoco.readthedocs.io/en/latest/mjwarp/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل NVIDIA Warp",
+          "paragraphs": [
+            {
+              "text": "يعمل NVIDIA Warp كإطار Python لكتابة نواة GPU عالية الأداء، مما يتيح للمطورين كتابة نواة بنوع ثابت في Python وتجميعها للتنفيذ على CPU أو CUDA. يميز هذا النظام بين لغة النواة الموجهة للأداء والـ Python العادي المسؤول عن التهيئة والتخصيص. من الخصائص الأساسية هو العمل المتوازي الصريح، حيث يحدد wp.tid() العنصر الذي يتعامل معه كل خيط منطقي، مما يسمح بتوسع الكود من نقطتين إلى ملايين دون تعقيد تدفق التحكم. كما يدعم النظام مصفوفات الأجهزة الصريحة، مع تنبيه بأن نقل البيانات من CUDA إلى الذاكرة المركزية يتطلب مزامنة صريحة وليس عملية نسخ صفرية.",
+              "links": [
+                {
+                  "text": "NVIDIA",
+                  "url": "https://huggingface.co/nvidia"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الفرق بين زمن الاستجابة والإنتاجية الإجمالية",
+          "paragraphs": [
+            {
+              "text": "تختلف طريقة تنظيم العمل بين MuJoCo و MJWarp بشكل جوهري. بينما يناسب MuJoCo تطوير وفحص عدد قليل من بيئات CPU، يهدف MJWarp إلى وضع النموذج ودفعات من الحالات المستقلة على وحدات معالجة الرسوميات. القيمة الجوهرية هنا ليست بالضرورة تقليل زمن الخطوة الواحدة (Latency)، بل القدرة على تقدم مئات أو آلاف البيئات معاً. هذا النهج يحسن الإنتاجية الإجمالية، أي إجمالي عدد خطوات العالم المكتملة في الثانية، وهو ما يفضله التعلم المعزز والتجميع واسع النطاق حيث يعد جمع الخبرة أهم من تقليل زمن استجابة بيئة فردية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إعداد المشهد والتحقق من الصحة",
+          "paragraphs": [
+            {
+              "text": "في هذا المقال، تنتقل NVIDIA من سيناريو مألوف لذراع SO-101 في MuJoCo إلى ما يصل إلى 2048 بيئة MJWarp متوازية. المشهد يتضمن ذراعاً، وطاولة، ومكعبين للتركيب، مكتوبة بصيغة MJCF عادية. يتم استخدام هذا المشهد للتحقق من صحة الانتقال، حيث يجب أن تتطابق النتائج الفيزيائية بين التنفيذين. يوضح المقال أن حجم المربعات في MJCF يمثل نصف الأبعاد، وهو تفصيل تقني مهم لضبط عتبات النجاح في المهام. كما يسلط الضوء على أهمية ضبط حدود التكرار في محلل القيد (Solver) دون تغيير سلوك المهمة، لضمان دقة المحاكاة في البيئات المتوازية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أدوات الضبط والأداء",
+          "paragraphs": [
+            {
+              "text": "يتطلب الاستخدام الأمثل لـ MJWarp ضبطاً دقيقاً للموارد. يوصي المقال باستخدام mjw.make_data() للحالات الافتراضية و mjw.put_data() عند الحاجة إلى نقل حالة MuJoCo محددة عبر حدود الانتقال. كما يشير إلى أهمية ضبط أحجام المخازن المؤقتة للتلامسات والقيود بشكل محكم، حيث تتناسب الذاكرة والعمل بشكل طردي معها. يمكن للمطورين استخدام أدوات مثل mjwarp-testspeed لقياس تخصيص الذاكرة ومراقبة أي تجاوزات. بالإضافة إلى ذلك، يدعم النظام التقاط رسوميات CUDA (CUDA graph capture) لتقليل تكلفة إرسال النواة المتكررة، مما يعزز الكفاءة في العمليات المستمرة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "NVIDIA",
+        "روبوتات",
+        "محاكاة",
+        "GPU",
+        "MuJoCo",
+        "Warp",
+        "تعلم معزز"
+      ],
+      "entities": [
+        "NVIDIA",
+        "MuJoCo",
+        "MJWarp",
+        "Warp",
+        "SO-101"
+      ],
+      "category": "الروبوتات",
+      "dateLabel": "23 سبتمبر 2026",
+      "modifiedLabel": "23 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 529
+    },
+    "en": {
+      "title": "NVIDIA Details Warp and MJWarp Robotics Workflows",
+      "description": "Discover how NVIDIA Warp and MuJoCo Warp accelerate robotics simulation and learning workflows by scaling parallel environments on GPUs.",
+      "deck": "A new technical guide highlights how developers can leverage NVIDIA Warp and MuJoCo Warp (MJWarp) to scale robot simulations into thousands of parallel GPU environments.",
+      "summaryBullets": [
+        "MuJoCo Warp (MJWarp) implements MuJoCo physics using NVIDIA Warp to run large batches of simulations on GPUs.",
+        "NVIDIA Warp compiles statically typed Python kernels for high-performance CPU or CUDA execution.",
+        "The technical walkthrough demonstrates moving an SO-101 follower arm workflow to 2,048 parallel environments.",
+        "The guide is part of the State of Simulation for Physical AI series from the Hugging Face Blog."
+      ],
+      "sections": [
+        {
+          "heading": "Scaling Robotics Simulation with NVIDIA Warp and MJWarp",
+          "paragraphs": [
+            {
+              "text": "Classic MuJoCo delivers fast CPU-based robot simulation for developing, testing, and controlling robots by parallelizing sampling across CPU cores. However, as learning workloads scale, the primary focus shifts from how quickly a single world can run to how many simulated worlds can operate simultaneously. GPU acceleration enables these environments to advance in large batches while maintaining simulation and learning data close to the device.",
+              "links": [
+                {
+                  "text": "robot simulation",
+                  "url": "https://www.nvidia.com/en-us/use-cases/robotics-simulation/"
+                }
+              ]
+            },
+            {
+              "text": "According to the official <a href=\"https://huggingface.co/blog/nvidia/how-to-use-nvidia-warp-and-mjwarp\">Hugging Face Blog</a>, MuJoCo Warp (MJWarp) builds upon NVIDIA Warp to bring compatible MuJoCo models into a GPU-scale regime. This approach moves an SO-101 follower arm from a traditional MuJoCo workflow to as many as 2,048 parallel MJWarp environments, allowing developers to examine the foundational technology and validation steps required for the transition.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/nvidia/how-to-use-nvidia-warp-and-mjwarp"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Understanding NVIDIA Warp and Kernel Compilation",
+          "paragraphs": [
+            {
+              "text": "NVIDIA Warp functions as a Python framework designed for writing high-performance, GPU-accelerated kernels. It allows developers to author statically typed kernels in Python and compiles them for either CPU or CUDA execution. The initial launch builds and caches a native module, while subsequent launches reuse it. The kernel language is a performance-oriented subset of Python, leaving ordinary Python responsible for configuration, allocation, and launch orchestration.",
+              "links": []
+            },
+            {
+              "text": "This architecture enables developers to build complex simulation logic where a single logical thread can handle individual points, contacts, bodies, or worlds. Consequently, code can scale seamlessly from a few points to millions without requiring deep GPU terminology within the core control flow.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Key Properties for Robotics Workloads",
+          "paragraphs": [
+            {
+              "text": "The framework incorporates three fundamental properties that make it particularly useful in robotics workflows. First, explicit parallel work uses specific identifiers to determine the exact point, contact, body, or world owned by the current logical thread. Second, explicit device arrays reside on selected devices, allowing developers to manage data efficiently.",
+              "links": []
+            },
+            {
+              "text": "Third, composable kernel launches enable programs to execute a sequence of focused kernels and capture supported CUDA work into a graph, which reduces repeated dispatch overhead. Furthermore, Warp kernels support differentiability and deterministic execution modes, offering robust tools for simulation, validation, and design optimization pipelines.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Transitioning from Single CPU Worlds to Batch Processing",
+          "paragraphs": [
+            {
+              "text": "A robot simulator repeatedly computes future states based on current joint positions, velocities, controls, and contacts, advancing the scene by small timesteps. While standard MuJoCo suits developing and inspecting single or few CPU worlds, MJWarp implements MuJoCo's physics pipeline directly on NVIDIA GPUs. This enables a single function call to advance an entire batch of independent states simultaneously.",
+              "links": []
+            },
+            {
+              "text": "The primary value of MJWarp lies in aggregate throughput rather than single-world latency improvements. By completing a massive total of world-steps per second, the framework supports reinforcement learning and large-scale sampling where gathering comprehensive experience outweighs minimizing the latency of an individual environment.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Validation and Practical Scene Configuration",
+          "paragraphs": [
+            {
+              "text": "To validate the pipeline, developers use standard simulation scenes represented in ordinary MJCF formats. For instance, a pick-and-place scene featuring an SO-101 arm, a table, and cubes can be loaded directly into MuJoCo CPU simulations for rendering and comparison against MJWarp validation steps.",
+              "links": []
+            },
+            {
+              "text": "Proper allocation of batched resources requires precise sizing of memory buffers and careful consideration of solver iteration limits. By configuring contact and constraint parameters correctly, developers can ensure smooth execution across thousands of parallel environments without altering underlying task behaviors.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "NVIDIA Warp",
+        "MJWarp",
+        "MuJoCo",
+        "Robot Simulation",
+        "GPU Acceleration",
+        "Reinforcement Learning",
+        "Hugging Face",
+        "Physical AI"
+      ],
+      "entities": [
+        "NVIDIA",
+        "Hugging Face",
+        "MuJoCo",
+        "MJWarp"
+      ],
+      "category": "Robotics",
+      "dateLabel": "September 23, 2026",
+      "modifiedLabel": "September 23, 2026",
+      "readMinutes": 3,
+      "wordCount": 628
+    }
+  },
+  "datePublished": "2026-09-23T22:01:32.934358+03:00",
+  "dateModified": "2026-09-23T22:01:32.934358+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/how-to-use-nvidia-warp-and-mjwarp-to-accelerate-robotics-simulation-and/hero.webp",
+    "card": "/forum/assets/posts/2026/09/how-to-use-nvidia-warp-and-mjwarp-to-accelerate-robotics-simulation-and/card.webp",
+    "social": "/forum/assets/posts/2026/09/how-to-use-nvidia-warp-and-mjwarp-to-accelerate-robotics-simulation-and/social.jpg",
+    "alt": {
+      "ar": "NVIDIA تسرّع محاكاة الروبوتات عبر Warp و MJWarp",
+      "en": "NVIDIA Details Warp and MJWarp Robotics Workflows"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/6994dc99f850a10f03fd0b21/rQ6tGCJEaH16bQQ8X4M8b.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/nvidia/how-to-use-nvidia-warp-and-mjwarp",
+      "type": "official",
+      "title": "How to Use NVIDIA Warp and MjWarp to Accelerate Robotics Simulation and Learning Workflows"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/nvidia/how-to-use-nvidia-warp-and-mjwarp",
+  "sourceTitle": "How to Use NVIDIA Warp and MjWarp to Accelerate Robotics Simulation and Learning Workflows",
+  "trendScore": 141.87,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-23T19:01:32+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/how-to-use-nvidia-warp-and-mjwarp-to-accelerate-robotics-simulation-and.json"
+}
