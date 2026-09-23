@@ -31,6 +31,17 @@ CANONICAL_SCRIPT = (
     "</script>"
 )
 
+# Mikhbar is a standalone search/publisher entity. Historical source pages used
+# Radwan's personal identity as the NewsMediaOrganization founder. Keep factual
+# per-article author attribution, but remove that personal relationship from the
+# site-level publisher entity in the deployable build.
+PUBLISHER_FOUNDER_RE = re.compile(
+    r',\s*"founder"\s*:\s*\{\s*"@type"\s*:\s*"Person"\s*,\s*'
+    r'"name"\s*:\s*"Radwan Abdulhadi"\s*,\s*'
+    r'"url"\s*:\s*"https://rdwan\.dev/"\s*\}',
+    re.I,
+)
+
 ABSOLUTE_REPLACEMENTS = (
     ("https://www.rdwan.dev/forum/", f"{PUBLIC_ORIGIN}/"),
     ("https://rdwan.dev/forum/", f"{PUBLIC_ORIGIN}/"),
@@ -85,6 +96,8 @@ def rewrite_text(text: str, suffix: str, relative_path: str) -> str:
 
     for old, new in STANDALONE_COPY_REPLACEMENTS:
         text = text.replace(old, new)
+
+    text = PUBLISHER_FOUNDER_RE.sub("", text)
 
     if suffix == ".html":
         text = CANONICAL_SCRIPT_RE.sub(CANONICAL_SCRIPT, text)
@@ -196,6 +209,7 @@ def validate_output() -> None:
         raise SystemExit("Missing required Cloudflare output: " + ", ".join(missing))
 
     stale = []
+    publisher_identity_leaks = []
     for path in OUT.rglob("*"):
         if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES:
             continue
@@ -207,8 +221,17 @@ def validate_output() -> None:
             stale.append(str(path.relative_to(OUT)))
             if len(stale) >= 20:
                 break
+        if PUBLISHER_FOUNDER_RE.search(text):
+            publisher_identity_leaks.append(str(path.relative_to(OUT)))
+            if len(publisher_identity_leaks) >= 20:
+                break
     if stale:
         raise SystemExit("Legacy rdwan.dev/forum URLs remain in output: " + ", ".join(stale))
+    if publisher_identity_leaks:
+        raise SystemExit(
+            "Personal founder identity remains in Mikhbar publisher schema: "
+            + ", ".join(publisher_identity_leaks)
+        )
 
     validate_article_runtime()
 
