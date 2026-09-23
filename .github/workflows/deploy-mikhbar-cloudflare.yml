@@ -15,6 +15,8 @@ on:
     branches: [main]
     paths:
       - 'forum/**'
+      - 'automation/forum/indexes.py'
+      - 'automation/forum/rebuild_indexes.py'
       - 'assets/brand/mikhbar/**'
       - 'assets/images/**'
       - 'assets/social/**'
@@ -46,6 +48,9 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Rebuild Mikhbar search discovery files
+        run: python automation/forum/rebuild_indexes.py
+
       - name: Build Mikhbar static distribution
         run: python cloudflare/mikhbar-site/build.py
 
@@ -56,7 +61,15 @@ jobs:
           test -f dist/mikhbar/ar/index.html
           test -f dist/mikhbar/en/index.html
           test -f dist/mikhbar/sitemap.xml
+          test -f dist/mikhbar/news-sitemap.xml
           test -f dist/mikhbar/robots.txt
+          test -f dist/mikhbar/contact/index.html
+          grep -q 'https://mikhbar.website/contact/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/about/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/editorial-policy/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/corrections/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/ai-policy/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/authors/radwan-abdulhadi/' dist/mikhbar/sitemap.xml
           if grep -RIl --exclude='*.webp' --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.ico' 'rdwan.dev/forum' dist/mikhbar | grep -q .; then
             echo 'Legacy rdwan.dev/forum URLs remain in deployment output.' >&2
             exit 1
