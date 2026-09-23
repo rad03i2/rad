@@ -61,6 +61,9 @@ jobs:
       - name: Build dynamic article route map
         run: python automation/forum/build_article_map.py
 
+      - name: Reject covered legacy article HTML
+        run: python automation/forum/prune_legacy_article_html.py --check-clean
+
       - name: Build lightweight Arabic and English hubs
         run: python automation/forum/build_locale_pages.py
 
