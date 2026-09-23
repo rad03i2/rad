@@ -1,0 +1,56 @@
+name: Mikhbar SEO Source Normalize
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mikhbar-seo-normalize-source.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mikhbar-seo-source-normalize
+  cancel-in-progress: false
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Normalize public Mikhbar identity
+        run: python automation/forum/normalize_public_identity.py
+
+      - name: Commit normalized public files
+        shell: bash
+        run: |
+          git config user.name "Mikhbar SEO Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add forum
+          if git diff --cached --quiet; then
+            echo "Mikhbar source identity is already normalized."
+            exit 0
+          fi
+          git commit -m "Mikhbar SEO: normalize public source identity"
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "Normalized Mikhbar source pushed successfully."
+              exit 0
+            fi
+            sleep $((attempt * 3))
+          done
+          echo "Unable to push normalized source after retries." >&2
+          exit 1
