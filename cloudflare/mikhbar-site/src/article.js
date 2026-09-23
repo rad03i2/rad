@@ -209,10 +209,10 @@ class TextHandler {
   element(element) { element.setInnerContent(String(this.value ?? ""), { html: this.html }); }
 }
 class AttrHandler {
-  constructor(attrs = {}, text = null) { this.attrs = attrs; this.text = text; }
+  constructor(attrs = {}, text = null) { this.attrs = attrs; this.textValue = text; }
   element(element) {
     for (const [key, value] of Object.entries(this.attrs)) element.setAttribute(key, String(value ?? ""));
-    if (this.text !== null) element.setInnerContent(String(this.text));
+    if (this.textValue !== null) element.setInnerContent(String(this.textValue));
   }
 }
 class HideHandler { element(element) { element.setAttribute("hidden", ""); } }
@@ -233,7 +233,7 @@ export async function renderDynamicArticle(request, env, pathname) {
   if (!view) return null;
   const ui = UI[locale];
 
-  const shellUrl = new URL("/article/index.html", request.url);
+  const shellUrl = new URL("/article/", request.url);
   const shell = await env.ASSETS.fetch(new Request(shellUrl, request));
   if (!shell.ok) return null;
 
