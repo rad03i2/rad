@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'forum/**'
+      - 'automation/forum/indexes.py'
+      - 'automation/forum/rebuild_indexes.py'
       - 'cloudflare/mikhbar-site/build.py'
       - '.github/workflows/indexnow.yml'
   workflow_dispatch:
@@ -23,8 +25,21 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Rebuild Mikhbar search discovery files
+        run: python automation/forum/rebuild_indexes.py
+
       - name: Build canonical Mikhbar distribution
         run: python cloudflare/mikhbar-site/build.py
+
+      - name: Validate trust URLs before submission
+        shell: bash
+        run: |
+          grep -q 'https://mikhbar.website/contact/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/about/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/editorial-policy/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/corrections/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/ai-policy/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/authors/radwan-abdulhadi/' dist/mikhbar/sitemap.xml
 
       - name: Submit Mikhbar URLs to IndexNow
         shell: bash
