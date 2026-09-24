@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "b0878320c6bd0cfba3b3",
+  "slug": "require-proof-of-presence-for-high-impact-actions",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/require-proof-of-presence-for-high-impact-actions/",
+    "en": "/forum/en/apps/require-proof-of-presence-for-high-impact-actions/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub يضيف ميزة إثبات الحضور للأعمال الحساسة",
+      "description": "أطلقت GitHub ميزة إثبات الحضور في بيئة Enterprise Cloud، مما يتطلب إعادة مصادقة تفاعلية أو تحدي عاملين قبل تنفيذ العمليات عالية التأثير، لتعزيز الأمان.",
+      "deck": "تسعى GitHub إلى سد الفجوات الأمنية الناتجة عن اختراق الجلسات عبر فرض طبقة تحقق إضافية.",
+      "summaryBullets": [
+        "تتطلب الميزة الجديدة إعادة مصادقة أو تحدي أمني متعدد العوامل قبل تنفيذ إجراءات حساسة.",
+        "تعمل الميزة حالياً كعرض عام مخصص لمؤسسات Enterprise Cloud التي تستخدم Microsoft Entra ID.",
+        "تهدف الميزة إلى منع استغلال ملفات تعريف الارتباط المسروبة أو الرموز الطويلة العمر في الهجمات.",
+        "تستند الميزة إلى نموذج جلسة مشابه لوضع sudo، حيث تبقى صلاحية التحقق لمدة ساعتين.",
+        "تدعم الميزة متطلبات الامتثال التنظيمي مثل FDA Part 11 من خلال ضمان مصادقة حديثة."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق ميزة إثبات الحضور",
+          "paragraphs": [
+            {
+              "text": "أعلنت GitHub عن إطلاق ميزة جديدة تسمى إثبات الحضور (Proof of Presence) ضمن حسابات GitHub Enterprise Cloud. تتيح هذه الميزة للمشرفين إلزام الأعضاء بإجراء إعادة مصادقة تفاعلية أو اجتياز تحدي أمني متعدد العوامل قبل تنفيذ أي إجراءات عالية التأثير. وتُعد هذه الخطوة توسيعاً لوضع sudo الخاص بـ GitHub، حيث تفرض مستوى أمان أعلى عند الحاجة إليه، مما يعزز حماية بيئات التطوير المؤسسية. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-24-require-proof-of-presence-for-high-impact-actions/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الهدف من الميزة",
+          "paragraphs": [
+            {
+              "text": "تستهدف الميزة الجديدة معالجة الثغرات التي تستغلها الهجمات الحديثة، خاصة تلك التي تعتمد على ملفات تعريف الارتباط للجلسات المسروقة أو رموز المصادقة طويلة العمر. تؤكد GitHub أن إثبات الحضور يضمن وجود شخص حقيقي ومصرح به في لحظة تنفيذ الإجراء الحساس، وليس مجرد استخدام لجلسة أو رمز صالح. يتم التحقق من ذلك بإعادة توجيه المستخدم إلى مزود الهوية الخاص به للتحقق، مما يسمح بإعداد سياسات مخصصة لحكم الإجراءات المتخذة على المنصة. ويمكن الرجوع إلى Back to changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "كيف تعمل الميزة",
+          "paragraphs": [
+            {
+              "text": "عندما يحاول عضو في المؤسسة تنفيذ إجراء عالي التأثير، مثل إنشاء رمز، أو تحرير خطافات الويب (webhooks)، أو تغيير إعدادات الأمان التنظيمية، أو عرض رموز الاسترداد، تقوم GitHub بإعادة توجيهه إلى مزود الهوية (IdP) لإشباع سياسة مصادقة محددة. قد تتطلب هذه السياسة تنفيذ المصادقة متعددة العوامل، أو التحقق من توافق الجهاز، أو مجرد تسجيل الدخول مرة أخرى لإثبات حداثة الجلسة. لا تسمح المنصة باستمرار الإجراء إلا إذا عاد المستخدم من مزود الهوية بدليل على استيفاء السياسة المطلوبة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نموذج الجلسة والصلاحية",
+          "paragraphs": [
+            {
+              "text": "تعتمد ميزة إثبات الحضور على نفس نموذج الجلسة المستخدم في وضع sudo. بعد اجتياز التحدي بنجاح، يمكن للمستخدم الاستمرار في تنفيذ الإجراءات عالية التأثير في جلسة المتصفح تلك لمدة ساعتين دون الحاجة إلى إجراء فحص إثبات حضور آخر. هذا النموذج يوفر توازناً بين الأمان وسهولة الاستخدام، حيث يقلل من تكرار طلبات التحقق أثناء العمل المستمر على مهام حساسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خيارات التكوين",
+          "paragraphs": [
+            {
+              "text": "إذا كانت مؤسستك تستخدم Microsoft Entra ID للمصادقة الأحادية (SSO)، يمكنك تكوين إثبات الحضور لإضافة طبقة تحقق إضافية من خلال أحد المتطلبات التالية: إعادة المصادقة، حيث يقوم العضو بالمصادقة مرة أخرى مع مزود الهوية، وقد تكفي كلمة المرور حسب السياسة. أو المصادقة متعددة العوامل (MFA)، حيث يقوم العضو بالمصادقة مرة أخرى واجتياز تحدي إضافي متعدد العوامل، مثل تطبيق المصادقة أو البصمة الحيوية، كما هو مُعد في مزود الهوية الخاص بك.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الامتثال والمتطلبات التنظيمية",
+          "paragraphs": [
+            {
+              "text": "تسهم هذه الميزة في تحسين وضعية الأمان من خلال منع استخدام الاعتمادات المخترقة أو الخاطفة، أو الوكلاء الذين يتخذون خطوات إضافية دون علم الإدارة. كما تساعد العملاء الخاضعين لتنظيمات صارمة على تلبية متطلبات الامتثال التي تشترط المصادقة الحديثة قبل العمليات الحساسة، استناداً إلى أطر عمل مثل FDA Part 11. وتخطط GitHub لإضافة دعم لإثبات الحضور قبل دمج طلبات السحب (pull requests) قريباً.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "أمن المعلومات",
+        "Enterprise Cloud",
+        "مصادقة متعددة العوامل",
+        "إدارة الهوية",
+        "إثبات الحضور"
+      ],
+      "entities": [
+        "GitHub",
+        "Microsoft Entra ID",
+        "GitHub Enterprise Cloud",
+        "FDA Part 11"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "25 سبتمبر 2026",
+      "modifiedLabel": "25 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 524
+    },
+    "en": {
+      "title": "GitHub Enterprise Cloud Adds Proof of Presence Security",
+      "description": "GitHub Enterprise Cloud introduces proof of presence, requiring interactive re-authentication or multi-factor challenges for high-impact actions.",
+      "deck": "GitHub Enterprise Cloud has introduced proof of presence features, allowing administrators to require interactive re-authentication or multi-factor challenges before members execute high-impact actions.",
+      "summaryBullets": [
+        "Proof of presence expands GitHub's sudo mode for enterprise cloud accounts to help combat threats from stolen session cookies and long-lived tokens.",
+        "The public preview currently targets managed user enterprises on github.com and GHEC-DR using Microsoft Entra ID via SAML or OIDC.",
+        "When members perform sensitive tasks like creating tokens or editing webhooks, GitHub redirects them to their identity provider to verify compliance.",
+        "Once authenticated, users can continue performing high-impact operations within the same browser session for a window of two hours."
+      ],
+      "sections": [
+        {
+          "heading": "Enhancing Enterprise Security with Proof of Presence",
+          "paragraphs": [
+            {
+              "text": "GitHub has rolled out a new capability that lets organizations require interactive re-authentication or a multi-factor challenge before members take high-impact actions on GitHub Enterprise Cloud accounts. Detailed in the official [GitHub Changelog](https://github.blog/changelog/2026-09-24-require-proof-of-presence-for-high-impact-actions/), this feature expands upon GitHub's existing security framework.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-24-require-proof-of-presence-for-high-impact-actions/"
+                }
+              ]
+            },
+            {
+              "text": "This update is designed to address security challenges highlighted by recent supply chain attacks, where stolen session cookies and long-lived authentication tokens posed significant risks. By introducing proof of presence, GitHub confirms that an authorized individual is actively present at the exact moment a high-impact operation takes place, rather than relying solely on a previously established session or token.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Scope and Target Identity Providers",
+          "paragraphs": [
+            {
+              "text": "During its initial public preview phase, the new security feature is strictly scoped to managed user enterprises on github.com and GHEC-DR. Furthermore, these organizations must utilize Microsoft Entra ID as their Single Sign-On identity provider via SAML or OIDC.",
+              "links": []
+            },
+            {
+              "text": "When an enterprise member attempts sensitive operations—such as creating a token, editing webhooks, changing organization security settings, or viewing recovery codes—GitHub redirects them back to their identity provider. This redirection ensures that custom identity provider policies govern the actions taken on the platform.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Authentication Requirements and Compliance",
+          "paragraphs": [
+            {
+              "text": "The validation process allows organizations to configure specific verification requirements to satisfy their security policies. Depending on the enterprise configuration, members may complete re-authentication where a password satisfies the prompt, or they may face a multi-factor challenge utilizing an authenticator app or biometric verification.",
+              "links": []
+            },
+            {
+              "text": "This extra verification step assists regulated customers in meeting strict compliance requirements that demand fresh authentication before sensitive operations, including frameworks like FDA Part 11. By enforcing these checks, the platform blocks compromised credentials or unauthorized agents from executing changes without explicit knowledge.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Session Behavior and Configuration Guidelines",
+          "paragraphs": [
+            {
+              "text": "In terms of session management, proof of presence utilizes the same operational model found in [sudo mode](https://docs.github.com/enterprise-cloud@latest/authentication/keeping-your-account-and-data-secure/sudo-mode). Following a successful authentication challenge, users can continue executing high-impact actions within that specific browser session for up to two hours without triggering another verification check.",
+              "links": [
+                {
+                  "text": "sudo mode",
+                  "url": "https://docs.github.com/enterprise-cloud@latest/authentication/keeping-your-account-and-data-secure/sudo-mode"
+                }
+              ]
+            },
+            {
+              "text": "Organizations wishing to implement these controls can consult the official documentation on [how to configure proof of presence](https://docs.github.com/enterprise-cloud@latest/admin/configuring-settings/hardening-security-for-your-enterprise/configuring-proof-of-presence) to integrate the settings properly with Microsoft Entra ID workflows.",
+              "links": [
+                {
+                  "text": "how to configure proof of presence",
+                  "url": "https://docs.github.com/enterprise-cloud@latest/admin/configuring-settings/hardening-security-for-your-enterprise/configuring-proof-of-presence"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Future Outlook and Community Discussions",
+          "paragraphs": [
+            {
+              "text": "GitHub has confirmed that additional features are currently in development for the platform's security framework. Specifically, support for proof of presence prior to executing pull request merges is slated for release soon.",
+              "links": []
+            },
+            {
+              "text": "Developers and enterprise administrators looking to discuss these changes or share deployment tips can participate in ongoing conversations through the [GitHub Community](https://github.com/orgs/community/discussions/64212) platform.",
+              "links": [
+                {
+                  "text": "GitHub Community",
+                  "url": "https://github.com/orgs/community/discussions/64212"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "Enterprise Cloud",
+        "Security",
+        "Authentication",
+        "Microsoft Entra ID",
+        "Identity Provider"
+      ],
+      "entities": [
+        "GitHub",
+        "Microsoft Entra ID"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "September 25, 2026",
+      "modifiedLabel": "September 25, 2026",
+      "readMinutes": 3,
+      "wordCount": 526
+    }
+  },
+  "datePublished": "2026-09-25T02:49:18.784564+03:00",
+  "dateModified": "2026-09-25T02:49:18.784564+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/require-proof-of-presence-for-high-impact-actions/hero.webp",
+    "card": "/forum/assets/posts/2026/09/require-proof-of-presence-for-high-impact-actions/card.webp",
+    "social": "/forum/assets/posts/2026/09/require-proof-of-presence-for-high-impact-actions/social.jpg",
+    "alt": {
+      "ar": "GitHub يضيف ميزة إثبات الحضور للأعمال الحساسة",
+      "en": "GitHub Enterprise Cloud Adds Proof of Presence Security"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/09/657665536-74436bd9-651a-4ee3-8be2-b3f851947afc.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-24-require-proof-of-presence-for-high-impact-actions/",
+      "type": "official",
+      "title": "Require proof of presence for high-impact actions"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-24-require-proof-of-presence-for-high-impact-actions",
+  "sourceTitle": "Require proof of presence for high-impact actions",
+  "trendScore": 105.7,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-24T23:49:18+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/require-proof-of-presence-for-high-impact-actions.json"
+}
