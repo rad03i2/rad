@@ -19,6 +19,7 @@ on:
       - 'automation/forum/rebuild_indexes.py'
       - 'automation/forum/normalize_public_identity.py'
       - 'automation/forum/enhance_category_seo.py'
+      - 'automation/forum/audit_topic_hubs.py'
       - 'automation/forum/audit_search_quality.py'
       - 'automation/forum/audit_deployed_sitemap.py'
       - 'automation/forum/prune_legacy_article_html.py'
@@ -62,6 +63,9 @@ jobs:
       - name: Enhance Mikhbar search topic hubs
         run: python automation/forum/enhance_category_seo.py
 
+      - name: Audit Mikhbar topic hubs
+        run: python automation/forum/audit_topic_hubs.py
+
       - name: Rebuild Mikhbar search discovery files
         run: python automation/forum/rebuild_indexes.py
 
@@ -77,16 +81,16 @@ jobs:
           test -f dist/mikhbar/index.html
           test -f dist/mikhbar/ar/index.html
           test -f dist/mikhbar/en/index.html
-          test -f dist/mikhbar/ar/ai/index.html
-          test -f dist/mikhbar/en/ai/index.html
+          for locale in ar en; do
+            for slug in ai security automation robotics apps web; do
+              test -f "dist/mikhbar/${locale}/${slug}/index.html"
+              grep -q "data-topic-hub=\"${slug}\"" "dist/mikhbar/${locale}/${slug}/index.html"
+            done
+          done
           test -f dist/mikhbar/sitemap.xml
           test -f dist/mikhbar/news-sitemap.xml
           test -f dist/mikhbar/robots.txt
           test -f dist/mikhbar/contact/index.html
-          grep -q 'أخبار الذكاء الاصطناعي وأدوات AI وتطبيقاته' dist/mikhbar/ar/ai/index.html
-          grep -q 'أخبار وأدوات الذكاء الاصطناعي في مكان واحد' dist/mikhbar/ar/ai/index.html
-          grep -q 'Artificial Intelligence News Updates & AI Tools' dist/mikhbar/en/ai/index.html
-          grep -q 'Artificial intelligence news, tools and model updates' dist/mikhbar/en/ai/index.html
           grep -q 'https://mikhbar.website/contact/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/about/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/editorial-policy/' dist/mikhbar/sitemap.xml
@@ -147,6 +151,11 @@ jobs:
 
           curl -fsS --retry 5 --retry-delay 2 --retry-all-errors https://mikhbar.website/healthz | grep -q '"ok":true'
 
+          for hub in security automation robotics apps web; do
+            curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website/en/${hub}/" -o "/tmp/mikhbar-hub-${hub}.html"
+            grep -q "data-topic-hub=\"${hub}\"" "/tmp/mikhbar-hub-${hub}.html"
+          done
+
           ARTICLE_PATH="$(python - <<'PY'
           import json
           from pathlib import Path
@@ -169,7 +178,10 @@ jobs:
           curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website${ARTICLE_PATH}" -o /tmp/mikhbar-live-article.html
           grep -q 'data-ssr-rendered="true"' /tmp/mikhbar-live-article.html
           grep -q 'class="rt-section rt-related-stories"' /tmp/mikhbar-live-article.html
+          grep -q 'class="rt-section rt-related-topics"' /tmp/mikhbar-live-article.html
           grep -q 'Related stories' /tmp/mikhbar-live-article.html
+          grep -q 'Related topics' /tmp/mikhbar-live-article.html
+          grep -q 'href="/en/automation/"' /tmp/mikhbar-live-article.html
           grep -Fq "rel=\"canonical\" href=\"https://mikhbar.website${ARTICLE_PATH}\"" /tmp/mikhbar-live-article.html
           if grep -q 'rdwan.dev' /tmp/mikhbar-live-article.html; then
             echo "Legacy rdwan.dev identity appeared in live article HTML." >&2
