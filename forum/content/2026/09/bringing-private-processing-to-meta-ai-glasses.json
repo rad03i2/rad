@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "fe19c32b683d437ceec0",
+  "slug": "bringing-private-processing-to-meta-ai-glasses",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/bringing-private-processing-to-meta-ai-glasses/",
+    "en": "/forum/en/ai/bringing-private-processing-to-meta-ai-glasses/"
+  },
+  "locales": {
+    "ar": {
+      "title": "متا تدمج تقنية المعالجة الخاصة في نظارات الذكاء الاصطناعي",
+      "description": "تعلن شركة ميتا عن توسيع نطاق تقنية المعالجة الخاصة لتشمل نظارات الذكاء الاصطناعي، مما يتيح معالجة البيانات والمهام المعقدة في السحابة مع الحفاظ على الخصوصية التامة.",
+      "deck": "تسعى شركة ميتا لتجاوز القيود الحوسبية لنظارات الذكاء الاصطناعي عبر توسيع نطاق بنيتها التحتية للحوسبة السرية إلى مراكز البيانات السحابية.",
+      "summaryBullets": [
+        "توسيع نطاق بنية \"المعالجة الخاصة\" (Private Processing) ليشمل نظارات الذكاء الاصطناعي.",
+        "الاعتماد على بيئات التنفيذ الموثوقة (TEEs) لضمان عدم إمكانية وصول أي جهة لبيانات المستخدمين.",
+        "تلبية متطلبات معالجة النماذج اللغوية الكبيرة والمهام السياقية المتقدمة خارج النطاق المحلي للنظارات.",
+        "توفير ضمانات صارمة تتضمن العزلة العتادية، والفشل المغلق، والتحقق العام عبر السجلات."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الحوسبة والسياق الشخصي في نظارات الذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "تعتبر النظارات الذكية الشكل الأنسب لتقديم مساعدات ذكية طوال اليوم، نظراً لقدرتها على فهم السياق الشخصي للمستخدم بشكل أفضل مقارنة بالأجهزة الأخرى، فضلاً عن إبقائه متفاعلاً مع محيطه دون الحاجة لالتقاط الهاتف المحمول. وفي حين تقتصر معظم مهام النظارات الحالية على مساعدة المستخدم على الرؤية أو حماية العينين أو تنفيذ أوامر بسيطة مثل إجراء المكالمات والرد على الرسائل محلياً، إلا أن الميزات المتقدمة تتطلب نماذج ذكاء اصطناعي أكبر بكثير من أن يتم تضمينها داخل إطار نظارة خفيفة الوزن. ويمكن الرجوع إلى Meta Engineering للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Meta Engineering",
+                  "url": "https://engineering.fb.com/2026/09/23/security/private-processing-meta-ai-glasses/"
+                }
+              ]
+            },
+            {
+              "text": "إلى جانب المعالجة الحاسوبية، يبرز التحدي المتمثل في كون المساعد الذكي المفيد بحاجة ماسة ليكون واعيًا بالحالة ومندمجًا بعمق مع تفاصيل حياة المستخدم الشخصية. ويشمل ذلك فهم السياق، وربط الأفكار عبر الأيام أو الأسابيع، والعمل استباقياً في الخلفية لإنجاز المهام. هذه المتطلبات تجعل نقل جزء من هذه العمليات إلى السحابة أمراً حتمياً، مما يفرض تحديات جديدة لم تكن البنى السحابية التقليدية مصممة لحلها فيما يتعلق بالخصوصية الفائقة. ويمكن الرجوع إلى Pritam Shah للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Pritam Shah",
+                  "url": "https://engineering.fb.com/author/pritam-shah/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الحوسبة السرية وبيئات التنفيذ الموثوقة كحل أمني متطور",
+          "paragraphs": [
+            {
+              "text": "تاريخياً، قامت صناعة التقنية بتشفير البيانات في حالتين فقط: أثناء السكون على الأقراص، وأثناء النقل عبر الشبكات. وكانت الثغرة الأمنية الكبرى تكمن دائماً في الحالة الثالثة المتمثلة في \"البيانات قيد الاستخدام\"، حيث كان لا بد من فك تشفير البيانات في الذاكرة لتتم معالجتها، مما يجعلها عرضة لنظام التشغيل المضيف ومدير الظلال ومسؤولي البنية التحتية. ولمعالجة هذه الثغرة، تبرز الحوسبة السرية كتوجه صناعي يضمن حماية البيانات حتى أثناء معالجتها الفعلية.",
+              "links": []
+            },
+            {
+              "text": "تعتمد هذه المقاربة على بيئات التنفيذ الموثوقة (TEEs) باعتبارها العنصر العتادي الأساسي. وتقوم معالجات الأجهزة، سواء وحدات المعالجة المركزية أو الرسومية، بتشفير ذاكرة آلة افتراضية سرية خاصة باستخدام مفتاح تخزنه أجهزة أمنية مخصصة داخل الشريحة نفسها. ولا يتم إطلاق هذا المفتاح أبداً لنظام التشغيل أو لمدير البنية التحتية، مما يجعل ذاكرة الآلة الافتراضية السرية بمثابة نص مشفر تماماً بالنسبة للجهات الخارجية والمديرين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توسيع نطاق بنية المعالجة الخاصة لتشمل الأجهزة القابلة للارتداء",
+          "paragraphs": [
+            {
+              "text": "استناداً إلى الخبرات السابقة التي بدأت مع إطلاق تقنيات حماية المراسلات والمحادثات الخاصة، تعمل الشركة على توسيع نطاق بنيتها التحتية المسماة \"المعالجة الخاصة\" لتوفير ذات مزايا الخصوصية الفائقة لنظارات الذكاء الاصطناعي. وتسمح هذه البنية بتنفيذ نماذج الذكاء الاصطناعي داخل آلات افتراضية سرية بحيث يتعذر على الشركة نفسها الوصول إلى بيانات المستخدم، مما يحل المعضلة الكلاسيكية المتمثلة في الحاجة إلى قدرات سحابية ضخمة دون المساس بالسرية الفردية.",
+              "links": []
+            },
+            {
+              "text": "ومع تزايد اعتماد المستخدمين على المساعدات الذكية القابلة للارتداء، تتسع الحاجة لمعالجة تدفقات البيانات المستمرة مثل النسخ التلقائي للمحادثات، والبحث السياقي، والاسترجاع طويل الأمد للبيانات. ولتحقيق ذلك بشكل آمن، تم بناء النظام على متطلبات هندسية صارمة تضمن عدم قدرة أي طرف خارجي على قراءة بيانات المستخدم في أي مرحلة من مراحل النقل أو الاستخدام أو التخزين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات الهندسية الخمسة لبنية المعالجة الخاصة",
+          "paragraphs": [
+            {
+              "text": "تم تصميم النظام السحابي متعدد المناطق والمقاوم للأعطال ليتعامل مع كميات كبيرة من البيانات بكفاءة عالية، مستنداً إلى خمسة ركائز هندسية أساسية تشمل العزلة العتادية التي تجعل بيانات المستخدم غير قابلة للقراءة تشفيرياً لجميع الأنظمة المضيفة والجهات المشغلة. بالإضافة إلى ذلك، يطبق النظام ضمانات الفشل المغلق التي تجعل أي محاولة لتعديل شروط المعالجة السرية تؤدي إما إلى إيقاف التشغيل الآمن أو اكتشاف المحاولة علناً عبر سجلات الشفافية القابلة للتحقق.",
+              "links": []
+            },
+            {
+              "text": "تتضمن الركائز الأخرى التحقق العام عبر تسجيل كل صورة تشغيلية للآلة الافتراضية السرية في دفتر أستاذ عام وشاهد مستقل، إلى جانب خاصية عدم القابلية للتوجيه التي تمنع أي مهاجم من استهداف جلسة مستخدم بعينها دون تعريض النظام بأكمله للاكتشاف. وأخيراً، يوفر النظام تخزيناً مشفراً للبيانات التي تضطر المنتجات للاحتفاظ بها لاحقاً، بحيث لا يمكن الوصول إليها إلا باستخدام مفتاح يوفره المستخدم حصرياً.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "الحوسبة السرية",
+        "ميتا",
+        "النظارات الذكية",
+        "الخصوصية والأمان",
+        "تقنية المعلومات"
+      ],
+      "entities": [
+        "Meta",
+        "Confidential Computing Consortium",
+        "Pritam Shah",
+        "Oskar Linde",
+        "Mark Zuckerberg"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "24 سبتمبر 2026",
+      "modifiedLabel": "24 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 650
+    },
+    "en": {
+      "title": "Meta Brings Private Processing Infrastructure to AI Glasses",
+      "description": "Meta expands its Private Processing confidential computing infrastructure to AI glasses, enabling secure cloud-based AI processing without exposing user data.",
+      "deck": "Meta is expanding its confidential computing infrastructure to AI glasses, allowing advanced cloud workloads to process personal context securely while keeping data unreadable even to Meta.",
+      "summaryBullets": [
+        "Meta expands its Private Processing infrastructure to support AI glasses for advanced cloud workloads.",
+        "The system utilizes Confidential Computing and Trusted Execution Environments (TEEs) to protect data while in use.",
+        "Hardware isolation, fail-closed guarantees, public verifiability, non-targetability, and encrypted storage form the architectural core.",
+        "The approach builds on previous implementations deployed for WhatsApp and the Meta AI app."
+      ],
+      "sections": [
+        {
+          "heading": "The Challenge of Wearable AI Compute and Context",
+          "paragraphs": [
+            {
+              "text": "Meta Engineering has highlighted that glasses represent an optimal form factor for everyday artificial intelligence assistance, offering deep contextual awareness without requiring users to constantly pick up mobile phones. While basic hands-on-device tasks like placing calls or answering texts happen locally, advanced capabilities demand models far larger than what can physically fit into a wearable device. Furthermore, an effective everyday assistant needs to remain stateful, connecting ideas across days and proactively managing background tasks.",
+              "links": [
+                {
+                  "text": "Meta Engineering",
+                  "url": "https://engineering.fb.com/2026/09/23/security/private-processing-meta-ai-glasses/"
+                }
+              ]
+            },
+            {
+              "text": "As noted by Mark Zuckerberg in July 2025 regarding Personal Superintelligence, personal devices that comprehend user context through shared sight and sound are positioned to become primary computing mechanisms. However, offloading this intensive data processing to traditional cloud architectures creates a privacy dilemma. Traditional frameworks encrypt data during transit and storage, but expose it in host memory while actively computing, presenting an inherent risk for deeply personal wearable data.",
+              "links": [
+                {
+                  "text": "Personal Superintelligence",
+                  "url": "https://www.meta.com/superintelligence/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Confidential Computing and Trusted Execution Environments",
+          "paragraphs": [
+            {
+              "text": "To resolve the vulnerability of data in use, Meta leverages Confidential Computing, an industry-wide movement focused on sealing security gaps while data is actively processed. The technological foundation rests on Trusted Execution Environments (TEEs), a hardware-level capability built into specific processors and graphics chips. These chips encrypt the memory of specialized virtual machines known as confidential virtual machines (CVMs) using keys securely managed by dedicated hardware, ensuring that the host operating system, hypervisors, and infrastructure administrators cannot read memory contents.",
+              "links": []
+            },
+            {
+              "text": "According to the Confidential Computing Consortium (CCC), TEEs enforce three fundamental guarantees: strict data confidentiality preventing unauthorized reading of CVM memory, data integrity stopping unauthorized modifications, and code integrity ensuring executing software remains unaltered after loading. Clients enforce these standards by demanding remote attestation reports signed by chip-internal keys, matching measurements published to independent append-only ledgers.",
+              "links": [
+                {
+                  "text": "Confidential Computing Consortium (CCC)",
+                  "url": "https://confidentialcomputing.io/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Expanding Private Processing to Wearables",
+          "paragraphs": [
+            {
+              "text": "Building upon methodologies established through Private Processing for WhatsApp, Meta is scaling this confidential infrastructure to accommodate AI glasses. The overarching goal is to safely handle heavy workloads like streaming transcription, contextual search, and long-term recall without compromising privacy. The foundational architecture relies on five strict engineering requirements to ensure off-device data remains completely inaccessible to third parties or Meta itself.",
+              "links": [
+                {
+                  "text": "Private Processing for WhatsApp",
+                  "url": "https://engineering.fb.com/2025/04/29/security/whatsapp-private-processing-ai-tools/"
+                }
+              ]
+            },
+            {
+              "text": "Technical specifics regarding the security paradigm and structural safeguards are detailed extensively in the Private Processing whitepaper. The system mandates hardware isolation across transit, use, and rest, alongside fail-closed guarantees that trigger system blocks or verifiable transparency logs if modifications are attempted. Additionally, the infrastructure incorporates public verifiability through witness ledgers, non-targetability to prevent specific user session isolation by malicious actors, and encrypted storage utilizing user-provided keys.",
+              "links": [
+                {
+                  "text": "Private Processing whitepaper",
+                  "url": "https://ai.meta.com/static-resource/private-processing-technical-whitepaper"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Security Analysis and Ecosystem Engagement",
+          "paragraphs": [
+            {
+              "text": "Meta's architectural approach addresses complex metadata and routing challenges to decouple user identity from traffic processing. By ensuring requests cannot be easily intercepted or linked to specific individuals without systemic compromise, the infrastructure seeks to establish a high standard for multimodal agentic safety. Engineers and security researchers analyzing the broader implications of agentic systems can review ongoing initiatives via the future of AI is agentic and multimodal research overview.",
+              "links": [
+                {
+                  "text": "future of AI is agentic and multimodal",
+                  "url": "https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse"
+                }
+              ]
+            },
+            {
+              "text": "Meta continues to test and refine its security frameworks through community engagement, inviting security researchers to report vulnerabilities via the Bug Bounty program. These collaborative evaluations help reinforce the multi-regional, fault-tolerant infrastructure designed to process sensitive contextual information at scale while maintaining rigorous cryptographic isolation.",
+              "links": [
+                {
+                  "text": "Bug Bounty program",
+                  "url": "https://l.facebook.com/l.php?u=https%3A%2F%2Fbugbounty.meta.com%2F&h=AUAFPftYjDH_AyKuIIaQt26RzsQ-5FEJscrRF_qQaY5ei9B-e8kzkvrZ_PIM1PZo96sCMQR30wnK4VqhxNCS2q0esb6oT9-hEI_j82_HwWDZGaX2MiZi7GhNtYjLsPMZ_dK65ObfvqGG9w"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Meta",
+        "AI Glasses",
+        "Private Processing",
+        "Confidential Computing",
+        "Trusted Execution Environment",
+        "Data Privacy",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "Meta",
+        "Confidential Computing Consortium",
+        "WhatsApp",
+        "Meta AI"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 24, 2026",
+      "modifiedLabel": "September 24, 2026",
+      "readMinutes": 3,
+      "wordCount": 629
+    }
+  },
+  "datePublished": "2026-09-24T03:32:06.707884+03:00",
+  "dateModified": "2026-09-24T03:32:06.707884+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/bringing-private-processing-to-meta-ai-glasses/hero.webp",
+    "card": "/forum/assets/posts/2026/09/bringing-private-processing-to-meta-ai-glasses/card.webp",
+    "social": "/forum/assets/posts/2026/09/bringing-private-processing-to-meta-ai-glasses/social.jpg",
+    "alt": {
+      "ar": "متا تدمج تقنية المعالجة الخاصة في نظارات الذكاء الاصطناعي",
+      "en": "Meta Brings Private Processing Infrastructure to AI Glasses"
+    },
+    "credit": "Meta Engineering",
+    "sourceUrl": "https://engineering.fb.com/wp-content/uploads/2026/09/Private-Processing-AI-Glasses-Hero-Option-6.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Meta Engineering",
+      "url": "https://engineering.fb.com/2026/09/23/security/private-processing-meta-ai-glasses/",
+      "type": "official",
+      "title": "Bringing Private Processing to Meta AI Glasses"
+    }
+  ],
+  "sourceUrl": "https://engineering.fb.com/2026/09/23/security/private-processing-meta-ai-glasses",
+  "sourceTitle": "Bringing Private Processing to Meta AI Glasses",
+  "trendScore": 115.8,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-24T00:32:06+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/bringing-private-processing-to-meta-ai-glasses.json"
+}
