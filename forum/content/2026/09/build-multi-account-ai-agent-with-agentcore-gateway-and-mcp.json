@@ -1,0 +1,331 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "cca310b8dce1d42c7ad3",
+  "slug": "build-multi-account-ai-agent-with-agentcore-gateway-and-mcp",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/build-multi-account-ai-agent-with-agentcore-gateway-and-mcp/",
+    "en": "/forum/en/ai/build-multi-account-ai-agent-with-agentcore-gateway-and-mcp/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تتيح بناء وكلاء ذكاء اصطناعي عبر حسابات متعددة",
+      "description": "تقدّم أمازون ويب سيرفيسز حلاً جديداً باستخدام AgentCore Gateway وMCP، يتيح للوكلاء الاستعلام عن بيانات موزعة في حسابات AWS متعددة دون الحاجة لنسخها أو تجميعها مركزياً.",
+      "deck": "تتيح البنية الجديدة للشركات الحفاظ على عزل البيانات ضمن حسابات الفرق المختلفة، مع منح وكلاء الذكاء الاصطناعي وصولاً موحداً وآمناً للاستعلام عبر هذه الحسابات.",
+      "summaryBullets": [
+        "يعتمد الحل على بنية متعددة الحسابات تربط حساباً مركزياً لحسابات الأعمال عبر بوابة AgentCore Gateway.",
+        "تستخدم الفرق بياناتها كخوادم MCP مع وصول آمن عبر الحسابات باستخدام AgentCore Identity وOkta.",
+        "تضمن البنية أن تظل البيانات الأصلية في حساباتها دون نسخ، حيث تنتقل فقط نتائج الاستعلامات المحددة.",
+        "توفر البنية سيطرة مركزية على النماذج اللغوية والحواجز الأمنية عبر Amazon Bedrock."
+      ],
+      "sections": [
+        {
+          "heading": "التحدي: توزيع البيانات في الشركات الكبرى",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات تحدياً متزايداً في تمكين وكلاء الذكاء الاصطناعي من الاستدلال على بيانات موزعة عبر حسابات AWS متعددة دون الحاجة إلى نسخها أو تجميعها في مكان واحد. يحتفظ كل فريق ببياناته في حسابه الخاص لأسباب تتعلق بالملكية الواضحة، وعزل النطاق، ودورات النشر المستقلة. ومع ذلك، فإن الوكيل الذي يرى بيانات حساب واحد فقط يقدم قيمة محدودة، وغالباً ما يتطلب الاتصال بمصادر موزعة تكرار البيانات أو تعقيد صلاحيات Amazon Identity and Access Management (IAM).",
+              "links": [
+                {
+                  "text": "Amazon Identity and Access Management (IAM)",
+                  "url": "https://aws.amazon.com/iam"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "حل أمازون: بوابة AgentCore Gateway",
+          "paragraphs": [
+            {
+              "text": "تقدم أمازون ويب سيرفيسز حلاً لبناء بنية متعددة الحسابات تحافظ على بيانات كل فريق في حسابه الخاص، مع منح الوكلاء طريقة موحدة للاستعلام عبرها. يعتمد هذا الحل على Amazon Bedrock AgentCore Gateway و Model Context Protocol (MCP). يعمل حساب منصة مركزي على استضافة طبقة الوكيل والاستدلال على النماذج اللغوية الكبيرة (LLM) عبر Amazon Bedrock، بينما تعرض فرق الأعمال بياناتها وأدواتها كخوادم MCP.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                },
+                {
+                  "text": "Model Context Protocol (MCP)",
+                  "url": "https://modelcontextprotocol.io/"
+                }
+              ]
+            },
+            {
+              "text": "تعمل بوابة AgentCore Gateway في حساب المنصة كنقطة نهاية موحدة للوكلاء، حيث تسجل خادم MCP لكل حساب أعمال كهدف، وتوفر اكتشافاً موحداً للأدوات مع بحث دلالي، ومصادرة مركزية، وصلاحيات دقيقة، وقابلية للمراقبة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية المعمارية: ثلاث طبقات رئيسية",
+          "paragraphs": [
+            {
+              "text": "تتبع البنية المعمارية نموذجاً متعدد الحسابات يتكون من ثلاث طبقات: حساب منصة مركزي، حسابات أعمال موزعة، وبوابة AgentCore Gateway كطبقة تكامل تربطها. يملك فريق المنصة الحساب المركزي الذي يشغل الوكيل على AgentCore Runtime، وهو بيئة خالية من الخوادم وغير مرتبطة بالإطار، مع عزل الجلسات في microVMs مخصصة، وسعر استهلاك، ومصادقة مدمجة.",
+              "links": [
+                {
+                  "text": "AgentCore Runtime",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agents-tools-runtime.html"
+                }
+              ]
+            },
+            {
+              "text": "يتم تشغيل الاستدلال على النماذج اللغوية الكبيرة في حساب المنصة عبر Amazon Bedrock، حيث يتحكم فريق المنصة في النماذج الأساسية المتاحة، ويطبق Amazon Bedrock Guardrails، ويتتبع التكاليف عبر حد فوترة واحد، مما يتجنب عبء إدارة حصص النماذج عبر عشرات حسابات الأعمال.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Guardrails",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تكامل آمن عبر الحسابات",
+          "paragraphs": [
+            {
+              "text": "تتبع البنية نمطاً مركزياً موزعاً (Hub-and-spoke)، حيث ينشر كل فريق أعمال خادم MCP مستقلاً، بينما تجمع بوابة AgentCore Gateway هذه الخوادم خلف نقطة نهاية واحدة. عندما يستدعي الوكيل أداة، تستخرج البوابة بيانات اعتماد OAuth 2.0 الآلية من AgentCore Identity، وتربطها بالطلب الصادر، وتوجهه إلى خادم MCP المناسب في حساب الأعمال، الذي يصادق على الرمز مقابل نقطة نهاية Okta قبل معالجة الطلب محلياً.",
+              "links": [
+                {
+                  "text": "AgentCore Identity",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/identity.html"
+                },
+                {
+                  "text": "Okta",
+                  "url": "https://www.okta.com/"
+                }
+              ]
+            },
+            {
+              "text": "تبقى بيانات فريق الأعمال في حسابه الخاص؛ حيث يعيد خادم MCP فقط النتيجة المحددة التي أنتجتها الأداة، وليس مجموعة البيانات الخام، وتنتقل هذه النتيجة إلى حساب المنصة كسياق للاستدلال. لا يتم نسخ البيانات المصدرية أو نقلها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حماية البيانات والسيطرة على الوصول",
+          "paragraphs": [
+            {
+              "text": "بدلاً من كشف موارد AWS الخام مباشرة، تغلف كل فرق الأعمال بياناتها وأدواتها كخادم MCP. على سبيل المثال، قد تعرض فريق الخدمات المصرفية أدوات مثل get_balance و get_profile، بينما يقدم فريق الإقراض أدوات مثل get_credit_score و search_lending_policies. توفر هذه البنية سيطرة دقيقة على خط أنابيب الاسترجاع، مما يسمح للفرق بتغيير التنفيذ دون التأثير على وكيل المنصة، طالما بقيت واجهة أداة MCP متسقة.",
+              "links": []
+            },
+            {
+              "text": "تدعم بوابة AgentCore Gateway أنواع أهداف إضافية تجعلها نقطة تكامل مركزية، مثل أهداف HTTP التي تجلب وكلاء AgentCore Runtime وخدمات الوكيل إلى الوكيل (A2A) إلى نفس النقطة النهائية الخاضعة للحكم. يمكن لفريق المنصة أيضاً تطبيق Amazon Bedrock Guardrails لسلامة المحتوى، وتكوين سياسة في AgentCore للتحكم الدقيق في الوصول، وكلاهما يُنفذ في طبقة البوابة خارج كود الوكيل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "وكلاء الذكاء الاصطناعي",
+        "بنية متعددة الحسابات",
+        "MCP",
+        "Amazon Bedrock",
+        "أمن المعلومات"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز",
+        "Amazon Bedrock AgentCore Gateway",
+        "Model Context Protocol (MCP)",
+        "AgentCore Runtime",
+        "AgentCore Identity",
+        "Okta",
+        "Amazon Bedrock Guardrails"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "24 سبتمبر 2026",
+      "modifiedLabel": "24 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 581
+    },
+    "en": {
+      "title": "AWS Details Multi-Account AI Agents with AgentCore and MCP",
+      "description": "Learn how to build multi-account AI architectures using Amazon Bedrock AgentCore Gateway, MCP, and IAM for secure cross-account data queries.",
+      "deck": "Enterprises can now keep data local to individual AWS accounts while enabling unified AI agent queries through a centralized platform approach.",
+      "summaryBullets": [
+        "Central platform accounts host agents using Amazon Bedrock AgentCore Gateway and the Model Context Protocol (MCP).",
+        "Line-of-business accounts expose their data as secure MCP servers to prevent unnecessary data copying or centralization.",
+        "Cross-account integrations utilize OAuth 2.0 machine-to-machine credentials managed via AgentCore Identity and Okta.",
+        "Centralized model inference runs on Amazon Bedrock, allowing platform teams to apply guardrails and monitor costs."
+      ],
+      "sections": [
+        {
+          "heading": "Architecting Multi-Account AI Agents",
+          "paragraphs": [
+            {
+              "text": "Enterprise organizations frequently face challenges when deploying artificial intelligence systems that need to reason over data spread across multiple AWS environments. Maintaining distinct accounts for each business team provides clear data ownership, scope isolation, and independent deployment lifecycles. However, connecting an AI agent to distributed sources traditionally required replicating data or untangling complex cross-account setups involving AWS Identity and Access Management (IAM).",
+              "links": [
+                {
+                  "text": "AWS Identity and Access Management (IAM)",
+                  "url": "https://aws.amazon.com/iam"
+                }
+              ]
+            },
+            {
+              "text": "To solve these distributed data challenges without moving underlying datasets, developers can build multi-account architectures using the Model Context Protocol (MCP). By keeping data inside each line-of-business account, only the specific information requested during a query flows out, ensuring datasets never leave their owning storage location.",
+              "links": [
+                {
+                  "text": "Model Context Protocol (MCP)",
+                  "url": "https://modelcontextprotocol.io/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Centralized Platform and Gateway Integration",
+          "paragraphs": [
+            {
+              "text": "The core integration relies on a central platform account hosting the agent tier alongside large language model inference. The platform team manages available foundation models and applies content safety measures through Amazon Bedrock Guardrails. As demands grow, organizations can scale inference across dedicated accounts by implementing an Inference Gateway that routes traffic across model providers and enforces per-team rate limits.",
+              "links": [
+                {
+                  "text": "Inference Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-targets-inference.html"
+                }
+              ]
+            },
+            {
+              "text": "Acting as the single integration endpoint, Amazon Bedrock AgentCore Gateway registers each line-of-business account's MCP server as a target. This central gateway provides unified tool discovery using semantic search, centralized authentication, fine-grained authorization, and system observability.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Line-of-Business MCP Servers",
+          "paragraphs": [
+            {
+              "text": "Rather than exposing raw cloud storage buckets, databases, or search indexes directly, each line-of-business team packages its data and operational tools as an MCP server. For instance, retail banking teams might expose functions for retrieving balances and profiles, while lending teams offer credit score checks and policy searches.",
+              "links": []
+            },
+            {
+              "text": "These distributed MCP servers run on AgentCore Runtime within each line-of-business account. This framework-agnostic environment offers session isolation in dedicated microVMs, consumption-based pricing, built-in authentication, and complete ownership of the underlying tool logic for individual teams.",
+              "links": [
+                {
+                  "text": "AgentCore Runtime",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agents-tools-runtime.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Security, Identity, and Governance",
+          "paragraphs": [
+            {
+              "text": "Securing multi-account agent interactions requires robust authentication mechanisms across different service layers. When an agent invokes a tool, the integration layer retrieves OAuth 2.0 machine-to-machine credentials from AgentCore Identity. These credentials are attached to outbound requests and routed to the correct line-of-business MCP server, which authenticates the incoming tokens against Okta.",
+              "links": [
+                {
+                  "text": "AgentCore Identity",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/identity.html"
+                },
+                {
+                  "text": "Okta",
+                  "url": "https://www.okta.com/"
+                }
+              ]
+            },
+            {
+              "text": "Furthermore, platform administrators can enforce strict content governance across the entire setup. By leveraging capabilities within Amazon Bedrock AgentCore, organizations gain deep visibility, policy enforcement, and reliable control structures suited for production-ready enterprise environments.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "AgentCore",
+        "MCP",
+        "Cloud Architecture",
+        "Security"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Okta",
+        "Model Context Protocol"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 24, 2026",
+      "modifiedLabel": "September 24, 2026",
+      "readMinutes": 3,
+      "wordCount": 471
+    }
+  },
+  "datePublished": "2026-09-24T20:33:31.561588+03:00",
+  "dateModified": "2026-09-24T20:33:31.561588+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/build-multi-account-ai-agent-with-agentcore-gateway-and-mcp/hero.webp",
+    "card": "/forum/assets/posts/2026/09/build-multi-account-ai-agent-with-agentcore-gateway-and-mcp/card.webp",
+    "social": "/forum/assets/posts/2026/09/build-multi-account-ai-agent-with-agentcore-gateway-and-mcp/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح بناء وكلاء ذكاء اصطناعي عبر حسابات متعددة",
+      "en": "AWS Details Multi-Account AI Agents with AgentCore and MCP"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-20091-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/build-multi-account-ai-agent-with-agentcore-gateway-and-mcp/inline-01.webp",
+        "width": 1400,
+        "height": 809,
+        "alt": {
+          "ar": "أمازون تتيح بناء وكلاء ذكاء اصطناعي عبر حسابات متعددة",
+          "en": "Multi-account AI agent architecture with AgentCore Gateway, MCP servers, and Cedar policy authorization across platform and LOB accounts."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-a-multi-account-ai-agent-with-agentcore-gateway-and-mcp/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-20091-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-a-multi-account-ai-agent-with-agentcore-gateway-and-mcp/",
+      "type": "official",
+      "title": "Build a multi-account AI agent with AgentCore Gateway and MCP"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-a-multi-account-ai-agent-with-agentcore-gateway-and-mcp",
+  "sourceTitle": "Build a multi-account AI agent with AgentCore Gateway and MCP",
+  "trendScore": 130.48,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-24T17:33:31+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/build-multi-account-ai-agent-with-agentcore-gateway-and-mcp.json"
+}
