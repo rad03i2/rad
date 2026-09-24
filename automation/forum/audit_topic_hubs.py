@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import sys
-from pathlib import Path
 
 from enhance_category_seo import FORUM, HUB_CONFIG
 
@@ -34,6 +33,11 @@ def main() -> int:
             for target, _link_label in config["links"]:
                 if f'href="../{target}/"' not in html:
                     errors.append(f"{label}: missing related hub link ../{target}/")
+
+            if config.get("pillar"):
+                pillar_slug, _pillar_label = config["pillar"]
+                if f'href="../guides/{pillar_slug}/"' not in html:
+                    errors.append(f"{label}: missing evergreen pillar link ../guides/{pillar_slug}/")
 
             if "rdwan.dev" in html:
                 errors.append(f"{label}: legacy rdwan.dev identity remains")
