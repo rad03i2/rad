@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-24T18:47:42+00:00",
+  "updated_at": "2026-09-24T19:57:13+00:00",
   "items": [
     {
       "title": "Build your way: Use any AI agent of your choice in Android Studio",
@@ -3131,8 +3131,38 @@
         "publish_eligible": true,
         "corroborating_sources": []
       },
-      "status": "incoming",
-      "id": "28337dd8b02a0336cd1e"
+      "status": "quality_rejected",
+      "id": "28337dd8b02a0336cd1e",
+      "last_publisher_status": "quality_rejected",
+      "last_publisher_at": "2026-09-24T19:56:13+00:00",
+      "quality_errors": [
+        "generation_error:RuntimeError: All article generation providers failed: Groq: No Groq model succeeded: Groq/qwen/qwen3.8-27b API failed (429): {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01m2x3gdxre2xbf908ryv7jg2j` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Used 637, Requested 594. Please try again in 13.86s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}\n | Gemini: No Gemini model succeeded: gemini-3.5-flash-lite request failed: JSONDecodeError: Expecting ':' delimiter: line 125 column 13 (char 7063) | gemini-2.5-flash-lite failed (404): {\"error\":{\"message\":\"This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemini-3.5-flash-lite for the latest features and improvements.\",\"code\":\"not_found\"}} | gemini-3.6-flash failed (503): {\"error\":{\"message\":\"gemini-3.6-flash is currently experiencing high demand, spikes in demand are usually temporary. Please try again later.\",\"code\":\"service_unavailable\"}} | OpenRouter: OpenRouter returned no text: {\"id\": \"gen-1790279713-DR308L4wrMMK2zpkGCWY\", \"object\": \"chat.completion\", \"created\": 1790279713, \"model\": \"liquid/lfm-2.5-2.6b:free\", \"provider\": \"Liquid\", \"system_fingerprint\": \"vllm-0.29.1rc1.dev9+g2671fedfc-dafbf1d2\", \"service_tier\": null, \"choices\": [{\"index\": 0, \"logprobs\": null, \"finish_reason\": \"length\", \"native_finish_reason\": \"length\", \"message\": {\"role\": \"assistant\", \"content\": null, \"refusal\": null, \"reasoning\": \"The user wants me to write a complete Arabic news article based on the provided source material about Firefox window types (Classic, Private, Smart). I need to follow specific formatting requirements:\\n\\n1. Output must be valid JSON only\\n2. Title: Arabic, clear and direct, 40-60 characters max (except if necessary), includes company/product name early\\n3. Description: SEO-friendly, 115-155 characters, accurate explanation\\n4. Deck: Short intro (1-2 sentences)\\n5. Summary bullets: 3-5 points\\n6. Sections: 4-7 sections, each with heading and paragraphs containing text and links\\n   - Each paragraph must have \\\"text\\\" and \\\"links\\\" array\\n   - Links must be from allowed list: \\n     - Mozilla Blog: https://blog.mozilla.org/en/firefox/firefox-window-types/\\n     - | Copilot: Copilot CLI failed (1): \nYou have exceeded your monthly quota (Request ID: 7886:1C9F15:7218:8F71:6AB5805D)\n"
+      ],
+      "publisher_attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "en:article_too_short"
+          ],
+          "word_count_ar": 490,
+          "word_count_en": 426
+        },
+        {
+          "attempt": 2,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 422,
+          "word_count_en": 765
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: All article generation providers failed: Groq: No Groq model succeeded: Groq/qwen/qwen3.8-27b API failed (429): {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01m2x3gdxre2xbf908ryv7jg2j` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Used 637, Requested 594. Please try again in 13.86s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}\n | Gemini: No Gemini model succeeded: gemini-3.5-flash-lite request failed: JSONDecodeError: Expecting ':' delimiter: line 125 column 13 (char 7063) | gemini-2.5-flash-lite failed (404): {\"error\":{\"message\":\"This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemini-3.5-flash-lite for the latest features and improvements.\",\"code\":\"not_found\"}} | gemini-3.6-flash failed (503): {\"error\":{\"message\":\"gemini-3.6-flash is currently experiencing high demand, spikes in demand are usually temporary. Please try again later.\",\"code\":\"service_unavailable\"}} | OpenRouter: OpenRouter returned no text: {\"id\": \"gen-1790279713-DR308L4wrMMK2zpkGCWY\", \"object\": \"chat.completion\", \"created\": 1790279713, \"model\": \"liquid/lfm-2.5-2.6b:free\", \"provider\": \"Liquid\", \"system_fingerprint\": \"vllm-0.29.1rc1.dev9+g2671fedfc-dafbf1d2\", \"service_tier\": null, \"choices\": [{\"index\": 0, \"logprobs\": null, \"finish_reason\": \"length\", \"native_finish_reason\": \"length\", \"message\": {\"role\": \"assistant\", \"content\": null, \"refusal\": null, \"reasoning\": \"The user wants me to write a complete Arabic news article based on the provided source material about Firefox window types (Classic, Private, Smart). I need to follow specific formatting requirements:\\n\\n1. Output must be valid JSON only\\n2. Title: Arabic, clear and direct, 40-60 characters max (except if necessary), includes company/product name early\\n3. Description: SEO-friendly, 115-155 characters, accurate explanation\\n4. Deck: Short intro (1-2 sentences)\\n5. Summary bullets: 3-5 points\\n6. Sections: 4-7 sections, each with heading and paragraphs containing text and links\\n   - Each paragraph must have \\\"text\\\" and \\\"links\\\" array\\n   - Links must be from allowed list: \\n     - Mozilla Blog: https://blog.mozilla.org/en/firefox/firefox-window-types/\\n     - | Copilot: Copilot CLI failed (1): \nYou have exceeded your monthly quota (Request ID: 7886:1C9F15:7218:8F71:6AB5805D)\n"
+        }
+      ]
     },
     {
       "title": "How Cloudflare addressed a cross-tenant data exposure vulnerability in Containers",
@@ -3252,8 +3282,42 @@
         "publish_eligible": true,
         "corroborating_sources": []
       },
-      "status": "incoming",
-      "id": "d8613f1593297df2840f"
+      "status": "quality_rejected",
+      "id": "d8613f1593297df2840f",
+      "last_publisher_status": "quality_rejected",
+      "last_publisher_at": "2026-09-24T19:56:49+00:00",
+      "quality_errors": [
+        "en:article_too_short"
+      ],
+      "publisher_attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "en:article_too_short"
+          ],
+          "word_count_ar": 750,
+          "word_count_en": 440
+        },
+        {
+          "attempt": 2,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 339,
+          "word_count_en": 546
+        },
+        {
+          "attempt": 3,
+          "status": "quality_rejected",
+          "errors": [
+            "en:article_too_short"
+          ],
+          "word_count_ar": 469,
+          "word_count_en": 443
+        }
+      ]
     },
     {
       "title": "At AI Day Singapore, NVIDIA and Partners Showcase AI Advancements Across Southeast Asia",
@@ -3990,8 +4054,34 @@
         "publish_eligible": true,
         "corroborating_sources": []
       },
-      "status": "incoming",
-      "id": "fc1f450c208d7c015ac4"
+      "status": "published",
+      "id": "fc1f450c208d7c015ac4",
+      "last_publisher_status": "published",
+      "last_publisher_at": "2026-09-24T19:57:13+00:00",
+      "publisher_attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 372,
+          "word_count_en": 555
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 712,
+          "word_count_en": 599
+        }
+      ],
+      "published_url": "/forum/ar/computers/aderant-builds-intelligent-ticket-triage-with-amazon-nova/",
+      "published_urls": {
+        "ar": "/forum/ar/computers/aderant-builds-intelligent-ticket-triage-with-amazon-nova/",
+        "en": "/forum/en/computers/aderant-builds-intelligent-ticket-triage-with-amazon-nova/"
+      },
+      "content_file": "forum/content/2026/09/aderant-builds-intelligent-ticket-triage-with-amazon-nova.json"
     },
     {
       "title": "Google Beam expands with new regions, partners, and customers",
@@ -8022,6 +8112,35 @@
       "id": "00b756f2cca2320b1d11"
     },
     {
+      "title": "Sadly, this $1,549 RTX 5070-equipped gaming PC is a very good deal",
+      "url": "https://www.theverge.com/gadgets/1000122/cyberpowerpc-gaming-prebuilt-rtx-5070-core-i7-asrock-oled-monitor-deal-sale",
+      "domain": "theverge.com",
+      "summary": "While PC component prices remain high, you can save a good bit of money on a system by purchasing a prebuilt desktop. Walmart has a well-equipped CyberPowerPC gaming PC on sale for $1,549, almost $600 off its original price of $2,139. It’s powered by an Intel Core i7-14700KF processor, and paired with 32GB of 6000MHz [&#8230;]",
+      "published_at": "2026-09-24T18:19:23+00:00",
+      "discovered_at": "2026-09-24T19:53:30+00:00",
+      "source": {
+        "name": "The Verge",
+        "feed": "https://www.theverge.com/rss/index.xml",
+        "type": "journalism",
+        "trust": 0.86,
+        "priority": 20,
+        "defaultCategory": "computers"
+      },
+      "category": "computers",
+      "category_label": "الحواسيب",
+      "score": 50,
+      "verification": {
+        "confidence": 0.86,
+        "reason": "trusted_journalism_single_source",
+        "official": false,
+        "single_source_trusted": true,
+        "publish_eligible": true,
+        "corroborating_sources": []
+      },
+      "status": "incoming",
+      "id": "9b5e89853cf3aec4e9a3"
+    },
+    {
       "title": "OpenAI's agent hacked into an Australian government website",
       "url": "https://www.engadget.com/2267381/openai-hacked-into-australias-government",
       "domain": "engadget.com",
@@ -8983,6 +9102,35 @@
       },
       "status": "incoming",
       "id": "1f3f1db3dc602aa10f26"
+    },
+    {
+      "title": "OpenAI agent “didn’t accept no for an answer” in Australian government breach",
+      "url": "https://arstechnica.com/ai/2026/09/openai-agent-didnt-accept-no-for-an-answer-in-australian-government-breach",
+      "domain": "arstechnica.com",
+      "summary": "\"There will obviously be legal consequences,\" prime minister promises.",
+      "published_at": "2026-09-24T16:01:16+00:00",
+      "discovered_at": "2026-09-24T19:53:30+00:00",
+      "source": {
+        "name": "Ars Technica",
+        "feed": "https://feeds.arstechnica.com/arstechnica/index",
+        "type": "journalism",
+        "trust": 0.88,
+        "priority": 21,
+        "defaultCategory": "computers"
+      },
+      "category": "ai",
+      "category_label": "الذكاء الاصطناعي",
+      "score": 48,
+      "verification": {
+        "confidence": 0.88,
+        "reason": "trusted_journalism_single_source",
+        "official": false,
+        "single_source_trusted": true,
+        "publish_eligible": true,
+        "corroborating_sources": []
+      },
+      "status": "incoming",
+      "id": "5ee8abf9fada0c0ceda3"
     },
     {
       "title": "Kontext Security Emerges With $4 Million for AI Agent Runtime Controls",
@@ -13679,6 +13827,64 @@
       "id": "2ae176babe156fa6bde3"
     },
     {
+      "title": "I Think I Found an AI Agent Worth the Risk",
+      "url": "https://www.wired.com/story/i-finally-found-an-ai-agent-worth-the-risk",
+      "domain": "wired.com",
+      "summary": "Instinct saved me $550, booked my restaurant reservations, and warned me about a phishing scam. It also wasted $64 and might be a security nightmare.",
+      "published_at": "2026-09-24T19:36:35+00:00",
+      "discovered_at": "2026-09-24T19:53:33+00:00",
+      "source": {
+        "name": "WIRED",
+        "feed": "https://www.wired.com/feed/rss",
+        "type": "journalism",
+        "trust": 0.88,
+        "priority": 21,
+        "defaultCategory": "computers"
+      },
+      "category": "ai",
+      "category_label": "الذكاء الاصطناعي",
+      "score": 45,
+      "verification": {
+        "confidence": 0.88,
+        "reason": "trusted_journalism_single_source",
+        "official": false,
+        "single_source_trusted": true,
+        "publish_eligible": true,
+        "corroborating_sources": []
+      },
+      "status": "incoming",
+      "id": "5c9f32255544f2b484fa"
+    },
+    {
+      "title": "Robots make combat airdrops, clear mines as Ukraine defeats Russian pincer",
+      "url": "https://arstechnica.com/gadgets/2026/09/robots-make-combat-airdrops-clear-mines-as-ukraine-defeats-russian-pincer",
+      "domain": "arstechnica.com",
+      "summary": "Ukraine’s Operation Vivaldi has erased Russian gains with the help of robots.",
+      "published_at": "2026-09-24T18:39:47+00:00",
+      "discovered_at": "2026-09-24T19:53:30+00:00",
+      "source": {
+        "name": "Ars Technica",
+        "feed": "https://feeds.arstechnica.com/arstechnica/index",
+        "type": "journalism",
+        "trust": 0.88,
+        "priority": 21,
+        "defaultCategory": "computers"
+      },
+      "category": "robotics",
+      "category_label": "الروبوتات",
+      "score": 45,
+      "verification": {
+        "confidence": 0.88,
+        "reason": "trusted_journalism_single_source",
+        "official": false,
+        "single_source_trusted": true,
+        "publish_eligible": true,
+        "corroborating_sources": []
+      },
+      "status": "incoming",
+      "id": "378bc473a990b945323e"
+    },
+    {
       "title": "OT Security Guidance: NIST Drafts Updated Guide, CISA/FBI Advise on ICS Integrators",
       "url": "https://www.securityweek.com/ot-security-guidance-nist-drafts-updated-guide-cisa-fbi-advise-on-ics-integrators",
       "domain": "securityweek.com",
@@ -14688,6 +14894,93 @@
       },
       "status": "incoming",
       "id": "33d7ddcc120be55b6ded"
+    },
+    {
+      "title": "PrismML brings its tiny LLMs to Qualcomm-powered smart glasses",
+      "url": "https://techcrunch.com/2026/09/24/prismml-brings-its-tiny-llms-to-qualcomm-powered-smart-glasses",
+      "domain": "techcrunch.com",
+      "summary": "Prism's larger goal is open-weight AI that runs on devices and makes better use of the computing power they already have.",
+      "published_at": "2026-09-24T19:00:42+00:00",
+      "discovered_at": "2026-09-24T19:53:30+00:00",
+      "source": {
+        "name": "TechCrunch",
+        "feed": "https://techcrunch.com/feed/",
+        "type": "journalism",
+        "trust": 0.86,
+        "priority": 20,
+        "defaultCategory": "apps"
+      },
+      "category": "ai",
+      "category_label": "الذكاء الاصطناعي",
+      "score": 44,
+      "verification": {
+        "confidence": 0.86,
+        "reason": "trusted_journalism_single_source",
+        "official": false,
+        "single_source_trusted": true,
+        "publish_eligible": true,
+        "corroborating_sources": []
+      },
+      "status": "incoming",
+      "id": "257f7f1f9fff2515cee7"
+    },
+    {
+      "title": "Meet Feather, the startup building the ‘Android of robotics’ for developers",
+      "url": "https://techcrunch.com/2026/09/24/meet-feather-the-startup-building-the-android-of-robotics-for-developers",
+      "domain": "techcrunch.com",
+      "summary": "Feather is betting on a customizable, $30,000 platform built for software developers.",
+      "published_at": "2026-09-24T18:52:38+00:00",
+      "discovered_at": "2026-09-24T19:53:30+00:00",
+      "source": {
+        "name": "TechCrunch",
+        "feed": "https://techcrunch.com/feed/",
+        "type": "journalism",
+        "trust": 0.86,
+        "priority": 20,
+        "defaultCategory": "apps"
+      },
+      "category": "robotics",
+      "category_label": "الروبوتات",
+      "score": 44,
+      "verification": {
+        "confidence": 0.86,
+        "reason": "trusted_journalism_single_source",
+        "official": false,
+        "single_source_trusted": true,
+        "publish_eligible": true,
+        "corroborating_sources": []
+      },
+      "status": "incoming",
+      "id": "d77984891b73a546bb15"
+    },
+    {
+      "title": "Meta is going to let you build games with AI right on your phone",
+      "url": "https://www.theverge.com/games/999972/meta-horizon-create-studio-ai-games",
+      "domain": "theverge.com",
+      "summary": "Meta has a new plan to get people to make games for its Horizon social platform. The company today announced two new development tools that will let you create games with AI prompts: Horizon Create, a mobile app, and Horizon Studio, a browser app that offers more granular controls. The apps will be available in [&#8230;]",
+      "published_at": "2026-09-24T17:52:29+00:00",
+      "discovered_at": "2026-09-24T19:53:30+00:00",
+      "source": {
+        "name": "The Verge",
+        "feed": "https://www.theverge.com/rss/index.xml",
+        "type": "journalism",
+        "trust": 0.86,
+        "priority": 20,
+        "defaultCategory": "computers"
+      },
+      "category": "apps",
+      "category_label": "التطبيقات والبرامج",
+      "score": 44,
+      "verification": {
+        "confidence": 0.86,
+        "reason": "trusted_journalism_single_source",
+        "official": false,
+        "single_source_trusted": true,
+        "publish_eligible": true,
+        "corroborating_sources": []
+      },
+      "status": "incoming",
+      "id": "d0c09943ed7a0f81eaab"
     },
     {
       "title": "Muse sure looks a lot like OpenClaw",
@@ -19467,209 +19760,6 @@
       },
       "status": "incoming",
       "id": "75858c37f7ded94b0880"
-    },
-    {
-      "title": "Meta expands subscription push with new AI-focused plans",
-      "url": "https://techcrunch.com/2026/09/15/meta-expands-subscription-push-with-new-ai-focused-plans",
-      "domain": "techcrunch.com",
-      "summary": "Meta One bundles expanded access to the company’s AI tools with premium features across Facebook, Instagram, and WhatsApp.",
-      "published_at": "2026-09-15T17:05:24+00:00",
-      "discovered_at": "2026-09-16T13:38:57+00:00",
-      "source": {
-        "name": "TechCrunch",
-        "feed": "https://techcrunch.com/feed/",
-        "type": "journalism",
-        "trust": 0.86,
-        "priority": 20,
-        "defaultCategory": "apps"
-      },
-      "category": "social",
-      "category_label": "التواصل الاجتماعي",
-      "score": 44,
-      "verification": {
-        "confidence": 0.86,
-        "reason": "trusted_journalism_single_source",
-        "official": false,
-        "single_source_trusted": true,
-        "publish_eligible": true,
-        "corroborating_sources": []
-      },
-      "status": "incoming",
-      "id": "549d4b3f5ab263ac34e5"
-    },
-    {
-      "title": "Exposed GitLab project email addresses let attackers push code",
-      "url": "https://www.bleepingcomputer.com/news/security/exposed-gitlab-project-email-addresses-let-attackers-push-code",
-      "domain": "bleepingcomputer.com",
-      "summary": "Private GitLab email addresses that allow developers to push issues or tasks to a project are being deliberately exposed in READMEs, contributing guides, and support pages used to collect bug reports. [...]",
-      "published_at": "2026-09-24T17:47:44+00:00",
-      "discovered_at": "2026-09-24T18:47:20+00:00",
-      "source": {
-        "name": "BleepingComputer",
-        "feed": "https://www.bleepingcomputer.com/feed/",
-        "type": "journalism",
-        "trust": 0.88,
-        "priority": 22,
-        "defaultCategory": "security"
-      },
-      "category": "ai",
-      "category_label": "الذكاء الاصطناعي",
-      "score": 43,
-      "verification": {
-        "confidence": 0.88,
-        "reason": "trusted_journalism_single_source",
-        "official": false,
-        "single_source_trusted": true,
-        "publish_eligible": true,
-        "corroborating_sources": []
-      },
-      "status": "incoming",
-      "id": "b0a95393de3947b95035"
-    },
-    {
-      "title": "Android’s Create My Widget ‘app’ detailed on phones, Googlebooks",
-      "url": "https://9to5google.com/2026/09/24/google-create-my-widget-app",
-      "domain": "9to5google.com",
-      "summary": "Create My Widget will debut in early October on Googlebooks. Ahead of that, a Play Store listing details what the interface will look like, including on Android phones. more…",
-      "published_at": "2026-09-24T17:45:24+00:00",
-      "discovered_at": "2026-09-24T18:47:21+00:00",
-      "source": {
-        "name": "9to5Google",
-        "feed": "https://9to5google.com/feed/",
-        "type": "journalism",
-        "trust": 0.85,
-        "priority": 19,
-        "defaultCategory": "mobile"
-      },
-      "category": "mobile",
-      "category_label": "الهواتف",
-      "score": 43,
-      "verification": {
-        "confidence": 0.85,
-        "reason": "trusted_journalism_single_source",
-        "official": false,
-        "single_source_trusted": true,
-        "publish_eligible": true,
-        "corroborating_sources": []
-      },
-      "status": "incoming",
-      "id": "d116a68e797b41543d46"
-    },
-    {
-      "title": "Chrome now saves scroll position, filled forms when sending tabs between devices",
-      "url": "https://9to5google.com/2026/09/24/chrome-send-scroll-position-more",
-      "domain": "9to5google.com",
-      "summary": "Google today announced a trio of new study-focused Chrome features, with the most notable being how the browser will now save scroll position when you send tabs between devices. more…",
-      "published_at": "2026-09-24T17:00:00+00:00",
-      "discovered_at": "2026-09-24T17:33:09+00:00",
-      "source": {
-        "name": "9to5Google",
-        "feed": "https://9to5google.com/feed/",
-        "type": "journalism",
-        "trust": 0.85,
-        "priority": 19,
-        "defaultCategory": "mobile"
-      },
-      "category": "web",
-      "category_label": "الويب",
-      "score": 43,
-      "verification": {
-        "confidence": 0.85,
-        "reason": "trusted_journalism_single_source",
-        "official": false,
-        "single_source_trusted": true,
-        "publish_eligible": true,
-        "corroborating_sources": []
-      },
-      "status": "incoming",
-      "id": "b3b79fc1aeea6b651929"
-    },
-    {
-      "title": "Google Messages adding official chat thread that showcases features [Gallery]",
-      "url": "https://9to5google.com/2026/09/24/google-messages-official-chat-feature-showcase",
-      "domain": "9to5google.com",
-      "summary": "If you open Google Messages, you might see a prompt on the main screen to join the “official chat” that delivers a WhatsApp-like thread for official updates on new features. more…",
-      "published_at": "2026-09-24T16:45:00+00:00",
-      "discovered_at": "2026-09-24T17:33:09+00:00",
-      "source": {
-        "name": "9to5Google",
-        "feed": "https://9to5google.com/feed/",
-        "type": "journalism",
-        "trust": 0.85,
-        "priority": 19,
-        "defaultCategory": "mobile"
-      },
-      "category": "apps",
-      "category_label": "التطبيقات والبرامج",
-      "score": 43,
-      "verification": {
-        "confidence": 0.85,
-        "reason": "trusted_journalism_single_source",
-        "official": false,
-        "single_source_trusted": true,
-        "publish_eligible": true,
-        "corroborating_sources": []
-      },
-      "status": "incoming",
-      "id": "9aa38c2a22286c860ba0"
-    },
-    {
-      "title": "Samsung starts rolling out Android 17, One UI 9 to Galaxy S26 in the US following delay",
-      "url": "https://9to5google.com/2026/09/24/samsung-galaxy-s26-one-ui-9-android-17-rollout",
-      "domain": "9to5google.com",
-      "summary": "After a slight delay, Samsung is rolling out its Android 17-based One UI 9 update to Galaxy S26 owners in the US, though not to everyone just yet. more…",
-      "published_at": "2026-09-24T16:10:00+00:00",
-      "discovered_at": "2026-09-24T17:33:09+00:00",
-      "source": {
-        "name": "9to5Google",
-        "feed": "https://9to5google.com/feed/",
-        "type": "journalism",
-        "trust": 0.85,
-        "priority": 19,
-        "defaultCategory": "mobile"
-      },
-      "category": "mobile",
-      "category_label": "الهواتف",
-      "score": 43,
-      "verification": {
-        "confidence": 0.85,
-        "reason": "trusted_journalism_single_source",
-        "official": false,
-        "single_source_trusted": true,
-        "publish_eligible": true,
-        "corroborating_sources": []
-      },
-      "status": "incoming",
-      "id": "a0746402c68ac3fc4629"
-    },
-    {
-      "title": "Googlebooks will get full GeForce Now support ‘later this year’",
-      "url": "https://9to5google.com/2026/09/24/nvidia-announces-googlebook-geforce-now-support",
-      "domain": "9to5google.com",
-      "summary": "Nvidia says Google’s new Gemini-infused laptops are slated to get GeForce Now support before the year is up, which is perfect because Googlebooks don’t exactly pack a ton of power. more…",
-      "published_at": "2026-09-24T13:00:00+00:00",
-      "discovered_at": "2026-09-24T14:56:29+00:00",
-      "source": {
-        "name": "9to5Google",
-        "feed": "https://9to5google.com/feed/",
-        "type": "journalism",
-        "trust": 0.85,
-        "priority": 19,
-        "defaultCategory": "mobile"
-      },
-      "category": "computers",
-      "category_label": "الحواسيب",
-      "score": 43,
-      "verification": {
-        "confidence": 0.85,
-        "reason": "trusted_journalism_single_source",
-        "official": false,
-        "single_source_trusted": true,
-        "publish_eligible": true,
-        "corroborating_sources": []
-      },
-      "status": "incoming",
-      "id": "63bab660b0af2c826d5b"
     }
   ]
 }

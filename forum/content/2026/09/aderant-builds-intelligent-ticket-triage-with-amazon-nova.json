@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "fc1f450c208d7c015ac4",
+  "slug": "aderant-builds-intelligent-ticket-triage-with-amazon-nova",
+  "categorySlug": "computers",
+  "urls": {
+    "ar": "/forum/ar/computers/aderant-builds-intelligent-ticket-triage-with-amazon-nova/",
+    "en": "/forum/en/computers/aderant-builds-intelligent-ticket-triage-with-amazon-nova/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أديرانت تبني نظام فرز ذكي للتذاكر باستخدام أمازون نوفا",
+      "description": "تستعرض أديرانت كيف استخدمت نموذج أمازون نوفا لايت لبناء نظام ذكي لفرز تذاكر الدعم، مما أتمت جمع السياق والتصنيف والتوجيه، وحققت دقة 96% بتكلفة أقل من 30 دولاراً شهرياً.",
+      "deck": "اعتمدت شركة أديرانت على تقنيات الذكاء الاصطناعي التوليدي لتحويل عمليات فرز تذاكر الدعم اليدوية إلى نظام آلي مستقل، مما وفر ساعات عمل أسبوعية للمهندسين.",
+      "summaryBullets": [
+        "طورت أديرانت نظام تحليل ذكي للتذاكر يعتمد على نموذج أمازون نوفا لايت عبر منصة أمازون بيدروك.",
+        "حقق النظام دقة توجيه تقارب 96% خلال الأسابيع الأولى من التشغيل الفعلي.",
+        "أتمت النظام جمع السياق من مصادر متعددة مثل جيرا وكونفلونس وأمازون أثينا.",
+        "أدى النظام إلى استعادة 8 إلى 14 ساعة عمل هندسية أسبوعياً بتكلفة تشغيلية منخفضة جداً."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات العمليات اليدوية في فرق الدعم",
+          "paragraphs": [
+            {
+              "text": "واجه فريق العمليات السحابية في شركة أديرانت، والمعروف باسم سيارا أوبس، تحديات كبيرة في التعامل مع متوسط 34 إلى 40 تذكرة دعم أسبوعياً. قبل تطبيق الأتمتة، كان كل مهندس يقضي ما بين 15 إلى 25 دقيقة في البحث اليدوي عن تفاصيل بيئة العميل وتحديد المسؤول عن التذكرة والبحث في الوثائق التاريخية. هذا الاستنزاف للوقت لم يكن مجرد تكلفة زمنية، بل أدى إلى أخطاء في التوجيه حيث كانت التذاكر تعلق في الطوابير الخاطئة، مما يتطلب تدخلاً بشرياً إضافياً لتصحيح المسار. كما كان المهندسون الجدد يحتاجون إلى إرشاد مستمر من زملائهم الأكثر خبرة لاتخاذ قرارات التوجيه الصحيحة، مما قلل من كفاءة الفريق ككل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الحل: نظام تحليل مستقل مع حواجز أمان بشرية",
+          "paragraphs": [
+            {
+              "text": "للتغلب على هذه التحديات، طورت أديرانت نظاماً ذكياً لتحليل التذاكر يعتمد على بنية تحتية سحابية خالية من الخوادم (Serverless). يعمل النظام عبر دالة AWS Lambda واحدة تنطلق كل ساعة في أيام العمل باستخدام Amazon EventBridge. يتبع النظام خمس مراحل رئيسية: تحديد التذاكر غير المخصصة، إثراء البيانات من مصادر متعددة، تصنيف الطلب، اتخاذ الإجراء المناسب، والمراقبة والتحسين. يعتمد النظام على نموذج Amazon Nova Lite للوصول إلى تصنيف هيكلي دقيق للطلبات وتحديد الخطوات التالية المقترحة. يتم دمج هذا النموذج عبر واجهة Amazon Bedrock Converse API، مما يضمن التكامل السلس مع بيئة AWS الحالية دون الحاجة إلى مزودي خدمات خارجيين.",
+              "links": [
+                {
+                  "text": "Amazon Nova",
+                  "url": "https://aws.amazon.com/nova/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل النظام وجمع السياق الذكي",
+          "paragraphs": [
+            {
+              "text": "يقوم النظام بجمع السياق التشغيلي من عدة مصادر داخلية لضمان دقة التحليل. يستخرج البيانات البيئية من Amazon Athena، ويجمع المعرفة التقنية من Confluence وMicrosoft SharePoint، كما يبحث عن تذاكر مشابهة تم حلها سابقاً في Jira. بعد تجميع هذه المعلومات، يرسلها إلى النموذج الذكي الذي يولد توصيات مبنية على البيانات. إذا كانت درجة الثقة في التصنيف مرتفعة بما يكفي، يقوم النظام آلياً بإعادة توجيه التذكرة وإشعار الفريق المعني عبر Microsoft Teams. أما إذا كانت درجة الثقة منخفضة، فيُعلَّم التذكرة للمراجعة البشرية، مما يضمن الحفاظ على جودة القرارات الحساسة. هذا النهج يوازن بين سرعة الأتمتة ودقة المراجعة البشرية.",
+              "links": [
+                {
+                  "text": "Amazon Athena",
+                  "url": "https://aws.amazon.com/athena/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "أسباب اختيار أمازون نوفا لايت",
+          "paragraphs": [
+            {
+              "text": "اختارت أديرانت نموذج Amazon Nova Lite بعد تقييم عدة نماذج أساسية باستخدام بيانات تذاكر حقيقية. جاء هذا القرار بناءً على ثلاثة عوامل رئيسية. أولاً، أظهر النموذج قدرة فائقة على استخراج خطوات حل محددة وربط المشكلات الحالية بمشاكل سابقة مشابهة بشكل أفضل من النماذج الأخرى. ثانياً، يوفر تكاملاً أصلياً مع خدمات AWS مثل IAM وAWS SDK، مما يقلل من التعقيد التشغيلي والتكاليف المرتبطة بإدارة مزودين خارجيين. ثالثاً، كانت تكلفة النموذج مناسبة للتطبيق على نطاق واسع، حيث سمحت بتحليل التذاكر الروتينية وليس فقط الحالات ذات الأولوية العالية. خلال فترة التشغيل الأولية، بقيت تكلفة الاستدلال عبر Amazon Bedrock أقل من دولار واحد شهرياً، مما يجعل الحل اقتصادياً للغاية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النتائج الأولية في بيئة الإنتاج",
+          "paragraphs": [
+            {
+              "text": "خلال الأسابيع 2.5 الأولى من التشغيل الفعلي، من 30 يونيو إلى 17 يوليو 2026، راجع النظام 109 تذاكر. أظهرت القياسات دقة في التوجيه تقارب 96%، حيث قورنت قرارات النظام بالفريق الذي قام فعلياً بحل كل تذكرة. بناءً على خط الأساس الذي تم قياسه قبل الأتمتة، تقدر أديرانت أن النظام يستعيد ما بين 8 إلى 14 ساعة عمل هندسية أسبوعياً. هذه الساعات المستعادة يتم إعادة توجيهها نحو مهام أكثر تعقيداً تتطلب حكماً بشرياً، مثل استكشاف الأخطاء وإصلاحها في البنية التحتية وتحسينات المنصة الاستباقية. تشير الشركة إلى أن هذه النتائج تمثل مرحلة أولية وليست معياراً طويل الأمد، لكنها تؤكد الجدوى العملية للنظام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حالات عملية وتحسين الكفاءة",
+          "paragraphs": [
+            {
+              "text": "توضح الأمثلة العملية فاعلية النظام في سيناريوهات مختلفة. في حالة واحدة، وصل طلب يصف خطأ 404 في موقع Azure DevOps إلى طابور AWS الخاطئ. قام النظام بتصنيفه كمشكلة Azure، وتحديث حقل الفريق، وإشعار مقدم الطلب بإعادة التوجيه، مما منع تأخر الحل. في حالة أخرى، طلب مهندس إعداد وصول عن بعد خارج ساعات العمل. جمع النظام بيانات بيئة العميل مع مقال تقني من Confluence ونشر الإجراء كتعليق داخلي، مما سمح للمهندس بإكمال المهمة في أقل من 30 دقيقة دون بحث إضافي. كما ساعد النظام المهندسين الجدد في فهم سياق طلبات النشر التي تتطلب سكربتات PowerShell، مما وسع نطاق الخبرة العملية للفريق.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "أتمتة العمليات",
+        "دعم العملاء",
+        "Aderant",
+        "Amazon Nova",
+        "الحوسبة السحابية"
+      ],
+      "entities": [
+        "Aderant",
+        "Amazon Nova Lite",
+        "Amazon Bedrock",
+        "AWS Lambda",
+        "Amazon EventBridge",
+        "Amazon Athena",
+        "Jira",
+        "Confluence"
+      ],
+      "category": "الحواسيب",
+      "dateLabel": "24 سبتمبر 2026",
+      "modifiedLabel": "24 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 712
+    },
+    "en": {
+      "title": "Aderant Builds Intelligent Ticket Triage with Amazon Nova",
+      "description": "Aderant built an intelligent ticket triage system using Amazon Nova Lite and Amazon Bedrock to automate context gathering, routing, and classification.",
+      "deck": "Global legal software provider Aderant has automated its cloud operations support ticket triage using foundation models on AWS.",
+      "summaryBullets": [
+        "Aderant developed an Intelligent Ticket Analyzer supporting its 38-person SierraOps team using Amazon Nova Lite through Amazon Bedrock.",
+        "The system automates context gathering, classification, routing, and knowledge enrichment for support tickets.",
+        "During its initial 2.5 weeks in production, the analyzer achieved approximately 96% routing accuracy across 109 reviewed tickets.",
+        "The solution saves an estimated 8 to 14 engineering hours per week while operating at a total cost of less than $30 per month."
+      ],
+      "sections": [
+        {
+          "heading": "Automating Cloud Operations Support",
+          "paragraphs": [
+            {
+              "text": "Aderant, a global provider of business management software for the legal industry, has implemented an intelligent ticket triage system to streamline its cloud operations support workflow. The company utilized Amazon Nova Lite through Amazon Bedrock to build a solution that automates context gathering, classification, routing, and knowledge enrichment for incoming support requests.",
+              "links": [
+                {
+                  "text": "Aderant",
+                  "url": "https://www.aderant.com/"
+                },
+                {
+                  "text": "Amazon Nova",
+                  "url": "https://aws.amazon.com/nova/"
+                }
+              ]
+            },
+            {
+              "text": "The Intelligent Ticket Analyzer supports Aderant's 38-person SierraOps team, which manages Expert Sierra across 268 client environments globally. Operating during scheduled hourly processing cycles on business days, the analyzer reviews newly submitted, unassigned tickets. It gathers operational context from multiple sources, including Jira, Confluence, Microsoft SharePoint, and Amazon Athena, to recommend team assignments and resolution starting points before automating approved routing and communication actions.",
+              "links": [
+                {
+                  "text": "Amazon Athena",
+                  "url": "https://aws.amazon.com/athena/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Addressing Manual Triage Challenges",
+          "paragraphs": [
+            {
+              "text": "Prior to implementing the automated system, the SierraOps team processed an average of 34 to 40 support tickets per week, with each ticket demanding 15 to 25 minutes of manual investigation before resolution work could begin. Engineers previously had to interpret incoming requests, locate client environment details, determine appropriate ownership, search documentation and ticket history, and handle assignment or redirection manually.",
+              "links": []
+            },
+            {
+              "text": "This manual process created operational bottlenecks. Misrouted tickets could languish in incorrect queues until discovered, and less-experienced team members often required additional time or guidance from senior engineers to gather context and make proper routing decisions. Aderant sought a repeatable investigative workflow to reduce this operational toil while preserving human oversight for lower-confidence decisions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Serverless Workflow and Architecture",
+          "paragraphs": [
+            {
+              "text": "The Intelligent Ticket Analyzer operates as a serverless workflow orchestrated by an AWS Lambda function and triggered hourly on weekdays by Amazon EventBridge. For each unassigned ticket in the CloudOps queue, the system executes a five-stage process: identification, enrichment, classification, action, and observation.",
+              "links": [
+                {
+                  "text": "Amazon EventBridge",
+                  "url": "https://aws.amazon.com/eventbridge/"
+                }
+              ]
+            },
+            {
+              "text": "During the classification stage, the ticket and its assembled context are sent to Amazon Nova Lite via the Amazon Bedrock Converse API for structured classification and recommended next steps. The architecture also incorporates Amazon CloudWatch for operational monitoring, while routing lower-confidence classifications to human review.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch",
+                  "url": "https://aws.amazon.com/cloudwatch/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Model Selection and Evaluation",
+          "paragraphs": [
+            {
+              "text": "Aderant selected Amazon Nova Lite after evaluating multiple foundation models through Amazon Bedrock using real ticket data. Three primary factors influenced the choice: operational specificity in extracting resolution steps and correlating past issues, native AWS integration within existing security and SDK environments, and cost-effectiveness at scale.",
+              "links": []
+            },
+            {
+              "text": "This deployment builds upon Aderant’s earlier AI journey, extending past initiatives in unified search and on-demand investigation to scheduled, autonomous operational workflows powered by advanced foundation models.",
+              "links": [
+                {
+                  "text": "Aderant’s earlier AI journey",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/aderant-transforms-cloud-operations-with-amazon-quick/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Early Production Results and Efficiency Gains",
+          "paragraphs": [
+            {
+              "text": "During the first two and a half weeks of production between June 30 and July 17, 2026, the analyzer reviewed 109 tickets and achieved an estimated 96% routing accuracy. Based on previous pre-automation baselines, Aderant estimates that the system recovers between 8 and 14 engineering hours per week.",
+              "links": []
+            },
+            {
+              "text": "The total operating cost for the system remained under $30 per month, with Bedrock inference costs staying below $1 per month. Aderant notes that the analyzer processes internal operational ticket data and internal knowledge sources only, without accessing or storing client matter or application business data.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Aderant",
+        "Amazon Nova",
+        "Amazon Bedrock",
+        "Cloud Operations",
+        "Artificial Intelligence",
+        "Serverless",
+        "Ticket Triage"
+      ],
+      "entities": [
+        "Aderant",
+        "Amazon Web Services",
+        "Amazon Nova Lite",
+        "Amazon Bedrock",
+        "SierraOps"
+      ],
+      "category": "Computing",
+      "dateLabel": "September 24, 2026",
+      "modifiedLabel": "September 24, 2026",
+      "readMinutes": 3,
+      "wordCount": 599
+    }
+  },
+  "datePublished": "2026-09-24T22:57:13.247673+03:00",
+  "dateModified": "2026-09-24T22:57:13.247673+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/aderant-builds-intelligent-ticket-triage-with-amazon-nova/hero.webp",
+    "card": "/forum/assets/posts/2026/09/aderant-builds-intelligent-ticket-triage-with-amazon-nova/card.webp",
+    "social": "/forum/assets/posts/2026/09/aderant-builds-intelligent-ticket-triage-with-amazon-nova/social.jpg",
+    "alt": {
+      "ar": "أديرانت تبني نظام فرز ذكي للتذاكر باستخدام أمازون نوفا",
+      "en": "Aderant Builds Intelligent Ticket Triage with Amazon Nova"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21388-featured-image-1.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/aderant-builds-intelligent-ticket-triage-with-amazon-nova/inline-01.webp",
+        "width": 1400,
+        "height": 497,
+        "alt": {
+          "ar": "أديرانت تبني نظام فرز ذكي للتذاكر باستخدام أمازون نوفا",
+          "en": "Architecture data flow from Amazon EventBridge through AWS Lambda to Amazon Bedrock, Amazon DynamoDB, and Amazon CloudWatch"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/aderant-builds-intelligent-ticket-triage-with-amazon-nova/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21388-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/aderant-builds-intelligent-ticket-triage-with-amazon-nova/",
+      "type": "official",
+      "title": "Aderant builds intelligent ticket triage with Amazon Nova"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/aderant-builds-intelligent-ticket-triage-with-amazon-nova",
+  "sourceTitle": "Aderant builds intelligent ticket triage with Amazon Nova",
+  "trendScore": 113.53,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-24T19:57:13+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/aderant-builds-intelligent-ticket-triage-with-amazon-nova.json"
+}
