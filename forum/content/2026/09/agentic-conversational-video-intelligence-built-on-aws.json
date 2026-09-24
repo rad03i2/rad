@@ -1,0 +1,364 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "a2b457221961f9263e3e",
+  "slug": "agentic-conversational-video-intelligence-built-on-aws",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/agentic-conversational-video-intelligence-built-on-aws/",
+    "en": "/forum/en/ai/agentic-conversational-video-intelligence-built-on-aws/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تطلق بنية ذكاء اصطناعي للتحليل التفاعلي للفيديو",
+      "description": "تقدّم أمازون ويب سيرفيسز حلاً جديداً يعتمد على الوكلاء الذكيين للتحليل التفاعلي للفيديو، مما يتيح للمستخدمين طرح أسئلة بلغة طبيعية والحصول على إجابات فورية من مقاطع فيديو طويلة.",
+      "deck": "تستعرض أمازون ويب سيرفيسز معمارية جديدة للذكاء الاصطناعي التفاعلي تتيح تحليل المحتوى المرئي والصوتي للفيديو عبر وكلاء ذكيين يقررون تلقائياً الخدمات المطلوبة لكل استعلام.",
+      "summaryBullets": [
+        "يعتمد الحل على إطار عمل Strands Agents SDK لتنسيق خدمات أمازون مثل Bedrock وRekognition وTranscribe.",
+        "يتيح النظام للمستخدمين طرح أسئلة بلغة طبيعية على الفيديوهات والحصول على إجابات خلال ثوانٍ للمحتوى المحلل مسبقاً.",
+        "تقلل البنية الوكيلية من الحاجة إلى خطوط معالجة مخصصة لكل نوع من الاستعلامات، مما يوفر وقت المراجعة اليدوية.",
+        "توفر أمازون مستودعاً على GitHub يحتوي على التنفيذ الكامل للحل لتسهيل بناء التطبيقات المماثلة."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي إدارة الكم الهائل من البيانات المرئية",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات في قطاعات الإعلام والأمن والتأمين تحدياً متزايداً مع تراكم كميات هائلة من تسجيلات الفيديو التي تتجاوز قدرة فرق العمل على مراجعتها يدوياً. تتراكم تسجيلات الاجتماعات في السحابة، وتلتقط كاميرات المراقبة أسابيع من اللقطات غير المراجعة، مما يجعل الوصول إلى المعلومات القيمة داخل هذه الفيديوهات، مثل القرارات التصميمية أو تسلسل الأحداث، عملية مرهقة تتطلب عادةً مشاهدة ساعات من المحتوى. كما أن بناء خطوط معالجة تعلم آلي مخصصة لكل نوع من الأسئلة يتطلب جهداً تطويرياً كبيراً، حيث كان كل استخدام جديد يستلزم تطوير خط معالجة جديد للنص أو الرؤية الحاسوبية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معمارية الوكلاء الذكيين في أمازون",
+          "paragraphs": [
+            {
+              "text": "تقدم أمازون ويب سيرفيسز حلاً يعتمد على بنية الوكلاء الذكيين (Agentic Architecture) لتحليل الفيديو، حيث يقوم وكيل واحد مبني باستخدام Strands Agents SDK بتنسيق خدمات أمازون المختلفة في وقت التشغيل. يعتمد هذا النظام على Amazon Bedrock كمحرك للاستدلال، ويقرر بناءً على سؤال المستخدم أي خدمة يجب استدعاؤها، سواء كانت Amazon Rekognition للتحليل البصري أو Amazon Transcribe لتحويل الكلام إلى نص. هذا النهج يقلب النموذج التقليدي الذي يتطلب معالجة مسبقة ثابتة، حيث يتعامل الوكيل مع كل استعلام بشكل مستقل ويستدعي فقط الخدمات اللازمة للإجابة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "Amazon Rekognition",
+                  "url": "https://aws.amazon.com/rekognition/"
+                },
+                {
+                  "text": "Amazon Transcribe",
+                  "url": "https://aws.amazon.com/transcribe/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحسين كفاءة المراجعة اليدوية",
+          "paragraphs": [
+            {
+              "text": "اعتمدت شركة كبرى في مجال الإعلام والترفيه هذا النهج خلال مشاركة مع خدمات أمازون المهنية. سمح هذا الحل للمستشارين بالاستعلام عن محتوى جلسات الاكتشاف المسجلة، واستخراج القرارات التصميمية والعناصر الإجراءية ومواقف أصحاب المصلحة. وفقاً للمقارنة الداخلية التي أجرتها الشركة بين ساعات المحلل لكل تسجيل قبل وبعد التطبيق، حقق النظام انخفاضاً بنسبة تقارب 80 في المئة في وقت المراجعة اليدوية عبر قائمة انتظار تضم أكثر من 200 تسجيل متعدد الساعات. وتجدر الإشارة إلى أن هذه الأرقام مبنية على قياسات داخلية للشركة ولم يتم التحقق منها بشكل مستقل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل الوكيل الذكي",
+          "paragraphs": [
+            {
+              "text": "يعمل الوكيل الذكي كمحرك استدلالي يفسر نية المستخدم عند إرسال استعلام، سواء كان يبحث عن ملخص نصي أو بحث بصري أو مطابقة وجوه. يستدعي الوكيل Amazon Transcribe للأسئلة المتعلقة بالمحتوى المنطوق، ويستعين بـ Amazon Rekognition لمطابقة الوجوه أو تحليل المشاهد، ويعيد استخدام النتائج المخزنة مؤقتاً للأسئلة المتابعية. يحافظ الوكيل على سجل المحادثة، مما يسمح للأسئلة اللاحقة بالبناء على التحليل السابق دون إعادة المعالجة. يتم تخزين جميع الفيديوهات المرفوعة ومخرجات التحليل في Amazon Simple Storage Service (Amazon S3) مع بادئات لكل مستخدم لعزل متعدد المستأجرين.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات التنفيذ والتوسع",
+          "paragraphs": [
+            {
+              "text": "يتطلب تنفيذ هذا الحل حساباً في أمازون ويب سيرفيسز مع تفعيل Amazon Bedrock (مع نموذج Claude Sonnet) وAmazon S3، بالإضافة إلى بيئة Python 3.11 أو أحدث مع تثبيت Strands Agents SDK. توفر أمازون مستودعاً مرافقاً على GitHub يحتوي على التنفيذ الكامل للحل، مما يتيح للمطورين بناء تطبيقاتهم الخاصة. كما يمكن توسيع البنية لتشمل خدمات إضافية كـ Amazon Bedrock Data Automation (BDA) لتحليل شامل في خطوة واحدة، أو إضافة حواجز حماية (Guardrails) لتصفية المحتوى وضمان الاستخدام المسؤول للذكاء الاصطناعي، خاصة في حالات المراقبة ومطابقة الوجوه.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "تحليل الفيديو",
+        "الوكلاء الذكيون",
+        "معالجة اللغة الطبيعية",
+        "الرؤية الحاسوبية"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز",
+        "Amazon Bedrock",
+        "Amazon Rekognition",
+        "Amazon Transcribe",
+        "Strands Agents SDK",
+        "Amazon S3"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "24 سبتمبر 2026",
+      "modifiedLabel": "24 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 538
+    },
+    "en": {
+      "title": "AWS Introduces Agentic Conversational Video Intelligence",
+      "description": "Amazon Web Services details a new agentic conversational video intelligence solution using Amazon Bedrock, Rekognition, and Transcribe.",
+      "deck": "Organizations can now ask natural language questions about video content and receive answers within seconds using an agentic architecture built on AWS.",
+      "summaryBullets": [
+        "A single Strands Agents SDK agent orchestrates Amazon Bedrock, Amazon Rekognition, and Amazon Transcribe at runtime.",
+        "The system lets users ask natural language questions about uploaded videos and get answers within seconds.",
+        "Previously analyzed content can return responses in under a second, while initial processing takes 5 to 10 minutes.",
+        "A major media and entertainment company reported an 80 percent reduction in manual review time using the approach."
+      ],
+      "sections": [
+        {
+          "heading": "Transforming Video Analysis with Agentic AI",
+          "paragraphs": [
+            {
+              "text": "With video intelligence powered by agentic AI, organizations across media, security, insurance, and professional services can ask natural language questions about uploaded videos and receive answers within seconds. As meeting recordings accumulate in shared drives, security cameras capture weeks of unreviewed footage, and field inspection videos sit in object storage, accessing valuable information has traditionally required watching hours of content manually or building custom machine learning pipelines.",
+              "links": []
+            },
+            {
+              "text": "A complete implementation of this architecture is available in the companion GitHub repository, providing the blueprint for developers looking to implement runtime orchestration rather than fixed pre-built workflows. The solution uses an agentic architecture that decides at runtime which AWS services to invoke, allowing responses for previously analyzed content to return in under a second.",
+              "links": [
+                {
+                  "text": "companion GitHub repository",
+                  "url": "https://github.com/aws-samples/sample-media-analysis-agent"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Orchestrating Services at Runtime",
+          "paragraphs": [
+            {
+              "text": "Rather than pre-building a fixed pipeline for each question type, developers can use the Strands Agents SDK to create a single AI agent that dynamically orchestrates tools based on user inquiries. A major media and entertainment company adopted this approach during an AWS Professional Services engagement to query recorded discovery session content and extract design decisions, action items, and stakeholder positions.",
+              "links": []
+            },
+            {
+              "text": "According to the customer’s internal before-and-after comparison of analyst hours per recording, this implementation resulted in an approximate 80 percent reduction in manual review time across a backlog of over 200 multi-hour recordings. The system handles diverse queries, from meeting summaries to security footage checks, without requiring separate processing pipelines for each individual use case.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Core AWS Services and Components",
+          "paragraphs": [
+            {
+              "text": "The agentic framework relies on several core components. The agent orchestrator acts as the reasoning engine, powered by large language models like Anthropic Claude Sonnet through <a href=\"https://aws.amazon.com/bedrock/\">Amazon Bedrock</a>. It receives natural language queries, determines which tools to invoke, sequences multiple service calls when necessary, and maintains conversation history for follow-up questions.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "Visual analysis is handled by <a href=\"https://aws.amazon.com/rekognition/\">Amazon Rekognition</a>, which detects objects, scenes, activities, and faces in video frames when a user's question concerns visual elements. Meanwhile, <a href=\"https://aws.amazon.com/transcribe/\">Amazon Transcribe</a> converts spoken audio to text with automatic language detection and speaker diarization for audio-related queries.",
+              "links": [
+                {
+                  "text": "Amazon Rekognition",
+                  "url": "https://aws.amazon.com/rekognition/"
+                },
+                {
+                  "text": "Amazon Transcribe",
+                  "url": "https://aws.amazon.com/transcribe/"
+                }
+              ]
+            },
+            {
+              "text": "Storage for uploaded videos and cached analysis outputs is managed by <a href=\"https://aws.amazon.com/s3/\">Amazon Simple Storage Service (Amazon S3)</a>, utilizing per-user prefixes to ensure multi-tenant isolation.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Implementation Requirements and Prerequisites",
+          "paragraphs": [
+            {
+              "text": "To follow along with the implementation, users require an AWS account with access to <a href=\"https://aws.amazon.com/bedrock/\">Amazon Bedrock</a> configured with Anthropic Claude Sonnet enabled, alongside <a href=\"https://aws.amazon.com/s3/\">Amazon Simple Storage Service (Amazon S3)</a> storage. For document processing, either Amazon Bedrock Data Automation or <a href=\"https://aws.amazon.com/rekognition/\">Amazon Rekognition</a> and <a href=\"https://aws.amazon.com/transcribe/\">Amazon Transcribe</a> are required.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                },
+                {
+                  "text": "Amazon Rekognition",
+                  "url": "https://aws.amazon.com/rekognition/"
+                },
+                {
+                  "text": "Amazon Transcribe",
+                  "url": "https://aws.amazon.com/transcribe/"
+                }
+              ]
+            },
+            {
+              "text": "Developers also need Python 3.11 or later with the Strands Agents SDK installed, the AWS Command Line Interface configured with appropriate IAM permissions, and basic familiarity with AI agent concepts such as tool use and reasoning loops.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Inverting the Traditional Video Pipeline",
+          "paragraphs": [
+            {
+              "text": "In conventional video analysis applications, developers define a fixed processing pipeline that runs transcription and visual analysis on every video regardless of specific queries. The agentic approach inverts this model by limiting pre-processing to file uploads and allowing the agent to reason about each question independently. For production deployments, AWS recommends adding guardrails to enforce content filtering and grounding checks, particularly for face-matching and surveillance use cases.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon Bedrock",
+        "Amazon Rekognition",
+        "Amazon Transcribe",
+        "Artificial Intelligence",
+        "Video Intelligence",
+        "Agentic AI"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Amazon Rekognition",
+        "Amazon Transcribe",
+        "Amazon S3",
+        "Strands Agents SDK"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 24, 2026",
+      "modifiedLabel": "September 24, 2026",
+      "readMinutes": 3,
+      "wordCount": 627
+    }
+  },
+  "datePublished": "2026-09-24T08:57:18.008091+03:00",
+  "dateModified": "2026-09-24T08:57:18.008091+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/agentic-conversational-video-intelligence-built-on-aws/hero.webp",
+    "card": "/forum/assets/posts/2026/09/agentic-conversational-video-intelligence-built-on-aws/card.webp",
+    "social": "/forum/assets/posts/2026/09/agentic-conversational-video-intelligence-built-on-aws/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق بنية ذكاء اصطناعي للتحليل التفاعلي للفيديو",
+      "en": "AWS Introduces Agentic Conversational Video Intelligence"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21279-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/agentic-conversational-video-intelligence-built-on-aws/inline-01.webp",
+        "width": 1193,
+        "height": 606,
+        "alt": {
+          "ar": "أمازون تطلق بنية ذكاء اصطناعي للتحليل التفاعلي للفيديو",
+          "en": "Video intelligence web interface with a chat panel for natural language queries and a sidebar for file uploads and analysis mode selection"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/agentic-conversational-video-intelligence-built-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21279-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/agentic-conversational-video-intelligence-built-on-aws/inline-02.webp",
+        "width": 891,
+        "height": 562,
+        "alt": {
+          "ar": "أمازون تطلق بنية ذكاء اصطناعي للتحليل التفاعلي للفيديو",
+          "en": "Architecture diagram of the agent orchestrator connected to Amazon Bedrock, Amazon Rekognition, Amazon Transcribe, and Amazon S3 storage"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/agentic-conversational-video-intelligence-built-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21279-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/agentic-conversational-video-intelligence-built-on-aws/inline-03.webp",
+        "width": 1400,
+        "height": 817,
+        "alt": {
+          "ar": "أمازون تطلق بنية ذكاء اصطناعي للتحليل التفاعلي للفيديو",
+          "en": "Diagram showing the agent extended with additional tools such as Amazon Textract, AWS HealthScribe, and Amazon Comprehend"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/agentic-conversational-video-intelligence-built-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21279-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/agentic-conversational-video-intelligence-built-on-aws/inline-04.webp",
+        "width": 909,
+        "height": 811,
+        "alt": {
+          "ar": "أمازون تطلق بنية ذكاء اصطناعي للتحليل التفاعلي للفيديو",
+          "en": "Deployment architecture with Amazon CloudFront as the public entry point routing through a VPC origin to an internal Application Load Balancer and AWS Fargate tasks"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/agentic-conversational-video-intelligence-built-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21279-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/agentic-conversational-video-intelligence-built-on-aws/",
+      "type": "official",
+      "title": "Agentic conversational video intelligence built on AWS"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/agentic-conversational-video-intelligence-built-on-aws",
+  "sourceTitle": "Agentic conversational video intelligence built on AWS",
+  "trendScore": 109.49,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-24T05:57:18+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/agentic-conversational-video-intelligence-built-on-aws.json"
+}
