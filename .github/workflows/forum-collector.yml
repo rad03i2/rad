@@ -81,6 +81,9 @@ jobs:
       - name: Normalize Mikhbar public SEO identity
         run: python automation/forum/normalize_public_identity.py
 
+      - name: Audit Mikhbar topic hubs
+        run: python automation/forum/audit_topic_hubs.py
+
       - name: Upload publisher audit snapshot
         if: always()
         uses: actions/upload-artifact@v4
