@@ -6,6 +6,7 @@ from pathlib import Path
 
 from indexes import FORUM, write_all
 from normalize_public_identity import normalize_public_identity
+from pillar_discovery import integrate_pillar_discovery
 
 TZ = timezone(timedelta(hours=3))
 
@@ -30,9 +31,11 @@ def main() -> int:
     # Publisher workflows use the normalizer without this flag and preserve the
     # repository's internal /forum/... contract.
     checked, changed = normalize_public_identity(include_post_indexes=True)
+    sitemap_rows, llms_sections = integrate_pillar_discovery()
     print(
         f"Mikhbar indexes rebuilt: ar={len(ar_posts)} en={len(en_posts)} "
-        f"normalized={changed}/{checked} deployment_indexes=true"
+        f"normalized={changed}/{checked} deployment_indexes=true "
+        f"pillar_sitemap_rows={sitemap_rows} pillar_llms_sections={llms_sections}"
     )
     return 0
 
