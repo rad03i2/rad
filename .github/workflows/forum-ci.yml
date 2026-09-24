@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check -r automation/forum/requirements.txt
       - name: Compile publisher modules
-        run: python -m py_compile automation/forum/writer.py automation/forum/publisher.py automation/forum/publisher_scheduler.py automation/forum/data_only_scheduler.py automation/forum/build_article_map.py automation/forum/audit_dynamic_articles.py automation/forum/audit_deployed_sitemap.py automation/forum/prune_legacy_article_html.py automation/forum/trend.py
+        run: python -m py_compile automation/forum/writer.py automation/forum/publisher.py automation/forum/publisher_scheduler.py automation/forum/data_only_scheduler.py automation/forum/build_article_map.py automation/forum/audit_dynamic_articles.py automation/forum/audit_deployed_sitemap.py automation/forum/prune_legacy_article_html.py automation/forum/enhance_category_seo.py automation/forum/audit_topic_hubs.py automation/forum/trend.py
       - name: Validate dynamic article JavaScript
         run: |
           node --check forum/article/article.js
@@ -49,6 +49,10 @@ jobs:
         run: python automation/forum/audit_dynamic_articles.py
       - name: Reject covered legacy article HTML
         run: python automation/forum/prune_legacy_article_html.py --check-clean
+      - name: Enhance Mikhbar topic hubs
+        run: python automation/forum/enhance_category_seo.py
+      - name: Audit Mikhbar topic hubs
+        run: python automation/forum/audit_topic_hubs.py
       - name: Run forum automation tests
         run: python -m unittest discover -s automation/forum/tests -v
       - name: Build Cloudflare static assets
