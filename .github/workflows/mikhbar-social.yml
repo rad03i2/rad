@@ -34,21 +34,114 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - name: Publish new Mikhbar story to Facebook
         if: github.event_name == 'workflow_run' || inputs.mode == 'live'
         shell: bash
         run: |
           python - <<'PY'
-          import json, os
+          import json
+          import os
           from pathlib import Path
+          from urllib.error import HTTPError
           from urllib.parse import urlencode
           from urllib.request import Request, urlopen
+
+          API = 'https://graph.facebook.com/v26.0'
+          REQUIRED_USER_SCOPES = {
+              'pages_show_list',
+              'pages_read_engagement',
+              'pages_manage_posts',
+          }
+
+          def request_json(path, token, *, method='GET', params=None):
+              params = dict(params or {})
+              params['access_token'] = token
+              if method == 'GET':
+                  url = API + path + '?' + urlencode(params)
+                  req = Request(url, method='GET')
+              else:
+                  req = Request(
+                      API + path,
+                      data=urlencode(params).encode(),
+                      method=method,
+                      headers={'Content-Type': 'application/x-www-form-urlencoded'},
+                  )
+              try:
+                  with urlopen(req, timeout=30) as response:
+                      return json.loads(response.read().decode())
+              except HTTPError as exc:
+                  body = exc.read().decode(errors='replace')
+                  raise RuntimeError(f'Facebook Graph API HTTP {exc.code}: {body}') from None
+
           root = Path('.')
-          history = json.loads((root / 'automation/forum/state/published.json').read_text(encoding='utf-8'))
+          page_id = os.environ.get('FACEBOOK_PAGE_ID', '').strip()
+          supplied_token = os.environ.get('FACEBOOK_PAGE_ACCESS_TOKEN', '').strip()
+          if not page_id:
+              raise RuntimeError('FACEBOOK_PAGE_ID is empty.')
+          if not supplied_token:
+              raise RuntimeError('FACEBOOK_PAGE_ACCESS_TOKEN is empty.')
+
+          # Accept either a real Page token or a User token. If a User token was
+          # stored by mistake, derive the correct Page token from /me/accounts.
+          me = request_json('/me', supplied_token, params={'fields': 'id,name'})
+          effective_token = supplied_token
+          token_kind = 'page'
+
+          if str(me.get('id')) != page_id:
+              token_kind = 'user'
+              permissions = request_json('/me/permissions', supplied_token)
+              granted = {
+                  row.get('permission')
+                  for row in permissions.get('data', [])
+                  if row.get('status') == 'granted'
+              }
+              missing = sorted(REQUIRED_USER_SCOPES - granted)
+              if missing:
+                  raise RuntimeError(
+                      'Facebook User token is missing required permissions: '
+                      + ', '.join(missing)
+                  )
+
+              accounts = request_json(
+                  '/me/accounts',
+                  supplied_token,
+                  params={'fields': 'id,name,access_token,tasks'},
+              )
+              match = next(
+                  (row for row in accounts.get('data', []) if str(row.get('id')) == page_id),
+                  None,
+              )
+              if not match or not match.get('access_token'):
+                  raise RuntimeError(
+                      f'Facebook Page {page_id} is not available through this User token.'
+                  )
+              effective_token = match['access_token']
+
+          page = request_json(
+              f'/{page_id}',
+              effective_token,
+              params={'fields': 'id,name'},
+          )
+          if str(page.get('id')) != page_id:
+              raise RuntimeError(
+                  f'Facebook token resolved to Page {page.get("id")}, expected {page_id}.'
+              )
+          print(json.dumps({
+              'facebook_auth': 'ok',
+              'token_kind_supplied': token_kind,
+              'page_id': page_id,
+              'page_name': page.get('name'),
+          }, ensure_ascii=False))
+
+          history = json.loads(
+              (root / 'automation/forum/state/published.json').read_text(encoding='utf-8')
+          )
           item = history['items'][0]
           article = json.loads((root / item['content_file']).read_text(encoding='utf-8'))
           ar = article.get('locales', {}).get('ar', {})
@@ -58,23 +151,50 @@ jobs:
           link = 'https://rdwan.dev' + path if str(path).startswith('/') else str(path)
           link += ('&' if '?' in link else '?') + 'utm_source=facebook&utm_medium=social&utm_campaign=mikhbar_social'
           story_id = str(item.get('story_id') or article.get('id') or link.split('?', 1)[0])
+
           state_path = root / 'automation/social/state/facebook.json'
-          state = json.loads(state_path.read_text(encoding='utf-8')) if state_path.exists() else {'published_story_ids': []}
+          state = (
+              json.loads(state_path.read_text(encoding='utf-8'))
+              if state_path.exists()
+              else {'published_story_ids': []}
+          )
           if story_id in state.get('published_story_ids', []):
-              print(json.dumps({'status':'skipped_duplicate','story_id':story_id}, ensure_ascii=False))
+              print(json.dumps({
+                  'status': 'skipped_duplicate',
+                  'story_id': story_id,
+              }, ensure_ascii=False))
               raise SystemExit(0)
-          message = f'{title}\\n\\n{description}\\n\\nاقرأ التفاصيل على مِخبار:\\n{link}\\n\\n#مخبار'
-          endpoint = f"https://graph.facebook.com/{os.environ['FACEBOOK_PAGE_ID']}/feed"
-          data = urlencode({'message': message, 'link': link}).encode()
-          req = Request(endpoint, data=data, method='POST', headers={'Authorization': 'Bearer ' + os.environ['FACEBOOK_PAGE_ACCESS_TOKEN']})
-          with urlopen(req, timeout=30) as response:
-              result = json.loads(response.read().decode())
+
+          message = (
+              f'{title}\n\n{description}\n\n'
+              f'اقرأ التفاصيل على مِخبار:\n{link}\n\n#مخبار'
+          )
+          result = request_json(
+              f'/{page_id}/feed',
+              effective_token,
+              method='POST',
+              params={'message': message, 'link': link},
+          )
+
           state.setdefault('published_story_ids', []).append(story_id)
-          state['last_success'] = {'story_id': story_id, 'facebook_post_id': result.get('id'), 'page_id': os.environ['FACEBOOK_PAGE_ID']}
+          state['last_success'] = {
+              'story_id': story_id,
+              'facebook_post_id': result.get('id'),
+              'page_id': page_id,
+          }
           state_path.parent.mkdir(parents=True, exist_ok=True)
-          state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-          print(json.dumps({'status':'published','story_id':story_id,'facebook_post_id':result.get('id'),'page_id':os.environ['FACEBOOK_PAGE_ID']}, ensure_ascii=False))
+          state_path.write_text(
+              json.dumps(state, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps({
+              'status': 'published',
+              'story_id': story_id,
+              'facebook_post_id': result.get('id'),
+              'page_id': page_id,
+          }, ensure_ascii=False))
           PY
+
       - name: Commit social state only
         if: always() && (github.event_name == 'workflow_run' || inputs.mode == 'live')
         shell: bash
