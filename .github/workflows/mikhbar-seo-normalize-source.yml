@@ -1,12 +1,16 @@
 name: Mikhbar SEO Source Normalize
-# v3: apply standalone identity cleanup plus search topic-hub enhancements
+# v4: standalone identity cleanup, topic hubs and evergreen pillar guides
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
+      - 'automation/forum/topic_hub_config.py'
       - 'automation/forum/enhance_category_seo.py'
+      - 'automation/forum/generate_pillar_pages.py'
+      - 'automation/forum/audit_topic_hubs.py'
+      - 'automation/forum/audit_pillar_pages.py'
       - '.github/workflows/mikhbar-seo-normalize-source.yml'
 
 permissions:
@@ -35,8 +39,17 @@ jobs:
       - name: Enhance Mikhbar search topic hubs
         run: python automation/forum/enhance_category_seo.py
 
+      - name: Generate evergreen Mikhbar pillar guides
+        run: python automation/forum/generate_pillar_pages.py
+
       - name: Normalize public Mikhbar identity
         run: python automation/forum/normalize_public_identity.py
+
+      - name: Audit Mikhbar topic hubs
+        run: python automation/forum/audit_topic_hubs.py
+
+      - name: Audit Mikhbar pillar guides
+        run: python automation/forum/audit_pillar_pages.py
 
       - name: Commit enhanced public files
         shell: bash
@@ -48,7 +61,7 @@ jobs:
             echo "Mikhbar SEO source is already enhanced and normalized."
             exit 0
           fi
-          git commit -m "Mikhbar SEO: enhance public topic hubs"
+          git commit -m "Mikhbar SEO: refresh topic hubs and evergreen guides"
           for attempt in 1 2 3 4; do
             git pull --rebase origin main
             if git push origin HEAD:main; then
