@@ -3,6 +3,43 @@ import { isArticlePath, renderDynamicArticle } from "./article.js";
 const CANONICAL_HOST = "mikhbar.website";
 const ARTICLE_PARTS = /^\/(ar|en)\/([a-z0-9-]+)\/([^/]+)\/$/i;
 
+const RELATED_HUBS = {
+  ai: ["automation", "apps", "robotics", "security"],
+  security: ["web", "apps", "computers", "ai"],
+  automation: ["ai", "apps", "web", "robotics"],
+  robotics: ["ai", "automation", "computers", "security"],
+  apps: ["mobile", "ai", "web", "security"],
+  web: ["security", "apps", "automation", "ai"],
+  mobile: ["apps", "computers", "security", "ai"],
+  computers: ["security", "apps", "ai", "web"],
+  social: ["apps", "web", "security", "ai"],
+};
+
+const HUB_LABELS = {
+  ar: {
+    ai: "الذكاء الاصطناعي",
+    security: "الأمن السيبراني",
+    automation: "الأتمتة",
+    robotics: "الروبوتات",
+    apps: "التطبيقات والبرامج",
+    web: "الويب",
+    mobile: "الهواتف",
+    computers: "الحواسيب",
+    social: "التواصل الاجتماعي",
+  },
+  en: {
+    ai: "Artificial Intelligence",
+    security: "Cybersecurity",
+    automation: "Automation",
+    robotics: "Robotics",
+    apps: "Apps & Software",
+    web: "Web Technology",
+    mobile: "Mobile",
+    computers: "Computing",
+    social: "Social Media",
+  },
+};
+
 function canonicalUrl(url) {
   const next = new URL(url.toString());
   next.protocol = "https:";
@@ -55,14 +92,32 @@ export function selectRelatedPosts(posts, pathname, limit = 4) {
     .slice(0, Math.max(0, limit));
 }
 
+function topicHubHtml(locale, category) {
+  const lang = locale.toLowerCase();
+  const labels = HUB_LABELS[lang] || HUB_LABELS.en;
+  const hubs = RELATED_HUBS[category] || [];
+  if (!hubs.length) return "";
+
+  const isAr = lang === "ar";
+  const title = isAr ? "مواضيع مرتبطة" : "Related topics";
+  const note = isAr ? "استكشف التغطية المتخصصة" : "Explore specialist coverage";
+  const cards = hubs.map((slug) => {
+    const label = labels[slug] || slug;
+    return `<a class="rt-topic-card" href="/${esc(lang)}/${esc(slug)}/"><b>${esc(label)}</b><span>${esc(note)}</span></a>`;
+  }).join("");
+
+  return `<section class="rt-section rt-related-topics" aria-labelledby="related-topics-title"><header class="rt-section-head"><div><h2 id="related-topics-title">${esc(title)}</h2></div></header><div class="rt-topic-grid">${cards}</div></section>`;
+}
+
 function relatedHtml(posts, pathname) {
   const match = String(pathname || "").match(ARTICLE_PARTS);
-  if (!match || !posts.length) return "";
+  if (!match) return "";
   const [, locale, category] = match;
   const isAr = locale.toLowerCase() === "ar";
   const title = isAr ? "أخبار مرتبطة" : "Related stories";
   const more = isAr ? "المزيد من هذا القسم" : "More from this section";
   const categoryUrl = `/${locale}/${category}/`;
+  const topicHubs = topicHubHtml(locale, category);
 
   const cards = posts.map((post) => {
     const href = publicPath(post?.url || "");
@@ -73,8 +128,11 @@ function relatedHtml(posts, pathname) {
     return `<a class="rt-feed-item" href="${esc(href)}"><div class="rt-feed-copy"><h3>${esc(postTitle)}</h3>${excerpt ? `<p>${esc(excerpt)}</p>` : ""}${date ? `<div class="rt-feed-time">${esc(date)}</div>` : ""}</div></a>`;
   }).filter(Boolean).join("");
 
-  if (!cards) return "";
-  return `<section class="rt-section rt-related-stories" aria-labelledby="related-stories-title"><header class="rt-section-head"><div><h2 id="related-stories-title">${esc(title)}</h2></div><a href="${esc(categoryUrl)}">${esc(more)}</a></header><div class="rt-feed">${cards}</div></section>`;
+  const stories = cards
+    ? `<section class="rt-section rt-related-stories" aria-labelledby="related-stories-title"><header class="rt-section-head"><div><h2 id="related-stories-title">${esc(title)}</h2></div><a href="${esc(categoryUrl)}">${esc(more)}</a></header><div class="rt-feed">${cards}</div></section>`
+    : "";
+
+  return stories + topicHubs;
 }
 
 class AppendHtmlHandler {
