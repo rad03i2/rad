@@ -70,11 +70,17 @@ jobs:
       - name: Enhance search topic hubs
         run: python automation/forum/enhance_category_seo.py
 
+      - name: Generate evergreen Mikhbar pillar guides
+        run: python automation/forum/generate_pillar_pages.py
+
       - name: Normalize Mikhbar public SEO identity
         run: python automation/forum/normalize_public_identity.py
 
       - name: Audit Mikhbar topic hubs
         run: python automation/forum/audit_topic_hubs.py
+
+      - name: Audit Mikhbar pillar guides
+        run: python automation/forum/audit_pillar_pages.py
 
       - name: Upload backup audit snapshot
         if: always()

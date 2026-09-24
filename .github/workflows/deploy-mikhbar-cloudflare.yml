@@ -18,8 +18,12 @@ on:
       - 'automation/forum/indexes.py'
       - 'automation/forum/rebuild_indexes.py'
       - 'automation/forum/normalize_public_identity.py'
+      - 'automation/forum/topic_hub_config.py'
       - 'automation/forum/enhance_category_seo.py'
       - 'automation/forum/audit_topic_hubs.py'
+      - 'automation/forum/generate_pillar_pages.py'
+      - 'automation/forum/audit_pillar_pages.py'
+      - 'automation/forum/pillar_discovery.py'
       - 'automation/forum/audit_search_quality.py'
       - 'automation/forum/audit_deployed_sitemap.py'
       - 'automation/forum/prune_legacy_article_html.py'
@@ -63,8 +67,14 @@ jobs:
       - name: Enhance Mikhbar search topic hubs
         run: python automation/forum/enhance_category_seo.py
 
+      - name: Generate evergreen Mikhbar pillar guides
+        run: python automation/forum/generate_pillar_pages.py
+
       - name: Audit Mikhbar topic hubs
         run: python automation/forum/audit_topic_hubs.py
+
+      - name: Audit Mikhbar pillar guides
+        run: python automation/forum/audit_pillar_pages.py
 
       - name: Rebuild Mikhbar search discovery files
         run: python automation/forum/rebuild_indexes.py
@@ -82,9 +92,15 @@ jobs:
           test -f dist/mikhbar/ar/index.html
           test -f dist/mikhbar/en/index.html
           for locale in ar en; do
-            for slug in ai security automation robotics apps web; do
+            for slug in ai security automation robotics apps web mobile computers social; do
               test -f "dist/mikhbar/${locale}/${slug}/index.html"
               grep -q "data-topic-hub=\"${slug}\"" "dist/mikhbar/${locale}/${slug}/index.html"
+            done
+            test -f "dist/mikhbar/${locale}/guides/index.html"
+            grep -q 'data-guide-index="true"' "dist/mikhbar/${locale}/guides/index.html"
+            for guide in artificial-intelligence cybersecurity robotics; do
+              test -f "dist/mikhbar/${locale}/guides/${guide}/index.html"
+              grep -q "data-pillar-guide=\"${guide}\"" "dist/mikhbar/${locale}/guides/${guide}/index.html"
             done
           done
           test -f dist/mikhbar/sitemap.xml
@@ -97,6 +113,17 @@ jobs:
           grep -q 'https://mikhbar.website/corrections/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/ai-policy/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/authors/radwan-abdulhadi/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/ar/guides/artificial-intelligence/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/en/guides/artificial-intelligence/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/ar/guides/cybersecurity/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/en/guides/cybersecurity/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/ar/guides/robotics/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/en/guides/robotics/' dist/mikhbar/sitemap.xml
+          if grep -RIl -E 'rdwan\.dev|radwan-abdulhadi|Radwan Abdulhadi|رضوان عبدالهادي' dist/mikhbar/ar/guides dist/mikhbar/en/guides >/tmp/mikhbar-guide-identity-leaks.txt; then
+            echo 'Personal or legacy SEO identity appeared in Mikhbar evergreen guides:' >&2
+            cat /tmp/mikhbar-guide-identity-leaks.txt >&2
+            exit 1
+          fi
           LEGACY_FILES="$(grep -RIl --exclude='*.webp' --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.ico' 'rdwan.dev' dist/mikhbar || true)"
           if [ -n "$LEGACY_FILES" ]; then
             echo 'Legacy rdwan.dev identity remains in these Mikhbar deployment files:' >&2
@@ -151,9 +178,18 @@ jobs:
 
           curl -fsS --retry 5 --retry-delay 2 --retry-all-errors https://mikhbar.website/healthz | grep -q '"ok":true'
 
-          for hub in security automation robotics apps web; do
+          for hub in ai security automation robotics apps web mobile computers social; do
             curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website/en/${hub}/" -o "/tmp/mikhbar-hub-${hub}.html"
             grep -q "data-topic-hub=\"${hub}\"" "/tmp/mikhbar-hub-${hub}.html"
+          done
+
+          for locale in ar en; do
+            curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website/${locale}/guides/" -o "/tmp/mikhbar-guides-${locale}.html"
+            grep -q 'data-guide-index="true"' "/tmp/mikhbar-guides-${locale}.html"
+            for guide in artificial-intelligence cybersecurity robotics; do
+              curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website/${locale}/guides/${guide}/" -o "/tmp/mikhbar-guide-${locale}-${guide}.html"
+              grep -q "data-pillar-guide=\"${guide}\"" "/tmp/mikhbar-guide-${locale}-${guide}.html"
+            done
           done
 
           ARTICLE_PATH="$(python - <<'PY'
@@ -187,4 +223,4 @@ jobs:
             echo "Legacy rdwan.dev identity appeared in live article HTML." >&2
             exit 1
           fi
-          echo "Live Mikhbar SSR smoke test passed for ${ARTICLE_PATH}"
+          echo "Live Mikhbar SSR and evergreen SEO smoke tests passed for ${ARTICLE_PATH}"
