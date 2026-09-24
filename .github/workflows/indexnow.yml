@@ -8,6 +8,7 @@ on:
       - 'automation/forum/indexes.py'
       - 'automation/forum/rebuild_indexes.py'
       - 'automation/forum/enhance_category_seo.py'
+      - 'automation/forum/audit_topic_hubs.py'
       - 'automation/forum/audit_deployed_sitemap.py'
       - 'cloudflare/mikhbar-site/build.py'
       - 'cloudflare/mikhbar-site/src/**'
@@ -31,6 +32,9 @@ jobs:
       - name: Enhance Mikhbar search topic hubs
         run: python automation/forum/enhance_category_seo.py
 
+      - name: Audit Mikhbar topic hubs
+        run: python automation/forum/audit_topic_hubs.py
+
       - name: Rebuild Mikhbar search discovery files
         run: python automation/forum/rebuild_indexes.py
 
@@ -43,8 +47,11 @@ jobs:
       - name: Validate trust and topic URLs before submission
         shell: bash
         run: |
-          grep -q 'أخبار الذكاء الاصطناعي وأدوات AI وتطبيقاته' dist/mikhbar/ar/ai/index.html
-          grep -q 'Artificial Intelligence News Updates & AI Tools' dist/mikhbar/en/ai/index.html
+          for locale in ar en; do
+            for slug in ai security automation robotics apps web; do
+              grep -q "data-topic-hub=\"${slug}\"" "dist/mikhbar/${locale}/${slug}/index.html"
+            done
+          done
           grep -q 'https://mikhbar.website/contact/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/about/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/editorial-policy/' dist/mikhbar/sitemap.xml
