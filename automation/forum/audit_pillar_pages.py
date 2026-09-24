@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import sys
-from pathlib import Path
+from html import escape
 
 from generate_pillar_pages import FORUM, ORIGIN, PILLARS
 
@@ -37,8 +37,8 @@ def main() -> int:
             html = path.read_text(encoding="utf-8")
             checked += 1
             expected = {
-                "title": f"<title>{config['title']}</title>",
-                "description": f'<meta name="description" content="{config["description"]}">',
+                "title": f"<title>{escape(config['title'])}</title>",
+                "description": f'<meta name="description" content="{escape(config["description"], quote=True)}">',
                 "canonical": f'<link rel="canonical" href="{ORIGIN}/{locale}/guides/{slug}/">',
                 "pillar marker": f'data-pillar-guide="{slug}"',
                 "organization author": '"author":{"@type":"Organization","name":"Mikhbar Editorial"',
