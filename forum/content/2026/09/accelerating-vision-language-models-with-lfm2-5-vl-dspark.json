@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "280bf64dcca75cee1131",
+  "slug": "accelerating-vision-language-models-with-lfm2-5-vl-dspark",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/accelerating-vision-language-models-with-lfm2-5-vl-dspark/",
+    "en": "/forum/en/ai/accelerating-vision-language-models-with-lfm2-5-vl-dspark/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إطلاق نموذج DSpark لتسريع نماذج الرؤية واللغة في LFM2.5",
+      "description": "أعلنت Liquid AI عن إطلاق نموذج DSpark التجريبي لتسريع نموذج الرؤية واللغة LFM2.5-VL-3B، مع دعم فوري لعدة منصات لتحسين كفاءة الاستدلال.",
+      "deck": "أصدرت Liquid AI نموذجاً تجريبياً جديداً للتنبؤ والاستدلال التفاؤلي المخصص لنموذج الرؤية واللغة LFM2.5-VL-3B، مما يرفع سرعة معالجة المهام بصورة ملحوظة.",
+      "summaryBullets": [
+        "إطلاق نموذج DSpark التجريبي المخصص لنموذج الرؤية واللغة LFM2.5-VL-3B.",
+        "تحقيق سرعات استدلال أعلى تصل إلى 3.13x على الأجهزة الطرفية و2.66x على وحدات H100.",
+        "تكلفة ذاكرة منخفضة بزيادة تبلغ 2.8% من البارامترات مقارنة بالنموذج الأساسي.",
+        "توفر دعم فوري من اليوم الأول عبر منصات llama.cpp وMLX-VLM وSGLang."
+      ],
+      "sections": [
+        {
+          "heading": "تسريع نماذج الرؤية واللغة",
+          "paragraphs": [
+            {
+              "text": "أعلنت المدونة الرسمية لـ Hugging Face Blog عن إصدار نموذج تجريبي يعتمد على تقنية DSpark والموجه لنموذج الرؤية واللغة LFM2.5-VL-3B. يضيف هذا النموذج مسار فك ترميز تفاؤلي يتيح زيادة طفيفة في الذاكرة مقابل تحقيق تسريع أكبر في الأداء دون إحداث أي تغيير يُذكر على جودة المخرجات النهائية للنموذج.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/LiquidAI/lfm2-5-vl-dspark"
+                },
+                {
+                  "text": "LFM2.5-VL-3B",
+                  "url": "https://huggingface.co/LiquidAI/LFM2.5-VL-3B"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد التقنية الجديدة على إضافة مسار استدلال تفاؤلي مصمم خصيصاً للتعامل مع البيانات البصرية واللغوية المتكاملة. وبحسب التفاصيل التقنية، فإن بنية النموذج الجديد تتيح له التقاط الحالات المخفية للنموذج المستهدف عند طبقات محددة، مما يسهل عملية التنبؤ بكتلة من الرموز المرشحة بكفاءة عالية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أداء الاستدلال ومكاسب السرعة",
+          "paragraphs": [
+            {
+              "text": "أظهرت القياسات التقنية التي أجرتها الشركة على نماذج DSpark تحسناً ملحوظاً في سرعات فك الترميز؛ حيث تراوحت سرعة فك الترميز على الأجهزة بين 2.30x و3.13x حسب طبيعة المهمة، بينما وصلت المكاسب الشاملة من البداية للنهاية إلى نطاق يتراوح بين 1.56x و2.62x عند التشغيل عبر حواسيب أبل باستخدام بيئة MLX على معالجات M5 Max.",
+              "links": []
+            },
+            {
+              "text": "أما على صعيد وحدات معالجة الرسومات المخصصة لمراكز البيانات، فقد سجل النموذج على شرائح H100 تحسينات في سرعة فك الترميز تتراوح بين 2.04x و2.66x، في حين بلغت التحسينات الشاملة للاستدلال ما بين 1.64x و2.27x، مما يعكس كفاءة التصميم الجديد عبر منصات الأجهزة المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية التقنية واستهلاك الذاكرة",
+          "paragraphs": [
+            {
+              "text": "تتميز البنية المعتمدة للنموذج بكونها مبسطة وتعتمد على الانتباه فقط، وتتألف من 4 طبقات بحجم كتلة يبلغ 9 رموز. وقد صُمم المكون بحيث يتم إسقاط بقع الصور ورموز النصوص في تمثيل مشترك موحد قبل الطبقات العميقة، مما يجعله قادراً على التعامل مع متجهات الحالة المخفية بنفس الأبعاد بغض النظر عن النمط المدخل.",
+              "links": []
+            },
+            {
+              "text": "من الناحية المادية، يضيف النموذج المساعد نحو 280 مليون بارامتر، وهو ما يمثل زيادة طفيفة بنسبة 8.9% فقط فوق إجمالي بارامترات النموذج المستهدف البالغة 3 مليارات بارامتر، مما يحافظ على بصمة ذاكرة منخفضة نسبياً مقارنة بحجم التسريع المحقق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل والدعم الفوري للأنظمة",
+          "paragraphs": [
+            {
+              "text": "يحظى نموذج DSpark الجديد بدعم فوري من اليوم الأول عبر عدة أطر عمل وبرمجيات شائعة في مجتمع الذكاء الاصطناعي والمفتوح المصدر، وتشمل هذه القائمة أدوات مثل llama.cpp وMLX-VLM بالإضافة إلى إطار العمل SGLang.",
+              "links": [
+                {
+                  "text": "llama.cpp",
+                  "url": "https://huggingface.co/blog/LiquidAI/lfm2-5-vl-dspark"
+                },
+                {
+                  "text": "SGLang",
+                  "url": "https://huggingface.co/blog/LiquidAI/lfm2-5-vl-dspark"
+                }
+              ]
+            },
+            {
+              "text": "تتيح هذه التكاملات للمطورين إمكانية دمج النموذج بسهولة في بيئات الإنتاج الحالية والاستفادة من آليات الاستدلال التفاؤلي عبر تمرير العلامات والأوامر البرمجية المناسبة لكل منصة، مع بقاء مخرجات النموذج دقيقة ومطابقة للاستدلال القياسي بفضل التحقق الدقيق من الرموز المقترحة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "القيود والتحديات المرتبطة بأحمال الرؤية",
+          "paragraphs": [
+            {
+              "text": "على الرغم من المكاسب الواضحة في سرعة فك الترميز، تشير التحليلات المتعلقة بأحمال العمل البصرية إلى وجود قيود تحكمها قوانين الأداء العامة مثل قانون أمدال. ففي نماذج الرؤية واللغة، تمر الصور أولاً عبر مُشفّر بصري، ثم يعالج المحور اللغوي مئات الرموز البصرية بالتزامن مع النصوص.",
+              "links": []
+            },
+            {
+              "text": "وبما أن الاستدلال التفاؤلي يعمل على تسريع مرحلة فك الترميز وحدها دون تسريع مرحلة المعالجة الأولية للصور أو التحضير، فإن الأجهزة الطرفية التي تفتقر لقدرات مراكز البيانات الضخمة قد تواجه وقتاً نسبياً أطول في الاستجابة الأولى، رغم التقدم الذي تحققه المسرعات العصبية الحديثة في تضييق الفجوة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوافر والإتاحة",
+          "paragraphs": [
+            {
+              "text": "أصبحت نماذج DSpark المخصصة للرؤية متاحة للمطورين والباحثين عبر منصة Hugging Face بصيغتي Safetensors وGGUF، مما يتيح إمكانية تنزيلها وتعديلها ونشرها دون قيود معقدة ضمن عائلة نماذج LFM2.5 المصممة لتوفير ذكاء اصطناعي يعمل بكفاءة في مختلف البيئات.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "رؤية حاسوبية",
+        "نماذج لغوية",
+        "Liquid AI",
+        "Hugging Face",
+        "استدلال تفاؤلي"
+      ],
+      "entities": [
+        "Liquid AI",
+        "Hugging Face",
+        "LFM2.5-VL-3B",
+        "llama.cpp",
+        "MLX-VLM",
+        "SGLang"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "25 سبتمبر 2026",
+      "modifiedLabel": "25 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 566
+    },
+    "en": {
+      "title": "Liquid AI releases LFM2.5-VL-DSpark for faster vision models",
+      "description": "Liquid AI's new LFM2.5-VL-DSpark draft model accelerates vision-language inference by up to 3.13x on edge devices with minimal memory overhead.",
+      "deck": "Liquid AI has released an experimental draft model for its LFM2.5-VL-3B vision-language model, leveraging speculative decoding to significantly boost inference speeds on both edge devices and high-end GPUs.",
+      "summaryBullets": [
+        "The new DSpark drafter adds 280M parameters, increasing the target model's size by only 8.9%.",
+        "Decoding speeds improve by up to 3.13x on Apple M5 Max and 2.66x on NVIDIA H100 GPUs.",
+        "Day-one support is available for llama.cpp, MLX-VLM, and SGLang frameworks.",
+        "The architecture uses a simplified attention-only drafter with a block size of 9 for training.",
+        "End-to-end latency gains are capped by prefill and vision encoding times on edge hardware."
+      ],
+      "sections": [
+        {
+          "heading": "New Draft Model Released",
+          "paragraphs": [
+            {
+              "text": "Liquid AI has announced the release of an experimental DSpark draft model designed for its LFM2.5-VL-3B vision-language model. This release introduces a speculative decoding path that aims to trade a minimal increase in memory footprint for a substantial speedup in inference without altering the quality of the output. The model is part of Liquid AI's broader effort to optimize its LFM2.5 family for efficient deployment across various hardware environments.",
+              "links": [
+                {
+                  "text": "Liquid AI",
+                  "url": "https://huggingface.co/LiquidAI"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Performance Gains on Edge and GPU",
+          "paragraphs": [
+            {
+              "text": "The company reports significant performance improvements across different hardware configurations. On-device inference using MLX on an Apple M5 Max chip sees decoding speeds increase by 2.30x to 3.13x depending on the specific task. End-to-end latency improvements range from 1.56x to 2.62x. For users relying on llama.cpp on an M3 Ultra, decoding speeds improve by 1.57x to 2.14x, with end-to-end gains between 1.30x and 1.77x. On high-end GPU hardware, specifically the NVIDIA H100, the drafter delivers decoding speedups of 20.4x to 2.66x, with end-to-end improvements of 1.64x to 2.27x.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architectural Design and Training",
+          "paragraphs": [
+            {
+              "text": "The vision drafter utilizes the same architecture as the text-based LFM2.5-DSpark drafters. It captures hidden states from the target model at a fixed set of tapped layers and uses them to draft a block of candidate tokens. Image patches and text tokens are projected into a shared representation before these layers, ensuring the drafter operates on hidden-state vectors of identical dimensionality regardless of the input modality. Following the DSpark recipe, the model was trained on a mixture of vision-language supervised fine-tuning data, weighted toward expected workloads. The final draft model is a simplified attention-only drafter with 4 layers and a block size of 9, trained for 10 epochs.",
+              "links": [
+                {
+                  "text": "DSpark",
+                  "url": "https://huggingface.co/papers/2607.05147"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Memory Footprint and Efficiency",
+          "paragraphs": [
+            {
+              "text": "A key feature of this release is its low memory overhead. The resulting drafter contains approximately 280 million parameters, which increases the deployed model’s parameter count by just 8.9% on top of the 3B target model. This small memory cost allows for significant speedups without requiring substantial additional hardware resources. The inference algorithm remains unchanged from the text models, ensuring that the speculative decoding process is exact; the target model verifies every proposed token, meaning greedy output is identical to the target model running alone.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Framework Integration and Availability",
+          "paragraphs": [
+            {
+              "text": "The DSpark draft model for LFM2.5-VL-3B ships with day-one support for major inference frameworks, including llama.cpp, MLX-VLM, and SGLang. Users can run the model with SGLang by using a build with DSpark support for LFM2 targets, launching the target with the draft attached. The block size is read from the draft's config.json file. For llama.cpp and MLX-VLM, specific builds are required to enable the functionality. The model is available on Hugging Face in both Safetensors and GGUF formats, facilitating easy integration into existing pipelines.",
+              "links": [
+                {
+                  "text": "LFM2.5-VL-3B",
+                  "url": "https://huggingface.co/LiquidAI/LFM2.5-VL-3B"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Limitations in Vision Workloads",
+          "paragraphs": [
+            {
+              "text": "While speculative decoding significantly accelerates the decode phase, it does not speed up vision encoding or prefill. In vision-language models, the image first passes through a vision encoder, and the language backbone processes hundreds of visual tokens along with the text prompt. On edge devices with less compute power than datacenter GPUs, prefill takes up a larger portion of the end-to-end latency. Consequently, even large decode speedups may result in only modest end-to-end gains due to Amdahl's law, where the overall speedup is capped by the unaccelerated parts of the workload.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Liquid AI",
+        "LFM2.5-VL-3B",
+        "Speculative Decoding",
+        "Vision-Language Models",
+        "Inference Optimization",
+        "Edge AI",
+        "Hugging Face"
+      ],
+      "entities": [
+        "Liquid AI",
+        "LFM2.5-VL-3B",
+        "DSpark",
+        "llama.cpp",
+        "MLX-VLM",
+        "SGLang",
+        "NVIDIA H100",
+        "Apple M5 Max"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 25, 2026",
+      "modifiedLabel": "September 25, 2026",
+      "readMinutes": 3,
+      "wordCount": 650
+    }
+  },
+  "datePublished": "2026-09-25T12:42:19.041473+03:00",
+  "dateModified": "2026-09-25T12:42:19.041473+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/accelerating-vision-language-models-with-lfm2-5-vl-dspark/hero.webp",
+    "card": "/forum/assets/posts/2026/09/accelerating-vision-language-models-with-lfm2-5-vl-dspark/card.webp",
+    "social": "/forum/assets/posts/2026/09/accelerating-vision-language-models-with-lfm2-5-vl-dspark/social.jpg",
+    "alt": {
+      "ar": "إطلاق نموذج DSpark لتسريع نماذج الرؤية واللغة في LFM2.5",
+      "en": "Liquid AI releases LFM2.5-VL-DSpark for faster vision models"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/644249b08443bce4c9890a0f/WgfT8N8Xyb6lBxSif7XLO.gif",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/LiquidAI/lfm2-5-vl-dspark",
+      "type": "official",
+      "title": "Accelerating vision-language models with LFM2.5-VL-DSpark"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/LiquidAI/lfm2-5-vl-dspark",
+  "sourceTitle": "Accelerating vision-language models with LFM2.5-VL-DSpark",
+  "trendScore": 101.91,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-25T09:42:19+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/accelerating-vision-language-models-with-lfm2-5-vl-dspark.json"
+}
