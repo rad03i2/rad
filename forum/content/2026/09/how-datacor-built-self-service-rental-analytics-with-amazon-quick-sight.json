@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "f47736df57dec501d195",
+  "slug": "how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight",
+  "categorySlug": "automation",
+  "urls": {
+    "ar": "/forum/ar/automation/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/",
+    "en": "/forum/en/automation/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Datacor تطلق تحليلات الإيجار الذاتي عبر Amazon Quick Sight",
+      "description": "تدمج Datacor لوحات Amazon Quick Sight والاستعلام اللغوي في منصة TrackAbout لتمكين موزعي الغاز من اتخاذ قرارات سريعة دون الحاجة لإدارة تقنية.",
+      "deck": "تستهدف Datacor معالجة تحدي الوصول إلى بيانات الإيجار المعقدة عبر دمج الذكاء الاصطناعي التوليدي في بيئة عمل موزعي الغاز واللحام.",
+      "summaryBullets": [
+        "دمج لوحات بيانات تفاعلية واستعلامات بلغة طبيعية في منصة TrackAbout.",
+        "بناء خط أنابيب بيانات سحابي متكامل يضمن تحديث البيانات بانتظام.",
+        "تطبيق نموذج أمان متعدد المستأجرين يعزل بيانات كل عميل بدقة.",
+        "تمكين المستخدمين من طرح أسئلة تحليلية معقدة والحصول على إجابات فورية."
+      ],
+      "sections": [
+        {
+          "heading": "تجاوز حواجز الوصول إلى بيانات الإيجار",
+          "paragraphs": [
+            {
+              "text": "تُعد فواتير إيجار الأصول مثل الأسطوانات والخزانات السائلة جزءاً حيوياً من إيرادات موزعي الغاز واللحام، إلا أن هذه البيانات كانت غالباً محبوسة في أنظمة متفرقة لا يمكن الوصول إليها إلا عبر فرق تقنية متخصصة. هذا الوضع كان يحد من القدرة على فهم معدلات استخدام الأسطول وأداء الأسعار واسترداد الإيرادات بدقة.",
+              "links": []
+            },
+            {
+              "text": "تسعى Datacor، وهي مزود موثوق بحلول البرمجيات لصناعات التصنيع الكيميائي والتوزيع، إلى تغيير هذه المعادلة من خلال منصة TrackAbout التي تساعد العملاء على تتبع وإدارة ملايين الأصول. مع إدارة أكثر من 27.5 مليون أصل وأكثر من 725 ألف فاتورة شهرياً، أصبح من الضروري تحويل البيانات غير المتاحة إلى قرارات استراتيجية فورية لتقليل أيام الإيجار غير المفوترة واستعادة الإيرادات المفقودة.",
+              "links": [
+                {
+                  "text": "Datacor",
+                  "url": "https://www.datacor.com/"
+                },
+                {
+                  "text": "TrackAbout",
+                  "url": "https://www.datacor.com/products/trackabout"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تجربة تحليلية ذاتية الخدمة",
+          "paragraphs": [
+            {
+              "text": "لحل مشكلة تشتت بيانات الإيجار واعتمادها على تقارير تقنية بطيئة، قامت Datacor بدمج Amazon Quick Sight مباشرة في حل TrackAbout. يتيح هذا التكامل للمستخدمين التجاريين استكشاف أداء الإيجار وطرح أسئلة بلغة طبيعية دون الحاجة لتقديم طلبات تقنية أو انتظار تقارير مخصصة قد تستغرق أياماً أو أسابيع.",
+              "links": [
+                {
+                  "text": "Amazon Quick Sight",
+                  "url": "https://aws.amazon.com/quicksight/"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد التجربة على قدرات الذكاء الاصطناعي التوليدي للتحليلات التجارية، مما يسمح للمستخدمين بطرح أسئلة بسيطة مثل \"أظهر لي إيرادات الإيجار حسب نوع المنتج في الربع الماضي\" أو \"ما متوسط معدل الإيجار حسب فئة الأصل في حساباتي العشرين الأولى؟\". توفر هذه الميزة إجابات دقيقة ومحدثة تعتمد على مجموعات بيانات منتظمة التحديث، مما يعيد سلطة اتخاذ القرار إلى يد العميل مباشرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بنية تحتية سحابية متكاملة",
+          "paragraphs": [
+            {
+              "text": "تقوم هذه التجربة التحليلية على خط أنابيب بيانات سحابي أوتوماتيكي يمتد عبر بيئات متعددة. تبدأ العملية باستخراج البيانات التشغيلية من قواعد بيانات Azure SQL وتحويلها إلى ملفات Parquet، ثم تدفقها إلى Amazon S3. يدعم هذا الخط عمليات التحميل الكامل والتدريجي، مما يضمن نقل الصفوف المعدلة فقط عند الحاجة، مما يقلل من استهلاك الموارد ويحافظ على كفاءة النظام.",
+              "links": []
+            },
+            {
+              "text": "عند وصول البيانات الجديدة، يتم تفعيل طبقة تنسيق مبنية على AWS Lambda و AWS Glue و Amazon DynamoDB. تتولى هذه الطبقة توزيع مهام المعالجة لكل جدول وتنفيذها بشكل متسلسل ومنظم. يقوم AWS Glue بعد ذلك بدمج التحديثات التدريجية في جداول Iceberg، بينما يتولى AWS Step Functions التحقق من أعداد الصفوف وبناء الجداول النهائية الجاهزة للتحليل.",
+              "links": [
+                {
+                  "text": "AWS Lambda",
+                  "url": "https://aws.amazon.com/lambda/"
+                },
+                {
+                  "text": "AWS Glue",
+                  "url": "https://aws.amazon.com/glue/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الأمان والعزل متعدد المستأجرين",
+          "paragraphs": [
+            {
+              "text": "يولي Sundar Kuppuswamy، كبير مسؤولي الذكاء الاصطناعي في Datacor، أهمية كبيرة للجانب غير المرئي من النظام، مشيراً إلى أن العمل الشاق في الاستهلاك السحابي والتحقق من أعداد الصفوف ونموذج عزل المستأجرين هو ما منحهم الثقة في تقديم الاستعلام اللغوي لبيانات الإيرادات الحساسة. يؤكد أن المعيار الحقيقي للنجاح هو إعادة القرار إلى يد العميل، مع الحفاظ على حذر شديد لضمان دقة الإجابات.",
+              "links": []
+            },
+            {
+              "text": "يعتمد النظام على نموذج أمان متعدد المستأجرين على مستوى الصف (Row-Level Security) لضمان عدم اختلاط بيانات عميل بآخر. هذا العزل الدقيق يسمح لكل موزع بالوصول إلى بياناته فقط، مما يوفر بيئة آمنة وموثوقة لاستخدام أدوات الذكاء الاصطناعي التوليدي في تحليلات الإيرادات الحساسة دون مخاطر تسرب المعلومات بين الحسابات المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحديث البيانات في الوقت شبه الحقيقي",
+          "paragraphs": [
+            {
+              "text": "لضمان دقة التحليلات، يقوم النظام بتحديث مجموعات البيانات في محرك Amazon Quick Sight SPICE بشكل مجدول. يتيح هذا التحديث المنتظم للمستخدمين رؤية لوحات بيانات تعكس أحدث البيانات التشغيلية المتوفرة، مما يجعل التحليلات ذات صلة مباشرة بالوضع الحالي للأسطول والفواتير بدلاً من الاعتماد على بيانات قديمة أو تقارير أرشيفية.",
+              "links": [
+                {
+                  "text": "Amazon Quick Sight SPICE",
+                  "url": "https://docs.aws.amazon.com/quicksuite/latest/userguide/spice.html"
+                }
+              ]
+            },
+            {
+              "text": "توفر هذه البنية لوحات جاهزة وذكية سياقياً تعرض مقاييس رئيسية مثل معدلات استخدام الأسطول، وملخصات استثناءات الفوترة، واتجاهات استرداد الإيرادات، وعمر الأصول على مستوى العميل. صُممت هذه اللوحات بصرياً لتناسب المستخدمين التجاريين وليس محللي البيانات فقط، مما يسهل فهم المعقدة التقنيات دون الحاجة إلى خبرة تقنية عميقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دروس مستفادة من التنفيذ",
+          "paragraphs": [
+            {
+              "text": "أبرزت تجربة Datacor أهمية التوازن بين الابتكار التقني والموثوقية التشغيلية. بدلاً من التركيز فقط على واجهات الذكاء الاصطناعي، ركزت الشركة على بناء أساس صلب من خطوط أنابيب البيانات والتحقق من الجودة. هذا النهج الحذر يضمن أن تكون الإجابات المقدمة للمستخدمين دقيقة وموثوقة، وهو أمر حاسم عند التعامل مع بيانات مالية تؤثر مباشرة على قرارات التسعير والإيرادات.",
+              "links": []
+            },
+            {
+              "text": "تُظهر هذه المبادرة كيف يمكن للشركات الصناعية تحويل بياناتها التشغيلية إلى ميزة تنافسية حقيقية من خلال دمج التحليلات الذاتية الخدمة. من خلال التعاون مع AWS، نجحت Datacor في إزالة الحواجز التقنية التي كانت تعيق عملاءها، مما يفتح الباب أمام قرارات أكثر استنارة وسرعة في قطاع يعتمد بشدة على كفاءة إدارة الأصول والإيرادات.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Datacor",
+        "Amazon Quick Sight",
+        "تحليلات البيانات",
+        "الذكاء الاصطناعي التوليدي",
+        "إدارة الأصول",
+        "السحابة",
+        "توزيع الغاز"
+      ],
+      "entities": [
+        "Datacor",
+        "TrackAbout",
+        "Amazon Quick Sight",
+        "AWS",
+        "Amazon S3",
+        "AWS Lambda",
+        "AWS Glue",
+        "Amazon DynamoDB",
+        "Sundar Kuppuswamy"
+      ],
+      "category": "الأتمتة",
+      "dateLabel": "25 سبتمبر 2026",
+      "modifiedLabel": "25 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 728
+    },
+    "en": {
+      "title": "Datacor Builds Self-Service Rental Analytics With Amazon QuickSight",
+      "description": "Datacor introduces a self-service rental analytics experience for gas and welding distributors by embedding Amazon QuickSight dashboards into TrackAbout.",
+      "deck": "Datacor has partnered with Amazon Web Services to tackle historical data bottlenecks for industrial gas and welding distributors by embedding interactive dashboards and generative business intelligence directly into its supply chain platform.",
+      "summaryBullets": [
+        "Datacor integrated Amazon QuickSight into its TrackAbout platform to provide interactive dashboards and natural language querying.",
+        "The new capability eliminates reliance on IT-generated custom reports and allows business users to query data using plain language.",
+        "An automated cross-cloud data pipeline transfers operational data from Azure SQL databases into AWS storage and processing layers.",
+        "The architecture implements a tenant-isolation model and automated row-count validation to securely handle customer revenue data."
+      ],
+      "sections": [
+        {
+          "heading": "Overcoming Operational Data Bottlenecks in Rental Billing",
+          "paragraphs": [
+            {
+              "text": "For industrial gas and welding distributors managing assets like cylinders and bulk tanks, rental billing represents a vital share of revenue. However, extracting actionable insights from operational systems historically required submitting requests for custom SQL Server Reporting Services reports or raw data exports through the support team at Datacor.",
+              "links": [
+                {
+                  "text": "Datacor",
+                  "url": "https://www.datacor.com/"
+                }
+              ]
+            },
+            {
+              "text": "Customers often waited days or weeks for static outputs that answered only the initial query. This manual workflow prevented business teams from quickly iterating on pricing or fleet utilization strategies, leaving potential revenue uncaptured across millions of tracked assets.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Embedding Generative BI and Dashboards into TrackAbout",
+          "paragraphs": [
+            {
+              "text": "To remove these technical hurdles, <a href=\"https://www.datacor.com/products/trackabout\">TrackAbout</a> integrated embedded analytics capabilities powered by <a href=\"https://aws.amazon.com/quicksight/\">Amazon Quick Sight</a>. The enhanced platform equips business users with pre-built, context-aware dashboards displaying fleet utilization rates, billing exception summaries, revenue recovery trends, and customer-level asset aging.",
+              "links": [
+                {
+                  "text": "TrackAbout",
+                  "url": "https://www.datacor.com/products/trackabout"
+                },
+                {
+                  "text": "Amazon Quick Sight",
+                  "url": "https://aws.amazon.com/quicksight/"
+                }
+              ]
+            },
+            {
+              "text": "Additionally, the solution features a generative business intelligence search bar powered by Amazon Q in QuickSight. Users can type plain-language prompts to analyze rental performance metrics, review unreturned cylinder totals, or calculate average rental rates across specific customer accounts without filing IT tickets.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Designing the Automated Cross-Cloud Data Pipeline",
+          "paragraphs": [
+            {
+              "text": "Behind the self-service interface lies a structured architecture spanning data ingestion, transformation, and storage. TrackAbout operational data resides in Azure SQL databases, from which an Azure Data Factory pipeline extracts source tables as Apache Parquet files and streams them into <a href=\"https://aws.amazon.com/s3/\">Amazon Simple Storage Service (Amazon S3)</a>.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            },
+            {
+              "text": "The pipeline handles both full and incremental loads using change tracking to move only modified rows. The arrival of new files in storage triggers an orchestration layer built on <a href=\"https://aws.amazon.com/lambda/\">AWS Lambda</a>, <a href=\"https://aws.amazon.com/glue/\">AWS Glue</a>, and <a href=\"https://aws.amazon.com/dynamodb/\">Amazon DynamoDB</a> to manage processing jobs and single-threaded execution.",
+              "links": [
+                {
+                  "text": "AWS Lambda",
+                  "url": "https://aws.amazon.com/lambda/"
+                },
+                {
+                  "text": "AWS Glue",
+                  "url": "https://aws.amazon.com/glue/"
+                },
+                {
+                  "text": "Amazon DynamoDB",
+                  "url": "https://aws.amazon.com/dynamodb/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Ensuring Data Integrity and Multi-Tenant Security",
+          "paragraphs": [
+            {
+              "text": "AWS Glue jobs merge incremental updates into Apache Iceberg tables located on Amazon S3. An AWS Step Functions workflow validates row counts and constructs final reporting tables before refreshing datasets within <a href=\"https://docs.aws.amazon.com/quicksuite/latest/userguide/spice.html\">Amazon Quick Sight SPICE</a> to ensure users view current operational metrics.",
+              "links": [
+                {
+                  "text": "Amazon Quick Sight SPICE",
+                  "url": "https://docs.aws.amazon.com/quicksuite/latest/userguide/spice.html"
+                }
+              ]
+            },
+            {
+              "text": "Sundar Kuppuswamy, Chief AI Officer at Datacor, emphasized that the underlying foundational engineering was critical to the project's success. He noted that cross-cloud ingestion, row-count validation, and a verifiable tenant-isolation model were essential before introducing natural language querying to revenue data managed on <a href=\"https://aws.amazon.com/\">Amazon Web Services</a>.",
+              "links": [
+                {
+                  "text": "Amazon Web Services",
+                  "url": "https://aws.amazon.com/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Datacor",
+        "TrackAbout",
+        "Amazon QuickSight",
+        "Analytics",
+        "Cloud Pipeline",
+        "Generative BI"
+      ],
+      "entities": [
+        "Datacor",
+        "TrackAbout",
+        "Amazon Web Services",
+        "Amazon QuickSight",
+        "Azure"
+      ],
+      "category": "Automation",
+      "dateLabel": "September 25, 2026",
+      "modifiedLabel": "September 25, 2026",
+      "readMinutes": 3,
+      "wordCount": 482
+    }
+  },
+  "datePublished": "2026-09-25T21:57:07.411663+03:00",
+  "dateModified": "2026-09-25T21:57:07.411663+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/hero.webp",
+    "card": "/forum/assets/posts/2026/09/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/card.webp",
+    "social": "/forum/assets/posts/2026/09/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/social.jpg",
+    "alt": {
+      "ar": "Datacor تطلق تحليلات الإيجار الذاتي عبر Amazon Quick Sight",
+      "en": "Datacor Builds Self-Service Rental Analytics With Amazon QuickSight"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-20632-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/inline-01.webp",
+        "width": 1400,
+        "height": 469,
+        "alt": {
+          "ar": "Datacor تطلق تحليلات الإيجار الذاتي عبر Amazon Quick Sight",
+          "en": "End-to-end architecture from TrackAbout’s Azure operational system through the AWS ingestion and transformation pipeline to embedded Amazon Quick Sight dashboards"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-20632-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/inline-02.webp",
+        "width": 1380,
+        "height": 748,
+        "alt": {
+          "ar": "Datacor تطلق تحليلات الإيجار الذاتي عبر Amazon Quick Sight",
+          "en": "TrackAbout Rental Summary dashboard showing rental health metrics, trends, and a natural language search bar"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-20632-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/inline-03.webp",
+        "width": 1380,
+        "height": 748,
+        "alt": {
+          "ar": "Datacor تطلق تحليلات الإيجار الذاتي عبر Amazon Quick Sight",
+          "en": "TrackAbout Rental Revenue Generator dashboard showing what-if pricing analysis and projected revenue impact"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-20632-3.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/",
+      "type": "official",
+      "title": "How Datacor built self-service rental analytics with Amazon Quick Sight"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight",
+  "sourceTitle": "How Datacor built self-service rental analytics with Amazon Quick Sight",
+  "trendScore": 128.33,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-25T18:57:07+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight.json"
+}
