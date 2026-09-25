@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "f79e7d7a633843bfcb6c",
+  "slug": "codeql-27-adds-and-query-and-kotlin-20-support",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/codeql-27-adds-and-query-and-kotlin-20-support/",
+    "en": "/forum/en/apps/codeql-27-adds-and-query-and-kotlin-20-support/"
+  },
+  "locales": {
+    "ar": {
+      "title": "CodeQL 2.27.1 يضيف دعم Kotlin 2.4.20 واستعلامات C++",
+      "description": "أطلقت GitHub تحديث CodeQL 2.27.1 الذي يدعم Kotlin 2.4.20 ويضيف استعلامات جديدة لتحليل الأمان في C/C++ وC# مع تحسين دقة النتائج.",
+      "deck": "أطلقت GitHub تحديثاً جديداً لأداة CodeQL يركز على تحسين دقة التحليل الثابت ودعم إصدارات أحدث من لغات البرمجة.",
+      "summaryBullets": [
+        "إضافة دعم كامل لإصدار Kotlin 2.4.20 وتحسين نماذج تدفق البيانات.",
+        "إدراج استعلامات جديدة لاكتشاف الثغرات في C/C++ وC#.",
+        "تحسين دقة الاستعلامات وتقليل الإيجابيات الكاذبة في عدة لغات.",
+        "تحديث مستخرج Rust لاستخدام rust-analyzer الإصدار 0.0.347."
+      ],
+      "sections": [
+        {
+          "heading": "تحديث CodeQL 2.27.1",
+          "paragraphs": [
+            {
+              "text": "أعلنت GitHub عن إطلاق الإصدار 2.27.1 من محرك التحليل الثابت CodeQL، وهو المحرك الأساسي الذي يقف خلف خدمة فحص الأكواد (Code Scanning) على المنصة. يهدف هذا التحديث إلى مساعدة المطورين في اكتشاف ومعالجة المشكلات الأمنية في أكوادهم البرمجية بشكل أكثر كفاءة ودقة. يتضمن التحديث تحسينات جوهرية في نماذج تدفق البيانات ودعم إصدارات أحدث من لغات البرمجة الشائعة. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-25-codeql-2-27-1-adds-c-and-c-query-and-kotlin-2-4-20-support/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات في C/C++ وC#",
+          "paragraphs": [
+            {
+              "text": "أضاف فريق التطوير نماذج تدفق تلوث (taint flow models) لـ boost::asio::ip::basic_resolver::resolve، بالإضافة إلى ملخصات تدفق (flow summaries) لتقنيات مثل Bloomberg Development Environment وProtocol Buffers. كما تم تحسين نماذج تدفق البيانات لمكتبة Go القياسية 1.27، مما يشمل دوال مثل bytes.CutLast وnet/url.URL.Clone. كما تم توسيع نماذج تدفق البيانات لحزمة strings لتشمل دوال إضافية مثل Clone وCut وJoin. ويمكن الرجوع إلى Back to changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            },
+            {
+              "text": "على صعيد C#، تم إضافة استعلام cs/linq/missed-firstordefault الذي يحدد حلقات foreach التي يمكن التعبير عنها بوضوح أكبر باستخدام طريقة LINQ FirstOrDefault. كما تم تعديل استعلامات cs/linq/missed-* لتجنب اقتراح إعادة كتابة lambdas التي التقطت معلمات in أو out أو ref، مما يمنع اقتراحات غير قابلة للتجميع. كما أصبح استعلام cs/web/missing-token-validation يكتشف ASP.NET Core AutoValidateAntiforgeryTokenAttribute عند تسجيله كفلتر MVC عام، مما يقلل من الإيجابيات الكاذبة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دعم Kotlin وRust",
+          "paragraphs": [
+            {
+              "text": "يشمل التحديث إصلاحاً لاستخراج حجة Foo::class.java عند استخدام مُجمِّع Kotlin K2، مما يقلل من الإيجابيات الكاذبة في استعلامات مثل java/android/implicit-pendingintents. كما أصبح CodeQL يتعرف على خوادم Fastify المهيأة من خلال طرق قابلة للتسلسل مثل fastify().withTypeProvider()، مما يحسن من نسبة الإسناد للمسارات (route attribution) ويقلل من الإيجابيات الكاذبة عندما تحمي الإضافات المسارات بشكل عام.",
+              "links": []
+            },
+            {
+              "text": "في لغة Rust، تم إصلاح حل المسارات لمسارات m::{self} عندما يكون m trait. كما تمت إضافة نماذج تدفق بيانات لـ core::fmt::Write، مما يحسن من اكتشاف الثغرات حيث تُكتب بيانات ملوثة إلى مخازن مخرجات منسقة. يستخرج Rust الآن استخدام rust-analyzer الإصدار 0.0.347، مما يحدّث AST لمكتبة Rust بأنواع عقد جديدة وواجهات برمجية للوصول (accessor APIs).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات في GitHub Actions",
+          "paragraphs": [
+            {
+              "text": "أصبح استعلام actions/unpinned-tag لا يبلغ عن الإجراءات المثبتة (pinned) بواسطة إدخال صالح هيكلياً في .github/workflows/actions.lock للعملية (workflow) المحيطة. كما لا يبلغ الاستعلام عن مراجع المستودع الذاتي $/، مثل uses: $/path/to/action، لأنها تحل إلى نفس المستودع عند الالتزام (commit) الجاري وتكون مثبّتة بطبيعتها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة التوزيع والترقية",
+          "paragraphs": [
+            {
+              "text": "تقوم GitHub تلقائياً بنشر كل إصدار جديد من CodeQL لمستخدمي خدمة فحص الأكواد على github.com. أما مستخدمو GitHub Enterprise Server (GHES) 3.24 فسيشملون الوظائف الجديدة في CodeQL 2.27.1. إذا كنت تستخدم إصداراً أقدم من GHES، يمكنك ترقية إصدار CodeQL يدوياً. كما أصبحت سجلات NuGet الخاصة التي تم تفعيل خيار Replaces base فيها في إعدادات المستودع الخاص بالمنظمة تستبدل تغذيات NuGet الافتراضية عند تنزيل الاعتماديات، حتى عندما يهيئ مشروع تغذيات افتراضية صراحةً.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "CodeQL",
+        "GitHub",
+        "Security",
+        "Static Analysis",
+        "Kotlin",
+        "C++",
+        "Rust"
+      ],
+      "entities": [
+        "GitHub",
+        "CodeQL",
+        "Kotlin",
+        "C++",
+        "C#",
+        "Rust",
+        "Go"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "25 سبتمبر 2026",
+      "modifiedLabel": "25 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 485
+    },
+    "en": {
+      "title": "CodeQL 2.27.1 Released With Kotlin 2.4.20 Support and New Queries",
+      "description": "GitHub has released CodeQL 2.27.1, introducing support for Kotlin 2.4.20, new queries for C/C++ and C#, and various accuracy improvements.",
+      "deck": "GitHub has released CodeQL 2.27.1, bringing new static analysis capabilities, updated language support, and expanded data flow models.",
+      "summaryBullets": [
+        "CodeQL 2.27.1 adds support for Kotlin 2.4.20 alongside new queries for C, C++, and C#.",
+        "The update includes new data flow and taint flow models for various languages including Go, Rust, and C++.",
+        "Several query-accuracy improvements have been implemented to reduce false positives across multiple ecosystems.",
+        "GitHub automatically deploys the new CodeQL version to GitHub code scanning users on github.com."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of CodeQL 2.27.1",
+          "paragraphs": [
+            {
+              "text": "GitHub has officially launched CodeQL 2.27.1, the latest version of the static analysis engine behind GitHub code scanning. This release introduces new queries for C/C++ and C#, support for Kotlin 2.4.20, and several query-accuracy improvements designed to help developers find and remediate security issues in their code more effectively. For comprehensive details regarding the changes, users can consult the official CodeQL 2.27.1 changelog.",
+              "links": [
+                {
+                  "text": "CodeQL 2.27.1 changelog",
+                  "url": "https://codeql.github.com/docs/codeql-overview/codeql-changelog/codeql-cli-2.27.1/"
+                }
+              ]
+            },
+            {
+              "text": "As the static analysis engine powering automated code scanning across the platform, CodeQL continually evolves to handle complex programming paradigms and newer language specifications. Developers looking to review specific CLI release updates can check the dedicated CodeQL 2.27.1 release notes for technical specifications and guidance.",
+              "links": [
+                {
+                  "text": "CodeQL 2.27.1",
+                  "url": "https://codeql.github.com/docs/codeql-overview/codeql-changelog/codeql-cli-2.27.1/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "C, C++, and Rust Enhancements",
+          "paragraphs": [
+            {
+              "text": "The latest release brings significant additions to C and C++ analysis. Specifically, the team added a new cpp/ambiguous-assignment-of-comparison query to detect potentially ambiguous expressions that assign a comparison result to a variable and subsequently use that assignment as a truth value. Furthermore, new taint flow models were added for boost::asio::ip::basic_resolver::resolve , along with flow summaries for Bloomberg Development Environment’s BloombergLP::bdlbb::Blob segmented byte buffer and the Protocol Buffers google::protobuf::MessageLite C++ API.",
+              "links": []
+            },
+            {
+              "text": "Additionally, data flow models for core::fmt::Write have been integrated to improve the detection of vulnerabilities where tainted data is written to formatted output buffers. For Rust development, the Rust extractor now utilizes rust-analyzer version 0.0.347, updating the Rust library AST with new node types and accessor APIs.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Go and Kotlin Updates",
+          "paragraphs": [
+            {
+              "text": "CodeQL 2.27.1 expands data flow models for Go 1.27 standard-library APIs, including bytes.CutLast , database/sql.ConvertAssign , database/sql/driver.RowsColumnScanner.ScanColumn , net/url.URL.Clone , net/url.Values.Clone , strings.CutLast , and the new encoding/json/jsontext package. Furthermore, data flow models for the strings package were extensively expanded to include Clone , Cut , CutPrefix , CutSuffix , Fields , FieldsFunc , Join , Builder , Reader , and Replacer APIs.",
+              "links": []
+            },
+            {
+              "text": "On the Kotlin front, the update adds formal support for Kotlin 2.4.20. Alongside this integration, the release fixes the extraction of Foo::class.java arguments when using the Kotlin K2 compiler, a change that successfully reduces false positives in queries such as java/android/implicit-pendingintents .",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "C# and JavaScript Query Improvements",
+          "paragraphs": [
+            {
+              "text": "C# analysis receives the new cs/linq/missed-firstordefault query, which identifies foreach loops that can be expressed more clearly using LINQ’s FirstOrDefault method. Additionally, cs/linq/missed-* queries will no longer suggest lambda rewrites that capture in , out , or ref parameters, preventing suggestions that would otherwise fail to compile.",
+              "links": []
+            },
+            {
+              "text": "The cs/web/missing-token-validation query now properly recognizes ASP.NET Core’s AutoValidateAntiforgeryTokenAttribute when registered as a global MVC filter through AddControllersWithViews and related methods, reducing false positives for protected actions. In the JavaScript domain, CodeQL now recognizes Fastify servers configured through chainable methods like fastify().withTypeProvider() and fastify().setValidatorCompiler(...) , improving route attribution and plugin interactions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Workflow and Registry Changes",
+          "paragraphs": [
+            {
+              "text": "The actions/unpinned-tag query has been updated so that it no longer reports actions pinned by a structurally valid .github/workflows/actions.lock entry for the enclosing workflow. It also excludes $/ self-repository references—such as uses: $/path/to/action —since they resolve to the same repository at the running commit and are inherently pinned.",
+              "links": []
+            },
+            {
+              "text": "For enterprise environments utilizing private NuGet registries with the Replaces base option enabled in organization-level configurations, CodeQL will now correctly replace default NuGet feeds whenever downloading dependencies, even if a project explicitly configures default feeds.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deployment and Availability",
+          "paragraphs": [
+            {
+              "text": "GitHub automatically deploys every new CodeQL version to users of GitHub code scanning on github.com. For self-hosted environments, GitHub Enterprise Server (GHES) 3.24 will include the new functionality natively. Administrators running an older version of GHES can manually upgrade your CodeQL version to adopt the latest features.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "CodeQL",
+        "GitHub",
+        "Kotlin",
+        "C++",
+        "C#",
+        "Static Analysis",
+        "Security"
+      ],
+      "entities": [
+        "GitHub",
+        "CodeQL",
+        "Kotlin",
+        "Rust",
+        "Go",
+        "Fastify"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "September 25, 2026",
+      "modifiedLabel": "September 25, 2026",
+      "readMinutes": 4,
+      "wordCount": 661
+    }
+  },
+  "datePublished": "2026-09-25T15:13:45.331976+03:00",
+  "dateModified": "2026-09-25T15:13:45.331976+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/codeql-27-adds-and-query-and-kotlin-20-support/hero.webp",
+    "card": "/forum/assets/posts/2026/09/codeql-27-adds-and-query-and-kotlin-20-support/card.webp",
+    "social": "/forum/assets/posts/2026/09/codeql-27-adds-and-query-and-kotlin-20-support/social.jpg",
+    "alt": {
+      "ar": "CodeQL 2.27.1 يضيف دعم Kotlin 2.4.20 واستعلامات C++",
+      "en": "CodeQL 2.27.1 Released With Kotlin 2.4.20 Support and New Queries"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/09/658036625-ee8039c4-10e3-485f-96eb-ecc1e2181f05.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-25-codeql-2-27-1-adds-c-and-c-query-and-kotlin-2-4-20-support/",
+      "type": "official",
+      "title": "CodeQL 2.27.1 adds C and C++ query and Kotlin 2.4.20 support"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-25-codeql-2-27-1-adds-c-and-c-query-and-kotlin-2-4-20-support",
+  "sourceTitle": "CodeQL 2.27.1 adds C and C++ query and Kotlin 2.4.20 support",
+  "trendScore": 116.62,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-25T12:13:45+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/codeql-27-adds-and-query-and-kotlin-20-support.json"
+}
