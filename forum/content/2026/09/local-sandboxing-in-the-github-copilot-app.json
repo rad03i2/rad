@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "63e0251438a40139e79a",
+  "slug": "local-sandboxing-in-the-github-copilot-app",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/local-sandboxing-in-the-github-copilot-app/",
+    "en": "/forum/en/ai/local-sandboxing-in-the-github-copilot-app/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إطلاق ميزة الحجز الرملي المحلي في تطبيق غيت هب كوبايلوت",
+      "description": "أعلنت منصة غيت هب عن إطلاق ميزة الحجز الرملي المحلي في تطبيق غيت هب كوبايلوت بنسخة معاينة عامة لتقليل تأثير الأوامر غير المقصودة.",
+      "deck": "أعلنت منصة غيت هب عن توفير ميزة الحجز الرملي المحلي ضمن تطبيق غيت هب كوبايلوت بهدف تقليص المخاطر المحتملة الناتجة عن تنفيذ أوامر غير مقصودة عبر تقييد الوصول إلى موارد الشبكة والملفات وبيانات الاعتماد.",
+      "summaryBullets": [
+        "إطلاق ميزة الحجز الرملي المحلي في تطبيق غيت هب كوبايلوت ضمن نسخة معاينة عامة.",
+        "الحد من تأثير الأوامر غير المقصودة عبر تقييد الوصول للملفات والشبكة وبيانات الاعتماد.",
+        "إمكانية ضبط إعدادات الحجز الرملي لكل مشروع بشكل مستقل لجلسات المستودعات المحلية.",
+        "الميزة متوقفة افتراضياً ويمكن تفعيلها عبر إعدادات التطبيق أو باستخدام أمر مخصص للجلسات النشطة."
+      ],
+      "sections": [
+        {
+          "heading": "آلية عمل الحجز الرملي المحلي ومستويات الحماية",
+          "paragraphs": [
+            {
+              "text": "أعلنت منصة غيت هب رسمياً عبر سجل التغييرات الرسمي في [GitHub Changelog](https://github.blog/changelog/2026-09-23-local-sandboxing-in-github-copilot-app/) عن إطلاق ميزة الحجز الرملي المحلي (Local sandboxing) في تطبيق غيت هب كوبايلوت (GitHub Copilot app)، وهي ميزة صُممت خصيصاً للمساعدة في الحد من التأثيرات المحتملة للأوامر غير المقصودة التي قد يتم تنفيذها أثناء جلسات العمل.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-23-local-sandboxing-in-the-github-copilot-app/"
+                }
+              ]
+            },
+            {
+              "text": "تعمل هذه الآلية على فرض قيود أمنية مشددة تحد بشكل كبير من قدرة العمليات على الوصول المباشر إلى الملفات المخزنة على الجهاز، وموارد الشبكة المختلفة، فضلاً عن بيانات الاعتماد الحساسة. وتتيح هذه المنظومة للمطورين ضبط السياسات الأمنية بشكل دقيق لكل مشروع على حدة، لتشمل الجلسات المحلية للمستودعات وأشجار العمل البرمجية، مما يرفع مستوى الموثوقية والأمان أثناء استخدام أدوات الذكاء الاصطناعي للمساعدة في البرمجة وتوليد الأكواد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تخصيص ملفات النظام والشبكة وبيانات الاعتماد",
+          "paragraphs": [
+            {
+              "text": "تتوزع إعدادات الحجز الرملي المحلي داخل تطبيق غيت هب كوبايلوت على ثلاثة مسارات رئيسية تمنح المطورين تحكماً كاملاً بالبيئة التشغيلية. الأول يتعلق بنظام الملفات (Filesystem)، حيث يمكن للمستخدمين تحديد قوائم المجلدات التي تمنح صلاحيات قراءة وكتابة إضافية، أو صلاحيات للقراءة فقط، فضلاً عن المجلدات المحظورة بالكامل.",
+              "links": []
+            },
+            {
+              "text": "المسار الثاني يخص شبكة الاتصال (Network)، ويتيح التحكم في إعدادات الاتصال بالإنترنت الصادر والشبكة المحلية. أما المسار الثالث فيتعلق ببيانات الاعتماد (Credentials)، إذ يحدد كيفية التعامل مع بيانات اعتماد جيت (Git credentials) اللازمة لعمليات جيت الموثقة عبر برتوكول HTTPS، بالإضافة إلى بيانات اعتماد واجهة سطر أوامر غيت هب (GitHub CLI credentials) المخصصة لعمليات المصادقة المرتبطة بها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تطبيق السياسات وإدارة الصلاحيات على مستوى المشاريع",
+          "paragraphs": [
+            {
+              "text": "تُعرّف إعدادات المشروع هذه السياسة الدقيقة التي يطلبها التطبيق لحظة بدء الجلسة المعزولة ضمن الحجز الرملي. ومع ذلك، تشير التفاصيل الفنية إلى أن السياسة الفعلية المطبقة قد تكون أكثر تقييداً في حال وجود سياسات تفرضها المؤسسة أو الجهة الإدارية التي تدير بيئة العمل.",
+              "links": []
+            },
+            {
+              "text": "وفي حال عجز نظام التشغيل عن فرض السياسة المطلوبة لأسباب تقنية أو قيود في النظام، فإن الغلاف المعزول (Sandboxed shell) سيتوقف ويفشل في العمل مظهرًا رسالة خطأ، بدلاً من المخاطرة بتشغيل الجلسة من دون بيئة عزل رملية. يضمن هذا السلوك عدم تساهل التطبيق مع أي خرق محتمل للسياسات الأمنية المحددة مسبقاً من قِبل المطورين أو المشرفين على المشاريع البرمجية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "طرق التفعيل والتحكم في الجلسات الجديدة والنشطة",
+          "paragraphs": [
+            {
+              "text": "تأتي ميزة الحجز الرملي المحلي معطلة بشكل افتراضي عند تثبيت التطبيق أو بدء استخدامه. ولتفعيلها، يتعين على المستخدم فتح إعدادات التطبيق، وتحديد المشروع المراد حمايته، ثم تفعيل خيار بدء جلسات جديدة داخل الحيز المعزول عبر خيار \"Sandbox new sessions\" الموجود تحت قسم الحجز الرملي.",
+              "links": []
+            },
+            {
+              "text": "ينطبق هذا التفعيل حصرياً على الجلسات الجديدة التي يتم إنشاؤها داخل المشروع، ولا يسري على الجلسات التي تعمل بالفعل في الوقت الحالي. أما التغييرات التي تُجرى على إعدادات نظام الملفات والشبكة وبيانات الاعتماد، فتسري على الجلسات الجديدة أو عند إعادة تشغيل جلسة قائمة بالفعل.",
+              "links": []
+            },
+            {
+              "text": "وإذا رغب المطور في تمكين الحجز الرملي لجلسة محلية نشطة حالياً من دون الحاجة لتغيير الإعدادات الافتراضية الخاصة بالمشروع بالكامل، فيمكنه ببساطة إدخال الأمر المخصص عبر نافذة التفاعل لتعديل سلوك تلك الجلسة المفردة بشكل فوري ومستقل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "القيود التقنية وحالة المعاينة الحالية",
+          "paragraphs": [
+            {
+              "text": "من الناحية التشغيلية، تجدر الإشارة إلى أن ميزة الحجز الرملي المحلي لا تنطبق على جلسات الحجز الرملي السحابية (Cloud sandbox sessions) أو الجلسات التي تعمل على مضيف بعيد (Remote host)، كما تُهيكل إعدادات الحجز الرملي لكل من تطبيق غيت هب كوبايلوت وواجهة سطر أوامر كوبايلوت وتُضبط بشكل منفصل تماماً عن بعضها البعض.",
+              "links": []
+            },
+            {
+              "text": "تتوفر ميزة الحجز الرملي المحلي في الوقت الحالي ضمن مرحلة المعاينة العامة (Public preview)، مما يعني أنها عرضة للتغيير والتطوير بناءً على ملاحظات المستخدمين وتقييمات الأداء. ويمكن للمطورين الراغبين في التعمق أكثر مطالعة دليل إعداد الميزة عبر [configuring local sandboxing in the GitHub Copilot app](https://gh.io/github-app-local-sandboxing) للاطلاع على الشروحات الفنية والتعليمات التفصيلية.",
+              "links": [
+                {
+                  "text": "configuring local sandboxing in the GitHub Copilot app",
+                  "url": "https://gh.io/github-app-local-sandboxing"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "غيت هب",
+        "كوبايلوت",
+        "الذكاء الاصطناعي",
+        "أمان التطوير",
+        "الحجز الرملي",
+        "أدوات المبرمجين"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Copilot",
+        "GitHub Changelog"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "25 سبتمبر 2026",
+      "modifiedLabel": "25 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 663
+    },
+    "en": {
+      "title": "GitHub Copilot App Introduces Local Sandboxing in Preview",
+      "description": "GitHub has announced local sandboxing for the GitHub Copilot app in public preview, helping to reduce the potential impact of unintended commands.",
+      "deck": "A new local sandboxing feature has been introduced in public preview for the GitHub Copilot app, designed to restrict access to local machine files, network resources, and credentials during sessions.",
+      "summaryBullets": [
+        "Local sandboxing limits access to files, network resources, and credentials on your machine.",
+        "The feature is configured per project for local repository and working tree sessions.",
+        "Settings can be managed through app preferences or controlled by enterprise-managed policies.",
+        "The functionality is currently available in public preview and is turned off by default."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of Local Sandboxing",
+          "paragraphs": [
+            {
+              "text": "GitHub has announced the introduction of local sandboxing for the GitHub Copilot app, aimed at reducing the potential impact of unintended commands by limiting access to files, network resources, and credentials on a user's machine. According to the <a href=\"https://github.blog/changelog/2026-09-23-local-sandboxing-in-the-github-copilot-app/\">GitHub Changelog</a>, users can configure this feature per project specifically for local repository and working tree sessions.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-23-local-sandboxing-in-the-github-copilot-app/"
+                }
+              ]
+            },
+            {
+              "text": "The introduction of local sandboxing provides developers with enhanced isolation controls while working locally. The tool is designed to intercept and manage potential risks before they can affect the broader development environment or sensitive local machine data.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Configurable Policy Domains",
+          "paragraphs": [
+            {
+              "text": "Within the GitHub Copilot app, the local sandboxing system governs three primary policy domains: filesystem controls, network restrictions, and credential management.",
+              "links": []
+            },
+            {
+              "text": "For the filesystem, the configuration includes additional read/write lists, additional read-only lists, and denied folder lists. On the network side, settings manage outbound internet access and local network connectivity. Meanwhile, credential handling covers Git credentials required for authenticated HTTPS operations, as well as GitHub CLI credentials for authentication purposes.",
+              "links": []
+            },
+            {
+              "text": "These defined project settings describe the precise policy that the application requests whenever a sandboxed session begins. However, the effective policy enforced may become even more restrictive if broader enterprise-managed settings apply to the environment.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Operating System Enforcement and Error Handling",
+          "paragraphs": [
+            {
+              "text": "The security architecture of the sandbox relies heavily on the underlying host operating system to properly enforce the requested restrictions. If a user's operating system cannot enforce the requested policy, the sandboxed shell will fail with an explicit error rather than running without a sandbox.",
+              "links": []
+            },
+            {
+              "text": "This fail-safe behavior ensures that developers are immediately alerted when safety constraints cannot be fully realized, preventing accidental execution in an unverified or insufficiently isolated state.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Enabling and Managing Sandbox Sessions",
+          "paragraphs": [
+            {
+              "text": "By default, local sandboxing is turned off in the app. To activate it, developers can open the application settings, select their project, and turn on the \"Sandbox new sessions\" toggle located under the \"Sandbox\" section. Developers should note that this setting applies exclusively to new sessions created within the project and does not retroactively alter sessions that are already running.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, any subsequent modifications made to filesystem, network, or credential settings will apply to newly initiated sessions or whenever an existing session undergoes a restart.",
+              "links": []
+            },
+            {
+              "text": "For users who need to enable sandboxing on an active local session instantly without altering the overall project default, entering a specific command string directly into the session environment can dynamically apply the change. Developers seeking detailed guidance on setup procedures can review the documentation regarding <a href=\"https://gh.io/github-app-local-sandboxing\">configuring local sandboxing in the GitHub Copilot app</a>.",
+              "links": [
+                {
+                  "text": "configuring local sandboxing in the GitHub Copilot app",
+                  "url": "https://gh.io/github-app-local-sandboxing"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Scope and Preview Status",
+          "paragraphs": [
+            {
+              "text": "It is important for users to understand the operational boundaries of the new feature. Local sandboxing does not apply to cloud sandbox sessions or to sessions running on a remote host.",
+              "links": []
+            },
+            {
+              "text": "Additionally, sandbox settings for the GitHub Copilot app and the Copilot CLI must be configured separately from one another.",
+              "links": []
+            },
+            {
+              "text": "GitHub has emphasized that local sandboxing is currently released in public preview and remains subject to change as feedback is gathered from the developer community.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "GitHub Copilot",
+        "Security",
+        "Sandboxing",
+        "AI",
+        "Developer Tools"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Copilot"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 25, 2026",
+      "modifiedLabel": "September 25, 2026",
+      "readMinutes": 3,
+      "wordCount": 588
+    }
+  },
+  "datePublished": "2026-09-25T04:38:26.201109+03:00",
+  "dateModified": "2026-09-25T04:38:26.201109+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/local-sandboxing-in-the-github-copilot-app/hero.webp",
+    "card": "/forum/assets/posts/2026/09/local-sandboxing-in-the-github-copilot-app/card.webp",
+    "social": "/forum/assets/posts/2026/09/local-sandboxing-in-the-github-copilot-app/social.jpg",
+    "alt": {
+      "ar": "إطلاق ميزة الحجز الرملي المحلي في تطبيق غيت هب كوبايلوت",
+      "en": "GitHub Copilot App Introduces Local Sandboxing in Preview"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/09/656087900-e37216e5-3bd4-448b-bcb5-03bd78440434.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-23-local-sandboxing-in-the-github-copilot-app/",
+      "type": "official",
+      "title": "Local sandboxing in the GitHub Copilot app"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-23-local-sandboxing-in-the-github-copilot-app",
+  "sourceTitle": "Local sandboxing in the GitHub Copilot app",
+  "trendScore": 105.54,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-25T01:38:26+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/local-sandboxing-in-the-github-copilot-app.json"
+}
