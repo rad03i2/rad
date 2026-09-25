@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "2a26e0bf4bcecd1520a4",
+  "slug": "deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai/",
+    "en": "/forum/en/ai/deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai/"
+  },
+  "locales": {
+    "ar": {
+      "title": "AWS تتيح استنساخ الصوت الفوري عبر نموذج Qwen3-TTS على SageMaker",
+      "description": "تتيح AWS نشر نموذج Qwen3-TTS على SageMaker JumpStart لإنشاء أصوات مخصصة فورية. يتيح الحل استنساخ الصوت من مقطع قصير مع الحفاظ على الهوية عبر اللغات المختلفة.",
+      "deck": "أطلقت AWS إمكانية نشر نموذج تحويل النص إلى كلام من عائلة Qwen3 على منصات SageMaker، مما يمكّن المطورين من استنساخ الأصوات بشكل فوري ومخصص دون الحاجة لإعادة تدريب النماذج.",
+      "summaryBullets": [
+        "نشر نموذج Qwen3-TTS-12Hz-1.7B-Base عبر Amazon SageMaker JumpStart لتوفير نقطة نهاية استنتاج فوري.",
+        "دعم استنساخ الصوت من مقاطع مرجعية قصيرة مع الحفاظ على خصائص النطق عبر 10 لغات.",
+        "إدارة كاملة للبنية التحتية عبر SageMaker AI تشمل التوسع التلقائي ومراقبة الأداء.",
+        "تحكم كامل في البيانات وتكاليف الاستخدام بناءً على موارد الحوسبة المستهلكة."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق ميزة استنساخ الصوت الفوري",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Amazon عن إمكانية نشر نموذج Qwen3-TTS-12Hz-1.7B-Base المتاح للعامة من خلال خدمة Amazon SageMaker JumpStart. يتيح هذا النشر إنشاء نقطة نهاية استنتاج (Inference Endpoint) مُدارة بالكامل تدعم التفاعل الفوري. تتيح هذه التقنية للمستخدمين استنساخ هوية صوتية محددة من تسجيل مرجعي قصير، دون الحاجة إلى إعادة تدريب النموذج على بيانات ضخمة.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker JumpStart",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-jumpstart.html"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد آلية العمل على تحليل الخصائص الصوتية للمتحدث المرجعي، مثل طبقة الصوت والنغمة والإيقاع، وتطبيقها على نصوص جديدة. هذا النهج يوفر مرونة عالية للمطورين وفرق الوسائط التعليمية، حيث يمكنهم إنشاء تجارب صوتية مخصصة وتوطين المحتوى متعدد اللغات بكفاءة أكبر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تفاصيل تقنية لنموذج Qwen3-TTS",
+          "paragraphs": [
+            {
+              "text": "يُعد نموذج Qwen3-TTS جزءاً من عائلة نماذج تحويل النص إلى كلام طورتها فريق Qwen في Alibaba Cloud. يدعم النموذج عشر لغات رئيسية تشمل الصينية والإنجليزية واليابانية والكورية والألمانية والفرنسية والروسية والبرتغالية والإسبانية والإيطالية. يعتمد النموذج على مرمّز صوتي (Tokenizer) يعمل بتردد 12 هرتز، مما يدعم التوليد البثي (Streaming) لتقليل زمن الاستجابة في السيناريوهات التفاعلية.",
+              "links": []
+            },
+            {
+              "text": "يتميز هذا الإصدار بقدرته على استنساخ الصوت من بضع ثوانٍ فقط من التسجيل الصوتي. كما يدعم ميزة الاستنساخ بين اللغات (Cross-lingual cloning)، حيث يمكن التقاط الصوت بلغة معينة وتوليد الكلام بلغة أخرى مع الحفاظ على الهوية الصوتية للمتحدث الأصلي. يختلف هذا عن الإصدار المخصص (CustomVoice) الذي يعتمد على مجموعة ثابتة من المتحدثين المحددين مسبقاً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مزايا النشر على Amazon SageMaker AI",
+          "paragraphs": [
+            {
+              "text": "يوفر نشر النموذج على منصة Amazon SageMaker AI مزايا تشغيلية واقتصادية مهمة. أولاً، يمنح الشركات تحكماً كاملاً في بياناتها الصوتية، حيث تبقى داخل حساب AWS الخاص بها ولا تغادر البيئة السحابية. ثانياً، تعتمد التكاليف على استخدام موارد الحوسبة الفعلية بدلاً من التسعير لكل حرف، مما يجعل الحل أكثر كفاءة للاستخدامات المكثفة.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker/ai/"
+                }
+              ]
+            },
+            {
+              "text": "تتولى المنصة إدارة البنية التحتية الأساسية، بما في ذلك توفير الخوادم، ومراقبة الصحة، والتوسع التلقائي. هذا يعني أن المطورين لا يحتاجون إلى إدارة خوادم GPU بشكل يدوي، مما يقلل من العبء التشغيلي ويسمح بالتركيز على تطوير التطبيقات. كما يتيح هذا النهج تخصيص النموذج ليناسب مجالات عمل محددة دون تعقيدات تقنية كبيرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية المعمارية للاستنتاج الفوري",
+          "paragraphs": [
+            {
+              "text": "يعمل النظام وفق نمط الاستنتاج الفوري القياسي في SageMaker. يرسل العميل طلباً عبر HTTP يحتوي على النص المستهدف، والتسجيل الصوتي المرجعي (مشفراً بـ Base64)، ونص التسجيل (Transcript). يتم توجيه الطلب إلى حاوية تقديم (Serving Container) تعمل على وحدة معالجة رسومية (GPU).",
+              "links": []
+            },
+            {
+              "text": "تتكون العملية من مرحلتين رئيسيتين: مرحلة 'Talker' التي تولد رموز الكلام من النص والصوت المرجعي، ومرحلة 'Code2Wav' التي تحول هذه الرموز إلى موجات صوتية. تُعاد النتيجة النهائية للعميل بصيغة WAV. تتطلب هذه العملية ضبطاً دقيقاً لذاكرة GPU لضمان الأداء الأمثل، حيث يتم حجز الذاكرة مسبقاً بناءً على إعدادات الاستخدام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات التنفيذ والإعداد",
+          "paragraphs": [
+            {
+              "text": "لتفعيل هذه الميزة، يحتاج المستخدمون إلى حساب AWS مع صلاحيات مناسبة لخدمات Amazon SageMaker AI و Amazon Simple Storage Service (Amazon S3). كما يتطلب الأمر هوية IAM تملك صلاحيات إنشاء النماذج ونقاط النهاية واستدعائها. يمكن تنفيذ النشر باستخدام Amazon SageMaker Python SDK من بيئة Studio أو عبر كائنات JumpStartModel.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker Python SDK",
+                  "url": "https://github.com/aws/sagemaker-python-sdk"
+                }
+              ]
+            },
+            {
+              "text": "يُنصح باستخدام وحدة معالجة رسومية من نوع ml.g6.4xlarge (مزودة بـ NVIDIA L4 GPU بسعة 24 جيجابايت)، وهي كافية لتشغيل نموذج 1.7B. يستغرق الوصول إلى حالة الخدمة (InService) بضع دقائق أثناء تحميل النموذج على الذاكرة. يمكن مراقبة الحالة عبر وحدة التحكم أو واجهة API الخاصة بـ describe_endpoint.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تطبيقات عملية محتملة",
+          "paragraphs": [
+            {
+              "text": "تفتح هذه التقنية آفاقاً واسعة في مجالات متعددة. في مجال التوطين، يمكن ترجمة المحتوى إلى لغات متعددة مع الحفاظ على صوت المتحدث الأصلي. في مراكز الاتصال، يمكن استخدام صوت علامة تجارية ثابت ومتسق في ردود المساعدات الافتراضية. كما يمكن استخدامها في التعليم الإلكتروني والكتب الصوتية لتقديم المحتوى بصوت المعلم أو المؤلف المفضل.",
+              "links": []
+            },
+            {
+              "text": "في مجال الذكاء الاصطناعي التفاعلي، يدعم البث الفوري وكفاءة زمن الاستجابة إنشاء وكلاء صوتيين تفاعليين. كما يمكن للمبدعين استخدام التقنية لاختبار الحوارات والمؤثرات الصوتية قبل الإنتاج النهائي في الاستوديوهات، مما يوفر وقتاً وتكلفة في مراحل التطوير المبكرة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "تحويل النص إلى كلام",
+        "استنساخ الصوت",
+        "AWS",
+        "SageMaker",
+        "Qwen3",
+        "الحوسبة السحابية"
+      ],
+      "entities": [
+        "Amazon Web Services (AWS)",
+        "Qwen3-TTS",
+        "Amazon SageMaker AI",
+        "Alibaba Cloud",
+        "NVIDIA"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "25 سبتمبر 2026",
+      "modifiedLabel": "25 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 678
+    },
+    "en": {
+      "title": "Deploying Real-Time Voice Cloning on Amazon SageMaker AI",
+      "description": "Learn how to deploy the Qwen3-TTS-12Hz-1.7B-Base text-to-speech model on Amazon SageMaker AI for real-time voice cloning and cross-lingual synthesis.",
+      "deck": "Developers can now deploy the Qwen3-TTS-12Hz-1.7B-Base text-to-speech model from Amazon SageMaker JumpStart to a fully managed real-time inference endpoint for personalized speech generation.",
+      "summaryBullets": [
+        "Deploy Qwen3-TTS-12Hz-1.7B-Base from Amazon SageMaker JumpStart to a fully managed real-time endpoint.",
+        "Clone speaker voices from short reference audio clips without retraining the underlying model.",
+        "Support cross-lingual cloning to preserve vocal identity across 10 different languages.",
+        "Maintain complete data control and cost efficiency within your AWS environment."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of Qwen3-TTS on AWS",
+          "paragraphs": [
+            {
+              "text": "Voice cloning allows applications to generate new speech in a target speaker's voice using only a short reference recording, eliminating the need to retrain a model. Users can deploy the publicly available Qwen3-TTS-12Hz-1.7B-Base text-to-speech model directly from Amazon SageMaker JumpStart to a fully managed real-time inference endpoint. For more details, developers can refer to the AWS Machine Learning Blog.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai/"
+                },
+                {
+                  "text": "Amazon SageMaker JumpStart",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-jumpstart.html"
+                }
+              ]
+            },
+            {
+              "text": "This text-to-speech family was developed by the Qwen team at Alibaba Cloud and covers 10 languages: Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, and Italian. The models utilize the Qwen3-TTS-Tokenizer-12Hz speech tokenizer and support streaming generation for low-latency, interactive scenarios. The base variant performs voice cloning from only a few seconds of user audio.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Capabilities and Use Cases",
+          "paragraphs": [
+            {
+              "text": "Voice cloning reproduces the vocal identity of a specific speaker by analyzing a short recording along with its transcript, allowing the system to synthesize new text in that same voice. Media teams, educators, and application developers can use this capability to create personalized voice experiences and localize multilingual content. Additionally, the Qwen3-TTS-12Hz-1.7B-CustomVoice variant generates speech from a fixed set of predefined speakers rather than a user-supplied reference clip.",
+              "links": [
+                {
+                  "text": "CustomVoice",
+                  "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice"
+                }
+              ]
+            },
+            {
+              "text": "The model also supports cross-lingual cloning, enabling a voice captured from a reference in one language to generate speech in another while maintaining the speaker's vocal identity. Common applications include content localization, consistent brand voices for virtual assistants, e-learning narration, creative prototyping, and real-time conversational AI workflows.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deployment Architecture on Amazon SageMaker AI",
+          "paragraphs": [
+            {
+              "text": "Running a self-hosted voice cloning model allows organizations to control costs and keep audio data securely inside their AWS environment. Utilizing Amazon SageMaker AI, engineering teams can run the model on a fully managed real-time endpoint that handles infrastructure provisioning, health monitoring, and automatic scaling without requiring direct management of underlying GPU servers.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker/ai/"
+                }
+              ]
+            },
+            {
+              "text": "The deployment follows standard real-time inference patterns where clients send HTTP requests containing target text, base64-encoded reference audio, and transcripts. Amazon SageMaker AI then routes these requests to the vLLM-Omni serving container running on a GPU instance, such as an ml.g6.4xlarge instance featuring an NVIDIA L4 GPU.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://docs.aws.amazon.com/sagemaker/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and Implementation",
+          "paragraphs": [
+            {
+              "text": "To get started, administrators need an AWS account with access to Amazon SageMaker AI and Amazon Simple Storage Service (Amazon S3), along with appropriate AWS Identity and Access Management (IAM) permissions. Developers can execute the deployment via Amazon SageMaker Studio or a local environment using the Amazon SageMaker Python SDK.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                },
+                {
+                  "text": "AWS Identity and Access Management (IAM)",
+                  "url": "https://docs.aws.amazon.com/iam/"
+                },
+                {
+                  "text": "Amazon SageMaker Studio",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated.html"
+                }
+              ]
+            },
+            {
+              "text": "The JumpStart container manages model artifacts and provides a pre-built serving container, eliminating the need to write a custom inference handler. Users construct a JumpStartModel object, call its deployment methods, and invoke the resulting endpoint using the Amazon SageMaker runtime client.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker",
+        "Qwen3-TTS",
+        "Voice Cloning",
+        "AWS",
+        "Artificial Intelligence",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Qwen",
+        "Alibaba Cloud",
+        "Amazon SageMaker AI"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 25, 2026",
+      "modifiedLabel": "September 25, 2026",
+      "readMinutes": 3,
+      "wordCount": 509
+    }
+  },
+  "datePublished": "2026-09-25T23:34:04.915436+03:00",
+  "dateModified": "2026-09-25T23:34:04.915436+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai/hero.webp",
+    "card": "/forum/assets/posts/2026/09/deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai/card.webp",
+    "social": "/forum/assets/posts/2026/09/deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai/social.jpg",
+    "alt": {
+      "ar": "AWS تتيح استنساخ الصوت الفوري عبر نموذج Qwen3-TTS على SageMaker",
+      "en": "Deploying Real-Time Voice Cloning on Amazon SageMaker AI"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-20646-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai/inline-01.webp",
+        "width": 1068,
+        "height": 602,
+        "alt": {
+          "ar": "AWS تتيح استنساخ الصوت الفوري عبر نموذج Qwen3-TTS على SageMaker",
+          "en": "Architecture diagram: a client sends text and base64-encoded reference audio to a SageMaker AI real-time endpoint, which routes the request to the vLLM-Omni container’s talker and code2wav stages and returns synthesized"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-20646-1.jpeg"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai/",
+      "type": "official",
+      "title": "Deploying real-time personalized speech with Qwen3-TTS on Amazon SageMaker AI"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai",
+  "sourceTitle": "Deploying real-time personalized speech with Qwen3-TTS on Amazon SageMaker AI",
+  "trendScore": 131.29,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-25T20:34:04+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai.json"
+}
