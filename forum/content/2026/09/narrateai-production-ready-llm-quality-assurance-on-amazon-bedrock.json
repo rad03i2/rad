@@ -1,0 +1,365 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "809c19bea702503bd68a",
+  "slug": "narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/",
+    "en": "/forum/en/ai/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/"
+  },
+  "locales": {
+    "ar": {
+      "title": "NarrateAI يرفع دقة نماذج الذكاء الاصطناعي إلى 99% على Amazon Bedrock",
+      "description": "تفصيل تقني لخمس تقنيات متقدمة تضمن جودة مخرجات نماذج اللغة الكبيرة في الوقت الفعلي، مع تقليل الهلوسة الرقمية وتحسين سرعة الاستجابة عبر بنية تحتية سحابية.",
+      "deck": "تقدم AWS حلاً هندسياً متكاملاً يجمع بين التوجيه التكيفي والتقييم اللحظي لضمان دقة البيانات في تطبيقات الذكاء الاصطناعي المؤسسية.",
+      "summaryBullets": [
+        "تحقيق دقة رقمية تقارب 99% عبر خمس تقنيات متداخلة تعمل كسلسلة اعتمادية.",
+        "توجيه الاستعلامات بناءً على حجم البيانات لتقليل زمن الاستجابة وتكاليف المعالجة.",
+        "تفعيل التقييم اللحظي للمخرجات أثناء البث المباشر بدلاً من الانتظار حتى اكتمال النص.",
+        "استخدام آلية تبديل متعددة الحسابات والنماذج لتجنب اختناقات معدل الطلبات (Throttling).",
+        "التحقق من صحة البيانات عبر تصعيد تدريجي يبدأ بالمطابقة الدقيقة وينتهي بالتحقق الدلالي."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات ضمان الجودة في بيئات الإنتاج",
+          "paragraphs": [
+            {
+              "text": "تواجه الشركات تحديات كبيرة عند دمج نماذج اللغة الكبيرة (LLM) في عملياتها اليومية، حيث أن الأخطاء الرقمية أو بطء الاستجابة أمام الإدارة العليا قد يحمل عواقب مهنية فورية. لا يمكن لنموذج ذكاء اصطناعي وحده ضمان الدقة أو السرعة، مما يؤدي في بيئات الإنتاج إلى ظهور أخطاء مثل الهلوسة في المقاييس، وتقييد واجهات برمجة التطبيقات، وتباطؤ عمليات التحقق. لسد هذه الفجوة، يتطلب الأمر نظاماً متكاملاً لضمان الجودة مدمجاً في كل خطوة، بدءاً من استرجاع البيانات وحتى تسليم الاستجابة النهائية. يركز هذا النهج على بناء طبقات حماية هندسية تعالج أوجه القصور الفردية للنماذج. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "يأتي هذا الحل ضمن سلسلة مقالات تقنية تشرح كيفية تحويل مخرجات الذكاء الاصطناعي إلى أدوات موثوقة لاتخاذ القرارات. يعتمد النظام على بنية تحتية سحابية قوية تتيح بناء الوكلاء وتحسينهم على نطاق واسع. الهدف ليس مجرد توليد نصوص، بل ضمان أن تكون هذه النصوص دقيقة رقمياً ومهنية الصياغة، وقادرة على التعامل مع الاستخدام المتزامن العالمي دون تدهور في الأداء. هذا يتطلب تفكيراً هندسياً يتجاوز مجرد استدعاء النموذج، ليشمل إدارة الدورة الكاملة للبيانات. ويمكن الرجوع إلى Artificial Intelligence للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التوجيه التكيفي للخطوط الأنابيب",
+          "paragraphs": [
+            {
+              "text": "تختلف استعلامات المستخدمين بشكل هائل في حجم البيانات المطلوبة للإجابة عنها. قد تتطلب أسئلة مركزة مثل \"ما هو أداء فريقي هذا الربع؟\" قراءة عدد قليل من الأقسام، بينما تحتاج طلبات شاملة مثل \"تحليل أداء إقليمي كامل\" إلى تجميع مئات الأقسام. يتوقع المستخدمون نفس زمن الاستجابة في كلتا الحالتين، مما يستلزم استراتيجية توجيه ذكية. لا تعمل استراتيجية معالجة واحدة لجميع الاستعلامات، حيث أن الطرق السريعة قد تفشل عند تجاوز حدود السياق، والطرق البطيئة تضيف تكاليف غير ضرورية للاستعلامات البسيطة.",
+              "links": []
+            },
+            {
+              "text": "يعتمد النظام على مرحلة تسمى \"التجميع الواعي بالوضع\" لتصنيف كل استعلام مرة واحدة. تستخدم هذه المرحلة استراتيجية تعبئة ذكية لملء نوافذ السياق مع الحفاظ على أولوية الأقسام. إذا كان حجم البيانات أقل من عتبة محددة، يسلك الاستعلام \"المسار السريع\" عبر استدعاء واحد للنموذج. أما إذا تجاوز الحجم العتبة، فيسلك \"المسار العادي\" الذي يقسم البيانات إلى دفعات متوازية. هذا التوجيه يضمن معالجة حوالي 90% من الاستعلامات عبر المسار الأسرع والأقل تكلفة، مع الحفاظ على الجودة الكاملة للاستعلامات المعقدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التبديل متعدد الحسابات والنماذج",
+          "paragraphs": [
+            {
+              "text": "من أكبر التحديات في بيئات الإنتاج هو تقييد معدل الطلبات (Throttling) الذي يحدث عندما تتجاوز الطلبات السعة المتاحة لنموذج معين. لتجاوز هذا، يطبق النظام تقنية \"التبديل متعدد النماذج عبر الحسابات\". هذه الآلية توسع سعة الاستدلال المتاحة من خلال توزيع الطلبات عبر مساحات حصة مستقلة لعدة حسابات ونماذج. بدلاً من الاعتماد على مصدر واحد قد يتعطل أو يتباطأ، يعمل النظام على تنويع مصادر الاستدلال لضمان استمرارية الخدمة.",
+              "links": []
+            },
+            {
+              "text": "يعمل هذا التبديل على تقليل التأخير الذي يلاحظه المستخدم بشكل كبير. عندما يكتشف النظام ضغطاً على مسار معين، يحول الطلبات تلقائياً إلى مسارات بديلة متاحة. هذا يضمن أن تبقى الاستجابة في الوقت الفعلي حتى تحت أحمال العمل العالية. تعتمد هذه التقنية على إدارة دقيقة لواجهات برمجة التطبيقات ومفاتيح الوصول، مما يجعل النظام مرناً وقادراً على الصمود أمام تقلبات الطلبات العالمية المتزامنة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التقييم اللحظي أثناء البث",
+          "paragraphs": [
+            {
+              "text": "تقليدياً، تنتظر أنظمة الجودة حتى اكتمال توليد النص بالكامل قبل تقييمه، مما يضيف زمن تأخير كبيراً. يتجاوز هذا النظام ذلك عبر \"التقييم اللحظي للبث\". يتم التحقق من صحة كل فقرة فور توليدها، مما يسمح بتداخل عمليات الفحص مع عملية التوليد نفسها. هذا يعني أن المستخدم يبدأ في رؤية النتائج الصحيحة قبل انتهاء النموذج من كتابة الإجابة الكاملة، مما يحسن تجربة المستخدم ويقلل زمن الانتظار الإجمالي.",
+              "links": []
+            },
+            {
+              "text": "يعمل إطار التقييم المركب (Composite Evaluation Framework) بالتوازي مع التوليد، حيث يشغل عدة قيمين مستقلين لكل فقرة. يسمح هذا النهج باكتشاف الأخطاء في وقت مبكر جداً، مما يوفر فرصة لتصحيح المسار أو إعادة التوليد إذا لزم الأمر دون انتظار نهاية العملية. هذا التوازي بين التوليد والتقييم هو ما يمكّن النظام من الحفاظ على سرعة البث المباشر مع ضمان جودة المحتوى المقدم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحقق من دقة البيانات الرقمية",
+          "paragraphs": [
+            {
+              "text": "تعتبر الهلوسة الرقمية (إعطاء أرقام غير صحيحة) من أخطر أخطاء نماذج اللغة. لمعالجتها، يستخدم النظام تقنية \"التحقق من دقة البيانات\" عبر سلسلة تصعيدية من مرحلتين. تبدأ المرحلة الأولى بـ \"المطابقة الدقيقة\" الأرخص تكلفة، حيث يتم مقارنة الأرقام في النص المولد مع المصدر الأصلي مباشرة. إذا نجحت المطابقة، يتم قبول الفقرة. وإذا فشلت أو كانت غير مؤكدة، يتم التصعيد إلى المرحلة الثانية.",
+              "links": []
+            },
+            {
+              "text": "في المرحلة الثانية، يتم استخدام \"التحقق الدلالي\" الذي يفهم المعنى والسياق بدلاً من الاعتماد على المطابقة الحرفية. هذا يضمن اكتشاف الأخطاء الدقيقة التي قد تخدع المطابقة البسيطة. من خلال هذا التدرج، يحافظ النظام على كفاءة المعالجة (بتجنب استخدام التحليل الدلالي المكلف في كل مرة) مع تحقيق دقة رقمية تقارب 99%. هذا التوازن بين التكلفة والدقة هو ما يجعل الحل قابلاً للتطبيق في بيئات الإنتاج واسعة النطاق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النتائج والأثر الهندسي",
+          "paragraphs": [
+            {
+              "text": "تعمل هذه التقنيات الخمس معاً كنظام منسق، حيث تغذي كل طبقة الطبقة التالية. يبدأ التوجيه التكيفي بتحديد المسار الأمثل، ثم يضمن التبديل متعدد الحسابات توفر السعة، ويتولى التقييم اللحظي مراقبة الجودة أثناء التوليد، ويختتم التحقق من البيانات بضمان صحة الأرقام. النتيجة النهائية هي استجابة موثوقة، سريعة، ودقيقة، تصل إلى المستخدمين في الوقت الفعلي.",
+              "links": []
+            },
+            {
+              "text": "يوفر هذا النموذج الهندسي دليلاً عملياً للمهندسين والمعماريين الذين يبنيون تطبيقات ذكاء اصطناعي تعتمد على نماذج اللغة الكبيرة. بدلاً من الاعتماد على قوة النموذج وحده، يبرز أهمية بناء طبقات ضمان جودة حول النموذج. هذا النهج يحوّل الذكاء الاصطناعي من أداة تجريبية إلى بنية تحتية مؤسسية قادرة على دعم قرارات الأعمال الحرجة بدقة وسرعة عاليتين.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Amazon Bedrock",
+        "جودة النماذج",
+        "معالجة اللغة الطبيعية",
+        "الحوسبة السحابية",
+        "تقييم الذكاء الاصطناعي",
+        "هندسة البرمجيات"
+      ],
+      "entities": [
+        "NarrateAI",
+        "Amazon Bedrock",
+        "AWS",
+        "LLM",
+        "Amazon Bedrock AgentCore"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "26 سبتمبر 2026",
+      "modifiedLabel": "26 سبتمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 931
+    },
+    "en": {
+      "title": "NarrateAI Brings LLM Quality Assurance to Amazon Bedrock",
+      "description": "NarrateAI implements five advanced quality assurance techniques on Amazon Bedrock to achieve 99% numerical accuracy with real-time streaming.",
+      "deck": "The second installment of the NarrateAI series details the engineering practices used to achieve production-ready quality assurance and high numerical accuracy for executive business reviews.",
+      "summaryBullets": [
+        "NarrateAI utilizes a two-layer architecture built on Amazon Bedrock AgentCore for batch processing and real-time interaction.",
+        "Five core techniques achieve approximately 99% numerical accuracy while streaming responses in real time.",
+        "Adaptive pipeline orchestration routes queries dynamically based on total aggregated section volume.",
+        "Cross-account multi-model failover helps reduce user-visible LLM API throttling during concurrent usage."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to NarrateAI Quality Assurance",
+          "paragraphs": [
+            {
+              "text": "Executives relying on conversational agentic AI assistants during live business reviews require absolute speed and precision. In production environments, gaps such as hallucinated metrics, API throttling, validation latency, and subjective language can cause immediate professional challenges. A capable large language model alone cannot resolve these issues, prompting the development of production-ready quality assurance mechanisms.",
+              "links": []
+            },
+            {
+              "text": "Detailed on the AWS Machine Learning Blog, NarrateAI transforms business intelligence for over 4,000 AWS executive leaders. The system operates via a two-layer architecture built on Amazon Bedrock AgentCore, which allows teams to build, connect, and optimize agents at scale using any framework or model.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/"
+                },
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "The Five Quality Assurance Techniques",
+          "paragraphs": [
+            {
+              "text": "To bridge the gap between raw LLM outputs and executive-ready reliability, NarrateAI integrates five specialized techniques deployed on Amazon Bedrock. These methods work together as a coordinated system to address distinct failure modes, ranging from data retrieval to final response delivery.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "The five mechanisms include adaptive pipeline orchestration, cross-account multi-model failover, real-time streaming evaluation, a composite evaluation framework, and data accuracy verification. Together, these layers form a structured dependency chain that turns raw queries into validated real-time responses while reaching approximately 99% numerical accuracy.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Adaptive Pipeline Orchestration",
+          "paragraphs": [
+            {
+              "text": "Query complexity and data volumes vary significantly across enterprise knowledge documents. While focused queries might only require a few document sections, comprehensive requests can demand synthesis across hundreds of sources. To handle this heterogeneity without sacrificing response time, adaptive pipeline orchestration routes each query based on its total aggregated section volume.",
+              "links": []
+            },
+            {
+              "text": "The pipeline processes queries through up to three distinct phases. First, Mode-Aware Consolidation packs retrieved sections and determines the optimal route using a character-count threshold. Smaller data volumes take a fast path via a single LLM invocation, while larger volumes use a normal path with parallel batch processing. Finally, conditional consolidation merges parallel results when necessary.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Failover and Real-Time Evaluation",
+          "paragraphs": [
+            {
+              "text": "During periods of heavy concurrent usage, enterprise applications frequently encounter API limits and capacity bottlenecks. Cross-account multi-model failover addresses this by expanding available inference capacity across independent model-account quota spaces, effectively minimizing user-visible throttling during executive sessions.",
+              "links": []
+            },
+            {
+              "text": "Additionally, real-time streaming evaluation validates each paragraph the moment it is generated, overlapping quality checks directly with the streaming output. The composite evaluation framework then runs multiple independent evaluators in parallel against each paragraph to maintain strict professional standards.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Data Accuracy Verification",
+          "paragraphs": [
+            {
+              "text": "Catching numerical hallucinations requires rigorous checks before the information reaches leadership. NarrateAI applies a data accuracy verification mechanism through a two-stage cascade. The system starts with cost-effective exact matching and escalates to semantic verification only when necessary.",
+              "links": []
+            },
+            {
+              "text": "These engineering practices build upon previous deployments outlined in the previous post, providing a robust framework for enterprise-grade conversational AI. By combining multiple verification strategies, the architecture ensures that responses delivered during live reviews remain trustworthy and precise.",
+              "links": [
+                {
+                  "text": "previous post",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-aws-smgs-uses-an-ai-powered-conversational-assistant-to-transform-business-management-with-amazon-bedrock-agentcore/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "NarrateAI",
+        "Amazon Bedrock",
+        "Amazon Bedrock AgentCore",
+        "Artificial Intelligence",
+        "AWS",
+        "Large Language Models",
+        "Quality Assurance"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Bedrock",
+        "Amazon Bedrock AgentCore",
+        "NarrateAI"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 26, 2026",
+      "modifiedLabel": "September 26, 2026",
+      "readMinutes": 3,
+      "wordCount": 540
+    }
+  },
+  "datePublished": "2026-09-26T14:42:09.651140+03:00",
+  "dateModified": "2026-09-26T14:42:09.651140+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/09/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/09/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "NarrateAI يرفع دقة نماذج الذكاء الاصطناعي إلى 99% على Amazon Bedrock",
+      "en": "NarrateAI Brings LLM Quality Assurance to Amazon Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/22/ML-20546-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/inline-01.webp",
+        "width": 943,
+        "height": 1050,
+        "alt": {
+          "ar": "NarrateAI يرفع دقة نماذج الذكاء الاصطناعي إلى 99% على Amazon Bedrock",
+          "en": "Layered dependency chain of the five quality assurance techniques, from query intake to validated real-time response"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/20546-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/inline-02.webp",
+        "width": 1101,
+        "height": 1050,
+        "alt": {
+          "ar": "NarrateAI يرفع دقة نماذج الذكاء الاصطناعي إلى 99% على Amazon Bedrock",
+          "en": "Failover cascade across a 3-model by 3-account grid of independent quota spaces"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/20546-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/inline-03.webp",
+        "width": 1400,
+        "height": 812,
+        "alt": {
+          "ar": "NarrateAI يرفع دقة نماذج الذكاء الاصطناعي إلى 99% على Amazon Bedrock",
+          "en": "Load test results for 100+ concurrent users streaming responses from Amazon Bedrock with no failed requests"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/22/ML-20546-4.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/inline-04.webp",
+        "width": 737,
+        "height": 765,
+        "alt": {
+          "ar": "NarrateAI يرفع دقة نماذج الذكاء الاصطناعي إلى 99% على Amazon Bedrock",
+          "en": "Producer-consumer streaming architecture with a thread-safe paragraph queue between token generation and evaluation"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/22/ML-20546-5.jpeg"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/",
+      "type": "official",
+      "title": "NarrateAI: production-ready LLM quality assurance on Amazon Bedrock"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock",
+  "sourceTitle": "NarrateAI: production-ready LLM quality assurance on Amazon Bedrock",
+  "trendScore": 102.44,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-26T11:42:09+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock.json"
+}
