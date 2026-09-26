@@ -5,6 +5,10 @@ name: Mikhbar Publisher Watchdog
 # Mikhbar is overdue, and it refuses to stack duplicate publisher runs.
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mikhbar-publisher-watchdog.yml'
   schedule:
     - cron: '9,19,29,39,49,59 * * * *'
 
