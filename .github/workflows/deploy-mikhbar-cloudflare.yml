@@ -1,5 +1,7 @@
 name: Mikhbar Cloudflare Deploy
 
+# Publisher workflows dispatch this workflow explicitly after a successful publication push.
+# This avoids relying on GITHUB_TOKEN-generated push events, which do not start new workflows.
 on:
   workflow_dispatch:
     inputs:
@@ -11,12 +13,6 @@ on:
         options:
           - preview
           - production
-  workflow_run:
-    workflows:
-      - "Mikhbar 20-Minute Publisher"
-      - "Mikhbar Backup Publisher"
-    types: [completed]
-    branches: [main]
   push:
     branches: [main]
     paths:
@@ -48,7 +44,6 @@ concurrency:
 
 jobs:
   build-and-deploy:
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
