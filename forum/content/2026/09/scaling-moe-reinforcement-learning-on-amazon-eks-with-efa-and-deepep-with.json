@@ -1,0 +1,334 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "95f314d9972fcd384b1f",
+  "slug": "scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with/",
+    "en": "/forum/en/ai/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون ترفع كفاءة تدريب نماذج MoE بنسبة 40% عبر EKS وEFA",
+      "description": "تقدم أمازون ويب سيرفيسز معمارية جديدة لتدريب نماذج مزيج الخبراء (MoE) باستخدام التعلم المعزز، مما يحقق زيادة 40% في الإنتاجية عبر تكامل EKS وEFA وDeepEP.",
+      "deck": "تواجه المؤسسات تحديات كبيرة في موازنة الموارد بين توليد البيانات وتدريب النماذج الضخمة. تقدم أمازون حلاً عملياً يجمع بين Kubernetes وشبكات EFA لتسريع هذه العمليات.",
+      "summaryBullets": [
+        "تحقيق زيادة بنسبة 40% في الإنتاجية الإجمالية لتدريب التعلم المعزز (RL) على نطاق واسع.",
+        "استخدام تقنية DeepEP لتحسين توازن التواصل بين الخبراء (Expert Parallelism) عبر شبكة EFA.",
+        "تكامل Amazon EKS لإدارة الموارد غير المتجانسة وتوزيع المهام بكفاءة بين العشرات من المعالجات.",
+        "معالجة تحدي التوازن بين استهلاك الحوسبة والتخزين والنطاق الترددي الشبكي في نماذج MoE."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات تدريب نماذج مزيج الخبراء",
+          "paragraphs": [
+            {
+              "text": "أصبحت معمارية مزيج الخبراء (MoE) المعيار السائد لتوسيع نماذج اللغة الكبيرة إلى مئات المليارات من المعاملات، مع الحفاظ على كفاءة الاستدلال من خلال التشتت (Sparsity). ومع ذلك، لا تلغي هذه الخاصية التعقيد البنيوي في مرحلة التدريب. تتطلب هذه النماذج المرور بمراحل متعددة تشمل التدريب المسبق، والتدريب المتوسط، والضبط الدقيق الإشرافي (SFT)، والتعلم المعزز (RL). تبرز هنا تحديات فريدة في التدريب المعزز الكبير، حيث يجمع بين عمل الاستدلال المرن والتدريب المقيد الذي يتطلب اتصالات عالية النطاق الترددي، مما يضيف ضغوطاً إضافية على الذاكرة والشبكة والتنسيق. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with-40-more-throughput/"
+                }
+              ]
+            },
+            {
+              "text": "تختلف نماذج MoE عن النماذج الكثيفة (Dense) في أنها تصبح أكثر تشتتاً لتقليل تكاليف الاستدلال، مما يجعل التدريب مقيداً أكثر بالتواصل الشبكي بدلاً من القدرة الحاسوبية. المصدر الرئيسي لهذا العبء هو توازن الخبراء (Expert Parallelism)، الذي يضيف توجيه ديناميكي للرموز (Tokens) بين الأجهزة، بالإضافة إلى أنماط التواصل الكثيفة الأخرى مثل توازن الموترات (Tensor Parallelism). في أعباء العمل غير المتزامنة، يجب موازنة متطلبات الحوسبة والتواصل مع توليد الاستدلال، حيث أن أي تأخير في خطوات التدريب قد يوقف عمال الاستدلال، والعكس صحيح.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المعمارية المقترحة من أمازون",
+          "paragraphs": [
+            {
+              "text": "لتجاوز هذه العقبات، وصفت أمازون ويب سيرفيسز معمارية محسنة لتسريع تدريب MoE، تجمع بين خدمة أمازون Kubernetes المرنة (Amazon EKS) ومحول النسيج المرن (EFA) لتنسيق وتسريع التدريب المعزز الكبير. كما تلعب مكتبة DeepEP دوراً محورياً في تحسين توازن التواصل بين الخبراء عبر EFA. تهدف هذه البنية إلى معالجة ثلاثة تحديات مترابطة: موازنة الطلبات المتنافسة بين توليد التمرير (Rollout) وتدريب السياسة، وإدارة الحوسبة والذاكرة والنطاق الترددي الشبكي للمسرعات، والتعامل مع الانتقال من اتصالات داخل العقدة عالية النطاق إلى روابط بين العقد ذات نطاق أقل عند توسيع نطاق العمل.",
+              "links": [
+                {
+                  "text": "Amazon EKS",
+                  "url": "https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد الاستراتيجية على فصل المكونات لتتمكن من التوسع بشكل مستقل. يوفر Amazon EKS إدارة دورة الحياة وتوزيع العمال غير المتجانسين، بينما يوفر EFA مسار بيانات بين العقد عالي الأداء. كما يتم دمج خدمة التخزين البسيط (Amazon S3) لضمان تخزين دائم وقابل للتوسع. هذا التكامل يسمح للمؤسسات بتنفيذ عمليات تدريب معقدة دون خلق عنق زجاجة في أي من الأنظمة الفرعية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور EFA وDeepEP في تحسين الأداء",
+          "paragraphs": [
+            {
+              "text": "تستخدم أجهزة الحوسبة المتسارعة من أمازون، مثل P5 وP6، مجالين رئيسيين للتواصل: نسيج NVLink داخل الجهاز، والشبكات بين الأجهزة عبر EFA. يوفر EFA حركة بيانات عالية النطاق الترددي بين الأجهزة، ويعمل مع تقنية NVIDIA GPUDirect RDMA لتحويل البيانات مباشرة بين ذاكرات GPU عبر الأجهزة، مما يقلل من تدخل المعالج المركزي ونظام التشغيل. في سياق نماذج MoE، يصبح توازن الخبراء عاملاً حاسماً، حيث يتحول التواصل من أنماط منظمة إلى حركة ديناميكية دقيقة للرموز بين الأجهزة، مما يتطلب بنية تحتية قادرة على التعامل مع هذا التغير السريع في أنماط الشبكات.",
+              "links": []
+            },
+            {
+              "text": "تساهم مكتبة DeepEP بشكل كبير في تحسين كفاءة توازن الخبراء عبر EFA. من خلال تحسين مسارات التواصل وتقليل زمن الاستجابة، تساعد هذه المكتبة في الحفاظ على تدفق مستمر للبيانات بين المعالجات. هذا التحسين يضمن أن لا تصبح الشبكة عنق زجاجة يحد من سرعة التدريب، خاصة عند التعامل مع نماذج ضخمة تتطلب توازناً دقيقاً بين الحوسبة والتخزين والشبكة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الموارد غير المتجانسة",
+          "paragraphs": [
+            {
+              "text": "تتميز أعباء العمل المعززة (RL) بمتطلبات حوسبة وتواصل غير متجانسة. يجب على النظام موازنة ثلاثة قيود موارد: حوسبة المسرعات، والذاكرة، والنطاق الترددي الشبكي. يتطلب تدريب السياسة حوسبة كثيفة لمواكبة توليد التمرير، بينما يجب على الاستدلال الموزع إدارة سعة ذاكرة KV-cache وتوليد الرموز. يعد توازن عرض النطاق الترددي للذاكرة والحوسبة أمراً حاسماً لتحقيق أقصى إنتاجية، خاصة مع إضافة طبقات MoE التي تضيف اتصالات ديناميكية متناثرة. كما تضيف نماذج المكافآت وحركة البيانات ضغوطاً إضافية يجب إدارتها بشكل مشترك لمنع أي نظام فرعي من أن يصبح عنق زجاجة.",
+              "links": []
+            },
+            {
+              "text": "عند توسيع نطاق مهام التدريب المعزز لتجاوز جهاز واحد، تمتد تقسيمات النموذج ومجموعات التوازي عبر عدة عقد. هذا ينتقل التواصل من نسيج NVLink عالي النطاق الترددي داخل الجهاز إلى روابط بين الأجهزة ذات نطاق أقل. تكثف نماذج MoE هذا التحدي؛ فبدلاً من الأنماط المنظمة لتوازن الموترات، يوجه توازن الخبراء الرموز ديناميكياً عبر الأجهزة من خلال حركة اتصالات دقيقة ومتناثرة، مما يزيد من الاعتماد على كفاءة الشبكة بين العقد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النتائج والأداء المحقق",
+          "paragraphs": [
+            {
+              "text": "أظهرت الاختبارات أن هذه المعمارية المدمجة لـ Amazon EKS وEFA وDeepEP حققت زيادة بنسبة 40% في الإنتاجية الإجمالية لتوليد التمرير في التعلم المعزز (RL). هذا التحسن ملحوظ بشكل خاص في عمليات التدريب الكبيرة مثل RLHF وGRPO. من خلال تحسين توزيع الأحمال وتقليل أوقات الانتظار في الاتصالات الشبكية، تتيح هذه البنية للمؤسسات تدريب نماذج أكثر تعقيداً وبسرعة أكبر، مع الحفاظ على استقرار النظام حتى عند التعامل مع مئات المسرعات.",
+              "links": []
+            },
+            {
+              "text": "توفر هذه الحلول أيضاً مرونة في إدارة البنية التحتية. باستخدام أدوات مثل Miles، يمكن للمطورين تنفيذ سيناريوهات تدريب متنوعة. توفر مستودعات مثل Miles إطار عمل مفتوح المصدر يدعم هذه الأنواع من الأحمال، مما يسهل على المهندسين تجربة وتطبيق هذه الممارسات الفضلى في بيئاتهم الخاصة. كما توفر وثائق أمازون إرشادات مفصلة لإعداد EFA على EKS، مما يضمن سهولة التوسع والصيانة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون ويب سيرفيسز",
+        "تدريب النماذج",
+        "MoE",
+        "التعلم المعزز",
+        "EKS",
+        "EFA",
+        "DeepEP",
+        "بنية تحتية سحابية"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز (AWS)",
+        "Amazon EKS",
+        "Elastic Fabric Adapter (EFA)",
+        "DeepEP",
+        "Mixture-of-Experts (MoE)",
+        "NVIDIA",
+        "Miles"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "26 سبتمبر 2026",
+      "modifiedLabel": "26 سبتمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 848
+    },
+    "en": {
+      "title": "Scaling MoE Reinforcement Learning on Amazon EKS with EFA",
+      "description": "Learn how AWS combines Amazon EKS, EFA, and DeepEP to increase aggregate reinforcement learning rollout throughput by 40% for large-scale MoE training.",
+      "deck": "A newly detailed AWS architecture combines Amazon EKS, EFA, and DeepEP to boost aggregate reinforcement learning rollout throughput by 40% for large-scale RLHF and GRPO training.",
+      "summaryBullets": [
+        "AWS detailed a new architecture combining Amazon EKS, EFA, and DeepEP for large-scale Mixture-of-Experts (MoE) reinforcement learning.",
+        "The approach increases aggregate reinforcement learning rollout throughput by 40% for RLHF and GRPO training workflows.",
+        "Post-training MoE models introduce communication bottlenecks due to dynamic expert-parallel all-to-all token routing across nodes.",
+        "Utilizing Amazon EKS and EFA helps manage heterogeneous compute workloads and high-bandwidth inter-node communication simultaneously."
+      ],
+      "sections": [
+        {
+          "heading": "Addressing Infrastructure Challenges in MoE Reinforcement Learning",
+          "paragraphs": [
+            {
+              "text": "When post-training a Mixture-of-Experts (MoE) model with Reinforcement Learning from Human Feedback (RLHF) or Group Relative Policy Optimization (GRPO) at scale, engineers face three simultaneous operational hurdles. The first challenge involves coordinating heterogeneous compute for rollout generation and policy training. The second requires sustaining high-throughput communication across hundreds of accelerators, while the third demands dynamic orchestration to keep every system component in balance. On AWS, development teams can address these hurdles by deploying solutions using Amazon EKS, Elastic Fabric Adapter, and DeepEP.",
+              "links": [
+                {
+                  "text": "Amazon EKS",
+                  "url": "https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html"
+                }
+              ]
+            },
+            {
+              "text": "Mixture-of-Experts models have emerged as a standard architecture for scaling large language models to hundreds of billions or trillions of parameters. By maintaining efficient inference through sparsity, MoE architectures reduce overall inference costs. However, sparsity introduces unique infrastructure complexities during training pipelines, which typically include pre-training, mid-training, supervised fine-tuning, and reinforcement learning. Among these phases, large-scale RL training places heavy demands on underlying hardware because it blends elastic inference work with tightly coupled model training requiring high-bandwidth communication.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Balancing Compute, Memory, and Network Bandwidth",
+          "paragraphs": [
+            {
+              "text": "Large-scale asynchronous reinforcement learning jobs require optimizing two distinct and simultaneous workloads: rollout generation and policy training. During rollout generation, the system performs distributed inference geared toward maximizing aggregate throughput rather than minimizing time to first token or inter-token latency. Conversely, policy training relies on tightly coupled workers that must progress in lockstep. Any latency spike or straggling worker can stall the entire execution or trigger NVIDIA Collective Communications Library timeouts.",
+              "links": []
+            },
+            {
+              "text": "RL systems must carefully balance competing resource constraints spanning accelerator compute, system memory, and network bandwidth. Because MoE layers introduce sparse, dynamic all-to-all communication as tokens route across devices, managing memory bandwidth alongside compute becomes vital for maximum throughput. Reward models and verifiers add further operational pressure, making it necessary to balance all subsystems jointly to prevent any single element from acting as a system bottleneck.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Navigating Inter-Node Communication and Expert Parallelism",
+          "paragraphs": [
+            {
+              "text": "As reinforcement learning jobs scale beyond a single instance, model partitions and parallelism groups span multiple compute nodes. This scaling shifts data communication from the high-bandwidth intra-node NVLink fabric to lower-bandwidth inter-node links. MoE models amplify this shift because Expert Parallelism dynamically routes tokens across devices through sparse, fine-grained all-to-all communication traffic that grows heavily inter-node as the expert parallelism degree increases.",
+              "links": []
+            },
+            {
+              "text": "AWS accelerated computing instances utilize two primary communication domains: an intra-instance NVLink fabric connected via NVSwitch, and inter-instance networking handled through EFA. On supported configurations, EFA integrates with NVIDIA GPUDirect RDMA and operating-system bypass capabilities to transfer data directly between GPU memory buffers across instances, minimizing CPU and operating-system overhead in the communication path.",
+              "links": [
+                {
+                  "text": "supported configurations",
+                  "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html#efa-instance-types"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Achieving 40% Higher Rollout Throughput",
+          "paragraphs": [
+            {
+              "text": "To scale these complex workloads efficiently, the architecture combines Amazon EKS, EFA, and Amazon Simple Storage Service so that orchestration, high-performance communication, and durable storage scale independently. Amazon EKS allows administrators to manage the lifecycle and placement of heterogeneous workers seamlessly.",
+              "links": []
+            },
+            {
+              "text": "By uniting these AWS services with DeepEP optimization for expert-parallel communication over EFA, organizations can increase aggregate reinforcement learning rollout throughput by 40% for large-scale RLHF and GRPO training pipelines.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon EKS",
+        "EFA",
+        "DeepEP",
+        "Reinforcement Learning",
+        "MoE",
+        "RLHF",
+        "GRPO",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon EKS",
+        "Elastic Fabric Adapter",
+        "DeepEP",
+        "NVIDIA"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 26, 2026",
+      "modifiedLabel": "September 26, 2026",
+      "readMinutes": 3,
+      "wordCount": 597
+    }
+  },
+  "datePublished": "2026-09-26T08:59:45.089480+03:00",
+  "dateModified": "2026-09-26T08:59:45.089480+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with/hero.webp",
+    "card": "/forum/assets/posts/2026/09/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with/card.webp",
+    "social": "/forum/assets/posts/2026/09/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with/social.jpg",
+    "alt": {
+      "ar": "أمازون ترفع كفاءة تدريب نماذج MoE بنسبة 40% عبر EKS وEFA",
+      "en": "Scaling MoE Reinforcement Learning on Amazon EKS with EFA"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21346-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with/inline-01.webp",
+        "width": 1400,
+        "height": 1050,
+        "alt": {
+          "ar": "أمازون ترفع كفاءة تدريب نماذج MoE بنسبة 40% عبر EKS وEFA",
+          "en": "Diagram of the asynchronous RL loop between rollout workers and policy-training workers"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with-40-more-throughput/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21346-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with/inline-02.webp",
+        "width": 865,
+        "height": 453,
+        "alt": {
+          "ar": "أمازون ترفع كفاءة تدريب نماذج MoE بنسبة 40% عبر EKS وEFA",
+          "en": "NVLink handling intra-node traffic and EFA handling inter-node token routing in multi-node MoE training"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with-40-more-throughput/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21346-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with/inline-03.webp",
+        "width": 1400,
+        "height": 1006,
+        "alt": {
+          "ar": "أمازون ترفع كفاءة تدريب نماذج MoE بنسبة 40% عبر EKS وEFA",
+          "en": "EKS cluster topology with GPU, CPU, and memory-optimized node groups for the RL workflow"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with-40-more-throughput/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21346-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with/inline-04.webp",
+        "width": 1400,
+        "height": 1049,
+        "alt": {
+          "ar": "أمازون ترفع كفاءة تدريب نماذج MoE بنسبة 40% عبر EKS وEFA",
+          "en": "RL job data flow on EKS from rollout workers through a memory buffer to policy training and Amazon S3"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with-40-more-throughput/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21346-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with-40-more-throughput/",
+      "type": "official",
+      "title": "Scaling MoE reinforcement learning on Amazon EKS with EFA and DeepEP with 40% more throughput"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with-40-more-throughput",
+  "sourceTitle": "Scaling MoE reinforcement learning on Amazon EKS with EFA and DeepEP with 40% more throughput",
+  "trendScore": 105.76,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-26T05:59:45+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with.json"
+}
