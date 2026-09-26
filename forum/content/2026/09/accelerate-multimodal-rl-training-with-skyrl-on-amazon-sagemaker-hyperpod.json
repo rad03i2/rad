@@ -1,0 +1,386 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "200ef5722dc3e64e236f",
+  "slug": "accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/",
+    "en": "/forum/en/ai/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/"
+  },
+  "locales": {
+    "ar": {
+      "title": "تدريب التعلم التعزيزي المتعدد الوسائط باستخدام SkyRL على HyperPod",
+      "description": "تعرف على كيفية تشغيل إطار عمل SkyRL للتعلم التعزيزي على Amazon SageMaker HyperPod لتدريب نموذج متعدد الوسائط باستخدام تقنية GRPO.",
+      "deck": "أعلنت المدونة التقنية AWS Machine Learning Blog عن إرشادات تفصيلية لتشغيل إطار عمل SkyRL مفتوح المصدر على بيئة Amazon SageMaker HyperPod لتنفيذ مرحلة ما بعد التدريب لنموذج الرؤية واللغة Qwen3-VL-8B.",
+      "summaryBullets": [
+        "استخدام إطار عمل SkyRL مفتوح المصدر لتدريب نموذج Qwen3-VL-8B متعدد الوسائط عبر تقنية GRPO.",
+        "الاعتماد على بيئة Amazon SageMaker HyperPod لتوفير بنية تحتية مستدامة وقابلة للتوسع.",
+        "تحسين معدل حل المتاهات البصرية من 43.75% إلى أكثر من 95% على مجموعة تقييم ثابتة.",
+        "الاستفادة من ميزات مرونة العقد واسترداد نقاط التحقق لمنع فقدان التقدم أثناء المهام الطويلة."
+      ],
+      "sections": [
+        {
+          "heading": "أهمية التدريب اللاحق بالتعلم التعزيزي وتقنيات البنية التحتية",
+          "paragraphs": [
+            {
+              "text": "تُعد مرحلة ما بعد التدريب للتعلم التعزيزي خطوة محورية وأساسية في بناء وكلاء النماذج اللغوية القادرة على التفكير واتخاذ القرار بمرونة عبر خطوات متتابعة. تتعلم النماذج الاستدلال والتفاعل من خلال توليد مسارات العمل، وتلقي المكافآت، وتحديث السياسات بناءً على النتائج المحققة. يتطلب تشغيل هذه العمليات على نطاق واسع عبر عقد متعددة ومئات الساعات من معالجة وحدات معالجة الرسوميات بنية تحتية مستدامة ومستقرة للبنية العنقودية، وهي متطلبات توفرها خدمات مثل Amazon SageMaker HyperPod.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod",
+                  "url": "https://aws.amazon.com/sagemaker/hyperpod/"
+                }
+              ]
+            },
+            {
+              "text": "تتطلب البنية التحتية القدرة على تحمل المهام الطويلة، واستعادة التشغيل بعد الأعطال الهاردويرية دون فقدان التقدم المحرز، فضلاً عن توفير رؤية واضحة ومباشرة لديناميكيات التدريب أثناء تنفيذها. توفر هذه البيئة الكفاءة العالية لمهام التعلم الآلي واسعة النطاق على نظم إدارة الحاويات عبر خدمات مثل Amazon Elastic Kubernetes Service (Amazon EKS).",
+              "links": [
+                {
+                  "text": "Amazon Elastic Kubernetes Service (Amazon EKS)",
+                  "url": "https://aws.amazon.com/eks/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دور مرونة العقد وقدرات Ray في إدارة التدريب طويل الأمد",
+          "paragraphs": [
+            {
+              "text": "تتميز بيئة التشغيل بقدرتها على مراقبة صحة العقد باستمرار واستبدال العقد المعطلة تلقائياً، مما يمنع أعطال الأجهزة من تعطيل النظام بأكمله بفضل ميزات مرونة العقد المتاحة في المنصة. وعند دمجها مع نظام نقاط التحقق، تستطيع مهام التدريب استئناف العمل من آخر خطوة محفوظة بدلاً من إعادة التشغيل من البداية، وهو أمر بالغ الأهمية لمهام التعلم التعزيزي الطويلة الممتدة عبر عقد متعددة.",
+              "links": []
+            },
+            {
+              "text": "بالتوازي مع ذلك، يتيح دمج قدرات راي المتاحة على المنصة إنشاء مجموعات تشغيلية مباشرة من بيئة التطوير، وإرسال المهام عن بعد عبر اتصال آمن، ومراقبة مسار التدريب باستخدام لوحات معلومات مخصصة. وتقدم المدونة التقنية AWS Machine Learning Blog تفاصيل متكاملة حول كيفية الاستفادة من هذه الأدوات لرفع كفاءة النماذج.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/"
+                }
+              ]
+            },
+            {
+              "text": "تساعد لوحات التحكم المجهزة مسبقاً والمستندة إلى أدوات المراقبة في تتبع الأداء بدقة، بينما تضمن الوظائف الملحقة إتاحة البيانات وتحليل المقاييس بشكل لحظي لضمان سير عمليات التدريب المتقدمة بسلاسة تامة دون انقطاع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تنفيذ نموذج Qwen3-VL-8B وتقنية GRPO للمتاهات البصرية",
+          "paragraphs": [
+            {
+              "text": "توضح التجربة العملية كيفية توظيف إطار عمل SkyRL المفتوح لتشغيل مهام التدريب المتقدمة لنموذج الرؤية واللغة، بهدف تمكينه من اجتياز المتاهات البصرية المعقدة عبر استخدام تقنية تحسين السياسة النسبية الجماعية المعروفة اختصاراً بـ GRPO. يبدأ التدريب اعتماداً على نقطة بداية التوليف الموجه المتاحة في VisGym SFT checkpoint، مما يسهم في رفع معدل نجاح حل المتاهات بشكل ملحوظ مقارنة بالوضع السابق.",
+              "links": [
+                {
+                  "text": "SkyRL",
+                  "url": "https://github.com/NovaSky-AI/SkyRL"
+                },
+                {
+                  "text": "VisGym SFT checkpoint",
+                  "url": "https://huggingface.co/VisGym/visgym_model"
+                }
+              ]
+            },
+            {
+              "text": "يعتمد التدريب المتعدد الدورات على توجيه الوكيل عبر تسلسل كامل من الخطوات، حيث يلاحظ الحالة الحالية، يتخذ القرار، يتلقى التقييم، وينتقل إلى الحالة اللاحقة. ونتيجة لندرة المكافآت في بيئة المتاهات، يحصل النموذج على تقييم إيجابي فقط عند وصوله الفعلي إلى الهدف ضمن حدود الحركات المسموحة، مما يجعل تقنية GRPO أداة فعالة لتقييم التشغيلات مقارنة بمتوسط المجموعة دون الحاجة لنموذج تقييم منفصل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات التقنية والهندسة العنقودية لتشغيل النظام",
+          "paragraphs": [
+            {
+              "text": "يتطلب تشغيل هذه البنية العنقودية إعداد مجموعة تشغيلية تتضمن مثيلات معالجة رسومية ومثيلات مخصصة لعقد التحكم، بالإضافة إلى تركيب مشغلات Kubernetes اللازمة مثل مشغل KubeRay وإضافات المراقبة الخاصة بالمنصة. ويمكن للمطورين الاطلاع على الإرشادات التفصيلية عبر دليل البدء السريع المخصص لتلك التقنيات.",
+              "links": []
+            },
+            {
+              "text": "تشمل البنية التحتية أيضاً استخدام نظام ملفات مشترك يعتمد على برنامج التشغيل المناسب لتخزين نقاط التحقق، ومزامنة محولات التكيف منخفضة الرتبة، وحفظ مخرجات التقييم لضمان تدفق البيانات بكفاءة عالية بين محركات التوليد وعقد السياسة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "التعلم التعزيزي",
+        "Amazon SageMaker HyperPod",
+        "SkyRL",
+        "Qwen3-VL-8B",
+        "GRPO",
+        "الحوسبة السحابية"
+      ],
+      "entities": [
+        "AWS Machine Learning Blog",
+        "Amazon SageMaker HyperPod",
+        "SkyRL",
+        "Qwen3-VL-8B",
+        "VisGym",
+        "Amazon EKS",
+        "Ray"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "26 سبتمبر 2026",
+      "modifiedLabel": "26 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 577
+    },
+    "en": {
+      "title": "Train Multimodal RL Models with SkyRL and HyperPod",
+      "description": "Learn how to use SkyRL on Amazon SageMaker HyperPod to post-train vision-language models with Group Relative Policy Optimization.",
+      "deck": "Reinforcement learning post-training for multimodal models can be scaled efficiently using open-source frameworks on managed cluster infrastructure.",
+      "summaryBullets": [
+        "Run SkyRL on Amazon SageMaker HyperPod to post-train the Qwen3-VL-8B vision-language model.",
+        "Utilize Group Relative Policy Optimization (GRPO) to improve visual maze solving rates from 43.75% to over 95%.",
+        "Leverage cluster resiliency features and Ray capabilities to manage long-running multi-node training tasks.",
+        "Colocate vLLM rollout engines and FSDP policy shards across GPU worker nodes with shared Amazon FSx for Lustre storage."
+      ],
+      "sections": [
+        {
+          "heading": "Scaling Reinforcement Learning Workloads",
+          "paragraphs": [
+            {
+              "text": "Reinforcement learning post-training has emerged as a fundamental technique for developing capable language model agents. By generating trajectories, receiving rewards, and updating policies based on outcomes, models learn to reason across sequential steps. Executing these intensive workloads across multi-node environments requires persistent infrastructure capable of handling hundreds of GPU-hours.",
+              "links": []
+            },
+            {
+              "text": "To address these requirements, Amazon SageMaker HyperPod delivers specialized infrastructure for large-scale machine learning workloads on Amazon Elastic Kubernetes Service (Amazon EKS). The platform incorporates cluster resiliency features that continuously monitor node health and automatically replace faulty hardware without disrupting the entire cluster.",
+              "links": [
+                {
+                  "text": "Amazon Elastic Kubernetes Service (Amazon EKS)",
+                  "url": "https://aws.amazon.com/eks/"
+                },
+                {
+                  "text": "cluster resiliency features",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-eks-resiliency.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Infrastructure and Observability Capabilities",
+          "paragraphs": [
+            {
+              "text": "Maintaining progress during long training sessions is critical, as hardware interruptions can otherwise result in lost rollout data. By pairing automated node replacement with checkpointing, jobs can resume from their most recent saved state. Furthermore, integrated Ray capabilities on HyperPod enable developers to launch Ray clusters directly from SageMaker Studio, submit jobs securely, and track training metrics using dashboards provisioned by the HyperPod Observability add-on.",
+              "links": [
+                {
+                  "text": "Ray capabilities on HyperPod",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/introducing-new-ray-capabilities-on-sagemaker-hyperpod/"
+                }
+              ]
+            },
+            {
+              "text": "Teams can monitor training dynamics in real time through pre-built Amazon Managed Grafana dashboards. This comprehensive observability ensures that unexpected anomalies or performance bottlenecks can be identified and addressed promptly during multi-node execution runs.",
+              "links": [
+                {
+                  "text": "Amazon Managed Grafana dashboards",
+                  "url": "https://aws.amazon.com/grafana/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Multimodal Post-Training with SkyRL",
+          "paragraphs": [
+            {
+              "text": "An official walkthrough published on the AWS Machine Learning Blog demonstrates how to utilize SkyRL, an open-source reinforcement learning framework, to post-train a Qwen3-VL-8B vision-language model. Starting from a supervised fine-tuning checkpoint known as the VisGym SFT checkpoint, the training process applies Group Relative Policy Optimization to navigate visual mazes.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/"
+                },
+                {
+                  "text": "SkyRL",
+                  "url": "https://github.com/NovaSky-AI/SkyRL"
+                },
+                {
+                  "text": "VisGym SFT checkpoint",
+                  "url": "https://huggingface.co/VisGym/visgym_model"
+                }
+              ]
+            },
+            {
+              "text": "In benchmark evaluations on a fixed set of 64 mazes, applying GRPO post-training on HyperPod significantly improved the maze solve rate from an initial baseline of 43.75% to more than 95%. This setup eliminates the need for a separate critic or value model by grading rollout attempts directly against the group average.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Cluster Topology and Configuration",
+          "paragraphs": [
+            {
+              "text": "The walkthrough configuration deploys a Ray cluster on Amazon SageMaker HyperPod utilizing three GPU worker nodes and a CPU head node. Specifically, the architecture relies on three ml.g7e.12xlarge instances equipped with NVIDIA RTX PRO 6000 Blackwell GPUs and one ml.r5d.16xlarge instance to manage the Ray Global Control Store and dashboard.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod",
+                  "url": "https://aws.amazon.com/sagemaker/hyperpod/"
+                }
+              ]
+            },
+            {
+              "text": "Within this topology, SkyRL colocates inference and training tasks on the same GPUs. vLLM engines handle rollout generation while a policy model sharded using Fully Sharded Data Parallel manages gradient updates. Updated Low-Rank Adaptation weights synchronize across the infrastructure utilizing a shared file system.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Storage and Execution Workflow",
+          "paragraphs": [
+            {
+              "text": "Successful deployment requires several core components, including the Amazon FSx for Lustre CSI driver, compatible Kubernetes operators, and a shared filesystem mounted at a designated directory. Detailed installation steps and configuration requirements are outlined within the Ray on HyperPod getting started guide.",
+              "links": [
+                {
+                  "text": "Amazon FSx for Lustre CSI driver",
+                  "url": "https://github.com/kubernetes-sigs/aws-fsx-csi-driver"
+                },
+                {
+                  "text": "Ray on HyperPod getting started guide",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-ray-getting-started.html"
+                }
+              ]
+            },
+            {
+              "text": "The shared storage volume acts as the repository for checkpoint storage, adapter weight synchronization, and evaluation outputs. Once the container image is built and pushed to an Amazon Elastic Container Registry repository, users can launch the cluster directly from SageMaker Studio to initiate their reinforcement learning workflows.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon SageMaker HyperPod",
+        "Artificial Intelligence",
+        "Reinforcement Learning",
+        "SkyRL",
+        "Ray",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "SkyRL",
+        "Qwen3-VL-8B",
+        "Ray",
+        "Amazon SageMaker HyperPod"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 26, 2026",
+      "modifiedLabel": "September 26, 2026",
+      "readMinutes": 3,
+      "wordCount": 574
+    }
+  },
+  "datePublished": "2026-09-26T03:21:10.173790+03:00",
+  "dateModified": "2026-09-26T03:21:10.173790+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/hero.webp",
+    "card": "/forum/assets/posts/2026/09/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/card.webp",
+    "social": "/forum/assets/posts/2026/09/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/social.jpg",
+    "alt": {
+      "ar": "تدريب التعلم التعزيزي المتعدد الوسائط باستخدام SkyRL على HyperPod",
+      "en": "Train Multimodal RL Models with SkyRL and HyperPod"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21828-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/inline-01.webp",
+        "width": 1338,
+        "height": 750,
+        "alt": {
+          "ar": "تدريب التعلم التعزيزي المتعدد الوسائط باستخدام SkyRL على HyperPod",
+          "en": "Architecture diagram of a RayCluster inside an Amazon SageMaker HyperPod cluster: one CPU head node and three GPU worker nodes with two GPUs each, colocating FSDP policy shards and vLLM rollout engines, with an Amazon FS"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21828-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/inline-02.webp",
+        "width": 1400,
+        "height": 848,
+        "alt": {
+          "ar": "تدريب التعلم التعزيزي المتعدد الوسائط باستخدام SkyRL على HyperPod",
+          "en": "The Create Ray Cluster form in SageMaker Studio with remote endpoints enabled for job submission and dashboard access."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21828-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/inline-03.webp",
+        "width": 1400,
+        "height": 596,
+        "alt": {
+          "ar": "تدريب التعلم التعزيزي المتعدد الوسائط باستخدام SkyRL على HyperPod",
+          "en": "The skyrl-visgym Ray cluster in the SageMaker Studio Tasks tab at Running status, with the Actions menu showing Open Ray Dashboard and Open Grafana."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21828-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/inline-04.webp",
+        "width": 1400,
+        "height": 444,
+        "alt": {
+          "ar": "تدريب التعلم التعزيزي المتعدد الوسائط باستخدام SkyRL على HyperPod",
+          "en": "Ray Dashboard Jobs view showing the running training job, its current step, and per-worker GPU resource utilization."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21828-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/",
+      "type": "official",
+      "title": "Accelerate multimodal RL training with SkyRL on Amazon SageMaker HyperPod"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod",
+  "sourceTitle": "Accelerate multimodal RL training with SkyRL on Amazon SageMaker HyperPod",
+  "trendScore": 118.87,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-26T00:21:10+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod.json"
+}
