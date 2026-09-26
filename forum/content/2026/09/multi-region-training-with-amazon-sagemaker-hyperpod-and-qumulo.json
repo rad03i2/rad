@@ -1,0 +1,368 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "67c6ac76526755bbf068",
+  "slug": "multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/",
+    "en": "/forum/en/ai/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/"
+  },
+  "locales": {
+    "ar": {
+      "title": "SageMaker HyperPod و Qumulo تتيحان تدريب نماذج الذكاء الاصطناعي عبر مناطق AWS",
+      "description": "تتيح تقنية Qumulo مع SageMaker HyperPod تدريب نماذج الذكاء الاصطناعي من منطقة AWS مختلفة عن موقع البيانات، مما يحقق أداءً مطابقاً للتدريب المحلي دون تكرار نقل البيانات.",
+      "deck": "تجاوزت حلول التخزين السحابي التقليدية حدود الكفاءة، حيث تتيح البنية الجديدة قراءة البيانات عن بُعد بكفاءة محلية.",
+      "summaryBullets": [
+        "تتيح البنية التدريب في منطقة AWS مختلفة عن موقع البيانات دون فقدان الأداء.",
+        "يعتمد الحل على تقنية NeuralCache للتنبؤ بالبيانات المطلوبة وتخزينها محلياً.",
+        "حقق العنقود البعيد أداءً مطابقاً للعنقود المحلي بعد فترة إحماء قصيرة.",
+        "تصل كفاءة وحدات معالجة الرسومات إلى 98-100% بعد استقرار عملية التخزين المؤقت."
+      ],
+      "sections": [
+        {
+          "heading": "تجاوز تحدي الفاصل الجغرافي بين البيانات والحوسبة",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق الذكاء الاصطناعي تحدياً كبيراً عندما تكون موارد الحوسبة المثالية وبيانات التدريب غير موجودة في نفس منطقة AWS. يتطلب تدريب النماذج الكبيرة سعة هائلة من وحدات معالجة الرسومات، لكن الوصول إلى البيانات عبر مناطق مختلفة يضيف زمن استجابة شبكي وتكاليف نقل. كانت الخيارات التقليدية تقتصر إما على تكرار نقل بيانات ضخمة بمقدار بيتا بين المناطق، أو قبول زمن الاستجابة البيني مما يؤدي إلى إبطاء عملية التدريب. هنا يأتي دور الجمع بين Amazon SageMaker HyperPod و Qumulo، حيث يتيح هذا التآزر للفرق إبقاء نماذجها الحالية دون الحاجة إلى نقل البيانات أو التضحية بالمخرجات.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod",
+                  "url": "https://aws.amazon.com/sagemaker/ai/hyperpod/"
+                },
+                {
+                  "text": "Qumulo",
+                  "url": "https://qumulo.com/product/aws"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "معمارية الحل: مصدر واحد للبيانات",
+          "paragraphs": [
+            {
+              "text": "يقدم هذا الحل معمارية تعتمد على مبدأ \"مصدر الحقيقة الوحيد\"، حيث يتم تخزين مجموعة بيانات التدريب في منطقة AWS واحدة باستخدام Cloud Native Qumulo (CNQ). يتم ربط كل عنقود HyperPod بمثال CNQ محلي عبر نظام الملفات الشبكي (NFS). يقوم عنقود CNQ البعيد (Spoke) بجلب البيانات من العنقود المركزي (Hub) عبر ربط Virtual Private Cloud (VPC)، مما يجعل المجموعة الكاملة متاحة دون الحاجة إلى وصول مباشر من عقد الحوسبة عبر المناطق. تضمن هذه البنية أن تقرأ عقد الحوسبة من نفس مسار التركيب المحلي في كلتا المنطقتين، مما يبسط إدارة البيانات ويقلل التعقيد التشغيلي.",
+              "links": [
+                {
+                  "text": "Virtual Private Cloud (VPC)",
+                  "url": "https://aws.amazon.com/vpc/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دور Cloud Data Fabric في إدارة البيانات",
+          "paragraphs": [
+            {
+              "text": "يلعب Cloud Data Fabric (CDF) دوراً محورياً في الحفاظ على نسخة واحدة موثوقة من مجموعة البيانات في العنقود المركزي، مع إسقاطها إلى عنقودات بعيدة كفضاء POSIX موحد. عند إنشاء عنقود بعيد، يقوم CDF بتكرار بيانات النظام الأساسية (Metadata) إليه، مما يسمح بتصفح مساحة الأسماء الكاملة خلال ثوانٍ قبل انتقال بيانات الملفات الفعلية. عند تركيب نظام الملفات، يخدم CDF كل عملية قراءة من أقرب مصدر صالح: من ذاكرة NVMe المحلية في حالة الإصابة، أو من العنقود المركزي في حالة عدم الإصابة. كما يستخدم CDF تحكمًا متقدمًا في الازدحام يوازن بين عرض النطاق الترددي وزمن الانتقال، مما يحافظ على معدل نقل بيانات شبه كامل حتى على المسارات التي تصل فيها زمن الرحلة الدائري (RTT) إلى 900 مللي ثانية.",
+              "links": [
+                {
+                  "text": "Cloud Data Fabric (CDF)",
+                  "url": "https://qumulo.com/product/cloud-data-fabric/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التخزين المؤقت التنبؤي عبر NeuralCache",
+          "paragraphs": [
+            {
+              "text": "يعتبر NeuralCache طبقة التخزين المؤقت التنبؤي داخل CDF. يراقب هذا المكون قراءات كتل 4KB المتسلسلة التي يصدرها محمّل بيانات التدريب ويتعلم نمط الوصول. ثم يقوم بوضع البيانات بشكل تنبؤي قبل أن يصدر المهمة الطلب. خلال أول 100 إلى 150 دفعة، يتعلم النموذج التنبؤ بالكتل المطلوبة التالية ويجلبها مسبقاً من العنقود المركزي إلى تخزين NVMe المحلي في العنقود البعيد. بعد الإحماء، يتم تلبية 94-96% من عمليات القراءة من ذاكرة التخزين المؤقت المحلية بزمن استجابة أقل من 5 مللي ثانية، مما يجعل زمن الاستجابة بين المناطق شفافاً تقريباً.",
+              "links": [
+                {
+                  "text": "NeuralCache",
+                  "url": "https://qumulo.com/product/neural-cache"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "نتائج التحقق من الأداء",
+          "paragraphs": [
+            {
+              "text": "تم التحقق من صحة الحل من خلال تشغيل نفس مهمة التدريب بشكل مستقل على عنقودين. شملت المهمة نموذج LLaMA v3 بمليار و20 مليون معلمة، مع استخدام عقدتي ml.p5.48xlarge لكل عنقود HyperPod، بإجمالي 16 وحدة معالجة رسومات H100. أظهرت النتائج أن العنقود البعيد، الذي يعمل في منطقة US West (Oregon) ويقرأ البيانات عن بُعد عبر CDF مع زمن استجابة شبكي 60 مللي ثانية، حقق نفس معدل الإنتاجية كالعنقود المركزي الموجود في US East (Ohio). بعد فترة إحماء قصيرة، تطابق أداء العنقود البعيد مع أداء العنقود المحلي، حيث بلغ معدل الإنتاجية بين 115 إلى 117 عينة في الثانية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "كفاءة استخدام الموارد",
+          "paragraphs": [
+            {
+              "text": "توفر البنية نتائج قابلة للقياس في كفاءة الموارد. أولاً، تتيح البنية السحابية الأصلية لـ CNQ توسيع الأداء بشكل مستقل عن حجم تخزين البيانات، مما يؤدي إلى استغلال كامل بنسبة 99% لوحدات معالجة الرسومات وتشبع لشبكة p5.48xlarge مع عمليات بيانات بزمن استجابة أقل من 3 مللي ثانية. ثانياً، تصل العناقيد البعيدة إلى استغلال مثالي؛ حيث يتقارب معدل الإنتاجية خلال أول 100-150 دفعة. تعتبر هذه فترة الإحماء الواحدة ضئيلة على نطاق واسع، حيث تمثل أقل من 1% من الوقت الكلي عند 10,000 دفعة، وأقل من 0.1% عند أكثر من 100,000 دفعة. نتيجة لذلك، تصل كفاءة وحدات معالجة الرسومات إلى 80-90% في المرحلة الأولية، ثم تستقر عند 98-100%.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "AWS",
+        "SageMaker",
+        "Qumulo",
+        "بنية تحتية سحابية",
+        "تدريب النماذج",
+        "أداء الحوسبة"
+      ],
+      "entities": [
+        "Amazon SageMaker HyperPod",
+        "Qumulo",
+        "Cloud Native Qumulo (CNQ)",
+        "Cloud Data Fabric (CDF)",
+        "NeuralCache",
+        "AWS",
+        "LLaMA v3"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "26 سبتمبر 2026",
+      "modifiedLabel": "26 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 682
+    },
+    "en": {
+      "title": "Cross-Region AI Training with SageMaker HyperPod and Qumulo",
+      "description": "Discover how Amazon SageMaker HyperPod and Cloud Native Qumulo enable efficient cross-Region AI model training without full data replication.",
+      "deck": "A newly validated multi-Region architecture lets artificial intelligence teams run training compute in one AWS Region while keeping datasets in another, maintaining optimal performance after a brief warmup.",
+      "summaryBullets": [
+        "Training compute and datasets can reside in separate AWS Regions without requiring petabyte-scale data replication.",
+        "Cloud Native Qumulo and Cloud Data Fabric enable remote clusters to match co-located throughput.",
+        "NeuralCache utilizes predictive AI to pre-fetch data blocks into local NVMe storage during an initial 100–150 batch warmup.",
+        "Validated testing demonstrated 98 to 100 percent GPU utilization on remote clusters once warmed."
+      ],
+      "sections": [
+        {
+          "heading": "Bridging the Compute and Data Gap",
+          "paragraphs": [
+            {
+              "text": "Training large artificial intelligence models requires massive graphics processing unit capacity, yet ideal compute resources and training data frequently reside in separate AWS Regions. Accessing datasets across Regions introduces network latency and transfer costs, forcing engineering teams to choose between replicating petabytes of data or absorbing cross-Region latency on every read. To address this trade-off, organizations can pair <a href=\"https://aws.amazon.com/sagemaker/ai/hyperpod/\">Amazon SageMaker HyperPod</a> with <a href=\"https://qumulo.com/product/aws\">Qumulo</a> to keep frontier models current without moving underlying data or sacrificing throughput.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod",
+                  "url": "https://aws.amazon.com/sagemaker/ai/hyperpod/"
+                },
+                {
+                  "text": "Qumulo",
+                  "url": "https://qumulo.com/product/aws"
+                }
+              ]
+            },
+            {
+              "text": "According to findings shared on the <a href=\"https://aws.amazon.com/blogs/machine-learning/\">Artificial Intelligence</a> blog, pairing managed training infrastructure with <a href=\"https://qumulo.com/product/aws\">Cloud Native Qumulo (CNQ)</a> and <a href=\"https://qumulo.com/product/cloud-data-fabric/\">Cloud Data Fabric (CDF)</a> allows training jobs to read datasets stored in separate AWS Regions or on-premises environments. This setup operates without copying data, changing application code, or degrading network performance.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                },
+                {
+                  "text": "Cloud Native Qumulo (CNQ)",
+                  "url": "https://qumulo.com/product/aws"
+                },
+                {
+                  "text": "Cloud Data Fabric (CDF)",
+                  "url": "https://qumulo.com/product/cloud-data-fabric/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Validation Architecture and Regional Setup",
+          "paragraphs": [
+            {
+              "text": "The validation approach evaluated two independent clusters running the same training job. The hub cluster ran in the US East (Ohio) Region, co-located with the dataset, while the spoke cluster operated in the US West (Oregon) Region and read data remotely through CDF over a connection with 60 ms of network latency. In the spoke Region, machine learning developers submitted jobs through an <a href=\"https://aws.amazon.com/eks/\">Amazon Elastic Kubernetes Service (Amazon EKS)</a> orchestrator running on the compute nodes.",
+              "links": [
+                {
+                  "text": "Amazon Elastic Kubernetes Service (Amazon EKS)",
+                  "url": "https://aws.amazon.com/eks/"
+                }
+              ]
+            },
+            {
+              "text": "Each HyperPod cluster mounted its local CNQ instance over Network File System. The spoke cluster retrieved information from the hub cluster utilizing <a href=\"https://aws.amazon.com/vpc/\">Virtual Private Cloud (VPC)</a> peering, making the entire dataset accessible without requiring direct cross-Region access from individual compute nodes.",
+              "links": [
+                {
+                  "text": "Virtual Private Cloud (VPC)",
+                  "url": "https://aws.amazon.com/vpc/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Predictive Caching via NeuralCache",
+          "paragraphs": [
+            {
+              "text": "To overcome long-haul network barriers, the architecture relies on Qumulo's <a href=\"https://qumulo.com/product/neural-cache\">NeuralCache</a>, which acts as the predictive caching layer inside Cloud Data Fabric. The caching layer observes sequential block reads issued by data loaders and learns specific access patterns. By utilizing an AI model to predict the next 4 KB blocks required by a job, the system pre-caches data locally.",
+              "links": [
+                {
+                  "text": "NeuralCache",
+                  "url": "https://qumulo.com/product/neural-cache"
+                }
+              ]
+            },
+            {
+              "text": "During an initial warmup phase spanning the first 100 to 150 batches, remote clusters experience slightly slower performance while the cache learns. Once warmed, however, the spoke cluster matches the performance of the co-located hub cluster, achieving optimal throughput without extra data orchestration.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Performance and GPU Utilization",
+          "paragraphs": [
+            {
+              "text": "Testing demonstrated that remote clusters running outside the data Region achieve optimal utilization comparable to co-located environments. Throughput consistently converges within the opening batches, rendering the one-time warmup duration negligible at scale—representing under one percent of wall-clock time at 10,000 batches and under 0.1 percent past 100,000 batches.",
+              "links": []
+            },
+            {
+              "text": "This performance pattern delivers 80 to 90 percent GPU utilization during the initial training phase before quickly converging to 98 to 100 percent utilization. Meanwhile, the underlying storage layer ensures that datasets stored using <a href=\"https://aws.amazon.com/s3/\">Amazon Simple Storage Service (Amazon S3)</a> and managed storage solutions remain easily accessible across distant infrastructure boundaries.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker HyperPod",
+        "Qumulo",
+        "Cloud Native Qumulo",
+        "Cloud Data Fabric",
+        "NeuralCache",
+        "AWS",
+        "Artificial Intelligence",
+        "GPU Utilization"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Qumulo",
+        "Amazon SageMaker HyperPod",
+        "Cloud Data Fabric",
+        "NeuralCache"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 26, 2026",
+      "modifiedLabel": "September 26, 2026",
+      "readMinutes": 3,
+      "wordCount": 559
+    }
+  },
+  "datePublished": "2026-09-26T08:11:55.964882+03:00",
+  "dateModified": "2026-09-26T08:11:55.964882+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/hero.webp",
+    "card": "/forum/assets/posts/2026/09/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/card.webp",
+    "social": "/forum/assets/posts/2026/09/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/social.jpg",
+    "alt": {
+      "ar": "SageMaker HyperPod و Qumulo تتيحان تدريب نماذج الذكاء الاصطناعي عبر مناطق AWS",
+      "en": "Cross-Region AI Training with SageMaker HyperPod and Qumulo"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-19515-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/inline-01.webp",
+        "width": 1320,
+        "height": 670,
+        "alt": {
+          "ar": "SageMaker HyperPod و Qumulo تتيحان تدريب نماذج الذكاء الاصطناعي عبر مناطق AWS",
+          "en": "Two AWS Regions: a HyperPod cluster and CNQ spoke in one Region reading a dataset from a CNQ hub in the other over Cloud Data Fabric."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-19515-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/inline-02.webp",
+        "width": 989,
+        "height": 763,
+        "alt": {
+          "ar": "SageMaker HyperPod و Qumulo تتيحان تدريب نماذج الذكاء الاصطناعي عبر مناطق AWS",
+          "en": "A single AWS Region holding the HyperPod cluster, the Amazon EKS orchestrator, and the CNQ hub that stores the training dataset."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-19515-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/inline-03.webp",
+        "width": 1211,
+        "height": 615,
+        "alt": {
+          "ar": "SageMaker HyperPod و Qumulo تتيحان تدريب نماذج الذكاء الاصطناعي عبر مناطق AWS",
+          "en": "A HyperPod cluster and CNQ spoke in one Region reading data from a CNQ hub in a second Region during NeuralCache cold start."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-19515-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/inline-04.webp",
+        "width": 1400,
+        "height": 747,
+        "alt": {
+          "ar": "SageMaker HyperPod و Qumulo تتيحان تدريب نماذج الذكاء الاصطناعي عبر مناطق AWS",
+          "en": "Qumulo dashboard time series for the hub run, with steady IOPS, throughput above 1.0 GBps, and a flat read latency trace."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-19515-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/",
+      "type": "official",
+      "title": "Multi-Region training with Amazon SageMaker HyperPod and Qumulo"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo",
+  "sourceTitle": "Multi-Region training with Amazon SageMaker HyperPod and Qumulo",
+  "trendScore": 106.31,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-26T05:11:55+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo.json"
+}
