@@ -1,8 +1,8 @@
 name: Mikhbar Publisher Clock
 
-# Independent wakeup/watchdog for the website publisher.
-# It never edits publication or social state itself; it only dispatches the
-# primary publisher when the last published story is approaching/past 20 min.
+# Lightweight native wakeup/watchdog for the website publisher.
+# It never edits publication or social state. It only dispatches the primary
+# publisher when the latest story is approaching/past the 20-minute boundary.
 on:
   workflow_dispatch:
   push:
@@ -10,14 +10,16 @@ on:
     paths:
       - '.github/workflows/mikhbar-publisher-clock.yml'
   schedule:
-    - cron: '5,25,45 * * * *'
+    # Frequent wakeups reduce GitHub scheduled-event delay risk. The publisher
+    # itself still enforces a strict minimum 20-minute gap between posts.
+    - cron: '7,12,17,22,27,32,37,42,47,52,57 * * * *'
 
 permissions:
   actions: write
   contents: read
 
 concurrency:
-  group: mikhbar-publisher-clock
+  group: mikhbar-publisher-native-watchdog
   cancel-in-progress: true
 
 jobs:
@@ -56,19 +58,37 @@ jobs:
               raise SystemExit(0)
 
           repository = os.environ["GITHUB_REPOSITORY"]
-          endpoint = f"repos/{repository}/actions/workflows/forum-collector.yml/dispatches"
-          payload = '{"ref":"main","inputs":{"trigger":"github-native-clock"}}'
-          subprocess.run(
+
+          # Avoid stacking duplicate publisher runs when multiple wakeup paths
+          # fire near the same time.
+          runs = subprocess.run(
               [
                   "gh", "api",
-                  "--method", "POST",
-                  endpoint,
-                  "--input", "-"
+                  f"repos/{repository}/actions/workflows/forum-collector.yml/runs",
+                  "-f", "per_page=20",
               ],
-              input=payload,
+              capture_output=True,
               text=True,
               check=True,
               env=os.environ,
           )
-          print("Primary Mikhbar publisher dispatched by independent GitHub clock.")
+          payload = json.loads(runs.stdout or "{}")
+          active = [
+              run for run in payload.get("workflow_runs", [])
+              if run.get("status") in {"queued", "in_progress", "waiting", "pending"}
+          ]
+          if active:
+              print(f"Primary Mikhbar publisher already active ({active[0].get('status')}); skipping duplicate dispatch.")
+              raise SystemExit(0)
+
+          endpoint = f"repos/{repository}/actions/workflows/forum-collector.yml/dispatches"
+          dispatch_payload = '{"ref":"main","inputs":{"trigger":"github-native-clock"}}'
+          subprocess.run(
+              ["gh", "api", "--method", "POST", endpoint, "--input", "-"],
+              input=dispatch_payload,
+              text=True,
+              check=True,
+              env=os.environ,
+          )
+          print("Primary Mikhbar publisher dispatched by native watchdog.")
           PY
