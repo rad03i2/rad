@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "0a10d0252c63a3f9d568",
+  "slug": "usage-metrics-api-adds-pull-request-review-stages",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/usage-metrics-api-adds-pull-request-review-stages/",
+    "en": "/forum/en/web/usage-metrics-api-adds-pull-request-review-stages/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub يضيف تفاصيل مراحل مراجعة الطلبات إلى API مقاييس الاستخدام",
+      "description": "أضافت GitHub إلى واجهة برمجة التطبيقات الخاصة بمقاييس استخدام Copilot ميزة جديدة تكشف عن الوقت الذي تستغرقه طلبات الدمج في مراحل المراجعة المختلفة، مما يساعد الفرق على تحسين سير العمل.",
+      "deck": "أعلنت GitHub عن تحديث لواجهة برمجة التطبيقات الخاصة بمقاييس استخدام Copilot على مستوى المستودعات، تتيح للفرق تحليل الوقت المستغرق في مراحل مراجعة طلبات الدمج الثلاثة.",
+      "summaryBullets": [
+        "إضافة مصفوفة pull_request_review_times لتتبع الوقت من الجاهزية للمراجعة الأولى، ثم للمراجعة النهائية، وأخيراً حتى الدمج.",
+        "توفر البيانات مقاييس الوسيط (Median) ونسبة 90% (P90) لكل مرحلة، مما يساعد في تحديد الاختناقات.",
+        "البيانات تشمل فقط المراجعات البشرية، حيث يتم تجاهل مراجعات الروبوتات وCopilot في هذه المقاييس.",
+        "تبدأ البيانات بالتراكم من تاريخ الإصدار، ولا تشمل الطلبات التي أصبحت جاهزة للمراجعة قبل 21 سبتمبر 2026.",
+        "يتطلب الوصول إلى هذه التقارير تفعيل سياسة مقاييس استخدام Copilot والصلاحيات المناسبة."
+      ],
+      "sections": [
+        {
+          "heading": "تحديث جديد في مقاييس استخدام Copilot",
+          "paragraphs": [
+            {
+              "text": "أعلنت GitHub عن إضافة ميزة جديدة إلى تقارير مقاييس استخدام Copilot على مستوى المستودعات للمؤسسات والمنظمات. تتيح هذه الميزة للفرق التقنية فهم توزيع الوقت الذي تستغرقه طلبات الدمج (Pull Requests) في كل مرحلة من مراحل المراجعة. بدلاً من الاقتصار على إجمالي الوقت، تقدم التحديثات الآن تفصيلاً دقيقاً يوضح أين يتم إنفاق الوقت خلال دورة حياة الطلب. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-25-usage-metrics-api-adds-pull-request-review-stages/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تفاصيل المصفوفة الجديدة pull_request_review_times",
+          "paragraphs": [
+            {
+              "text": "أضافت GitHub مصفوفة جديدة اسمها pull_request_review_times إلى كل صف في تقارير repos-1-day. تتضمن هذه المصفوفة بيانات دقيقة لكل مرحلة من المراحل الثلاث الأساسية: الوقت من لحظة جاهزية الطلب للمراجعة حتى المراجعة الأولى، والوقت بين المراجعة الأولى والنهائية، وأخيراً الوقت من المراجعة النهائية حتى الدمج. توفر البيانات قيمتين لكل مرحلة: الوسيط (Median) ونسبة 90% (P90)، مما يساعد المطورين على فهم الأداء النموذجي مقابل الحالات الشاذة. ويمكن الرجوع إلى Back to changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "حساب الوقت والمعايير المعتمدة",
+          "paragraphs": [
+            {
+              "text": "تُقاس المدد الزمنية بالدقائق وتُسجل في اليوم الذي تم فيه دمج الطلب. تشمل المعايير الجديدة فقط الطلبات التي فتحها شخص واحد وقام شخص آخر على الأقل بمراجعتها. يتم تجاهل المراجعات التي يقوم بها الروبوتات أو Copilot أو المؤلف نفسه في حساب هذه المدد. لذلك، قد تكون قيمة total_merged في المصفوفة الجديدة أقل من القيمة الموجودة في حقل pull_requests التقليدي، لأن الأخير يشمل الطلبات المدمجة دون أي مراجعة بشرية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "فوائد تحليل المراحل الثلاث",
+          "paragraphs": [
+            {
+              "text": "تساعد هذه التفصيلات الفرق على تحديد سبب تأخر دمج الطلبات بدقة. إذا كان الوقت طويلاً في المرحلة الأولى، فقد يكون السبب نقصاً في المراجعين. أما إذا كان الطول في المرحلة الثانية، فقد يشير إلى وجود نقاشات مطولة أو تعديلات متكررة. وإذا كان التأخير في المرحلة الثالثة، فقد يعني أن الطلبات معتمدة لكنها لم تُدمج بعد. وجود قيمة P90 بجانب الوسيط يكشف إذا كانت مجموعة صغيرة من الطلبات البطيئة هي المسؤولة عن تأخير المتوسط العام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوفر والوصول إلى البيانات",
+          "paragraphs": [
+            {
+              "text": "تتوفر هذه البيانات في تقارير repos-1-day للمؤسسات والمنظمات. لا توجد بيانات تاريخية (Backfill)، حيث تبدأ البيانات بالتراجم من تاريخ الإصدار، مما يعني أن الأيام الأولى قد تكون البيانات فيها محدودة. الطلبات التي أصبحت جاهزة للمراجعة قبل 21 سبتمبر 2026 لن تظهر في هذه المصفوفة، لكنها ستظل محسوبة في إجمالي الطلبات المدمجة. في الأيام التي لا يتم فيها دمج أي طلبات مؤهلة، تكون المصفوفة فارغة [].",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات الصلاحيات والوصول",
+          "paragraphs": [
+            {
+              "text": "يمكن لمالكي المؤسسات، ومديري الفوترة، ومالكي المنظمات، وأي شخص لديه دور مخصص يمنح صلاحية عرض مقاييس Copilot الوصول إلى هذه التقارير. يجب أن تكون سياسة مقاييس استخدام Copilot مفعلة في المؤسسة أو المنظمة. يمكن للمستخدمين البدء في استخدام هذه البيانات من خلال الرجوع إلى التوثيق الرسمي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "Copilot",
+        "API",
+        "مقاييس الاستخدام",
+        "مراجعة الطلبات",
+        "إنتاجية المطورين",
+        "تحليل البيانات"
+      ],
+      "entities": [
+        "GitHub",
+        "Copilot",
+        "Usage Metrics API",
+        "Pull Requests"
+      ],
+      "category": "الويب",
+      "dateLabel": "26 سبتمبر 2026",
+      "modifiedLabel": "26 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 517
+    },
+    "en": {
+      "title": "Usage Metrics API Adds Pull Request Review Stages",
+      "description": "Enterprise and organization repository-level Copilot usage metrics reports now break down how long pull requests spend in each review stage.",
+      "deck": "GitHub has updated its enterprise and organization repository-level Copilot usage metrics reports to include a granular breakdown of how long pull requests spend in individual review stages.",
+      "summaryBullets": [
+        "A new pull_request_review_times array on each repos-1-day row tracks review durations.",
+        "Metrics measure the time from ready for review to first review, first review to final review, and final review to merge.",
+        "Data includes median and 90th percentile durations measured in minutes and attributed to the merge date.",
+        "Only human reviews are timed, excluding bot activity and Copilot code review from the timing logic."
+      ],
+      "sections": [
+        {
+          "heading": "Granular Review Stage Breakdown",
+          "paragraphs": [
+            {
+              "text": "According to the GitHub Changelog, enterprise and organization repository-level Copilot usage metrics reports now provide a detailed breakdown of how long pull requests spend across distinct stages of review. Teams can review the newly introduced pull_request_review_times array on each repos-1-day row to gain deeper insight into their development workflows. For more details on accessing these capabilities, developers can consult the Copilot usage metrics API documentation.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-09-25-usage-metrics-api-adds-pull-request-review-stages/"
+                },
+                {
+                  "text": "Copilot usage metrics API documentation",
+                  "url": "https://docs.github.com/rest/copilot/copilot-usage-metrics"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Understanding the Three Review Stages",
+          "paragraphs": [
+            {
+              "text": "While development teams could previously track when pull requests took an extended period to merge, identifying the precise bottleneck remained challenging. The new update splits the wait time into three distinct stages: from ready for review to the first review, from the first review to the final review, and from the final review to the merge itself. Each metric provides both a median duration and a 90th percentile measurement to highlight when a small number of unusually slow pull requests might be skewing overall delivery performance.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Data Composition and Human-Only Timing",
+          "paragraphs": [
+            {
+              "text": "Entries within the pull_request_review_times array record specific data points, including authored_by and reviewed_by fields alongside total_merged counts. Notably, the system times human reviews exclusively. Reviews generated by Copilot code review, other automated bots, and the pull request author are intentionally ignored during timing calculations. Consequently, the total_merged count in this array will typically fall below the figures found in standard repository-level GitHub Copilot usage metrics, which continue to count pull requests that merge without any reviews at all.",
+              "links": [
+                {
+                  "text": "repository-level GitHub Copilot usage metrics",
+                  "url": "https://github.blog/changelog/2026-07-17-repository-level-github-copilot-usage-metrics-generally-available/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Rollout and Historical Data Constraints",
+          "paragraphs": [
+            {
+              "text": "Because there is no backfill mechanism for this feature, historical data will not be available. Information builds forward starting directly from the release date, meaning that reports covering the earliest days following the launch will appear relatively sparse. Furthermore, pull requests that became ready for review prior to September 21, 2026, are excluded from the review times section entirely, though they still factor into general totals.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Access and Availability",
+          "paragraphs": [
+            {
+              "text": "These new metrics are available directly within enterprise and organization repos-1-day reports. To view the data, users must possess appropriate permissions, such as enterprise owners, billing managers, organization owners, or individuals assigned a custom organization or enterprise role that explicitly grants the View Copilot Metrics permission. Additionally, the underlying Copilot usage metrics policy must be actively enabled.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "Copilot",
+        "API",
+        "Metrics",
+        "Pull Requests",
+        "DevOps",
+        "Software Development"
+      ],
+      "entities": [
+        "GitHub"
+      ],
+      "category": "Web",
+      "dateLabel": "September 26, 2026",
+      "modifiedLabel": "September 26, 2026",
+      "readMinutes": 3,
+      "wordCount": 465
+    }
+  },
+  "datePublished": "2026-09-26T03:53:16.119115+03:00",
+  "dateModified": "2026-09-26T03:53:16.119115+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/usage-metrics-api-adds-pull-request-review-stages/hero.webp",
+    "card": "/forum/assets/posts/2026/09/usage-metrics-api-adds-pull-request-review-stages/card.webp",
+    "social": "/forum/assets/posts/2026/09/usage-metrics-api-adds-pull-request-review-stages/social.jpg",
+    "alt": {
+      "ar": "GitHub يضيف تفاصيل مراحل مراجعة الطلبات إلى API مقاييس الاستخدام",
+      "en": "Usage Metrics API Adds Pull Request Review Stages"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/09/6b8e111412cb6b98fa885fd25af7a5fa-2400x1260-1.jpeg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-25-usage-metrics-api-adds-pull-request-review-stages/",
+      "type": "official",
+      "title": "Usage metrics API adds pull request review stages"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-09-25-usage-metrics-api-adds-pull-request-review-stages",
+  "sourceTitle": "Usage metrics API adds pull request review stages",
+  "trendScore": 117.48,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-26T00:53:16+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/usage-metrics-api-adds-pull-request-review-stages.json"
+}
