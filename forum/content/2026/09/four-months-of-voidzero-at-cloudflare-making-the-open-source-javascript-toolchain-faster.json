@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "c21a6e84faf67f612a2e",
+  "slug": "four-months-of-voidzero-at-cloudflare-making-the-open-source-javascript-toolchain-faster",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/four-months-of-voidzero-at-cloudflare-making-the-open-source-javascript-toolchain-faster/",
+    "en": "/forum/en/ai/four-months-of-voidzero-at-cloudflare-making-the-open-source-javascript-toolchain-faster/"
+  },
+  "locales": {
+    "ar": {
+      "title": "فويديرو زيرو تسرّع أدوات جافاسكربت 10 أضعاف بعد انضمامها لـ كلاودفلير",
+      "description": "أطلقت فويديرو زيرو أكثر من 80 إصداراً خلال 4 أشهر، محققة تسارعاً هائلاً في تجميع جافاسكربت واختباره، لتخدم المطورين والوكلاء الذكيين بكفاءة قصوى.",
+      "deck": "بعد أربعة أشهر من الانضمام إلى كلاودفلير، كشفت فويديرو زيرو عن إنجازات تقنية ضخمة تسرّع سلسلة أدوات جافاسكربت المفتوحة المصدر بشكل جذري، مع تركيز خاص على دعم وكلاء الذكاء الاصطناعي.",
+      "summaryBullets": [
+        "إطلاق Oxc React Compiler الذي يسرّع تجميع تطبيقات React.js بمعدل 10 أضعاف مقارنة بالإصدار الأصلي.",
+        "إصدار Vitest 5 الذي يحقق تسارعاً بنسبة تصل إلى 50% في تشغيل الاختبارات مقارنة بالإصدار السابق.",
+        "استقرار محرك التفتيش الواعي بالنوع tsgolint، الذي يتفوق على ESLint في السرعة بمعدل 18 ضعفاً في قواعد البيانات الكبيرة.",
+        "إطلاق الإصدار 1.0 من Vite+ الذي يوحّد جميع أدوات فويديرو زيرو في سلسلة أدوات متكاملة وسريعة.",
+        "التزام كلاودفلير بتمويل مجتمع المصادر المفتوحة بمبلغ إضافي قدره مليون دولار لدعم المساهمين."
+      ],
+      "sections": [
+        {
+          "heading": "انطلاقة قوية بعد الانضمام لكلاودفلير",
+          "paragraphs": [
+            {
+              "text": "منذ انضمام فريق فويديرو زيرو إلى شركة كلاودفلير قبل أربعة أشهر، التزم الفريق بالحفاظ على طبيعة أدواته مفتوحة المصدر ومستقلة عن الموردين. وخلال هذه الفترة القصيرة، تم إطلاق أكثر من 80 إصداراً جديداً وإغلاق أكثر من 1200 مشكلة تقنية، مما يعكس وتيرة تطوير سريعة تهدف إلى تحسين أداء سلسلة أدوات جافاسكربت بشكل شامل.",
+              "links": []
+            },
+            {
+              "text": "يأتي هذا التحديث ضمن أسبوع عيد ميلاد كلاودفلير، حيث تسعى الشركة إلى تعزيز مساهمتها في الإنترنت ومجتمع المطورين. تؤكد هذه الأرقام على أن الدمج بين كلاودفلير وفويديرو زيرو لم يؤثر سلباً على استقلالية الأدوات، بل عزز من قدرتها على تقديم تحسينات أداء جوهرية للمجتمع التقني.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تسريع تجميع React بمعدل 10 أضعاف",
+          "paragraphs": [
+            {
+              "text": "أبرز الإنجازات التقنية تمثلت في إطلاق Oxc React Compiler في أغسطس الماضي. يعتمد هذا المجمع على إعادة كتابة محرك React Compiler بلغة Rust، مما أدى إلى تسريع عمليات التجميع لتطبيقات React.js بمعدل 10 أضعاف مقارنة بالتنفيذ الأصلي المبني على Babel.",
+              "links": [
+                {
+                  "text": "Oxc React Compiler",
+                  "url": "https://oxc.rs/blog/2026-08-18-react-compiler-support"
+                }
+              ]
+            },
+            {
+              "text": "لا يقتصر التحسن على السرعة فحسب، بل يشمل أيضاً تقليل استهلاك الذاكرة وتحسين معالجة الأخطاء. يمكن للمطورين الذين يستخدمون Vite تفعيل هذا المجمع بسهولة عبر تثبيت الحزمة المناسبة وتفعيل الرمز الخاص به، مما يوفر تجربة تطوير أكثر سلاسة وكفاءة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات جوهرية في نظام الاختبارات Vitest 5",
+          "paragraphs": [
+            {
+              "text": "في سبتمبر، تم إصدار Vitest 5 الذي يحقق تسارعاً يصل إلى 50% في أوقات الاختبار مقارنة بالإصدار الرابع. يعتمد هذا التحسن على مشاركة الملفات المحولة بين المشاريع، وتخزين الوحدات في ذاكرة القرص، وتقليل حجم البيانات المنقولة بين العملية الرئيسية والعمّال.",
+              "links": [
+                {
+                  "text": "Vitest 5",
+                  "url": "https://vitest.dev/blog/vitest-5.html"
+                }
+              ]
+            },
+            {
+              "text": "أضاف الإصدار الجديد أدوات تشخيصية متقدمة مثل vitest doctor التي تحلل أوقات الإعداد والاستيراد والتحويل، وتوصي بإعدادات أسرع. كما تم تحسين عرض التتبع (Trace View) لتسجيل تفاعلات المتصفح ولقطات DOM، مما يسهل إعادة تشغيل الأخطاء وفحصها في تقارير HTML تفاعلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استقرار محرك التفتيش الواعي بالنوع tsgolint",
+          "paragraphs": [
+            {
+              "text": "أصبح محرك tsgolint، الذي يدعم التفتيش الواعي بأنواع TypeScript، مستقراً الآن. يتفوق هذا المحرك على ESLint في السرعة بمعدل يتراوح بين 12 و18 ضعفاً في قواعد البيانات الكبيرة، مع دعمه لـ 59 من قواعد typescript-eslint الواعية بالنوع.",
+              "links": [
+                {
+                  "text": "tsgolint",
+                  "url": "https://oxc.rs/blog/2026-07-22-type-aware-linting-stable"
+                }
+              ]
+            },
+            {
+              "text": "يتميز Oxlint بقدرته على مشاركة برنامج TypeScript واحد بين مهام التفتيش والتحقق من الأنواع، بدلاً من تحليل المشروع مرتين. هذا التكامل يقلل من زمن المعالجة ويوفر نتائج دقيقة في اكتشاف الأخطاء التي تتطلب بيانات النوع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أداء فائق في تنسيق الكود عبر Oxfmt",
+          "paragraphs": [
+            {
+              "text": "أعاد فريق فويديرو زيرو كتابة أدوات تنسيق JSON وCSS وSCSS وLess وGraphQL وYAML في Oxfmt بلغة Rust. هذا التحول التقني جعل Oxfmt أسرع من Prettier بمعدل 7 أضعاف، مع الحفاظ على توافق المخرجات وسهولة الاستخدام التي اعتاد عليها المطورون.",
+              "links": [
+                {
+                  "text": "Oxfmt",
+                  "url": "https://oxc.rs/docs/guide/usage/formatter.html"
+                }
+              ]
+            },
+            {
+              "text": "يعكس هذا التحسين التزام الفريق بجعل سلسلة الأدوات أسرع دون التضحية بجودة المخرجات. بفضل البنية المبنية على Oxc، تستفيد جميع الأدوات من التحسينات في الطبقات السفلية، مما يخلق تأثيراً تراكمياً إيجابياً على الأداء العام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إطلاق Vite+ 1.0 وتوحيد سلسلة الأدوات",
+          "paragraphs": [
+            {
+              "text": "أعلنت الشركة عن إطلاق الإصدار 1.0 من Vite+، وهو إطار عمل يوحّد جميع أدوات فويديرو زيرو في سلسلة أدوات واحدة سريعة ومترابطة. يأتي Vite+ مدمجاً مع Vite 8 وVitest 5 وRolldown وOxlint وOxfmt، مع إعدادات افتراضية مدروسة لتقليل تعقيد اتخاذ القرارات للمطورين.",
+              "links": [
+                {
+                  "text": "Vite+",
+                  "url": "https://viteplus.dev/"
+                }
+              ]
+            },
+            {
+              "text": "كما يعمل الفريق على ميزة \"Bundled Dev\" التي تستخدم مجمّع الإنتاج أثناء التطوير، مما يسرّع خادم التطوير للتطبيقات الضخمة ويقلل من عبء الشبكة. تستخدم لوحة تحكم كلاودفلير الداخلية هذه الميزة بالفعل لجميع مطوريها، مما يعكس ثقتها في فعاليتها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استثمار في المصادر المفتوحة ومستقبل الوكلاء",
+          "paragraphs": [
+            {
+              "text": "تؤكد فويديرو زيرو أن مهمتها تتمثل في زيادة إنتاجية مطوري جافاسكربت من الجيل القادم، بما في ذلك وكلاء الذكاء الاصطناعي. مع تسارع عمليات الاستدلال (Inference)، تصبح سرعة التحقق من الأنواع والتجميع عنق الزجاجة، لذا فإن تسريع هذه الأدوات يصبح أمراً حيوياً لتقليل وقت انتظار الوكلاء.",
+              "links": []
+            },
+            {
+              "text": "لتعزيز التزامها بالمجتمع، التزمت كلاودفلير بتمويل إضافي قدره مليون دولار للمصادر المفتوحة، ليضاف إلى مليون دولار مخصصة سابقاً لمجتمع Vite. يخطط الفريق لإطلاق تحسينات كبيرة على محلل Oxc وخوارزميات تقطيع الكود في Rolldown خلال الأشهر القادمة، مع الحفاظ على الشفافية والمشاركة المجتمعية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "جافاسكربت",
+        "مصادر مفتوحة",
+        "كلاودفلير",
+        "أدوات تطوير",
+        "ذكاء اصطناعي",
+        "أداء",
+        "React",
+        "Vite"
+      ],
+      "entities": [
+        "VoidZero",
+        "Cloudflare",
+        "Vite+",
+        "Vitest 5",
+        "Oxc React Compiler",
+        "tsgolint",
+        "Oxfmt",
+        "Rolldown"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "28 سبتمبر 2026",
+      "modifiedLabel": "28 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 721
+    },
+    "en": {
+      "title": "VoidZero at Cloudflare: Faster JS Toolchain Launch",
+      "description": "Cloudflare integrates VoidZero into its open-source JavaScript toolchain, accelerating compilation, linting, and testing for developers and AI agents.",
+      "deck": "Since joining Cloudflare four months ago, VoidZero has delivered over 80 releases that dramatically improve JavaScript performance.",
+      "summaryBullets": [
+        "Over 80 releases delivered in four months, focusing on open-source, vendor-agnostic toolchain improvements",
+        "Oxc React Compiler offers 10x faster React compilation with lower memory usage and better error handling",
+        "Vitest 5 provides up to 50% faster test execution through advanced caching and transformation strategies",
+        "tsgolint and Oxfmt achieve 18x and 7x speedups respectively compared to traditional alternatives",
+        "Vite+ 1.0 unifies all VoidZero tools into a single, highly optimized, and fast toolchain bundle"
+      ],
+      "sections": [
+        {
+          "heading": "Integration and Commitment",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has integrated VoidZero into its open-source JavaScript toolchain, launching over 80 releases in four months to deliver dramatic performance gains for developers and AI agents. This rapid pace reflects Cloudflare's broader commitment to maintain Vite, Vitest, Rolldown, Oxc, and Vite+ as open-source, vendor-agnostic, and community-driven projects. The continuous delivery model ensures that users receive immediate access to performance improvements without waiting for external releases.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Performance Enhancements Across the Toolchain",
+          "paragraphs": [
+            {
+              "text": "The Oxc React Compiler, released in August, represents a major rewrite of the React compiler based on the React team's rewrite in Rust. It delivers 10x faster compile times for React.js applications compared to the previous Babel implementation, uses significantly less memory, and provides a more complete implementation with superior error handling. When paired with Vite, developers can enable the compiler via the oxc-transform-react package and the compiler flag for substantially quicker builds.",
+              "links": []
+            },
+            {
+              "text": "Vitest 5, launched in September, achieves up to 50% faster test execution than Vitest 4 through several key optimizations. The runner shares transformed files across projects, caches modules on disk, and reduces data transfer between its main process and worker threads. Additional features include vitest doctor for breaking down setup, import, transform, and test phases, trace view for recording browser interactions, conditional mocks with vi.when, and improved benchmark reporting.",
+              "links": [
+                {
+                  "text": "Vitest 5",
+                  "url": "https://vitest.dev/blog/vitest-5.html"
+                }
+              ]
+            },
+            {
+              "text": "tsgolint is now stable and provides type-aware linting 12 to 18 times faster than ESLint in large codebases. The engine supports 59 of typescript-eslint's 61 type-aware rules, combining efficient static analysis with TypeScript diagnostics. Its design enables one-pass linting and type-checking by sharing a single TypeScript program across both tasks, eliminating redundant analyses.",
+              "links": []
+            },
+            {
+              "text": "Oxfmt's JSON, CSS, SCSS, Less, GraphQL, and YAML formatters have been rewritten entirely in Rust, making the tool 7x faster than Prettier while preserving Prettier-compatible output and familiar ergonomics. This performance boost stems from Rust's memory safety guarantees and parallel processing capabilities, allowing rapid formatting of complex configuration files.",
+              "links": [
+                {
+                  "text": "Oxfmt",
+                  "url": "https://oxc.rs/docs/guide/usage/formatter.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Unified Development Experience with Vite+",
+          "paragraphs": [
+            {
+              "text": "Progress is being made toward shipping 'Bundled Dev' (Full Bundle Mode), a new development environment that leverages Vite's production bundler during local development. This approach accelerates larger applications by minimizing start-up latency and reducing network overhead when working with remote sandboxes. Early adopters, including Cloudflare's own dashboard, are already benefiting from this unified development workflow.",
+              "links": [
+                {
+                  "text": "Bundled Dev",
+                  "url": "https://viteplus.dev/"
+                }
+              ]
+            },
+            {
+              "text": "Vite+ is now at version 1.0, representing a unified and fast toolchain that consolidates all VoidZero components into a single package. The bundle includes Vite 8, Vitest 5, Rolldown, Oxlint, and Oxfmt with built-in task caching. This streamlined distribution simplifies dependency management and ensures consistent behavior across development and production environments.",
+              "links": [
+                {
+                  "text": "Vite+",
+                  "url": "https://viteplus.dev/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Future Roadmap and Community Impact",
+          "paragraphs": [
+            {
+              "text": "Looking ahead, VoidZero plans major enhancements such as improved parsing algorithms in Oxc with potential up to 3x speedup, a redesigned chunking strategy in Rolldown for better incremental compilation, and an open-source self-hostable deployment platform built on Cloudflare. These initiatives aim to further reduce friction for teams working on massive codebases.",
+              "links": [
+                {
+                  "text": "Cloudflare",
+                  "url": "https://blog.cloudflare.com/voidzero-joins-cloudflare/"
+                }
+              ]
+            },
+            {
+              "text": "The project remains deeply committed to expanding the open-source ecosystem, believing that a thriving community drives sustainable innovation. Cloudflare's contribution of $1M to a Vite ecosystem fund and subsequent $1M investment in open source demonstrate their dedication to supporting maintainers and contributors. This collaborative spirit continues to shape the future direction of the toolchain.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "VoidZero",
+        "Oxc",
+        "Vitest",
+        "tsgolint",
+        "Oxfmt",
+        "Vite+"
+      ],
+      "entities": [
+        "Cloudflare",
+        "VoidZero",
+        "Oxc",
+        "React",
+        "Vitest",
+        "tsgolint",
+        "Oxfmt",
+        "Vite+",
+        "Rolldown",
+        "ESLint"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 28, 2026",
+      "modifiedLabel": "September 28, 2026",
+      "readMinutes": 3,
+      "wordCount": 627
+    }
+  },
+  "datePublished": "2026-09-28T16:57:06.757175+03:00",
+  "dateModified": "2026-09-28T16:57:06.757175+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/four-months-of-voidzero-at-cloudflare-making-the-open-source-javascript-toolchain-faster/hero.webp",
+    "card": "/forum/assets/posts/2026/09/four-months-of-voidzero-at-cloudflare-making-the-open-source-javascript-toolchain-faster/card.webp",
+    "social": "/forum/assets/posts/2026/09/four-months-of-voidzero-at-cloudflare-making-the-open-source-javascript-toolchain-faster/social.jpg",
+    "alt": {
+      "ar": "فويديرو زيرو تسرّع أدوات جافاسكربت 10 أضعاف بعد انضمامها لـ كلاودفلير",
+      "en": "VoidZero at Cloudflare: Faster JS Toolchain Launch"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3JF39Y5YKC8AHHGD706PRKV.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/four-months-of-voidzero-at-cloudflare-making-the-open-source-javascript-toolchain-faster/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "فويديرو زيرو تسرّع أدوات جافاسكربت 10 أضعاف بعد انضمامها لـ كلاودفلير",
+          "en": "Four months of VoidZero at Cloudflare: making the open-source JavaScript toolchain faster for all humans and agents"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/voidzero-update/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3KGJRF1EHG181ZZFCQEF96E.01M3KGJSS4805N5K6M06E2T86J.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/four-months-of-voidzero-at-cloudflare-making-the-open-source-javascript-toolchain-faster/inline-02.webp",
+        "width": 1400,
+        "height": 866,
+        "alt": {
+          "ar": "فويديرو زيرو تسرّع أدوات جافاسكربت 10 أضعاف بعد انضمامها لـ كلاودفلير",
+          "en": "VoidZero at Cloudflare: Faster JS Toolchain Launch"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/voidzero-update/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3JF3B663NP132B5X1EGYZTG.png&w=1430&h=886&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/voidzero-update/",
+      "type": "official",
+      "title": "Four months of VoidZero at Cloudflare: making the open-source JavaScript toolchain faster for all humans and agents"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/voidzero-update",
+  "sourceTitle": "Four months of VoidZero at Cloudflare: making the open-source JavaScript toolchain faster for all humans and agents",
+  "trendScore": 124.72,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-28T13:57:06+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 3
+  },
+  "contentFile": "forum/content/2026/09/four-months-of-voidzero-at-cloudflare-making-the-open-source-javascript-toolchain-faster.json"
+}
