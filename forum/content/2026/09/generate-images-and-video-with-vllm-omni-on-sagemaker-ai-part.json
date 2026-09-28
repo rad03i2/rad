@@ -1,0 +1,346 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "ad3571e52966313e0228",
+  "slug": "generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part/",
+    "en": "/forum/en/ai/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part/"
+  },
+  "locales": {
+    "ar": {
+      "title": "توليد الصور والفيديوهات عبر vLLM-Omni على SageMaker AI",
+      "description": "تعرف على كيفية نشر نماذج توليد الصور والفيديوهات باستخدام حاويات التعلم العميق vLLM-Omni على منصة Amazon SageMaker AI بمرونة كاملة.",
+      "deck": "تتيح أمازون وبلاتفورم vLLM-Omni للمطورين إمكانية نشر نماذج توليد الوسائط المتعددة عبر نقاط نهاية متخصصة للوقت الفعلي والاستدلال غير المتزامن.",
+      "summaryBullets": [
+        "نشر نموذجي FLUX.2-klein وWan2.1-VACE باستخدام نفس حاوية التعلم العميق AWS vLLM-Omni DLC.",
+        "استخدام الاستدلال في الوقت الفعلي لتوليد الصور الثابتة عبر نقطة نهاية مخصصة.",
+        "الاعتماد على الاستدلال غير المتزامن لتحويل الصور إلى مقاطع فيديو قصيرة وتخزينها في Amazon S3.",
+        "توفير سير عمل متكامل يشمل واجهة سطر أوامر وتطبيق Streamlit تفاعلي."
+      ],
+      "sections": [
+        {
+          "heading": "مقدمة حول دمج vLLM-Omni مع SageMaker AI",
+          "paragraphs": [
+            {
+              "text": "في إطار التطور المستمر لتقنيات الذكاء الاصطناعي التوليدي، أصبح بإمكان المطورين تحويل النصوص الوصفية إلى صور ثابتة ثم تحريكها بمرونة لتصبح مقاطع فيديو قصيرة على منصة Amazon SageMaker AI. يعتمد هذا النهج المتقدم على نشر نقطتي نهاية منفصلتين ولكن من نفس حاوية التعلم العميق AWS vLLM-Omni DLC، مما يقلل من تباين حزمة التوجيه ويسهل عملية إدارة النماذج المتخصصة.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker/ai/"
+                }
+              ]
+            },
+            {
+              "text": "تعتبر هذه المقالة امتداداً لسلسلة تقنية متخصصة تتناول حاويات التعلم العميق من أمازون، حيث ركز الجزء الأول على تطبيقات الصوت الفورية باستخدام البث ثنائي الاتجاه، بينما يركز الجزء الحالي على آليات الاستدلال المباشر وغير المتزامن للصور والفيديوهات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية توليد الصور الثابتة عبر الاستدلال الفوري",
+          "paragraphs": [
+            {
+              "text": "يبدأ سير العمل بإرسال موجه نصي إلى نقطة نهاية مخصصة للوقت الفعلي لتوليد الصور باستخدام نموذج FLUX.2-klein-4B. تقوم نقطة النهاية هذه بمعالجة الطلب وإرجاع صورة بصيغة PNG مشفرة بنظام base64 مباشرة إلى التطبيق، وهو ما يتطلبه سير العمل لضمان توفر الصورة قبل الانتقال للخطوة التالية.",
+              "links": [
+                {
+                  "text": "FLUX.2-klein-4B",
+                  "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4B"
+                }
+              ]
+            },
+            {
+              "text": "تستفيد هذه المرحلة من سرعة الاستجابة المباشرة التي توفرها نقاط النهاية الفورية، مما يتيح للمستخدم معاينة الصورة وتعديل الأبعاد قبل تحويلها إلى فيديو متحرك عبر النماذج اللاحقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحويل الصور إلى فيديوهات باستخدام الاستدلال غير المتزامن",
+          "paragraphs": [
+            {
+              "text": "بمجرد الحصول على الصورة الثابتة وتعديل أبعادها، يقوم التطبيق بتمريرها مع موجه حركي إلى نموذج Wan2.1-VACE-1.3B المخصص لإنشاء الفيديوهات. نظراً لأن عمليات توليد الفيديو تستغرق وقتاً أطول وتحمل حمولات مركبة، يتم استخدام الاستدلال غير المتزامن عبر Amazon S3.",
+              "links": [
+                {
+                  "text": "Wan2.1-VACE-1.3B",
+                  "url": "https://huggingface.co/Wan-AI/Wan2.1-VACE-1.3B-diffusers"
+                },
+                {
+                  "text": "Amazon S3",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            },
+            {
+              "text": "تتولى منصة الاستدلال غير المتزامن طابور الطلبات وتخزين المخرجات بصيغة MP4 في التخزين السحابي، مما يتيح للعميل استطلاع حالة الطلب واسترجاع الملف النهائي بسلاسة دون الحاجة لفتح اتصال متزامن طويل الأمد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تكوين البنية التحتية ونشر الحاويات",
+          "paragraphs": [
+            {
+              "text": "تعتمد هذه التجربة على استخدام AWS Deep Learning Containers لتغليف كافة الحزم والتبعيات اللازمة للتدريب والاستدلال. يضمن استخدام نفس صورة الحاوية عبر متغيرات البيئة توحيد البيئة التشغيلية مع تخصيص أنواع المثيلات حسب متطلبات كل نموذج.",
+              "links": [
+                {
+                  "text": "AWS Deep Learning Containers",
+                  "url": "https://github.com/aws/deep-learning-containers"
+                }
+              ]
+            },
+            {
+              "text": "يوفر نموذج الكود المتاح للمستخدمين إمكانية استنساخ المستودع، ضبط الأذونات، وتشغيل سكريبت النشر الذي يقوم بإنشاء نقطتي النهاية للصور والفيديوهات وحفظ حالتهما لاستخدامها لاحقاً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خطوات التنفيذ والأوامر البرمجية للاستخدام",
+          "paragraphs": [
+            {
+              "text": "لبدء العمل، يتعين على المطور استنساخ المستودع الخاص بأمثلة الاستضافة، ثم إنشاء بيئة افتراضية بايثون وتثبيت المتطلبات اللازمة عبر مدير الحزم لتفادي أي تعارض في الإصدارات.",
+              "links": []
+            },
+            {
+              "text": "بعد ضبط دور التنفيذ الخاص بـ SageMaker وتنفيذ سكريبت النشر، يمكن تشغيل سير العمل النهائي عبر سطر الأوامر باستخدام الموجهات النصية والحركية المطلوبة للوصول إلى النتيجة المرجوة وتخزين ملفات الفيديو بنجاح.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "SageMaker AI",
+        "vLLM-Omni",
+        "الذكاء الاصطناعي التوليدي",
+        "توليد الفيديوهات",
+        "الحوسبة السحابية",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon SageMaker AI",
+        "AWS",
+        "FLUX.2-klein",
+        "Wan2.1-VACE",
+        "Amazon S3",
+        "Streamlit"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "28 سبتمبر 2026",
+      "modifiedLabel": "28 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 454
+    },
+    "en": {
+      "title": "Generate Images and Video with vLLM-Omni on SageMaker AI",
+      "description": "Deploy FLUX.2-klein and Wan2.1-VACE models using AWS vLLM-Omni Deep Learning Containers on Amazon SageMaker AI for text-to-image and video generation.",
+      "deck": "A new architectural approach combines real-time image generation and asynchronous video workflows utilizing a unified container image on Amazon SageMaker AI.",
+      "summaryBullets": [
+        "Deploy FLUX.2-klein and Wan2.1-VACE from a single AWS vLLM-Omni Deep Learning Container.",
+        "Use real-time inference for image generation and asynchronous inference for video animation.",
+        "Retrieve generated MP4 files directly from Amazon Simple Storage Service (Amazon S3).",
+        "Utilize provided command-line workflows or optional Streamlit interfaces for execution."
+      ],
+      "sections": [
+        {
+          "heading": "Unified Generative Media Deployment",
+          "paragraphs": [
+            {
+              "text": "The AWS Machine Learning Blog detailed a comprehensive workflow to transform text prompts into still images and subsequently animate those images into short videos on Amazon SageMaker AI. Developers can deploy two separate endpoints utilizing the identical AWS vLLM-Omni Deep Learning Container (DLC). This unified setup includes a real-time endpoint dedicated to the FLUX.2-klein-4B image generation model and an asynchronous endpoint configured for the Wan2.1-VACE-1.3B video generation model.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part-2/"
+                },
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker/ai/"
+                },
+                {
+                  "text": "FLUX.2-klein-4B",
+                  "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4B"
+                },
+                {
+                  "text": "Wan2.1-VACE-1.3B",
+                  "url": "https://huggingface.co/Wan-AI/Wan2.1-VACE-1.3B-diffusers"
+                }
+              ]
+            },
+            {
+              "text": "AWS Deep Learning Containers package the necessary frameworks and underlying dependencies to streamline training and inference tasks across infrastructure. Specifically, the AWS vLLM-Omni DLC packages tracked vLLM-Omni releases alongside routing middleware tailored for SageMaker AI environments. Through OpenAI-compatible APIs, vLLM-Omni expands traditional text-generation capabilities to accommodate advanced media models that process or generate text, audio, images, and video.",
+              "links": [
+                {
+                  "text": "AWS Deep Learning Containers",
+                  "url": "https://github.com/aws/deep-learning-containers"
+                },
+                {
+                  "text": "AWS vLLM-Omni DLC",
+                  "url": "https://aws.github.io/deep-learning-containers/vllm-omni/"
+                },
+                {
+                  "text": "vLLM-Omni",
+                  "url": "https://github.com/vllm-project/vllm-omni"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Real-Time and Asynchronous Architecture",
+          "paragraphs": [
+            {
+              "text": "This publishing sequence builds upon earlier guides exploring specialized AWS DLCs. While previous content like Part 1 addressed bidirectional streaming for real-time speech, this second installment shifts focus to a combination of real-time and asynchronous inference patterns. The image model immediately returns results inline, whereas the computationally intensive video model writes its output securely to Amazon Simple Storage Service (Amazon S3).",
+              "links": [
+                {
+                  "text": "Part 1",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part-1/"
+                },
+                {
+                  "text": "Amazon S3",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            },
+            {
+              "text": "By deploying a common container image across both endpoints, administrators minimize serving-stack variation. Concurrently, separating the endpoints permits each media model to leverage the precise instance type and inference configuration suited to its distinct workload. Real-time endpoints handle incoming requests for FLUX.2-klein by routing traffic directly to dedicated image generation paths, while asynchronous endpoints queue video tasks to balance heavy computational demands.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Workflow and Implementation Steps",
+          "paragraphs": [
+            {
+              "text": "Engineers can utilize an available code sample to replicate the deployment architecture. The provided repository includes both command-line utilities and a Streamlit application to evaluate the generation pipeline. After configuring an AWS account with proper CLI credentials and execution roles, users clone the hosting examples repository and install the specified Python dependencies.",
+              "links": [
+                {
+                  "text": "code sample",
+                  "url": "https://github.com/aws-samples/sagemaker-genai-hosting-examples/tree/main/03-features/vllm-omni-image-video"
+                }
+              ]
+            },
+            {
+              "text": "The deployment script initializes the environment by pinning specific container releases and establishing both real-time image and asynchronous video endpoints. Environmental variables instruct each container on which specific model to load, while internal features such as variational autoencoder (VAE) tiling help mitigate peak memory constraints during complex video decoding processes.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Inference Execution and Request Routing",
+          "paragraphs": [
+            {
+              "text": "During operation, client applications send text prompts to the image generation endpoint to retrieve a base64-encoded PNG file. The workflow then resizes this image, translates it into a compact data reference, and embeds it into a multipart request sent to the asynchronous video endpoint. SageMaker Asynchronous Inference evaluates the input stored within Amazon S3 and eventually writes the finalized MP4 file back to the designated output storage location.",
+              "links": []
+            },
+            {
+              "text": "This architectural choice separates fast conversational responses from longer-running media computations, enabling clients to poll result locations rather than maintaining blocked synchronous connections. Developers are encouraged to evaluate endpoint quotas across supported instance types like ml.g6.xlarge and ml.g6e.xlarge within their targeted regions before deploying production media generation pipelines.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon SageMaker AI",
+        "vLLM-Omni",
+        "Generative AI",
+        "Machine Learning",
+        "Deep Learning Containers",
+        "FLUX.2-klein",
+        "Wan2.1-VACE"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker AI",
+        "vLLM-Omni",
+        "Amazon S3"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 28, 2026",
+      "modifiedLabel": "September 28, 2026",
+      "readMinutes": 3,
+      "wordCount": 551
+    }
+  },
+  "datePublished": "2026-09-28T23:56:36.436370+03:00",
+  "dateModified": "2026-09-28T23:56:36.436370+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part/hero.webp",
+    "card": "/forum/assets/posts/2026/09/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part/card.webp",
+    "social": "/forum/assets/posts/2026/09/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part/social.jpg",
+    "alt": {
+      "ar": "توليد الصور والفيديوهات عبر vLLM-Omni على SageMaker AI",
+      "en": "Generate Images and Video with vLLM-Omni on SageMaker AI"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21866-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part/inline-01.webp",
+        "width": 884,
+        "height": 544,
+        "alt": {
+          "ar": "توليد الصور والفيديوهات عبر vLLM-Omni على SageMaker AI",
+          "en": "A CLI or Streamlit application invokes a SageMaker real-time endpoint that runs FLUX.2-klein. The application places the generated image in a multipart request in Amazon S3. A SageMaker asynchronous endpoint runs Wan VAC"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part-2/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21866-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part/inline-02.webp",
+        "width": 924,
+        "height": 675,
+        "alt": {
+          "ar": "توليد الصور والفيديوهات عبر vLLM-Omni على SageMaker AI",
+          "en": "The application sends an image prompt to a SageMaker real-time endpoint and receives a base64-encoded PNG. It uploads a multipart request containing the image reference and motion prompt to Amazon S3, then calls a SageMa"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part-2/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21866-2.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part-2/",
+      "type": "official",
+      "title": "Generate images and video with vLLM-Omni on SageMaker AI – Part 2"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part-2",
+  "sourceTitle": "Generate images and video with vLLM-Omni on SageMaker AI – Part 2",
+  "trendScore": 126.16,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-28T20:56:36+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part.json"
+}
