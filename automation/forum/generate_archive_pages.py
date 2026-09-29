@@ -15,6 +15,19 @@ MONTHS = {
     "en": ("", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"),
 }
 
+CATEGORY_ARCHIVE_MIN_STORIES = 21
+CATEGORY_LABELS = {
+    "ai": {"ar": "الذكاء الاصطناعي", "en": "Artificial Intelligence"},
+    "security": {"ar": "الأمن السيبراني", "en": "Cybersecurity"},
+    "automation": {"ar": "الأتمتة", "en": "Automation"},
+    "robotics": {"ar": "الروبوتات", "en": "Robotics"},
+    "apps": {"ar": "التطبيقات والبرامج", "en": "Apps & Software"},
+    "web": {"ar": "الويب", "en": "Web"},
+    "mobile": {"ar": "الهواتف", "en": "Mobile"},
+    "computers": {"ar": "الحواسيب", "en": "Computing"},
+    "social": {"ar": "التواصل الاجتماعي", "en": "Social Media"},
+}
+
 
 def load_posts(locale: str) -> list[dict]:
     path = FORUM / f"posts-{locale}.json"
@@ -190,8 +203,120 @@ def archive_page(locale: str, posts: list[dict]) -> str:
 <script src="/forum.js" defer></script></body></html>'''
 
 
+
+def category_archive_schema(locale: str, slug: str, label: str, count: int) -> str:
+    is_ar = locale == "ar"
+    canonical = f"{ORIGIN}/{locale}/{slug}/archive/"
+    name = f"أرشيف {label}" if is_ar else f"{label} News Archive"
+    description = (
+        f"أرشيف كامل لأخبار {label} المنشورة في مِخبار، مرتب زمنيًا للوصول المباشر إلى التغطيات السابقة."
+        if is_ar else
+        f"A complete chronological archive of Mikhbar {label} stories, providing direct access to older coverage."
+    )
+    return json.dumps({
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "CollectionPage",
+                "@id": canonical + "#page",
+                "url": canonical,
+                "name": name,
+                "description": description,
+                "inLanguage": locale,
+                "isPartOf": {"@id": ORIGIN + "/#website"},
+                "publisher": {"@id": ORIGIN + "/#publisher"},
+                "about": {"@type": "Thing", "name": label},
+                "mainEntity": {"@type": "ItemList", "numberOfItems": count},
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "مِخبار" if is_ar else "Mikhbar", "item": f"{ORIGIN}/{locale}/"},
+                    {"@type": "ListItem", "position": 2, "name": label, "item": f"{ORIGIN}/{locale}/{slug}/"},
+                    {"@type": "ListItem", "position": 3, "name": "الأرشيف" if is_ar else "Archive"},
+                ],
+            },
+        ],
+    }, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
+
+
+def category_archive_page(locale: str, slug: str, posts: list[dict]) -> str:
+    is_ar = locale == "ar"
+    other = "en" if is_ar else "ar"
+    label = CATEGORY_LABELS[slug][locale]
+    canonical = f"{ORIGIN}/{locale}/{slug}/archive/"
+    other_url = f"{ORIGIN}/{other}/{slug}/archive/"
+    title = (
+        f"أرشيف {label} — جميع أخبار القسم | مِخبار"
+        if is_ar else
+        f"{label} News Archive — All Mikhbar Stories"
+    )
+    description = (
+        f"تصفح جميع أخبار {label} المنشورة في مِخبار، مرتبة من الأحدث إلى الأقدم مع روابط مباشرة لكل تغطية."
+        if is_ar else
+        f"Browse every Mikhbar {label} story from newest to oldest, with a direct static link to each report."
+    )
+    heading = f"أرشيف {label}" if is_ar else f"{label} archive"
+    deck = (
+        "هذه الصفحة تجمع جميع أخبار القسم، بما فيها التغطيات الأقدم التي لا تظهر ضمن أول الأخبار في صفحة القسم."
+        if is_ar else
+        "This page lists the complete section history, including older coverage beyond the latest stories shown on the main topic hub."
+    )
+    archive_label = "الأرشيف" if is_ar else "Archive"
+    all_archive = "الأرشيف العام" if is_ar else "All news archive"
+    section_label = "القسم" if is_ar else "Section"
+    count_label = "خبر" if is_ar else "stories"
+    lang_label = "EN" if is_ar else "عربي"
+    trust_base = "" if is_ar else "/en"
+
+    grouped: dict[str, list[dict]] = defaultdict(list)
+    for post in posts:
+        href = public_path(post.get("url"))
+        if href.startswith("/"):
+            grouped[month_key(post)].append(post)
+
+    sections = []
+    for key in sorted(grouped, reverse=True):
+        rows = []
+        for post in grouped[key]:
+            href = public_path(post.get("url"))
+            title_text = str(post.get("title") or "").strip()
+            if not href or not title_text:
+                continue
+            date = display_date(post, locale)
+            rows.append(
+                f'<li><a data-category-archive-article="true" href="{escape(href, quote=True)}">'
+                f'<strong>{escape(title_text)}</strong>'
+                f'{f"<span>{escape(date)}</span>" if date else ""}</a></li>'
+            )
+        if rows:
+            sections.append(
+                f'<section class="rt-section rt-archive-month" data-archive-month="{escape(key, quote=True)}">'
+                f'<header class="rt-section-head"><div><h2>{escape(month_label(key, locale))}</h2></div>'
+                f'<span class="rt-count">{len(rows)}</span></header>'
+                f'<ol class="rt-archive-list">{"".join(rows)}</ol></section>'
+            )
+
+    about_url = "/about/" if is_ar else "/en/about/"
+    style = """.rt-archive-list{list-style:none;margin:0;padding:0;display:grid;gap:0}.rt-archive-list li{border-top:1px solid #e8e8e4}.rt-archive-list a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:14px 0;text-decoration:none;color:inherit}.rt-archive-list strong{line-height:1.55}.rt-archive-list span{font-size:.88rem;white-space:nowrap;opacity:.68}.rt-archive-actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px}.rt-archive-actions a{text-decoration:underline;text-underline-offset:3px}@media(max-width:700px){.rt-archive-list a{grid-template-columns:1fr;gap:5px}.rt-archive-list span{white-space:normal}}"""
+
+    return f'''<!DOCTYPE html><html lang="{locale}" dir="{"rtl" if is_ar else "ltr"}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ffffff">
+<title>{escape(title)}</title><meta name="description" content="{escape(description, quote=True)}"><meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="{canonical}"><link rel="alternate" hreflang="ar" href="{ORIGIN}/ar/{slug}/archive/"><link rel="alternate" hreflang="en" href="{ORIGIN}/en/{slug}/archive/"><link rel="alternate" hreflang="x-default" href="{ORIGIN}/ar/{slug}/archive/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="{"مِخبار" if is_ar else "Mikhbar"}"><meta property="og:title" content="{escape(title, quote=True)}"><meta property="og:description" content="{escape(description, quote=True)}"><meta property="og:url" content="{canonical}">
+<link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/forum.css?v=20260929-layout4"><link rel="stylesheet" href="/forum-media.css?v=20260929-layout4"><link rel="icon" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon.ico"><style>{style}</style>
+<script type="application/ld+json">{category_archive_schema(locale, slug, label, len(posts))}</script></head>
+<body class="rt-locale-{locale}" data-category-archive="true" data-category="{slug}" data-archive-count="{len(posts)}">
+<header class="rt-site-header"><div class="rt-navbar"><a class="mikhbar-brand" href="/{locale}/" aria-label="{"مِخبار" if is_ar else "Mikhbar"}"><span class="mikhbar-brand-mark"><img src="/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png" alt="" width="64" height="64"></span><span class="mikhbar-brand-copy"><strong>{"مِخبار" if is_ar else "Mikhbar"}</strong><small dir="ltr">MIKHBAR</small></span></a>
+<nav class="nav-links rt-platform-nav" aria-label="{"التنقل الرئيسي" if is_ar else "Main navigation"}"><a href="/{locale}/">{"الرئيسية" if is_ar else "Home"}</a><a href="/{locale}/{slug}/">{label}</a><a href="/{locale}/archive/">{all_archive}</a><a href="{about_url}">{"عن مِخبار" if is_ar else "About Mikhbar"}</a><a class="rt-lang-switch" href="/{other}/{slug}/archive/" lang="{other}">{lang_label}</a></nav></div></header>
+<main class="rt-main" id="main"><div class="rt-shell"><section class="rt-category-hero"><nav class="rt-breadcrumbs"><a href="/{locale}/">{"مِخبار" if is_ar else "Mikhbar"}</a><span>›</span><a href="/{locale}/{slug}/">{label}</a><span>›</span><span>{archive_label}</span></nav><div class="rt-category-title"><span class="rt-label">{escape(slug.upper())} ARCHIVE</span><h1>{escape(heading)}</h1><p>{escape(deck)}</p><span class="rt-count">{len(posts)} {count_label}</span><div class="rt-archive-actions"><a href="/{locale}/{slug}/">{section_label}: {escape(label)}</a><a href="/{locale}/archive/">{all_archive}</a></div></div></section>{"".join(sections)}</div></main>
+<footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> {"مِخبار" if is_ar else "Mikhbar"} · <a href="/{locale}/{slug}/">{label}</a> · <a href="/{locale}/archive/">{all_archive}</a> · <a href="{trust_base}/editorial-policy/">{"السياسة التحريرية" if is_ar else "Editorial policy"}</a></div></footer>
+<script src="/forum.js" defer></script></body></html>'''
+
+
 def main() -> int:
     total = 0
+    category_pages = 0
     for locale in ("ar", "en"):
         posts = load_posts(locale)
         target = FORUM / locale / "archive" / "index.html"
@@ -199,7 +324,23 @@ def main() -> int:
         target.write_text(archive_page(locale, posts), encoding="utf-8")
         total += len(posts)
         print(f"Mikhbar archive generated: locale={locale} stories={len(posts)} path={target.relative_to(ROOT)}")
-    print(f"Mikhbar archive generation complete: stories={total}")
+
+        for slug in CATEGORY_LABELS:
+            rows = [post for post in posts if str(post.get("categorySlug") or "") == slug]
+            category_target = FORUM / locale / slug / "archive" / "index.html"
+            if len(rows) < CATEGORY_ARCHIVE_MIN_STORIES:
+                if category_target.exists():
+                    category_target.unlink()
+                continue
+            category_target.parent.mkdir(parents=True, exist_ok=True)
+            category_target.write_text(category_archive_page(locale, slug, rows), encoding="utf-8")
+            category_pages += 1
+            print(
+                f"Mikhbar category archive generated: locale={locale} category={slug} "
+                f"stories={len(rows)} path={category_target.relative_to(ROOT)}"
+            )
+
+    print(f"Mikhbar archive generation complete: stories={total} category_pages={category_pages}")
     return 0
 
 
