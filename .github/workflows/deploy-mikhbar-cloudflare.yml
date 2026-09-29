@@ -184,17 +184,37 @@ jobs:
 
           curl -fsS --retry 5 --retry-delay 2 --retry-all-errors https://mikhbar.website/healthz | grep -q '"ok":true'
 
-          curl -fsS -D /tmp/mikhbar-healthz.headers -o /dev/null --retry 5 --retry-delay 2 --retry-all-errors https://mikhbar.website/healthz
-          grep -Eiq '^x-robots-tag:[[:space:]]*noindex,[[:space:]]*follow' /tmp/mikhbar-healthz.headers
+          assert_noindex_header() {
+            url="$1"
+            headers_file="$2"
+            for attempt in 1 2 3 4 5 6; do
+              curl -fsS -D "$headers_file" -o /dev/null --retry 3 --retry-delay 1 --retry-all-errors "$url" || true
+              if grep -Eiq '^x-robots-tag:[[:space:]]*noindex,[[:space:]]*follow' "$headers_file"; then
+                return 0
+              fi
+              sleep 3
+            done
+            echo "Expected X-Robots-Tag noindex, follow was not observed for $url" >&2
+            cat "$headers_file" >&2 || true
+            return 1
+          }
+
+          assert_noindex_header https://mikhbar.website/healthz /tmp/mikhbar-healthz.headers
 
           for technical_url in feed-ar.xml feed-en.xml posts-ar.json posts-en.json article-map.json; do
-            curl -fsS -D "/tmp/mikhbar-${technical_url//\//-}.headers" -o /dev/null --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website/${technical_url}"
-            grep -Eiq '^x-robots-tag:[[:space:]]*noindex,[[:space:]]*follow' "/tmp/mikhbar-${technical_url//\//-}.headers"
+            assert_noindex_header "https://mikhbar.website/${technical_url}" "/tmp/mikhbar-${technical_url//\//-}.headers"
           done
 
-          curl -fsS -D /tmp/mikhbar-ar-home.headers -o /dev/null --retry 5 --retry-delay 2 --retry-all-errors https://mikhbar.website/ar/
+          for attempt in 1 2 3 4 5 6; do
+            curl -fsS -D /tmp/mikhbar-ar-home.headers -o /dev/null --retry 3 --retry-delay 1 --retry-all-errors https://mikhbar.website/ar/ || true
+            if ! grep -Eiq '^x-robots-tag:.*noindex' /tmp/mikhbar-ar-home.headers; then
+              break
+            fi
+            sleep 3
+          done
           if grep -Eiq '^x-robots-tag:.*noindex' /tmp/mikhbar-ar-home.headers; then
             echo 'Indexable Arabic homepage received an X-Robots-Tag noindex header.' >&2
+            cat /tmp/mikhbar-ar-home.headers >&2 || true
             exit 1
           fi
 
