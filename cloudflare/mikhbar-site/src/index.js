@@ -1,7 +1,7 @@
 import { isArticlePath, renderDynamicArticle } from "./article.js";
 
 const CANONICAL_HOST = "mikhbar.website";
-const ARTICLE_PARTS = /^\/(ar|en)\/([a-z0-9-]+)\/(?!archive(?:\/|$))([^/]+)\/$/i;
+const ARTICLE_PARTS = /^\/(ar|en)\/(?!(?:entities)(?:\/|$))([a-z0-9-]+)\/(?!archive(?:\/|$))([^/]+)\/$/i;
 
 const RELATED_HUBS = {
   ai: ["automation", "apps", "robotics", "security"],
@@ -299,6 +299,22 @@ function topicHubHtml(locale, category) {
   return `<section class="rt-section rt-related-topics" aria-labelledby="related-topics-title"><header class="rt-section-head"><div><h2 id="related-topics-title">${esc(title)}</h2></div></header><div class="rt-topic-grid">${cards}</div></section>`;
 }
 
+function entityHubHtml(post, locale) {
+  const hubs = Array.isArray(post?.entityHubs) ? post.entityHubs.slice(0, 4) : [];
+  if (!hubs.length) return "";
+  const isAr = String(locale || "").toLowerCase() === "ar";
+  const title = isAr ? "تغطية الكيانات المرتبطة" : "Related entity coverage";
+  const note = isAr ? "كل أخبار الكيان" : "All entity coverage";
+  const cards = hubs.map((hub) => {
+    const href = publicPath(hub?.url || "");
+    const name = String(hub?.name || "").trim();
+    if (!href || !name) return "";
+    return `<a class="rt-topic-card" data-article-entity-hub="true" href="${esc(href)}"><b>${esc(name)}</b><span>${esc(note)}</span></a>`;
+  }).filter(Boolean).join("");
+  if (!cards) return "";
+  return `<section class="rt-section rt-article-entity-hubs" data-article-entity-hubs="true" aria-labelledby="article-entity-hubs-title"><header class="rt-section-head"><div><h2 id="article-entity-hubs-title">${esc(title)}</h2></div></header><div class="rt-topic-grid">${cards}</div></section>`;
+}
+
 function chronologicalHtml(neighbors, pathname) {
   const match = String(pathname || "").match(ARTICLE_PARTS);
   if (!match) return "";
@@ -360,7 +376,11 @@ async function addRelatedStories(response, request, env, pathname) {
   const posts = Array.isArray(payload) ? payload : (Array.isArray(payload?.posts) ? payload.posts : []);
   const related = selectRelatedPosts(posts, pathname, 4);
   const chronology = selectChronologicalNeighbors(posts, pathname);
-  const html = chronologicalHtml(chronology, pathname) + relatedHtml(related, pathname);
+  const current = publicPath(pathname);
+  const currentPost = posts.find((post) => publicPath(post?.url || "") === current);
+  const html = chronologicalHtml(chronology, pathname)
+    + entityHubHtml(currentPost, locale)
+    + relatedHtml(related, pathname);
   if (!html) return response;
   return new HTMLRewriter()
     .on("#article-body", new AppendHtmlHandler(html))
