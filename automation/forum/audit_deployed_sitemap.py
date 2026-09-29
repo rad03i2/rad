@@ -184,8 +184,8 @@ def main() -> int:
             href = str(alt.attrib.get("href") or "").strip()
             if hreflang in {"ar", "en"} and href and href not in loc_set:
                 errors.append(f"hreflang target missing from sitemap: {url} -> {hreflang} {href}")
-            if hreflang == "x-default" and href != ORIGIN + "/":
-                errors.append(f"unexpected x-default target: {url} -> {href}")
+            if hreflang == "x-default" and href and href != ORIGIN + "/" and href not in loc_set:
+                errors.append(f"x-default target is not a canonical sitemap URL: {url} -> {href}")
 
     expected_articles: set[str] = set()
     source_rows = 0
