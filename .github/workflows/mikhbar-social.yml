@@ -40,6 +40,9 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Test social publishing
+        run: python -m unittest discover -s automation/social/tests -v
+
       - name: Publish new Mikhbar story to Facebook
         if: github.event_name == 'workflow_run' || inputs.mode == 'live'
         shell: bash
@@ -49,7 +52,7 @@ jobs:
           import os
           from pathlib import Path
           from urllib.error import HTTPError
-          from urllib.parse import urlencode
+          from urllib.parse import urlencode, urlsplit
           from urllib.request import Request, urlopen
 
           API = 'https://graph.facebook.com/v26.0'
@@ -80,6 +83,40 @@ jobs:
                   raise RuntimeError(f'Facebook Graph API HTTP {exc.code}: {body}') from None
 
           root = Path('.')
+          history = json.loads(
+              (root / 'automation/forum/state/published.json').read_text(encoding='utf-8')
+          )
+          item = history['items'][0]
+          article = json.loads((root / item['content_file']).read_text(encoding='utf-8'))
+          ar = article.get('locales', {}).get('ar', {})
+          title = ar.get('title') or item.get('title') or 'خبر جديد'
+          description = ar.get('description') or ar.get('deck') or ''
+          path = article.get('urls', {}).get('ar') or item.get('published_url')
+          parsed = urlsplit(str(path))
+          if parsed.netloc and parsed.hostname not in {'rdwan.dev', 'www.rdwan.dev', 'mikhbar.website', 'www.mikhbar.website'}:
+              raise RuntimeError('Article URL is outside the Mikhbar website.')
+          article_path = parsed.path
+          if article_path.startswith('/forum/'):
+              article_path = article_path[len('/forum'):]
+          if not article_path.startswith('/ar/'):
+              raise RuntimeError('Missing canonical Arabic article URL.')
+          link = 'https://mikhbar.website' + article_path
+          link += ('&' if '?' in link else '?') + 'utm_source=facebook&utm_medium=social&utm_campaign=mikhbar_social'
+          story_id = str(item.get('story_id') or article.get('id') or link.split('?', 1)[0])
+
+          state_path = root / 'automation/social/state/facebook.json'
+          state = (
+              json.loads(state_path.read_text(encoding='utf-8'))
+              if state_path.exists()
+              else {'published_story_ids': []}
+          )
+          if story_id in state.get('published_story_ids', []):
+              print(json.dumps({
+                  'status': 'skipped_duplicate',
+                  'story_id': story_id,
+              }, ensure_ascii=False))
+              raise SystemExit(0)
+
           page_id = os.environ.get('FACEBOOK_PAGE_ID', '').strip()
           supplied_token = os.environ.get('FACEBOOK_PAGE_ACCESS_TOKEN', '').strip()
           if not page_id:
@@ -138,32 +175,6 @@ jobs:
               'page_id': page_id,
               'page_name': page.get('name'),
           }, ensure_ascii=False))
-
-          history = json.loads(
-              (root / 'automation/forum/state/published.json').read_text(encoding='utf-8')
-          )
-          item = history['items'][0]
-          article = json.loads((root / item['content_file']).read_text(encoding='utf-8'))
-          ar = article.get('locales', {}).get('ar', {})
-          title = ar.get('title') or item.get('title') or 'خبر جديد'
-          description = ar.get('description') or ar.get('deck') or ''
-          path = article.get('urls', {}).get('ar') or item.get('published_url')
-          link = 'https://rdwan.dev' + path if str(path).startswith('/') else str(path)
-          link += ('&' if '?' in link else '?') + 'utm_source=facebook&utm_medium=social&utm_campaign=mikhbar_social'
-          story_id = str(item.get('story_id') or article.get('id') or link.split('?', 1)[0])
-
-          state_path = root / 'automation/social/state/facebook.json'
-          state = (
-              json.loads(state_path.read_text(encoding='utf-8'))
-              if state_path.exists()
-              else {'published_story_ids': []}
-          )
-          if story_id in state.get('published_story_ids', []):
-              print(json.dumps({
-                  'status': 'skipped_duplicate',
-                  'story_id': story_id,
-              }, ensure_ascii=False))
-              raise SystemExit(0)
 
           message = (
               f'{title}\n\n{description}\n\n'
