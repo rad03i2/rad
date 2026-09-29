@@ -4,7 +4,7 @@
 (()=>{
 'use strict';
 document.documentElement.classList.add('js');
-if(!document.querySelector('link[href*="forum-media.css"]')){const l=document.createElement('link');l.rel='stylesheet';l.href='/forum/forum-media.css?v=20260930-lead2';l.dataset.rtMedia='1';document.head.appendChild(l)}
+if(!document.querySelector('link[href*="forum-media.css"]')){const l=document.createElement('link');l.rel='stylesheet';l.href='/forum-media.css?v=20260930-lead2';l.dataset.rtMedia='1';document.head.appendChild(l)}
 const $=(s,r=document)=>r.querySelector(s);const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const locale=(document.body.dataset.locale||document.documentElement.lang||'ar').toLowerCase().startsWith('en')?'en':'ar';
@@ -157,9 +157,14 @@ function paintHero(p,index,animate=true){
   $('#rtLeadDate',lead).textContent=p.dateLabel||fmt(p.date);
   $('#rtLeadRead',lead).textContent=p.readTime||'';
   const img=$('#rtLeadImage',lead);if(img){img.src=imageFor(p);img.alt=p.title||dict.imgAlt}
-  const pos=$('#rtLeadPosition');if(pos)pos.textContent=`${heroIndex+1} / ${heroPosts.length}`;
+  $$('.rt-lead-dot').forEach((dot,i)=>{const active=i===heroIndex;dot.classList.toggle('is-active',active);if(active)dot.setAttribute('aria-current','true');else dot.removeAttribute('aria-current')});
   if(animate&&wrap){wrap.classList.remove('is-changing');void wrap.offsetWidth;wrap.classList.add('is-changing');window.setTimeout(()=>wrap.classList.remove('is-changing'),320)}
   const next=heroPosts[(heroIndex+1)%heroPosts.length];if(next){const preload=new Image();preload.src=imageFor(next)}
+}
+function renderHeroDots(){
+  const box=$('#rtLeadDots');if(!box)return;
+  box.innerHTML=heroPosts.map((_,i)=>`<button class="rt-lead-dot" type="button" data-hero-dot="${i}" aria-label="${isAr?'عرض الخبر':'Show story'} ${i+1}"><span aria-hidden="true"></span></button>`).join('');
+  $('.rt-lead-dot',box).forEach((dot,i)=>dot.addEventListener('click',()=>{paintHero(heroPosts[i],i,true);scheduleHero()}));
 }
 function scheduleHero(){
   if(heroTimer){window.clearTimeout(heroTimer);heroTimer=null}
@@ -177,15 +182,16 @@ function renderHome(){
   const latest=$('#rtNowList');
   heroPosts=allPosts.slice(0,20);
   heroIndex=0;
+  renderHeroDots();
   paintHero(heroPosts[0],0,false);
   scheduleHero();
   if(latest){const list=allPosts.slice(1,4);latest.innerHTML=list.length?list.map(nowItem).join(''):`<div class="rt-empty-mini">${dict.emptyNow}</div>`}
 }
 function renderCategory(){const slug=document.body.dataset.category;if(!slug)return;currentFilter=slug;const title=$('#rtCategoryCount');if(title)title.textContent=categoryMap[slug]||slug;renderFeed()}
-async function load(){const urls=locale==='ar'?['/forum/posts-ar.json','/forum/posts.json']:['/forum/posts-en.json'];for(const url of urls){try{const r=await fetch(url,{cache:'no-store'});if(!r.ok)continue;const data=await r.json();allPosts=(Array.isArray(data)?data:(data.posts||[])).slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));renderHome();renderFeed();renderCategory();return}catch{}}}
+async function load(){const urls=locale==='ar'?['/posts-ar.json','/forum/posts-ar.json','/posts.json','/forum/posts.json']:['/posts-en.json','/forum/posts-en.json'];for(const url of urls){try{const r=await fetch(url,{cache:'no-store'});if(!r.ok)continue;const data=await r.json();allPosts=(Array.isArray(data)?data:(data.posts||[])).slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));renderHome();renderFeed();renderCategory();return}catch{}}}
 function bind(){
   const search=$('#rtSearch');if(search)search.addEventListener('input',()=>{visibleCount=12;renderFeed()});
-  $('[data-filter]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();currentFilter=b.dataset.filter||'all';visibleCount=12;$('[data-filter]').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','page');renderFeed()}));
+  $$('[data-filter]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();currentFilter=b.dataset.filter||'all';visibleCount=12;$$('[data-filter]').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','page');renderFeed()}));
   const prev=$('#rtLeadPrev'),next=$('#rtLeadNext');
   if(prev)prev.addEventListener('click',()=>stepHero(-1));
   if(next)next.addEventListener('click',()=>stepHero(1));
