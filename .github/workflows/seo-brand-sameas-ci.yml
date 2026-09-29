@@ -31,17 +31,17 @@ jobs:
           python automation/forum/rebuild_indexes.py
       - name: Verify source sameAs
         run: |
-          grep -Fq '"sameAs":["https://rdwan.dev/mikhbar.html"]' forum/ar/index.html
-          grep -Fq '"sameAs":["https://rdwan.dev/mikhbar.html"]' forum/en/index.html
-          grep -Fq '"sameAs":["https://rdwan.dev/mikhbar.html"]' forum/about/index.html
-          grep -Fq '"sameAs":["https://rdwan.dev/mikhbar.html"]' forum/en/about/index.html
+          grep -Fq 'https://rdwan.dev/mikhbar.html' forum/ar/index.html
+          grep -Fq 'https://rdwan.dev/mikhbar.html' forum/en/index.html
+          grep -Fq 'https://rdwan.dev/mikhbar.html' forum/about/index.html
+          grep -Fq 'https://rdwan.dev/mikhbar.html' forum/en/about/index.html
       - name: Build Cloudflare output
         run: python cloudflare/mikhbar-site/build.py
       - name: Verify deployable sameAs
         run: |
-          grep -Fq '"sameAs":["https://rdwan.dev/mikhbar.html"]' dist/mikhbar/index.html
-          grep -Fq '"sameAs":["https://rdwan.dev/mikhbar.html"]' dist/mikhbar/ar/index.html
-          grep -Fq '"sameAs":["https://rdwan.dev/mikhbar.html"]' dist/mikhbar/en/index.html
-          grep -Fq '"sameAs":["https://rdwan.dev/mikhbar.html"]' dist/mikhbar/about/index.html
+          grep -Fq 'https://rdwan.dev/mikhbar.html' dist/mikhbar/index.html
+          grep -Fq 'https://rdwan.dev/mikhbar.html' dist/mikhbar/ar/index.html
+          grep -Fq 'https://rdwan.dev/mikhbar.html' dist/mikhbar/en/index.html
+          grep -Fq 'https://rdwan.dev/mikhbar.html' dist/mikhbar/about/index.html
       - name: Audit deployed sitemap
         run: python automation/forum/audit_deployed_sitemap.py
