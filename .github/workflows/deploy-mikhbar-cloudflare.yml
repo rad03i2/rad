@@ -25,6 +25,8 @@ on:
       - 'automation/forum/audit_topic_hubs.py'
       - 'automation/forum/generate_pillar_pages.py'
       - 'automation/forum/audit_pillar_pages.py'
+      - 'automation/forum/generate_trust_pages.py'
+      - 'automation/forum/audit_multilingual_trust.py'
       - 'automation/forum/pillar_discovery.py'
       - 'automation/forum/audit_search_quality.py'
       - 'automation/forum/audit_deployed_sitemap.py'
@@ -78,8 +80,14 @@ jobs:
       - name: Audit Mikhbar pillar guides
         run: python automation/forum/audit_pillar_pages.py
 
+      - name: Generate multilingual Mikhbar trust pages
+        run: python automation/forum/generate_trust_pages.py
+
       - name: Rebuild Mikhbar search discovery files
         run: python automation/forum/rebuild_indexes.py
+
+      - name: Audit multilingual Mikhbar trust pages
+        run: python automation/forum/audit_multilingual_trust.py
 
       - name: Build Mikhbar static distribution
         run: python cloudflare/mikhbar-site/build.py
@@ -115,6 +123,12 @@ jobs:
           grep -q 'https://mikhbar.website/corrections/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/ai-policy/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/authors/radwan-abdulhadi/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/en/about/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/en/contact/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/en/editorial-policy/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/en/corrections/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/en/ai-policy/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/en/authors/radwan-abdulhadi/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/ar/guides/artificial-intelligence/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/en/guides/artificial-intelligence/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/ar/guides/cybersecurity/' dist/mikhbar/sitemap.xml
@@ -217,6 +231,13 @@ jobs:
             cat /tmp/mikhbar-ar-home.headers >&2 || true
             exit 1
           fi
+
+          for trust_page in about contact editorial-policy corrections ai-policy; do
+            curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website/en/${trust_page}/" -o "/tmp/mikhbar-trust-${trust_page}.html"
+            grep -Fq "rel=\"canonical\" href=\"https://mikhbar.website/en/${trust_page}/\"" "/tmp/mikhbar-trust-${trust_page}.html"
+            grep -Fq "hreflang=\"ar\"" "/tmp/mikhbar-trust-${trust_page}.html"
+            grep -Fq "hreflang=\"en\"" "/tmp/mikhbar-trust-${trust_page}.html"
+          done
 
           for hub in ai security automation robotics apps web mobile computers social; do
             curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website/en/${hub}/" -o "/tmp/mikhbar-hub-${hub}.html"

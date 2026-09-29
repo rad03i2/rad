@@ -165,7 +165,7 @@ def publisher_schema() -> dict:
         "@type": "NewsMediaOrganization",
         "@id": ORIGIN + "/#publisher",
         "name": "Mikhbar",
-        "alternateName": "مِخبار",
+        "alternateName": ["مِخبار", "مخبار", "MIKHBAR"],
         "url": ORIGIN + "/",
         "logo": {"@type": "ImageObject", "url": ORIGIN + "/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"},
     }
@@ -179,9 +179,10 @@ def header(locale: str) -> str:
     about = "عن مِخبار" if ar else "About Mikhbar"
     switch = "EN" if ar else "عربي"
     other = "en" if ar else "ar"
+    about_url = "/about/" if ar else "/en/about/"
     return f'''<header class="rt-site-header"><div class="rt-navbar">
 <a class="mikhbar-brand" href="/{locale}/" aria-label="Mikhbar"><span class="mikhbar-brand-mark"><img src="/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png" alt="" width="64" height="64"></span><span class="mikhbar-brand-copy"><strong>{'مِخبار' if ar else 'Mikhbar'}</strong><small dir="ltr">MIKHBAR</small></span></a>
-<nav class="nav-links rt-platform-nav" aria-label="{'التنقل الرئيسي' if ar else 'Main navigation'}"><a href="/{locale}/">{home}</a><a href="/{locale}/#latest">{latest}</a><a href="/{locale}/#sections">{sections}</a><a href="/{locale}/guides/">{'الأدلة' if ar else 'Guides'}</a><a href="/about/">{about}</a><a class="rt-lang-switch" href="/{other}/guides/">{switch}</a></nav>
+<nav class="nav-links rt-platform-nav" aria-label="{'التنقل الرئيسي' if ar else 'Main navigation'}"><a href="/{locale}/">{home}</a><a href="/{locale}/#latest">{latest}</a><a href="/{locale}/#sections">{sections}</a><a href="/{locale}/guides/">{'الأدلة' if ar else 'Guides'}</a><a href="{about_url}">{about}</a><a class="rt-lang-switch" href="/{other}/guides/">{switch}</a></nav>
 </div></header>'''
 
 

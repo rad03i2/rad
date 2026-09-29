@@ -12,10 +12,17 @@ SITE = "https://rdwan.dev"
 CATEGORIES = ("ai", "robotics", "automation", "mobile", "computers", "apps", "web", "social", "security", "announcements")
 TRUST_PAGES = (
     ("/forum/about/", "about/index.html", "0.7"),
+    ("/forum/en/about/", "en/about/index.html", "0.7"),
+    ("/forum/contact/", "contact/index.html", "0.7"),
+    ("/forum/en/contact/", "en/contact/index.html", "0.7"),
     ("/forum/editorial-policy/", "editorial-policy/index.html", "0.7"),
+    ("/forum/en/editorial-policy/", "en/editorial-policy/index.html", "0.7"),
     ("/forum/corrections/", "corrections/index.html", "0.6"),
+    ("/forum/en/corrections/", "en/corrections/index.html", "0.6"),
     ("/forum/ai-policy/", "ai-policy/index.html", "0.6"),
+    ("/forum/en/ai-policy/", "en/ai-policy/index.html", "0.6"),
     ("/forum/authors/radwan-abdulhadi/", "authors/radwan-abdulhadi/index.html", "0.8"),
+    ("/forum/en/authors/radwan-abdulhadi/", "en/authors/radwan-abdulhadi/index.html", "0.8"),
 )
 INDEX_ROBOTS = "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
 NOINDEX_ROBOTS = "noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"

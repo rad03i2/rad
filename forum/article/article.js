@@ -237,7 +237,12 @@
       image: [socialAbsolute],
       articleSection: view.category || record.categorySlug,
       keywords: view.tags || [],
-      author: { '@type': 'Person', name: UI[locale].author },
+      author: {
+        '@type': 'Person',
+        '@id': PUBLIC_ORIGIN + '/authors/radwan-abdulhadi/#person',
+        name: UI[locale].author,
+        url: PUBLIC_ORIGIN + (locale === 'ar' ? '/authors/radwan-abdulhadi/' : '/en/authors/radwan-abdulhadi/')
+      },
       publisher: {
         '@type': 'NewsMediaOrganization', name: UI[locale].site,
         alternateName: locale === 'ar' ? ['Mikhbar', 'مخبار', 'MIKHBAR'] : ['مِخبار', 'مخبار', 'MIKHBAR'],
@@ -255,6 +260,7 @@
     document.body.className = `rt-locale-${locale}`;
     const root = sourceRoot();
     const home = `${root}/${locale}/`;
+    const trustBase = locale === 'ar' ? root : `${root}/en`;
     $('brand-name').textContent = ui.site;
     $('brand-link').href = home;
     $('brand-link').setAttribute('aria-label', ui.site);
@@ -263,22 +269,23 @@
     $('nav-sections').textContent = ui.sections; $('nav-sections').href = `${home}#sections`;
     $('nav-top').textContent = ui.top; $('nav-top').href = `${home}#top-stories`;
     $('nav-newsletter').textContent = ui.newsletter; $('nav-newsletter').href = `${home}#newsletter`;
-    $('nav-about').textContent = ui.about; $('nav-about').href = `${root}/about/`;
+    $('nav-about').textContent = ui.about; $('nav-about').href = `${trustBase}/about/`;
     $('nav-lang').textContent = ui.lang;
     const other = locale === 'ar' ? 'en' : 'ar';
     $('nav-lang').href = sourcePath(record.urls && record.urls[other] || `/${other}/`);
     $('author-name').textContent = ui.author;
     $('author-role').textContent = ui.role;
-    $('author-link').href = `${root}/authors/radwan-abdulhadi/`;
+    $('author-link').href = `${trustBase}/authors/radwan-abdulhadi/`;
     $('footer-brand').textContent = ui.site;
     $('footer-copy-brand').textContent = ui.site;
     $('footer-description').textContent = ui.footerDesc;
     $('footer-publication-title').textContent = ui.publication;
-    $('footer-about').textContent = ui.about; $('footer-about').href = `${root}/about/`;
-    $('footer-editorial').textContent = ui.editorial; $('footer-editorial').href = `${root}/editorial-policy/`;
+    $('footer-about').textContent = ui.about; $('footer-about').href = `${trustBase}/about/`;
+    $('footer-editorial').textContent = ui.editorial; $('footer-editorial').href = `${trustBase}/editorial-policy/`;
     $('footer-trust-title').textContent = ui.trust;
-    $('footer-corrections').textContent = ui.corrections; $('footer-corrections').href = `${root}/corrections/`;
-    $('footer-ai').textContent = ui.ai; $('footer-ai').href = `${root}/ai-policy/`;
+    $('footer-corrections').textContent = ui.corrections; $('footer-corrections').href = `${trustBase}/corrections/`;
+    $('footer-ai').textContent = ui.ai; $('footer-ai').href = `${trustBase}/ai-policy/`;
+    if ($('footer-contact')) { $('footer-contact').textContent = locale === 'ar' ? 'تواصل' : 'Contact'; $('footer-contact').href = `${trustBase}/contact/`; }
     $('source-note').textContent = ui.sourceNote;
     const year = document.querySelector('[data-year]');
     if (year) year.textContent = String(new Date().getFullYear());
