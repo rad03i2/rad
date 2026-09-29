@@ -1,5 +1,335 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-09-29T22:21:17+00:00",
-  "last_published_story_id": "0e0b8cf9a158d3df8514"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-09-29T22:26:36+00:00",
+  "target_publish_at": "2026-09-30T01:41:17.001700+03:00",
+  "story": {
+    "title": "Building an AI-powered contract intelligence platform with Amazon Quick and Amazon Bedrock AgentCore",
+    "url": "https://aws.amazon.com/blogs/machine-learning/building-an-ai-powered-contract-intelligence-platform-with-amazon-quick-and-amazon-bedrock-agentcore",
+    "domain": "aws.amazon.com",
+    "summary": "Manually extracting data from hundreds of vendor contracts doesn't scale, and RAG chat tools fall short on portfolio-wide questions. This post shares a contract intelligence platform on AWS that uses AI agents to extract and verify contract fields, then answers aggregate and single-contract questions through Amazon Quick analytics.",
+    "published_at": "2026-09-29T16:14:24+00:00",
+    "discovered_at": "2026-09-29T17:02:40+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 69,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "82ea29af1bd53c0dc09a",
+    "trend": {
+      "score": 119.59,
+      "age_hours": 6.2,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/building-an-ai-powered-contract-intelligence-platform-with-amazon-quick-and-amazon-bedrock-agentcore/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Building an AI-powered contract intelligence platform with Amazon Quick and Amazon Bedrock AgentCore",
+      "title": "Building an AI-powered contract intelligence platform with Amazon Quick and Amazon Bedrock AgentCore | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تكشف عن منصة ذكاء اصطناعي لتحليل العقود باستخدام Quick وBedrock",
+      "description": "تقدم أمازون ويب سيرفيسز منصة ذكاء اصطناعي جديدة تستخدم وكلاء AI لاستخراج بيانات العقود وتحليلها بدقة، متجاوزةً قيود تقنيات RAG التقليدية عبر دمج Amazon Quick وBedrock AgentCore.",
+      "deck": "تواجه فرق العقود تحديات كبيرة في استخراج البيانات من مئات المستندات، وتقدم أمازون حلاً يعتمد على وكلاء الذكاء الاصطناعي والتحليلات المدمجة لتسريع العمليات وتحسين الدقة.",
+      "summary_bullets": [
+        "تتجاوز المنصة قيود تقنيات RAG التقليدية التي تعجز عن الإجابة على الأسئلة التجميعية عبر مئات العقود.",
+        "تعتمد الحل على وكلاء AI مستقلين لاستخراج الحقول والتحقق منها، مع استخدام Amazon Textract كحَكَم نهائي عند التعارض.",
+        "تتيح المنصة للمستخدمين استعلامات فورية عبر لوحات تحكم مدمجة ووكيل محادثة بلغة طبيعية.",
+        "تعمل البنية التحتية بشكل Serverless على Amazon Bedrock AgentCore لضمان التوسع الآلي والعزل الأمني."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي إدارة العقود على نطاق واسع",
+          "paragraphs": [
+            {
+              "text": "يعاني مديرو العقود من صعوبة استخراج البيانات الحساسة مثل قيم العقود وتواريخ الانتهاء من مئات المستندات PDF. تعتمد الأدوات الحالية غالباً على تقنيات RAG التي تفشل في تقديم إجابات دقيقة للأسئلة التجميعية التي تتطلب تحليل البيانات عبر كامل المحفظة بدلاً من الاعتماد على مقتطفات نصية محدودة. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/building-an-ai-powered-contract-intelligence-platform-with-amazon-quick-and-amazon-bedrock-agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "توضح أمازون ويب سيرفيسز في مدونة تقنية أن الحل يكمن في تحويل البيانات غير المهيكلة إلى هيكلية قابلة للاستعلام، مما يتيح دمج قدرات الذكاء الاصطناعي مع قواعد البيانات لتحليل البيانات بدقة عالية وسرعة فائقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية المعمارية للمنصة",
+          "paragraphs": [
+            {
+              "text": "تعتمد المنصة على تطبيق ويب مبني بتقنية React يعمل على بنية أمازون السحابية. تبدأ العملية بتخزين ملفات PDF في Amazon S3، مما يطلق خط أنابيب معالجة أوتوماتيكي. يقوم وكيل استخراج مخصص بقراءة المستند واستخراج ثمانية حقول رئيسية مع تحديد درجة الثقة لكل حقل.",
+              "links": []
+            },
+            {
+              "text": "تتضمن البنية وكيل تحقق مستقل يقوم بمراجعة نفس المستند للتأكد من صحة البيانات المستخرجة. في حال وجود تعارض بين الوكلاء في اكتشاف التواقيع، يتدخل Amazon Textract باستخدام الرؤية الحاسوبية لتقديم حكم حاسم ومحدد، مما يضمن دقة النتائج النهائية قبل تخزينها في قاعدة بيانات Amazon Aurora PostgreSQL.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحقق المزدوج باستخدام نماذج مختلفة",
+          "paragraphs": [
+            {
+              "text": "اختارت أمازون استخدام نموذجين أساسيين مختلفين لتعزيز موثوقية النتائج. يتم استخدام نموذج Claude Sonnet 4.6 القوي لفهم المستندات واستخراج البيانات، بينما يتولى نموذج Claude Haiku الأخف وزناً مهمة التحقق المستقل. هذا النهج يوازن بين جودة الفهم العميق وكفاءة المعالجة السريعة.",
+              "links": []
+            },
+            {
+              "text": "تُبنى هذه الوكلاء باستخدام إطار عمل Strands Agent SDK مفتوح المصدر، وتُنفذ على بيئة التشغيل الخاصة بـ Amazon Bedrock AgentCore. يوفر هذا الإطار إدارة تلقائية للتوسع وعزل الجلسات، مما يزيل الحاجة إلى إدارة البنية التحتية للذكاء الاصطناعي يدوياً.",
+              "links": [
+                {
+                  "text": "Strands Agent SDK",
+                  "url": "http://docs.aws.amazon.com/sap/latest/general/rise-agenticai-strands-agent.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الأمان وسياسات الوصول",
+          "paragraphs": [
+            {
+              "text": "تولي المنصة أهمية كبيرة لحماية البيانات الحساسة مثل الشروط المالية وعلاقات الموردين. تتيح سياسات Amazon Bedrock AgentCore تعريف ضوابط أمنية صارمة تعمل كحدود واقية حول عمليات الوكلاء. تعتمد هذه السياسات على لغة Cedar ويمكن التحقق منها منطقياً قبل تفعيلها، مما يضمن وصول المستخدمين والوكلاء فقط إلى العقود المصرح بها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحليلات الفورية والتفاعل الطبيعي",
+          "paragraphs": [
+            {
+              "text": "بعد معالجة البيانات وتخزينها، يمكن للمستخدمين استكشاف النتائج عبر لوحات تحكم مدمجة ووكيل محادثة بلغة طبيعية. تتيح هذه الواجهة الإجابة على أسئلة المحفظة الشاملة، مثل إجمالي التعرض المالي، بالإضافة إلى استعلامات محددة لعقود فردية. يوفر النظام حالة خط الأنابيب في الوقت الفعلي عبر WebSocket، مما يسمح للمستخدمين بمراقبة تقدم المعالجة فوراً.",
+              "links": []
+            },
+            {
+              "text": "تصمم البنية الخادمية (Serverless) للتوسع الآلي، مما يتيح معالجة عقود متعددة بالتوازي في ثوانٍ قليلة تحت الظروف العادية. هذا النهج يحل مشكلة بطء التحليل اليدوي ويوفر بيانات محدثة باستمرار لمتخذي القرار.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوثيق والموارد التقنية",
+          "paragraphs": [
+            {
+              "text": "توفر أمازون توثيقاً شاملاً لمكونات المنصة، بما في ذلك تفاصيل Amazon Bedrock AgentCore وإمكانات التكامل مع أدوات التحليل. يمكن للمطورين الرجوع إلى التوثيق الرسمي لفهم كيفية دمج هذه التقنيات في بيئاتهم الخاصة، مع مراعاة التغيرات السريعة في خيارات النماذج المتاحة في مناطق AWS المختلفة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "تحليل العقود",
+        "وكلاء AI",
+        "Amazon Bedrock",
+        "Amazon Quick",
+        "SaaS",
+        "تحليل البيانات"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز",
+        "Amazon Bedrock AgentCore",
+        "Amazon Quick",
+        "Amazon Textract",
+        "Strands Agent SDK",
+        "Claude Sonnet",
+        "Claude Haiku",
+        "Amazon Aurora PostgreSQL"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من مدونة أمازون التقنية الرسمية، مع التركيز على البنية المعمارية المذكورة دون استنتاجات إضافية."
+    },
+    "en": {
+      "title": "AWS Details AI-Powered Contract Intelligence Platform Architecture",
+      "description": "Learn how an AWS reference architecture uses AI agents, dual-model verification, and Amazon Quick analytics to solve portfolio-wide vendor contract challenges.",
+      "deck": "A recently shared AWS architecture tackles the limitations of standard RAG chat tools by combining AI agents, structured database storage, and embedded analytics for vendor contract portfolios.",
+      "summary_bullets": [
+        "Traditional RAG tools struggle with portfolio-wide aggregations across hundreds of vendor contracts.",
+        "The AWS platform extracts and verifies key fields using two separate foundation models.",
+        "Amazon Textract provides a deterministic tiebreaker if the AI agents disagree on signature detection.",
+        "Verified data is stored in Amazon Aurora PostgreSQL to enable accurate calculations and analytics."
+      ],
+      "sections": [
+        {
+          "heading": "The Scaling Challenge of Vendor Contracts",
+          "paragraphs": [
+            {
+              "text": "Managing hundreds or thousands of vendor contracts presents a significant operational hurdle for organizations. Documents containing critical details such as expiration dates, signing statuses, and total values are frequently locked away inside lengthy PDF files. Teams often rely on manual data extraction or standard Retrieval-Augmented Generation (RAG) chat tools to query this information. While RAG works well for isolated, single-document queries, it falls short when users ask portfolio-wide questions that require aggregating data across an entire document repository.",
+              "links": []
+            },
+            {
+              "text": "According to the AWS Machine Learning Blog, semantic search mechanisms used in standard RAG split text into chunks and only retrieve the top results relevant to a specific query. Consequently, asking aggregate questions like total portfolio exposure or upcoming renewals fails because the system never processes the entire dataset simultaneously. To address this limitation, a different architectural approach is required to convert unstructured PDF documents into structured, queryable data.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/building-an-ai-powered-contract-intelligence-platform-with-amazon-quick-and-amazon-bedrock-agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Structured Extraction Versus Retrieval",
+          "paragraphs": [
+            {
+              "text": "The core of the architecture shifts the focus from better retrieval to structured extraction. By pulling key contract fields into a database, organizations can leverage traditional analytics tools to perform mathematical operations, counts, and comparisons across the portfolio. Meanwhile, original documents remain accessible in a knowledge base for targeted, single-document inquiries.",
+              "links": []
+            },
+            {
+              "text": "This setup allows a React-based web application on AWS to ingest contract PDFs via an Amazon Simple Storage Service (Amazon S3) bucket. Once a document is uploaded, an automated processing pipeline triggers immediately, providing real-time status updates over WebSocket and preparing the extracted fields for user interaction.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Dual-Model Verification and Agent Infrastructure",
+          "paragraphs": [
+            {
+              "text": "To ensure data accuracy, the platform uses two independent foundation models for extraction and verification. The extraction agent reads the full PDF to gather key fields, while a separate verification agent independently checks the results. If the two models disagree on signature detection, Amazon Textract provides a deterministic tiebreaker using computer vision capabilities.",
+              "links": []
+            },
+            {
+              "text": "These autonomous agents are constructed using the open-source Strands Agent SDK and run on serverless infrastructure managed by Amazon Bedrock AgentCore. Developers can reference the official Amazon Bedrock AgentCore documentation for details on setting up serverless hosting, automatic scaling, and session isolation. Security and data governance are enforced using Cedar-based rules, which can be reviewed in the Policy in Amazon Bedrock AgentCore guidelines.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore documentation",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/"
+                },
+                {
+                  "text": "Policy in Amazon Bedrock AgentCore",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Analytics and Embedded Dashboards",
+          "paragraphs": [
+            {
+              "text": "Once verified by the automated pipeline, structured contract data is securely stored in Amazon Aurora PostgreSQL. This database serves as the foundation for answering aggregate queries and complex portfolio questions. Users can explore metrics and review contract details directly through embedded dashboards and natural language chat agents.",
+              "links": []
+            },
+            {
+              "text": "Organizations looking to implement similar visualization layers can consult resources such as the Amazon Quick Sight Embedding SDK to integrate analytics directly into their web applications. Additionally, developers can review regional model availability via Supported models by AWS Region and check pricing details on the Amazon Quick Pricing page before deploying production workloads.",
+              "links": [
+                {
+                  "text": "Supported models by AWS Region",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html"
+                },
+                {
+                  "text": "Amazon Quick Pricing",
+                  "url": "https://aws.amazon.com/quick/pricing/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "Contract Intelligence",
+        "Machine Learning",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Bedrock AgentCore",
+        "Amazon Textract",
+        "Amazon Aurora PostgreSQL",
+        "Amazon S3"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly based on the provided official AWS Machine Learning Blog source text and adheres to all formatting and linking rules."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 544,
+      "word_count_en": 560
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "82ea29af1bd53c0dc09a",
+      "title": "Building an AI-powered contract intelligence platform with Amazon Quick and Amazon Bedrock AgentCore",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 544,
+          "word_count_en": 560
+        }
+      ]
+    }
+  ],
+  "slug": "building-an-ai-powered-contract-intelligence-platform-with-amazon-quick-and-amazon-bedrock",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/building-an-ai-powered-contract-intelligence-platform-with-amazon-quick-and-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/09/building-an-ai-powered-contract-intelligence-platform-with-amazon-quick-and-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/09/building-an-ai-powered-contract-intelligence-platform-with-amazon-quick-and-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "أمازون تكشف عن منصة ذكاء اصطناعي لتحليل العقود باستخدام Quick وBedrock",
+      "en": "AWS Details AI-Powered Contract Intelligence Platform Architecture"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21546-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/building-an-ai-powered-contract-intelligence-platform-with-amazon-quick-and-amazon-bedrock/inline-01.webp",
+        "width": 1096,
+        "height": 659,
+        "alt": {
+          "ar": "أمازون تكشف عن منصة ذكاء اصطناعي لتحليل العقود باستخدام Quick وBedrock",
+          "en": "Contract intelligence pipeline from Amazon S3 ingestion through AI extraction and verification to Amazon Quick querying"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/building-an-ai-powered-contract-intelligence-platform-with-amazon-quick-and-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21546-1.png"
+      }
+    ]
+  }
 }
