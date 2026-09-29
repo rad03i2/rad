@@ -217,12 +217,16 @@ def _category_page(locale: str, slug: str, all_posts: list[dict]) -> str:
     site_name = "مِخبار" if locale == "ar" else "Mikhbar"
     title = (f"{label}: أحدث الأخبار والشروحات | مِخبار" if locale == "ar" else f"{label} News, Updates & Analysis | Mikhbar")
     path = f"/forum/{locale}/{slug}/"; root = "../../../"; feed = "".join(_card(p, locale) for p in posts[:20]); schema = _schemas(locale, path, posts, title)
+    archive_link = ""
+    if len(posts) > 20:
+        archive_label = "كل أخبار القسم" if locale == "ar" else "Browse full section archive"
+        archive_link = f'<a class="rt-section-archive-link" data-category-archive-link="true" href="./archive/">{archive_label}</a>'
     return f'''<!DOCTYPE html><html lang="{locale}" dir="{ui['dir']}"><head>{_head(locale,path,title,desc)}
 <link rel="stylesheet" href="{root}styles.css"><link rel="stylesheet" href="../../forum.css?v=20260929-layout4"><link rel="stylesheet" href="../../forum-media.css?v=20260929-layout4"><link rel="icon" type="image/png" sizes="1024x1024" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon-large.png?v=20260922-tab4"><link rel="apple-touch-icon" href="/assets/brand/mikhbar/06-web-ready/favicon/apple-touch-icon.png"><link rel="manifest" href="/assets/brand/mikhbar/06-web-ready/favicon/site.webmanifest"><script type="application/ld+json">{schema}</script></head>
 <body class="rt-locale-{locale}" data-locale="{locale}" data-category="{slug}">{_header(locale,3)}<main class="rt-main" id="main">
 <nav class="rt-categories" aria-label="Sections"><div class="rt-shell rt-category-scroll">{_category_nav(locale,'../',slug)}</div></nav><div class="rt-shell"><section class="rt-category-hero"><nav class="rt-breadcrumbs"><a href="../">{site_name}</a><span>›</span><span>{escape(label)}</span></nav><div class="rt-category-title"><span class="rt-label">{slug.upper()}</span><h1>{escape(label)}</h1><p>{escape(desc)}</p></div></section>
 <div class="rt-toolbar"><label class="rt-search"><input id="rtSearch" type="search" autocomplete="off" placeholder="{ui['search']}" aria-label="{ui['search']}"></label><span class="rt-view-note">{ui['searchNote']}</span></div>
-<section class="rt-section"><header class="rt-section-head"><div><h2>{ui['latest']}</h2><p>{escape(desc)}</p></div><span class="rt-count" id="rtCount">{len(posts)} {ui['posts']}</span></header><div class="rt-feed" id="rtFeed">{feed}</div><div class="rt-feed-empty" id="rtEmpty" {'hidden' if posts else ''}><b>{ui['noResults']}</b><p>{ui['tryDifferent']}</p></div><button class="rt-load-more" id="rtLoadMore" type="button">{ui['more']}</button></section></div></main>
+<section class="rt-section"><header class="rt-section-head"><div><h2>{ui['latest']}</h2><p>{escape(desc)}</p>{archive_link}</div><span class="rt-count" id="rtCount">{len(posts)} {ui['posts']}</span></header><div class="rt-feed" id="rtFeed">{feed}</div><div class="rt-feed-empty" id="rtEmpty" {'hidden' if posts else ''}><b>{ui['noResults']}</b><p>{ui['tryDifferent']}</p></div><button class="rt-load-more" id="rtLoadMore" type="button">{ui['more']}</button></section></div></main>
 {_footer(locale)}<script src="../../forum.js?v=20260929-layout4" defer></script></body></html>'''
 
 
