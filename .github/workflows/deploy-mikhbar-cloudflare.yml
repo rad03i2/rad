@@ -25,6 +25,8 @@ on:
       - 'automation/forum/audit_topic_hubs.py'
       - 'automation/forum/generate_pillar_pages.py'
       - 'automation/forum/audit_pillar_pages.py'
+      - 'automation/forum/generate_archive_pages.py'
+      - 'automation/forum/audit_crawl_graph.py'
       - 'automation/forum/generate_trust_pages.py'
       - 'automation/forum/audit_multilingual_trust.py'
       - 'automation/forum/pillar_discovery.py'
@@ -80,6 +82,9 @@ jobs:
       - name: Audit Mikhbar pillar guides
         run: python automation/forum/audit_pillar_pages.py
 
+      - name: Generate full bilingual Mikhbar news archives
+        run: python automation/forum/generate_archive_pages.py
+
       - name: Generate multilingual Mikhbar trust pages
         run: python automation/forum/generate_trust_pages.py
 
@@ -88,6 +93,9 @@ jobs:
 
       - name: Audit multilingual Mikhbar trust pages
         run: python automation/forum/audit_multilingual_trust.py
+
+      - name: Audit Mikhbar crawl graph and article depth
+        run: python automation/forum/audit_crawl_graph.py
 
       - name: Build Mikhbar static distribution
         run: python cloudflare/mikhbar-site/build.py
@@ -106,6 +114,8 @@ jobs:
               test -f "dist/mikhbar/${locale}/${slug}/index.html"
               grep -q "data-topic-hub=\"${slug}\"" "dist/mikhbar/${locale}/${slug}/index.html"
             done
+            test -f "dist/mikhbar/${locale}/archive/index.html"
+            grep -q 'data-news-archive="true"' "dist/mikhbar/${locale}/archive/index.html"
             test -f "dist/mikhbar/${locale}/guides/index.html"
             grep -q 'data-guide-index="true"' "dist/mikhbar/${locale}/guides/index.html"
             for guide in artificial-intelligence cybersecurity robotics; do
@@ -129,6 +139,8 @@ jobs:
           grep -q 'https://mikhbar.website/en/corrections/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/en/ai-policy/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/en/authors/radwan-abdulhadi/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/ar/archive/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/en/archive/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/ar/guides/artificial-intelligence/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/en/guides/artificial-intelligence/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/ar/guides/cybersecurity/' dist/mikhbar/sitemap.xml
@@ -245,6 +257,9 @@ jobs:
           done
 
           for locale in ar en; do
+            curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website/${locale}/archive/" -o "/tmp/mikhbar-archive-${locale}.html"
+            grep -q 'data-news-archive="true"' "/tmp/mikhbar-archive-${locale}.html"
+            grep -Fq "rel=\"canonical\" href=\"https://mikhbar.website/${locale}/archive/\"" "/tmp/mikhbar-archive-${locale}.html"
             curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website/${locale}/guides/" -o "/tmp/mikhbar-guides-${locale}.html"
             grep -q 'data-guide-index="true"' "/tmp/mikhbar-guides-${locale}.html"
             for guide in artificial-intelligence cybersecurity robotics; do
@@ -275,6 +290,8 @@ jobs:
           curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website${ARTICLE_PATH}" -o /tmp/mikhbar-live-article.html
           grep -q 'data-ssr-rendered="true"' /tmp/mikhbar-live-article.html
           grep -q 'class="rt-section rt-related-stories"' /tmp/mikhbar-live-article.html
+          grep -q 'class="rt-section rt-article-chronology"' /tmp/mikhbar-live-article.html
+          grep -q 'href="/en/archive/"' /tmp/mikhbar-live-article.html
           grep -q 'class="rt-section rt-related-topics"' /tmp/mikhbar-live-article.html
           grep -q 'Related stories' /tmp/mikhbar-live-article.html
           grep -q 'Related topics' /tmp/mikhbar-live-article.html
