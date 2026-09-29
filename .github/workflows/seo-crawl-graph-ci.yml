@@ -1,0 +1,81 @@
+name: Temporary Mikhbar Crawl Graph CI
+
+on:
+  push:
+    branches:
+      - seo/crawl-graph-archive-phase-5
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: automation/forum/requirements.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check -r automation/forum/requirements.txt
+      - name: Compile SEO modules
+        run: |
+          python -m py_compile automation/forum/generate_archive_pages.py automation/forum/audit_crawl_graph.py automation/forum/build_locale_pages.py automation/forum/generate_trust_pages.py automation/forum/indexes.py automation/forum/rebuild_indexes.py automation/forum/audit_deployed_sitemap.py
+          node --check cloudflare/mikhbar-site/src/index.js
+          node --check cloudflare/mikhbar-site/src/article.js
+          node --check forum/article/article.js
+      - name: Test article crawl-link selection
+        run: node --test cloudflare/mikhbar-site/tests/*.test.mjs
+      - name: Audit baseline search quality
+        run: python automation/forum/audit_search_quality.py
+      - name: Generate topic hubs and guides
+        run: |
+          python automation/forum/enhance_category_seo.py
+          python automation/forum/generate_pillar_pages.py
+          python automation/forum/audit_topic_hubs.py
+          python automation/forum/audit_pillar_pages.py
+      - name: Generate full bilingual news archives
+        run: python automation/forum/generate_archive_pages.py
+      - name: Generate multilingual trust pages
+        run: python automation/forum/generate_trust_pages.py
+      - name: Rebuild discovery files
+        run: python automation/forum/rebuild_indexes.py
+      - name: Audit trust and crawl graph
+        run: |
+          python automation/forum/audit_multilingual_trust.py
+          python automation/forum/audit_crawl_graph.py
+      - name: Run forum tests
+        run: python -m unittest discover -s automation/forum/tests -v
+      - name: Build Cloudflare output
+        run: python cloudflare/mikhbar-site/build.py
+      - name: Audit deployed sitemap
+        run: python automation/forum/audit_deployed_sitemap.py
+      - name: Verify archive output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("dist/mikhbar")
+          for locale in ("ar", "en"):
+              payload = json.loads((root / f"posts-{locale}.json").read_text(encoding="utf-8"))
+              posts = payload.get("posts", []) if isinstance(payload, dict) else payload
+              archive = (root / locale / "archive" / "index.html").read_text(encoding="utf-8")
+              assert 'data-news-archive="true"' in archive
+              assert f'https://mikhbar.website/{locale}/archive/' in archive
+              assert archive.count('data-archive-article="true"') == len(posts), (locale, len(posts), archive.count('data-archive-article="true"'))
+              home = (root / locale / "index.html").read_text(encoding="utf-8")
+              assert f'href="/{locale}/archive/"' in home
+          sitemap = (root / "sitemap.xml").read_text(encoding="utf-8")
+          assert "https://mikhbar.website/ar/archive/" in sitemap
+          assert "https://mikhbar.website/en/archive/" in sitemap
+          print("Archive output verification passed")
+          PY
+      - name: Validate Worker bundle
+        run: npx --yes wrangler@latest deploy --dry-run --config cloudflare/mikhbar-site/wrangler.preview.toml
