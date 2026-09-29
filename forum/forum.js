@@ -161,21 +161,31 @@ function paintHero(p,index,animate=true){
   if(animate&&wrap){wrap.classList.remove('is-changing');void wrap.offsetWidth;wrap.classList.add('is-changing');window.setTimeout(()=>wrap.classList.remove('is-changing'),320)}
   const next=heroPosts[(heroIndex+1)%heroPosts.length];if(next){const preload=new Image();preload.src=imageFor(next)}
 }
+function stopHero(){
+  if(heroTimer){window.clearInterval(heroTimer);heroTimer=null}
+}
+function startHero(){
+  stopHero();
+  if(heroPosts.length<2)return;
+  heroTimer=window.setInterval(()=>{
+    if(document.hidden)return;
+    const nextIndex=(heroIndex+1)%heroPosts.length;
+    paintHero(heroPosts[nextIndex],nextIndex,true);
+  },HERO_INTERVAL_MS);
+}
 function renderHeroDots(){
   const box=$('#rtLeadDots');if(!box)return;
   box.innerHTML=heroPosts.map((_,i)=>`<button class="rt-lead-dot" type="button" data-hero-dot="${i}" aria-label="${isAr?'عرض الخبر':'Show story'} ${i+1}"><span aria-hidden="true"></span></button>`).join('');
-  $('.rt-lead-dot',box).forEach((dot,i)=>dot.addEventListener('click',()=>{paintHero(heroPosts[i],i,true);scheduleHero()}));
-}
-function scheduleHero(){
-  if(heroTimer){window.clearTimeout(heroTimer);heroTimer=null}
-  if(heroPosts.length<2||document.hidden)return;
-  heroTimer=window.setTimeout(()=>{paintHero(heroPosts[(heroIndex+1)%heroPosts.length],heroIndex+1,true);scheduleHero()},HERO_INTERVAL_MS);
+  $$('.rt-lead-dot',box).forEach((dot,i)=>dot.addEventListener('click',()=>{
+    paintHero(heroPosts[i],i,true);
+    startHero();
+  }));
 }
 function stepHero(delta){
   if(!heroPosts.length)return;
   const nextIndex=(heroIndex+delta+heroPosts.length)%heroPosts.length;
   paintHero(heroPosts[nextIndex],nextIndex,true);
-  scheduleHero();
+  startHero();
 }
 function renderHome(){
   if(!allPosts.length)return;
@@ -184,7 +194,7 @@ function renderHome(){
   heroIndex=0;
   renderHeroDots();
   paintHero(heroPosts[0],0,false);
-  scheduleHero();
+  startHero();
   if(latest){const list=allPosts.slice(1,4);latest.innerHTML=list.length?list.map(nowItem).join(''):`<div class="rt-empty-mini">${dict.emptyNow}</div>`}
 }
 function renderCategory(){const slug=document.body.dataset.category;if(!slug)return;currentFilter=slug;const title=$('#rtCategoryCount');if(title)title.textContent=categoryMap[slug]||slug;renderFeed()}
@@ -195,7 +205,7 @@ function bind(){
   const prev=$('#rtLeadPrev'),next=$('#rtLeadNext');
   if(prev)prev.addEventListener('click',()=>stepHero(-1));
   if(next)next.addEventListener('click',()=>stepHero(1));
-  document.addEventListener('visibilitychange',()=>{if(document.hidden&&heroTimer){window.clearTimeout(heroTimer);heroTimer=null}else if(!document.hidden)scheduleHero()});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stopHero();else startHero()});
 }
 function year(){$$('[data-year]').forEach(e=>e.textContent=new Date().getFullYear())}
 brandAssets();menu();bind();bindAboutTransition();year();load();
