@@ -7,12 +7,13 @@ import xml.etree.ElementTree as ET
 from collections import defaultdict, deque
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import urljoin, urlsplit
 
 ROOT = Path(__file__).resolve().parents[2]
 FORUM = ROOT / "forum"
 ORIGIN = "https://mikhbar.website"
 ARTICLE_RE = re.compile(r"^/(ar|en)/([a-z0-9-]+)/([^/]+)/$")
+CATEGORY_ARCHIVE_MIN_STORIES = 21
 
 AR_TRUST = ("/about/", "/contact/", "/editorial-policy/", "/corrections/", "/ai-policy/", "/authors/radwan-abdulhadi/")
 EN_TRUST = tuple("/en" + path for path in AR_TRUST)
@@ -69,10 +70,19 @@ def file_for_route(route: str) -> Path | None:
     return FORUM / route.strip("/") / "index.html"
 
 
-def html_links(path: Path) -> set[str]:
+def html_links(path: Path, source_route: str) -> set[str]:
     parser = LinkParser()
     parser.feed(path.read_text(encoding="utf-8"))
-    return {link for raw in parser.links if (link := public_path(raw))}
+    links: set[str] = set()
+    base = ORIGIN + (source_route if source_route.endswith("/") else source_route + "/")
+    for raw in parser.links:
+        value = str(raw or "").strip()
+        if not value or value.startswith(("#", "mailto:", "tel:", "javascript:")):
+            continue
+        link = public_path(urljoin(base, value))
+        if link:
+            links.add(link)
+    return links
 
 
 def sitemap_routes() -> set[str]:
@@ -175,11 +185,62 @@ def main() -> int:
         if not home.exists() or f'href="/{locale}/archive/"' not in home.read_text(encoding="utf-8"):
             errors.append(f"/{locale}/: missing direct archive link")
 
+        by_category: dict[str, list[dict]] = defaultdict(list)
+        for post in posts_by_locale[locale]:
+            by_category[str(post.get("categorySlug") or "")].append(post)
+        for category, rows in by_category.items():
+            if len(rows) < CATEGORY_ARCHIVE_MIN_STORIES:
+                continue
+            category_route = f"/{locale}/{category}/"
+            category_archive_route = f"/{locale}/{category}/archive/"
+            category_archive_file = file_for_route(category_archive_route)
+            if not category_archive_file or not category_archive_file.exists():
+                errors.append(f"{category_archive_route}: category archive missing")
+                continue
+            category_html = category_archive_file.read_text(encoding="utf-8")
+            if 'data-category-archive="true"' not in category_html:
+                errors.append(f"{category_archive_route}: category archive marker missing")
+            if f'<link rel="canonical" href="{ORIGIN}{category_archive_route}">' not in category_html:
+                errors.append(f"{category_archive_route}: canonical missing")
+            expected_urls = {
+                public_path(post.get("url"))
+                for post in rows
+                if public_path(post.get("url"))
+            }
+            missing_category_links = [
+                url for url in expected_urls
+                if f'href="{url}"' not in category_html
+            ]
+            if missing_category_links:
+                errors.append(
+                    f"{category_archive_route}: missing {len(missing_category_links)} category article links; "
+                    f"examples={missing_category_links[:5]}"
+                )
+            count = category_html.count('data-category-archive-article="true"')
+            if count != len(expected_urls):
+                errors.append(
+                    f"{category_archive_route}: article link count={count} expected={len(expected_urls)}"
+                )
+            category_file = file_for_route(category_route)
+            if not category_file or not category_file.exists():
+                errors.append(f"{category_route}: category hub missing")
+            elif f'href="./archive/"' not in category_file.read_text(encoding="utf-8"):
+                errors.append(f"{category_route}: missing category archive link")
+
     routes = sitemap_routes()
     for locale in ("ar", "en"):
         archive_route = f"/{locale}/archive/"
         if archive_route not in routes:
             errors.append(f"sitemap missing {archive_route}")
+        by_category: dict[str, list[dict]] = defaultdict(list)
+        for post in posts_by_locale[locale]:
+            by_category[str(post.get("categorySlug") or "")].append(post)
+        for category, rows in by_category.items():
+            if len(rows) < CATEGORY_ARCHIVE_MIN_STORIES:
+                continue
+            category_archive_route = f"/{locale}/{category}/archive/"
+            if category_archive_route not in routes:
+                errors.append(f"sitemap missing {category_archive_route}")
 
     graph: dict[str, set[str]] = {route: set() for route in routes}
 
@@ -193,7 +254,7 @@ def main() -> int:
             continue
         path = file_for_route(route)
         if path and path.exists():
-            graph[route].update(link for link in html_links(path) if link in graph)
+            graph[route].update(link for link in html_links(path, route) if link in graph)
 
     # Dynamic article pages: model the guaranteed server-rendered navigation plus
     # chronological neighbors that the Worker exposes.
@@ -218,6 +279,7 @@ def main() -> int:
         errors.append(f"unreachable indexable routes={len(unreachable)} examples={unreachable[:12]}")
 
     article_depths: list[int] = []
+    article_inbound: list[int] = []
     for locale in ("ar", "en"):
         home_depth = bfs(graph, (f"/{locale}/",))
         for route in article_urls[locale]:
@@ -231,6 +293,11 @@ def main() -> int:
                 article_depths.append(value)
                 if value > 2:
                     errors.append(f"article crawl depth exceeds 2 ({value}): {route}")
+            if ARTICLE_RE.fullmatch(route):
+                inbound_count = inbound.get(route, 0)
+                article_inbound.append(inbound_count)
+                if inbound_count < 2:
+                    errors.append(f"article has weak internal inbound links ({inbound_count}): {route}")
 
     if errors:
         for error in errors:
@@ -244,11 +311,14 @@ def main() -> int:
 
     max_depth = max(depth.values()) if depth else 0
     max_article_depth = max(article_depths) if article_depths else 0
+    min_article_inbound = min(article_inbound) if article_inbound else 0
+    avg_article_inbound = (sum(article_inbound) / len(article_inbound)) if article_inbound else 0
     print(
         "Mikhbar crawl graph audit: "
         f"nodes={len(graph)} edges={sum(len(v) for v in graph.values())} "
         f"articles={sum(len(v) for v in article_urls.values())} "
-        f"orphans=0 unreachable=0 max_depth={max_depth} max_article_depth={max_article_depth}"
+        f"orphans=0 unreachable=0 max_depth={max_depth} max_article_depth={max_article_depth} "
+        f"min_article_inbound={min_article_inbound} avg_article_inbound={avg_article_inbound:.2f}"
     )
     return 0
 

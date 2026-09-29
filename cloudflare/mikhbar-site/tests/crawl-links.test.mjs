@@ -5,6 +5,7 @@ import {
   selectChronologicalNeighbors,
   selectRelatedPosts,
 } from "../src/index.js";
+import { isArticlePath } from "../src/article.js";
 
 const posts = [
   { locale: "en", categorySlug: "ai", url: "/en/ai/newest/", title: "Newest", date: "2026-09-30T00:00:00Z" },
@@ -36,4 +37,11 @@ test("related stories stay inside the current locale/category and exclude the cu
     related.map((post) => post.url),
     ["/en/ai/newest/", "/en/ai/oldest/"],
   );
+});
+
+
+test("category archive paths are reserved from dynamic article routing", () => {
+  assert.equal(isArticlePath("/en/ai/archive/"), false);
+  assert.equal(isArticlePath("/ar/computers/archive/"), false);
+  assert.equal(isArticlePath("/en/ai/real-story-slug/"), true);
 });
