@@ -6,7 +6,8 @@ This Worker is a migration-only component for the old Mikhbar URLs that were his
 
 It is intentionally limited to the old publication path only:
 
-- `https://rdwan.dev/forum` → `https://mikhbar.website/`
+- `https://rdwan.dev/forum` → `https://mikhbar.website/ar/`
+- `https://rdwan.dev/forum/` → `https://mikhbar.website/ar/`
 - `https://rdwan.dev/forum/ar/...` → `https://mikhbar.website/ar/...`
 - `https://rdwan.dev/forum/en/...` → `https://mikhbar.website/en/...`
 - `https://rdwan.dev/forum/about/` → `https://mikhbar.website/about/`
