@@ -1,0 +1,41 @@
+name: Temporary Mikhbar sameAs Rebase CI
+
+on:
+  push:
+    branches:
+      - seo/brand-sameas-reference-v2
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: automation/forum/requirements.txt
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check -r automation/forum/requirements.txt
+      - name: Regenerate and normalize
+        run: |
+          python automation/forum/build_locale_pages.py
+          python automation/forum/generate_trust_pages.py
+          python automation/forum/normalize_public_identity.py
+          python automation/forum/rebuild_indexes.py
+      - name: Verify external reference survives generation
+        run: |
+          for p in forum/ar/index.html forum/en/index.html forum/about/index.html forum/en/about/index.html; do
+            grep -Fq 'https://rdwan.dev/mikhbar.html' "$p"
+          done
+      - name: Build and verify deployable output
+        run: |
+          python cloudflare/mikhbar-site/build.py
+          for p in dist/mikhbar/index.html dist/mikhbar/ar/index.html dist/mikhbar/en/index.html dist/mikhbar/about/index.html; do
+            grep -Fq 'https://rdwan.dev/mikhbar.html' "$p"
+          done
+          python automation/forum/audit_deployed_sitemap.py
