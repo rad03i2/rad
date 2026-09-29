@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 FORUM = ROOT / "forum"
 ORIGIN = "https://mikhbar.website"
 
+# Arabic trust URLs stay stable; English equivalents live under /en/.
 PAIRS = {
     "/about/": "/en/about/",
     "/contact/": "/en/contact/",
