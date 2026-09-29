@@ -1,0 +1,338 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "0123a5a77136303ad327",
+  "slug": "automating-amazon-textract-adapter-lifecycle-management-across-accounts",
+  "categorySlug": "robotics",
+  "urls": {
+    "ar": "/forum/ar/robotics/automating-amazon-textract-adapter-lifecycle-management-across-accounts/",
+    "en": "/forum/en/robotics/automating-amazon-textract-adapter-lifecycle-management-across-accounts/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تيسكت: أتمتة دورة حياة المحوّلات عبر الحسابات السحابية",
+      "description": "تقدّم أمازون حلاً لإدارة محوّلات تيسكت عبر الحسابات باستخدام البنية التحتية ككود، مما يسهّل الترقية الآمنة ويقلل زمن التوقف في بيئات الإنتاج.",
+      "deck": "توفر أمازون ويب سيرفيسز أدوات جديدة لأتمتة إدارة محوّلات الاستعلامات المخصصة، مما يتيح للشركات نقل النماذج المدربة بين البيئات بكفاءة وأمان دون تدخل يدوي مكثف.",
+      "summaryBullets": [
+        "استخدام قوالب CloudFormation وTerraform لبناء بنية تحتية قابلة للتكرار لإدارة المحوّلات.",
+        "تطبيق نمط التوجيه المسبق لتصنيف المستندات واختيار المحوّل المناسب تلقائياً.",
+        "عزل المعرفات في Systems Manager Parameter Store لتحديث الإنتاج دون إعادة نشر التطبيقات.",
+        "تعزيز الأمان عبر نقاط نهاية VPC وتشفير البيانات وصلاحيات IAM بأقل امتيازات ممكنة."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الانتقال من النموذج التجريبي إلى الإنتاج",
+          "paragraphs": [
+            {
+              "text": "يعتمد العديد من المؤسسات على خدمة أمازون تيسكت لاستخراج البيانات من المستندات، لكن الانتقال من مرحلة البرهان على المفهوم (PoC) إلى بيئة الإنتاج يواجه عقبات تقنية. تشمل هذه التحديات صعوبة نقل المحوّلات المدربة بين حسابات AWS المختلفة، حيث تتطلب العملية حالياً تذاكر دعم ولا تنتقل تعريفات الاستعلامات أو بيانات التدريب تلقائياً. كما تواجه الشركات التي تتعامل مع نسخ متعددة من النماذج الورقية صعوبة في توجيه كل مستند إلى المحوّل الصحيح، نظراً لأن API يدعم محوّلاً واحداً لكل مكالمة لكل نوع ميزة. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/automating-amazon-textract-adapter-lifecycle-management-across-accounts/"
+                }
+              ]
+            },
+            {
+              "text": "بالإضافة إلى ذلك، تفرض الصناعات الخاضعة للتنظيم متطلبات صارمة للأمان تشمل التشفير والعزل الشبكي وسجلات التدقيق الشاملة. بدون آلية أتمتة، تصبح إدارة دورة حياة المحوّلات عنقاً زجاجياً يدوياً يبطئ وتيرة الإصدارات ويهدد استقرار العمليات الحرجة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بنية تحتية ككود لإدارة المحوّلات",
+          "paragraphs": [
+            {
+              "text": "تقدم أمازون حلاً يعتمد على مبدأ البنية التحتية ككود (IaC) باستخدام قوالب AWS CloudFormation وTerraform. يتيح هذا النهج إنشاء بيئات تدريب وإنتاج متسقة وقابلة للتكرار، مما يقلل من الأخطاء البشرية ويسهل التوسع. تشمل القوالب المتاحة في مستودع GitHub الرسمي مكوّنات جاهزة لبناء البنية التحتية اللازمة لدعم دورة حياة المحوّلات الكاملة.",
+              "links": []
+            },
+            {
+              "text": "تتيح هذه القوالب للمهندسين تعريف الموارد المطلوبة بدقة، بما في ذلك دلاء S3 للتخزين، وسياسات IAM، ونقاط نهاية PrivateLink. كما يوفر المستودع سكربتات مساعدة مثل create-adapter.sh لتسهيل عمليات الإنشاء الأولية عبر سطر الأوامر، مما يضمن توحيد الإجراءات عبر الفرق المختلفة.",
+              "links": [
+                {
+                  "text": "create-adapter.sh",
+                  "url": "https://github.com/aws-samples/sample-textract-adapter-lifecycle-management/blob/main/scripts/create-adapter.sh"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "نمط التوجيه المسبق وتصنيف المستندات",
+          "paragraphs": [
+            {
+              "text": "لتحدي التعامل مع نسخ متعددة من النماذج، يقترح الحل نمط التوجيه المسبق (Pre-classification). تبدأ العملية باستقبال المستندات في دلاء S3 مشفرة، ثم يقوم نظام خفيف الوزن باستخراج النص الخام باستخدام DetectDocumentText. يتم بعد ذلك تحديد نسخة المستند من خلال البحث عن علامات نصية مثل عناوين النماذج أو معرّفات الإصدارات.",
+              "links": []
+            },
+            {
+              "text": "بناءً على نتيجة التصنيف، يتم استرجاع معرف المحوّل الصحيح من AWS Systems Manager Parameter Store. هذا الفصل بين منطق التصنيف واختيار المحوّل يسمح بمرونة عالية، حيث يمكن تحديث المحوّلات دون الحاجة لتعديل كود التطبيق الأساسي. يدعم النظام صيغ JPEG وPNG وPDF وTIFF، مع معالجة الملفات متعددة الصفحات عبر API غير المتزامن.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة المعرفات وتحديث الإنتاج بدون توقف",
+          "paragraphs": [
+            {
+              "text": "من أبرز مزايا هذا الحل هو خارجية معرفات المحوّلات (Adapter IDs) خارج كود التطبيق وتخزينها في Parameter Store. عند ترقية نسخة جديدة من المحوّل أو نقله إلى بيئة إنتاج، يكفي تحديث قيمة المعرف في Parameter Store. هذا الإجراء يتم لحظياً ولا يتطلب إعادة نشر التطبيق أو إيقاف الخدمة، مما يقلل زمن التوقف من ساعات أو أيام إلى ثوانٍ معدودة.",
+              "links": []
+            },
+            {
+              "text": "يسمح هذا التصميم بفصل إدارة المحوّلات عن منطق الأعمال، مما يسهل على فرق العمليات تنفيذ التحديثات بشكل مستقل عن فرق التطوير. كما يضمن أن أي تغيير في البنية التحتية أو النماذج المدربة يعكس نفسه في الإنتاج بسلاسة وأمان، مع الحفاظ على استقرار العمليات المستمرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استراتيجيات الترقية عبر الحسابات",
+          "paragraphs": [
+            {
+              "text": "توفر أمازون نهجين رئيسيين لنقل المحوّلات بين البيئات. النهج الأول هو النسخ عبر الحسابات (Cross-Account Copy)، حيث يتم تدريب المحوّل في حساب مخصص ثم نسخه إلى حسابات الإنتاج عبر تذاكر دعم. هذا النهج مناسب للمؤسسات التي لديها عدد قليل من المحوّلات (أقل من 10) وتقوم بتحديثات نادرة.",
+              "links": []
+            },
+            {
+              "text": "النهج الثاني هو استخدام حساب مركزي (Hub Account) لتدريب جميع المحوّلات، مما يسهل الإدارة الموحدة. يمكن للمؤسسات اختيار البنية التي تناسب نضجها التشغيلي، بدءاً من بيئتين في حساب واحد للفريق الصغيرة، وصولاً إلى حسابات مخصصة لكل مرحلة (تدريب، تحقق، ما قبل الإنتاج، إنتاج) للمؤسسات الكبيرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحكمات الأمان والامتثال في الإنتاج",
+          "paragraphs": [
+            {
+              "text": "لتلبية متطلبات الصناعات الخاضعة للتنظيم، يدمج الحل عدة طبقات أمنية. يتم توجيه مكالمات API عبر AWS PrivateLink لضمان العزل الشبكي ومنع الوصول العام. كما يتم تطبيق مبدأ أقل امتيازات ممكنة (Least-privilege) في سياسات IAM، مع توثيق كامل للمكالمات عبر AWS CloudTrail ومراقبة العمليات باستخدام Amazon CloudWatch.",
+              "links": []
+            },
+            {
+              "text": "يُنصح باستخدام مفاتيح عملاء مُدارة من AWS KMS لتشفير البيانات عند السكون، بدلاً من المفاتيح المُدارة من S3، للحصول على تحكم كامل في تدوير المفاتيح وسياسات الوصول. هذه الإجراءات تضمن أن تكون بيئة الإنتاج جاهزة للتعامل مع بيانات حساسة مع الحفاظ على الامتثال للمعايير التنظيمية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون ويب سيرفيسز",
+        "أمازون تيسكت",
+        "التعلم الآلي",
+        "أتمتة العمليات",
+        "البنية التحتية ككود",
+        "أمن السحابة",
+        "معالجة المستندات"
+      ],
+      "entities": [
+        "Amazon Textract",
+        "AWS CloudFormation",
+        "Terraform",
+        "AWS Systems Manager Parameter Store",
+        "AWS PrivateLink",
+        "AWS IAM",
+        "AWS S3"
+      ],
+      "category": "الروبوتات",
+      "dateLabel": "29 سبتمبر 2026",
+      "modifiedLabel": "29 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 708
+    },
+    "en": {
+      "title": "Automating Amazon Textract Adapter Lifecycle Management",
+      "description": "Learn how to operationalize Amazon Textract adapters for production workloads using infrastructure as code and cross-account promotion strategies.",
+      "deck": "A structured approach to managing Amazon Textract adapters across environments helps organizations transition from proof-of-concept document processing workflows to secure, scalable production deployments.",
+      "summaryBullets": [
+        "Amazon Textract Custom Queries adapters extend pre-trained models to extract data from documents with unique layouts.",
+        "Operations teams face core challenges including cross-account adapter promotion, document routing, and production security.",
+        "Infrastructure as code templates using AWS CloudFormation and Terraform help automate adapter lifecycle infrastructure.",
+        "Decoupling adapter IDs via AWS Systems Manager Parameter Store allows zero-downtime updates without application redeployment."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Amazon Textract Custom Adapters",
+          "paragraphs": [
+            {
+              "text": "Organizations frequently automate document processing workflows such as mortgage application intake, invoice parsing, insurance claim handling, and identity verification to eliminate manual data entry. Amazon Textract is a fully managed machine learning service that automatically extracts text, handwriting, layout elements, and structured data from scanned documents. To learn more about the service fundamentals, review the official documentation on Amazon Textract.",
+              "links": [
+                {
+                  "text": "Amazon Textract",
+                  "url": "https://docs.aws.amazon.com/textract/latest/dg/what-is.html"
+                }
+              ]
+            },
+            {
+              "text": "While baseline extraction handles many standard formats, organizations often encounter unique layouts or domain-specific terminologies that require fine-tuning. For these specialized use cases, developers utilize the Amazon Textract Custom Queries documentation to extend pre-trained deep learning models into modular components tailored for specific form versions.",
+              "links": [
+                {
+                  "text": "Amazon Textract Custom Queries documentation",
+                  "url": "https://docs.aws.amazon.com/textract/latest/dg/textract-using-adapters.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Core Operational Challenges in Production",
+          "paragraphs": [
+            {
+              "text": "Transitioning document extraction workloads from initial proof-of-concept stages to full-scale production environments introduces several operational obstacles. The first major hurdle involves adapter promotion, which dictates how trained adapters move securely across different AWS accounts. Without proper automation, transferring these components relies on manual request workflows.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, enterprise systems typically process multiple form versions simultaneously. Because the underlying processing APIs accept a single adapter per page per feature type, engineering teams must deploy upstream routing mechanisms. These upstream routines correctly direct incoming documents to the matching adapter before extraction takes place.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Document Processing Pipeline Architecture",
+          "paragraphs": [
+            {
+              "text": "To solve multi-version challenges, developers can implement a multi-stage document processing pipeline that cleanly separates document classification, adapter selection, and data extraction. Ingested documents arrive in encrypted storage buckets, where lightweight text detection routines scan for specific titles, field labels, or version identifiers.",
+              "links": []
+            },
+            {
+              "text": "Once the document version is identified, the processing pipeline retrieves the appropriate adapter identifier dynamically. By leveraging operational parameter storage rather than hardcoding references into application code, engineering teams can update production adapter references instantly. This externalization strategy ensures zero downtime and removes the need for full application redeployments when updating model weights.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Infrastructure as Code and Automation",
+          "paragraphs": [
+            {
+              "text": "Operationalizing these pipelines effectively requires repeatable infrastructure templates and deployment scripts. Organizations can provision required resources using infrastructure as code frameworks. Available resources include an official CloudFormation template alongside a modular Terraform configuration to accelerate deployment across multi-account environments.",
+              "links": [
+                {
+                  "text": "CloudFormation template",
+                  "url": "https://github.com/aws-samples/sample-textract-adapter-lifecycle-management/blob/main/cloudformation/textract-adapter-infrastructure.yaml"
+                }
+              ]
+            },
+            {
+              "text": "In addition to infrastructure definitions, teams can utilize automated scripts such as the create-adapter.sh utility file to streamline initialization workflows. These automation scripts align with standard command-line interfaces to simplify the setup of custom adapters across development and staging environments.",
+              "links": [
+                {
+                  "text": "create-adapter.sh",
+                  "url": "https://github.com/aws-samples/sample-textract-adapter-lifecycle-management/blob/main/scripts/create-adapter.sh"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Multi-Environment Lifecycle Stages",
+          "paragraphs": [
+            {
+              "text": "A robust adapter lifecycle typically spans four logical environments to guarantee stability before production release. These stages begin with a training environment dedicated to adapter creation and annotation, followed by a validation environment focused on regression testing against diverse document sets.",
+              "links": []
+            },
+            {
+              "text": "The subsequent pre-production phase enables integration testing with downstream enterprise systems and performance benchmarking. Finally, the production environment handles live document processing workloads under strict operational controls. Depending on organizational maturity, teams can map these distinct stages to separate AWS accounts or isolate them using resource tags within a single account.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Security and Compliance Controls",
+          "paragraphs": [
+            {
+              "text": "Regulated industries handling sensitive documents must enforce rigorous security measures throughout their machine learning pipelines. Production deployments require network isolation via virtual private cloud endpoints, encryption at rest using customer-managed keys, and comprehensive audit logging.",
+              "links": []
+            },
+            {
+              "text": "Applying principle-of-least-privilege permissions through identity and access management policies ensures that downstream systems only access required document types. Furthermore, tracking service limits and operational quotas helps maintain reliable throughput. Developers can consult the official documentation on Amazon Textract quotas to understand service boundaries and scale applications safely.",
+              "links": [
+                {
+                  "text": "Amazon Textract quotas",
+                  "url": "https://docs.aws.amazon.com/general/latest/gr/textract.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Textract",
+        "Machine Learning",
+        "CloudFormation",
+        "Terraform",
+        "Automation",
+        "Infrastructure as Code",
+        "Document Processing"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Textract",
+        "AWS Systems Manager",
+        "AWS CloudFormation",
+        "Terraform"
+      ],
+      "category": "Robotics",
+      "dateLabel": "September 29, 2026",
+      "modifiedLabel": "September 29, 2026",
+      "readMinutes": 3,
+      "wordCount": 653
+    }
+  },
+  "datePublished": "2026-09-29T03:23:38.913575+03:00",
+  "dateModified": "2026-09-29T03:23:38.913575+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/automating-amazon-textract-adapter-lifecycle-management-across-accounts/hero.webp",
+    "card": "/forum/assets/posts/2026/09/automating-amazon-textract-adapter-lifecycle-management-across-accounts/card.webp",
+    "social": "/forum/assets/posts/2026/09/automating-amazon-textract-adapter-lifecycle-management-across-accounts/social.jpg",
+    "alt": {
+      "ar": "أمازون تيسكت: أتمتة دورة حياة المحوّلات عبر الحسابات السحابية",
+      "en": "Automating Amazon Textract Adapter Lifecycle Management"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21054-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/automating-amazon-textract-adapter-lifecycle-management-across-accounts/inline-01.webp",
+        "width": 752,
+        "height": 1050,
+        "alt": {
+          "ar": "أمازون تيسكت: أتمتة دورة حياة المحوّلات عبر الحسابات السحابية",
+          "en": "Amazon Textract adapter lifecycle architecture: ingestion, pre-classification, adapter selection, Amazon Textract processing, and results delivery"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/automating-amazon-textract-adapter-lifecycle-management-across-accounts/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21054-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/automating-amazon-textract-adapter-lifecycle-management-across-accounts/",
+      "type": "official",
+      "title": "Automating Amazon Textract adapter lifecycle management across accounts"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/automating-amazon-textract-adapter-lifecycle-management-across-accounts",
+  "sourceTitle": "Automating Amazon Textract adapter lifecycle management across accounts",
+  "trendScore": 119.18,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-29T00:23:38+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/automating-amazon-textract-adapter-lifecycle-management-across-accounts.json"
+}
