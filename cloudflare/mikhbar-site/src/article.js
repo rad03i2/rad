@@ -176,7 +176,12 @@ function schemaFor(record, view, locale, canonical, social) {
         image: [social],
         articleSection: view.category || record.categorySlug,
         keywords: view.tags || [],
-        author: { "@type": "Person", name: UI[locale].author, url: ORIGIN + "/authors/radwan-abdulhadi/" },
+        author: {
+          "@type": "Person",
+          "@id": ORIGIN + "/authors/radwan-abdulhadi/#person",
+          name: UI[locale].author,
+          url: ORIGIN + (locale === "ar" ? "/authors/radwan-abdulhadi/" : "/en/authors/radwan-abdulhadi/")
+        },
         publisher: {
           "@type": "NewsMediaOrganization",
           "@id": ORIGIN + "/#publisher",
@@ -248,6 +253,7 @@ export async function renderDynamicArticle(request, env, pathname) {
   const category = view.category || record.categorySlug || "";
   const other = locale === "ar" ? "en" : "ar";
   const otherUrl = publicPath(record?.urls?.[other] || `/${other}/`);
+  const trustBase = locale === "ar" ? "" : "/en";
   const summary = (view.summaryBullets || []).map((item) => `<li>${esc(item)}</li>`).join("");
   const tags = (view.tags || []).slice(0, 8).map((item) => `<span>${esc(item)}</span>`).join("");
   const credit = String(images.credit || "").trim();
@@ -282,7 +288,7 @@ export async function renderDynamicArticle(request, env, pathname) {
     .on("#nav-sections", new AttrHandler({ href: `/${locale}/#sections` }, ui.sections))
     .on("#nav-top", new AttrHandler({ href: `/${locale}/#top-stories` }, ui.top))
     .on("#nav-newsletter", new AttrHandler({ href: `/${locale}/#newsletter` }, ui.newsletter))
-    .on("#nav-about", new AttrHandler({ href: "/about/" }, ui.about))
+    .on("#nav-about", new AttrHandler({ href: `${trustBase}/about/` }, ui.about))
     .on("#nav-lang", new AttrHandler({ href: otherUrl }, ui.lang))
     .on("#article-loading", new HideHandler())
     .on("#article-error", new HideHandler())
@@ -293,7 +299,7 @@ export async function renderDynamicArticle(request, env, pathname) {
     .on("#category-label", new TextHandler(category))
     .on("#article-title", new TextHandler(view.title || ""))
     .on("#article-deck", new TextHandler(view.deck || ""))
-    .on("#author-link", new AttrHandler({ href: "/authors/radwan-abdulhadi/" }))
+    .on("#author-link", new AttrHandler({ href: `${trustBase}/authors/radwan-abdulhadi/` }))
     .on("#author-name", new TextHandler(ui.author))
     .on("#author-role", new TextHandler(ui.role))
     .on("#article-dates", new TextHandler(`${ui.published}: ${view.dateLabel || ""} · ${ui.updated}: ${view.modifiedLabel || view.dateLabel || ""} · ${view.readMinutes || 3} ${ui.read}`))
@@ -308,11 +314,12 @@ export async function renderDynamicArticle(request, env, pathname) {
     .on("#footer-copy-brand", new TextHandler(ui.site))
     .on("#footer-description", new TextHandler(ui.footerDesc))
     .on("#footer-publication-title", new TextHandler(ui.publication))
-    .on("#footer-about", new AttrHandler({ href: "/about/" }, ui.about))
-    .on("#footer-editorial", new AttrHandler({ href: "/editorial-policy/" }, ui.editorial))
+    .on("#footer-about", new AttrHandler({ href: `${trustBase}/about/` }, ui.about))
+    .on("#footer-editorial", new AttrHandler({ href: `${trustBase}/editorial-policy/` }, ui.editorial))
     .on("#footer-trust-title", new TextHandler(ui.trust))
-    .on("#footer-corrections", new AttrHandler({ href: "/corrections/" }, ui.corrections))
-    .on("#footer-ai", new AttrHandler({ href: "/ai-policy/" }, ui.ai));
+    .on("#footer-corrections", new AttrHandler({ href: `${trustBase}/corrections/` }, ui.corrections))
+    .on("#footer-ai", new AttrHandler({ href: `${trustBase}/ai-policy/` }, ui.ai))
+    .on("#footer-contact", new AttrHandler({ href: `${trustBase}/contact/` }, locale === "ar" ? "تواصل" : "Contact"));
 
   const transformed = rewriter.transform(shell);
   const headers = new Headers(transformed.headers);
