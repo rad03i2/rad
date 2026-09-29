@@ -50,7 +50,7 @@ jobs:
               grep -q "https://mikhbar.website/\${locale}/\${category}/archive/" forum/sitemap.xml
               grep -q 'data-category-archive-link="true"' "forum/\${locale}/\${category}/index.html"
             done
-            for category in automation web mobile social; do
+            for category in security automation web mobile social; do
               if [ -f "forum/\${locale}/\${category}/archive/index.html" ]; then
                 echo "Thin category archive should not exist: \${locale}/\${category}" >&2
                 exit 1
