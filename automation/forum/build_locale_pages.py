@@ -127,7 +127,8 @@ def _card(post: dict, locale: str) -> str:
 
 
 def _now_item(post: dict, index: int) -> str:
-    return f'''<a class="rt-now-item" href="{escape(str(post.get('url') or '#'), quote=True)}"><span class="rt-now-num">{index:02d}</span><span><strong>{escape(str(post.get('title') or ''))}</strong><small>{escape(str(post.get('dateLabel') or ''))}</small></span></a>'''
+    image = str(post.get("image") or (post.get("images") or {}).get("card") or "/assets/social/home.jpg")
+    return f'''<a class="rt-now-item" href="{escape(str(post.get('url') or '#'), quote=True)}"><span class="rt-now-num">{index:02d}</span><span><strong>{escape(str(post.get('title') or ''))}</strong><small>{escape(str(post.get('dateLabel') or ''))}</small></span><img class="rt-now-thumb" src="{escape(image, quote=True)}" alt="" width="80" height="70" loading="lazy" decoding="async"></a>'''
 
 
 def _schemas(locale: str, path: str, posts: list[dict], page_name: str) -> str:
@@ -161,7 +162,7 @@ def _home_page(locale: str, posts: list[dict]) -> str:
     title = "مِخبار (مخبار) — أخبار التقنية والذكاء الاصطناعي" if locale == "ar" else "Mikhbar — Technology News, AI, Robotics & Automation"
     desc = "مِخبار (Mikhbar، ويُكتب مخبار دون تشكيل) منصة تقنية مستقلة تقدم أخبارًا وشروحات موثقة عن الذكاء الاصطناعي والأمن السيبراني والروبوتات والأتمتة." if locale == "ar" else "Verified technology news in English covering AI, robotics, automation, mobile, computing, software and the web, with sources and continuous updates."
     featured = next((p for p in posts if p.get("featured")), posts[0] if posts else {})
-    others = [p for p in posts if p.get("id") != featured.get("id")][:5]
+    others = [p for p in posts if p.get("id") != featured.get("id")][:3]
     lead_url = escape(str(featured.get("url") or "#latest"), quote=True)
     lead_img = str(featured.get("image") or (featured.get("images") or {}).get("hero") or "/assets/social/home.jpg")
     lead_title = escape(str(featured.get("title") or ui["latest"]))
@@ -173,7 +174,7 @@ def _home_page(locale: str, posts: list[dict]) -> str:
     topics = "".join(f'<a class="rt-category-box" href="./{slug}/"><span>{i:02d} · {slug.upper()}</span><h3>{escape(CATEGORIES[slug][locale][0])}</h3><p>{escape(CATEGORIES[slug][locale][1])}</p></a>' for i, slug in enumerate(("ai","robotics","automation","mobile","computers","apps","web","social","security"), 1))
     schema = _schemas(locale, f"/forum/{locale}/", posts, title)
     return f'''<!DOCTYPE html><html lang="{locale}" dir="{ui['dir']}"><head>{_head(locale, f'/forum/{locale}/', title, desc, lead_img)}
-<link rel="stylesheet" href="../../styles.css"><link rel="stylesheet" href="../forum.css?v=20260929-home3"><link rel="stylesheet" href="../forum-media.css"><link rel="icon" type="image/png" sizes="1024x1024" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon-large.png?v=20260922-tab4"><link rel="apple-touch-icon" href="/assets/brand/mikhbar/06-web-ready/favicon/apple-touch-icon.png"><link rel="manifest" href="/assets/brand/mikhbar/06-web-ready/favicon/site.webmanifest"><script type="application/ld+json">{schema}</script></head>
+<link rel="stylesheet" href="../../styles.css"><link rel="stylesheet" href="../forum.css?v=20260929-layout4"><link rel="stylesheet" href="../forum-media.css?v=20260929-layout4"><link rel="icon" type="image/png" sizes="1024x1024" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon-large.png?v=20260922-tab4"><link rel="apple-touch-icon" href="/assets/brand/mikhbar/06-web-ready/favicon/apple-touch-icon.png"><link rel="manifest" href="/assets/brand/mikhbar/06-web-ready/favicon/site.webmanifest"><script type="application/ld+json">{schema}</script></head>
 <body class="rt-locale-{locale} rt-home" data-locale="{locale}">{_header(locale,2)}<main class="rt-main" id="main">
 <section class="rt-brandline"><div class="rt-shell rt-brandrow"><div class="rt-wordmark"><strong>{site_name}</strong><b>{"أخبار التقنية" if locale == "ar" else "TECH"}</b></div><p class="rt-tagline">{ui['tagline']}</p></div></section>
 <nav class="rt-categories" id="sections" aria-label="Sections"><div class="rt-shell rt-category-scroll">{_category_nav(locale)}</div></nav><div class="rt-shell">
@@ -183,7 +184,7 @@ def _home_page(locale: str, posts: list[dict]) -> str:
 <section class="rt-section" id="latest"><header class="rt-section-head"><div><h2>{ui['latest']}</h2><p>{ui['latestDesc']}</p></div><span class="rt-count" id="rtCount">{len(posts)} {ui['posts']}</span></header><div class="rt-feed" id="rtFeed">{feed}</div><div class="rt-feed-empty" id="rtEmpty" hidden><b>{ui['noResults']}</b><p>{ui['tryDifferent']}</p></div><button class="rt-load-more" id="rtLoadMore" type="button">{ui['more']}</button></section>
 <section class="rt-section"><header class="rt-section-head"><div><h2>{ui['topics']}</h2><p>{ui['topicsDesc']}</p></div></header><div class="rt-category-showcase">{topics}</div></section>
 <section class="rt-newsletter" id="newsletter"><div><h2>{ui['newsletter']}</h2><p>{ui['newsletterDesc']}</p></div><a href="https://omniform1.com/forms/v1/landingPage/6aa951449b0f973742e3f90d/6aa9b7a1f85082d5ccd3f79c">{ui['subscribe']}</a></section></div></main>
-<footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> {site_name}</div></footer><script src="../forum.js?v=20260922-about3" defer></script></body></html>'''
+<footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> {site_name}</div></footer><script src="../forum.js?v=20260929-layout4" defer></script></body></html>'''
 
 
 def _category_page(locale: str, slug: str, all_posts: list[dict]) -> str:
@@ -192,12 +193,12 @@ def _category_page(locale: str, slug: str, all_posts: list[dict]) -> str:
     title = (f"{label}: أحدث الأخبار والشروحات | مِخبار" if locale == "ar" else f"{label} News, Updates & Analysis | Mikhbar")
     path = f"/forum/{locale}/{slug}/"; root = "../../../"; feed = "".join(_card(p, locale) for p in posts[:20]); schema = _schemas(locale, path, posts, title)
     return f'''<!DOCTYPE html><html lang="{locale}" dir="{ui['dir']}"><head>{_head(locale,path,title,desc)}
-<link rel="stylesheet" href="{root}styles.css"><link rel="stylesheet" href="../../forum.css?v=20260929-home3"><link rel="stylesheet" href="../../forum-media.css"><link rel="icon" type="image/png" sizes="1024x1024" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon-large.png?v=20260922-tab4"><link rel="apple-touch-icon" href="/assets/brand/mikhbar/06-web-ready/favicon/apple-touch-icon.png"><link rel="manifest" href="/assets/brand/mikhbar/06-web-ready/favicon/site.webmanifest"><script type="application/ld+json">{schema}</script></head>
+<link rel="stylesheet" href="{root}styles.css"><link rel="stylesheet" href="../../forum.css?v=20260929-layout4"><link rel="stylesheet" href="../../forum-media.css?v=20260929-layout4"><link rel="icon" type="image/png" sizes="1024x1024" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon-large.png?v=20260922-tab4"><link rel="apple-touch-icon" href="/assets/brand/mikhbar/06-web-ready/favicon/apple-touch-icon.png"><link rel="manifest" href="/assets/brand/mikhbar/06-web-ready/favicon/site.webmanifest"><script type="application/ld+json">{schema}</script></head>
 <body class="rt-locale-{locale}" data-locale="{locale}" data-category="{slug}">{_header(locale,3)}<main class="rt-main" id="main">
 <nav class="rt-categories" aria-label="Sections"><div class="rt-shell rt-category-scroll">{_category_nav(locale,'../',slug)}</div></nav><div class="rt-shell"><section class="rt-category-hero"><nav class="rt-breadcrumbs"><a href="../">{site_name}</a><span>›</span><span>{escape(label)}</span></nav><div class="rt-category-title"><span class="rt-label">{slug.upper()}</span><h1>{escape(label)}</h1><p>{escape(desc)}</p></div></section>
 <div class="rt-toolbar"><label class="rt-search"><input id="rtSearch" type="search" autocomplete="off" placeholder="{ui['search']}" aria-label="{ui['search']}"></label><span class="rt-view-note">{ui['searchNote']}</span></div>
 <section class="rt-section"><header class="rt-section-head"><div><h2>{ui['latest']}</h2><p>{escape(desc)}</p></div><span class="rt-count" id="rtCount">{len(posts)} {ui['posts']}</span></header><div class="rt-feed" id="rtFeed">{feed}</div><div class="rt-feed-empty" id="rtEmpty" {'hidden' if posts else ''}><b>{ui['noResults']}</b><p>{ui['tryDifferent']}</p></div><button class="rt-load-more" id="rtLoadMore" type="button">{ui['more']}</button></section></div></main>
-<footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> RDWAN Tech</div></footer><script src="../../forum.js?v=20260922-about3" defer></script></body></html>'''
+<footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> RDWAN Tech</div></footer><script src="../../forum.js?v=20260929-layout4" defer></script></body></html>'''
 
 
 def _router_page(posts_ar: list[dict], posts_en: list[dict]) -> str:
