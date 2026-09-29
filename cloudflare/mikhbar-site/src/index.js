@@ -116,6 +116,31 @@ export function selectRelatedPosts(posts, pathname, limit = 4) {
     .slice(0, Math.max(0, limit));
 }
 
+export function selectChronologicalNeighbors(posts, pathname) {
+  const match = String(pathname || "").match(ARTICLE_PARTS);
+  if (!match || !Array.isArray(posts)) return { newer: null, older: null };
+  const [, locale, category] = match;
+  const current = publicPath(pathname);
+  const ordered = posts
+    .filter((post) => {
+      if (String(post?.locale || locale).toLowerCase() !== locale.toLowerCase()) return false;
+      if (String(post?.categorySlug || "") !== category) return false;
+      return Boolean(publicPath(post?.url || ""));
+    })
+    .sort((a, b) => {
+      const aTime = Date.parse(String(a?.dateModified || a?.date || "")) || 0;
+      const bTime = Date.parse(String(b?.dateModified || b?.date || "")) || 0;
+      return bTime - aTime;
+    });
+
+  const index = ordered.findIndex((post) => publicPath(post?.url || "") === current);
+  if (index < 0) return { newer: null, older: null };
+  return {
+    newer: index > 0 ? ordered[index - 1] : null,
+    older: index + 1 < ordered.length ? ordered[index + 1] : null,
+  };
+}
+
 function topicHubHtml(locale, category) {
   const lang = locale.toLowerCase();
   const labels = HUB_LABELS[lang] || HUB_LABELS.en;
@@ -131,6 +156,28 @@ function topicHubHtml(locale, category) {
   }).join("");
 
   return `<section class="rt-section rt-related-topics" aria-labelledby="related-topics-title"><header class="rt-section-head"><div><h2 id="related-topics-title">${esc(title)}</h2></div></header><div class="rt-topic-grid">${cards}</div></section>`;
+}
+
+function chronologicalHtml(neighbors, pathname) {
+  const match = String(pathname || "").match(ARTICLE_PARTS);
+  if (!match) return "";
+  const [, locale] = match;
+  const isAr = locale.toLowerCase() === "ar";
+  const title = isAr ? "تابع التسلسل الزمني" : "Continue chronologically";
+  const newerLabel = isAr ? "الخبر الأحدث" : "Newer story";
+  const olderLabel = isAr ? "الخبر الأقدم" : "Older story";
+  const cards = [];
+
+  for (const [kind, post] of [["newer", neighbors?.newer], ["older", neighbors?.older]]) {
+    const href = publicPath(post?.url || "");
+    const postTitle = String(post?.title || "").trim();
+    if (!href || !postTitle) continue;
+    const label = kind === "newer" ? newerLabel : olderLabel;
+    cards.push(`<a class="rt-topic-card" data-chronology="${esc(kind)}" href="${esc(href)}"><span>${esc(label)}</span><b>${esc(postTitle)}</b></a>`);
+  }
+
+  if (!cards.length) return "";
+  return `<section class="rt-section rt-article-chronology" aria-labelledby="article-chronology-title"><header class="rt-section-head"><div><h2 id="article-chronology-title">${esc(title)}</h2></div></header><div class="rt-topic-grid">${cards.join("")}</div></section>`;
 }
 
 function relatedHtml(posts, pathname) {
@@ -171,7 +218,8 @@ async function addRelatedStories(response, request, env, pathname) {
   const payload = await assetJson(env, request, `/posts-${locale}.json`);
   const posts = Array.isArray(payload) ? payload : (Array.isArray(payload?.posts) ? payload.posts : []);
   const related = selectRelatedPosts(posts, pathname, 4);
-  const html = relatedHtml(related, pathname);
+  const chronology = selectChronologicalNeighbors(posts, pathname);
+  const html = chronologicalHtml(chronology, pathname) + relatedHtml(related, pathname);
   if (!html) return response;
   return new HTMLRewriter()
     .on("#article-body", new AppendHtmlHandler(html))
