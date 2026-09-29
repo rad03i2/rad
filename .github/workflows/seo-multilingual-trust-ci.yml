@@ -55,24 +55,54 @@ jobs:
       - name: Audit deployed indexability
         run: python automation/forum/audit_deployed_sitemap.py
       - name: Verify multilingual trust output
-        shell: bash
         run: |
-          for page in about contact editorial-policy corrections ai-policy; do
-            test -f "dist/mikhbar/en/\${page}/index.html"
-            grep -Fq "rel=\"canonical\" href=\"https://mikhbar.website/en/\${page}/\"" "dist/mikhbar/en/\${page}/index.html"
-            grep -Fq "hreflang=\"ar\"" "dist/mikhbar/en/\${page}/index.html"
-            grep -Fq "hreflang=\"en\"" "dist/mikhbar/en/\${page}/index.html"
-            grep -q "https://mikhbar.website/en/\${page}/" dist/mikhbar/sitemap.xml
-          done
-          test -f dist/mikhbar/en/authors/radwan-abdulhadi/index.html
-          grep -q 'https://mikhbar.website/en/authors/radwan-abdulhadi/' dist/mikhbar/sitemap.xml
-          grep -Fq 'href="/en/about/"' dist/mikhbar/en/index.html
-          grep -Fq 'href="/en/editorial-policy/"' dist/mikhbar/en/index.html
-          grep -Fq 'href="/en/contact/"' dist/mikhbar/en/index.html
-          grep -Fq 'href="/about/"' dist/mikhbar/about/index.html
-          if grep -q 'RDWAN Tech' dist/mikhbar/en/index.html dist/mikhbar/en/ai/index.html; then
-            echo 'Legacy publication identity remains in English locale output' >&2
-            exit 1
-          fi
+          python - <<'PY'
+          from pathlib import Path
+          errors = []
+          root = Path("dist/mikhbar")
+          for page in ("about", "contact", "editorial-policy", "corrections", "ai-policy"):
+              p = root / "en" / page / "index.html"
+              if not p.exists():
+                  errors.append(f"missing {p}")
+                  continue
+              text = p.read_text(encoding="utf-8")
+              checks = {
+                  "canonical": f'rel="canonical" href="https://mikhbar.website/en/{page}/"',
+                  "hreflang ar": 'hreflang="ar"',
+                  "hreflang en": 'hreflang="en"',
+              }
+              for name, needle in checks.items():
+                  if needle not in text:
+                      errors.append(f"{p}: missing {name}")
+              sitemap = (root / "sitemap.xml").read_text(encoding="utf-8")
+              if f"https://mikhbar.website/en/{page}/" not in sitemap:
+                  errors.append(f"sitemap missing /en/{page}/")
+
+          author = root / "en" / "authors" / "radwan-abdulhadi" / "index.html"
+          if not author.exists():
+              errors.append("missing English author profile")
+          sitemap = (root / "sitemap.xml").read_text(encoding="utf-8")
+          if "https://mikhbar.website/en/authors/radwan-abdulhadi/" not in sitemap:
+              errors.append("sitemap missing English author profile")
+
+          en_home = (root / "en" / "index.html").read_text(encoding="utf-8")
+          for href in ("/en/about/", "/en/editorial-policy/", "/en/contact/"):
+              if f'href="{href}"' not in en_home:
+                  errors.append(f"English homepage missing {href}")
+
+          ar_about = (root / "about" / "index.html").read_text(encoding="utf-8")
+          if 'href="/about/"' not in ar_about:
+              errors.append("Arabic About page lost its self/internal About link")
+
+          for p in (root / "en" / "index.html", root / "en" / "ai" / "index.html"):
+              if "RDWAN Tech" in p.read_text(encoding="utf-8"):
+                  errors.append(f"legacy publication identity remains in {p}")
+
+          if errors:
+              for error in errors:
+                  print("ERROR:", error)
+              raise SystemExit(1)
+          print("Multilingual trust output verification passed")
+          PY
       - name: Validate Worker bundle
         run: npx --yes wrangler@latest deploy --dry-run --config cloudflare/mikhbar-site/wrangler.preview.toml
