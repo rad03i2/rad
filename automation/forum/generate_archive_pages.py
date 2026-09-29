@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from collections import defaultdict
 from datetime import datetime
 from html import escape
@@ -314,6 +315,54 @@ def category_archive_page(locale: str, slug: str, posts: list[dict]) -> str:
 <script src="/forum.js" defer></script></body></html>'''
 
 
+
+def sync_category_archive_link(locale: str, slug: str, enabled: bool) -> None:
+    """Keep the topic hub connected to its generated category archive.
+
+    Production workflows enhance existing hub HTML rather than rebuilding every
+    locale page, so the archive generator owns this link as well as the archive.
+    """
+    hub = FORUM / locale / slug / "index.html"
+    if not hub.exists():
+        return
+
+    text = hub.read_text(encoding="utf-8")
+    pattern = re.compile(
+        r'<p class="rt-topic-archive" data-category-archive-link-block="true">.*?</p>',
+        re.S,
+    )
+    updated = pattern.sub("", text)
+
+    if enabled:
+        label = "كل أخبار القسم" if locale == "ar" else "Browse full section archive"
+        block = (
+            '<p class="rt-topic-archive" data-category-archive-link-block="true">'
+            f'<a data-category-archive-link="true" href="./archive/">{label}</a></p>'
+        )
+
+        topic_marker = 'data-topic-hub="'
+        start = updated.find(topic_marker)
+        inserted = False
+        if start >= 0:
+            end = updated.find("</div></section>", start)
+            if end >= 0:
+                updated = updated[:end] + block + updated[end:]
+                inserted = True
+
+        if not inserted:
+            toolbar = '<div class="rt-toolbar">'
+            pos = updated.find(toolbar)
+            if pos >= 0:
+                updated = updated[:pos] + block + updated[pos:]
+                inserted = True
+
+        if not inserted:
+            raise RuntimeError(f"Could not add category archive link to {hub}")
+
+    if updated != text:
+        hub.write_text(updated, encoding="utf-8")
+
+
 def main() -> int:
     total = 0
     category_pages = 0
@@ -331,9 +380,11 @@ def main() -> int:
             if len(rows) < CATEGORY_ARCHIVE_MIN_STORIES:
                 if category_target.exists():
                     category_target.unlink()
+                sync_category_archive_link(locale, slug, False)
                 continue
             category_target.parent.mkdir(parents=True, exist_ok=True)
             category_target.write_text(category_archive_page(locale, slug, rows), encoding="utf-8")
+            sync_category_archive_link(locale, slug, True)
             category_pages += 1
             print(
                 f"Mikhbar category archive generated: locale={locale} category={slug} "
