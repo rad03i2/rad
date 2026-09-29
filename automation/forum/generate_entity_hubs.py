@@ -682,6 +682,7 @@ def manifest_payload(entities: dict[str, dict]) -> dict:
                 "slug": slug,
                 "name": entity["name"],
                 "storyCount": entity["storyCount"],
+                "storyIds": entity["storyIds"],
                 "categories": entity["categories"],
                 "pillars": entity["pillars"],
                 "related": entity["related"],
