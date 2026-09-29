@@ -7,7 +7,7 @@ const cases = [
   ["https://rdwan.dev/forum/", "https://mikhbar.website/ar/"],
   ["https://rdwan.dev/forum/ar/ai/example/", "https://mikhbar.website/ar/ai/example/"],
   ["https://rdwan.dev/forum/en/security/example/?ref=old", "https://mikhbar.website/en/security/example/?ref=old"],
-  ["https://www.rdwan.dev/forum/", "https://mikhbar.website/"],
+  ["https://www.rdwan.dev/forum/", "https://mikhbar.website/ar/"],
   ["https://www.rdwan.dev/forum/en/ai/example/", "https://mikhbar.website/en/ai/example/"],
 ];
 
