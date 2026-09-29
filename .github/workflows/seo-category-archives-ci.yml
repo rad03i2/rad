@@ -93,8 +93,8 @@ jobs:
         run: |
           for locale in ar en; do
             for category in ai robotics apps computers; do
-              test -f "dist/mikhbar/\${locale}/\${category}/archive/index.html"
-              grep -q 'data-category-archive="true"' "dist/mikhbar/\${locale}/\${category}/archive/index.html"
+              test -f "dist/mikhbar/${locale}/${category}/archive/index.html"
+              grep -q 'data-category-archive="true"' "dist/mikhbar/${locale}/${category}/archive/index.html"
             done
           done
       - name: Validate Worker bundle
