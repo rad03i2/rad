@@ -47,6 +47,8 @@ jobs:
           node --check forum/article/article.js
           node --check cloudflare/mikhbar-site/src/article.js
           node --check cloudflare/mikhbar-site/src/index.js
+      - name: Test Mikhbar crawl-link selection
+        run: node --test cloudflare/mikhbar-site/tests/*.test.mjs
       - name: Rebuild dynamic article map
         run: python automation/forum/build_article_map.py
       - name: Audit JSON coverage
