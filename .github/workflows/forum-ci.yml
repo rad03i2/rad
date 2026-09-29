@@ -6,12 +6,16 @@ on:
     branches: [main]
     paths:
       - 'automation/forum/**'
+      - 'automation/external-scheduler/cloudflare/**'
       - 'forum/article/**'
       - 'forum/article-map.json'
       - 'cloudflare/mikhbar-site/**'
       - '.github/workflows/forum-collector.yml'
       - '.github/workflows/forum-publisher-backup.yml'
       - '.github/workflows/forum-ci.yml'
+      - '.github/workflows/mikhbar-publisher-clock.yml'
+      - '.github/workflows/mikhbar-publisher-watchdog.yml'
+      - '.github/workflows/deploy-cloudflare-scheduler.yml'
 
 permissions:
   contents: read
@@ -68,6 +72,8 @@ jobs:
           grep -q '## Evergreen technology guides' forum/llms.txt
       - name: Run forum automation tests
         run: python -m unittest discover -s automation/forum/tests -v
+      - name: Test external scheduler
+        run: node --test automation/external-scheduler/cloudflare/tests/*.test.mjs
       - name: Build Cloudflare static assets
         run: python cloudflare/mikhbar-site/build.py
       - name: Audit deployed sitemap completeness

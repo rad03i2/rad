@@ -13,7 +13,7 @@ The deployment workflow expects these GitHub Actions repository secrets:
 
 ## Deployment
 
-Run the GitHub Actions workflow **Deploy Mikhbar External Scheduler** after the four secrets exist. The workflow deploys the Worker, installs its secrets, and attaches the cron trigger from `wrangler.toml`.
+Run the GitHub Actions workflow **Deploy Mikhbar External Scheduler** after the required secrets exist. Updates to this scheduler also deploy automatically from `main`. The workflow tests the Worker, installs its secrets, attaches the cron trigger from `wrangler.toml`, verifies health, and tests an authenticated publisher dispatch. The manual trigger key is optional.
 
 ## Schedule
 
@@ -23,8 +23,8 @@ Cloudflare wakes the publisher every five minutes using:
 */5 * * * *
 ```
 
-The Worker calls GitHub `workflow_dispatch` for `.github/workflows/forum-collector.yml` on `main`. Frequent wakeups do not create duplicate posts because the repository publisher enforces the 20-minute publication boundary and shared concurrency group.
+The Worker calls GitHub `workflow_dispatch` for `.github/workflows/forum-collector.yml` on `main`. It checks both the primary and backup publishers before dispatching, and skips the wakeup when either is active. The repository publisher enforces a minimum 20-minute gap and a shared concurrency group. Publication normally follows the due boundary on the next wakeup, plus GitHub runner and deployment time; cron is not a guarantee of exact-to-the-second delivery. Drafts still must pass verification and quality checks.
 
 ## Health
 
-After deployment, `GET /health` returns the scheduler target and cadence. `POST /trigger` is available only with `Authorization: Bearer <RDWAN_SCHEDULER_MANUAL_KEY>`.
+After deployment, `GET /health` returns the scheduler target, wakeup cadence and 20-minute publication minimum. It reports `ok: false` if the dispatch token is missing. `POST /trigger` is available only with `Authorization: Bearer <RDWAN_SCHEDULER_MANUAL_KEY>`. GitHub API failures reject the scheduled event and appear in Cloudflare logs.

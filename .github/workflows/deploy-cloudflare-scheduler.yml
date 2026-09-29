@@ -1,7 +1,16 @@
-name: Deploy RDWAN Tech External Scheduler
+name: Deploy Mikhbar External Scheduler
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - automation/external-scheduler/cloudflare/**
+      - .github/workflows/deploy-cloudflare-scheduler.yml
+
+concurrency:
+  group: mikhbar-external-scheduler-deploy
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -39,8 +48,25 @@ jobs:
       - name: Install Wrangler
         run: npm install --no-save wrangler@latest
 
+      - name: Test external scheduler
+        run: node --test tests/*.test.mjs
+
       - name: Deploy Worker and cron trigger
-        run: npx wrangler deploy
+        id: worker
+        shell: bash
+        run: |
+          npx wrangler deploy | tee /tmp/mikhbar-scheduler-deploy.log
+          WORKER_URL="$(python - <<'PYCODE'
+          import re
+          from pathlib import Path
+          text = Path('/tmp/mikhbar-scheduler-deploy.log').read_text()
+          match = re.search(r'https://rdwan-tech-publisher-wakeup[^\s]*\.workers\.dev', text)
+          if not match:
+              raise SystemExit('Worker URL missing from deployment output')
+          print(match.group(0))
+          PYCODE
+          )"
+          echo "url=$WORKER_URL" >> "$GITHUB_OUTPUT"
 
       - name: Install GitHub dispatch token in Worker
         shell: bash
@@ -61,3 +87,22 @@ jobs:
 
       - name: Confirm deployment metadata
         run: npx wrangler deployments list
+
+      - name: Verify configured Worker and authenticated GitHub dispatch
+        shell: bash
+        env:
+          WORKER_URL: ${{ steps.worker.outputs.url }}
+          GH_TOKEN: ${{ secrets.RDWAN_SCHEDULER_GITHUB_TOKEN }}
+        run: |
+          curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "$WORKER_URL/health" -o /tmp/mikhbar-scheduler-health.json
+          python - <<'PYCODE'
+          import json
+          from pathlib import Path
+          health = json.loads(Path('/tmp/mikhbar-scheduler-health.json').read_text())
+          assert health.get('ok') is True, health
+          assert health.get('schedule') == '*/5 * * * *', health
+          assert health.get('publication_minimum_minutes') == 20, health
+          print('External scheduler health and configuration verified.')
+          PYCODE
+          gh api --method GET repos/rad03i2/rad/actions/workflows/forum-collector.yml/runs -f per_page=1 > /dev/null
+          gh workflow run forum-collector.yml --ref main -f trigger=external-scheduler-deployment-check

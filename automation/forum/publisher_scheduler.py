@@ -295,6 +295,11 @@ def main() -> int:
             save_json(PREPARED_PATH, {"status": "empty", "cleared_at": now_iso(), "reason": "invalid_or_stale"})
         prepared = _prepare_next(settings, queue_doc, history, now, target)
 
+    # Drafting can cross the publication boundary. Recheck the current time
+    # instead of skipping a now-due story until another scheduled run arrives.
+    now = datetime.now(publisher.TZ)
+    due = _is_due(last, now, minimum_gap)
+
     if force_publish and prepared:
         due = True
         print("20-minute pipeline: one-time immediate publication requested.")

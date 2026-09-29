@@ -60,11 +60,11 @@ class PublicationContractTests(unittest.TestCase):
         self.assertIn('candidate.suffix.lower() != ".json"', builder)
         self.assertNotIn('index.html', builder)
 
-    def test_external_wakeup_matches_twenty_minute_publication_clock(self) -> None:
+    def test_external_wakeup_prepares_before_twenty_minute_publication_boundary(self) -> None:
         wrangler = self._read("automation/external-scheduler/cloudflare/wrangler.toml")
         worker = self._read("automation/external-scheduler/cloudflare/src/index.js")
-        self.assertIn('crons = ["2,22,42 * * * *"]', wrangler)
-        self.assertIn('const CRON = "2,22,42 * * * *";', worker)
+        self.assertIn('crons = ["*/5 * * * *"]', wrangler)
+        self.assertIn('const CRON = "*/5 * * * *";', worker)
         self.assertIn('inputs: { trigger: "external-20m" }', worker)
         self.assertIn("publication_cadence_source", worker)
 
