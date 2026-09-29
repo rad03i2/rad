@@ -186,8 +186,8 @@ def _home_page(locale: str, posts: list[dict]) -> str:
     site_name = "مِخبار" if locale == "ar" else "Mikhbar"
     title = "مِخبار (مخبار) — أخبار التقنية والذكاء الاصطناعي" if locale == "ar" else "Mikhbar — Technology News, AI, Robotics & Automation"
     desc = "مِخبار (Mikhbar، ويُكتب مخبار دون تشكيل) منصة تقنية مستقلة تقدم أخبارًا وشروحات موثقة عن الذكاء الاصطناعي والأمن السيبراني والروبوتات والأتمتة." if locale == "ar" else "Verified technology news in English covering AI, robotics, automation, mobile, computing, software and the web, with sources and continuous updates."
-    featured = next((p for p in posts if p.get("featured")), posts[0] if posts else {})
-    others = [p for p in posts if p.get("id") != featured.get("id")][:3]
+    featured = posts[0] if posts else {}
+    others = posts[1:4] if posts else []
     lead_url = escape(str(featured.get("url") or "#latest"), quote=True)
     lead_img = str(featured.get("image") or (featured.get("images") or {}).get("hero") or "/assets/social/home.jpg")
     lead_title = escape(str(featured.get("title") or ui["latest"]))
@@ -198,17 +198,23 @@ def _home_page(locale: str, posts: list[dict]) -> str:
     now = "".join(_now_item(p, i + 1) for i, p in enumerate(others))
     topics = "".join(f'<a class="rt-category-box" href="./{slug}/"><span>{i:02d} · {slug.upper()}</span><h3>{escape(CATEGORIES[slug][locale][0])}</h3><p>{escape(CATEGORIES[slug][locale][1])}</p></a>' for i, slug in enumerate(("ai","robotics","automation","mobile","computers","apps","web","social","security"), 1))
     schema = _schemas(locale, f"/forum/{locale}/", posts, title)
+    carousel_count = max(1, min(20, len(posts)))
+    carousel_label = "التنقل بين آخر الأخبار" if locale == "ar" else "Navigate the latest stories"
+    prev_label = "الخبر السابق" if locale == "ar" else "Previous story"
+    next_label = "الخبر التالي" if locale == "ar" else "Next story"
+    prev_icon = "→" if locale == "ar" else "←"
+    next_icon = "←" if locale == "ar" else "→"
     return f'''<!DOCTYPE html><html lang="{locale}" dir="{ui['dir']}"><head>{_head(locale, f'/forum/{locale}/', title, desc, lead_img)}
-<link rel="stylesheet" href="../../styles.css"><link rel="stylesheet" href="../forum.css?v=20260930-lead1"><link rel="stylesheet" href="../forum-media.css?v=20260930-lead2"><link rel="stylesheet" href="../home-compact.css?v=20260930-final4"><link rel="icon" type="image/png" sizes="1024x1024" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon-large.png?v=20260922-tab4"><link rel="apple-touch-icon" href="/assets/brand/mikhbar/06-web-ready/favicon/apple-touch-icon.png"><link rel="manifest" href="/assets/brand/mikhbar/06-web-ready/favicon/site.webmanifest"><script type="application/ld+json">{schema}</script></head>
+<link rel="stylesheet" href="../../styles.css"><link rel="stylesheet" href="../forum.css?v=20260930-lead1"><link rel="stylesheet" href="../forum-media.css?v=20260930-lead2"><link rel="stylesheet" href="../home-compact.css?v=20260930-carousel1"><link rel="icon" type="image/png" sizes="1024x1024" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon-large.png?v=20260922-tab4"><link rel="apple-touch-icon" href="/assets/brand/mikhbar/06-web-ready/favicon/apple-touch-icon.png"><link rel="manifest" href="/assets/brand/mikhbar/06-web-ready/favicon/site.webmanifest"><script type="application/ld+json">{schema}</script></head>
 <body class="rt-locale-{locale} rt-home" data-locale="{locale}">{_header(locale,2)}<main class="rt-main" id="main">
 <nav class="rt-categories" id="sections" aria-label="Sections"><div class="rt-shell rt-category-scroll">{_category_nav(locale)}</div></nav><div class="rt-shell">
-<section class="rt-hero" aria-label="Top content"><a class="rt-lead" id="rtLead" href="{lead_url}"><img class="rt-lead-media" id="rtLeadImage" src="{escape(lead_img, quote=True)}" alt="{escape(str(featured.get('title') or site_name), quote=True)}" width="1600" height="900" fetchpriority="high" decoding="async"><span class="rt-label" id="rtLeadCategory">{lead_category}</span><h1 id="rtLeadTitle">{lead_title}</h1><p id="rtLeadExcerpt">{lead_excerpt}</p><div class="rt-story-meta"><span id="rtLeadDate">{lead_date}</span><span id="rtLeadRead">{lead_read}</span><span>Radwan Abdulhadi</span></div></a>
+<section class="rt-hero" aria-label="Top content"><div class="rt-lead-carousel" id="rtLeadCarousel"><a class="rt-lead" id="rtLead" href="{lead_url}"><img class="rt-lead-media" id="rtLeadImage" src="{escape(lead_img, quote=True)}" alt="{escape(str(featured.get('title') or site_name), quote=True)}" width="1600" height="900" fetchpriority="high" decoding="async"><span class="rt-label" id="rtLeadCategory">{lead_category}</span><h1 id="rtLeadTitle">{lead_title}</h1><p id="rtLeadExcerpt">{lead_excerpt}</p><div class="rt-story-meta"><span id="rtLeadDate">{lead_date}</span><span id="rtLeadRead">{lead_read}</span><span>Radwan Abdulhadi</span></div></a><div class="rt-lead-controls" aria-label="{carousel_label}"><button class="rt-lead-nav rt-lead-prev" id="rtLeadPrev" type="button" aria-label="{prev_label}"><span aria-hidden="true">{prev_icon}</span></button><span class="rt-lead-position" id="rtLeadPosition">1 / {carousel_count}</span><button class="rt-lead-nav rt-lead-next" id="rtLeadNext" type="button" aria-label="{next_label}"><span aria-hidden="true">{next_icon}</span></button></div></div>
 <aside class="rt-side"><section class="rt-side-panel" id="top-stories"><div class="rt-panel-head"><h2>{ui['important']}</h2><a href="#latest">{ui['allNews']}</a></div><div class="rt-now-list" id="rtNowList">{now}</div></section></aside></section>
 <div class="rt-toolbar"><label class="rt-search"><input id="rtSearch" type="search" autocomplete="off" placeholder="{ui['search']}" aria-label="{ui['search']}"></label><span class="rt-view-note">{ui['searchNote']}</span></div>
 <section class="rt-section" id="latest"><header class="rt-section-head"><div><h2>{ui['latest']}</h2><p>{ui['latestDesc']}</p></div><span class="rt-count" id="rtCount">{len(posts)} {ui['posts']}</span></header><div class="rt-feed" id="rtFeed">{feed}</div><div class="rt-feed-empty" id="rtEmpty" hidden><b>{ui['noResults']}</b><p>{ui['tryDifferent']}</p></div><button class="rt-load-more" id="rtLoadMore" type="button">{ui['more']}</button></section>
 <section class="rt-section"><header class="rt-section-head"><div><h2>{ui['topics']}</h2><p>{ui['topicsDesc']}</p></div></header><div class="rt-category-showcase">{topics}</div></section>
 <section class="rt-newsletter" id="newsletter"><div><h2>{ui['newsletter']}</h2><p>{ui['newsletterDesc']}</p></div><a href="https://omniform1.com/forms/v1/landingPage/6aa951449b0f973742e3f90d/6aa9b7a1f85082d5ccd3f79c">{ui['subscribe']}</a></section></div></main>
-{_footer(locale)}<script src="../forum.js?v=20260929-layout4" defer></script></body></html>'''
+{_footer(locale)}<script src="../forum.js?v=20260930-carousel1" defer></script></body></html>'''
 
 
 def _category_page(locale: str, slug: str, all_posts: list[dict]) -> str:
@@ -226,7 +232,7 @@ def _category_page(locale: str, slug: str, all_posts: list[dict]) -> str:
 <nav class="rt-categories" aria-label="Sections"><div class="rt-shell rt-category-scroll">{_category_nav(locale,'../',slug)}</div></nav><div class="rt-shell"><section class="rt-category-hero"><nav class="rt-breadcrumbs"><a href="../">{site_name}</a><span>›</span><span>{escape(label)}</span></nav><div class="rt-category-title"><span class="rt-label">{slug.upper()}</span><h1>{escape(label)}</h1><p>{escape(desc)}</p></div></section>
 <div class="rt-toolbar"><label class="rt-search"><input id="rtSearch" type="search" autocomplete="off" placeholder="{ui['search']}" aria-label="{ui['search']}"></label><span class="rt-view-note">{ui['searchNote']}</span></div>
 <section class="rt-section"><header class="rt-section-head"><div><h2>{ui['latest']}</h2><p>{escape(desc)}</p>{archive_link}</div><span class="rt-count" id="rtCount">{len(posts)} {ui['posts']}</span></header><div class="rt-feed" id="rtFeed">{feed}</div><div class="rt-feed-empty" id="rtEmpty" {'hidden' if posts else ''}><b>{ui['noResults']}</b><p>{ui['tryDifferent']}</p></div><button class="rt-load-more" id="rtLoadMore" type="button">{ui['more']}</button></section></div></main>
-{_footer(locale)}<script src="../../forum.js?v=20260929-layout4" defer></script></body></html>'''
+{_footer(locale)}<script src="../../forum.js?v=20260930-carousel1" defer></script></body></html>'''
 
 
 def _router_page(posts_ar: list[dict], posts_en: list[dict]) -> str:
