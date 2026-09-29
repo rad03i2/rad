@@ -5,6 +5,7 @@ import re
 import shutil
 import subprocess
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -178,6 +179,36 @@ def rewrite_output() -> tuple[int, int]:
             path.write_text(updated, encoding="utf-8")
             changed += 1
     return scanned, changed
+
+
+def prune_redirecting_root_from_sitemap() -> int:
+    """Keep only final canonical URLs in the production sitemap.
+
+    The public root performs language negotiation and redirects to /ar/ or /en/.
+    It remains the x-default hreflang target, but it should not be submitted as a
+    sitemap URL because sitemap entries should represent final indexable pages.
+    """
+    path = OUT / "sitemap.xml"
+    if not path.exists():
+        raise SystemExit("sitemap.xml is missing before production sitemap cleanup")
+
+    sitemap_ns = "http://www.sitemaps.org/schemas/sitemap/0.9"
+    ET.register_namespace("", sitemap_ns)
+    ET.register_namespace("xhtml", "http://www.w3.org/1999/xhtml")
+    ET.register_namespace("image", "http://www.google.com/schemas/sitemap-image/1.1")
+
+    tree = ET.parse(path)
+    root = tree.getroot()
+    removed = 0
+    for url_node in list(root.findall(f"{{{sitemap_ns}}}url")):
+        loc_node = url_node.find(f"{{{sitemap_ns}}}loc")
+        loc = str(loc_node.text or "").strip() if loc_node is not None else ""
+        if loc == f"{PUBLIC_ORIGIN}/":
+            root.remove(url_node)
+            removed += 1
+
+    tree.write(path, encoding="utf-8", xml_declaration=True)
+    return removed
 
 
 def prune_dynamic_article_html() -> int:
@@ -397,6 +428,7 @@ def main() -> int:
         shutil.copytree(WELL_KNOWN, OUT / ".well-known", dirs_exist_ok=True)
 
     scanned, changed = rewrite_output()
+    sitemap_redirects_pruned = prune_redirecting_root_from_sitemap()
     pruned = prune_dynamic_article_html()
     oversized = prune_oversized_assets()
     write_platform_files()
@@ -404,8 +436,9 @@ def main() -> int:
     files = sum(1 for path in OUT.rglob("*") if path.is_file())
     print(
         f"Mikhbar Cloudflare build complete: files={files} text_scanned={scanned} "
-        f"text_rewritten={changed} static_article_dirs_pruned={pruned} "
-        f"oversized_assets_pruned={len(oversized)} output={OUT.relative_to(ROOT)}"
+        f"text_rewritten={changed} sitemap_redirects_pruned={sitemap_redirects_pruned} "
+        f"static_article_dirs_pruned={pruned} oversized_assets_pruned={len(oversized)} "
+        f"output={OUT.relative_to(ROOT)}"
     )
     for item in oversized:
         print(f"Pruned oversized source asset: {item}")

@@ -178,13 +178,25 @@ async function addRelatedStories(response, request, env, pathname) {
     .transform(response);
 }
 
-function withHeaders(response) {
+function shouldNoIndexTechnicalPath(pathname) {
+  const path = String(pathname || "").toLowerCase();
+  return path === "/healthz"
+    || path.endsWith(".json")
+    || /^\/feed(?:-(?:ar|en))?\.xml$/.test(path)
+    || /^\/[a-f0-9]{32}\.txt$/.test(path);
+}
+
+function withHeaders(response, pathname = "") {
   const headers = new Headers(response.headers);
   headers.set("X-Content-Type-Options", "nosniff");
   headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
   headers.set("X-Frame-Options", "SAMEORIGIN");
   headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+
+  if (shouldNoIndexTechnicalPath(pathname) || response.status >= 400) {
+    headers.set("X-Robots-Tag", "noindex, follow");
+  }
 
   const type = (headers.get("content-type") || "").toLowerCase();
   if (type.includes("text/html") || type.includes("xml") || type.includes("json")) {
@@ -219,11 +231,11 @@ export default {
           "Cache-Control": "private, no-store",
           "Vary": "Accept-Language",
         },
-      }));
+      }), url.pathname);
     }
 
     if (url.pathname === "/healthz") {
-      return Response.json({
+      return withHeaders(Response.json({
         ok: true,
         service: "mikhbar",
         canonicalHost: CANONICAL_HOST,
@@ -231,7 +243,7 @@ export default {
         now: new Date().toISOString(),
       }, {
         headers: { "Cache-Control": "no-store" },
-      });
+      }), url.pathname);
     }
 
     if (url.pathname === "/forum" || url.pathname.startsWith("/forum/")) {
@@ -250,7 +262,7 @@ export default {
       const article = await renderDynamicArticle(request, env, url.pathname);
       if (article) {
         const enriched = await addRelatedStories(article, request, env, url.pathname);
-        return withHeaders(enriched);
+        return withHeaders(enriched, url.pathname);
       }
     }
 
@@ -266,6 +278,6 @@ export default {
       }
     }
 
-    return withHeaders(response);
+    return withHeaders(response, url.pathname);
   },
 };
