@@ -1,0 +1,29 @@
+name: Temporary Legacy Redirect CI
+
+on:
+  push:
+    branches:
+      - seo/brand-entity-consolidation
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate redirect worker syntax and mapping
+        run: |
+          node --check cloudflare/legacy-forum-redirect/src/index.js
+          node cloudflare/legacy-forum-redirect/test.mjs
+      - name: Validate scoped Cloudflare routes
+        working-directory: cloudflare/legacy-forum-redirect
+        run: |
+          test "$(grep -Fc 'pattern = "rdwan.dev/forum*"' wrangler.toml)" -eq 1
+          test "$(grep -Fc 'pattern = "www.rdwan.dev/forum*"' wrangler.toml)" -eq 1
+          npx --yes wrangler@latest deploy --dry-run --config wrangler.toml
