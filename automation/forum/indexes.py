@@ -10,12 +10,12 @@ FORUM = ROOT / "forum"
 SITE = "https://rdwan.dev"
 CATEGORY_SLUGS = ["ai", "robotics", "automation", "mobile", "computers", "apps", "web", "social", "security", "announcements"]
 TRUST_PATHS = [
-    ("/forum/about/", "0.7"),
-    ("/forum/contact/", "0.7"),
-    ("/forum/editorial-policy/", "0.7"),
-    ("/forum/corrections/", "0.6"),
-    ("/forum/ai-policy/", "0.6"),
-    ("/forum/authors/radwan-abdulhadi/", "0.8"),
+    ("/forum/about/", "/forum/en/about/", "0.7"),
+    ("/forum/contact/", "/forum/en/contact/", "0.7"),
+    ("/forum/editorial-policy/", "/forum/en/editorial-policy/", "0.7"),
+    ("/forum/corrections/", "/forum/en/corrections/", "0.6"),
+    ("/forum/ai-policy/", "/forum/en/ai-policy/", "0.6"),
+    ("/forum/authors/radwan-abdulhadi/", "/forum/en/authors/radwan-abdulhadi/", "0.8"),
 ]
 
 
@@ -135,10 +135,12 @@ def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
 
     # Trust/policy pages are stable. Do not fabricate a fresh lastmod on every
     # publication cycle; omit it unless we have a real per-page modification date.
-    for path, priority in TRUST_PATHS:
-        lines.append(
-            f'  <url><loc>{SITE}{path}</loc><changefreq>monthly</changefreq><priority>{priority}</priority></url>'
-        )
+    for ar_path, en_path, priority in TRUST_PATHS:
+        alternates = _locale_links(ar_path, en_path, ar_path)
+        for path in (ar_path, en_path):
+            lines.append(
+                f'  <url><loc>{SITE}{path}</loc><changefreq>monthly</changefreq><priority>{priority}</priority>{alternates}</url>'
+            )
 
     seen = set()
     for _, posts in posts_by_locale.items():
@@ -201,12 +203,18 @@ def write_llms(posts_by_locale: dict[str, list[dict]], now: datetime) -> None:
         f"- Publication: {SITE}/forum/",
         f"- Arabic edition: {SITE}/forum/ar/",
         f"- English edition: {SITE}/forum/en/",
-        f"- About: {SITE}/forum/about/",
-        f"- Contact: {SITE}/forum/contact/",
-        f"- Author: {SITE}/forum/authors/radwan-abdulhadi/",
-        f"- Editorial policy: {SITE}/forum/editorial-policy/",
-        f"- Corrections policy: {SITE}/forum/corrections/",
-        f"- AI and automation policy: {SITE}/forum/ai-policy/",
+        f"- About (AR): {SITE}/forum/about/",
+        f"- About (EN): {SITE}/forum/en/about/",
+        f"- Contact (AR): {SITE}/forum/contact/",
+        f"- Contact (EN): {SITE}/forum/en/contact/",
+        f"- Author (AR): {SITE}/forum/authors/radwan-abdulhadi/",
+        f"- Author (EN): {SITE}/forum/en/authors/radwan-abdulhadi/",
+        f"- Editorial policy (AR): {SITE}/forum/editorial-policy/",
+        f"- Editorial policy (EN): {SITE}/forum/en/editorial-policy/",
+        f"- Corrections policy (AR): {SITE}/forum/corrections/",
+        f"- Corrections policy (EN): {SITE}/forum/en/corrections/",
+        f"- AI and automation policy (AR): {SITE}/forum/ai-policy/",
+        f"- AI and automation policy (EN): {SITE}/forum/en/ai-policy/",
         f"- Sitemap: {SITE}/forum/sitemap.xml",
         f"- News sitemap: {SITE}/forum/news-sitemap.xml",
         f"- Arabic RSS: {SITE}/forum/feed-ar.xml",
