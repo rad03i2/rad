@@ -116,6 +116,7 @@ def publisher_schema() -> dict:
         "name": "Mikhbar",
         "alternateName": ["مِخبار", "مخبار", "MIKHBAR"],
         "url": ORIGIN + "/",
+        "sameAs": ["https://github.com/rad03i2/rad", "https://rdwan.dev/mikhbar.html"],
         "logo": {"@type": "ImageObject", "url": LOGO},
         "publishingPrinciples": ORIGIN + "/editorial-policy/",
         "correctionsPolicy": ORIGIN + "/corrections/",
