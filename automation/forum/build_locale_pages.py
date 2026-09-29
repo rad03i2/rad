@@ -25,7 +25,7 @@ UI = {
     "ar": {
         "dir": "rtl", "home": "الرئيسية", "about": "عنّي", "projects": "المشاريع", "forum": "مِخبار",
         "coverage": "تغطية تقنية على مدار الساعة", "edition": "ARABIC EDITION",
-        "tagline": "أخبار وشروحات وتحليلات موثقة في التقنية والذكاء الاصطناعي والروبوتات والأتمتة والهواتف والحواسيب والبرمجيات.",
+        "tagline": "مِخبار (Mikhbar، ويُكتب مخبار دون تشكيل) منصة تقنية مستقلة للأخبار والشروحات والتحليلات الموثقة في التقنية والذكاء الاصطناعي والأمن السيبراني والروبوتات والأتمتة.",
         "important": "الأهم الآن", "allNews": "كل الأخبار", "explore": "استكشف بسرعة", "latest": "أحدث المنشورات",
         "latestDesc": "أحدث الأخبار التقنية المنشورة والمحدثة باستمرار.", "search": "ابحث في الأخبار والمواضيع والتقنيات...",
         "searchNote": "بحث فوري داخل المنشورات", "noResults": "لا توجد نتائج مطابقة", "tryDifferent": "جرّب عبارة بحث مختلفة أو استعرض أحد الأقسام التقنية.",
@@ -136,7 +136,7 @@ def _schemas(locale: str, path: str, posts: list[dict], page_name: str) -> str:
     alternate_names = [name for name in brand_aliases if name != site_name]
     item_list = [{"@type": "ListItem", "position": i + 1, "url": SITE + str(p.get("url") or ""), "name": str(p.get("title") or "")} for i, p in enumerate(posts[:20]) if p.get("url")]
     graph = [
-        {"@type": "NewsMediaOrganization", "@id": SITE + "/forum/#publisher", "name": site_name, "alternateName": alternate_names, "url": SITE + "/forum/", "logo": {"@type": "ImageObject", "url": SITE + "/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"}},
+        {"@type": "NewsMediaOrganization", "@id": SITE + "/forum/#publisher", "name": site_name, "alternateName": alternate_names, "url": SITE + "/forum/", "logo": {"@type": "ImageObject", "url": SITE + "/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"}, "description": "مِخبار (Mikhbar، مخبار دون تشكيل) منصة تقنية مستقلة بالعربية والإنجليزية." if locale == "ar" else "Mikhbar is an independent bilingual technology publication."},
         {"@type": "CollectionPage", "@id": SITE + path + "#page", "url": SITE + path, "name": page_name, "inLanguage": locale, "publisher": {"@id": SITE + "/forum/#publisher"}},
     ]
     if path in {"/forum/ar/", "/forum/en/"}:
@@ -148,6 +148,7 @@ def _schemas(locale: str, path: str, posts: list[dict], page_name: str) -> str:
             "alternateName": ["مِخبار", "مخبار", "MIKHBAR"],
             "inLanguage": ["ar", "en"],
             "publisher": {"@id": SITE + "/forum/#publisher"},
+            "description": "Mikhbar (مِخبار؛ مخبار دون تشكيل) is an independent bilingual technology publication.",
         })
     if item_list:
         graph.append({"@type": "ItemList", "itemListElement": item_list})
@@ -157,8 +158,8 @@ def _schemas(locale: str, path: str, posts: list[dict], page_name: str) -> str:
 def _home_page(locale: str, posts: list[dict]) -> str:
     ui = UI[locale]
     site_name = "مِخبار" if locale == "ar" else "Mikhbar"
-    title = "مِخبار — أخبار التقنية والذكاء الاصطناعي والروبوتات" if locale == "ar" else "Mikhbar — Technology News, AI, Robotics & Automation"
-    desc = "أخبار تقنية موثقة بالعربية عن الذكاء الاصطناعي والروبوتات والأتمتة والهواتف والحواسيب والبرامج، مع مصادر وصور وتحديثات مستمرة." if locale == "ar" else "Verified technology news in English covering AI, robotics, automation, mobile, computing, software and the web, with sources and continuous updates."
+    title = "مِخبار (مخبار) — أخبار التقنية والذكاء الاصطناعي" if locale == "ar" else "Mikhbar — Technology News, AI, Robotics & Automation"
+    desc = "مِخبار (Mikhbar، ويُكتب مخبار دون تشكيل) منصة تقنية مستقلة تقدم أخبارًا وشروحات موثقة عن الذكاء الاصطناعي والأمن السيبراني والروبوتات والأتمتة." if locale == "ar" else "Verified technology news in English covering AI, robotics, automation, mobile, computing, software and the web, with sources and continuous updates."
     featured = next((p for p in posts if p.get("featured")), posts[0] if posts else {})
     others = [p for p in posts if p.get("id") != featured.get("id")][:5]
     lead_url = escape(str(featured.get("url") or "#latest"), quote=True)
