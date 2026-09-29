@@ -26,6 +26,8 @@ let relatedLinks = 0;
 let semanticLinks = 0;
 let semanticArticles = 0;
 let crossCategoryLinks = 0;
+let contentBacked = 0;
+let entityBacked = 0;
 let duplicates = 0;
 let selfLinks = 0;
 let localeLeaks = 0;
@@ -36,6 +38,10 @@ for (const locale of ["ar", "en"]) {
     const route = publicRoute(post?.url);
     if (!/^\/(ar|en)\/[a-z0-9-]+\/[^/]+\/$/i.test(route)) continue;
     articles += 1;
+    if (post?.contentFile) {
+      contentBacked += 1;
+      if (Array.isArray(post?.entities) && post.entities.length) entityBacked += 1;
+    }
     const related = selectRelatedPosts(posts, route, 4);
     const seen = new Set();
     let hasSemantic = false;
@@ -62,15 +68,27 @@ for (const locale of ["ar", "en"]) {
 
 const coverage = articles ? semanticArticles / articles : 0;
 const averageSemantic = articles ? semanticLinks / articles : 0;
+const entityCoverage = contentBacked ? entityBacked / contentBacked : 0;
 
 console.log(
   "Mikhbar semantic link audit: " +
   `articles=${articles} related_links=${relatedLinks} semantic_links=${semanticLinks} ` +
   `semantic_articles=${semanticArticles} coverage=${(coverage * 100).toFixed(1)}% ` +
   `cross_category=${crossCategoryLinks} avg_semantic_per_article=${averageSemantic.toFixed(2)} ` +
+  `content_backed=${contentBacked} entity_backed=${entityBacked} entity_coverage=${(entityCoverage * 100).toFixed(1)}% ` +
   `self=${selfLinks} duplicates=${duplicates} locale_leaks=${localeLeaks}`
 );
 
-if (!articles || !relatedLinks || !semanticLinks || !crossCategoryLinks || selfLinks || duplicates || localeLeaks) {
-  process.exitCode = 1;
-}
+const qualityFailed = (
+  !articles
+  || !relatedLinks
+  || !semanticLinks
+  || !crossCategoryLinks
+  || coverage < 0.90
+  || averageSemantic < 2
+  || entityCoverage < 0.95
+  || selfLinks
+  || duplicates
+  || localeLeaks
+);
+if (qualityFailed) process.exitCode = 1;
