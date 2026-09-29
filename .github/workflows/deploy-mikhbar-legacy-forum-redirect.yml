@@ -48,3 +48,35 @@ jobs:
             exit 1
           fi
           npx --yes wrangler@latest deploy --config wrangler.toml
+
+      - name: Verify live legacy redirects
+        shell: bash
+        run: |
+          check_redirect() {
+            source_url="$1"
+            expected_location="$2"
+            headers_file="$(mktemp)"
+            status="$(curl -sS -o /dev/null -D "$headers_file" -w '%{http_code}' "$source_url")"
+            if [ "$status" != "308" ]; then
+              echo "::error::Expected 308 for $source_url but received $status"
+              cat "$headers_file"
+              exit 1
+            fi
+            location="$(awk 'BEGIN{IGNORECASE=1} /^location:/ {sub(/^[^:]+:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit}' "$headers_file")"
+            if [ "$location" != "$expected_location" ]; then
+              echo "::error::Unexpected redirect for $source_url: $location"
+              cat "$headers_file"
+              exit 1
+            fi
+            grep -Eiq '^x-mikhbar-migration:[[:space:]]*legacy-forum' "$headers_file"
+          }
+
+          check_redirect "https://rdwan.dev/forum/" "https://mikhbar.website/ar/"
+          check_redirect "https://rdwan.dev/forum/en/" "https://mikhbar.website/en/"
+          check_redirect "https://rdwan.dev/forum/about/" "https://mikhbar.website/about/"
+
+          root_status="$(curl -sS -o /dev/null -w '%{http_code}' https://rdwan.dev/)"
+          if [ "$root_status" = "308" ]; then
+            echo "::error::rdwan.dev homepage must not be captured by the Mikhbar migration Worker."
+            exit 1
+          fi
