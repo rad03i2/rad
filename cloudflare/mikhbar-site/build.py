@@ -22,6 +22,11 @@ CANONICAL_SCRIPT_RE = re.compile(
     r'<script\s+id=["\']canonical-host-redirect["\'][^>]*>.*?</script>',
     re.I | re.S,
 )
+
+SKIP_LINK_RE = re.compile(
+    r'<a\b(?=[^>]*\bclass=["\'][^"\']*\bskip-link\b[^"\']*["\'])[^>]*>.*?</a>\s*',
+    re.I | re.S,
+)
 CANONICAL_SCRIPT = (
     '<script id="canonical-host-redirect">'
     "(()=>{const h=location.hostname.toLowerCase();"
@@ -118,18 +123,10 @@ ROOT_INDEX_HTML = f'''<!doctype html>
 <meta name="twitter:title" content="Mikhbar | مِخبار">
 <meta name="twitter:description" content="Independent technology news and analysis in Arabic and English.">
 <meta name="twitter:image" content="{PUBLIC_ORIGIN}/assets/social/home.jpg">
+<script>(()=>{{document.documentElement.hidden=true;const lang=String((navigator.languages&&navigator.languages[0])||navigator.language||'en').toLowerCase();const edition=(lang==='ar'||lang.startsWith('ar-'))?'ar':'en';location.replace('/'+edition+'/'+location.search+location.hash)}})();</script>
 <script type="application/ld+json">{{"@context":"https://schema.org","@graph":[{{"@type":"WebSite","@id":"{PUBLIC_ORIGIN}/#website","url":"{PUBLIC_ORIGIN}/","name":"Mikhbar","alternateName":["مِخبار","mikhbar.website"],"inLanguage":["ar","en"],"publisher":{{"@id":"{PUBLIC_ORIGIN}/#publisher"}}}},{{"@type":"NewsMediaOrganization","@id":"{PUBLIC_ORIGIN}/#publisher","name":"Mikhbar","alternateName":"مِخبار","url":"{PUBLIC_ORIGIN}/","logo":{{"@type":"ImageObject","url":"{PUBLIC_ORIGIN}/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"}},"description":"Independent technology news and analysis in Arabic and English.","publishingPrinciples":"{PUBLIC_ORIGIN}/editorial-policy/"}}]}}</script>
-<style>html{{color-scheme:light}}body{{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f7f7f5;color:#151515;min-height:100vh;display:grid;place-items:center}}main{{width:min(760px,calc(100% - 40px));text-align:center}}img{{width:84px;height:84px;object-fit:contain}}h1{{font-size:clamp(2.2rem,7vw,4.5rem);margin:.45rem 0 .3rem}}p{{font-size:1.05rem;line-height:1.8;color:#565656;max-width:650px;margin:.4rem auto 1.5rem}}nav{{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}}a{{display:inline-flex;align-items:center;justify-content:center;min-width:150px;padding:13px 20px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid #d8d8d4;color:#151515;background:#fff}}a:first-child{{background:#151515;color:#fff;border-color:#151515}}small{{display:block;margin-top:1.4rem;color:#777}}</style>
 </head>
-<body>
-<main>
-<img src="/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png" width="84" height="84" alt="Mikhbar logo">
-<h1>Mikhbar <span lang="ar" dir="rtl">| مِخبار</span></h1>
-<p>Independent technology news and analysis in Arabic and English.<br><span lang="ar" dir="rtl">منصة تقنية مستقلة للأخبار والتحليلات بالعربية والإنجليزية.</span></p>
-<nav aria-label="Choose edition"><a href="/ar/" lang="ar" dir="rtl">النسخة العربية</a><a href="/en/" lang="en">English Edition</a></nav>
-<small>mikhbar.website</small>
-</main>
-</body>
+<body></body>
 </html>'''
 
 
@@ -160,6 +157,7 @@ def rewrite_text(text: str, suffix: str, relative_path: str) -> str:
 
     if suffix == ".html":
         text = CANONICAL_SCRIPT_RE.sub(CANONICAL_SCRIPT, text)
+        text = SKIP_LINK_RE.sub("", text)
     return text
 
 
@@ -266,8 +264,12 @@ def validate_root_search_identity() -> None:
     missing = [needle for needle in required if needle not in text]
     if missing:
         raise SystemExit("Root search identity is incomplete: " + ", ".join(missing))
-    if "navigator.language" in text or "location.replace" in text:
-        raise SystemExit("Root x-default page must remain crawlable and must not auto-redirect by browser language")
+    if "navigator.language" not in text or "location.replace" not in text:
+        raise SystemExit("Root language handoff must auto-detect the browser language")
+    forbidden_chooser = ("Choose edition", "النسخة العربية", ">English Edition<")
+    leaked = [needle for needle in forbidden_chooser if needle in text]
+    if leaked:
+        raise SystemExit("Legacy language chooser remains in root page: " + ", ".join(leaked))
 
 
 def validate_output() -> None:
@@ -336,8 +338,8 @@ def validate_output() -> None:
 
 
 def write_platform_files() -> None:
-    # Keep / as a stable x-default landing page. The two language editions are
-    # linked explicitly instead of being selected with a client-side redirect.
+    # / is a metadata-preserving fallback handoff. Production requests are
+    # redirected by the Worker using Accept-Language before this HTML is served.
     (OUT / "index.html").write_text(ROOT_INDEX_HTML, encoding="utf-8")
     (OUT / "robots.txt").write_text(
         "User-agent: *\nAllow: /\n\n"
