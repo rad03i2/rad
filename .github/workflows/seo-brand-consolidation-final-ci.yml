@@ -1,0 +1,28 @@
+name: Temporary Final Brand Consolidation CI
+
+on:
+  push:
+    branches:
+      - seo/brand-consolidation-final
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Test redirect mapping
+        run: node cloudflare/legacy-forum-redirect/test.mjs
+      - name: Validate scoped routes and Worker bundle
+        working-directory: cloudflare/legacy-forum-redirect
+        run: |
+          grep -Fq 'pattern = "rdwan.dev/forum*"' wrangler.toml
+          grep -Fq 'pattern = "www.rdwan.dev/forum*"' wrangler.toml
+          node --check src/index.js
+          npx --yes wrangler@latest deploy --dry-run --config wrangler.toml
