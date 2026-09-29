@@ -280,6 +280,7 @@
     $('footer-copy-brand').textContent = ui.site;
     $('footer-description').textContent = ui.footerDesc;
     $('footer-publication-title').textContent = ui.publication;
+    if ($('footer-archive')) { $('footer-archive').textContent = locale === 'ar' ? 'الأرشيف' : 'Archive'; $('footer-archive').href = `${root}/${locale}/archive/`; }
     $('footer-about').textContent = ui.about; $('footer-about').href = `${trustBase}/about/`;
     $('footer-editorial').textContent = ui.editorial; $('footer-editorial').href = `${trustBase}/editorial-policy/`;
     $('footer-trust-title').textContent = ui.trust;
