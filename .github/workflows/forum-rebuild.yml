@@ -54,6 +54,9 @@ jobs:
       - name: Build Arabic and English publication pages
         run: python automation/forum/build_locale_pages.py
 
+      - name: Generate full bilingual Mikhbar news archives
+        run: python automation/forum/generate_archive_pages.py
+
       - name: Rebuild all structured articles
         run: python automation/forum/rebuild_articles.py
 
@@ -65,6 +68,9 @@ jobs:
 
       - name: Normalize canonical host across HTML
         run: python automation/seo/normalize_html.py
+
+      - name: Audit rebuilt Mikhbar crawl graph
+        run: python automation/forum/audit_crawl_graph.py
 
       - name: Commit rebuilt publication
         shell: bash
