@@ -133,6 +133,10 @@ jobs:
             exit 1
           fi
           grep -q 'https://mikhbar.website' dist/mikhbar/sitemap.xml
+          if grep -q '<loc>https://mikhbar.website/</loc>' dist/mikhbar/sitemap.xml; then
+            echo 'Redirecting root URL must not be submitted in the production sitemap.' >&2
+            exit 1
+          fi
 
       - name: Select deployment target
         id: target
@@ -179,6 +183,20 @@ jobs:
           fi
 
           curl -fsS --retry 5 --retry-delay 2 --retry-all-errors https://mikhbar.website/healthz | grep -q '"ok":true'
+
+          curl -fsS -D /tmp/mikhbar-healthz.headers -o /dev/null --retry 5 --retry-delay 2 --retry-all-errors https://mikhbar.website/healthz
+          grep -Eiq '^x-robots-tag:[[:space:]]*noindex,[[:space:]]*follow' /tmp/mikhbar-healthz.headers
+
+          for technical_url in feed-ar.xml feed-en.xml posts-ar.json posts-en.json article-map.json; do
+            curl -fsS -D "/tmp/mikhbar-${technical_url//\//-}.headers" -o /dev/null --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website/${technical_url}"
+            grep -Eiq '^x-robots-tag:[[:space:]]*noindex,[[:space:]]*follow' "/tmp/mikhbar-${technical_url//\//-}.headers"
+          done
+
+          curl -fsS -D /tmp/mikhbar-ar-home.headers -o /dev/null --retry 5 --retry-delay 2 --retry-all-errors https://mikhbar.website/ar/
+          if grep -Eiq '^x-robots-tag:.*noindex' /tmp/mikhbar-ar-home.headers; then
+            echo 'Indexable Arabic homepage received an X-Robots-Tag noindex header.' >&2
+            exit 1
+          fi
 
           for hub in ai security automation robotics apps web mobile computers social; do
             curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website/en/${hub}/" -o "/tmp/mikhbar-hub-${hub}.html"
