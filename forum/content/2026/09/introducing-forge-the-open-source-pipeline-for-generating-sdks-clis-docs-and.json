@@ -1,0 +1,385 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "dca4381835d8e7ce4740",
+  "slug": "introducing-forge-the-open-source-pipeline-for-generating-sdks-clis-docs-and",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/introducing-forge-the-open-source-pipeline-for-generating-sdks-clis-docs-and/",
+    "en": "/forum/en/web/introducing-forge-the-open-source-pipeline-for-generating-sdks-clis-docs-and/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cloudflare تطلق Forge: خط أنابيب مفتوح المصدر لتوليد أدوات المطورين",
+      "description": "أعلنت Cloudflare عن Forge، أداة مفتوحة المصدر تعمل ضمن بيئات CI لتوليد SDKs وأوامر CLI والتوثيق تلقائياً من تعريفات API، مما يضمن مزامنة مستمرة ودقيقة لأدوات المطورين مع تحديثات المنصة.",
+      "deck": "تسعى Cloudflare إلى تبسيط إدارة واجهات برمجية ضخمة عبر Forge، نظام توليد مرن يحوّل التعريفات التقنية إلى أدوات جاهزة للاستخدام.",
+      "summaryBullets": [
+        "Forge هو خط أنابيب مفتوح المصدر قابل للتخصيص يعمل في بيئات التكامل المستمر (CI) لتوليد SDKs وCLI والتوثيق.",
+        "يهدف النظام إلى تقليل العبء الإداري بين فرق التطوير وضمان عدم كسر خطوط التوليد عند إدخال تغييرات على الـ API.",
+        "يدعم Forge توليد مخرجات متقدمة مثل Cap'n Web و TanStack Query مباشرة من مواصفات OpenAPI.",
+        "يتيح النظام سلاسل تحويل (Chaining) حيث يمكن استخدام مخرجات أداة كمدخلات لأخرى، مما يمنح المطورين تحكماً كاملاً في العملية.",
+        "تخطط Cloudflare لاستخدام Forge لدعم إصدارات API جديدة دون كسر التوافق مع العملاء الحاليين، مع التركيز على Terraform."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق Forge كأداة مفتوحة المصدر",
+          "paragraphs": [
+            {
+              "text": "أعلنت Cloudflare رسمياً عن إطلاق Forge، وهو خط أنابيب توليد مفتوح المصدر وقابل للتوصيل (Pluggable) مصمم للعمل داخل بيئات التكامل المستمر (CI). تهدف هذه الأداة إلى توليد مجموعات أدوات المطورين (SDKs)، وأوامر السطر الأوامر (CLIs)، والتوثيق التقني مباشرة من تعريفات الـ API. وتأتي هذه الخطوة في وقت مبكر من دورة حياة المشروع، حيث تولد الأداة بالفعل المخرجات اللازمة لأداة cf CLI، ومن المقرر أن تدعم خلال الأشهر القادمة توثيق API الخاص بـ Cloudflare ومجموعات أدوات المطورين الخاصة بها.",
+              "links": [
+                {
+                  "text": "Forge",
+                  "url": "https://github.com/cloudflare/forge"
+                },
+                {
+                  "text": "cf CLI",
+                  "url": "https://blog.cloudflare.com/cloudflare-cf-cli-launch/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التحدي وراء بناء النظام",
+          "paragraphs": [
+            {
+              "text": "تواجه Cloudflare تحدياً فريداً نظراً لحجم واجهتها البرمجية التي تضم أكثر من 3,500 عملية (Operations)، مدعومة بمئات الخدمات المكتوبة بلغات متعددة تشمل Rust وGo وTypeScript وPython. كانت الشركة بحاجة إلى خط توليد قادر على التعامل مع هذا الحجم الهائل، مع مرونة كافية للعمل عبر مختلف اللغات وأساليب عمل فرق الهندسة. كما سعت لتقليل العبء الإداري الناتج عن التنسيق بين الفرق، حيث يحتاج فريق المنتج إلى معاينة بناء CLI والتوثيق قبل دمج أي تغييرات في الـ API، لضمان عدم حدوث أخطاء في خط التوليد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حل مشاكل الأدوات المستضافة",
+          "paragraphs": [
+            {
+              "text": "جربت Cloudflare عدة منتجات مستضافة لحل هذه المشكلة، لكن لم تنجح أي منها في تلبية احتياجاتها، بل إن بعضها توقف عن العمل تماماً. كانت المشكلة تكمن في أن تغييراً بسيطاً من فريق قد يكسر خط التوليد دون أن يكتشفه فريق آخر إلا عند وقت الإطلاق، مما أدى إلى إهدار الوقت في تنسيق التغييرات بين الفرق والموردين. يسعى Forge لمعالجة هذه القضايا من خلال العمل مباشرة في مستودعات API الخاصة بكل فريق، حيث يقوم بفحص كل تغيير (Linting) وتوليد بناءات معاينة (Preview Builds) لـ CLI والتوثيق وSDKs مع تمييز التغييرات الجديدة فقط.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مبدأ المعاينة الكاملة",
+          "paragraphs": [
+            {
+              "text": "يعتمد Forge على نفس المبدأ الذي تتبناه ميزة Workers Previews، وهو توفير بناء معاينة كامل لكل تغيير، ولكن مطبقاً على توليد SDKs على نطاق واسع. هذا النهج يضمن أن يكون كل تغيير مرئياً وقابلاً للاختبار فوراً، حتى عندما تكون واجهة الـ API موزعة عبر مئات الخدمات والمستودعات. يتيح هذا النظام للمطورين تثبيت بناءات المعاينة واختبارها، مما يوفر بيئة آمنة للتجربة قبل الدمج النهائي والإطلاق للعملاء.",
+              "links": [
+                {
+                  "text": "Workers Previews",
+                  "url": "https://blog.cloudflare.com/worker-previews/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "توليد مخرجات متقدمة ومرنة",
+          "paragraphs": [
+            {
+              "text": "تتميز محولات Forge (Transformers) بقدرتها على توليد أي مخرجات، بما في ذلك أنظمة RPC متقدمة. على سبيل المثال، يتيح Forge توليد Cap'n Web مباشرة من مواصفات OpenAPI، وهو نظام يسمح لـ TypeScript باستدعاء API عن بُعد وكأنه استدعاء لـ Method محلي. هذا يفتح الباب لتوليد روابط (Bindings) من Workers إلى واجهات أخرى، حيث أن الروابط في بيئة Workers تعمل فعلياً كـ Workers تعرض طرق RPC. كما يمكن توليد روابط لأدوات شائعة مثل TanStack Query أو مخططات Zod وValibot، مما يضمن أن تكون هذه الأدوات محدثة دائماً ومطابقة للـ API الفعلي.",
+              "links": [
+                {
+                  "text": "TanStack Query",
+                  "url": "https://tanstack.com/query/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التحكم في سلاسل التحويل",
+          "paragraphs": [
+            {
+              "text": "صُمم Forge ليكون قابلاً للتوصيل ودعم أنواع مدخلات ومخرجات متعددة. بينما يوفر حالياً مولدات لـ CLI وSDK والتوثيق، لا يوجد ما يمنع المطورين من إضافة محولات لتوليد حزم مكتبات محددة أو حتى لوحات تحكم كاملة. يدعم النظام OpenAPI كمدخل حالياً، لكن تم تصميمه لاستقبال AsyncAPI وGraphQL وProtobuf في المستقبل. الأهم من ذلك هو إمكانية سلاسل التحويل (Chaining)، حيث يمكن استخدام مخرجات هدف معين لإنتاج أهداف أخرى، مما يمنح المستخدم تحكماً كاملاً في كيفية تدفق المعلومات بين المخرجات بدلاً من فرض قرارات مسبقة من قِبل الأداة.",
+              "links": [
+                {
+                  "text": "AsyncAPI",
+                  "url": "http://asyncapi.com"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مستقبل إصدارات الـ API",
+          "paragraphs": [
+            {
+              "text": "يساعد Forge أيضاً في تحسين استراتيجية إصدارات الـ API. على الرغم من أن إصدار v4 كان الإصدار الرئيسي الوحيد لـ Cloudflare لمدة 10 سنوات، إلا أن التعريفات التقنية (SemVer) تشير إلى أن تغييرات كبيرة جرت تستدعي إصدارات رئيسية جديدة. يدرك فريق Cloudflare أن إطلاق إصدار v5 كبير قد يترك العديد من العملاء خلف الركب. لذلك، يعملون على نهج إصدارات يتيح لهم إطلاق إصدارات API رئيسية جديدة دون كسر التوافق مع العملاء أو SDKs القديمة. ومن المتوقع قريباً الإعلان عن تفاصيل SDKs بلغات متعددة، مع اهتمام خاص بعملية الانتقال إلى Terraform نظراً لصرامة متطلباتها.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Forge",
+        "Open Source",
+        "API Generation",
+        "Developer Tools",
+        "CI/CD",
+        "SDK"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Forge",
+        "cf CLI",
+        "OpenAPI",
+        "TanStack Query",
+        "Terraform"
+      ],
+      "category": "الويب",
+      "dateLabel": "29 سبتمبر 2026",
+      "modifiedLabel": "29 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 723
+    },
+    "en": {
+      "title": "Cloudflare Introduces Forge Open Source Generation Pipeline",
+      "description": "Cloudflare has announced Forge, an open source, pluggable generation pipeline that runs in CI to create SDKs, CLIs, and documentation.",
+      "deck": "Cloudflare has introduced Forge, an open source and pluggable generation pipeline designed to run in continuous integration workflows and build SDKs, CLIs, and documentation directly from API definitions.",
+      "summaryBullets": [
+        "Forge is an open source, pluggable pipeline that runs in CI to generate developer tools.",
+        "The tool is built to handle Cloudflare's massive API with over 3,500 operations across multiple languages.",
+        "Forge allows developers to generate outputs ranging from Cap'n Web to custom SDKs and documentation.",
+        "The open source system aims to eliminate coordination overhead and prevent broken generation pipelines."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Forge",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has officially introduced Forge, a fresh approach to generating software development kits, command line interfaces, documentation, and libraries. Forge is an open source, pluggable generation pipeline that anyone can deploy and run for free. According to the announcement on the Cloudflare Blog, the project is early in its lifecycle but already powers the output required for the cf CLI.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/forge-open-source-generation-pipeline/"
+                },
+                {
+                  "text": "cf CLI",
+                  "url": "https://blog.cloudflare.com/cloudflare-cf-cli-launch/"
+                }
+              ]
+            },
+            {
+              "text": "Over the coming months, the technology is scheduled to power Cloudflare's API documentation, SDKs, and additional developer surfaces. The company stated that it built Forge because it needed to treat agents as customers, making developer tools, API SDKs, MCP servers, and comprehensive documentation essential table stakes for every product.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Addressing API Scale and Coordination",
+          "paragraphs": [
+            {
+              "text": "Cloudflare's API encompasses more than 3,500 operations, while the hundreds of services powering these endpoints are written in a variety of programming languages, including Rust, Go, TypeScript, and Python. When engineering a command line interface for the entire API alongside SDKs and documentation, the team required a code generation pipeline capable of handling such scale.",
+              "links": []
+            },
+            {
+              "text": "The pipeline had to be flexible enough to accommodate different languages and distinct team workflows while reducing coordination overhead. Previously, when a product team introduced an API change, they needed to inspect a preview build before merging. To solve this, Forge runs directly in CI on each team's API repositories, linting changes and generating preview builds of the CLI, documentation, and SDKs. This concept mirrors Workers Previews, bringing full preview builds to SDK generation at scale across distributed services.",
+              "links": [
+                {
+                  "text": "Workers Previews",
+                  "url": "https://blog.cloudflare.com/worker-previews/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Flexible Transformers and Cap'n Web",
+          "paragraphs": [
+            {
+              "text": "Forge utilizes flexible transformers that can generate virtually any target output, including Cap'n Web. Cap'n Web serves as Cloudflare's RPC system, which allows TypeScript applications to invoke a remote API as if it were a local method. With Forge, developers can take an OpenAPI specification and generate Cap'n Web directly, paving the way for bindings from Workers to other external APIs.",
+              "links": [
+                {
+                  "text": "Cap'n Web",
+                  "url": "https://capnweb.com/"
+                },
+                {
+                  "text": "bindings",
+                  "url": "https://developers.cloudflare.com/workers/runtime-apis/bindings/"
+                }
+              ]
+            },
+            {
+              "text": "This capability extends beyond Cap'n Web to other popular developer tools. For instance, projects utilizing TanStack Query can generate native bindings built directly from the API specification, ensuring the code remains continuously up to date and validated against the live backend. Similar workflows apply to schemas, Model Context Protocol servers, and other interface formats.",
+              "links": [
+                {
+                  "text": "TanStack Query",
+                  "url": "https://tanstack.com/query/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Pluggable Architecture and Chained Targets",
+          "paragraphs": [
+            {
+              "text": "The platform was constructed to be pluggable and accommodate diverse input and output types. While Forge natively provides generators for command line interfaces, software development kits, and documentation, users can easily introduce custom transformers to produce library-specific packages or complete dashboard applications. Input formats currently include OpenAPI, with designs accommodating AsyncAPI and other structures in the future.",
+              "links": [
+                {
+                  "text": "AsyncAPI",
+                  "url": "http://asyncapi.com"
+                }
+              ]
+            },
+            {
+              "text": "Furthermore, the system allows users to chain targets together, utilizing one target output to produce secondary formats. This flexibility ensures that teams retain full control over how their code and documentation are structured, supporting custom local-only behaviors that go beyond standard API wrappers.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Open Source Availability and Future Outlook",
+          "paragraphs": [
+            {
+              "text": "Developers interested in exploring the codebase can access Forge available open source on GitHub. By open sourcing the project, Cloudflare aims to give the broader developer community the necessary infrastructure to generate all the surfaces required by modern automated agents.",
+              "links": [
+                {
+                  "text": "Forge available open source",
+                  "url": "https://github.com/cloudflare/forge"
+                }
+              ]
+            },
+            {
+              "text": "The release of Forge also sets the stage for improved API versioning strategies, allowing the company to roll out new major API versions without breaking older clients. Additional updates regarding SDK support for languages such as TypeScript, Rust, Python, Go, PHP, and Terraform are expected to follow shortly.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Forge",
+        "Open Source",
+        "Developer Tools",
+        "API",
+        "SDK",
+        "CLI"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Forge",
+        "TanStack Query",
+        "Cap'n Web",
+        "AsyncAPI"
+      ],
+      "category": "Web",
+      "dateLabel": "September 29, 2026",
+      "modifiedLabel": "September 29, 2026",
+      "readMinutes": 3,
+      "wordCount": 658
+    }
+  },
+  "datePublished": "2026-09-29T08:54:48.702375+03:00",
+  "dateModified": "2026-09-29T08:54:48.702375+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/introducing-forge-the-open-source-pipeline-for-generating-sdks-clis-docs-and/hero.webp",
+    "card": "/forum/assets/posts/2026/09/introducing-forge-the-open-source-pipeline-for-generating-sdks-clis-docs-and/card.webp",
+    "social": "/forum/assets/posts/2026/09/introducing-forge-the-open-source-pipeline-for-generating-sdks-clis-docs-and/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تطلق Forge: خط أنابيب مفتوح المصدر لتوليد أدوات المطورين",
+      "en": "Cloudflare Introduces Forge Open Source Generation Pipeline"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3J4EWN0BM1HFWCRCV3ND3H8.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/introducing-forge-the-open-source-pipeline-for-generating-sdks-clis-docs-and/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "Cloudflare تطلق Forge: خط أنابيب مفتوح المصدر لتوليد أدوات المطورين",
+          "en": "Introducing Forge: the open source pipeline for generating SDKs, CLIs, docs, and more"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/forge-open-source-generation-pipeline/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3KMAME9D8SZR1HGPV8CRXCF.01M3KMANG7A7ANG06TDFFC7ZTQ.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/introducing-forge-the-open-source-pipeline-for-generating-sdks-clis-docs-and/inline-02.webp",
+        "width": 1173,
+        "height": 1050,
+        "alt": {
+          "ar": "Cloudflare تطلق Forge: خط أنابيب مفتوح المصدر لتوليد أدوات المطورين",
+          "en": "Cloudflare Introduces Forge Open Source Generation Pipeline"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "We needed something that generated a preview on every pull request, across hundreds of repos."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/forge-open-source-generation-pipeline/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3J4EPCB6S3BJ6C7BY6HKZKN.png&w=1430&h=1280&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/introducing-forge-the-open-source-pipeline-for-generating-sdks-clis-docs-and/inline-03.webp",
+        "width": 1000,
+        "height": 1050,
+        "alt": {
+          "ar": "Cloudflare تطلق Forge: خط أنابيب مفتوح المصدر لتوليد أدوات المطورين",
+          "en": "Cloudflare Introduces Forge Open Source Generation Pipeline"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Forge helps you detect problems in CI, before they cause issues downstream."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/forge-open-source-generation-pipeline/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3J4EVDEJ0CVMAT598QFERDT.png&w=1430&h=1502&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/introducing-forge-the-open-source-pipeline-for-generating-sdks-clis-docs-and/inline-04.webp",
+        "width": 991,
+        "height": 1050,
+        "alt": {
+          "ar": "Cloudflare تطلق Forge: خط أنابيب مفتوح المصدر لتوليد أدوات المطورين",
+          "en": "Cloudflare Introduces Forge Open Source Generation Pipeline"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "The original OpenAPI definition is built into the TypeScript SDK, which is used to generate the cf CLI and Cap'n Web specifications."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/forge-open-source-generation-pipeline/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3J4ERXXG0DDMKKETZXQQHHX.png&w=1430&h=1514&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/forge-open-source-generation-pipeline/",
+      "type": "official",
+      "title": "Introducing Forge: the open source pipeline for generating SDKs, CLIs, docs, and more"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/forge-open-source-generation-pipeline",
+  "sourceTitle": "Introducing Forge: the open source pipeline for generating SDKs, CLIs, docs, and more",
+  "trendScore": 113.27,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-29T05:54:48+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/introducing-forge-the-open-source-pipeline-for-generating-sdks-clis-docs-and.json"
+}
