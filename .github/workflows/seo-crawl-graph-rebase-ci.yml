@@ -1,0 +1,56 @@
+name: Temporary Mikhbar Crawl Graph Rebase CI
+
+on:
+  push:
+    branches:
+      - seo/crawl-graph-archive-phase-5-v2
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: automation/forum/requirements.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: python -m pip install --disable-pip-version-check -r automation/forum/requirements.txt
+      - name: Validate modules and chronology tests
+        run: |
+          python -m py_compile automation/forum/generate_archive_pages.py automation/forum/audit_crawl_graph.py automation/forum/indexes.py automation/forum/generate_trust_pages.py
+          node --check cloudflare/mikhbar-site/src/index.js
+          node --check cloudflare/mikhbar-site/src/article.js
+          node --test cloudflare/mikhbar-site/tests/*.test.mjs
+      - name: Generate SEO graph
+        run: |
+          python automation/forum/audit_search_quality.py
+          python automation/forum/enhance_category_seo.py
+          python automation/forum/generate_pillar_pages.py
+          python automation/forum/audit_topic_hubs.py
+          python automation/forum/audit_pillar_pages.py
+          python automation/forum/generate_archive_pages.py
+          python automation/forum/generate_trust_pages.py
+          python automation/forum/rebuild_indexes.py
+          python automation/forum/audit_multilingual_trust.py
+          python automation/forum/audit_crawl_graph.py
+      - name: Build and audit deployable output
+        run: |
+          python cloudflare/mikhbar-site/build.py
+          python automation/forum/audit_deployed_sitemap.py
+          for locale in ar en; do
+            test -f "dist/mikhbar/\${locale}/archive/index.html"
+            grep -q 'data-news-archive="true"' "dist/mikhbar/\${locale}/archive/index.html"
+            grep -Fq "href=\"/\${locale}/archive/\"" "dist/mikhbar/\${locale}/index.html"
+          done
+          grep -q 'https://mikhbar.website/ar/archive/' dist/mikhbar/sitemap.xml
+          grep -q 'https://mikhbar.website/en/archive/' dist/mikhbar/sitemap.xml
+      - name: Validate Worker bundle
+        run: npx --yes wrangler@latest deploy --dry-run --config cloudflare/mikhbar-site/wrangler.preview.toml
