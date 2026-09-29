@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "dc53fce90c6f36f5c727",
+  "slug": "nvidia-kumo-tabular-sets-new-accuracy-efficiency-frontier-for-tabular-prediction",
+  "categorySlug": "computers",
+  "urls": {
+    "ar": "/forum/ar/computers/nvidia-kumo-tabular-sets-new-accuracy-efficiency-frontier-for-tabular-prediction/",
+    "en": "/forum/en/computers/nvidia-kumo-tabular-sets-new-accuracy-efficiency-frontier-for-tabular-prediction/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إنفيديا تطلق نموذج Kumo Tabular المفتوح للبيانات الجدولية",
+      "description": "أطلقت إنفيديا نموذج Kumo Tabular المفتوح المصدر للبيانات الجدولية، متصدراً أربعة معايير رئيسية بدقة وكفاءة عالية دون الحاجة إلى تدريب مسبق أو هندسة ميزات معقدة.",
+      "deck": "يقدّم نموذج Kumo Tabular من إنفيديا نهجاً جديداً في التنبؤ بالبيانات الجدولية عبر التعلم السياقي، متجاوزاً حدود النماذج التقليدية.",
+      "summaryBullets": [
+        "نموذج مفتوح المصدر مبني على معمارية Transformer مخصصة للبيانات الجدولية.",
+        "يتصدر أربعة معايير رئيسية (TabArena, BeyondArena, TALENT, ScoringBench) بدقة وكفاءة.",
+        "يعتمد على التعلم السياقي (In-context learning) دون الحاجة إلى تدريب أو هندسة ميزات.",
+        "متوفر بثلاثة أحجام (28M إلى 215M) ومفتوح للاستخدام التجاري تحت رخصة OpenMDW-1.1."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق نموذج Kumo Tabular المفتوح",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة إنفيديا عن إطلاق نموذج Kumo Tabular، وهو نموذج أساسي مفتوح المصدر مخصص للبيانات الجدولية، ليكون جزءاً من مجموعة نماذج Kumo Structured. يتيح هذا النموذج للمستخدمين التنبؤ بملفات البيانات الجديدة في مسار واحد للأمام، دون الحاجة إلى تدريب مسبق أو ضبط معلمات أو هندسة ميزات، سواء للتمثيل أو الانحدار. تم إطلاق النموذج رسمياً على منصة Hugging Face، حيث يمكن الوصول إلى أوزانه ومصدره المفتوح.",
+              "links": [
+                {
+                  "text": "Hugging Face",
+                  "url": "https://huggingface.co/nvidia/Kumo-Tabular"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تجاوز حدود النماذج التقليدية",
+          "paragraphs": [
+            {
+              "text": "لطالما اعتمدت المؤسسات على أشجار التدرج المعزز (Gradient-boosted trees) للتعامل مع البيانات الجدولية، مثل سجلات العملاء والمعاملات وسجلات المستشعرات. وعلى الرغم من فاعلية هذه النماذج، إلا أن دورة حياتها تتطلب جمع التسميات وهندسة الميزات وضبط المعلمات لكل مهمة جديدة. يقدم Kumo Tabular بديلاً يعتمد على التعلم السياقي، حيث يمكن للنموذج قراءة جدول مسمّى كسياق والتنبؤ بملفات الصفوف الجديدة مباشرة، مما يقلل من التعقيد التشغيلي بشكل كبير. ويمكن الرجوع إلى Hugging Face Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/nvidia/kumo-tabular"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "معمارية مخصصة للبيانات الجدولية",
+          "paragraphs": [
+            {
+              "text": "يعتمد Kumo Tabular على معمارية Transformer مبنية حول بنية الجدول، مستفيدة من الانتباه السياقي (In-context attention) كما تم تقديمه في نماذج TabICL و TabPFN. يتطلب التنبؤ فهم معنى كل قيمة داخل عمودها، وفهم تفاعل الأعمدة في الصف، وربط الصفوف السياقية بالصفوف الاستعلام. يتم تحقيق ذلك من خلال تضمين الخلايا (Cell Embedding) الذي يعالج القيم الرقمية والفئوية باستخدام ميزات فورييه، وتضمين الصفوف (Row Embedding) الذي يجمع بين الانتباه العمودي والصفوي لفهم التوزيعات والتفاعلات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التعلم السياقي وكفاءة الحساب",
+          "paragraphs": [
+            {
+              "text": "يعمل النموذج من خلال مرحلة التعلم السياقي النهائية، حيث تنتبه الصفوف السياقية لبعضها البعض، بينما تنتبه صفوف الاستعلام إلى الصفوف السياقية فقط. هذا التصميم يضمن أن يعتمد كل تنبؤ على السياق والصف نفسه فقط، مما يسمح بإعادة استخدام مفاتيح وقيم السياق للتنبؤات اللاحقة. كما يستخدم النموذج تقنية Test-GQA لتقليل حجم ذاكرة التخزين المؤقت، مما يحسن من كفاءة الحساب ويقلل من التكاليف التشغيلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التدريب على البيانات الاصطناعية",
+          "paragraphs": [
+            {
+              "text": "تم تدريب Kumo Tabular بالكامل على جداول اصطناعية مولدة من نموذج سببي هيكلي (SCM). يتضمن هذا العملية سحب إعدادات عشوائية للجداول، وربط المتغيرات المخفية عبر رسوم بيانية سببية، وتقييمها من الجذر إلى الورقة باستخدام دوال عشوائية. يتم حقن قيم مفقودة وضوضاء واقعية في البيانات لمحاكاة تعقيدات العالم الحقيقي. هذا النهج يسمح للنموذج بتعلم التعامل مع النواقص والتباينات دون الحاجة إلى تنظيف البيانات مسبقاً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الأداء على المعايير الرئيسية",
+          "paragraphs": [
+            {
+              "text": "أظهر Kumo Tabular أداءً استثنائياً عند اختباره على لوحة TabArena، متفوقاً على أشجار التدرج المعزز ونماذج AutoGluon والنماذج الأساسية الأخرى للبيانات الجدولية. حقق النموذج المرتبة الأولى بشكل عام بمعدل ELO يبلغ 1950، مما يؤكد تفوقه في دقة التنبؤ وكفاءة الحساب. كما تصدر النموذج معايير BeyondArena و TALENT و ScoringBench، مما يجعله الخيار الأمثل للمهام الجدولية في بيئات المؤسسات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوفر والاستخدام التجاري",
+          "paragraphs": [
+            {
+              "text": "يتوفر Kumo Tabular بثلاثة أحجام مختلفة، تتراوح من 28 مليون إلى 215 مليون معلمة، مما يتيح للمستخدمين اختيار الحجم المناسب لمتطلباتهم. يمكن تشغيل النموذج عبر مكتبة إنفيديا مفتوحة المصدر، وهو متاح للاستخدام التجاري تحت رخصة OpenMDW-1.1. يوفر هذا التوفر المرن للمطورين والمؤسسات إمكانية دمج النموذج في أنظمتهم الحالية بسهولة، مع الحفاظ على مرونة الأداء والتكلفة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "إنفيديا",
+        "Kumo Tabular",
+        "البيانات الجدولية",
+        "التعلم الآلي",
+        "نماذج مفتوحة المصدر",
+        "Hugging Face"
+      ],
+      "entities": [
+        "إنفيديا",
+        "Kumo Tabular",
+        "Hugging Face",
+        "TabArena",
+        "BeyondArena",
+        "TALENT",
+        "ScoringBench"
+      ],
+      "category": "الحواسيب",
+      "dateLabel": "29 سبتمبر 2026",
+      "modifiedLabel": "29 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 544
+    },
+    "en": {
+      "title": "NVIDIA Launches Kumo Tabular Foundation Models",
+      "description": "NVIDIA introduces Kumo Tabular, an open foundation model collection for tabular prediction delivering zero-shot accuracy and efficiency.",
+      "deck": "NVIDIA has released Kumo Tabular, a new collection of open foundation models designed to perform tabular classification and regression in a single forward pass without prior training or feature engineering.",
+      "summaryBullets": [
+        "NVIDIA Kumo Tabular is available in three model sizes ranging from 28 million to 215 million parameters.",
+        "The open foundation model enables in-context learning for tabular prediction across classification and regression tasks.",
+        "It ranks first on multiple industry benchmarks including TabArena, BeyondArena, TALENT, and ScoringBench.",
+        "Released under the OpenMDW-1.1 license, the model is pretrained entirely on artificial tables generated via Structural Causal Models."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to NVIDIA Kumo Tabular",
+          "paragraphs": [
+            {
+              "text": "NVIDIA has announced the release of NVIDIA Kumo Tabular, an open foundation model for tabular data that is now available on the Hugging Face Blog. Part of the broader NVIDIA Kumo Structured model collection, the system is designed to predict the labels of new rows in a single forward pass given a table of labeled rows.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/nvidia/kumo-tabular"
+                },
+                {
+                  "text": "Hugging Face",
+                  "url": "https://huggingface.co/nvidia/Kumo-Tabular"
+                }
+              ]
+            },
+            {
+              "text": "The new model operates without requiring any training, tuning, or feature engineering for both classification and regression tasks. Available in three different sizes spanning from 28 million to 215 million parameters, the model is released under the OpenMDW-1.1 license for commercial use and runs through an open-source library.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and In-Context Learning",
+          "paragraphs": [
+            {
+              "text": "Traditional enterprise machine learning has relied heavily on gradient-boosted trees for two decades, requiring extensive data collection, feature engineering, and hyperparameter tuning for every new task. Kumo Tabular introduces an in-context learning approach inspired by large language models, allowing a pretrained model to read a labeled table as its context and directly predict the labels of new rows.",
+              "links": []
+            },
+            {
+              "text": "Built as a Transformer around the structure of a table, Kumo Tabular utilizes column, row, and in-context attention mechanisms. To generate predictions, the model executes cell embeddings using Fourier features, row embeddings via alternating attention mechanisms to handle feature interactions, and a final Transformer operating on the row embeddings to maintain efficiency as tables scale.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Pretraining on Artificial Data and Benchmarks",
+          "paragraphs": [
+            {
+              "text": "Kumo Tabular was pretrained entirely on artificial tables sampled from a Structural Causal Model. This procedural generator produces an endless supply of tables featuring varied sizes, mechanisms, missing values, and outliers, allowing the model to learn how to handle real-world data imperfections without requiring manual cleanup.",
+              "links": []
+            },
+            {
+              "text": "Following its training phases across millions of artificial tables, Kumo Tabular has demonstrated top-tier performance on major evaluation tracks. According to evaluations, the model ranks first overall on the TabArena, BeyondArena, TALENT, and ScoringBench benchmarks.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Availability and Resource Access",
+          "paragraphs": [
+            {
+              "text": "Developers and enterprise users looking to deploy or evaluate the models can access the official resources and community updates hosted online. Further discussions and updates regarding the architecture can be followed via contributors on platforms like Hugging Face.",
+              "links": []
+            },
+            {
+              "text": "The release aims to streamline machine learning workflows for customer records, transaction logs, and industry predictions by bypassing traditional multi-step model lifecycles in favor of direct, zero-shot tabular inference.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "NVIDIA",
+        "Kumo Tabular",
+        "Machine Learning",
+        "Artificial Intelligence",
+        "Tabular Data",
+        "Foundation Models",
+        "Hugging Face"
+      ],
+      "entities": [
+        "NVIDIA",
+        "Hugging Face",
+        "Kumo Tabular"
+      ],
+      "category": "Computing",
+      "dateLabel": "September 29, 2026",
+      "modifiedLabel": "September 29, 2026",
+      "readMinutes": 3,
+      "wordCount": 477
+    }
+  },
+  "datePublished": "2026-09-29T20:02:57.561633+03:00",
+  "dateModified": "2026-09-29T20:02:57.561633+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/nvidia-kumo-tabular-sets-new-accuracy-efficiency-frontier-for-tabular-prediction/hero.webp",
+    "card": "/forum/assets/posts/2026/09/nvidia-kumo-tabular-sets-new-accuracy-efficiency-frontier-for-tabular-prediction/card.webp",
+    "social": "/forum/assets/posts/2026/09/nvidia-kumo-tabular-sets-new-accuracy-efficiency-frontier-for-tabular-prediction/social.jpg",
+    "alt": {
+      "ar": "إنفيديا تطلق نموذج Kumo Tabular المفتوح للبيانات الجدولية",
+      "en": "NVIDIA Launches Kumo Tabular Foundation Models"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/684040a5de1ad7f4fcec9508/HyVlq-3d7EVj_M-m_TfHJ.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/nvidia/kumo-tabular",
+      "type": "official",
+      "title": "NVIDIA Kumo Tabular Sets a New Accuracy-Efficiency Frontier for Tabular Prediction"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/nvidia/kumo-tabular",
+  "sourceTitle": "NVIDIA Kumo Tabular Sets a New Accuracy-Efficiency Frontier for Tabular Prediction",
+  "trendScore": 128.4,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-29T17:02:57+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/nvidia-kumo-tabular-sets-new-accuracy-efficiency-frontier-for-tabular-prediction.json"
+}
