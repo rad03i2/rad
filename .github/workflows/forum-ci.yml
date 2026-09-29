@@ -71,6 +71,9 @@ jobs:
         run: python automation/forum/rebuild_indexes.py
       - name: Audit multilingual Mikhbar trust pages
         run: python automation/forum/audit_multilingual_trust.py
+
+      - name: Audit semantic internal linking
+        run: node cloudflare/mikhbar-site/scripts/audit-semantic-links.mjs
       - name: Audit Mikhbar crawl graph and article depth
         run: python automation/forum/audit_crawl_graph.py
       - name: Validate pillar discovery
