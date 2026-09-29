@@ -55,6 +55,30 @@ function publicPath(value) {
   return path;
 }
 
+function preferredEdition(request) {
+  const header = String(request.headers.get("Accept-Language") || "");
+  const languages = header
+    .split(",")
+    .map((entry, index) => {
+      const parts = entry.trim().split(";");
+      const tag = String(parts.shift() || "").trim().toLowerCase();
+      let q = 1;
+      for (const param of parts) {
+        const match = param.trim().match(/^q=([0-9.]+)$/i);
+        if (match) {
+          const parsed = Number.parseFloat(match[1]);
+          q = Number.isFinite(parsed) ? parsed : 0;
+        }
+      }
+      return { tag, q, index };
+    })
+    .filter((item) => item.tag && item.q > 0)
+    .sort((a, b) => (b.q - a.q) || (a.index - b.index));
+
+  const language = languages[0]?.tag || "";
+  return language === "ar" || language.startsWith("ar-") ? "ar" : "en";
+}
+
 function esc(value) {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -182,6 +206,20 @@ export default {
 
     if (url.hostname === `www.${CANONICAL_HOST}` || url.protocol === "http:") {
       return Response.redirect(canonicalUrl(url).toString(), 308);
+    }
+
+    if (url.pathname === "/") {
+      const edition = preferredEdition(request);
+      const target = canonicalUrl(url);
+      target.pathname = `/${edition}/`;
+      return withHeaders(new Response(null, {
+        status: 302,
+        headers: {
+          "Location": target.toString(),
+          "Cache-Control": "private, no-store",
+          "Vary": "Accept-Language",
+        },
+      }));
     }
 
     if (url.pathname === "/healthz") {
