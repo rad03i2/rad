@@ -239,7 +239,9 @@
       keywords: view.tags || [],
       author: { '@type': 'Person', name: UI[locale].author },
       publisher: {
-        '@type': 'NewsMediaOrganization', name: UI[locale].site, url: PUBLIC_ORIGIN + '/',
+        '@type': 'NewsMediaOrganization', name: UI[locale].site,
+        alternateName: locale === 'ar' ? ['Mikhbar', 'مخبار', 'MIKHBAR'] : ['مِخبار', 'مخبار', 'MIKHBAR'],
+        url: PUBLIC_ORIGIN + '/',
         logo: { '@type': 'ImageObject', url: PUBLIC_ORIGIN + '/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png' }
       }
     };

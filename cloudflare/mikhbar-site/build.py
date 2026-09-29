@@ -124,7 +124,7 @@ ROOT_INDEX_HTML = f'''<!doctype html>
 <meta name="twitter:description" content="Independent technology news and analysis in Arabic and English.">
 <meta name="twitter:image" content="{PUBLIC_ORIGIN}/assets/social/home.jpg">
 <script>(()=>{{document.documentElement.hidden=true;const lang=String((navigator.languages&&navigator.languages[0])||navigator.language||'en').toLowerCase();const edition=(lang==='ar'||lang.startsWith('ar-'))?'ar':'en';location.replace('/'+edition+'/'+location.search+location.hash)}})();</script>
-<script type="application/ld+json">{{"@context":"https://schema.org","@graph":[{{"@type":"WebSite","@id":"{PUBLIC_ORIGIN}/#website","url":"{PUBLIC_ORIGIN}/","name":"Mikhbar","alternateName":["مِخبار","mikhbar.website"],"inLanguage":["ar","en"],"publisher":{{"@id":"{PUBLIC_ORIGIN}/#publisher"}}}},{{"@type":"NewsMediaOrganization","@id":"{PUBLIC_ORIGIN}/#publisher","name":"Mikhbar","alternateName":"مِخبار","url":"{PUBLIC_ORIGIN}/","logo":{{"@type":"ImageObject","url":"{PUBLIC_ORIGIN}/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"}},"description":"Independent technology news and analysis in Arabic and English.","publishingPrinciples":"{PUBLIC_ORIGIN}/editorial-policy/"}}]}}</script>
+<script type="application/ld+json">{{"@context":"https://schema.org","@graph":[{{"@type":"WebSite","@id":"{PUBLIC_ORIGIN}/#website","url":"{PUBLIC_ORIGIN}/","name":"Mikhbar","alternateName":["مِخبار","مخبار","MIKHBAR","mikhbar.website"],"inLanguage":["ar","en"],"publisher":{{"@id":"{PUBLIC_ORIGIN}/#publisher"}}}},{{"@type":"NewsMediaOrganization","@id":"{PUBLIC_ORIGIN}/#publisher","name":"Mikhbar","alternateName":["مِخبار","مخبار","MIKHBAR"],"url":"{PUBLIC_ORIGIN}/","logo":{{"@type":"ImageObject","url":"{PUBLIC_ORIGIN}/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"}},"description":"Independent technology news and analysis in Arabic and English.","publishingPrinciples":"{PUBLIC_ORIGIN}/editorial-policy/"}}]}}</script>
 </head>
 <body></body>
 </html>'''
@@ -255,7 +255,7 @@ def validate_root_search_identity() -> None:
     required = (
         '"@type":"WebSite"',
         '"name":"Mikhbar"',
-        '"alternateName":["مِخبار","mikhbar.website"]',
+        '"alternateName":["مِخبار","مخبار","MIKHBAR","mikhbar.website"]',
         f'"url":"{PUBLIC_ORIGIN}/"',
         'hreflang="x-default"',
         f'href="{PUBLIC_ORIGIN}/ar/"',

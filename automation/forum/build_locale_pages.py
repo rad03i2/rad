@@ -132,11 +132,23 @@ def _now_item(post: dict, index: int) -> str:
 
 def _schemas(locale: str, path: str, posts: list[dict], page_name: str) -> str:
     site_name = "مِخبار" if locale == "ar" else "Mikhbar"
+    brand_aliases = ["Mikhbar", "مِخبار", "مخبار", "MIKHBAR"]
+    alternate_names = [name for name in brand_aliases if name != site_name]
     item_list = [{"@type": "ListItem", "position": i + 1, "url": SITE + str(p.get("url") or ""), "name": str(p.get("title") or "")} for i, p in enumerate(posts[:20]) if p.get("url")]
     graph = [
-        {"@type": "NewsMediaOrganization", "@id": SITE + "/forum/#publisher", "name": site_name, "alternateName": "Mikhbar" if locale == "ar" else "مِخبار", "url": SITE + "/forum/", "logo": {"@type": "ImageObject", "url": SITE + "/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"}, "founder": {"@type": "Person", "name": "Radwan Abdulhadi", "url": SITE + "/"}},
+        {"@type": "NewsMediaOrganization", "@id": SITE + "/forum/#publisher", "name": site_name, "alternateName": alternate_names, "url": SITE + "/forum/", "logo": {"@type": "ImageObject", "url": SITE + "/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"}},
         {"@type": "CollectionPage", "@id": SITE + path + "#page", "url": SITE + path, "name": page_name, "inLanguage": locale, "publisher": {"@id": SITE + "/forum/#publisher"}},
     ]
+    if path in {"/forum/ar/", "/forum/en/"}:
+        graph.insert(0, {
+            "@type": "WebSite",
+            "@id": SITE + "/forum/#website",
+            "url": SITE + "/forum/",
+            "name": "Mikhbar",
+            "alternateName": ["مِخبار", "مخبار", "MIKHBAR"],
+            "inLanguage": ["ar", "en"],
+            "publisher": {"@id": SITE + "/forum/#publisher"},
+        })
     if item_list:
         graph.append({"@type": "ItemList", "itemListElement": item_list})
     return json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, separators=(",", ":"))
@@ -190,7 +202,7 @@ def _category_page(locale: str, slug: str, all_posts: list[dict]) -> str:
 
 def _router_page(posts_ar: list[dict], posts_en: list[dict]) -> str:
     del posts_ar, posts_en
-    schema = json.dumps({"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Mikhbar","alternateName":"مِخبار","url":SITE+"/forum/","inLanguage":["ar","en"]},{"@type":"NewsMediaOrganization","name":"Mikhbar","alternateName":"مِخبار","url":SITE+"/forum/","founder":{"@type":"Person","name":"Radwan Abdulhadi","url":SITE+"/"}}]}, ensure_ascii=False, separators=(",",":"))
+    schema = json.dumps({"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":SITE+"/forum/#website","name":"Mikhbar","alternateName":["مِخبار","مخبار","MIKHBAR"],"url":SITE+"/forum/","inLanguage":["ar","en"],"publisher":{"@id":SITE+"/forum/#publisher"}},{"@type":"NewsMediaOrganization","@id":SITE+"/forum/#publisher","name":"Mikhbar","alternateName":["مِخبار","مخبار","MIKHBAR"],"url":SITE+"/forum/"}]}, ensure_ascii=False, separators=(",",":"))
     return f'''<!DOCTYPE html><html lang="en" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff">
 <title>Mikhbar | Technology News</title><meta name="description" content="Mikhbar technology news in Arabic and English."><meta name="robots" content="index,follow"><link rel="canonical" href="{SITE}/forum/"><link rel="alternate" hreflang="ar" href="{SITE}/forum/ar/"><link rel="alternate" hreflang="en" href="{SITE}/forum/en/"><link rel="alternate" hreflang="x-default" href="{SITE}/forum/"><script>(()=>{{const lang=String((navigator.languages&&navigator.languages[0])||navigator.language||'en').toLowerCase();const edition=lang.startsWith('ar')?'ar':'en';const target='{SITE}/forum/'+edition+'/'+location.search+location.hash;if(location.href!==target)location.replace(target)}})();</script><script type="application/ld+json">{schema}</script></head><body><noscript><p><a href="/forum/ar/" lang="ar" dir="rtl">النسخة العربية</a> · <a href="/forum/en/" lang="en">English Edition</a></p></noscript></body></html>'''
 

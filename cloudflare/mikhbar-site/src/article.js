@@ -181,6 +181,7 @@ function schemaFor(record, view, locale, canonical, social) {
           "@type": "NewsMediaOrganization",
           "@id": ORIGIN + "/#publisher",
           name: UI[locale].site,
+          alternateName: locale === "ar" ? ["Mikhbar", "مخبار", "MIKHBAR"] : ["مِخبار", "مخبار", "MIKHBAR"],
           url: ORIGIN + "/",
           logo: { "@type": "ImageObject", url: ORIGIN + "/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png" }
         }
