@@ -283,6 +283,22 @@ def patch_locale_navigation() -> int:
                     1,
                 )
 
+            archive_href = f"/{locale}/archive/"
+            archive_label = "الأرشيف" if locale == "ar" else "Archive"
+            if archive_href not in updated and '<footer class="rt-footer">' in updated:
+                copyright_prefix = f'© <span data-year></span> {spec["brand"]} · '
+                archive_link = f'<a href="{archive_href}">{archive_label}</a> · '
+                if copyright_prefix in updated:
+                    updated = updated.replace(copyright_prefix, copyright_prefix + archive_link, 1)
+                else:
+                    fixed_prefix = f'© 2026 {spec["brand"]}'
+                    if fixed_prefix in updated:
+                        updated = updated.replace(
+                            fixed_prefix,
+                            fixed_prefix + f' · <a href="{archive_href}">{archive_label}</a>',
+                            1,
+                        )
+
             if updated != text:
                 path.write_text(updated, encoding="utf-8")
                 changed += 1
