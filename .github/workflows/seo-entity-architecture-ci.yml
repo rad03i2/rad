@@ -76,7 +76,7 @@ jobs:
           python cloudflare/mikhbar-site/build.py
           python automation/forum/audit_deployed_sitemap.py
           for locale in ar en; do
-            test -f "dist/mikhbar/\${locale}/entities/index.html"
-            grep -q 'data-entity-index="true"' "dist/mikhbar/\${locale}/entities/index.html"
+            test -f "dist/mikhbar/${locale}/entities/index.html"
+            grep -q 'data-entity-index="true"' "dist/mikhbar/${locale}/entities/index.html"
           done
           npx --yes wrangler@latest deploy --dry-run --config cloudflare/mikhbar-site/wrangler.preview.toml
