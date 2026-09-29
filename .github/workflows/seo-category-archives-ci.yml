@@ -1,0 +1,78 @@
+name: Temporary Mikhbar Category Archive CI
+
+on:
+  push:
+    branches:
+      - seo/category-archives-phase-5
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: automation/forum/requirements.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check -r automation/forum/requirements.txt
+      - name: Compile SEO generators
+        run: |
+          python -m py_compile automation/forum/build_locale_pages.py automation/forum/generate_archive_pages.py automation/forum/indexes.py automation/forum/audit_crawl_graph.py
+          node --check cloudflare/mikhbar-site/src/index.js
+      - name: Regenerate public SEO graph
+        run: |
+          python automation/forum/build_locale_pages.py
+          python automation/forum/enhance_category_seo.py
+          python automation/forum/generate_pillar_pages.py
+          python automation/forum/generate_archive_pages.py
+          python automation/forum/generate_trust_pages.py
+          python automation/forum/normalize_public_identity.py
+          python automation/forum/rebuild_indexes.py
+      - name: Audit crawl graph
+        run: python automation/forum/audit_crawl_graph.py
+      - name: Verify expected large category archives
+        shell: bash
+        run: |
+          for locale in ar en; do
+            for category in ai robotics apps computers; do
+              test -f "forum/\${locale}/\${category}/archive/index.html"
+              grep -q 'data-category-archive="true"' "forum/\${locale}/\${category}/archive/index.html"
+              grep -q 'data-category-archive-article="true"' "forum/\${locale}/\${category}/archive/index.html"
+              grep -q "https://mikhbar.website/\${locale}/\${category}/archive/" forum/sitemap.xml
+              grep -q 'data-category-archive-link="true"' "forum/\${locale}/\${category}/index.html"
+            done
+            for category in automation web mobile social; do
+              if [ -f "forum/\${locale}/\${category}/archive/index.html" ]; then
+                echo "Thin category archive should not exist: \${locale}/\${category}" >&2
+                exit 1
+              fi
+            done
+          done
+      - name: Run existing forum tests
+        run: |
+          python -m unittest discover -s automation/forum/tests -v
+          node --test cloudflare/mikhbar-site/tests/*.test.mjs
+      - name: Build Cloudflare output
+        run: python cloudflare/mikhbar-site/build.py
+      - name: Audit deployed sitemap
+        run: python automation/forum/audit_deployed_sitemap.py
+      - name: Verify deployment copies
+        shell: bash
+        run: |
+          for locale in ar en; do
+            for category in ai robotics apps computers; do
+              test -f "dist/mikhbar/\${locale}/\${category}/archive/index.html"
+              grep -q 'data-category-archive="true"' "dist/mikhbar/\${locale}/\${category}/archive/index.html"
+            done
+          done
+      - name: Validate Worker bundle
+        run: npx --yes wrangler@latest deploy --dry-run --config cloudflare/mikhbar-site/wrangler.preview.toml
