@@ -2,9 +2,9 @@ import assert from "node:assert/strict";
 import { legacyForumTarget } from "./src/index.js";
 
 const cases = [
-  ["https://rdwan.dev/forum", "https://mikhbar.website/"],
-  ["https://rdwan.dev/forum?utm_source=google", "https://mikhbar.website/?utm_source=google"],
-  ["https://rdwan.dev/forum/", "https://mikhbar.website/"],
+  ["https://rdwan.dev/forum", "https://mikhbar.website/ar/"],
+  ["https://rdwan.dev/forum?utm_source=google", "https://mikhbar.website/ar/?utm_source=google"],
+  ["https://rdwan.dev/forum/", "https://mikhbar.website/ar/"],
   ["https://rdwan.dev/forum/ar/ai/example/", "https://mikhbar.website/ar/ai/example/"],
   ["https://rdwan.dev/forum/en/security/example/?ref=old", "https://mikhbar.website/en/security/example/?ref=old"],
   ["https://www.rdwan.dev/forum/", "https://mikhbar.website/"],
