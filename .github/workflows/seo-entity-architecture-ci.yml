@@ -1,0 +1,82 @@
+name: Temporary Mikhbar Entity Architecture CI
+
+on:
+  push:
+    branches:
+      - seo/entity-architecture-phase-7
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: automation/forum/requirements.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check -r automation/forum/requirements.txt
+      - name: Validate code
+        run: |
+          python -m py_compile automation/forum/entity_hub_config.py automation/forum/generate_entity_hubs.py automation/forum/audit_entity_architecture.py
+          node --check cloudflare/mikhbar-site/src/article.js
+          node --check cloudflare/mikhbar-site/src/index.js
+      - name: Run Worker tests
+        run: node --test cloudflare/mikhbar-site/tests/*.test.mjs
+      - name: Reproduce SEO production sequence
+        run: |
+          python automation/forum/enhance_category_seo.py
+          python automation/forum/generate_pillar_pages.py
+          python automation/forum/generate_archive_pages.py
+          python automation/forum/generate_trust_pages.py
+          python automation/forum/rebuild_indexes.py
+          python automation/forum/generate_entity_hubs.py
+          python automation/forum/audit_entity_architecture.py
+          python automation/forum/audit_multilingual_trust.py
+          node cloudflare/mikhbar-site/scripts/audit-semantic-links.mjs
+          python automation/forum/audit_crawl_graph.py
+      - name: Inspect qualified entity architecture
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          payload = json.loads(Path("forum/entity-hubs.json").read_text(encoding="utf-8"))
+          entities = payload.get("entities", [])
+          print("QUALIFIED_ENTITY_COUNT", len(entities))
+          for entity in entities:
+              print(
+                  "ENTITY",
+                  entity["slug"],
+                  entity["storyCount"],
+                  entity.get("categories", {}),
+                  entity.get("pillars", []),
+              )
+          assert len(entities) >= 1
+          for locale in ("ar", "en"):
+              index = Path(f"forum/{locale}/entities/index.html")
+              assert index.exists()
+              assert 'data-entity-index="true"' in index.read_text(encoding="utf-8")
+              for entity in entities:
+                  hub = Path(f"forum/{locale}/entities/{entity['slug']}/index.html")
+                  assert hub.exists(), hub
+                  text = hub.read_text(encoding="utf-8")
+                  assert 'data-entity-hub="true"' in text
+                  assert text.count('data-entity-story="true"') >= payload["minimumPairedStories"]
+          PY
+      - name: Build and validate Cloudflare output
+        run: |
+          python cloudflare/mikhbar-site/build.py
+          python automation/forum/audit_deployed_sitemap.py
+          for locale in ar en; do
+            test -f "dist/mikhbar/\${locale}/entities/index.html"
+            grep -q 'data-entity-index="true"' "dist/mikhbar/\${locale}/entities/index.html"
+          done
+          npx --yes wrangler@latest deploy --dry-run --config cloudflare/mikhbar-site/wrangler.preview.toml
