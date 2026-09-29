@@ -19,6 +19,9 @@ on:
       - 'automation/forum/audit_crawl_graph.py'
       - 'automation/forum/generate_trust_pages.py'
       - 'automation/forum/audit_multilingual_trust.py'
+      - 'automation/forum/entity_hub_config.py'
+      - 'automation/forum/generate_entity_hubs.py'
+      - 'automation/forum/audit_entity_architecture.py'
       - 'automation/forum/audit_deployed_sitemap.py'
       - 'cloudflare/mikhbar-site/build.py'
       - 'cloudflare/mikhbar-site/src/**'
@@ -60,6 +63,12 @@ jobs:
       - name: Rebuild Mikhbar search discovery files
         run: python automation/forum/rebuild_indexes.py
 
+      - name: Generate qualified Mikhbar entity hubs
+        run: python automation/forum/generate_entity_hubs.py
+
+      - name: Audit Mikhbar entity architecture
+        run: python automation/forum/audit_entity_architecture.py
+
       - name: Audit multilingual Mikhbar trust pages
         run: python automation/forum/audit_multilingual_trust.py
 
@@ -83,6 +92,7 @@ jobs:
               grep -q "data-topic-hub=\"${slug}\"" "dist/mikhbar/${locale}/${slug}/index.html"
             done
             grep -q 'data-news-archive="true"' "dist/mikhbar/${locale}/archive/index.html"
+            grep -q 'data-entity-index="true"' "dist/mikhbar/${locale}/entities/index.html"
             grep -q 'data-guide-index="true"' "dist/mikhbar/${locale}/guides/index.html"
             for guide in artificial-intelligence cybersecurity robotics; do
               grep -q "data-pillar-guide=\"${guide}\"" "dist/mikhbar/${locale}/guides/${guide}/index.html"

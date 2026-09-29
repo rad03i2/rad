@@ -41,9 +41,11 @@ test("related stories stay inside the current locale/category and exclude the cu
 });
 
 
-test("category archive paths are reserved from dynamic article routing", () => {
+test("category archive and entity hub paths are reserved from dynamic article routing", () => {
   assert.equal(isArticlePath("/en/ai/archive/"), false);
   assert.equal(isArticlePath("/ar/computers/archive/"), false);
+  assert.equal(isArticlePath("/en/entities/openai/"), false);
+  assert.equal(isArticlePath("/ar/entities/google/"), false);
   assert.equal(isArticlePath("/en/ai/real-story-slug/"), true);
 });
 

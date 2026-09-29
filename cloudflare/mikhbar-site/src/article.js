@@ -15,7 +15,7 @@ const UI = {
   }
 };
 
-const ARTICLE_ROUTE = /^\/(ar|en)\/([a-z0-9-]+)\/(?!archive(?:\/|$))([^/]+)\/?$/i;
+const ARTICLE_ROUTE = /^\/(ar|en)\/(?!(?:entities)(?:\/|$))([a-z0-9-]+)\/(?!archive(?:\/|$))([^/]+)\/?$/i;
 
 function esc(value) {
   return String(value ?? "")

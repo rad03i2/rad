@@ -29,6 +29,9 @@ on:
       - 'automation/forum/audit_crawl_graph.py'
       - 'automation/forum/generate_trust_pages.py'
       - 'automation/forum/audit_multilingual_trust.py'
+      - 'automation/forum/entity_hub_config.py'
+      - 'automation/forum/generate_entity_hubs.py'
+      - 'automation/forum/audit_entity_architecture.py'
       - 'automation/forum/pillar_discovery.py'
       - 'automation/forum/audit_search_quality.py'
       - 'automation/forum/audit_deployed_sitemap.py'
@@ -91,6 +94,12 @@ jobs:
       - name: Rebuild Mikhbar search discovery files
         run: python automation/forum/rebuild_indexes.py
 
+      - name: Generate qualified Mikhbar entity hubs
+        run: python automation/forum/generate_entity_hubs.py
+
+      - name: Audit Mikhbar entity architecture
+        run: python automation/forum/audit_entity_architecture.py
+
       - name: Audit multilingual Mikhbar trust pages
         run: python automation/forum/audit_multilingual_trust.py
 
@@ -122,6 +131,11 @@ jobs:
             while IFS= read -r category_archive; do
               grep -q 'data-category-archive="true"' "$category_archive"
             done < <(find "dist/mikhbar/${locale}" -mindepth 3 -maxdepth 3 -path '*/archive/index.html' -type f | sort)
+            test -f "dist/mikhbar/${locale}/entities/index.html"
+            grep -q 'data-entity-index="true"' "dist/mikhbar/${locale}/entities/index.html"
+            while IFS= read -r entity_hub; do
+              grep -q 'data-entity-hub="true"' "$entity_hub"
+            done < <(find "dist/mikhbar/${locale}/entities" -mindepth 2 -maxdepth 2 -name index.html -type f | sort)
             test -f "dist/mikhbar/${locale}/guides/index.html"
             grep -q 'data-guide-index="true"' "dist/mikhbar/${locale}/guides/index.html"
             for guide in artificial-intelligence cybersecurity robotics; do
@@ -287,12 +301,12 @@ jobs:
           payload = json.loads(Path('dist/mikhbar/posts-en.json').read_text(encoding='utf-8'))
           posts = payload.get('posts', []) if isinstance(payload, dict) else payload
           for post in posts:
-              if str(post.get('categorySlug') or '') != 'ai':
+              if not post.get('entityHubs'):
                   continue
               path = str(post.get('url') or '')
               if path.startswith('/forum/'):
                   path = path[len('/forum'):]
-              if path.startswith('/en/ai/'):
+              if path.startswith('/en/'):
                   print(path)
                   break
           PY
@@ -303,6 +317,8 @@ jobs:
           grep -q 'data-ssr-rendered="true"' /tmp/mikhbar-live-article.html
           grep -q 'class="rt-section rt-related-stories"' /tmp/mikhbar-live-article.html
           grep -q 'data-related-strategy="semantic"' /tmp/mikhbar-live-article.html
+          grep -q 'data-article-entity-hubs="true"' /tmp/mikhbar-live-article.html
+          grep -q 'data-article-entity-hub="true"' /tmp/mikhbar-live-article.html
           grep -q 'class="rt-section rt-article-chronology"' /tmp/mikhbar-live-article.html
           grep -q 'href="/en/archive/"' /tmp/mikhbar-live-article.html
           grep -q 'class="rt-section rt-related-topics"' /tmp/mikhbar-live-article.html
