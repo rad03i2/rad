@@ -107,11 +107,34 @@ def _header(locale: str, depth: int) -> str:
     top_url = home_url + "#top-stories"
     newsletter_url = home_url + "#newsletter"
     lang_url = "/forum/en/" if locale == "ar" else "/forum/ar/"
+    about_url = "/forum/about/" if locale == "ar" else "/forum/en/about/"
     return f'''<header class="rt-site-header"><div class="rt-navbar">
 <a class="mikhbar-brand" href="{home_url}" aria-label="{site_name}"><span class="mikhbar-brand-mark"><img src="/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png" alt="" width="64" height="64"></span><span class="mikhbar-brand-copy"><strong>{site_name}</strong><small dir="ltr">MIKHBAR</small></span></a>
 <button class="menu-button rt-menu-button" type="button" aria-label="{ui['menu']}" aria-expanded="false" aria-controls="navigation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-<nav class="nav-links rt-platform-nav" id="navigation" aria-label="{ui['nav']}"><a href="{home_url}">{home_label}</a><a href="{latest_url}">{latest_label}</a><a data-mikhbar-nav="sections" href="{sections_url}">{sections_label}</a><a data-mikhbar-nav="top" href="{top_url}">{top_label}</a><a data-mikhbar-nav="newsletter" href="{newsletter_url}">{newsletter_label}</a><a href="/forum/about/">{about_label}</a><a class="rt-lang-switch" href="{lang_url}" lang="{'en' if locale == 'ar' else 'ar'}">{lang_label}</a></nav>
+<nav class="nav-links rt-platform-nav" id="navigation" aria-label="{ui['nav']}"><a href="{home_url}">{home_label}</a><a href="{latest_url}">{latest_label}</a><a data-mikhbar-nav="sections" href="{sections_url}">{sections_label}</a><a data-mikhbar-nav="top" href="{top_url}">{top_label}</a><a data-mikhbar-nav="newsletter" href="{newsletter_url}">{newsletter_label}</a><a href="{about_url}">{about_label}</a><a class="rt-lang-switch" href="{lang_url}" lang="{'en' if locale == 'ar' else 'ar'}">{lang_label}</a></nav>
 </div></header>'''
+
+def _footer(locale: str) -> str:
+    if locale == "ar":
+        links = (
+            '<a href="/forum/about/">عن مِخبار</a> · '
+            '<a href="/forum/editorial-policy/">السياسة التحريرية</a> · '
+            '<a href="/forum/corrections/">التصحيحات</a> · '
+            '<a href="/forum/ai-policy/">سياسة الذكاء الاصطناعي</a> · '
+            '<a href="/forum/contact/">تواصل</a>'
+        )
+        brand = "مِخبار"
+    else:
+        links = (
+            '<a href="/forum/en/about/">About</a> · '
+            '<a href="/forum/en/editorial-policy/">Editorial policy</a> · '
+            '<a href="/forum/en/corrections/">Corrections</a> · '
+            '<a href="/forum/en/ai-policy/">AI policy</a> · '
+            '<a href="/forum/en/contact/">Contact</a>'
+        )
+        brand = "Mikhbar"
+    return f'<footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> {brand} · {links}</div></footer>'
+
 
 def _card(post: dict, locale: str) -> str:
     url = escape(str(post.get("url") or "#"), quote=True)
@@ -183,7 +206,7 @@ def _home_page(locale: str, posts: list[dict]) -> str:
 <section class="rt-section" id="latest"><header class="rt-section-head"><div><h2>{ui['latest']}</h2><p>{ui['latestDesc']}</p></div><span class="rt-count" id="rtCount">{len(posts)} {ui['posts']}</span></header><div class="rt-feed" id="rtFeed">{feed}</div><div class="rt-feed-empty" id="rtEmpty" hidden><b>{ui['noResults']}</b><p>{ui['tryDifferent']}</p></div><button class="rt-load-more" id="rtLoadMore" type="button">{ui['more']}</button></section>
 <section class="rt-section"><header class="rt-section-head"><div><h2>{ui['topics']}</h2><p>{ui['topicsDesc']}</p></div></header><div class="rt-category-showcase">{topics}</div></section>
 <section class="rt-newsletter" id="newsletter"><div><h2>{ui['newsletter']}</h2><p>{ui['newsletterDesc']}</p></div><a href="https://omniform1.com/forms/v1/landingPage/6aa951449b0f973742e3f90d/6aa9b7a1f85082d5ccd3f79c">{ui['subscribe']}</a></section></div></main>
-<footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> {site_name}</div></footer><script src="../forum.js?v=20260922-about3" defer></script></body></html>'''
+{_footer(locale)}<script src="../forum.js?v=20260922-about3" defer></script></body></html>'''
 
 
 def _category_page(locale: str, slug: str, all_posts: list[dict]) -> str:
@@ -197,7 +220,7 @@ def _category_page(locale: str, slug: str, all_posts: list[dict]) -> str:
 <nav class="rt-categories" aria-label="Sections"><div class="rt-shell rt-category-scroll">{_category_nav(locale,'../',slug)}</div></nav><div class="rt-shell"><section class="rt-category-hero"><nav class="rt-breadcrumbs"><a href="../">{site_name}</a><span>›</span><span>{escape(label)}</span></nav><div class="rt-category-title"><span class="rt-label">{slug.upper()}</span><h1>{escape(label)}</h1><p>{escape(desc)}</p></div></section>
 <div class="rt-toolbar"><label class="rt-search"><input id="rtSearch" type="search" autocomplete="off" placeholder="{ui['search']}" aria-label="{ui['search']}"></label><span class="rt-view-note">{ui['searchNote']}</span></div>
 <section class="rt-section"><header class="rt-section-head"><div><h2>{ui['latest']}</h2><p>{escape(desc)}</p></div><span class="rt-count" id="rtCount">{len(posts)} {ui['posts']}</span></header><div class="rt-feed" id="rtFeed">{feed}</div><div class="rt-feed-empty" id="rtEmpty" {'hidden' if posts else ''}><b>{ui['noResults']}</b><p>{ui['tryDifferent']}</p></div><button class="rt-load-more" id="rtLoadMore" type="button">{ui['more']}</button></section></div></main>
-<footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> RDWAN Tech</div></footer><script src="../../forum.js?v=20260922-about3" defer></script></body></html>'''
+{_footer(locale)}<script src="../../forum.js?v=20260922-about3" defer></script></body></html>'''
 
 
 def _router_page(posts_ar: list[dict], posts_en: list[dict]) -> str:
