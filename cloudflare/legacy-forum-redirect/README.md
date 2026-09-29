@@ -17,9 +17,11 @@ It is intentionally limited to the old publication path only:
 
 It must **not** be attached to `rdwan.dev/*` generally and must not change the personal site's homepage, portfolio, assets or other routes.
 
-## Deployment safety
+## Deployment status
 
-Production routing is deliberately scoped only to `rdwan.dev/forum*` and `www.rdwan.dev/forum*`. The Worker must never be attached to `rdwan.dev/*` generally. The deployment workflow verifies that the personal homepage remains outside the Mikhbar migration route.
+`rdwan.dev` is currently served by **Appwrite Sites**, not by the Cloudflare zone used for `mikhbar.website`. Therefore this Worker is retained as a tested migration reference only and is not auto-deployed.
+
+The live migration layer is source-controlled in `rad03i2/rad2`: legacy `/forum` landing pages carry cross-domain canonicals and immediate migration navigation toward `mikhbar.website`, while the personal site's remaining paths stay independent.
 
 ## SEO purpose
 
