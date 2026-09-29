@@ -38,18 +38,45 @@ jobs:
 
       - name: Validate required secrets
         shell: bash
-        env:
-          SCHEDULER_GITHUB_TOKEN: ${{ secrets.RDWAN_SCHEDULER_GITHUB_TOKEN }}
         run: |
           test -n "$CLOUDFLARE_API_TOKEN" || { echo "Missing CLOUDFLARE_API_TOKEN"; exit 1; }
           test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo "Missing CLOUDFLARE_ACCOUNT_ID"; exit 1; }
-          test -n "$SCHEDULER_GITHUB_TOKEN" || { echo "Missing RDWAN_SCHEDULER_GITHUB_TOKEN"; exit 1; }
 
       - name: Install Wrangler
         run: npm install --no-save wrangler@latest
 
       - name: Test external scheduler
         run: node --test tests/*.test.mjs
+
+      - name: Validate new or existing Worker dispatch credential
+        shell: bash
+        env:
+          SCHEDULER_GITHUB_TOKEN: ${{ secrets.RDWAN_SCHEDULER_GITHUB_TOKEN }}
+        run: |
+          python - <<'PYCODE'
+          import json
+          import os
+          import urllib.error
+          import urllib.request
+          if os.environ.get('SCHEDULER_GITHUB_TOKEN'):
+              print('Repository dispatch credential is configured.')
+              raise SystemExit(0)
+          account = os.environ['CLOUDFLARE_ACCOUNT_ID']
+          url = f'https://api.cloudflare.com/client/v4/accounts/{account}/workers/scripts/rdwan-tech-publisher-wakeup/settings'
+          request = urllib.request.Request(url, headers={
+              'Authorization': 'Bearer ' + os.environ['CLOUDFLARE_API_TOKEN'],
+          })
+          try:
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  payload = json.load(response)
+          except urllib.error.HTTPError as error:
+              raise SystemExit(f'Worker credential lookup returned HTTP {error.code}; configure RDWAN_SCHEDULER_GITHUB_TOKEN.')
+          bindings = (payload.get('result') or {}).get('bindings') or []
+          configured = any(binding.get('name') == 'GITHUB_TOKEN' and binding.get('type') == 'secret_text' for binding in bindings)
+          if not configured:
+              raise SystemExit('Missing RDWAN_SCHEDULER_GITHUB_TOKEN and no existing Worker GITHUB_TOKEN secret.')
+          print('Preserving the existing Worker GITHUB_TOKEN secret; no credential value was read.')
+          PYCODE
 
       - name: Deploy Worker and cron trigger
         id: worker
@@ -72,7 +99,12 @@ jobs:
         shell: bash
         env:
           SCHEDULER_GITHUB_TOKEN: ${{ secrets.RDWAN_SCHEDULER_GITHUB_TOKEN }}
-        run: printf '%s' "$SCHEDULER_GITHUB_TOKEN" | npx wrangler secret put GITHUB_TOKEN
+        run: |
+          if [ -n "$SCHEDULER_GITHUB_TOKEN" ]; then
+            printf '%s' "$SCHEDULER_GITHUB_TOKEN" | npx wrangler secret put GITHUB_TOKEN
+          else
+            echo "Keeping the previously validated Worker GITHUB_TOKEN secret."
+          fi
 
       - name: Install protected manual trigger key when configured
         shell: bash
@@ -104,5 +136,9 @@ jobs:
           assert health.get('publication_minimum_minutes') == 20, health
           print('External scheduler health and configuration verified.')
           PYCODE
-          gh api --method GET repos/rad03i2/rad/actions/workflows/forum-collector.yml/runs -f per_page=1 > /dev/null
-          gh workflow run forum-collector.yml --ref main -f trigger=external-scheduler-deployment-check
+          if [ -n "$GH_TOKEN" ]; then
+            gh api --method GET repos/rad03i2/rad/actions/workflows/forum-collector.yml/runs -f per_page=1 > /dev/null
+            gh workflow run forum-collector.yml --ref main -f trigger=external-scheduler-deployment-check
+          else
+            echo "Existing Worker secret retained; verify authenticated dispatch in the next scheduled Worker event."
+          fi
