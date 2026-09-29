@@ -258,8 +258,8 @@ def validate_root_search_identity() -> None:
         '"alternateName":["مِخبار","mikhbar.website"]',
         f'"url":"{PUBLIC_ORIGIN}/"',
         'hreflang="x-default"',
-        'href="/ar/"',
-        'href="/en/"',
+        f'href="{PUBLIC_ORIGIN}/ar/"',
+        f'href="{PUBLIC_ORIGIN}/en/"',
     )
     missing = [needle for needle in required if needle not in text]
     if missing:
