@@ -84,6 +84,11 @@ def sitemap_routes() -> set[str]:
     routes = set()
     for node in root.findall(".//s:loc", ns):
         if node.text and (route := public_path(node.text)):
+            # The source discovery file briefly contains the language-negotiating
+            # root before the Cloudflare build prunes it. It is a redirect, not an
+            # indexable content node, so exclude it from crawl-depth calculations.
+            if route == "/":
+                continue
             routes.add(route)
     return routes
 
@@ -180,7 +185,11 @@ def main() -> int:
 
     # Static indexable pages contribute their real HTML links.
     for route in list(routes):
-        if route in article_urls["ar"] or route in article_urls["en"]:
+        is_article = route in article_urls["ar"] or route in article_urls["en"]
+        # Dynamic bilingual articles are modeled below. The protected launch
+        # announcement predates locale-prefixed routes and remains a real static
+        # page, so crawl its actual HTML like any other static node.
+        if is_article and ARTICLE_RE.fullmatch(route):
             continue
         path = file_for_route(route)
         if path and path.exists():
@@ -190,7 +199,7 @@ def main() -> int:
     # chronological neighbors that the Worker exposes.
     for locale in ("ar", "en"):
         for route, links in related_article_edges(posts_by_locale[locale], locale).items():
-            if route in graph:
+            if route in graph and ARTICLE_RE.fullmatch(route):
                 graph[route].update(link for link in links if link in graph)
 
     inbound: dict[str, int] = {route: 0 for route in graph}
