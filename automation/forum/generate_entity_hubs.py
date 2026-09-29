@@ -221,8 +221,8 @@ def qualify_entities(posts_by_locale: dict[str, list[dict]]) -> dict[str, dict]:
         categories.pop("", None)
         pillars = [
             PILLAR_BY_CATEGORY[category]
-            for category, _ in categories.most_common()
-            if category in PILLAR_BY_CATEGORY
+            for category, count in categories.most_common()
+            if category in PILLAR_BY_CATEGORY and count >= 2
         ]
 
         qualified[slug] = {
@@ -247,7 +247,7 @@ def qualify_entities(posts_by_locale: dict[str, list[dict]]) -> dict[str, dict]:
             if other_slug == slug:
                 continue
             shared = len(current_ids & set(other["storyIds"]))
-            if shared:
+            if shared >= 2:
                 related.append({"slug": other_slug, "name": other["name"], "sharedStories": shared})
         entity["related"] = sorted(
             related,
