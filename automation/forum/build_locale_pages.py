@@ -162,7 +162,7 @@ def _schemas(locale: str, path: str, posts: list[dict], page_name: str) -> str:
     alternate_names = [name for name in brand_aliases if name != site_name]
     item_list = [{"@type": "ListItem", "position": i + 1, "url": SITE + str(p.get("url") or ""), "name": str(p.get("title") or "")} for i, p in enumerate(posts[:20]) if p.get("url")]
     graph = [
-        {"@type": "NewsMediaOrganization", "@id": SITE + "/forum/#publisher", "name": site_name, "alternateName": alternate_names, "url": SITE + "/forum/", "logo": {"@type": "ImageObject", "url": SITE + "/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"}, "description": "مِخبار (Mikhbar، مخبار دون تشكيل) منصة تقنية مستقلة بالعربية والإنجليزية." if locale == "ar" else "Mikhbar is an independent bilingual technology publication."},
+        {"@type": "NewsMediaOrganization", "@id": SITE + "/forum/#publisher", "name": site_name, "alternateName": alternate_names, "url": SITE + "/forum/", "logo": {"@type": "ImageObject", "url": SITE + "/assets/brand/mikhbar/06-web-ready/icon/mikhbar-app-icon-512.png"}, "description": "مِخبار (Mikhbar، مخبار دون تشكيل) منصة تقنية مستقلة بالعربية والإنجليزية." if locale == "ar" else "Mikhbar is an independent bilingual technology publication.", "sameAs": ["https://rdwan.dev/mikhbar.html"]},
         {"@type": "CollectionPage", "@id": SITE + path + "#page", "url": SITE + path, "name": page_name, "inLanguage": locale, "publisher": {"@id": SITE + "/forum/#publisher"}},
     ]
     if path in {"/forum/ar/", "/forum/en/"}:

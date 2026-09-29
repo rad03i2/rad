@@ -119,6 +119,7 @@ def publisher_schema() -> dict:
         "logo": {"@type": "ImageObject", "url": LOGO},
         "publishingPrinciples": ORIGIN + "/editorial-policy/",
         "correctionsPolicy": ORIGIN + "/corrections/",
+        "sameAs": ["https://rdwan.dev/mikhbar.html"],
     }
 
 
