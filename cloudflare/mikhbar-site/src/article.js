@@ -314,6 +314,7 @@ export async function renderDynamicArticle(request, env, pathname) {
     .on("#footer-copy-brand", new TextHandler(ui.site))
     .on("#footer-description", new TextHandler(ui.footerDesc))
     .on("#footer-publication-title", new TextHandler(ui.publication))
+    .on("#footer-archive", new AttrHandler({ href: `/${locale}/archive/` }, locale === "ar" ? "الأرشيف" : "Archive"))
     .on("#footer-about", new AttrHandler({ href: `${trustBase}/about/` }, ui.about))
     .on("#footer-editorial", new AttrHandler({ href: `${trustBase}/editorial-policy/` }, ui.editorial))
     .on("#footer-trust-title", new TextHandler(ui.trust))
