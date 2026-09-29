@@ -11,9 +11,12 @@ export function legacyForumTarget(input) {
   }
 
   const target = new URL(TARGET_ORIGIN);
-  target.pathname = source.pathname === "/forum"
-    ? "/"
-    : source.pathname.slice("/forum".length) || "/";
+  // The historical publication root was Arabic-first. Point the bare legacy
+  // root directly at the final canonical Arabic homepage instead of chaining
+  // through the language-negotiating site root.
+  target.pathname = (source.pathname === "/forum" || source.pathname === "/forum/")
+    ? "/ar/"
+    : source.pathname.slice("/forum".length) || "/ar/";
   target.search = source.search;
   return target.toString();
 }
