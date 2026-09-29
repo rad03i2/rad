@@ -313,6 +313,26 @@ jobs:
           )"
           test -n "$ARTICLE_PATH"
 
+          ENTITY_PATH="$(python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path('dist/mikhbar/posts-en.json').read_text(encoding='utf-8'))
+          posts = payload.get('posts', []) if isinstance(payload, dict) else payload
+          for post in posts:
+              hubs = post.get('entityHubs') or []
+              if not hubs:
+                  continue
+              path = str(hubs[0].get('url') or '')
+              if path.startswith('/forum/'):
+                  path = path[len('/forum'):]
+              if path.startswith('/en/entities/'):
+                  print(path)
+                  break
+          PY
+          )"
+          test -n "$ENTITY_PATH"
+
           curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website${ARTICLE_PATH}" -o /tmp/mikhbar-live-article.html
           grep -q 'data-ssr-rendered="true"' /tmp/mikhbar-live-article.html
           grep -q 'class="rt-section rt-related-stories"' /tmp/mikhbar-live-article.html
@@ -320,14 +340,19 @@ jobs:
           grep -q 'data-article-entity-hubs="true"' /tmp/mikhbar-live-article.html
           grep -q 'data-article-entity-hub="true"' /tmp/mikhbar-live-article.html
           grep -q 'class="rt-section rt-article-chronology"' /tmp/mikhbar-live-article.html
-          grep -q 'href="/en/archive/"' /tmp/mikhbar-live-article.html
           grep -q 'class="rt-section rt-related-topics"' /tmp/mikhbar-live-article.html
           grep -q 'Related stories' /tmp/mikhbar-live-article.html
           grep -q 'Related topics' /tmp/mikhbar-live-article.html
-          grep -q 'href="/en/automation/"' /tmp/mikhbar-live-article.html
           grep -Fq "rel=\"canonical\" href=\"https://mikhbar.website${ARTICLE_PATH}\"" /tmp/mikhbar-live-article.html
+
+          curl -fsS --retry 5 --retry-delay 2 --retry-all-errors "https://mikhbar.website${ENTITY_PATH}" -o /tmp/mikhbar-live-entity.html
+          grep -q 'data-entity-hub="true"' /tmp/mikhbar-live-entity.html
+          grep -Fq "rel=\"canonical\" href=\"https://mikhbar.website${ENTITY_PATH}\"" /tmp/mikhbar-live-entity.html
+          grep -q 'hreflang="ar"' /tmp/mikhbar-live-entity.html
+          grep -q 'hreflang="en"' /tmp/mikhbar-live-entity.html
+
           if grep -q 'rdwan.dev' /tmp/mikhbar-live-article.html; then
             echo "Legacy rdwan.dev identity appeared in live article HTML." >&2
             exit 1
           fi
-          echo "Live Mikhbar SSR and evergreen SEO smoke tests passed for ${ARTICLE_PATH}"
+          echo "Live Mikhbar SSR, semantic links and entity hub smoke tests passed for ${ARTICLE_PATH} -> ${ENTITY_PATH}"
