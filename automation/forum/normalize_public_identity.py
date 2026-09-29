@@ -6,6 +6,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 FORUM = ROOT / "forum"
+BRAND_REFERENCE_URL = "https://rdwan.dev/mikhbar.html"
+BRAND_REFERENCE_SENTINEL = "__MIKHBAR_EXTERNAL_BRAND_REFERENCE__"
 
 PUBLIC_SHELL_FILES = {
     "sitemap.xml",
@@ -33,6 +35,10 @@ def _is_public_shell(path: Path, include_post_indexes: bool) -> bool:
 
 
 def _normalize(text: str) -> str:
+    # Preserve the one intentional external brand-reference URL while still
+    # blocking every legacy rdwan.dev identity/path from public Mikhbar shells.
+    text = text.replace(BRAND_REFERENCE_URL, BRAND_REFERENCE_SENTINEL)
+
     # Canonical public identity: Mikhbar is a standalone publication.
     text = text.replace("https://www.rdwan.dev/forum", "https://mikhbar.website")
     text = text.replace("https://rdwan.dev/forum", "https://mikhbar.website")
@@ -60,6 +66,7 @@ def _normalize(text: str) -> str:
     text = text.replace("'/forum/", "'/")
     text = text.replace("url=/forum/", "url=/")
     text = text.replace("https://mikhbar.website/forum/", "https://mikhbar.website/")
+    text = text.replace(BRAND_REFERENCE_SENTINEL, BRAND_REFERENCE_URL)
     return text
 
 
@@ -87,7 +94,8 @@ def normalize_public_identity(*, include_post_indexes: bool = False) -> tuple[in
         if not path.is_file() or not _is_public_shell(path, include_post_indexes):
             continue
         text = path.read_text(encoding="utf-8")
-        if "rdwan.dev" in text:
+        unexpected = text.replace(BRAND_REFERENCE_URL, "")
+        if "rdwan.dev" in unexpected:
             leftovers.append(path.relative_to(ROOT).as_posix())
 
     if leftovers:
