@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "5a499aeeb99b0744b94b",
+  "slug": "build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part/",
+    "en": "/forum/en/ai/build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part/"
+  },
+  "locales": {
+    "ar": {
+      "title": "AWS تتيح بناء تطبيقات صوتية فورية عبر vLLM-Omni على SageMaker",
+      "description": "تعتمد AWS على حاوية vLLM-Omni لتوزيع نموذج Qwen3-TTS على SageMaker AI، مما يتيح بثّ الصوت الفوري عبر اتصالات ثنائية الاتجاه لتحسين تجربة الوكلاء الصوتيين.",
+      "deck": "تقدّم شركة AWS حلاً تقنياً جديداً لتسريع استجابة التطبيقات الصوتية من خلال بثّ الصوت أثناء توليده، بدلاً من انتظار اكتمال النص كاملاً.",
+      "summaryBullets": [
+        "إطلاق حاوية vLLM-Omni لدعم نماذج متعددة الوسائط بما في ذلك تحويل النص إلى كلام.",
+        "استخدام نموذج Qwen3-TTS لتوليد صوتي فوري عبر اتصال ويب سوكيت ثنائي الاتجاه.",
+        "توزيع النموذج على Amazon SageMaker AI مع دعم لاختيار أنواع الحواسيب المناسبة تلقائياً.",
+        "توفير واجهة Gradio لتجربة البث الصوتي المباشر وتقييم الأداء الفعلي للتطبيق."
+      ],
+      "sections": [
+        {
+          "heading": "تسريع استجابة الوكلاء الصوتيين",
+          "paragraphs": [
+            {
+              "text": "تواجه التطبيقات الصوتية التفاعلية، وأدوات إمكانية الوصول، ومساعدات خدمة العملاء تحدياً رئيسياً يتمثل في التأخير الزمني بين معالجة الطلب وعرض النتيجة. لسد هذه الفجوة، تتيح شركة AWS الآن نشر نماذج تحويل النص إلى كلام (TTS) على منصة Amazon SageMaker AI باستخدام حاوية تعلم عميق متخصصة تُعرف باسم AWS vLLM-Omni Deep Learning Container. تتيح هذه التقنية بدء تشغيل الصوت قبل انتهاء النموذج من توليد الرد الكامل، مما يقلل من فترات الصمت المزعجة للمستخدمين.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker/ai/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "توسيع قدرات vLLM ليشمل الوسائط المتعددة",
+          "paragraphs": [
+            {
+              "text": "يُعد مشروع vLLM-Omni امتداداً لتقنية vLLM الشهيرة، حيث يوسع نطاقها من توليد النصوص فقط إلى معالجة وتوليد الوسائط المتعددة مثل الصوت والصور والفيديو. توفر هذه الحاوية طبقة تجريد تسهّل إدارة خطوط الأنابيب المعقدة التي تتضمن مراحل متعددة، بدءاً من التوليد التلقائي وحتى مراحل الانتشار (Diffusion). كما توفر واجهات برمجية متوافقة مع معايير OpenAI، مما يسهّل على المطورين دمج هذه القدرات في تطبيقاتهم الحالية دون الحاجة إلى إعادة بناء البنية التحتية بالكامل.",
+              "links": [
+                {
+                  "text": "vLLM-Omni",
+                  "url": "https://github.com/aws/deep-learning-containers/tree/main/docs/vllm-omni"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية البث الثنائي الاتجاه",
+          "paragraphs": [
+            {
+              "text": "تعتمد هذه التقنية على ميزة البث الثنائي الاتجاه (Bidirectional Streaming) في SageMaker، والتي تستغل بروتوكول WebSocket فوق HTTP/2 لإنشاء اتصال دائم بين العميل والخادم. من خلال هذا الاتصال، يمكن إرسال النص إلى النموذج واستقبال مقاطع الصوت (Audio Chunks) فور توليدها. في هذا الجزء من الشرح، يتم استخدام نموذج Qwen3-TTS كمثال تطبيقي، حيث تُرسل النصوص عبر واجهة Gradio، ويعود الصوت المولد بجودة 24 كيلو هرتز عبر نفس القناة، مما يضمن استمرارية التدفق وسلاسة التجربة.",
+              "links": [
+                {
+                  "text": "Qwen3-TTS",
+                  "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الموارد وتوزيع النماذج",
+          "paragraphs": [
+            {
+              "text": "لتحسين كفاءة التكلفة والأداء، يستخدم النظام ميزة مجمعات الحواسيب (Instance Pools) في SageMaker. يسمح هذا الإعداد بتحديد قائمة بأولويات لأنواع الحواسيب المتوافقة، مثل ml.g6.xlarge أو ml.g5.xlarge. يقوم النظام بمحاولة تخصيص الموارد من النوع الأول، وفي حال عدم توفرها، ينتقل تلقائياً إلى النوع التالي. يتطلب هذا الإعداد ضمان توفر الحصة (Quota) اللازمة لجميع أنواع الحواسيب المدرجة في القائمة، مع إمكانية تخصيص القائمة لتتناسب مع متطلبات الأداء والميزانية المحددة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات التقنية والإعداد",
+          "paragraphs": [
+            {
+              "text": "يتطلب تنفيذ هذا الحل امتلاك حساب AWS مع صلاحيات إنشاء واستدعاء نقاط النهاية (Endpoints) على SageMaker AI. كما يحتاج المطور إلى تثبيت عميل Python الخاص بـ SageMaker Runtime الإصدار 0.4.0 لدعم اتصالات HTTP/2. يتضمن الإعداد استنساخ مستودع أمثلة AWS، وتكوين الدور التنفيذي (Execution Role)، وتحديد مسار استدعاء النموذج بشكل صحيح لضمان تمرير الطلبات عبر وسيط الاستدلال (Sidecar) إلى حاوية vLLM-Omni داخل النظام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مستقبل السلسلة التقنية",
+          "paragraphs": [
+            {
+              "text": "يُعد هذا المقال الجزء الأول من سلسلة تقنية تركز على حاويات التعلم العميق المتخصصة (Specialized DLCs) التي توفرها AWS. بينما يركز هذا الجزء على معالجة الصوت الفوري، ستتناول الأجزاء اللاحقة تطبيقات أخرى مثل توليد الصور والفيديو باستخدام نفس البنية التحتية. تهدف هذه السلسلة إلى تقديم أمثلة عملية قابلة للتكرار مع مقاييس أداء دقيقة، مما يساعد المطورين على اتخاذ قرارات مستنيرة عند بناء تطبيقات الذكاء الاصطناعي متعددة الوسائط.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "AWS",
+        "SageMaker",
+        "vLLM-Omni",
+        "تحويل النص إلى كلام",
+        "تطبيقات صوتية",
+        "تعلم عميق"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon SageMaker AI",
+        "vLLM-Omni",
+        "Qwen3-TTS",
+        "Gradio",
+        "WebSocket"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "29 سبتمبر 2026",
+      "modifiedLabel": "29 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 508
+    },
+    "en": {
+      "title": "Build Real-Time Voice Apps with vLLM-Omni on SageMaker AI",
+      "description": "Learn how to deploy a text-to-speech model using the AWS vLLM-Omni Deep Learning Container on Amazon SageMaker AI for real-time voice apps.",
+      "deck": "A new AWS tutorial demonstrates how to stream generated speech over a persistent bidirectional connection using the AWS vLLM-Omni Deep Learning Container and Amazon SageMaker AI.",
+      "summaryBullets": [
+        "Deploy the Qwen3-TTS model on Amazon SageMaker AI to start playing audio before full generation finishes.",
+        "Utilize the AWS vLLM-Omni Deep Learning Container (DLC) to stream text in and audio out over a persistent bidirectional connection.",
+        "Test the real-time workflow using a bundled Gradio application and sample code.",
+        "Configure instance pools to manage fallback options across multiple compatible instance types."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to vLLM-Omni and SageMaker AI",
+          "paragraphs": [
+            {
+              "text": "Voice agents, interactive learning applications, accessibility tools, and customer service assistants require immediate responses without long silent pauses. To address this challenge, developers can deploy a text-to-speech model on <a href=\"https://aws.amazon.com/sagemaker/ai/\">Amazon SageMaker AI</a> that begins playing speech before completing the full response generation. This approach utilizes the <a href=\"https://aws.github.io/deep-learning-containers/vllm-omni/\">AWS vLLM-Omni Deep Learning Container (DLC)</a> to deploy the Qwen3-TTS model, enabling text input and audio output over a single persistent bidirectional connection.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker/ai/"
+                },
+                {
+                  "text": "AWS vLLM-Omni Deep Learning Container (DLC)",
+                  "url": "https://aws.github.io/deep-learning-containers/vllm-omni/"
+                }
+              ]
+            },
+            {
+              "text": "AWS provides deployment guidance and specialized Docker images for widely adopted serving frameworks. This release serves as Part 1 of a tutorial series focusing on specialized DLCs such as vLLM-Omni, WhisperX, and llama.cpp, targeting streamed speech for real-time voice applications. Part 2 of the series expands the usage of the vLLM-Omni DLC toward image and video generation workflows.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Multimodal Inference and vLLM-Omni Capabilities",
+          "paragraphs": [
+            {
+              "text": "Specialized inference runtimes support media pipelines and model architectures that diverge from traditional text generation. By packaging these runtimes with framework dependencies and configuration files, AWS Deep Learning Containers offer a consistent path to managed inference services and cloud compute infrastructure.",
+              "links": []
+            },
+            {
+              "text": "The vLLM-Omni project extends standard text generation capabilities to serve models capable of processing and generating text, audio, images, and video. Its heterogeneous pipeline abstraction coordinates multi-stage workflows, providing streaming outputs and OpenAI-compatible APIs. While the runtime supports automatic speech recognition, audio generation, and image production, this initial tutorial highlights the <a href=\"https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice\">Qwen3-TTS</a> model as a focused example for bidirectional audio output.",
+              "links": [
+                {
+                  "text": "Qwen3-TTS",
+                  "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Bidirectional Streaming Architecture",
+          "paragraphs": [
+            {
+              "text": "SageMaker bidirectional streaming relies on a full-duplex WebSocket transported over HTTP/2. Clients connect directly to the SageMaker Runtime endpoint on port 8443, where an inference sidecar forwards the connection to the native vLLM-Omni WebSocket route inside the underlying container.",
+              "links": []
+            },
+            {
+              "text": "During operation, session configurations and text events are sent to the endpoint, while audio lifecycle events and 24 kHz PCM chunks stream back over the same connection. The vLLM-Omni v1.5 DLC provides the necessary routing middleware and capability labels required by SageMaker AI, utilizing the native WebSocket route designed for streaming speech.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Endpoint Configuration and Instance Pools",
+          "paragraphs": [
+            {
+              "text": "Endpoint configurations within this deployment workflow utilize SageMaker instance pools. An instance pool establishes a priority-ordered list of compatible instance types for a single production variant. SageMaker attempts to provision the primary choice first before falling back to alternative instance options if compute capacity is unavailable.",
+              "links": []
+            },
+            {
+              "text": "When creating the endpoint, SageMaker validates quotas for every entry defined in the configured pool, meaning developers must ensure adequate account quota for all included types. Furthermore, hourly operational costs may shift if SageMaker selects a secondary instance type from the pool during provisioning.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deployment and Setup Instructions",
+          "paragraphs": [
+            {
+              "text": "To begin building applications with this architecture, developers need an AWS account with configured CLI credentials, appropriate permissions to create SageMaker AI endpoints, and sufficient quota for at least one supported instance type, such as ml.g6.xlarge, ml.g6e.xlarge, ml.g5.xlarge, or ml.g4dn.xlarge.",
+              "links": []
+            },
+            {
+              "text": "The complete code sample is available in the hosting examples repository. Developers can clone the repository, install the necessary Python packages within a virtual environment, set the required execution role environment variables, and run the deployment script to initialize the real-time endpoint and execute a validation streaming smoke test.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker AI",
+        "vLLM-Omni",
+        "AWS",
+        "Text-to-Speech",
+        "Artificial Intelligence",
+        "Deep Learning Containers",
+        "Qwen3-TTS"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "SageMaker AI",
+        "vLLM-Omni",
+        "Qwen3-TTS"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 29, 2026",
+      "modifiedLabel": "September 29, 2026",
+      "readMinutes": 3,
+      "wordCount": 611
+    }
+  },
+  "datePublished": "2026-09-29T03:53:43.818195+03:00",
+  "dateModified": "2026-09-29T03:53:43.818195+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part/hero.webp",
+    "card": "/forum/assets/posts/2026/09/build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part/card.webp",
+    "social": "/forum/assets/posts/2026/09/build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part/social.jpg",
+    "alt": {
+      "ar": "AWS تتيح بناء تطبيقات صوتية فورية عبر vLLM-Omni على SageMaker",
+      "en": "Build Real-Time Voice Apps with vLLM-Omni on SageMaker AI"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21837-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part/inline-01.webp",
+        "width": 954,
+        "height": 544,
+        "alt": {
+          "ar": "AWS تتيح بناء تطبيقات صوتية فورية عبر vLLM-Omni على SageMaker",
+          "en": "A Gradio voice application opens an HTTP/2 WebSocket to SageMaker Runtime. The SageMaker inference sidecar forwards the request to the vLLM-Omni streaming speech route, where Qwen3-TTS returns audio lifecycle events and"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part-1/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21837-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part-1/",
+      "type": "official",
+      "title": "Build real-time voice applications with vLLM-Omni on SageMaker AI – Part 1"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part-1",
+  "sourceTitle": "Build real-time voice applications with vLLM-Omni on SageMaker AI – Part 1",
+  "trendScore": 118.58,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-29T00:53:43+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part.json"
+}
