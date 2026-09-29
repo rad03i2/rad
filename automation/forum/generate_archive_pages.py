@@ -133,7 +133,10 @@ def archive_page(locale: str, posts: list[dict]) -> str:
     grouped: dict[str, list[dict]] = defaultdict(list)
     for post in posts:
         href = public_path(post.get("url"))
-        if not href.startswith(f"/{locale}/"):
+        # The Arabic launch announcement intentionally keeps its historical,
+        # pre-bilingual URL. Because the input list is already locale-scoped,
+        # include every valid story URL instead of requiring a locale prefix.
+        if not href.startswith("/"):
             continue
         grouped[month_key(post)].append(post)
 
