@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { legacyForumTarget } from "./src/index.js";
+import worker, { legacyForumTarget } from "./src/index.js";
 
 const cases = [
   ["https://rdwan.dev/forum", "https://mikhbar.website/ar/"],
@@ -23,5 +23,11 @@ for (const source of [
 ]) {
   assert.equal(legacyForumTarget(source), null, source);
 }
+
+const response = await worker.fetch(new Request("https://rdwan.dev/forum/en/"));
+assert.equal(response.status, 308);
+assert.equal(response.headers.get("location"), "https://mikhbar.website/en/");
+assert.equal(response.headers.get("x-mikhbar-migration"), "legacy-forum");
+assert.equal(response.headers.get("x-robots-tag"), null);
 
 console.log("Legacy forum redirect mapping tests passed.");
