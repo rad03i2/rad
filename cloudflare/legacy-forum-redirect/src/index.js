@@ -35,7 +35,6 @@ export default {
       headers: {
         Location: target,
         "Cache-Control": "public, max-age=86400",
-        "X-Robots-Tag": "noindex, follow",
         "X-Mikhbar-Migration": "legacy-forum",
       },
     });
