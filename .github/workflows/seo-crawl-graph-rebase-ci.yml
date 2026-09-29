@@ -46,9 +46,9 @@ jobs:
           python cloudflare/mikhbar-site/build.py
           python automation/forum/audit_deployed_sitemap.py
           for locale in ar en; do
-            test -f "dist/mikhbar/\${locale}/archive/index.html"
-            grep -q 'data-news-archive="true"' "dist/mikhbar/\${locale}/archive/index.html"
-            grep -Fq "href=\"/\${locale}/archive/\"" "dist/mikhbar/\${locale}/index.html"
+            test -f "dist/mikhbar/$locale/archive/index.html"
+            grep -q 'data-news-archive="true"' "dist/mikhbar/$locale/archive/index.html"
+            grep -Fq "href=\"/$locale/archive/\"" "dist/mikhbar/$locale/index.html"
           done
           grep -q 'https://mikhbar.website/ar/archive/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/en/archive/' dist/mikhbar/sitemap.xml
