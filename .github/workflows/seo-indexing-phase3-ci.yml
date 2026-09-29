@@ -1,0 +1,58 @@
+name: Temporary Mikhbar Indexing Phase 3 CI
+
+on:
+  push:
+    branches:
+      - seo/indexing-hygiene-phase-3
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: automation/forum/requirements.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check -r automation/forum/requirements.txt
+      - name: Validate Python and JavaScript
+        run: |
+          python -m py_compile automation/forum/audit_deployed_sitemap.py cloudflare/mikhbar-site/build.py
+          node --check cloudflare/mikhbar-site/src/index.js
+          node --check cloudflare/mikhbar-site/src/article.js
+      - name: Run forum automation tests
+        run: python -m unittest discover -s automation/forum/tests -v
+      - name: Prepare current SEO discovery files
+        run: |
+          python automation/forum/enhance_category_seo.py
+          python automation/forum/generate_pillar_pages.py
+          python automation/forum/audit_topic_hubs.py
+          python automation/forum/audit_pillar_pages.py
+          python automation/forum/rebuild_indexes.py
+          python automation/forum/pillar_discovery.py
+      - name: Build Cloudflare static assets
+        run: python cloudflare/mikhbar-site/build.py
+      - name: Audit production sitemap and indexability
+        run: python automation/forum/audit_deployed_sitemap.py
+      - name: Verify sitemap hygiene
+        shell: bash
+        run: |
+          if grep -q '<loc>https://mikhbar.website/</loc>' dist/mikhbar/sitemap.xml; then
+            echo 'Redirecting root URL remains in production sitemap' >&2
+            exit 1
+          fi
+          grep -q '<loc>https://mikhbar.website/ar/</loc>' dist/mikhbar/sitemap.xml
+          grep -q '<loc>https://mikhbar.website/en/</loc>' dist/mikhbar/sitemap.xml
+          grep -q 'function shouldNoIndexTechnicalPath' cloudflare/mikhbar-site/src/index.js
+          grep -q 'X-Robots-Tag' cloudflare/mikhbar-site/src/index.js
+      - name: Validate Cloudflare Worker bundle
+        run: npx --yes wrangler@latest deploy --dry-run --config cloudflare/mikhbar-site/wrangler.preview.toml
