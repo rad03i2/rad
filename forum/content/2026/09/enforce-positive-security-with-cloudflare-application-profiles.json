@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "d22c51a4118b1413cbbb",
+  "slug": "enforce-positive-security-with-cloudflare-application-profiles",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/enforce-positive-security-with-cloudflare-application-profiles/",
+    "en": "/forum/en/apps/enforce-positive-security-with-cloudflare-application-profiles/"
+  },
+  "locales": {
+    "ar": {
+      "title": "كلودفلير تطلق ميزة Application Profiles لتعزيز الأمان",
+      "description": "أعلنت شركة كلودفلير عن إطلاق ميزة Application Profiles لتطبيق الأمان الإيجابي عبر تحليل هيكل وتنسيق طلبات HTTP واكتشاف الانحرافات.",
+      "deck": "تستهدف هذه الإضافة الجديدة تقليص مساحة الهجوم الرقمي ومواجهة التحديات الأمنية المتزايدة في ظل تطور الذكاء الاصطناعي واستخدامه في توليد الثغرات.",
+      "summaryBullets": [
+        "إطلاق ميزة Application Profiles لفرض سياسة أمان إيجابي فعالة.",
+        "التحليل الآلي لهيكل وتنسيق طلبات HTTP لتحديد الانحرافات بدقة.",
+        "دعم التطبيقات عبر ميزة Application Schema Profiles للحد من الهجمات.",
+        "إتاحة الإصدار التجريبي المغلق لعملاء المؤسسات المدعوين."
+      ],
+      "sections": [
+        {
+          "heading": "مواجهة التهديدات الأمنية المتقدمة",
+          "paragraphs": [
+            {
+              "text": "في ظل التطور المتسارع للتقنيات والذكاء الاصطناعي، بات المهاجمون يعتمدون على النماذج اللغوية الكبيرة لتوليد الحمولة الضارة واختبار التقنيات المعروفة بطرق آلية. هذا الواقع فرض على المطورين والشركات البحث عن آليات دفاعية تتجاوز الحلول التقليدية القائمة على التصحيح السريع للثغرات، والتي لم تعد كافية وحدها لاحتواء المخاطر المتنوعة.",
+              "links": []
+            },
+            {
+              "text": "ولهذا السبب، كشفت شركة كلودفلير عبر [Cloudflare Blog](https://blog.cloudflare.com/application-profiles/) عن إطلاق ميزة التطبيقات الجديدة التي تتيح للمؤسسات بناء طبقة أمان إيجابي تقلل بشكل ملحوظ من مساحة الهجوم المتاحة أمام الجهات الخبيثة.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/application-profiles/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل سياسات الأمان الإيجابي",
+          "paragraphs": [
+            {
+              "text": "تعتمد الفكرة الأساسية خلف هذه الميزة على تعلم الشكل الصحيح لطلبات HTTP المتوقعة من خلال مراقبة حركة المرور الفعلية. وبدلاً من الاكتفاء بالبحث عن أنماط الهجمات المعروفة، تقوم المنظومة بالسماح فقط بالطلبات التي تتطابق مع الهيكل المعيارى المتوقع للتطبيق.",
+              "links": []
+            },
+            {
+              "text": "على سبيل المثال، إذا كان حقل البحث داخل استعلام معين لا يتوقع رموزاً خاصة، فإن النظام يقبل فقط السلاسل النصية الأبجدية الرقمية، مما يسهم في منع شريحة واسعة من الهجمات الشائعة مثل حقن SQL والبرمجة النصية عبر المواقع.",
+              "links": []
+            },
+            {
+              "text": "تعتبر هذه الأداة امتداداً للقدرات الحالية التي توفرها الشركة، حيث تتكامل مع حلول حماية واجهات برمجة التطبيقات عبر ميزات مثل [Application Schema Profiles](https://developers.cloudflare.com/waf/detections/application-profiles/) لتمتد حماية الأمان الإيجابي لتشمل تطبيقات الويب التقليدية أيضاً.",
+              "links": [
+                {
+                  "text": "Application Schema Profiles",
+                  "url": "https://developers.cloudflare.com/waf/detections/application-profiles/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دورة التعلم والتحقق من الطلبات",
+          "paragraphs": [
+            {
+              "text": "تقوم الميزة بعمليات تحليل دورية لهيكل الطلبات المتوقعة استناداً إلى حركة المرور المرصودة. وبعد اكتمال بناء الملف الشخصي للتطبيق، يجري نشر طبقة تحقق تعمل بشكل دائم لمقارنة الطلبات الحية مع المعايير المكتسبة.",
+              "links": []
+            },
+            {
+              "text": "وعند رصد أي انحراف، مثل وجود قيمة خارج النطاق المتوقع، أو قيمة غير معروفة في البيانات، أو معرف فريد عالمي غير صالح، يتم تصنيف الطلب كحالة غير مطابقة وإضافة النتيجة كبيانات وصفية لفحصها لاحقاً.",
+              "links": []
+            },
+            {
+              "text": "تساعد هذه الإجراءات في تمكين الفرق الأمنية من تتبع مؤشرات المخاطر وتحليل الأنماط بدقة، مع ضرورة مراجعة النتائج بعناية لضمان عدم تصنيف التحديثات المشروعة للتطبيقات على أنها تهديدات أمنية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الأصول وتحليل الأمان",
+          "paragraphs": [
+            {
+              "text": "تخضع عمليات التعلم للعمليات التي يختارها العملاء للتوصيف. وفي قسم [Web Assets](https://developers.cloudflare.com/security/web-assets/)، يتم التعرف باستمرار على العمليات بناءً على طريقة HTTP ونمط اسم المضيف ونمط المسار لتسهيل عملية المتابعة.",
+              "links": [
+                {
+                  "text": "Web Assets",
+                  "url": "https://developers.cloudflare.com/security/web-assets/"
+                }
+              ]
+            },
+            {
+              "text": "يتطلب تعلم الحقول توافر حد أدنى من الطلبات الناجحة خلال فترة زمنية محددة، مما يضمن دقة البيانات المستخلصة وتحديثها أسبوعياً لتواكب التغيرات المستمرة في بنية التطبيق.",
+              "links": []
+            },
+            {
+              "text": "كما تتيح منصة التحليلات الأمنية تبويب جديد يسمى تحليل الملفات الشخصية، والذي يتيح للعملاء استعراض اتجاهات حركة المرور والطلبات غير المطابقة خلال الأيام السابقة بكل سهولة ويسر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوفر والإصدار التجريبي",
+          "paragraphs": [
+            {
+              "text": "أعلنت الشركة أن هذه الميزة متوفرة حالياً من خلال إصدار تجريبي مغلق مخصص لعملاء المؤسسات المدعوين الذين لا يستخدمون أداة حماية واجهات برمجة التطبيقات، بينما يحصل العملاء الذين يمتلكون أمان واجهات برمجة التطبيقات على إمكانية الوصول مباشرة.",
+              "links": []
+            },
+            {
+              "text": "وتؤكد هذه الخطوة التزام الشركة المستمر بتطوير حلول قطاع [Security](https://blog.cloudflare.com/tag/security/) وتوفير أدوات متقدمة لحماية التطبيقات والخدمات الرقمية لمختلف المؤسسات حول العالم.",
+              "links": [
+                {
+                  "text": "Security",
+                  "url": "https://blog.cloudflare.com/tag/security/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "كلودفلير",
+        "أمن المعلومات",
+        "تطبيقات الويب",
+        "الأمن السيبراني",
+        "ذكاء اصطناعي",
+        "حماية الشبكات"
+      ],
+      "entities": [
+        "كلودفلير",
+        "Cloudflare"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "29 سبتمبر 2026",
+      "modifiedLabel": "29 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 499
+    },
+    "en": {
+      "title": "Cloudflare Launches Application Profiles for Positive Security",
+      "description": "Cloudflare introduces Application Profiles to enforce positive security policies, analyzing HTTP request structures to reduce attack surfaces.",
+      "deck": "Cloudflare has announced the launch of Application Profiles, offering organizations a seamless way to enforce positive security policies by analyzing the structure and format of HTTP requests.",
+      "summaryBullets": [
+        "Application Profiles analyze HTTP request structures to help organizations significantly reduce their attack surface area.",
+        "The new feature extends API schema learning protections to web applications through Application Schema Profiles.",
+        "A closed beta is currently open to invited Enterprise customers who do not yet use API Security.",
+        "Learned profiles periodically update weekly based on observed traffic, allowing teams to review data in Security Analytics."
+      ],
+      "sections": [
+        {
+          "heading": "Combating AI-Driven Threats with Positive Security",
+          "paragraphs": [
+            {
+              "text": "Today, Cloudflare is launching Application Profiles as a seamless way to enforce a positive security policy. By analyzing the structure and format of HTTP requests and identifying deviations, the system helps organizations significantly reduce their attack surface area in response to evolving threat landscapes.",
+              "links": []
+            },
+            {
+              "text": "Security teams frequently express concerns regarding attacks utilizing frontier artificial intelligence models. Large language models allow non-technical individuals to autonomously generate malicious payloads, test known techniques, and probe applications by mutating tactics based on feedback from the application or web application firewall.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Shifting Toward Request Structure Validation",
+          "paragraphs": [
+            {
+              "text": "While managed WAF rules and machine learning detections remain essential for addressing SQL injection, cross-site scripting, and remote code execution, patching faster alone is no longer fully sustainable. Application Profiles shift the paradigm by learning what valid requests look like through traffic structure analysis, allowing only expected requests.",
+              "links": []
+            },
+            {
+              "text": "For instance, if a query search field expects only alphanumeric strings instead of special characters, the system can block deviations and prevent a wide range of typical attack vectors.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Extending Protection to Web Applications",
+          "paragraphs": [
+            {
+              "text": "Cloudflare already supports positive security for APIs through Schema Learning and Schema Validation. The company is now extending these protections to web applications through Application Schema Profiles, establishing an always-on detection mechanism that identifies non-conformity.",
+              "links": [
+                {
+                  "text": "Application Schema Profiles",
+                  "url": "https://developers.cloudflare.com/waf/detections/application-profiles/"
+                }
+              ]
+            },
+            {
+              "text": "A closed beta for this capability is currently open to invited Enterprise customers who do not already use API Security, while customers with API Security already have access to the feature.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Evaluating Traffic and Managing Validation",
+          "paragraphs": [
+            {
+              "text": "Schema Profiles periodically learn expected request structures from observed traffic. Once a profile is established, an always-on validation layer evaluates whether live traffic conforms, appending the results as metadata without taking automated enforcement actions by default.",
+              "links": []
+            },
+            {
+              "text": "Because non-conforming requests are not necessarily malicious—such as instances involving new client releases or unusual valid inputs—users are advised to start in observation mode. Security Analytics includes a new Profile Analysis tab to review traffic trends and non-conforming request volumes.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Operational Requirements and Weekly Learning",
+          "paragraphs": [
+            {
+              "text": "Profiling applies to operations selected by customers. In Web Assets, an operation represents an endpoint identified by its HTTP method, hostname pattern, and path pattern, which can be discovered continuously or added manually.",
+              "links": [
+                {
+                  "text": "Web Assets",
+                  "url": "https://developers.cloudflare.com/security/web-assets/"
+                }
+              ]
+            },
+            {
+              "text": "For discovered operations, users must intentionally select learning from the overflow menu. To generate a profile, an operation requires a minimum number of successful requests over a seven-day period, after which Cloudflare runs learning automatically on a weekly basis.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Application Profiles",
+        "Web Application Firewall",
+        "API Security",
+        "Application Security",
+        "Security Analytics"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Application Schema Profiles",
+        "Security Analytics",
+        "Web Assets"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "September 29, 2026",
+      "modifiedLabel": "September 29, 2026",
+      "readMinutes": 3,
+      "wordCount": 494
+    }
+  },
+  "datePublished": "2026-09-29T16:21:55.965232+03:00",
+  "dateModified": "2026-09-29T16:21:55.965232+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/enforce-positive-security-with-cloudflare-application-profiles/hero.webp",
+    "card": "/forum/assets/posts/2026/09/enforce-positive-security-with-cloudflare-application-profiles/card.webp",
+    "social": "/forum/assets/posts/2026/09/enforce-positive-security-with-cloudflare-application-profiles/social.jpg",
+    "alt": {
+      "ar": "كلودفلير تطلق ميزة Application Profiles لتعزيز الأمان",
+      "en": "Cloudflare Launches Application Profiles for Positive Security"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3B09CMJMHVJCVMPMCFARRCT.01M3B09DCPG1A08FA7FTWA6PR9.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/enforce-positive-security-with-cloudflare-application-profiles/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "كلودفلير تطلق ميزة Application Profiles لتعزيز الأمان",
+          "en": "Enforce positive security with Cloudflare Application Profiles"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/application-profiles/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3PBBA4GJZ1JT8G9WGCBD7BX.01M3PBBAZMG15XEE4TC9HZ4VBX.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/enforce-positive-security-with-cloudflare-application-profiles/inline-02.webp",
+        "width": 1400,
+        "height": 676,
+        "alt": {
+          "ar": "كلودفلير تطلق ميزة Application Profiles لتعزيز الأمان",
+          "en": "Request validation enriches the request with metadata that can be used in analytics or Security Rules to enforce blocking of non-conforming requests.Â"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Request validation enriches the request with metadata that can be used in analytics or Security Rules to enforce blocking of non-conforming requests.Â"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/application-profiles/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3B09CFWMN5RMJ4P52K5QEEZ.01M3B09D3DE13C6NY19SCCGXQX.jpg&w=1430&h=690&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/enforce-positive-security-with-cloudflare-application-profiles/inline-03.webp",
+        "width": 1400,
+        "height": 519,
+        "alt": {
+          "ar": "كلودفلير تطلق ميزة Application Profiles لتعزيز الأمان",
+          "en": "To enable profiling for a discovered operation, a customer can select âLearn profileâ in the overflow menu of an operation. When learning is active, âLearning profileâ will be displayed."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "To enable profiling for a discovered operation, a customer can select âLearn profileâ in the overflow menu of an operation. When learning is active, âLearning profileâ will be displayed."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/application-profiles/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3B09CFRQWTP4W5S1BCN07X2.01M3B09DWCC8TJAYNP51SB3ENS.png&w=1430&h=530&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/enforce-positive-security-with-cloudflare-application-profiles/inline-04.webp",
+        "width": 1261,
+        "height": 1050,
+        "alt": {
+          "ar": "كلودفلير تطلق ميزة Application Profiles لتعزيز الأمان",
+          "en": "Learned schema can be reviewed directly in the dashboard and downloaded in OpenAPI format."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Learned schema can be reviewed directly in the dashboard and downloaded in OpenAPI format."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/application-profiles/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3B09EY75HGTKJ084869Z1FF.01M3B09G3R8J7APCEQMP5H1E6J.png&w=1430&h=1192&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/application-profiles/",
+      "type": "official",
+      "title": "Enforce positive security with Cloudflare Application Profiles"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/application-profiles",
+  "sourceTitle": "Enforce positive security with Cloudflare Application Profiles",
+  "trendScore": 129.86,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-29T13:21:55+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/enforce-positive-security-with-cloudflare-application-profiles.json"
+}
