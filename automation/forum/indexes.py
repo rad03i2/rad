@@ -122,6 +122,12 @@ def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
             f'  <url><loc>{SITE}/forum/{locale}/</loc><lastmod>{today}</lastmod><changefreq>hourly</changefreq><priority>1.0</priority>'
             f'{_locale_links("/forum/ar/", "/forum/en/", "/forum/")}</url>'
         )
+        archive_ar = "/forum/ar/archive/"
+        archive_en = "/forum/en/archive/"
+        lines.append(
+            f'  <url><loc>{SITE}/forum/{locale}/archive/</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq><priority>0.7</priority>'
+            f'{_locale_links(archive_ar, archive_en, archive_ar)}</url>'
+        )
         for slug in CATEGORY_SLUGS:
             if not _category_has_posts(posts_by_locale.get(locale, []), slug):
                 continue
@@ -203,6 +209,8 @@ def write_llms(posts_by_locale: dict[str, list[dict]], now: datetime) -> None:
         f"- Publication: {SITE}/forum/",
         f"- Arabic edition: {SITE}/forum/ar/",
         f"- English edition: {SITE}/forum/en/",
+        f"- News archive (AR): {SITE}/forum/ar/archive/",
+        f"- News archive (EN): {SITE}/forum/en/archive/",
         f"- About (AR): {SITE}/forum/about/",
         f"- About (EN): {SITE}/forum/en/about/",
         f"- Contact (AR): {SITE}/forum/contact/",

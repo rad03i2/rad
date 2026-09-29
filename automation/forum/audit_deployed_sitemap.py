@@ -220,6 +220,8 @@ def main() -> int:
         ORIGIN + "/en/corrections/",
         ORIGIN + "/en/ai-policy/",
         ORIGIN + "/en/authors/radwan-abdulhadi/",
+        ORIGIN + "/ar/archive/",
+        ORIGIN + "/en/archive/",
     }
     missing_required = sorted(required_pages - loc_set)
     if missing_required:
