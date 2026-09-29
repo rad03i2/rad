@@ -237,28 +237,53 @@ def patch_arabic_page(key: str, spec: dict) -> bool:
 
 
 
-def patch_english_navigation() -> int:
+def patch_locale_navigation() -> int:
     changed = 0
-    trust_links = (
-        '<a href="/en/about/">About</a> · '
-        '<a href="/en/editorial-policy/">Editorial policy</a> · '
-        '<a href="/en/corrections/">Corrections</a> · '
-        '<a href="/en/ai-policy/">AI policy</a> · '
-        '<a href="/en/contact/">Contact</a>'
-    )
-    for path in (FORUM / "en").rglob("index.html"):
-        text = path.read_text(encoding="utf-8")
-        updated = text.replace('href="/about/"', 'href="/en/about/"')
-        simple_footer = '<footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> Mikhbar</div></footer>'
-        if simple_footer in updated:
-            updated = updated.replace(
-                simple_footer,
-                f'<footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> Mikhbar · {trust_links}</div></footer>',
-                1,
+    locale_specs = {
+        "ar": {
+            "brand": "مِخبار",
+            "links": (
+                '<a href="/about/">عن مِخبار</a> · '
+                '<a href="/editorial-policy/">السياسة التحريرية</a> · '
+                '<a href="/corrections/">التصحيحات</a> · '
+                '<a href="/ai-policy/">سياسة الذكاء الاصطناعي</a> · '
+                '<a href="/contact/">تواصل</a>'
+            ),
+        },
+        "en": {
+            "brand": "Mikhbar",
+            "links": (
+                '<a href="/en/about/">About</a> · '
+                '<a href="/en/editorial-policy/">Editorial policy</a> · '
+                '<a href="/en/corrections/">Corrections</a> · '
+                '<a href="/en/ai-policy/">AI policy</a> · '
+                '<a href="/en/contact/">Contact</a>'
+            ),
+        },
+    }
+
+    for locale, spec in locale_specs.items():
+        for path in (FORUM / locale).rglob("index.html"):
+            text = path.read_text(encoding="utf-8")
+            updated = text
+            if locale == "en":
+                updated = updated.replace('href="/about/"', 'href="/en/about/"')
+
+            simple_footer = (
+                '<footer class="rt-footer"><div class="rt-shell rt-copyright">'
+                f'© <span data-year></span> {spec["brand"]}</div></footer>'
             )
-        if updated != text:
-            path.write_text(updated, encoding="utf-8")
-            changed += 1
+            if simple_footer in updated:
+                updated = updated.replace(
+                    simple_footer,
+                    '<footer class="rt-footer"><div class="rt-shell rt-copyright">'
+                    f'© <span data-year></span> {spec["brand"]} · {spec["links"]}</div></footer>',
+                    1,
+                )
+
+            if updated != text:
+                path.write_text(updated, encoding="utf-8")
+                changed += 1
     return changed
 
 
@@ -271,10 +296,10 @@ def main() -> int:
         target.write_text(english_page(key, spec), encoding="utf-8")
         written += 1
         patched += int(patch_arabic_page(key, spec))
-    navigation_patched = patch_english_navigation()
+    navigation_patched = patch_locale_navigation()
     print(
         f"Mikhbar multilingual trust pages: english_written={written} "
-        f"arabic_hreflang_patched={patched} english_navigation_patched={navigation_patched}"
+        f"arabic_hreflang_patched={patched} locale_navigation_patched={navigation_patched}"
     )
     return 0
 
