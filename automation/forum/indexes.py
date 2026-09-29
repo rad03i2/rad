@@ -111,6 +111,10 @@ def _category_has_posts(posts: list[dict], slug: str) -> bool:
     return any(str(post.get("categorySlug") or "") == slug for post in posts)
 
 
+def _category_post_count(posts: list[dict], slug: str) -> int:
+    return sum(1 for post in posts if str(post.get("categorySlug") or "") == slug)
+
+
 def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
@@ -138,6 +142,18 @@ def write_sitemap(posts_by_locale: dict[str, list[dict]], today: str) -> None:
                 f'  <url><loc>{SITE}/forum/{locale}/{slug}/</loc><lastmod>{today}</lastmod><changefreq>hourly</changefreq><priority>0.9</priority>'
                 f'{alternates}</url>'
             )
+            if _category_post_count(posts_by_locale.get(locale, []), slug) > 20:
+                ar_archive = f"/forum/ar/{slug}/archive/"
+                en_archive = f"/forum/en/{slug}/archive/"
+                both_archives = (
+                    _category_post_count(posts_by_locale.get("ar", []), slug) > 20
+                    and _category_post_count(posts_by_locale.get("en", []), slug) > 20
+                )
+                archive_alternates = _locale_links(ar_archive, en_archive, ar_archive) if both_archives else ""
+                lines.append(
+                    f'  <url><loc>{SITE}/forum/{locale}/{slug}/archive/</loc><lastmod>{today}</lastmod>'
+                    f'<changefreq>daily</changefreq><priority>0.65</priority>{archive_alternates}</url>'
+                )
 
     # Trust/policy pages are stable. Do not fabricate a fresh lastmod on every
     # publication cycle; omit it unless we have a real per-page modification date.
