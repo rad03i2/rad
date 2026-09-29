@@ -272,6 +272,26 @@ def validate_root_search_identity() -> None:
         raise SystemExit("Legacy language chooser remains in root page: " + ", ".join(leaked))
 
 
+def validate_arabic_brand_search_identity() -> None:
+    text = (OUT / "ar" / "index.html").read_text(encoding="utf-8")
+    required = (
+        "<title>مِخبار (مخبار) — أخبار التقنية والذكاء الاصطناعي</title>",
+        "مِخبار (Mikhbar، ويُكتب مخبار دون تشكيل)",
+        '"@type":"WebSite"',
+        '"alternateName":["مِخبار","مخبار","MIKHBAR"]',
+        f'<link rel="canonical" href="{PUBLIC_ORIGIN}/ar/">',
+        f'<link rel="alternate" hreflang="en" href="{PUBLIC_ORIGIN}/en/">',
+        'content="index,follow',
+    )
+    missing = [needle for needle in required if needle not in text]
+    if missing:
+        raise SystemExit("Arabic branded-search identity is incomplete: " + ", ".join(missing))
+
+    # Keep the alias explicit but restrained; repeated stuffing would weaken the page.
+    if text.count("مخبار") > 12:
+        raise SystemExit("Arabic homepage overuses the unvocalized brand alias مخبار")
+
+
 def validate_output() -> None:
     required = [
         OUT / "index.html",
@@ -313,6 +333,7 @@ def validate_output() -> None:
         )
 
     validate_root_search_identity()
+    validate_arabic_brand_search_identity()
     validate_article_runtime()
 
     payload = json.loads((OUT / "article-map.json").read_text(encoding="utf-8"))
