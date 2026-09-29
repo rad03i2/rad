@@ -126,14 +126,14 @@ def header(current: str) -> str:
     return f'''<header class="rt-site-header"><div class="rt-navbar">
 <a class="mikhbar-brand" href="/en/" aria-label="Mikhbar"><span class="mikhbar-brand-mark"><img src="/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png" alt="" width="64" height="64"></span><span class="mikhbar-brand-copy"><strong>Mikhbar</strong><small>MIKHBAR</small></span></a>
 <button class="menu-button rt-menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="navigation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-<nav class="nav-links rt-platform-nav" id="navigation" aria-label="Main navigation"><a href="/en/">Home</a><a href="/en/#latest">Latest</a><a href="/en/guides/">Guides</a><a href="/en/about/"{' aria-current="page"' if current == "about" else ""}>About Mikhbar</a><a href="/en/contact/"{' aria-current="page"' if current == "contact" else ""}>Contact</a><a class="rt-lang-switch" href="{PAGES[current]['ar_path']}" lang="ar">عربي</a></nav>
+<nav class="nav-links rt-platform-nav" id="navigation" aria-label="Main navigation"><a href="/en/">Home</a><a href="/en/#latest">Latest</a><a href="/en/guides/">Guides</a><a href="/en/archive/">Archive</a><a href="/en/about/"{' aria-current="page"' if current == "about" else ""}>About Mikhbar</a><a href="/en/contact/"{' aria-current="page"' if current == "contact" else ""}>Contact</a><a class="rt-lang-switch" href="{PAGES[current]['ar_path']}" lang="ar">عربي</a></nav>
 </div></header>'''
 
 
 def footer() -> str:
     return '''<footer class="rt-footer"><div class="rt-shell rt-footer-grid">
 <div class="rt-footer-brand"><strong>Mikhbar</strong><p>An independent bilingual technology publication.</p></div>
-<div><h3>Publication</h3><div class="rt-footer-links"><a href="/en/about/">About</a><a href="/en/editorial-policy/">Editorial policy</a><a href="/en/contact/">Contact</a></div></div>
+<div><h3>Publication</h3><div class="rt-footer-links"><a href="/en/archive/">Archive</a><a href="/en/about/">About</a><a href="/en/editorial-policy/">Editorial policy</a><a href="/en/contact/">Contact</a></div></div>
 <div><h3>Trust</h3><div class="rt-footer-links"><a href="/en/corrections/">Corrections</a><a href="/en/ai-policy/">AI & automation</a></div></div>
 </div><div class="rt-shell rt-copyright">© <span data-year></span> Mikhbar</div></footer>'''
 
@@ -243,6 +243,7 @@ def patch_locale_navigation() -> int:
         "ar": {
             "brand": "مِخبار",
             "links": (
+                '<a href="/ar/archive/">الأرشيف</a> · '
                 '<a href="/about/">عن مِخبار</a> · '
                 '<a href="/editorial-policy/">السياسة التحريرية</a> · '
                 '<a href="/corrections/">التصحيحات</a> · '
@@ -253,6 +254,7 @@ def patch_locale_navigation() -> int:
         "en": {
             "brand": "Mikhbar",
             "links": (
+                '<a href="/en/archive/">Archive</a> · '
                 '<a href="/en/about/">About</a> · '
                 '<a href="/en/editorial-policy/">Editorial policy</a> · '
                 '<a href="/en/corrections/">Corrections</a> · '
