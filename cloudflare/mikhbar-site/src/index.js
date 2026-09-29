@@ -95,25 +95,166 @@ async function assetJson(env, request, path) {
   try { return await response.json(); } catch { return null; }
 }
 
+const GENERIC_SEMANTIC_TERMS = new Set([
+  "ai", "artificial intelligence", "technology", "tech", "software", "apps", "app",
+  "security", "cybersecurity", "mobile", "web", "computing", "computer", "robotics",
+  "automation", "news", "update", "updates", "platform", "model", "models",
+  "الذكاء الاصطناعي", "تقنية", "التقنية", "برمجيات", "تطبيقات", "تطبيق",
+  "الأمن السيبراني", "امن سيبراني", "الهواتف", "الويب", "الحواسيب", "الروبوتات",
+  "الأتمتة", "اخبار", "أخبار", "تحديث", "تحديثات", "منصة", "نموذج", "نماذج",
+]);
+
+const TITLE_STOP_WORDS = new Set([
+  "with", "from", "into", "over", "after", "before", "that", "this", "their", "about",
+  "using", "launches", "launch", "new", "adds", "gets", "more", "will", "your",
+  "على", "إلى", "الى", "عن", "من", "في", "مع", "بعد", "قبل", "هذا", "هذه", "التي",
+  "الذي", "جديد", "جديدة", "عبر", "لدى", "بين", "حول",
+]);
+
+function normalizeSemanticTerm(value) {
+  return String(value ?? "")
+    .normalize("NFKD")
+    .toLowerCase()
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, "")
+    .replace(/[أإآٱ]/g, "ا")
+    .replace(/ى/g, "ي")
+    .replace(/ؤ/g, "و")
+    .replace(/ئ/g, "ي")
+    .replace(/[^\p{L}\p{N}+#. -]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function semanticSet(values) {
+  const output = new Set();
+  for (const value of Array.isArray(values) ? values : []) {
+    const term = normalizeSemanticTerm(value);
+    if (!term || term.length < 2 || GENERIC_SEMANTIC_TERMS.has(term)) continue;
+    output.add(term);
+  }
+  return output;
+}
+
+function titleTokens(value) {
+  const normalized = normalizeSemanticTerm(value);
+  const output = new Set();
+  for (const token of normalized.split(/\s+/)) {
+    if (!token || token.length < 4 || TITLE_STOP_WORDS.has(token) || GENERIC_SEMANTIC_TERMS.has(token)) continue;
+    output.add(token);
+  }
+  return output;
+}
+
+function intersectionCount(a, b, excluded = new Set()) {
+  let count = 0;
+  for (const item of a) {
+    if (!excluded.has(item) && b.has(item)) count += 1;
+  }
+  return count;
+}
+
+export function semanticRelatedScore(currentPost, candidatePost) {
+  if (!currentPost || !candidatePost) return { score: 0, signals: 0 };
+
+  const currentEntities = semanticSet(currentPost.entities);
+  const candidateEntities = semanticSet(candidatePost.entities);
+  const currentTags = semanticSet(currentPost.tags);
+  const candidateTags = semanticSet(candidatePost.tags);
+
+  const entityMatches = intersectionCount(currentEntities, candidateEntities);
+  const entityTagMatches = (
+    intersectionCount(currentEntities, candidateTags)
+    + intersectionCount(currentTags, candidateEntities)
+  );
+  const entityTerms = new Set([...currentEntities, ...candidateEntities]);
+  const tagMatches = intersectionCount(currentTags, candidateTags, entityTerms);
+
+  const currentTitle = titleTokens(currentPost.title);
+  const candidateTitle = titleTokens(candidatePost.title);
+  const titleMatches = Math.min(4, intersectionCount(currentTitle, candidateTitle));
+
+  const sameCategory = String(currentPost.categorySlug || "") === String(candidatePost.categorySlug || "");
+  const signals = entityMatches + entityTagMatches + tagMatches + titleMatches;
+  let score = (
+    entityMatches * 12
+    + entityTagMatches * 7
+    + tagMatches * 5
+    + titleMatches * 1.5
+    + (sameCategory ? 1.5 : 0)
+  );
+
+  // Crossing topic hubs should require a meaningful semantic relationship,
+  // not a single generic keyword or recency coincidence.
+  if (!sameCategory && entityMatches === 0 && entityTagMatches === 0 && tagMatches < 2 && titleMatches < 2) {
+    score = 0;
+  }
+  if (sameCategory && signals === 0) score = 0;
+
+  return { score, signals, sameCategory };
+}
+
+function newestFirst(a, b) {
+  const aTime = Date.parse(String(a?.dateModified || a?.date || "")) || 0;
+  const bTime = Date.parse(String(b?.dateModified || b?.date || "")) || 0;
+  return bTime - aTime;
+}
+
 export function selectRelatedPosts(posts, pathname, limit = 4) {
   const match = String(pathname || "").match(ARTICLE_PARTS);
   if (!match || !Array.isArray(posts)) return [];
   const [, locale, category] = match;
   const current = publicPath(pathname);
+  const wanted = Math.max(0, limit);
+  if (!wanted) return [];
 
-  return posts
-    .filter((post) => {
-      if (String(post?.locale || locale).toLowerCase() !== locale.toLowerCase()) return false;
-      if (String(post?.categorySlug || "") !== category) return false;
-      const url = publicPath(post?.url || "");
-      return url && url !== current;
+  const currentPost = posts.find((post) => publicPath(post?.url || "") === current);
+  const candidates = posts.filter((post) => {
+    if (String(post?.locale || locale).toLowerCase() !== locale.toLowerCase()) return false;
+    const url = publicPath(post?.url || "");
+    return url && url !== current;
+  });
+
+  // If an older/index-only article lacks semantic metadata, preserve the safe
+  // chronological same-section fallback instead of inventing weak relevance.
+  if (!currentPost) {
+    return candidates
+      .filter((post) => String(post?.categorySlug || "") === category)
+      .sort(newestFirst)
+      .slice(0, wanted);
+  }
+
+  const ranked = candidates
+    .map((post) => {
+      const semantic = semanticRelatedScore(currentPost, post);
+      return { post, ...semantic };
     })
-    .sort((a, b) => {
-      const aTime = Date.parse(String(a?.dateModified || a?.date || "")) || 0;
-      const bTime = Date.parse(String(b?.dateModified || b?.date || "")) || 0;
-      return bTime - aTime;
-    })
-    .slice(0, Math.max(0, limit));
+    .filter((item) => item.score > 0)
+    .sort((a, b) => (
+      b.score - a.score
+      || Number(b.sameCategory) - Number(a.sameCategory)
+      || newestFirst(a.post, b.post)
+    ));
+
+  const selected = ranked.slice(0, wanted).map((item) => ({
+    ...item.post,
+    _semanticScore: item.score,
+    _semanticSignals: item.signals,
+  }));
+  const used = new Set(selected.map((post) => publicPath(post?.url || "")));
+
+  if (selected.length < wanted) {
+    const fallback = candidates
+      .filter((post) => String(post?.categorySlug || "") === category)
+      .filter((post) => !used.has(publicPath(post?.url || "")))
+      .sort(newestFirst);
+    for (const post of fallback) {
+      selected.push({ ...post, _semanticScore: 0, _semanticSignals: 0 });
+      if (selected.length >= wanted) break;
+    }
+  }
+
+  return selected.slice(0, wanted);
 }
 
 export function selectChronologicalNeighbors(posts, pathname) {
@@ -186,7 +327,7 @@ function relatedHtml(posts, pathname) {
   const [, locale, category] = match;
   const isAr = locale.toLowerCase() === "ar";
   const title = isAr ? "أخبار مرتبطة" : "Related stories";
-  const more = isAr ? "المزيد من هذا القسم" : "More from this section";
+  const more = isAr ? "المزيد حول هذا الموضوع" : "More on this topic";
   const categoryUrl = `/${locale}/${category}/`;
   const topicHubs = topicHubHtml(locale, category);
 
@@ -200,7 +341,7 @@ function relatedHtml(posts, pathname) {
   }).filter(Boolean).join("");
 
   const stories = cards
-    ? `<section class="rt-section rt-related-stories" aria-labelledby="related-stories-title"><header class="rt-section-head"><div><h2 id="related-stories-title">${esc(title)}</h2></div><a href="${esc(categoryUrl)}">${esc(more)}</a></header><div class="rt-feed">${cards}</div></section>`
+    ? `<section class="rt-section rt-related-stories" data-related-strategy="semantic" aria-labelledby="related-stories-title"><header class="rt-section-head"><div><h2 id="related-stories-title">${esc(title)}</h2></div><a href="${esc(categoryUrl)}">${esc(more)}</a></header><div class="rt-feed">${cards}</div></section>`
     : "";
 
   return stories + topicHubs;
