@@ -39,6 +39,10 @@ jobs:
       - name: Test isolated URL mapping
         run: node cloudflare/legacy-forum-redirect/test.mjs
 
+      - name: Validate Worker bundle and routes
+        working-directory: cloudflare/legacy-forum-redirect
+        run: npx --yes wrangler@latest deploy --dry-run --config wrangler.toml
+
       - name: Deploy only the legacy /forum migration route
         working-directory: cloudflare/legacy-forum-redirect
         shell: bash
@@ -71,12 +75,29 @@ jobs:
             grep -Eiq '^x-mikhbar-migration:[[:space:]]*legacy-forum' "$headers_file"
           }
 
+          check_redirect "https://rdwan.dev/forum" "https://mikhbar.website/ar/"
           check_redirect "https://rdwan.dev/forum/" "https://mikhbar.website/ar/"
           check_redirect "https://rdwan.dev/forum/en/" "https://mikhbar.website/en/"
           check_redirect "https://rdwan.dev/forum/about/" "https://mikhbar.website/about/"
+          check_redirect "https://www.rdwan.dev/forum/en/ai/example/" "https://mikhbar.website/en/ai/example/"
 
-          root_status="$(curl -sS -o /dev/null -w '%{http_code}' https://rdwan.dev/)"
-          if [ "$root_status" = "308" ]; then
+          root_headers="$(mktemp)"
+          curl -sS -D "$root_headers" -o /dev/null --retry 3 --retry-delay 1 --retry-all-errors https://rdwan.dev/
+          if grep -Eiq '^x-mikhbar-migration:' "$root_headers"; then
             echo "::error::rdwan.dev homepage must not be captured by the Mikhbar migration Worker."
+            cat "$root_headers"
+            exit 1
+          fi
+          if grep -Eiq '^location:[[:space:]]*https://mikhbar\.website' "$root_headers"; then
+            echo "::error::rdwan.dev homepage must not redirect to Mikhbar."
+            cat "$root_headers"
+            exit 1
+          fi
+
+          lookalike_headers="$(mktemp)"
+          curl -sS -D "$lookalike_headers" -o /dev/null --retry 3 --retry-delay 1 --retry-all-errors https://rdwan.dev/forumanything || true
+          if grep -Eiq '^x-mikhbar-migration:' "$lookalike_headers"; then
+            echo "::error::/forumanything must remain outside the Mikhbar migration Worker."
+            cat "$lookalike_headers"
             exit 1
           fi
