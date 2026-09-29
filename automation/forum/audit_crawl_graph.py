@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 from collections import defaultdict, deque
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import urljoin, urlsplit
 
 ROOT = Path(__file__).resolve().parents[2]
 FORUM = ROOT / "forum"
@@ -70,10 +70,19 @@ def file_for_route(route: str) -> Path | None:
     return FORUM / route.strip("/") / "index.html"
 
 
-def html_links(path: Path) -> set[str]:
+def html_links(path: Path, source_route: str) -> set[str]:
     parser = LinkParser()
     parser.feed(path.read_text(encoding="utf-8"))
-    return {link for raw in parser.links if (link := public_path(raw))}
+    links: set[str] = set()
+    base = ORIGIN + (source_route if source_route.endswith("/") else source_route + "/")
+    for raw in parser.links:
+        value = str(raw or "").strip()
+        if not value or value.startswith(("#", "mailto:", "tel:", "javascript:")):
+            continue
+        link = public_path(urljoin(base, value))
+        if link:
+            links.add(link)
+    return links
 
 
 def sitemap_routes() -> set[str]:
@@ -245,7 +254,7 @@ def main() -> int:
             continue
         path = file_for_route(route)
         if path and path.exists():
-            graph[route].update(link for link in html_links(path) if link in graph)
+            graph[route].update(link for link in html_links(path, route) if link in graph)
 
     # Dynamic article pages: model the guaranteed server-rendered navigation plus
     # chronological neighbors that the Worker exposes.
