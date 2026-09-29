@@ -40,23 +40,46 @@ jobs:
       - name: Audit crawl graph
         run: python automation/forum/audit_crawl_graph.py
       - name: Verify expected large category archives
-        shell: bash
         run: |
-          for locale in ar en; do
-            for category in ai robotics apps computers; do
-              test -f "forum/\${locale}/\${category}/archive/index.html"
-              grep -q 'data-category-archive="true"' "forum/\${locale}/\${category}/archive/index.html"
-              grep -q 'data-category-archive-article="true"' "forum/\${locale}/\${category}/archive/index.html"
-              grep -q "https://mikhbar.website/\${locale}/\${category}/archive/" forum/sitemap.xml
-              grep -q 'data-category-archive-link="true"' "forum/\${locale}/\${category}/index.html"
-            done
-            for category in security automation web mobile social; do
-              if [ -f "forum/\${locale}/\${category}/archive/index.html" ]; then
-                echo "Thin category archive should not exist: \${locale}/\${category}" >&2
-                exit 1
-              fi
-            done
-          done
+          python - <<'PY'
+          from pathlib import Path
+
+          errors = []
+          sitemap = Path("forum/sitemap.xml").read_text(encoding="utf-8")
+          large = ("ai", "robotics", "apps", "computers")
+          thin = ("security", "automation", "web", "mobile", "social")
+
+          for locale in ("ar", "en"):
+              for category in large:
+                  archive = Path(f"forum/{locale}/{category}/archive/index.html")
+                  hub = Path(f"forum/{locale}/{category}/index.html")
+                  if not archive.exists():
+                      errors.append(f"missing category archive: {archive}")
+                      continue
+                  html = archive.read_text(encoding="utf-8")
+                  if 'data-category-archive="true"' not in html:
+                      errors.append(f"missing archive marker: {archive}")
+                  if 'data-category-archive-article="true"' not in html:
+                      errors.append(f"missing article marker: {archive}")
+                  url = f"https://mikhbar.website/{locale}/{category}/archive/"
+                  if url not in sitemap:
+                      errors.append(f"sitemap missing: {url}")
+                  if not hub.exists():
+                      errors.append(f"missing hub: {hub}")
+                  elif 'data-category-archive-link="true"' not in hub.read_text(encoding="utf-8"):
+                      errors.append(f"hub missing category archive link: {hub}")
+
+              for category in thin:
+                  archive = Path(f"forum/{locale}/{category}/archive/index.html")
+                  if archive.exists():
+                      errors.append(f"thin category archive should not exist: {archive}")
+
+          if errors:
+              for error in errors:
+                  print("ERROR:", error)
+              raise SystemExit(1)
+          print("Category archive verification passed")
+          PY
       - name: Run existing forum tests
         run: |
           python -m unittest discover -s automation/forum/tests -v
