@@ -1,7 +1,7 @@
 import { isArticlePath, renderDynamicArticle } from "./article.js";
 
 const CANONICAL_HOST = "mikhbar.website";
-const ARTICLE_PARTS = /^\/(ar|en)\/([a-z0-9-]+)\/([^/]+)\/$/i;
+const ARTICLE_PARTS = /^\/(ar|en)\/([a-z0-9-]+)\/(?!archive(?:\/|$))([^/]+)\/$/i;
 
 const RELATED_HUBS = {
   ai: ["automation", "apps", "robotics", "security"],
