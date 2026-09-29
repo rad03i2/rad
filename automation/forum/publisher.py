@@ -447,6 +447,7 @@ def _post_from_record(record: dict, locale: str, story: dict) -> dict:
         "dateLabel": view["dateLabel"],
         "excerpt": view["description"],
         "tags": view.get("tags", []),
+        "entities": view.get("entities", []),
         "featured": trend_score >= 105,
         "breaking": trend_score >= 120 and age_hours <= 3,
         "readTime": f"{view['readMinutes']} دقائق" if locale == "ar" else f"{view['readMinutes']} min",
