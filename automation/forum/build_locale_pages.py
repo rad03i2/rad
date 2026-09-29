@@ -117,6 +117,7 @@ def _header(locale: str, depth: int) -> str:
 def _footer(locale: str) -> str:
     if locale == "ar":
         links = (
+            '<a href="/forum/ar/archive/">الأرشيف</a> · '
             '<a href="/forum/about/">عن مِخبار</a> · '
             '<a href="/forum/editorial-policy/">السياسة التحريرية</a> · '
             '<a href="/forum/corrections/">التصحيحات</a> · '
@@ -126,6 +127,7 @@ def _footer(locale: str) -> str:
         brand = "مِخبار"
     else:
         links = (
+            '<a href="/forum/en/archive/">Archive</a> · '
             '<a href="/forum/en/about/">About</a> · '
             '<a href="/forum/en/editorial-policy/">Editorial policy</a> · '
             '<a href="/forum/en/corrections/">Corrections</a> · '
