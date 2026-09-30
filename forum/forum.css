@@ -546,29 +546,28 @@ body{background-image:none!important}
 }
 
 
-/* Mikhbar header intro animation */
+/* Mikhbar header intro animation — frame-normalized, zero size jump */
 .mikhbar-brand-mark{
   position:relative!important;
   isolation:isolate;
   overflow:visible!important;
 }
-.mikhbar-brand-mark>img{
+.mikhbar-brand-mark>img:not(.mikhbar-brand-intro-source){
   position:relative;
   z-index:1;
   opacity:0;
-  transition:none!important;
+  transition:opacity .07s linear!important;
 }
-.mikhbar-brand-mark.is-brand-static>img{
+.mikhbar-brand-mark.is-brand-static>img:not(.mikhbar-brand-intro-source){
   opacity:1;
 }
 .mikhbar-brand-intro{
   position:absolute!important;
-  opacity:1!important;
+  inset:0!important;
   z-index:2!important;
-  top:50%!important;
-  left:50%!important;
-  width:124px!important;
-  height:124px!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
   max-width:none!important;
   max-height:none!important;
   margin:0!important;
@@ -577,18 +576,27 @@ body{background-image:none!important}
   border-radius:0!important;
   background:transparent!important;
   box-shadow:none!important;
-  object-fit:contain!important;
-  transform:translate(-50%,-50%)!important;
-  transform-origin:center!important;
   pointer-events:none!important;
+  opacity:1!important;
+  transition:opacity .07s linear!important;
 }
-@media(max-width:760px){
-  .mikhbar-brand-intro{
-    width:110px!important;
-    height:110px!important;
-  }
+.mikhbar-brand-intro.is-finishing{
+  opacity:0!important;
+}
+.mikhbar-brand-intro-source{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  width:1px!important;
+  height:1px!important;
+  min-width:0!important;
+  min-height:0!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transform:translate(-50%,-50%)!important;
 }
 @media(prefers-reduced-motion:reduce){
-  .mikhbar-brand-mark>img{opacity:1!important}
-  .mikhbar-brand-intro{display:none!important}
+  .mikhbar-brand-mark>img:not(.mikhbar-brand-intro-source){opacity:1!important}
+  .mikhbar-brand-intro,.mikhbar-brand-intro-source{display:none!important}
 }
