@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "c34102ced00c0ae46b1f",
+  "slug": "cloudflare-containers-rebuilt-to-scale-agent-sandboxes",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/cloudflare-containers-rebuilt-to-scale-agent-sandboxes/",
+    "en": "/forum/en/ai/cloudflare-containers-rebuilt-to-scale-agent-sandboxes/"
+  },
+  "locales": {
+    "ar": {
+      "title": "تحديث رئيسي لحاويات كلاودفلير يدعم بيئات وكلاء الذكاء الاصطناعي",
+      "description": "أعلنت منصة كلاودفلير عن إعادة هيكلة شاملة لحاويات Cloudflare Containers لتسريع إقلاع بيئات العمل بمعدل ستة أضعاف، ودعم تخصيص الموارد وصور التشغيل.",
+      "deck": "أجرت شركة كلاودفلير تعديلات واسعة على بنية حاوياتها لتصبح أكثر مرونة وملاءمة لتشغيل مهام وكلاء الذكاء الاصطناعي المعقدة، مع تقكيك الاعتمادية بين التطبيقات وبيئاتها.",
+      "summaryBullets": [
+        "زيادة سرعة إقلاع حاويات Cloudflare Containers لتصبح أسرع بستة أضعاف مقارنة بالسابق.",
+        "إمكانية اختيار صورة النظام ونوع المثيل البرمجي وقت تشغيل المهمة دون الحاجة لعمليات نشر مسبقة.",
+        "توفر ميزة لقطات نظام الملفات في مرحلة التجربة العامة (Public Beta) لحفظ واسترجاع بيئات العمل.",
+        "الاعتماد على سياسة الجدولة الجديدة عبر الكائنات المتينة (Durable Objects) لتبسيط إدارة دورة الحياة."
+      ],
+      "sections": [
+        {
+          "heading": "إعادة هندسة البنية التحتية لتلبية متطلبات وكلاء الذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "أعلنت منصة كلاودفلير في مدونتها الرسمية عن تحديثات جذرية لخدمة Cloudflare Containers، حيث تم إعادة تصميم البنية التحتية من الصفر لتتلاءم مع متطلبات مهام وكلاء الذكاء الاصطناعي المتزايدة. على عكس التطبيقات التقليدية، لا يقوم وكلاء الذكاء الاصطناعي بنشر بيئات العمل مسبقاً، بل ينشئونها عند الطلب لكل مهمة محددة، متوقعين جاهزية فورية وقدرة عالية على الإيقاف المؤقت والاستئناف. ويمكن الرجوع إلى Cloudflare Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/faster-agent-sandboxes/"
+                }
+              ]
+            },
+            {
+              "text": "أظهرت اختبارات المستقلين من ComputeSDK انخفاضاً ملحوظاً في زمن بدء التشغيل الوسيط ليصل إلى 648 ملي ثانية فقط مقارنة بأكثر من أربعة ثوانٍ سابقاً. وفي الاختبارات الأولية للشركة، نجحت اختبارات الضغط في إنشاء مئات الآلاف من الحواسب في ثوانٍ معدودة. ويمكن الرجوع إلى your agent needs a computer. للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "your agent needs a computer.",
+                  "url": "https://blog.cloudflare.com/cloudflare-computer/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التحكم الديناميكي بالمصادر وصور التشغيل وقت التنفيذ",
+          "paragraphs": [
+            {
+              "text": "حتى وقت قريب، كانت حاويات كلاودفلير مرتبطة ارتباطاً وثيقاً بنسخ التطبيقات عند النشر، حيث يتم اختيار الصورة والموارد الحوسبية مسبقاً وتعميمها مركزياً. أما مع التحديث الجديد، فقد أصبحت سياسة الجدولة تمنح الكود البرمجي حرية اختيار صورة كل بيئة ونوع الموارد الحوسبية مباشرة عند التشغيل، وهو ما يتماشى مع رؤية الشركة في أن your agent needs a computer.",
+              "links": []
+            },
+            {
+              "text": "يتيح هذا النهج المرن للمطورين استخدام فئة كائن متين واحدة (Durable Object) لإطلاق بيئات تشغيل متعددة لتقنيات مختلفة مثل Node.js وأنظمة أخرى جنباً إلى جنب دون تعقيدات النشر المعتادة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دعم لقطات نظام الملفات وسيناريوهات الاستخدام المتنوعة",
+          "paragraphs": [
+            {
+              "text": "إلى جانب سرعة الإقلاع، توفر النسخة المحدثة لقطات نظام الملفات في مرحلة التجربة العامة، مما يسمح بحفظ مساحات العمل واستعادتها لاحقاً. وقد أثبتت هذه التحسينات فعاليتها في العديد من التكاملات البارزة مثل تكامل Cursor Cloud Agents و Devin Outposts و OpenAI Agents API وغيرها.",
+              "links": []
+            },
+            {
+              "text": "تحتاج وكلاء البرمجة وم Systems التعلم التعزيمي إلى بيئات ذات حالات محددة وموثوقة، فضلاً عن القدرة على الحفاظ على الملفات الناتجة لضمان استمرار العمل بسلاسة عبر الجلسات المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل العميق مع الكائنات المتينة وإدارة دورة الحياة",
+          "paragraphs": [
+            {
+              "text": "تعتمد البنية المعمارية المحدثة على ربط كل حاوية بكائن متين خاص بها يعمل بمثابة وحدة تحكم دائمة وقابلة للبرمجة تدير دورة الحياة وحركة المرور الصادرة. تتيح واجهة برمجة التطبيقات الجديدة للتحكم المباشر في الحاويات مزيداً من المرونة دون الحاجة لطبقات برمجية وسيطة، وهو النهج المعتمد في إصدار Sandbox SDK 1.0.",
+              "links": []
+            },
+            {
+              "text": "تساهم هذه الخصائص في جعل حاويات كلاودفلير مكملاً مثالياً لخدمات Workers و Dynamic Workers عند الحاجة لتوفير مساحة عمل لينكس متكاملة ومخصصة لوكلاء الذكاء الاصطناعي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تبسيط استراتيجيات التحديث ونشر الإصدارات",
+          "paragraphs": [
+            {
+              "text": "أدى توفير القدرة على اختيار صور التشغيل وقت التنفيذ إلى حل إحدى أكثر المشكلات تعقيداً في إدارة الحاويات والمتمثلة في ترقيات التطبيقات. فلم تعد هناك حاجة لضبط فترات السماح أو تقسيم نسب حركة المرور، حيث يمكن للحاوية مواصلة التشغيل بصورتها الحالية حتى يتم إيقافها برمجياً.",
+              "links": []
+            },
+            {
+              "text": "تمنح هذه المرونة المطورين حرية تنفيذ استراتيجيات تجريبية مختلفة، مثل نشر الإصدارات التجريبية على نسبة محددة من البيئات أو تثبيت المشاريع النشطة على صورها الحالية لمنع مقاطعة عمل الوكلاء في منتصف المهام.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "كلاودفلير",
+        "الذكاء الاصطناعي",
+        "حاويات",
+        "حوسبة سحابية",
+        "تطوير البرمجيات",
+        "وكلاء ذكاء اصطناعي"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Cloudflare Containers",
+        "Durable Objects",
+        "ComputeSDK",
+        "Cursor Cloud Agents",
+        "Devin Outposts",
+        "OpenAI Agents API"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "30 سبتمبر 2026",
+      "modifiedLabel": "30 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 546
+    },
+    "en": {
+      "title": "Cloudflare Rebuilds Containers to Scale Agent Sandboxes",
+      "description": "Cloudflare has rearchitected its Containers platform with 6x faster startup times, runtime image selection, and filesystem snapshots in public beta.",
+      "deck": "Cloudflare has updated its Containers infrastructure to support dynamic agent workloads, enabling runtime image and instance selection controlled via Durable Objects.",
+      "summaryBullets": [
+        "Cloudflare Containers now start six times faster, dropping median startup times to 648 milliseconds in independent benchmarks.",
+        "Developers can now choose each sandbox's image and instance type dynamically at runtime using the new durable_object scheduling policy.",
+        "Filesystem snapshots are currently available in public beta, allowing agent workspaces to be saved and restored across sessions.",
+        "The infrastructure updates support various integrations including Cursor Cloud Agents, Devin Outposts, the OpenAI Agents API, and Claude Managed Agents."
+      ],
+      "sections": [
+        {
+          "heading": "Rearchitecting Infrastructure for AI Agents",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has announced a major bottom-up redesign of its Cloudflare Containers infrastructure to better optimize for AI agent workloads. Unlike traditional application deployments that require predefined configurations and rollouts, AI agents create sandboxes on demand for individual tasks, expecting them to start immediately while supporting pause and resume capabilities.",
+              "links": []
+            },
+            {
+              "text": "Through a new scheduling policy and redesigned runtime environment, median startup speeds have dropped significantly. According to independent benchmarks from ComputeSDK, median startup fell from over four seconds down to 648 milliseconds, while preliminary internal testing successfully provisioned hundreds of thousands of containers in seconds.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Runtime Configuration and Durable Objects",
+          "paragraphs": [
+            {
+              "text": "Every Cloudflare Container is attached to a persistent, programmable controller known as a Durable Object, which manages its lifecycle and outbound traffic right next to the instance. The platform is expanding these capabilities directly into the native ctx.container API and carrying the model into Sandbox SDK 1.0.",
+              "links": []
+            },
+            {
+              "text": "Previously, developers had to lock in container images and compute resources ahead of time during the deployment phase, requiring separate applications and routing logic to handle different workloads like Node.js or Python. The newly introduced durable_object scheduling policy removes this restriction entirely by allowing application code to pass the desired image and instance type as arguments when the sandbox starts.",
+              "links": [
+                {
+                  "text": "Node.js",
+                  "url": "https://nodejs.org/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Filesystem Snapshots and Workload Persistence",
+          "paragraphs": [
+            {
+              "text": "Along with dynamic runtime provisioning, Cloudflare has introduced filesystem snapshots in public beta. This feature addresses the requirements of longer-running tasks, evaluation frameworks, and reinforcement learning environments where preserving files produced by an agent is critical for continuing work later.",
+              "links": []
+            },
+            {
+              "text": "These architectural enhancements complement existing integrations across various platforms. The infrastructure update supports deployments utilized by development tools and agent systems such as Cursor Cloud Agents and Devin Outposts, providing isolated workspaces equipped with necessary repositories and development tools.",
+              "links": [
+                {
+                  "text": "Cursor Cloud Agents",
+                  "url": "https://developers.cloudflare.com/changelog/post/2026-09-02-cursor-cloud-agents/"
+                },
+                {
+                  "text": "Devin Outposts",
+                  "url": "https://developers.cloudflare.com/changelog/post/2026-07-21-devin-outposts/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Eliminating Deployment Complexities for Rollouts",
+          "paragraphs": [
+            {
+              "text": "By shifting image and resource decisions to runtime execution, the update eliminates traditional rollout configurations and traffic draining procedures. Containers can continue running their initial images until explicitly stopped by application code, allowing developers to implement custom rollout strategies directly through code logic rather than centralized platform APIs.",
+              "links": []
+            },
+            {
+              "text": "Partners and platforms building agent infrastructure have noted the practical impact of these updates. Companies like Base44 and Kilo Code utilize Cloudflare Containers to spin up isolated development environments on demand, enabling AI assistants to execute commands, install dependencies, and manage live previews securely.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Containers",
+        "AI Agents",
+        "Durable Objects",
+        "Cloud Computing",
+        "Sandbox"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Cursor",
+        "Devin",
+        "OpenAI",
+        "Claude",
+        "Base44",
+        "Kilo Code"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 30, 2026",
+      "modifiedLabel": "September 30, 2026",
+      "readMinutes": 3,
+      "wordCount": 487
+    }
+  },
+  "datePublished": "2026-09-30T17:56:37.408021+03:00",
+  "dateModified": "2026-09-30T17:56:37.408021+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/cloudflare-containers-rebuilt-to-scale-agent-sandboxes/hero.webp",
+    "card": "/forum/assets/posts/2026/09/cloudflare-containers-rebuilt-to-scale-agent-sandboxes/card.webp",
+    "social": "/forum/assets/posts/2026/09/cloudflare-containers-rebuilt-to-scale-agent-sandboxes/social.jpg",
+    "alt": {
+      "ar": "تحديث رئيسي لحاويات كلاودفلير يدعم بيئات وكلاء الذكاء الاصطناعي",
+      "en": "Cloudflare Rebuilds Containers to Scale Agent Sandboxes"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01KW46H9N3ZPBVM99CMTJZRPF3.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/cloudflare-containers-rebuilt-to-scale-agent-sandboxes/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "تحديث رئيسي لحاويات كلاودفلير يدعم بيئات وكلاء الذكاء الاصطناعي",
+          "en": "Cloudflare Containers, rebuilt to scale agent sandboxes"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/faster-agent-sandboxes/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3S8R4W0018F4ABEE2X1ZH4G.01M3S8R5VDFQC24Z3Q4E6RBE3E.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/cloudflare-containers-rebuilt-to-scale-agent-sandboxes/inline-02.webp",
+        "width": 1400,
+        "height": 836,
+        "alt": {
+          "ar": "تحديث رئيسي لحاويات كلاودفلير يدعم بيئات وكلاء الذكاء الاصطناعي",
+          "en": "image2.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/faster-agent-sandboxes/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3RZHX4W63MBJM5R8X7VVE2G.01M3RZHXT3X1AAZRW96ZVHJNB2.png&w=1430&h=854&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/faster-agent-sandboxes/",
+      "type": "official",
+      "title": "Cloudflare Containers, rebuilt to scale agent sandboxes"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/faster-agent-sandboxes",
+  "sourceTitle": "Cloudflare Containers, rebuilt to scale agent sandboxes",
+  "trendScore": 110.17,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-30T14:56:37+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/09/cloudflare-containers-rebuilt-to-scale-agent-sandboxes.json"
+}
