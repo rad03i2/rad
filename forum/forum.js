@@ -53,6 +53,16 @@ function brandAssets(){
   setTimeout(normalizePlatformNav,1400);
 }
 
+const BRAND_INTRO_MS=2050;
+function brandIntro(){
+  const marks=$('.mikhbar-brand-mark');
+  if(!marks.length)return;
+  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){marks.forEach(mark=>mark.classList.add('is-brand-static'));return}
+  const finish=()=>marks.forEach(mark=>mark.classList.add('is-brand-static'));
+  window.setTimeout(finish,BRAND_INTRO_MS);
+}
+
 const ABOUT_TRANSITION_VIDEO='/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-logo-mark-alpha.webm?v=20260922-about1';
 const ABOUT_TRANSITION_POSTER='/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-logo-mark-poster-transparent.png';
 const ABOUT_TRANSITION_MS=2000;
@@ -259,5 +269,5 @@ function articleProgress(){
   update();
 }
 function year(){$$('[data-year]').forEach(e=>e.textContent=new Date().getFullYear())}
-brandAssets();menu();smartHeader();articleProgress();bind();bindAboutTransition();year();load();
+brandAssets();brandIntro();menu();smartHeader();articleProgress();bind();bindAboutTransition();year();load();
 })();
