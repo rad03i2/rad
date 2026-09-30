@@ -53,7 +53,7 @@ function brandAssets(){
   setTimeout(normalizePlatformNav,1400);
 }
 
-const BRAND_INTRO_SRC='/assets/images/06_Mikhbar_Sticker_Animated_512.webp?v=20260930-brandintro5';
+const BRAND_INTRO_SRC='/assets/images/06_Mikhbar_Sticker_Animated_512.webp?v=20260930-brandintro6';
 const BRAND_INTRO_MS=2050;
 function brandIntro(){
   const marks=$$('.mikhbar-brand-mark');
@@ -80,9 +80,25 @@ function brandIntro(){
 
   const finish=()=>{
     marks.forEach(mark=>{
-      mark.classList.add('is-brand-static');
       const intro=$('.mikhbar-brand-intro',mark);
-      if(intro)intro.remove();
+      if(!intro){mark.classList.add('is-brand-static');return}
+      try{
+        const w=intro.naturalWidth||512;
+        const h=intro.naturalHeight||512;
+        const canvas=document.createElement('canvas');
+        canvas.className='mikhbar-brand-intro';
+        canvas.width=w;
+        canvas.height=h;
+        canvas.setAttribute('aria-hidden','true');
+        const ctx=canvas.getContext('2d',{alpha:true});
+        if(!ctx)throw new Error('canvas unavailable');
+        ctx.clearRect(0,0,w,h);
+        ctx.drawImage(intro,0,0,w,h);
+        intro.replaceWith(canvas);
+      }catch{
+        mark.classList.add('is-brand-static');
+        intro.remove();
+      }
     });
   };
 
