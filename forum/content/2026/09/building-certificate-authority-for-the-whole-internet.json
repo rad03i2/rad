@@ -1,0 +1,350 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "830de58cacf62ad1b88c",
+  "slug": "building-certificate-authority-for-the-whole-internet",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/building-certificate-authority-for-the-whole-internet/",
+    "en": "/forum/en/web/building-certificate-authority-for-the-whole-internet/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cloudflare تعلن عن نيتها لتصبح سلطة شهادات عامة",
+      "description": "بعد 12 عاماً من إطلاق Universal SSL، تخطط Cloudflare لتأسيس سلطة شهادات عامة جديدة تعتمد على تقنيات ما بعد الكم ومعايير ACME لتعزيز أمان الويب.",
+      "deck": "تستعد Cloudflare لخطوة تاريخية في بنية الويب عبر الترشح لتكون سلطة شهادات عامة، معتمدةً على جذور موثوقة وتقنيات متقدمة لضمان استمرارية الخدمة.",
+      "summaryBullets": [
+        "تقدم Cloudflare بطلب للانضمام إلى برامج جذور المتصفحات الكبرى (Chrome, Apple, Microsoft, Mozilla).",
+        "تستهدف الشركة تقديم شهادات مقاومة للكم (Post-Quantum) ضمن برنامج Chrome الجديد.",
+        "تعتمد الخطة على بروتوكول ACME لإصدار الشهادات وتجديدها تلقائياً وبشكل مجاني.",
+        "تسعى الشركة لتقليل المخاطر النظامية المرتبطة بالاعتماد على سلطة شهادات مجانية واحدة هي Let's Encrypt."
+      ],
+      "sections": [
+        {
+          "heading": "الانتقال من المستهلك إلى المُصدر",
+          "paragraphs": [
+            {
+              "text": "بعد اثني عشر عاماً من إطلاق خدمة Universal SSL التي ضاعفت عدد المواقع المشفرة على الويب، تعلن Cloudflare عن نيتها لتصبح سلطة شهادات عامة (CA) معتمدة. على الرغم من كونها واحدة من أكبر مستهلكي الشهادات الموثوقة عالمياً، لم تصدر الشركة أي شهادة بنفسها من قبل، لكن هذا الواقع سيتغير قريباً. تهدف هذه الخطوة إلى سد الفجوة في البنية التحتية للأمان الرقمي، حيث تلتزم الشركة بالشفافية في مشاركة مراحل التطوير مع مجتمع WebPKI.",
+              "links": [
+                {
+                  "text": "Universal SSL",
+                  "url": "https://blog.cloudflare.com/introducing-universal-ssl/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "استراتيجية الجذور: التغطية الواسعة والتوافق المستقبلي",
+          "paragraphs": [
+            {
+              "text": "تواجه السلطات الجديدة تحدياً زمنياً طويلاً قبل أن تصل جذورها إلى جميع الأجهزة، خاصة القديمة منها التي لم تعد تتلقى التحديثات. لتجاوز هذه المشكلة، وقعت Cloudflare اتفاقية نهائية لاقتناء جذر (Root) موثوق وممتد من شركة GlobalSign، والذي يتمتع بتغطية واسعة عبر أنظمة التشغيل والمتصفحات منذ عام 2012. في الوقت نفسه، ستقوم الشركة بتقديم جذور جديدة مصممة لتلبية سياسات المستقبل، بما في ذلك برامج Chrome التي تقيّد عمر الجذور الموثوقة. هذا المزيج يضمن توافقاً فورياً مع الأجهزة الحالية وقبولاً سياسياً في البيئات المستقبلية.",
+              "links": [
+                {
+                  "text": "GlobalSign",
+                  "url": "https://www.globalsign.com/en/acme-automated-certificate-management"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "معالجة المخاطر النظامية في بنية الويب",
+          "paragraphs": [
+            {
+              "text": "يعتمد معظم الويب المشفر حالياً على نموذج الشهادات المجانية التلقائية، والذي تتصدره Let's Encrypt بإصدار ملايين الشهادات يومياً. رغم نجاح هذا النموذج، إلا أنه يحمل مخاطر نظامية؛ فأي خلل في السلطة المهيمنة قد يترك جزءاً كبيراً من الويب بدون بديل مجاني وتلقائي جاهز. تمتلك Cloudflare خبرة في بناء هذا النوع من التكرار (Redundancy) لعملائها، حيث تزود شهادات Universal SSL بشهادات احتياطية من سلطات مختلفة. الآن، تطبق الشركة هذه الفلسفة على نطاق أوسع، بهدف توفير بنية تحتية مرنة للويب بأكمله وليس فقط لعملائها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اعتماد بروتوكول ACME كخيار أساسي",
+          "paragraphs": [
+            {
+              "text": "لتسهيل الانتقال إليها، ستعتمد Cloudflare على بروتوكول إدارة الشهادات التلقائية (ACME) كخيار أساسي. هذا البروتوكول المعتمد عالمياً يسمح للمستخدمين الحاليين لأي سلطة شهادات مجانية بالانتقال إلى Cloudflare بتغيير رابط التوجيه (Directory URL) فقط، دون الحاجة إلى إعادة هندسة الأنظمة أو استخدام أدوات جديدة. هذا النهج يضمن قابلية تبنٍّ سلسة ويقلل من الحواجز التقنية أمام المطورين والمؤسسات.",
+              "links": [
+                {
+                  "text": "ACME",
+                  "url": "https://www.globalsign.com/en/acme-automated-certificate-management"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التصميم للمرونة والشفافية التشغيلية",
+          "paragraphs": [
+            {
+              "text": "تعتمد Cloudflare على مبدأ \"الفشل الصغير\" (Fail Small) لضمان أن أي خلل محلي لا يؤثر على نطاق واسع. تشمل هذه الإجراءات اشتراط دعم آلية التجديد التلقائي (ARI) المعيارية في RFC 9773 كشرط لإصدار الشهادات. كما تخطط الشركة لتحسين عمليات الإلغاء (Revocation) من خلال تمديد نوافذ التجديد للمؤثرات بدلاً من الإلغاء الفوري الذي قد يعطل المواقع، مما يوفر توازناً بين الأمان واستمرارية الخدمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاستعداد لعصر ما بعد الكم",
+          "paragraphs": [
+            {
+              "text": "تستهدف Cloudflare أن تكون من أوائل سلطات الشهادات التي تقدم شهادات مقاومة للكم (Post-Quantum). يأتي هذا التوجه ضمن برنامج Chrome الجديد لجذور مقاومة للكم، والذي يسعى لتأمين الويب ضد هجمات الحواسيب الكمومية المستقبلية. مع تزايد نشاط الوكلاء الآليين (Agentic activity) وتقليل مدة صلاحية الشهادات، تتوقع الشركة نمواً سريعاً في عدد الشهادات المطلوبة سنوياً، مما يجعل الاستثمار في بنية تحتية قوية ومتطورة ضرورة حتمية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Certificate Authority",
+        "Web Security",
+        "Post-Quantum",
+        "ACME",
+        "TLS",
+        "GlobalSign"
+      ],
+      "entities": [
+        "Cloudflare",
+        "GlobalSign",
+        "Let's Encrypt",
+        "Chrome",
+        "Apple",
+        "Microsoft",
+        "Mozilla",
+        "IETF"
+      ],
+      "category": "الويب",
+      "dateLabel": "30 سبتمبر 2026",
+      "modifiedLabel": "30 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 520
+    },
+    "en": {
+      "title": "Cloudflare Announces Intent to Become a Public Certificate Authority",
+      "description": "Cloudflare is applying to become a public certificate authority, combining an established root, an ACME-first approach, and Merkle Tree Certificates.",
+      "deck": "Twelve years after launching Universal SSL, Cloudflare is taking the next step to become a public certificate authority with plans to offer post-quantum certificates.",
+      "summaryBullets": [
+        "Cloudflare has applied for inclusion in the Chrome, Apple, Microsoft, and Mozilla root programs.",
+        "The company signed a definitive agreement to acquire an established, broadly trusted root from GlobalSign.",
+        "The initiative plans to serve post-quantum certificates targeting Chrome’s Quantum-resistant Root Program.",
+        "Automated issuance and renewal will be handled using the open standard ACME protocol."
+      ],
+      "sections": [
+        {
+          "heading": "Expanding From Consumer to Issuer",
+          "paragraphs": [
+            {
+              "text": "Twelve years ago, during Birthday Week 2014, [we turned on Universal SSL](https://blog.cloudflare.com/introducing-universal-ssl/) and nearly doubled the number of encrypted sites on the web overnight by providing free TLS to every site behind Cloudflare. Encryption transitioned from an expensive, time-intensive undertaking into the default standard for the web.",
+              "links": [
+                {
+                  "text": "we turned on Universal SSL",
+                  "url": "https://blog.cloudflare.com/introducing-universal-ssl/"
+                }
+              ]
+            },
+            {
+              "text": "For Birthday Week this year, Cloudflare announced its intent to become a public certificate authority (CA). Despite being one of the largest consumers of publicly trusted certificates on the Internet for over a decade, the company has never issued a single certificate itself. That operational reality is now changing as the organization formally applies to become a public CA.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Root Programs and GlobalSign Acquisition",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has applied for inclusion in the Chrome, Apple, Microsoft, and Mozilla root programs. Additionally, the company has signed a definitive agreement to acquire an established, broadly trusted root from GlobalSign to offer certificates with the widest possible device reach from day one.",
+              "links": []
+            },
+            {
+              "text": "A brand-new root typically requires years to propagate into operating systems, browsers, and devices, often missing older clients that have stopped receiving updates. Acquiring an existing root with a high degree of trust store coverage solves that gap immediately. The GlobalSign root has been trusted across diverse clients since 2012, helping reach older devices while newer roots align with evolving root program policies.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Post-Quantum Goals and Ecosystem Redundancy",
+          "paragraphs": [
+            {
+              "text": "Cloudflare also announced plans to be among the first certificate authorities to serve post-quantum certificates, targeting Chrome’s recently announced [Quantum-resistant Root Program](https://blog.google/security/cultivating-a-robust-and-efficient-quantum-safe-https/).",
+              "links": [
+                {
+                  "text": "Quantum-resistant Root Program",
+                  "url": "https://blog.google/security/cultivating-a-robust-and-efficient-quantum-safe-https/"
+                }
+              ]
+            },
+            {
+              "text": "While free and automated certificate models like Let's Encrypt handle a massive share of the encrypted web, reliance on a single dominant operator introduces systemic risk. Cloudflare aims to provide broader redundancy for the ecosystem, drawing on its experience provisioning certificates through multiple CAs to keep customer services operational during outages and revocation events.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ACME-First Approach and Automated Renewal",
+          "paragraphs": [
+            {
+              "text": "To streamline adoption, Cloudflare will employ an [ACME](https://www.globalsign.com/en/acme-automated-certificate-management)-first approach utilizing the widely accepted open standard protocol. Automated issuance and renewal through ACME will allow users of existing free certificate authorities to transition by changing a directory URL without new tooling or re-architecting.",
+              "links": [
+                {
+                  "text": "ACME",
+                  "url": "https://www.globalsign.com/en/acme-automated-certificate-management"
+                }
+              ]
+            },
+            {
+              "text": "As [certificate maximum validity period decreases](https://cabforum.org/2025/04/11/ballot-sc081v3-introduce-schedule-of-reducing-validity-and-data-reuse-periods/#ballot-contents) over the coming years, agentic activity increases, and post-quantum certificates go mainstream, raw certificate volume is expected to grow rapidly across the Internet.",
+              "links": [
+                {
+                  "text": "certificate maximum validity period decreases",
+                  "url": "https://cabforum.org/2025/04/11/ballot-sc081v3-introduce-schedule-of-reducing-validity-and-data-reuse-periods/#ballot-contents"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Designing for Resilience and Compliance",
+          "paragraphs": [
+            {
+              "text": "In building its own CA, Cloudflare is focusing on reliability, designing recovery processes, and adopting standards such as [ACME Renewal Information](https://www.rfc-editor.org/info/rfc9773/). Making renewal automation a condition of issuance will require subscribers to maintain automation that polls renewal endpoints and tracks replacement certificates.",
+              "links": [
+                {
+                  "text": "ACME Renewal Information",
+                  "url": "https://www.rfc-editor.org/info/rfc9773/"
+                }
+              ]
+            },
+            {
+              "text": "By incorporating these strategies alongside [standards-based proposal](https://datatracker.ietf.org/doc/draft-ietf-plants-merkle-tree-certs/) efforts like Merkle Tree Certificates, the initiative intends to limit the impact of operational issues and support the broader transition outlined [in a blog post on the topic](http://blog.cloudflare.com/pq-ca-with-mtcs).",
+              "links": [
+                {
+                  "text": "standards-based proposal",
+                  "url": "https://datatracker.ietf.org/doc/draft-ietf-plants-merkle-tree-certs/"
+                },
+                {
+                  "text": "in a blog post on the topic",
+                  "url": "http://blog.cloudflare.com/pq-ca-with-mtcs"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Certificate Authority",
+        "SSL",
+        "TLS",
+        "GlobalSign",
+        "ACME",
+        "Post-Quantum"
+      ],
+      "entities": [
+        "Cloudflare",
+        "GlobalSign",
+        "Let's Encrypt",
+        "Chrome",
+        "Apple",
+        "Microsoft",
+        "Mozilla"
+      ],
+      "category": "Web",
+      "dateLabel": "September 30, 2026",
+      "modifiedLabel": "September 30, 2026",
+      "readMinutes": 3,
+      "wordCount": 539
+    }
+  },
+  "datePublished": "2026-09-30T10:16:36.871524+03:00",
+  "dateModified": "2026-09-30T10:16:36.871524+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/building-certificate-authority-for-the-whole-internet/hero.webp",
+    "card": "/forum/assets/posts/2026/09/building-certificate-authority-for-the-whole-internet/card.webp",
+    "social": "/forum/assets/posts/2026/09/building-certificate-authority-for-the-whole-internet/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تعلن عن نيتها لتصبح سلطة شهادات عامة",
+      "en": "Cloudflare Announces Intent to Become a Public Certificate Authority"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3NDS17PAN9XKW88493GE864.01M3NDS24T3Y1A90FZDRFXYHZD.png&w=3998&h=2246&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/building-certificate-authority-for-the-whole-internet/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "Cloudflare تعلن عن نيتها لتصبح سلطة شهادات عامة",
+          "en": "Building a certificate authority for the whole Internet"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/cloudflare-certificate-authority/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3NDRB3KYKX16KDC3S3YSQFQ.01M3NDRCZRSNQTMACBMW3GDJVB.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/building-certificate-authority-for-the-whole-internet/inline-02.webp",
+        "width": 1400,
+        "height": 933,
+        "alt": {
+          "ar": "Cloudflare تعلن عن نيتها لتصبح سلطة شهادات عامة",
+          "en": "Cloudflare Announces Intent to Become a Public Certificate Authority"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/cloudflare-certificate-authority/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3NDPRKC82G6V4NTDZEF5NPP.png&w=1430&h=954&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/building-certificate-authority-for-the-whole-internet/inline-03.webp",
+        "width": 1400,
+        "height": 787,
+        "alt": {
+          "ar": "Cloudflare تعلن عن نيتها لتصبح سلطة شهادات عامة",
+          "en": "Cloudflare Announces Intent to Become a Public Certificate Authority"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/cloudflare-certificate-authority/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3NDPPYQ33SWKYEFT2W6D6RM.png&w=1430&h=804&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/cloudflare-certificate-authority/",
+      "type": "official",
+      "title": "Building a certificate authority for the whole Internet"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/cloudflare-certificate-authority",
+  "sourceTitle": "Building a certificate authority for the whole Internet",
+  "trendScore": 116.5,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-30T07:16:36+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/building-certificate-authority-for-the-whole-internet.json"
+}
