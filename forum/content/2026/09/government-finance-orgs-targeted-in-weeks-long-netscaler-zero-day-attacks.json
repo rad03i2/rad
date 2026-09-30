@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "bc74b592ee31bedefc59",
+  "slug": "government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks",
+  "categorySlug": "security",
+  "urls": {
+    "ar": "/forum/ar/security/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks/",
+    "en": "/forum/en/security/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks/"
+  },
+  "locales": {
+    "ar": {
+      "title": "هجمات صفرية تستهدف NetScaler في حكومات ومؤسسات مالية",
+      "description": "كشفت تقارير أمنية عن استغلال ثغرات صفرية في Citrix NetScaler منذ أيلول، مما أدى إلى اختراق عشرات المنظمات الحكومية والمالية في أمريكا الشمالية وأوروبا.",
+      "deck": "أعلنت فرق الاستخبارات الأمنية عن حملة اختراق واسعة النطاق استهدفت أجهزة NetScaler عبر ثغرات حرجة، مما دفع الوكالات الحكومية إلى إصدار تحذيرات نادرة.",
+      "summaryBullets": [
+        "استغلال ثغرتين صفريتين (CVE-2026-88771 وCVE-2026-88772) منذ مطلع أيلول 2026.",
+        "استهداف منظمات في قطاعات الحكومة، الخدمات المالية، التعليم، والقانون.",
+        "اكتشاف برمجيات خبيثة جديدة باسمي WHIPSHOT وSLAPSHOT لتسهيل الحركة الجانبية.",
+        "توصية الوكالات الحكومية بفصل الأجهزة المتأثرة عن الإنترنت فوراً قبل إصدار التصحيحات."
+      ],
+      "sections": [
+        {
+          "heading": "تفاصيل الاستغلال والجهات المتأثرة",
+          "paragraphs": [
+            {
+              "text": "أصدرت فرق Mandiant و Threat Intelligence Group التابعة لشركة Google تقريراً مفصلاً يوثق هجمات نشطة استغلت ثغرتين صفريتين في أجهزة Citrix NetScaler ADC و NetScaler Gateway. تحمل هذه الثغرات المعرفين CVE-2026-88771 و CVE-2026-88772، وتسمح للمهاجمين بتنفيذ أكواد عن بُعد دون الحاجة إلى مصادقة. كشفت التحقيقات أن هذه الحملة لم تكن وليدة اللحظة، بل كانت مستمرة منذ مطلع أيلول على الأقل، مما يعني أن الاستغلال حدث قبل أسابيع من إصدار التصحيحات الرسمية.",
+              "links": [
+                {
+                  "text": "CVE-2026-88772",
+                  "url": "https://labs.watchtowr.com/here-we-go-again-citrix-netscaler-dtls-preauth-memory-overflow-cve-2026-88772/"
+                }
+              ]
+            },
+            {
+              "text": "تشير البيانات إلى أن الضربات طالت منظمات في أمريكا الشمالية وأوروبا، مع تركيز خاص على قطاعات حساسة تشمل الحكومة، الخدمات المالية، التعليم، والخدمات القانونية والمهنية. وقد نجح المهاجمون في الحصول على صلاحيات الجذر (Root) على الأجهزة المتأثرة، مما مكنهم من تغيير إعدادات خوادم الويب لزراعة أصداف ويب (Web Shells) تعمل بصلاحيات قصوى داخل شبكات الضحايا.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "برمجيات خبيثة جديدة وأدوات تسلل",
+          "paragraphs": [
+            {
+              "text": "اكتشف فريق Mandiant برمجيات خبيثة غير مسبوقة في هذه الهجمات، من بينها صنف ويب PHP يحمل اسم WHIPSHOT وأداة نفق (Tunneling Tool) مبنية على لغة بايثون تسمى SLAPSHOT. تعمل هذه الأدوات معاً لتوفير مسار للمهاجمين من الجهاز المخترق إلى الشبكة الداخلية للضحية، مما يتيح لهم إجراء استطلاع داخلي، والحركة الجانبية، وسرقة بيانات الاعتماد.",
+              "links": []
+            },
+            {
+              "text": "في إحدى حالات الاختراق الموثقة، استخدم المهاجمون النفق الرقمي لاستكشاف الشبكة الداخلية يدوياً وسرقة بيانات الدخول. كما رصد الفريق مؤشرات على أن الفاعل الأمني يدير أصداف ويب مشابهة في بيئات متعددة، مما يوحي بحملة منظمة ومستمرة. وحذر تشارلز كارماكال، كبير مسؤولي التقن في Mandiant، من أن عشرات المنظمات قد تأثرت، مشيراً إلى احتمال مشاركة فاعلين مدعومين من دول في هذه العمليات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحذيرات نادرة وإجراءات طارئة",
+          "paragraphs": [
+            {
+              "text": "في خطوة غير معتادة، دعت وكالات الأمن السيبراني الحكومية والشركات الأمنية الكبرى مسؤولي النظام إلى فصل أجهزة NetScaler المتأثرة عن الإنترنت فوراً. جاءت هذه التوصية القوية أثناء استمرار تحقيقات الاستغلال الصفرية وقبل أن تطلق Citrix التصحيحات اللازمة. ويهدف هذا الإجراء الطارئ إلى قطع الاتصال بين المهاجمين والأجهزة المعرضة للخطر حتى يتم تأمينها بشكل كامل.",
+              "links": []
+            },
+            {
+              "text": "أكد خبير الأمن السيبراني كيفين بيومونت أنه على علم بأكثر من 100 منظمة ضحية حتى يوم الثلاثاء، مشيراً إلى أن الهجمات تبدو جزءاً من حملة تجسس واسعة النطاق. وتؤكد هذه الأرقام حجم الخطر الذي تمثله الثغرات غير المصححة في البنية التحتية للشبكات المؤسسية الكبرى.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ملاحظات تقنية من خبراء الاستخبارات",
+          "paragraphs": [
+            {
+              "text": "نشرت شركة WatchTowr، التي كانت من أوائل الشركات التي أكدت الاستغلال في البيئة الواقعية، تفاصيل تقنية حول كل من CVE-2026-88771 و CVE-2026-88772. كما رصدت شركة GreyNoise محاولات استغلال صفرية في 24 أيلول، أي قبل أيام من الكشف الرسمي عن الثغرات وإصدار التصحيحات. وأوضحت GreyNoise أن المهاجمين حاولوا ضبط أعلام setuid و setgid على /bin/sh للحصول على shell بصلاحيات الجذر.",
+              "links": [
+                {
+                  "text": "CVE-2026-88772",
+                  "url": "https://labs.watchtowr.com/here-we-go-again-citrix-netscaler-dtls-preauth-memory-overflow-cve-2026-88772/"
+                }
+              ]
+            },
+            {
+              "text": "أضافت GreyNoise أن الهدف من هذه التقنية هو تثبيت صنف ويب محمي بكلمة مرور يتواصل عبر قيم الكوكيز المرسلة من المهاجم، وذلك لتجنب توثيق أوامرهم في سجلات الويب. من جانبها، أفادت شركة Palo Alto Networks بوجود حوالي 50,000 حالة محتملة لأجهزة NetScaler معرضة للخطر حتى 27 أيلول، مما يبرز حجم السطح الهجومي الكبير الذي يواجهه المدافعون عن الشبكات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوقعات المستقبلية والإجراءات المطلوبة",
+          "paragraphs": [
+            {
+              "text": "مع تزايد عدد الضحايا وتأكيد مشاركة فاعلين دوليين، يتوقع الخبراء استغلالاً واسعاً وفرصياً للثغرتين من قبل مجموعة متنوعة من الفاعلين الأمنيين في المدى القريب. ويُنصح جميع مسؤولي النظام بمراجعة سجلات الوصول لأجهزة NetScaler والتحقق من وجود أي أصداف ويب غير مصرح بها أو أدوات نفق مشبوهة.",
+              "links": []
+            },
+            {
+              "text": "تبقى الأولوية القصوى هي تطبيق التصحيحات التي أصدرتها Citrix وفصل أي جهاز لا يمكن تأمينه فوراً عن الشبكة العامة. إن الطبيعة الحرجة لهذه الثغرات، التي تتيح تنفيذ أكواد عن بُعد دون مصادقة، تجعلها هدفاً رئيسياً للمهاجمين الذين يسعون للوصول إلى البيانات الحساسة في المؤسسات الكبرى.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمن سيبراني",
+        "Citrix NetScaler",
+        "ثغرة صفرية",
+        "CVE-2026-88771",
+        "CVE-2026-88772",
+        "Mandiant",
+        "هجمات تجسس"
+      ],
+      "entities": [
+        "Citrix",
+        "NetScaler ADC",
+        "NetScaler Gateway",
+        "Mandiant",
+        "Google Threat Intelligence Group",
+        "WatchTowr",
+        "GreyNoise",
+        "Palo Alto Networks"
+      ],
+      "category": "الأمن التقني",
+      "dateLabel": "30 سبتمبر 2026",
+      "modifiedLabel": "30 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 631
+    },
+    "en": {
+      "title": "NetScaler Zero-Day Attacks Hit Government and Finance Sectors",
+      "description": "Government and financial organizations in North America and Europe face weeks-long zero-day attacks exploiting NetScaler vulnerabilities.",
+      "deck": "Security researchers reveal that critical NetScaler zero-day vulnerabilities have been actively exploited in stealthy espionage campaigns targeting high-profile sectors across multiple regions.",
+      "summaryBullets": [
+        "NetScaler ADC and Gateway appliances were targeted by zero-day attacks exploiting critical flaws since early September.",
+        "Attackers leveraged unauthenticated remote code execution to plant custom web shells and establish internal network tunnels.",
+        "Mandiant identified unseen malware tools including the WHIPSHOT web shell and SLAPSHOT tunneling utility.",
+        "Cybersecurity agencies and security firms took the rare step of urging administrators to disconnect affected appliances before patches arrived."
+      ],
+      "sections": [
+        {
+          "heading": "Severe NetScaler Flaws Trigger Urgent Disconnection Warnings",
+          "paragraphs": [
+            {
+              "text": "Google’s Mandiant and Threat Intelligence Group (GTIG) have published comprehensive details regarding attacks that exploit critical NetScaler zero-day vulnerabilities. Tracked as CVE-2026-88771 and CVE-2026-88772, these security flaws affect NetScaler ADC and NetScaler Gateway instances, allowing attackers to execute unauthenticated remote code execution. Before Citrix released official software patches, government cybersecurity agencies and prominent security firms took the rare and drastic step of urging network administrators to immediately disconnect affected NetScaler appliances from the internet while active investigations unfolded.",
+              "links": []
+            },
+            {
+              "text": "While Mandiant's specific report focuses heavily on the exploitation of CVE-2026-88772, observations indicate that the underlying zero-day campaign has been ongoing since at least early September. The targeted organizations primarily span North America and Europe, encompassing critical industries such as government, financial services, education, legal, and professional services sectors.",
+              "links": [
+                {
+                  "text": "CVE-2026-88772",
+                  "url": "https://labs.watchtowr.com/here-we-go-again-citrix-netscaler-dtls-preauth-memory-overflow-cve-2026-88772/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Technical Mechanics of the Zero-Day Campaign",
+          "paragraphs": [
+            {
+              "text": "During the intrusions, threat actors successfully exploited the vulnerabilities to acquire root-level access to the targeted NetScaler ADC and Gateway appliances. Once inside, they modified the core web server configuration to seamlessly plant web shells that operate with elevated root privileges. Security research firms like WatchTowr provided early technical validation of the in-the-wild exploitation activity, detailing the precise methods utilized to breach the perimeters.",
+              "links": []
+            },
+            {
+              "text": "Concurrently, threat intelligence provider GreyNoise observed active zero-day exploitation attempts against infrastructure starting on September 24, days before public disclosure and patching occurred. According to GreyNoise analysts, malicious actors attempted to configure specific execution bits on shell utilities to secure root access and plant password-protected web shells designed to accept cookie-based communication values to bypass standard web logging.",
+              "links": [
+                {
+                  "text": "zero-day exploitation attempts",
+                  "url": "https://www.greynoise.io/blog/swarming-against-citrix-0-day-exploitation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Novel Malware Arsenal: WHIPSHOT and SLAPSHOT",
+          "paragraphs": [
+            {
+              "text": "Mandiant's analysis uncovered previously unseen malware variants deployed explicitly during these operations. The custom toolset features a PHP-based web shell designated as WHIPSHOT and a Python-powered tunneling utility known as SLAPSHOT. Working in tandem, these malicious components provide intruders with a reliable path from the compromised edge appliance deep into the victim's internal enterprise network.",
+              "links": []
+            },
+            {
+              "text": "The implementation of these tools facilitates thorough internal reconnaissance, lateral movement, and aggressive credential theft. In at least one documented intrusion, malicious actors leveraged the established network tunnel to manually traverse the internal environment, explore connected systems, and harvest sensitive credentials.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Scope of Compromise and State-Sponsored Espionage",
+          "paragraphs": [
+            {
+              "text": "Mandiant CTO Charles Carmakal warned that dozens of organizations have suffered direct compromises, with indications pointing toward suspected state-sponsored threat actors orchestrating the incursions. Security expert Kevin Beaumont similarly reported tracking upwards of 100 victim organizations, characterizing the widespread operations as part of a targeted espionage campaign.",
+              "links": [
+                {
+                  "text": "espionage campaign",
+                  "url": "https://cyberplace.social/@GossiTheDog/117351107654208046"
+                }
+              ]
+            },
+            {
+              "text": "Data gathered from Palo Alto Networks emphasized the massive scale of the potential threat surface, revealing that roughly 50,000 NetScaler instances remained potentially exposed to the internet shortly before the patches were deployed. Security researchers continue to analyze telemetry from these incidents to understand the full breadth of the attacks.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "NetScaler",
+        "Citrix",
+        "Zero-Day",
+        "Mandiant",
+        "Cybersecurity",
+        "Vulnerabilities",
+        "Espionage"
+      ],
+      "entities": [
+        "NetScaler",
+        "Citrix",
+        "Mandiant",
+        "GreyNoise",
+        "WatchTowr",
+        "Palo Alto Networks"
+      ],
+      "category": "Cybersecurity",
+      "dateLabel": "September 30, 2026",
+      "modifiedLabel": "September 30, 2026",
+      "readMinutes": 3,
+      "wordCount": 554
+    }
+  },
+  "datePublished": "2026-09-30T22:56:37.785252+03:00",
+  "dateModified": "2026-09-30T22:56:37.785252+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks/hero.webp",
+    "card": "/forum/assets/posts/2026/09/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks/card.webp",
+    "social": "/forum/assets/posts/2026/09/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks/social.jpg",
+    "alt": {
+      "ar": "هجمات صفرية تستهدف NetScaler في حكومات ومؤسسات مالية",
+      "en": "NetScaler Zero-Day Attacks Hit Government and Finance Sectors"
+    },
+    "credit": "SecurityWeek",
+    "sourceUrl": "https://www.securityweek.com/wp-content/uploads/2026/08/Citrix-vulnerability.jpeg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "SecurityWeek",
+      "url": "https://www.securityweek.com/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks/",
+      "type": "journalism",
+      "title": "Government, Finance Orgs Targeted in Weeks-Long NetScaler Zero-Day Attacks"
+    }
+  ],
+  "sourceUrl": "https://www.securityweek.com/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks",
+  "sourceTitle": "Government, Finance Orgs Targeted in Weeks-Long NetScaler Zero-Day Attacks",
+  "trendScore": 100.32,
+  "verification": {
+    "confidence": 0.87,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-09-30T19:56:37+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/government-finance-orgs-targeted-in-weeks-long-netscaler-zero-day-attacks.json"
+}
