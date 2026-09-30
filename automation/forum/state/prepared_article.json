@@ -1,5 +1,451 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-09-30T16:56:37+00:00",
-  "last_published_story_id": "d4646695a3c226f57716"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-09-30T17:01:49+00:00",
+  "target_publish_at": "2026-09-30T20:16:37.558007+03:00",
+  "story": {
+    "title": "Build a multi-agent music production pipeline on Amazon Bedrock AgentCore Runtime Instances",
+    "url": "https://aws.amazon.com/blogs/machine-learning/build-a-multi-agent-music-production-pipeline-on-amazon-bedrock-agentcore-runtime-instances",
+    "domain": "aws.amazon.com",
+    "summary": "Amazon Bedrock AgentCore Runtime Instances gives multi-agent workflows AWS managed EC2 infrastructure with GPUs, persistent volumes, and multi-day sessions. In this post, we deploy a three-agent music production pipeline where the agents colocate on one GPU instance, share a filesystem, and hand work to each other to produce a finished track.",
+    "published_at": "2026-09-30T15:21:57+00:00",
+    "discovered_at": "2026-09-30T15:26:17+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "59ac649abb99214213a2",
+    "trend": {
+      "score": 102.36,
+      "age_hours": 1.64,
+      "corroboration_count": 0,
+      "entity_momentum": 12.0,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-a-multi-agent-music-production-pipeline-on-amazon-bedrock-agentcore-runtime-instances/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Build a multi-agent music production pipeline on Amazon Bedrock AgentCore Runtime Instances",
+      "title": "Build a multi-agent music production pipeline on Amazon Bedrock AgentCore Runtime Instances | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تطلق خط إنتاج موسيقي متعدد الوكلاء على Bedrock",
+      "description": "تتيح أمازون ويب سيرفيسز عبر Bedrock AgentCore إنشاء خطوط إنتاج موسيقية تعتمد على ثلاثة وكلاء ذكاء اصطناعي يعملون على بنية تحتية موحدة بموارد GPU.",
+      "deck": "تقدم أمازون ويب سيرفيسز حلاً جديداً لتسهيل العمل الإبداعي المعقد عبر دمج عدة وكلاء ذكاء اصطناعي في بيئة تشغيل واحدة.",
+      "summary_bullets": [
+        "تتيح تقنية AgentCore Runtime Instances تشغيل عدة وكلاء على نفس بنية تحتية EC2 مع مشاركة الملفات.",
+        "يعتمد النظام على ثلاثة وكلاء متخصصين: التلحين، هندسة الصوت، والتدقيق على الجودة.",
+        "تعمل النماذج التوليدية مباشرة على معالجات NVIDIA L4 المدمجة في البنية التحتية.",
+        "تدعم البنية الجديدة الجلسات الممتدة لعدة أيام مع إمكانية إيقاف واستئناف العمل دون فقدان البيانات."
+      ],
+      "sections": [
+        {
+          "heading": "التحول نحو أنظمة متعددة الوكلاء",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات تحديات تقنية متزايدة عند الانتقال من وكلاء ذكاء اصطناعي منفذين لمهام بسيطة إلى أنظمة متكاملة تتكون من عدة وكلاء يتعاونون معاً. تتطلب هذه الأنظمة المتقدمة بنية تحتية قادرة على استيعاب الجلسات الممتدة لعدة أيام ومشاركة السياق والبيانات بين المكونات المختلفة، وهو ما لا توفره بيئات التشغيل الخفيفة التقليدية. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/build-a-multi-agent-music-production-pipeline-on-amazon-bedrock-agentcore-runtime-instances/"
+                }
+              ]
+            },
+            {
+              "text": "للتغلب على هذه القيود، أطلقت أمازون ويب سيرفيسز ميزة جديدة ضمن خدمة Amazon Bedrock AgentCore تتيح للوكلاء العمل على بنية تحتية موحدة. تتيح هذه التقنية للوكلاء المختلفة أن تتشارك نفس المعالج الرسومي ونفس مساحة التخزين، مما يسهل تبادل الملفات والنتائج بين مراحل العمل المختلفة بسلاسة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل خط الإنتاج الموسيقي",
+          "paragraphs": [
+            {
+              "text": "يوضح هذا الحل عملياً كيفية بناء خط إنتاج موسيقي متكامل يعتمد على ثلاثة وكلاء متخصصين. يبدأ العمل بوكيل التلحين الذي يحول طلب المنتج الموسيقي إلى إرشادات فنية، ثم يستخدم نموذج توليد موسيقي مفتوح المصدر لتحويل هذه الإرشادات إلى ملف صوتي حقيقي.",
+              "links": []
+            },
+            {
+              "text": "بعد توليد الصوت، يتولى وكيل هندسة الصوت قراءة الملف الصوتي من مساحة التخزين المشتركة. يقوم هذا الوكيل بقياس خصائص الصوت، ثم يطلب من نموذج ذكاء اصطناعي تحديد سلسلة معالجة مناسبة تشمل ضبط التوازن والترشيح والحد الأقصى للصوت. يتم تطبيق هذه المعالجة فعلياً على الملف الصوتي، ثم يُعاد قياسه للتأكد من مطابقة النتائج للمعايير المطلوبة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور وكيل التدقيق على الجودة",
+          "paragraphs": [
+            {
+              "text": "يختتم خط الإنتاج وكيل التدقيق على الجودة، الذي يعيد قياس الملف الصوتي النهائي بشكل مستقل للتحقق من مطابقته للمعايير التي أعلنها وكيل هندسة الصوت. كما يقوم هذا الوكيل بفحص التوافق التوافقي بين المقطع الجديد ومكتبة الأعمال السابقة للموسيقى الخاصة بالاستوديو.",
+              "links": []
+            },
+            {
+              "text": "إذا اكتشف وكيل التدقيق أي تشابه غير مقبول أو مخالفة للمعايير، فإنه يعيد الطلب إلى وكيل التلحين لتوليد بديل. يستمر هذا التفاعل حتى يتم إنتاج ملف صوتي نهائي قابل للتشغيل، مع تقديم ثلاثة تقارير تفصيلية توضح القرارات المتخذة في كل مرحلة من مراحل الإنتاج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مزايا البنية التحتية الموحدة",
+          "paragraphs": [
+            {
+              "text": "تعتمد هذه التقنية على ميزة التجميع المشترك عبر معرف جلسة موحدة. على الرغم من أن كل وكيل يعمل ضمن بيئة تشغيل مستقلة، إلا أن استدعاءها بنفس المعرف على نفس مزود الطاقة يضمن عملها على نفس الخادم مع نفس وحدات التخزين المعلقة. هذا يسمح للوكلاء بالوصول إلى مخرجات بعضهم البعض وتشارك نظام الملفات.",
+              "links": []
+            },
+            {
+              "text": "توفر البنية التحتية معالج رسومي NVIDIA L4 مخصصاً لتشغيل النماذج التوليدية. يمكن لوكيل التلحين تشغيل نموذج ACE-Step مباشرة على هذا المعالج، حيث يستغرق توليد 20 ثانية من الصوت بجودة عالية حوالي 9 ثوانٍ فقط. يتم حفظ النموذج وتبعياته على وحدة تخزين دائمة، مما يسمح بإعادة استخدامه في كل استدعاء دون الحاجة لإعادة التحميل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاستقلالية والمرونة في النشر",
+          "paragraphs": [
+            {
+              "text": "تتيح هذه البنية لكل فريق تقني نشر تحديثات على وكلائه بشكل مستقل دون التأثير على فرق العمل الأخرى. يمكن لفريق الذكاء الاصطناعي الصوتي، على سبيل المثال، نشر نسخة جديدة من وكيل التلحين دون الحاجة إلى التنسيق مع فرق هندسة الصوت أو هندسة الإصدار، مما يسرع دورة التطوير ويقلل من التعقيد التشغيلي.",
+              "links": []
+            },
+            {
+              "text": "كما تدعم البنية الجديدة الجلسات الممتدة لعدة أيام. يمكن للمنتج الموسيقي العمل على مرحلة التلحين في يوم، ثم إيقاف الجلسة مؤقتاً، واستئناف مرحلة التسليم في اليوم التالي. يتم إيقاف الخادم تلقائياً أثناء عدم الاستخدام، ويعود للعمل فور الاستدعاء التالي دون فقدان أي بيانات أو سياق سابق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات التقنية للتنفيذ",
+          "paragraphs": [
+            {
+              "text": "يتطلب تنفيذ هذا الحل امتلاك حساب على أمازون ويب سيرفيسز مع الصلاحيات اللازمة لإنشاء البنية التحتية، بالإضافة إلى تثبيت واجهة سطر الأوامر AWS CLI. يجب أيضاً إعداد شبكة خاصة افتراضية VPC مع مجموعة أمان، وتفعيل الوصول إلى نماذج Anthropic Claude Sonnet 4.6 من خلال وحدة تحكم Amazon Bedrock.",
+              "links": []
+            },
+            {
+              "text": "تتطلب البيئة المحلية استخدام أداة متوافقة مع OCI مثل Finch لبناء صور الحاويات، بالإضافة إلى تثبيت مكتبات boto3 أو botocore بإصدارات حديثة تدعم إنشاء مزودي الطاقة. تتوفر جميع الأكواد المصدية الكاملة لهذا الحل في مستودع GitHub الخاص بعينات AgentCore، مما يسهل على المطورين استكشاف التطبيق العملي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "Bedrock",
+        "وكلاء ذكاء اصطناعي",
+        "إنتاج موسيقي",
+        "بنية تحتية سحابية",
+        "نماذج توليدية"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز",
+        "Amazon Bedrock AgentCore",
+        "ACE-Step",
+        "NVIDIA L4",
+        "Anthropic Claude Sonnet 4.6",
+        "Strands Agents"
+      ],
+      "article_type": "news",
+      "confidence_note": "تم الاعتماد حصرياً على النص المصنف كمصدر رسمي من مدونة أمازون، مع التركيز على التفاصيل التقنية المذكورة دون إضافة معلومات خارجية."
+    },
+    "en": {
+      "title": "Build Multi-Agent Pipelines with Amazon Bedrock AgentCore",
+      "description": "Learn how to build a multi-agent music production pipeline on Amazon Bedrock AgentCore Runtime Instances using shared sessions and GPU infrastructure.",
+      "deck": "A new architectural pattern for multi-agent systems enables persistent workflows, GPU utilization, and shared filesystems across multiple collaborating agents on AWS.",
+      "summary_bullets": [
+        "Amazon Bedrock AgentCore Runtime Instances offer AWS managed EC2 infrastructure with persistent volumes and multi-day sessions.",
+        "A demonstration music production pipeline deploys three specialized agents colocated on a single GPU instance.",
+        "The architecture supports mixed artifacts including containers from Amazon ECR and code packages from Amazon S3.",
+        "Developers can coordinate agent-to-agent collaboration using shared session IDs and persistent storage."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Amazon Bedrock AgentCore Runtime Instances",
+          "paragraphs": [
+            {
+              "text": "As organizations transition from single-purpose agents to complex multi-agent systems, infrastructure requirements are evolving rapidly. While a lone agent handling straightforward customer queries can operate efficiently in a serverless environment with short-lived sessions, creative and long-running workflows demand persistent environments. To address these needs, AWS introduced Amazon Bedrock AgentCore Runtime Instances, which provide managed EC2 infrastructure equipped with GPUs, persistent volumes, and support for multi-day sessions.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "According to the AWS Machine Learning Blog, developers can now deploy sophisticated multi-agent workflows where agents colocate on a single GPU instance, share a common filesystem, and seamlessly hand off work to each other. Comprehensive technical guidance is detailed on the AWS Machine Learning Blog for teams looking to implement these persistent systems.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/build-a-multi-agent-music-production-pipeline-on-amazon-bedrock-agentcore-runtime-instances/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Architecture of the Three-Agent Music Production Pipeline",
+          "paragraphs": [
+            {
+              "text": "The reference architecture outlines a three-agent music production pipeline consisting of a composition agent, a delivery agent, and a compliance agent. The composition agent turns producer requests into musical briefs using Anthropic Claude Sonnet 4.6 and renders audio utilizing ACE-Step, an open-source foundation model running directly on the instance's NVIDIA L4 GPU.",
+              "links": [
+                {
+                  "text": "ACE-Step",
+                  "url": "https://github.com/ace-step/ACE-Step"
+                }
+              ]
+            },
+            {
+              "text": "Once the initial track is rendered as a .wav file onto a shared volume, the delivery agent opens the file, measures it, and derives an appropriate signal processing chain for EQ, compression, and limiting. Finally, the compliance agent independently re-measures the finished track, verifies delivery targets, and screens the audio against the studio back catalog for harmonic similarity.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Key Capabilities of Runtime Instances",
+          "paragraphs": [
+            {
+              "text": "Amazon Bedrock AgentCore offers two primary compute options for hosting agents: MicroVMs designed for serverless workloads with fast cold starts, and Runtime Instances tailored for persistent, long-running processes. Runtime Instances introduce several crucial capabilities for advanced AI deployments, including multi-day session persistence, dedicated GPU access, and the ability to run multiple agents within a single session.",
+              "links": []
+            },
+            {
+              "text": "By invoking multiple agent runtimes with the exact same runtimeSessionId on a shared capacity provider, the platform places them onto the same underlying EC2 instance with identical volumes mounted. This colocation allows agents to share a local filesystem, exchange intermediate files instantly, and maintain context across overnight pauses without losing state.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deployment and Framework Flexibility",
+          "paragraphs": [
+            {
+              "text": "The platform supports a wide range of custom frameworks, allowing developers to build applications using tools such as Strands Agents, CrewAI, LangGraph, or LlamaIndex. Furthermore, the architecture accommodates mixed artifact types, enabling container images stored in Amazon Elastic Container Registry and code packages stored in Amazon Simple Storage Service to coexist on the same capacity provider.",
+              "links": [
+                {
+                  "text": "Strands Agents",
+                  "url": "https://github.com/strands-agents/"
+                }
+              ]
+            },
+            {
+              "text": "Independent deployment workflows mean that individual development teams can ship updates to their specific agent artifacts without requiring coordination with other engineering groups. For those looking to inspect or deploy the reference architecture directly, complete working code and implementation instructions are accessible via the AgentCore samples GitHub repository.",
+              "links": [
+                {
+                  "text": "AgentCore samples GitHub repository",
+                  "url": "https://github.com/awslabs/agentcore-samples/tree/main/02-use-cases/02-workflow-automation-agents/gpu-music-production-agent"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and Getting Started",
+          "paragraphs": [
+            {
+              "text": "Setting up the multi-agent music production pipeline requires an active AWS account with permissions to create IAM roles, S3 buckets, ECR repositories, and AgentCore capacity providers. Developers must also have the AWS Command Line Interface (AWS CLI) installed, along with an OCI-compatible container tool such as Finch and appropriate foundation model access enabled in the Amazon Bedrock console.",
+              "links": [
+                {
+                  "text": "AWS Command Line Interface (AWS CLI)",
+                  "url": "https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html"
+                },
+                {
+                  "text": "Amazon Bedrock console",
+                  "url": "https://console.aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "Finch",
+                  "url": "https://github.com/runfinch/finch"
+                }
+              ]
+            },
+            {
+              "text": "After fulfilling all environment prerequisites and verifying library versions like boto3, users can follow the step-by-step procedures outlined in the AgentCore samples repository to provision infrastructure, deploy runtimes, and execute collaborative multi-day workflows.",
+              "links": [
+                {
+                  "text": "AgentCore samples repository",
+                  "url": "https://github.com/awslabs/agentcore-samples/tree/main/02-use-cases/02-workflow-automation-agents/gpu-music-production-agent"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AgentCore",
+        "Generative AI",
+        "Multi-Agent Systems",
+        "AWS",
+        "Machine Learning",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Anthropic Claude",
+        "ACE-Step"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based entirely on the provided official AWS Machine Learning Blog post and associated GitHub repository sources."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 683,
+      "word_count_en": 638
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "eb39ddc0289b9b2c1f7d",
+      "title": "Samsung Galaxy SmartTag3 Makes It Easier To Keep Track of What Matters",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "4e52063e7037c3bd9fcd",
+      "title": "[World Heart Day] Taking Care of Your Heart Every Day, Starting From Your Wrist",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "story_id": "f6e0a3b3f52abf457b49",
+      "title": "Samsung Introduces Galaxy Tab S12 Series: The Ultimate Productivity Powerhouse Built for Growth",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "story_id": "59ac649abb99214213a2",
+      "title": "Build a multi-agent music production pipeline on Amazon Bedrock AgentCore Runtime Instances",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 683,
+          "word_count_en": 638
+        }
+      ]
+    }
+  ],
+  "slug": "build-multi-agent-music-production-pipeline-on-amazon-bedrock-agentcore-runtime-instances",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/build-multi-agent-music-production-pipeline-on-amazon-bedrock-agentcore-runtime-instances/hero.webp",
+    "card": "/forum/assets/posts/2026/09/build-multi-agent-music-production-pipeline-on-amazon-bedrock-agentcore-runtime-instances/card.webp",
+    "social": "/forum/assets/posts/2026/09/build-multi-agent-music-production-pipeline-on-amazon-bedrock-agentcore-runtime-instances/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق خط إنتاج موسيقي متعدد الوكلاء على Bedrock",
+      "en": "Build Multi-Agent Pipelines with Amazon Bedrock AgentCore"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/28/ML-21762-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/build-multi-agent-music-production-pipeline-on-amazon-bedrock-agentcore-runtime-instances/inline-01.webp",
+        "width": 1400,
+        "height": 443,
+        "alt": {
+          "ar": "أمازون تطلق خط إنتاج موسيقي متعدد الوكلاء على Bedrock",
+          "en": "Compose, Deliver, and Screen agents on one shared GPU instance turn a producer request into a playable track and three reports"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-a-multi-agent-music-production-pipeline-on-amazon-bedrock-agentcore-runtime-instances/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/28/ML-21762-1.png"
+      }
+    ]
+  }
 }
