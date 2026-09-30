@@ -233,6 +233,28 @@ function smartHeader(){
   },{passive:true});
   window.addEventListener('pageshow',()=>{lastY=Math.max(0,window.scrollY||0);header.classList.remove('rt-nav-hidden')});
 }
+function articleProgress(){
+  const article=$('.rt-article');if(!article)return;
+  const bar=document.createElement('div');
+  bar.className='rt-reading-progress';
+  bar.setAttribute('aria-hidden','true');
+  const fill=document.createElement('span');
+  bar.append(fill);
+  document.body.append(bar);
+  let ticking=false;
+  const update=()=>{
+    const rect=article.getBoundingClientRect();
+    const start=window.scrollY+rect.top;
+    const end=start+article.offsetHeight-window.innerHeight;
+    const progress=end>start?Math.min(1,Math.max(0,(window.scrollY-start)/(end-start))):0;
+    fill.style.width=`${(progress*100).toFixed(2)}%`;
+    ticking=false;
+  };
+  const onScroll=()=>{if(ticking)return;ticking=true;requestAnimationFrame(update)};
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll,{passive:true});
+  update();
+}
 function year(){$$('[data-year]').forEach(e=>e.textContent=new Date().getFullYear())}
-brandAssets();menu();smartHeader();bind();bindAboutTransition();year();load();
+brandAssets();menu();smartHeader();articleProgress();bind();bindAboutTransition();year();load();
 })();
