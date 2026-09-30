@@ -1,5 +1,456 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-09-30T13:36:37+00:00",
-  "last_published_story_id": "94a7808d7ab73a9ea7b0"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-09-30T13:41:48+00:00",
+  "target_publish_at": "2026-09-30T16:56:37.310283+03:00",
+  "story": {
+    "title": "Detect and send production issues straight to your agent",
+    "url": "https://blog.cloudflare.com/real-time-issue-detection",
+    "domain": "blog.cloudflare.com",
+    "summary": "You can now use built-in error monitoring in Cloudflare Workers to group production failures and send stack traces, logs, traces, and application context directly to a coding agent to investigate further and open a pull request.",
+    "published_at": "2026-09-30T13:00:00+00:00",
+    "discovered_at": "2026-09-30T13:06:06+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 64,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "63a829e6e03ea0e86593",
+    "trend": {
+      "score": 111.73,
+      "age_hours": 0.69,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/real-time-issue-detection/",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Detect and send production issues straight to your agent",
+      "title": "Detect and send production issues straight to your agent | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "Cloudflare تطلق Issues لمراقبة أخطاء الإنتاج وإرسالها للوكلاء",
+      "description": "أعلنت Cloudflare عن ميزة Issues الجديدة في Workers، التي تجمع أخطاء الإنتاج وتُرسلها مباشرة إلى وكلاء البرمجة الذكيين للتحليل وإصلاح الأكواد تلقائياً.",
+      "deck": "تُسهّل الميزة الجديدة عملية تشخيص الأعطال من خلال تجميع الأخطاء المتكررة وإرسال سياق كامل للوكلاء البرمجيين.",
+      "summary_bullets": [
+        "تجميع الاستثناءات المتكررة وسجلات الأخطاء في تقارير موحدة.",
+        "إرسال تفاصيل الخطأ والسجلات مباشرة إلى وكلاء البرمجة مثل Claude Code.",
+        "تفعيل الميزة بسطر إعداد واحد دون الحاجة لتثبيت مكتبات إضافية.",
+        "اكتشاف فريق Cloudflare لأخطاء خفية في نظام Workflows خلال يوم واحد."
+      ],
+      "sections": [
+        {
+          "heading": "أتمتة تشخيص الأعطال في بيئة الإنتاج",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Cloudflare عن إطلاق ميزة Issues الجديدة، وهي نظام مراقبة أخطاء مدمج في منصة Cloudflare Workers. تهدف هذه الميزة إلى سد الفجوة بين رصد الأعطال في بيئة الإنتاج وإصلاحها، من خلال إرسال بيانات الخطأ مباشرة إلى وكلاء البرمجة (Coding Agents) الذكيين. بدلاً من الاعتماد على المراقبة اليدوية أو نسخ الأكواد، تتيح هذه الأداة للوكلاء الوصول الفوري إلى السياق الكامل للمشكلة.",
+              "links": []
+            },
+            {
+              "text": "تعمل الميزة على تجميع الاستثناءات المتكررة، واستجابات HTTP من النوع 5xx، وسجلات الأخطاء في تقرير واحد موحّد. هذا التجميع يساعد المطورين والوكلاء على فهم نطاق المشكلة بدقة، بدلاً من التعامل مع آلاف السجلات المنفصلة. كما توفر الميزة معلومات حول وقت ظهور الخطأ الأولي وتكراره، مما يسهل تحديد الأولويات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مراقبة مدمجة دون تعقيد إضافي",
+          "paragraphs": [
+            {
+              "text": "تتميز Issues بأنها مدمجة في بيئة تشغيل Workers، مما يعني عدم الحاجة إلى تثبيت أي SDK إضافي أو تعديل بنية التطبيق. يمكن للمطورين تفعيل الميزة من خلال سطر إعداد واحد في ملف wrangler.jsonc. بمجرد التفعيل، تبدأ الميزة بتسجيل الاستثناءات غير الملتقطة، وفشل الاستدعاءات، وأخطاء HTTP، بالإضافة إلى مخرجات console.log و console.error.",
+              "links": []
+            },
+            {
+              "text": "تلتقط الميزة أيضاً حالات الإنذارات المفرطة (Runaway alarms) والكود الذي يكتب كميات كبيرة من السجلات داخل الحلقات التكرارية. هذا المستوى من التفصيل يساعد في اكتشاف مشاكل الأداء والاستقرار التي قد لا تظهر في المراقبة التقليدية. كما يمكن للمطورين استخدام واجهة OpenTelemetry API المدمجة في بيئة التشغيل لإضافة معرفات مخصصة مثل معرفات الحسابات أو الجلسات.",
+              "links": [
+                {
+                  "text": "OpenTelemetry API",
+                  "url": "https://opentelemetry.io/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تكامل مباشر مع وكلاء البرمجة",
+          "paragraphs": [
+            {
+              "text": "الهدف الرئيسي من Issues هو تمكين الوكلاء البرمجيين من إجراء التحقيقات بشكل مستقل. عند حدوث خطأ، يمكن للميزة إرسال ملخص الفشل والسياق التشخيصي، بما في ذلك الخطأ، والسجل المتتبع (Stack Trace)، والسجلات المحيطة، وإصدار Worker، إلى وكيل البرمجة. هذا يسمح للوكيل بفهم المشكلة واقتراح إصلاحات أو فتح طلبات سحب (Pull Requests) دون تدخل بشري مباشر في البداية.",
+              "links": []
+            },
+            {
+              "text": "تدعم الميزة التكامل مع عدة وكلاء برمجيين رائدين. يمكن ربط Claude Code عبر معرف روتين ورمز، أو Cursor عبر عنوان Webhook، أو Devin عبر رمز API. كما توفر خيارات مرنة أخرى مثل إرسال البيانات إلى نقاط نهاية HTTPS مخصصة، أو إشعار فرق العمل عبر منصات الدردشة وأدوات إدارة الحوادث. هذا التنوع يضمن ملاءمة الأداة لمختلف بيئات التطوير.",
+              "links": [
+                {
+                  "text": "Claude Code",
+                  "url": "https://code.claude.com/docs/en/routines#add-an-api-trigger"
+                },
+                {
+                  "text": "Cursor",
+                  "url": "https://cursor.com/docs/cloud-agent/automations#webhook-triggers"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل الأتمتة والإشعارات",
+          "paragraphs": [
+            {
+              "text": "تعتمد الميزة على نظام أتمتة (Automations) لتحديد متى يجب إرسال الإشعارات. يمكن للمطورين ضبط عتبات محددة، مثل عدد مرات تكرار الخطأ، أو إرسال الإشعار عندما يعود الخطأ بعد فترة من الهدوء. عند تشغيل الأتمتة، تُرسل Issues البيانات المطلوبة للوكيل، مما يتيح له البدء في التحليل فوراً. هذا يقلل من زمن الاستجابة للأعطال الحرجة في بيئة الإنتاج.",
+              "links": [
+                {
+                  "text": "Automations",
+                  "url": "http://developers.cloudflare.com/workers/observability/issues/automations/"
+                }
+              ]
+            },
+            {
+              "text": "للتحقيقات الأعمق، يمكن للوكيل الاتصال بـ Cloudflare MCP (Model Context Protocol) لاستعلام السجلات والتتبعات المرتبطة بالخطأ. هذا يتيح للوكيل جمع المزيد من البيانات قبل اقتراح تغييرات في الكود أو الاختبارات. يبقى القرار النهائي للمطور البشري، الذي يقوم بمراجعة طلب السحب، ونشر الإصلاح، وعلامة الخطأ كمحلول.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حالة استخدام واقعية في Cloudflare Workflows",
+          "paragraphs": [
+            {
+              "text": "اختبرت فريق Cloudflare الميزة على نظامها الداخلي Workflows، وهو بنية تحتية تدعم التطبيقات متعددة الخطوات طويلة الأمد. خلال يوم واحد فقط من تفعيل Issues، اكتشف الفريق مشكلتين غير متوقعين وسط حجم ضخم من حركة المرور. كانت المشكلة الأولى تتعلق بهجرة قاعدة بيانات SQLite عالقة في حلقة إعادة محاولة بسبب خطأ في المفاتيح الأجنبية.",
+              "links": []
+            },
+            {
+              "text": "أما المشكلة الثانية فكانت تتعلق بعملية حذف لم تكتمل، حيث تجاوزت بعض الحالات الحد الأقصى لطلبات الفرع (Subrequest limit) في Workers، مما أدى إلى توقف عملية الحذف. ساعدت Issues الفريق في تحديد هاتين المشكلتين بسرعة، وقام وكيل البرمجة الداخلي (Cloudflare OS) بتتبع الأخطاء واقتراح إصلاحات لكلتا الحالتين. هذا يوضح الفعالية العملية للميزة في اكتشاف الأخطاء الخفية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "كيفية البدء والاستخدام",
+          "paragraphs": [
+            {
+              "text": "لبدء استخدام الميزة، يجب على المطورين ضبط observability.issues.enabled إلى true في ملف الإعدادات. بعد ذلك، يمكنهم إعداد أول أتمتة من لوحة تحكم Cloudflare لإرسال الإشعارات إلى الوجهة المختارة، سواء كانت وكيل برمجي، أو Webhook، أو أداة إدارة حوادث. توفر المنصة أيضاً أوامر سطر أوامر (CLI) جديدة لفحص المشاكل وإنشاء الأتمتات برمجياً.",
+              "links": []
+            },
+            {
+              "text": "تتوفر الميزة حالياً في بيتا مفتوحة، مما يتيح للمطورين تجربة الأداة وتقديم الملاحظات. يهدف هذا الإطلاق إلى تحسين طريقة تعامل فرق التطوير مع الأعطال في بيئة الإنتاج، من خلال دمج الذكاء الاصطناعي في دورة حياة المراقبة والإصلاح. يمكن للمطورين الرجوع إلى التوثيق الرسمي للحصول على تفاصيل تقنية إضافية حول الإعداد والاستخدام.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Workers",
+        "مراقبة الأخطاء",
+        "الذكاء الاصطناعي",
+        "وكلاء البرمجة",
+        "DevOps",
+        "أتمتة"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Workers",
+        "Issues",
+        "Claude Code",
+        "Cursor",
+        "Devin",
+        "Workflows",
+        "OpenTelemetry"
+      ],
+      "article_type": "news",
+      "confidence_note": "الخبر يعتمد حصراً على المدونة الرسمية لـ Cloudflare، والمعلومات دقيقة ومحدثة بتاريخ 2026-09-30."
+    },
+    "en": {
+      "title": "Cloudflare Launches Built-in Error Monitoring for Workers",
+      "description": "Cloudflare has introduced Issues, a built-in error monitoring tool for Cloudflare Workers that connects production failures directly to coding agents.",
+      "deck": "Cloudflare has introduced Issues, a built-in error monitoring tool for Cloudflare Workers designed to group production failures and send context straight to coding agents.",
+      "summary_bullets": [
+        "Cloudflare announced Issues, an open beta feature for built-in error monitoring in Cloudflare Workers.",
+        "The tool automatically groups repeated exceptions, 5xx responses, and error logs into a single issue.",
+        "Issues can send error contexts, stack traces, logs, and Worker versions directly to configured coding agents.",
+        "Developers can enable the feature using [With one line of configuration]."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Issues in Cloudflare Workers",
+          "paragraphs": [
+            {
+              "text": "As coding agents increasingly help developers build complex software, a major manual bottleneck remains: connecting repeated production failures to the data required to fix them. To address this workflow gap, Cloudflare announced the open beta release of Issues, a [built-in error monitoring for Cloudflare WorkersÂ] tool designed to streamline real-time detection and agent handoffs.",
+              "links": [
+                {
+                  "text": "built-in error monitoring for Cloudflare WorkersÂ",
+                  "url": "http://developers.cloudflare.com/workers/observability/issues/"
+                }
+              ]
+            },
+            {
+              "text": "The new feature eliminates the need for separate SDK installations or application wrappers. Because it is embedded directly into the Worker runtime, developers can enable the system [With one line of configuration] to start monitoring uncaught exceptions, failed invocations, HTTP 5xx responses, console outputs, and stack traces without additional instrumentation.",
+              "links": [
+                {
+                  "text": "With one line of configuration",
+                  "url": "http://developers.cloudflare.com/workers/observability/issues/#enable-issues"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Streamlining Diagnostics and Grouping Failures",
+          "paragraphs": [
+            {
+              "text": "Production applications often generate thousands of separate failure logs stemming from a single underlying bug. Issues automatically groups repeated exceptions, error logs, and 5xx responses into a unified issue tracker. It highlights metrics such as when an error first appeared, how frequently it occurs, and whether the error rate is accelerating.",
+              "links": []
+            },
+            {
+              "text": "While Cloudflare automatically captures runtime behavior, developers can also incorporate custom application context. By leveraging the [Worker runtime's] built-in OpenTelemetry API, teams can [add those identifiers]—such as specific users, accounts, or sessions—directly to error occurrences without installing extra packages.",
+              "links": [
+                {
+                  "text": "Worker runtime's",
+                  "url": "https://github.com/cloudflare/workerd"
+                },
+                {
+                  "text": "add those identifiers",
+                  "url": "https://developers.cloudflare.com/workers/observability/traces/custom-spans/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Automated Handoffs to Coding Agents",
+          "paragraphs": [
+            {
+              "text": "Instead of requiring human operators to manually copy stack traces into local prompts, [Automations] allow teams to configure direct delivery channels. Once an issue crosses specified occurrence thresholds or returns after a quiet period, the system forwards the diagnostic payload directly to designated coding agents or endpoint destinations.",
+              "links": [
+                {
+                  "text": "Automations",
+                  "url": "http://developers.cloudflare.com/workers/observability/issues/automations/"
+                }
+              ]
+            },
+            {
+              "text": "Supported direct integrations include [Claude Code] routines, [Cursor] automation webhook triggers, generic HTTPS webhooks, and incident management notification platforms. Once the agent receives the structured context, it can investigate the repository, propose code changes, and open a pull request for review.",
+              "links": [
+                {
+                  "text": "Claude Code",
+                  "url": "https://code.claude.com/docs/en/routines#add-an-api-trigger"
+                },
+                {
+                  "text": "Cursor",
+                  "url": "https://cursor.com/docs/cloud-agent/automations#webhook-triggers"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Real-World Testing on Cloudflare Workflows",
+          "paragraphs": [
+            {
+              "text": "Cloudflare tested the new error monitoring capability internally on its own production systems powering Cloudflare Workflows. Within a single day of enabling the feature, internal teams successfully uncovered and resolved two complex bugs that were previously hidden beneath large volumes of traffic.",
+              "links": []
+            },
+            {
+              "text": "The first bug involved a Workflows control plane migration getting stuck in a retry loop due to a SQLite foreign key error in an edge case. The second bug involved Workflow instance deletions occasionally exceeding subrequest limits and failing to finish. In both instances, the monitoring system routed the telemetry directly to internal agents to propose successful code fixes.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Getting Started With Issues",
+          "paragraphs": [
+            {
+              "text": "Developers looking to test the open beta can begin by setting observability.issues.enabled to true inside their wrangler.jsonc configuration file. Additional rules and automated delivery channels can be established directly through the Cloudflare dashboard.",
+              "links": []
+            },
+            {
+              "text": "For agent-driven setups or command-line workflows, developers can also utilize the [CF CLI] to inspect issues and build automations. Comprehensive setup guidelines and technical requirements are available directly in the official [documentation].",
+              "links": [
+                {
+                  "text": "CF CLI",
+                  "url": "https://blog.cloudflare.com/cloudflare-cf-cli-launch/"
+                },
+                {
+                  "text": "documentation",
+                  "url": "https://developers.cloudflare.com/workers/observability/issues/#enable-issues"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare Workers",
+        "Error Monitoring",
+        "Coding Agents",
+        "Observability",
+        "Open Beta",
+        "Webhooks"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Cloudflare Workers",
+        "Claude Code",
+        "Cursor"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based on official Cloudflare blog post detailing the launch of Issues for Cloudflare Workers."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 725,
+      "word_count_en": 554
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "eb39ddc0289b9b2c1f7d",
+      "title": "Samsung Galaxy SmartTag3 Makes It Easier To Keep Track of What Matters",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "63a829e6e03ea0e86593",
+      "title": "Detect and send production issues straight to your agent",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 725,
+          "word_count_en": 554
+        }
+      ]
+    }
+  ],
+  "slug": "detect-and-send-production-issues-straight-to-your-agent",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/detect-and-send-production-issues-straight-to-your-agent/hero.webp",
+    "card": "/forum/assets/posts/2026/09/detect-and-send-production-issues-straight-to-your-agent/card.webp",
+    "social": "/forum/assets/posts/2026/09/detect-and-send-production-issues-straight-to-your-agent/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تطلق Issues لمراقبة أخطاء الإنتاج وإرسالها للوكلاء",
+      "en": "Cloudflare Launches Built-in Error Monitoring for Workers"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3QYSQZS2E3XN2KS33WWKWGT.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/detect-and-send-production-issues-straight-to-your-agent/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "Cloudflare تطلق Issues لمراقبة أخطاء الإنتاج وإرسالها للوكلاء",
+          "en": "Detect and send production issues straight to your agent"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/real-time-issue-detection/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3QYSW0604Y8C0PC54P180FT.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/detect-and-send-production-issues-straight-to-your-agent/inline-02.webp",
+        "width": 1400,
+        "height": 536,
+        "alt": {
+          "ar": "Cloudflare تطلق Issues لمراقبة أخطاء الإنتاج وإرسالها للوكلاء",
+          "en": "Cloudflare Launches Built-in Error Monitoring for Workers"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/real-time-issue-detection/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3QYT05Y21ZDERDW929GEFN1.png&w=1430&h=548&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/detect-and-send-production-issues-straight-to-your-agent/inline-03.webp",
+        "width": 1400,
+        "height": 683,
+        "alt": {
+          "ar": "Cloudflare تطلق Issues لمراقبة أخطاء الإنتاج وإرسالها للوكلاء",
+          "en": "Cloudflare Launches Built-in Error Monitoring for Workers"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/real-time-issue-detection/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3QYT25VMJ2V35QMW8F4E6HC.png&w=1430&h=698&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/detect-and-send-production-issues-straight-to-your-agent/inline-04.webp",
+        "width": 1400,
+        "height": 613,
+        "alt": {
+          "ar": "Cloudflare تطلق Issues لمراقبة أخطاء الإنتاج وإرسالها للوكلاء",
+          "en": "Cloudflare Launches Built-in Error Monitoring for Workers"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/real-time-issue-detection/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3QYT4ESTTWJM2TD7B3D0PVE.png&w=1430&h=626&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
