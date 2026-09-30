@@ -3,6 +3,7 @@ from __future__ import annotations
 import sys
 
 from enhance_category_seo import FORUM, HUB_CONFIG
+from normalize_public_identity import has_legacy_identity
 
 
 def main() -> int:
@@ -39,7 +40,7 @@ def main() -> int:
                 if f'href="../guides/{pillar_slug}/"' not in html:
                     errors.append(f"{label}: missing evergreen pillar link ../guides/{pillar_slug}/")
 
-            if "rdwan.dev" in html:
+            if has_legacy_identity(html):
                 errors.append(f"{label}: legacy rdwan.dev identity remains")
 
     if errors:

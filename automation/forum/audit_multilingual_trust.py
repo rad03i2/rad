@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 import sys
 from pathlib import Path
+from normalize_public_identity import has_legacy_identity
 
 ROOT = Path(__file__).resolve().parents[2]
 FORUM = ROOT / "forum"
@@ -42,7 +43,7 @@ def check_page(path: str, locale: str, ar_path: str, en_path: str, errors: list[
             errors.append(f"{label}: missing {name}")
     if re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*noindex', html, re.I):
         errors.append(f"{label}: unexpectedly noindex")
-    if "rdwan.dev" in html:
+    if has_legacy_identity(html):
         errors.append(f"{label}: legacy rdwan.dev identity remains")
     if locale == "en" and 'href="/about/"' in html:
         errors.append(f"{label}: English page links to Arabic About instead of /en/about/")

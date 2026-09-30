@@ -79,6 +79,9 @@ jobs:
       - name: Generate evergreen Mikhbar pillar guides
         run: python automation/forum/generate_pillar_pages.py
 
+      - name: Normalize Mikhbar public SEO identity
+        run: python automation/forum/normalize_public_identity.py
+
       - name: Audit Mikhbar topic hubs
         run: python automation/forum/audit_topic_hubs.py
 
@@ -167,17 +170,12 @@ jobs:
           grep -q 'https://mikhbar.website/en/guides/cybersecurity/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/ar/guides/robotics/' dist/mikhbar/sitemap.xml
           grep -q 'https://mikhbar.website/en/guides/robotics/' dist/mikhbar/sitemap.xml
-          if grep -RIl -E 'rdwan\.dev|radwan-abdulhadi|Radwan Abdulhadi|رضوان عبدالهادي' dist/mikhbar/ar/guides dist/mikhbar/en/guides >/tmp/mikhbar-guide-identity-leaks.txt; then
+          if grep -RIl -E 'radwan-abdulhadi|Radwan Abdulhadi|رضوان عبدالهادي' dist/mikhbar/ar/guides dist/mikhbar/en/guides >/tmp/mikhbar-guide-identity-leaks.txt; then
             echo 'Personal or legacy SEO identity appeared in Mikhbar evergreen guides:' >&2
             cat /tmp/mikhbar-guide-identity-leaks.txt >&2
             exit 1
           fi
-          LEGACY_FILES="$(grep -RIl --exclude='*.webp' --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.ico' 'rdwan.dev' dist/mikhbar || true)"
-          if [ -n "$LEGACY_FILES" ]; then
-            echo 'Legacy rdwan.dev identity remains in these Mikhbar deployment files:' >&2
-            printf '%s\n' "$LEGACY_FILES" >&2
-            exit 1
-          fi
+          python automation/forum/normalize_public_identity.py --check-root dist/mikhbar
           grep -q 'https://mikhbar.website' dist/mikhbar/sitemap.xml
           if grep -q '<loc>https://mikhbar.website/</loc>' dist/mikhbar/sitemap.xml; then
             echo 'Redirecting root URL must not be submitted in the production sitemap.' >&2

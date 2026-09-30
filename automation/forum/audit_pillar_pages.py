@@ -4,6 +4,7 @@ import sys
 from html import escape
 
 from generate_pillar_pages import FORUM, ORIGIN, PILLARS
+from normalize_public_identity import has_legacy_identity
 
 
 def main() -> int:
@@ -24,7 +25,7 @@ def main() -> int:
             for slug in PILLARS:
                 if f'href="/{locale}/guides/{slug}/"' not in html:
                     errors.append(f"{locale}/guides: missing link to {slug}")
-            if "rdwan.dev" in html or "radwan-abdulhadi" in html or "Radwan Abdulhadi" in html or "رضوان عبدالهادي" in html:
+            if has_legacy_identity(html) or "radwan-abdulhadi" in html or "Radwan Abdulhadi" in html or "رضوان عبدالهادي" in html:
                 errors.append(f"{locale}/guides: personal SEO identity leaked into Mikhbar guide index")
 
         for slug, spec in PILLARS.items():
@@ -53,7 +54,7 @@ def main() -> int:
             for target in spec["related"]:
                 if f'href="/{locale}/guides/{target}/"' not in html:
                     errors.append(f"{label}: missing related guide {target}")
-            if "rdwan.dev" in html or "radwan-abdulhadi" in html or "Radwan Abdulhadi" in html or "رضوان عبدالهادي" in html:
+            if has_legacy_identity(html) or "radwan-abdulhadi" in html or "Radwan Abdulhadi" in html or "رضوان عبدالهادي" in html:
                 errors.append(f"{label}: personal SEO identity leaked into Mikhbar pillar")
 
     if errors:

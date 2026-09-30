@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 FORUM = ROOT / "forum"
 BRAND_REFERENCE_URL = "https://rdwan.dev/mikhbar.html"
 BRAND_REFERENCE_SENTINEL = "__MIKHBAR_EXTERNAL_BRAND_REFERENCE__"
+BRAND_REFERENCE_PATTERN = re.compile(re.escape(BRAND_REFERENCE_URL) + r"(?=[\"'<>\s]|$)")
 
 PUBLIC_SHELL_FILES = {
     "sitemap.xml",
@@ -34,10 +35,30 @@ def _is_public_shell(path: Path, include_post_indexes: bool) -> bool:
     return include_post_indexes and rel_path in DEPLOYMENT_INDEX_FILES
 
 
+def has_legacy_identity(text: str) -> bool:
+    """Allow the exact external brand reference, never legacy publication URLs."""
+    return "rdwan.dev" in BRAND_REFERENCE_PATTERN.sub("", text)
+
+
+def audit_identity_tree(root: Path) -> list[str]:
+    """Check deployable text files without changing the output being reviewed."""
+    leftovers = []
+    for path in root.rglob("*"):
+        if not path.is_file():
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+        if has_legacy_identity(text):
+            leftovers.append(path.relative_to(root).as_posix())
+    return sorted(leftovers)
+
+
 def _normalize(text: str) -> str:
     # Preserve the one intentional external brand-reference URL while still
     # blocking every legacy rdwan.dev identity/path from public Mikhbar shells.
-    text = text.replace(BRAND_REFERENCE_URL, BRAND_REFERENCE_SENTINEL)
+    text = BRAND_REFERENCE_PATTERN.sub(BRAND_REFERENCE_SENTINEL, text)
 
     # Canonical public identity: Mikhbar is a standalone publication.
     text = text.replace("https://www.rdwan.dev/forum", "https://mikhbar.website")
@@ -94,8 +115,7 @@ def normalize_public_identity(*, include_post_indexes: bool = False) -> tuple[in
         if not path.is_file() or not _is_public_shell(path, include_post_indexes):
             continue
         text = path.read_text(encoding="utf-8")
-        unexpected = text.replace(BRAND_REFERENCE_URL, "")
-        if "rdwan.dev" in unexpected:
+        if has_legacy_identity(text):
             leftovers.append(path.relative_to(ROOT).as_posix())
 
     if leftovers:
@@ -109,12 +129,21 @@ def normalize_public_identity(*, include_post_indexes: bool = False) -> tuple[in
 
 def main() -> int:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--check-root", type=Path, help="Audit a deployment directory without modifying it.")
     parser.add_argument(
         "--deployment",
         action="store_true",
         help="Also normalize deployment copies of posts*.json to public root routes.",
     )
     args = parser.parse_args()
+    if args.check_root is not None:
+        if not args.check_root.is_dir():
+            parser.error(f"Audit directory does not exist: {args.check_root}")
+        leftovers = audit_identity_tree(args.check_root)
+        if leftovers:
+            raise SystemExit("Legacy rdwan.dev identity remains: " + ", ".join(leftovers[:20]))
+        print("Mikhbar deployment identity audit: errors=0")
+        return 0
     checked, changed = normalize_public_identity(include_post_indexes=args.deployment)
     print(
         "Mikhbar public identity normalized: "
