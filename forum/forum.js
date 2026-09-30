@@ -56,7 +56,7 @@ function brandAssets(){
 const BRAND_INTRO_SRC='/assets/images/06_Mikhbar_Sticker_Animated_512.webp?v=20260930-brandintro3';
 const BRAND_INTRO_MS=2050;
 function brandIntro(){
-  const marks=$('.mikhbar-brand-mark');
+  const marks=$$('.mikhbar-brand-mark');
   if(!marks.length)return;
   const finish=()=>marks.forEach(mark=>mark.classList.add('is-brand-static'));
   const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
