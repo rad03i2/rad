@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
+import time
 
 import publisher
 from common import CONFIG, STATE, load_json, now_iso, save_json
@@ -23,6 +24,23 @@ def _target_publish_at(last: datetime | None, now: datetime, minimum_gap_minutes
     if last is None:
         return now
     return last.astimezone(publisher.TZ) + timedelta(minutes=minimum_gap_minutes)
+
+
+def _wait_for_near_boundary(target: datetime, now: datetime) -> datetime:
+    """Keep a ready article in this run when its slot is within one wakeup interval."""
+    remaining = (target.astimezone(timezone.utc) - now.astimezone(timezone.utc)).total_seconds()
+    if not 0 < remaining <= 300:
+        return now
+    print(f"20-minute pipeline: waiting {remaining:.1f} seconds for the prepared article's publication slot.", flush=True)
+    deadline = time.monotonic() + 300
+    while remaining > 0:
+        budget = deadline - time.monotonic()
+        if budget <= 0:
+            break
+        time.sleep(min(remaining, budget, 30))
+        now = datetime.now(publisher.TZ)
+        remaining = (target.astimezone(timezone.utc) - now.astimezone(timezone.utc)).total_seconds()
+    return now
 
 
 def _published_sets(history: dict) -> tuple[set[str], set[str]]:
@@ -303,6 +321,10 @@ def main() -> int:
     if force_publish and prepared:
         due = True
         print("20-minute pipeline: one-time immediate publication requested.")
+
+    if prepared and not due:
+        now = _wait_for_near_boundary(target, now)
+        due = _is_due(last, now, minimum_gap)
 
     if not due:
         if prepared:

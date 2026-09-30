@@ -51,6 +51,50 @@ class WakeupRecoveryTests(unittest.TestCase):
 
 
 class PreparationBoundaryTests(unittest.TestCase):
+    def test_ready_article_waits_for_slot_and_publishes_without_early_release(self):
+        last = datetime(2026, 9, 29, 12, 0, tzinfo=timezone.utc)
+        start = last + timedelta(minutes=19, seconds=35)
+        early_wakeup = last + timedelta(minutes=19, seconds=50)
+        due = last + timedelta(minutes=20)
+        prepared = {"status": "ready", "story": {"id": "approved"}}
+
+        def load(path, default):
+            if path.name == "settings.json":
+                return {"publishingEnabled": True, "minimumMinutesBetweenPosts": 20}
+            if path.name == "published.json":
+                return {"last_published_at": last.isoformat(), "items": []}
+            if path.name == "prepared_article.json":
+                return prepared
+            return default
+
+        with patch.object(scheduler, "load_json", side_effect=load), \
+             patch.object(scheduler, "datetime") as clock, \
+             patch.object(scheduler, "_prepared_is_valid", return_value=True), \
+             patch.object(scheduler.time, "sleep") as sleep, \
+             patch.object(scheduler, "_publish_prepared", return_value=0) as publish:
+            clock.now.side_effect = [start, start, early_wakeup, due]
+            self.assertEqual(scheduler.main(), 0)
+            publish.assert_called_once_with(prepared, ignore_cooldown=False)
+            self.assertEqual([call.args[0] for call in sleep.call_args_list], [25, 10])
+
+    def test_distant_slot_does_not_hold_runner(self):
+        target = datetime(2026, 9, 29, 12, 20, tzinfo=timezone.utc)
+        now = target - timedelta(minutes=6)
+        with patch.object(scheduler.time, "sleep") as sleep:
+            self.assertEqual(scheduler._wait_for_near_boundary(target, now), now)
+            sleep.assert_not_called()
+
+    def test_near_boundary_wait_is_bounded_even_if_clock_moves_back(self):
+        target = datetime(2026, 9, 29, 12, 20, tzinfo=timezone.utc)
+        now = target - timedelta(minutes=1)
+        with patch.object(scheduler, "datetime") as clock, \
+             patch.object(scheduler.time, "monotonic", side_effect=[0, 0, 301]), \
+             patch.object(scheduler.time, "sleep") as sleep:
+            clock.now.return_value = now - timedelta(minutes=1)
+            returned = scheduler._wait_for_near_boundary(target, now)
+            self.assertLess(returned, target)
+            sleep.assert_called_once_with(30)
+
     def test_draft_finishing_after_boundary_publishes_in_same_run(self):
         last = datetime(2026, 9, 29, 12, 0, tzinfo=timezone.utc)
         before = last + timedelta(minutes=19, seconds=59)
