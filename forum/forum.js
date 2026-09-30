@@ -53,12 +53,11 @@ function brandAssets(){
   setTimeout(normalizePlatformNav,1400);
 }
 
-const BRAND_INTRO_SRC='/assets/images/06_Mikhbar_Sticker_Animated_512.webp?v=20260930-brandintro4';
+const BRAND_INTRO_SRC='/assets/images/06_Mikhbar_Sticker_Animated_512.webp?v=20260930-brandintro5';
 const BRAND_INTRO_MS=2050;
 function brandIntro(){
   const marks=$$('.mikhbar-brand-mark');
   if(!marks.length)return;
-
   const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduced){
     marks.forEach(mark=>mark.classList.add('is-brand-static'));
@@ -67,51 +66,39 @@ function brandIntro(){
 
   marks.forEach(mark=>{
     mark.classList.remove('is-brand-static');
-    $$('.mikhbar-brand-intro',mark).forEach(node=>node.remove());
-
-    const animated=document.createElement('img');
-    animated.className='mikhbar-brand-intro';
-    animated.src=BRAND_INTRO_SRC;
-    animated.alt='';
-    animated.setAttribute('aria-hidden','true');
-    animated.decoding='async';
-    mark.appendChild(animated);
-
-    let finished=false;
-    const freeze=()=>{
-      if(finished)return;
-      finished=true;
-      try{
-        const w=animated.naturalWidth||512;
-        const h=animated.naturalHeight||512;
-        const canvas=document.createElement('canvas');
-        canvas.className='mikhbar-brand-intro';
-        canvas.width=w;
-        canvas.height=h;
-        canvas.setAttribute('aria-hidden','true');
-        const ctx=canvas.getContext('2d',{alpha:true});
-        if(!ctx)throw new Error('canvas unavailable');
-        ctx.clearRect(0,0,w,h);
-        ctx.drawImage(animated,0,0,w,h);
-        animated.replaceWith(canvas);
-      }catch{
-        mark.classList.add('is-brand-static');
-        animated.remove();
-      }
-    };
-
-    const startTimer=()=>window.setTimeout(()=>window.requestAnimationFrame(freeze),BRAND_INTRO_MS);
-    if(animated.complete&&animated.naturalWidth)startTimer();
-    else{
-      animated.addEventListener('load',startTimer,{once:true});
-      animated.addEventListener('error',()=>{
-        mark.classList.add('is-brand-static');
-        animated.remove();
-      },{once:true});
+    let intro=$('.mikhbar-brand-intro',mark);
+    if(!intro){
+      intro=document.createElement('img');
+      intro.className='mikhbar-brand-intro';
+      intro.src=BRAND_INTRO_SRC;
+      intro.alt='';
+      intro.setAttribute('aria-hidden','true');
+      intro.decoding='async';
+      mark.appendChild(intro);
     }
   });
-}
 
+  const finish=()=>{
+    marks.forEach(mark=>{
+      mark.classList.add('is-brand-static');
+      const intro=$('.mikhbar-brand-intro',mark);
+      if(intro)intro.remove();
+    });
+  };
+
+  const probe=new Image();
+  let started=false;
+  const startTimer=()=>{
+    if(started)return;
+    started=true;
+    window.setTimeout(finish,BRAND_INTRO_MS);
+  };
+  probe.addEventListener('load',startTimer,{once:true});
+  probe.addEventListener('error',startTimer,{once:true});
+  probe.src=BRAND_INTRO_SRC;
+  if(probe.complete)startTimer();
+  window.setTimeout(startTimer,800);
+}
 const ABOUT_TRANSITION_VIDEO='/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-logo-mark-alpha.webm?v=20260922-about1';
 const ABOUT_TRANSITION_POSTER='/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-logo-mark-poster-transparent.png';
 const ABOUT_TRANSITION_MS=2000;
