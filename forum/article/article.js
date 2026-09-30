@@ -257,7 +257,7 @@
     const ui = UI[locale];
     document.documentElement.lang = locale;
     document.documentElement.dir = ui.dir;
-    document.body.className = `rt-locale-${locale}`;
+    document.body.className = `rt-locale-${locale} rt-article-page`;
     const root = sourceRoot();
     const home = `${root}/${locale}/`;
     const trustBase = locale === 'ar' ? root : `${root}/en`;
