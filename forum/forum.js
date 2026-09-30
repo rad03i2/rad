@@ -131,7 +131,8 @@ const categoryMaps={
 const categoryMap=categoryMaps[locale];
 const slugFor=p=>p.categorySlug||'general';
 const imageFor=p=>p.image||p.images?.card||p.images?.hero||'/assets/social/home.jpg';
-let allPosts=[],visibleCount=12,currentFilter=document.body.dataset.category||'all';
+const pageSize=document.body.classList.contains('rt-home')?24:12;
+let allPosts=[],visibleCount=pageSize,currentFilter=document.body.dataset.category||'all';
 const HERO_INTERVAL_MS=3000;
 let heroPosts=[],heroIndex=0,heroTimer=null;
 function menu(){
@@ -146,7 +147,7 @@ function menu(){
 function card(p){const cat=esc(p.category||categoryMap[slugFor(p)]||dict.fallbackCat);const time=esc(p.dateLabel||fmt(p.date));const read=esc(p.readTime||'');const image=esc(imageFor(p));const alt=esc(p.title||dict.imgAlt);return `<a class="rt-feed-item" href="${esc(p.url||'#')}"><div class="rt-feed-copy"><div class="rt-feed-kicker">${p.breaking?`<span class="rt-breaking">${isAr?'عاجل':'BREAKING'}</span>`:''}<span>${cat}</span></div><h3>${esc(p.title||'')}</h3><p>${esc(p.excerpt||'')}</p><div class="rt-feed-time">${time}${read?` · ${read}`:''}</div></div><div class="rt-thumb"><img src="${image}" alt="${alt}" loading="lazy" decoding="async" width="800" height="450"></div></a>`}
 function nowItem(p,i){return `<a class="rt-now-item" href="${esc(p.url||'#')}"><span class="rt-now-num">0${i+1}</span><span><strong>${esc(p.title||'')}</strong><small>${esc(p.dateLabel||fmt(p.date))}</small></span><img class="rt-now-thumb" src="${esc(imageFor(p))}" alt="" width="80" height="70" loading="lazy" decoding="async"></a>`}
 function filtered(){const q=($('#rtSearch')?.value||'').trim().toLowerCase();return allPosts.filter(p=>{const byCat=currentFilter==='all'||slugFor(p)===currentFilter;const hay=[p.title,p.excerpt,p.category,...(p.tags||[])].join(' ').toLowerCase();return byCat&&(!q||hay.includes(q))})}
-function renderFeed(){const box=$('#rtFeed'),empty=$('#rtEmpty'),count=$('#rtCount'),more=$('#rtLoadMore');if(!box)return;const list=filtered();if(count)count.textContent=dict.count(list.length);box.innerHTML=list.slice(0,visibleCount).map(card).join('');if(empty)empty.hidden=!!list.length;if(more){more.style.display=list.length>visibleCount?'block':'none';more.onclick=()=>{visibleCount+=12;renderFeed()}}}
+function renderFeed(){const box=$('#rtFeed'),empty=$('#rtEmpty'),count=$('#rtCount'),more=$('#rtLoadMore');if(!box)return;const list=filtered();if(count)count.textContent=dict.count(list.length);box.innerHTML=list.slice(0,visibleCount).map(card).join('');if(empty)empty.hidden=!!list.length;if(more){more.style.display=list.length>visibleCount?'block':'none';more.onclick=()=>{visibleCount+=pageSize;renderFeed()}}}
 function paintHero(p,index,animate=true){
   const lead=$('#rtLead'),wrap=$('#rtLeadCarousel');if(!lead||!p)return;
   heroIndex=((index%heroPosts.length)+heroPosts.length)%heroPosts.length;
@@ -200,7 +201,7 @@ function renderHome(){
 function renderCategory(){const slug=document.body.dataset.category;if(!slug)return;currentFilter=slug;const title=$('#rtCategoryCount');if(title)title.textContent=categoryMap[slug]||slug;renderFeed()}
 async function load(){const urls=locale==='ar'?['/posts-ar.json','/forum/posts-ar.json','/posts.json','/forum/posts.json']:['/posts-en.json','/forum/posts-en.json'];for(const url of urls){try{const r=await fetch(url,{cache:'no-store'});if(!r.ok)continue;const data=await r.json();allPosts=(Array.isArray(data)?data:(data.posts||[])).slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));renderHome();renderFeed();renderCategory();return}catch{}}}
 function bind(){
-  const search=$('#rtSearch');if(search)search.addEventListener('input',()=>{visibleCount=12;renderFeed()});
+  const search=$('#rtSearch');if(search)search.addEventListener('input',()=>{visibleCount=pageSize;renderFeed()});
   $$('[data-filter]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();currentFilter=b.dataset.filter||'all';visibleCount=12;$$('[data-filter]').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','page');renderFeed()}));
   const prev=$('#rtLeadPrev'),next=$('#rtLeadNext');
   if(prev)prev.addEventListener('click',()=>stepHero(-1));

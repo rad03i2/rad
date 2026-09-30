@@ -194,7 +194,7 @@ def _home_page(locale: str, posts: list[dict]) -> str:
     lead_excerpt = escape(str(featured.get("excerpt") or ui["tagline"]))
     lead_category = escape(str(featured.get("category") or site_name))
     lead_date = escape(str(featured.get("dateLabel") or "")); lead_read = escape(str(featured.get("readTime") or ""))
-    feed = "".join(_card(p, locale) for p in posts[:12])
+    feed = "".join(_card(p, locale) for p in posts[:24])
     now = "".join(_now_item(p, i + 1) for i, p in enumerate(others))
     topics = "".join(f'<a class="rt-category-box" href="./{slug}/"><span>{i:02d} · {slug.upper()}</span><h3>{escape(CATEGORIES[slug][locale][0])}</h3><p>{escape(CATEGORIES[slug][locale][1])}</p></a>' for i, slug in enumerate(("ai","robotics","automation","mobile","computers","apps","web","social","security"), 1))
     schema = _schemas(locale, f"/forum/{locale}/", posts, title)
@@ -214,7 +214,7 @@ def _home_page(locale: str, posts: list[dict]) -> str:
 <section class="rt-section" id="latest"><header class="rt-section-head"><div><h2>{ui['latest']}</h2><p>{ui['latestDesc']}</p></div><span class="rt-count" id="rtCount">{len(posts)} {ui['posts']}</span></header><div class="rt-feed" id="rtFeed">{feed}</div><div class="rt-feed-empty" id="rtEmpty" hidden><b>{ui['noResults']}</b><p>{ui['tryDifferent']}</p></div><button class="rt-load-more" id="rtLoadMore" type="button">{ui['more']}</button></section>
 <section class="rt-section"><header class="rt-section-head"><div><h2>{ui['topics']}</h2><p>{ui['topicsDesc']}</p></div></header><div class="rt-category-showcase">{topics}</div></section>
 <section class="rt-newsletter" id="newsletter"><div><h2>{ui['newsletter']}</h2><p>{ui['newsletterDesc']}</p></div><a href="https://omniform1.com/forms/v1/landingPage/6aa951449b0f973742e3f90d/6aa9b7a1f85082d5ccd3f79c">{ui['subscribe']}</a></section></div></main>
-{_footer(locale)}<script src="../forum.js?v=20260930-nav1" defer></script></body></html>'''
+{_footer(locale)}<script src="../forum.js?v=20260930-feed8" defer></script></body></html>'''
 
 
 def _category_page(locale: str, slug: str, all_posts: list[dict]) -> str:
@@ -232,7 +232,7 @@ def _category_page(locale: str, slug: str, all_posts: list[dict]) -> str:
 <nav class="rt-categories" aria-label="Sections"><div class="rt-shell rt-category-scroll">{_category_nav(locale,'../',slug)}</div></nav><div class="rt-shell"><section class="rt-category-hero"><nav class="rt-breadcrumbs"><a href="../">{site_name}</a><span>›</span><span>{escape(label)}</span></nav><div class="rt-category-title"><span class="rt-label">{slug.upper()}</span><h1>{escape(label)}</h1><p>{escape(desc)}</p></div></section>
 <div class="rt-toolbar"><label class="rt-search"><input id="rtSearch" type="search" autocomplete="off" placeholder="{ui['search']}" aria-label="{ui['search']}"></label><span class="rt-view-note">{ui['searchNote']}</span></div>
 <section class="rt-section"><header class="rt-section-head"><div><h2>{ui['latest']}</h2><p>{escape(desc)}</p>{archive_link}</div><span class="rt-count" id="rtCount">{len(posts)} {ui['posts']}</span></header><div class="rt-feed" id="rtFeed">{feed}</div><div class="rt-feed-empty" id="rtEmpty" {'hidden' if posts else ''}><b>{ui['noResults']}</b><p>{ui['tryDifferent']}</p></div><button class="rt-load-more" id="rtLoadMore" type="button">{ui['more']}</button></section></div></main>
-{_footer(locale)}<script src="../../forum.js?v=20260930-nav1" defer></script></body></html>'''
+{_footer(locale)}<script src="../../forum.js?v=20260930-feed8" defer></script></body></html>'''
 
 
 def _router_page(posts_ar: list[dict], posts_en: list[dict]) -> str:
