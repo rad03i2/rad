@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "d8139ee5b66b8461667b",
+  "slug": "introducing-cf-the-agentic-cli-for-the-entire-cloudflare-api",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/introducing-cf-the-agentic-cli-for-the-entire-cloudflare-api/",
+    "en": "/forum/en/web/introducing-cf-the-agentic-cli-for-the-entire-cloudflare-api/"
+  },
+  "locales": {
+    "ar": {
+      "title": "كلاودفلير تطلق أداة cf لتفعيل واجهة برمجة التطبيقات بالكامل",
+      "description": "أطلقت كلاودفلير أداة cf، وهي سطر أوامر ذكي يغطي أكثر من 3000 عملية API، مع دعم TypeScript وإخراج JSON افتراضي لتسهيل عمل وكلاء الذكاء الاصطناعي.",
+      "deck": "تستجيب كلاودفلير للنمو الهائل في استخدام وكلاء الذكاء الاصطناعي عبر إطلاق أداة cf، التي توفر وصولاً شاملاً وموحداً لواجهات برمجة التطبيقات الخاصة بها.",
+      "summaryBullets": [
+        "توفر أداة cf وصولاً إلى أكثر من 3000 عملية في واجهة برمجة تطبيقات كلاودفلير، مقارنة بـ 280 فقط في أداة Wrangler.",
+        "تعتمد الأداة على إخراج JSON كواجهة افتراضية لتقليل استهلاك السياق وتحسين كفاءة الوكلاء.",
+        "تتبنى صيغة cloudflare.config.ts الجديدة بناءً على TypeScript لتحسين دقة الإعدادات ودعم بروتوكول LSP.",
+        "تتيح الأداة للوكلاء البحث عن الأوامر المطلوبة باستخدام اللغة الطبيعية عبر ميزة cf cli search.",
+        "تصدر كلاودفلير مولد Forge مفتوح المصدر لتوليد أوامر السطر من مخطط OpenAPI."
+      ],
+      "sections": [
+        {
+          "heading": "استجابة للنمو المتسارع في استخدام الوكلاء",
+          "paragraphs": [
+            {
+              "text": "شهدت كلاودفلير زيادة حادة في اعتماد وكلاء الذكاء الاصطناعي على أدواتها، حيث وصلت نسبة الاستخدام إلى 48% في الأسبوع الأخير، مقارنة بنسب منخفضة في العام السابق. لاحظت الشركة أن الوكلاء يستخدمون عدداً أكبر من الأوامر المتنوعة يومياً، مما دفعها لتطوير أداة جديدة تلبي احتياجاتهم المتزايدة. أعلنت الشركة عن إطلاق cf، وهي أداة سطر أوامر مصممة خصيصاً لتعكس واجهة برمجة التطبيقات بالكامل، مما يتيح للوكلاء تنفيذ أي عملية تدعمها المنصة دون قيود.",
+              "links": [
+                {
+                  "text": "كلاودفلير",
+                  "url": "https://blog.cloudflare.com/cloudflare-cf-cli-launch/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تجاوز قيود أداة Wrangler التقليدية",
+          "paragraphs": [
+            {
+              "text": "كانت أداة Wrangler، التي طورتها فرق المنتجات بشكل منفصل، تعاني من عدم اتساق المصطلحات والأوامر، مما جعلها غير مثالية للوكلاء. رغم توفر حوالي 280 عملية فقط، كانت الأداة تواجه تحديات في توحيد التجربة عبر فرق متعددة. سعت كلاودفلير إلى توحيد هذه العمليات وتوسيعها بشكل جذري، مستفيدة من البنية التحتية الجديدة التي تتيح توليد الأوامر مباشرة من مخطط API، مما يضمن اتساقاً ودقة أعلى في التعامل مع آلاف العمليات المتاحة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إعادة تصميم واجهة المستخدم للوكلاء",
+          "paragraphs": [
+            {
+              "text": "اعتمدت cf على مبدأ أن الوكلاء يحتاجون إلى بيانات منظمة وليس جداول نصية. لذلك، أصبح إخراج JSON هو الافتراضي لجميع الأوامر، مما يقلل من الحاجة إلى فلاتر إضافية ويوفر مساحة السياق. بالنسبة للمستخدمين البشريين الذين يحتاجون إلى إدخال بيانات معقدة، توفر الأداة نماذج تفاعلية تحلل متطلبات API إلى مدخلات مفحوصة، مما يسهل عمليات مثل شراء النطاقات. كما أضافت الشركة ميزة cf cli search التي تسمح للوكلاء بالبحث عن الأوامر المناسبة باستخدام اللغة الطبيعية، مع توجيه تلقائي عند تشغيل أمر المساعدة لأول مرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اعتماد TypeScript في الإعدادات",
+          "paragraphs": [
+            {
+              "text": "أدخلت كلاودفلير صيغة cloudflare.config.ts الجديدة، التي تعتمد على لغة TypeScript بدلاً من صيغ مثل TOML أو JSONC. يتيح هذا التغيير للوكلاء والمطورين قراءة وتعديل الإعدادات ببرمجة، مع الاستفادة من دعم بروتوكول LSP في أدوات مثل Claude Code وCodex. لاحظت الشركة أن الوكلاء قادرون على تحديد وتعديل الإعدادات بدقة عالية حتى بدون سياق مسبق، مما يعزز موثوقية العمليات البرمجية ويقلل من الأخطاء المحتملة في إدارة البيئة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تصميم مخصص لتجربة الوكلاء",
+          "paragraphs": [
+            {
+              "text": "رغم أن الانتقال من أداة مألوفة قد يبدو معقداً، ترى كلاودفلير أن cf توفر تجربة أنظف للوكلاء. من خلال حقن سياق محدد وملفات AGENTS.md، تقلل الأداة من الارتباك مقارنة بمحاولة تكييف وكيل مع اختلافات كبيرة في إصدارات قديمة. صُممت الأداة من الصفر مع وضع الوكلاء في الاعتبار، وتضم أدوات اكتشاف أوامر مبتكرة من المتوقع أن تصبح معياراً في أدوات سطر الأوامر المستقبلية. تهدف الشركة إلى تسهيل بناء ونشر البرمجيات في عصر التطوير الوكلي، حيث تتغير طرق العمل التقليدية بشكل جذري.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "فتح مصدر مولد Forge",
+          "paragraphs": [
+            {
+              "text": "كجزء من هذا الإطلاق، قررت كلاودفلير فتح مصدر Forge، وهو خط أنابيب توليد API الموحّد الذي يقف خلف cf. يعتمد Forge على مخطط OpenAPI الذي يغذي توثيق API وتوليد SDK، مع إضافة معلومات بسيطة لتحويله إلى أوامر سطر. يتيح هذا للمطورين فهم آلية توليد الأوامر ويساهم في بناء مجتمع حول أدوات تطوير البرمجيات الوكيلية. يمثل هذا الخطوة جزءاً من استراتيجية أوسع لدعم تحول صناعة البرمجيات نحو الاعتماد المتزايد على الوكلاء في عمليات البناء والنشر.",
+              "links": [
+                {
+                  "text": "Forge",
+                  "url": "https://blog.cloudflare.com/forge-open-source-generation-pipeline"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "كلاودفلير",
+        "cf",
+        "ذكاء اصطناعي",
+        "وكلاء",
+        "API",
+        "TypeScript",
+        "أدوات مطورين"
+      ],
+      "entities": [
+        "كلاودفلير",
+        "cf",
+        "Wrangler",
+        "Forge",
+        "TypeScript",
+        "OpenAPI"
+      ],
+      "category": "الويب",
+      "dateLabel": "30 سبتمبر 2026",
+      "modifiedLabel": "30 سبتمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 566
+    },
+    "en": {
+      "title": "Cloudflare Introduces cf, an Agentic CLI for the Full API",
+      "description": "Cloudflare has launched cf, a new command-line tool mirroring its entire API, featuring TypeScript configuration and agent-focused optimization.",
+      "deck": "Cloudflare has released cf, a new command-line tool built to mirror the company's entire API surface and support programmatic TypeScript configuration for developers and AI agents.",
+      "summaryBullets": [
+        "Cloudflare launched cf, a new CLI that expands command coverage from Wrangler's ~280 functions to the entire API surface of over 3,000 operations.",
+        "The tool features JSON as the default interface to save context tokens for automated agents.",
+        "A new TypeScript configuration format provides language server protocol safety for both humans and agents.",
+        "The open-source generation pipeline Forge was utilized to build the CLI directly from OpenAPI schemas."
+      ],
+      "sections": [
+        {
+          "heading": "The Rise of Agentic CLI Usage",
+          "paragraphs": [
+            {
+              "text": "Over the past year, the utilization of development tools by automated agents has grown dramatically. According to data shared by the Cloudflare Blog, agents accounted for a quarter of Wrangler usage in March 2026, and that figure reached 48% recently.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/cloudflare-cf-cli-launch/"
+                }
+              ]
+            },
+            {
+              "text": "Automated agents demonstrate high activity levels, using nearly twice as many distinct commands per day compared to human users and showing a strong preference for command-line interfaces. However, Wrangler historically provided commands for only around 280 operations while Cloudflare offers thousands.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Bridging the Gap With cf",
+          "paragraphs": [
+            {
+              "text": "To address these limitations, Cloudflare is introducing cf, a new command-line utility designed specifically for the next generation of software development. As detailed in the initial announcements, the tool enables automated agents to interact with every Cloudflare product seamlessly.",
+              "links": [
+                {
+                  "text": "cf",
+                  "url": "https://blog.cloudflare.com/tag/cf/"
+                }
+              ]
+            },
+            {
+              "text": "While Wrangler was constructed over time with individual product teams contributing distinct patterns and inconsistent terminology across roughly 280 command paths, the new tool standardizes operations across a much broader scope. Developers can review the background behind these architecture choices and read about how we were planning to solve this challenge in earlier posts.",
+              "links": [
+                {
+                  "text": "how we were planning to solve this",
+                  "url": "https://blog.cloudflare.com/cf-cli-local-explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Unified Generation via Forge",
+          "paragraphs": [
+            {
+              "text": "The expansion of functionality was made possible by Forge, Cloudflare's new unified API generation pipeline. By building upon OpenAPI schemas that already power documentation and SDK generation, the company was able to automatically generate CLI commands for over 3,000 distinct operations.",
+              "links": [
+                {
+                  "text": "Forge",
+                  "url": "https://blog.cloudflare.com/forge-open-source-generation-pipeline"
+                }
+              ]
+            },
+            {
+              "text": "This pipeline allows developers and their automated agents to handle complex workflows—such as provisioning workers, managing domains, and configuring security controls—from a single unified tool rather than navigating fragmented command structures.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Built for Agents and JSON",
+          "paragraphs": [
+            {
+              "text": "Unlike traditional developer tools optimized for human terminal reading with unicode tables, cf treats JSON as its primary default interface. Pretty-printed for human inspection yet condensed for automated processes, this approach maximizes context savings and eliminates the need for constant filtering tools like jq.",
+              "links": []
+            },
+            {
+              "text": "Additionally, the tool incorporates natural language search capabilities through dedicated commands. When running help menus, agents are automatically introduced to search indexes that retrieve precise operations based on API descriptions and parameters.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "TypeScript Configuration and Ecosystem",
+          "paragraphs": [
+            {
+              "text": "The new CLI shifts configuration standards toward a programmatic TypeScript format, improving accuracy through language server protocol integration. This structured approach helps code-editing assistants interpret project settings more reliably.",
+              "links": []
+            },
+            {
+              "text": "Developers interested in inspecting the implementation details or contributing to the project can review the source code and updates reported to our GitHub repository as the open beta rolls out globally.",
+              "links": [
+                {
+                  "text": "reported to our GitHub repository",
+                  "url": "https://github.com/cloudflare/cf"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "CLI",
+        "API",
+        "TypeScript",
+        "Forge",
+        "Wrangler",
+        "Developers",
+        "Agents"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Wrangler",
+        "Forge",
+        "TypeScript"
+      ],
+      "category": "Web",
+      "dateLabel": "September 30, 2026",
+      "modifiedLabel": "September 30, 2026",
+      "readMinutes": 3,
+      "wordCount": 500
+    }
+  },
+  "datePublished": "2026-09-30T12:36:37.042992+03:00",
+  "dateModified": "2026-09-30T12:36:37.042992+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/introducing-cf-the-agentic-cli-for-the-entire-cloudflare-api/hero.webp",
+    "card": "/forum/assets/posts/2026/09/introducing-cf-the-agentic-cli-for-the-entire-cloudflare-api/card.webp",
+    "social": "/forum/assets/posts/2026/09/introducing-cf-the-agentic-cli-for-the-entire-cloudflare-api/social.jpg",
+    "alt": {
+      "ar": "كلاودفلير تطلق أداة cf لتفعيل واجهة برمجة التطبيقات بالكامل",
+      "en": "Cloudflare Introduces cf, an Agentic CLI for the Full API"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3KR63G9MAXHAG81FC5HKYRY.01M3KR64BVBYV5MM3YBHRRRWGF.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/introducing-cf-the-agentic-cli-for-the-entire-cloudflare-api/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "كلاودفلير تطلق أداة cf لتفعيل واجهة برمجة التطبيقات بالكامل",
+          "en": "Introducing cf: the agentic CLI for the entire Cloudflare API"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/cloudflare-cf-cli-launch/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3KR59T13YTXBHQW0ZAX7MBG.01M3KR5AZTG3VJ8REJ9047KYC4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/cloudflare-cf-cli-launch/",
+      "type": "official",
+      "title": "Introducing cf: the agentic CLI for the entire Cloudflare API"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/cloudflare-cf-cli-launch",
+  "sourceTitle": "Introducing cf: the agentic CLI for the entire Cloudflare API",
+  "trendScore": 109.47,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-30T09:36:37+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/introducing-cf-the-agentic-cli-for-the-entire-cloudflare-api.json"
+}
