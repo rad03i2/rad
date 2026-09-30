@@ -53,14 +53,26 @@ function brandAssets(){
   setTimeout(normalizePlatformNav,1400);
 }
 
+const BRAND_INTRO_SRC='/assets/images/06_Mikhbar_Sticker_Animated_512.webp?v=20260930-brandintro3';
 const BRAND_INTRO_MS=2050;
 function brandIntro(){
   const marks=$('.mikhbar-brand-mark');
   if(!marks.length)return;
-  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced){marks.forEach(mark=>mark.classList.add('is-brand-static'));return}
   const finish=()=>marks.forEach(mark=>mark.classList.add('is-brand-static'));
-  window.setTimeout(finish,BRAND_INTRO_MS);
+  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){finish();return}
+  let started=false;
+  const start=()=>{
+    if(started)return;
+    started=true;
+    window.setTimeout(finish,BRAND_INTRO_MS);
+  };
+  const probe=new Image();
+  probe.addEventListener('load',start,{once:true});
+  probe.addEventListener('error',start,{once:true});
+  probe.src=BRAND_INTRO_SRC;
+  if(probe.complete)start();
+  window.setTimeout(start,5000);
 }
 
 const ABOUT_TRANSITION_VIDEO='/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-logo-mark-alpha.webm?v=20260922-about1';
