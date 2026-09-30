@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "f02e3585bdb4614bde3c",
+  "slug": "query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/",
+    "en": "/forum/en/ai/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تتيح استعلامات ذكية عن المطالبات عبر Bedrock Knowledge Bases",
+      "description": "تقدّم أمازون ويب سيرفيسز حلاً تقنياً لبناء مساعد محادثة للمطالبات يعتمد على Bedrock Knowledge Bases، مما يتيح إجابات دقيقة مع استشهادات مبنية على مستندات PDF وWord.",
+      "deck": "تسعى أمازون إلى تبسيط إدارة المطالبات المعقدة من خلال دمج تقنيات الذكاء الاصطناعي التوليدي مع قواعد المعرفة، مما يسمح للمستخدمين بطرح أسئلة بلغة طبيعية والحصول على إجابات مدعومة بمصادر موثوقة.",
+      "summaryBullets": [
+        "يستخدم الحل واجهة AgenticRetrieveStream لتقسيم الأسئلة المعقدة إلى استعلامات فرعية وجلب الأدلة اللازمة.",
+        "يعتمد النظام على ملفات بيانات جانبية (Metadata) لتصفية النتائج بناءً على معطيات مثل رقم المطالبة أو النوع.",
+        "تضمن حواجز الأمان السياقية (Guardrails) أن تكون كل إجابة مرتبطة مباشرة بالمستندات المصدرية لمنع الهلوسة.",
+        "يدعم النظام المستندات الأصلية مثل PDF وWord دون الحاجة لتحويلها يدوياً، مع تخزين متجهي مُدار بالكامل."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي تفتت البيانات في إدارة المطالبات",
+          "paragraphs": [
+            {
+              "text": "تواجه شركات التأمين تحدياً كبيراً في تجميع المعلومات المتناثرة عبر مذكرات المحققين وتقارير الإصلاح وسجلات الدفعات، مما يجعل البحث عن إجابة دقيقة عملية مرهقة. بدلاً من الاعتماد على حقول بحثية موحدة، تتوزع الأدلة عبر صيغ ملفات متعددة، مما يتطلب جهداً بشرياً كبيراً للربط بين هذه العناصر. هنا يأتي دور تقنيات توليد المعزّز بالاسترجاع (RAG) التي تستخدم المستندات المسترجعة لتأريض إجابات النماذج اللغوية، حيث تتولى أمازون معالجة التحليل والتجزئة والتضمين والتخزين المتجهي، مما يتيح بناء واجهات محادثة تعيد إجابات مستشهداً بها من ملفات المطالبات مباشرة. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل عبر الاسترجاع الوكيل",
+          "paragraphs": [
+            {
+              "text": "يعتمد الحل المقدم في هذا الدليل التقني على واجهة AgenticRetrieveStream التي تخطط للإجابة عن طريق تقسيم السؤال متعدد الأجزاء إلى استعلامات فرعية، ثم تنفيذ جولات استرجاع متعددة حتى تتأكد من كفاية الأدلة. على عكس الاسترجاع التقليدي، تتحقق هذه الآلية من صحة المعلومات قبل توليد الرد، وتبث أحداث التتبع ونص الإجابة والاستشهادات بشكل متدفق. هذا يسمح للتطبيق بعرض المخرجات فور وصولها، مما يوفر شفافية كاملة حول كيفية وصول المساعد إلى النتيجة النهائية، وهو أمر حاسم في البيئات التنظيمية الصارمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معالجة المستندات والبيانات الوصفية",
+          "paragraphs": [
+            {
+              "text": "تخزن المستندات في خدمة Amazon S3 بصيغتها الأصلية، سواء كانت تقارير PDF أو مراسلات Word أو ملاحظات نصية، مع ملفات بيانات وصفية جانبية (Sidecars) تحمل الحقول القابلة للتصفية. يجب أن تتطابق أسماء ملفات البيانات الوصفية مع المستندات الأصلية مع إضافة لاحقة .metadata.json، وتحتوي هذه الملفات على قيم رقمية ومنطقية ونصية تساعد في تحديد نطاق البحث بدقة. على سبيل المثال، يمكن تخزين التواريخ كأرقام صحيحة بصيغة YYYYMMDD لتسهيل المقارنات الرقمية، مع الحفاظ على القيم النقدية في نص المستند لضمان وضوح السياق المالي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ضمان الدقة عبر الحواجز السياقية",
+          "paragraphs": [
+            {
+              "text": "نظراً لطبيعة المطالبات الخاضعة للتنظيم، يجب أن تكون كل إجابة مدعومة بمستندات مصدرية واضحة. يضيف الحل حاجزاً للأمان السياقي (Contextual Grounding Guardrail) الذي يمنع الإجابات غير المدعومة بالأدلة المسترجعة. هذا يضمن أن يتمكن عملاء مراكز الاتصال من التحقق من المصدر قبل تكرار الإجابة، ويمكن للمشرفين تدقيق مسار الاستدلال الذي اتبعه المساعد. كما يتعامل النظام مع التعارضات المحتملة بين السجلات، مثل التقديرات المعدلة التي تحل محل النسخ السابقة، من خلال تحديد النسخة السائدة بناءً على البيانات الوصفية والمحتوى.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات التنفيذ والبنية التحتية",
+          "paragraphs": [
+            {
+              "text": "يتطلب بناء هذا المساعد امتلاك حساب AWS مع صلاحيات IAM مناسبة لخدمات Bedrock وS3، بالإضافة إلى الوصول إلى نموذج أساسي (Foundation Model) مفعّل عبر Amazon Bedrock. يجب اختيار منطقة AWS تدعم النموذج المختار وقواعد المعرفة، حيث يستخدم هذا الدليل منطقة US West (Oregon). كما يتطلب الأمر إعداد SDK لبايثون (Boto3) مع الإصدارات الداعمة للواجهات البرمجية المستخدمة، وإنشاء قاعدة معرفة مُدارة (Managed Knowledge Base) حيث تتولى أمازون اختيار نموذج التضمين وتشغيله دون الحاجة لإعداد مخازن متجهية خارجية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الأمان والتشفير في التخزين",
+          "paragraphs": [
+            {
+              "text": "يتم إنشاء قاعدة المعرفة عبر واجهة bedrock-agent مع تحديد نوع التكوين ونوع نموذج التضمين كـ MANAGED. تمنح خدمة الدور (Service Role) قاعدة المعرفة الإذن بقراءة دلو S3 واستخدام نموذج التضمين المُدار. لضمان حماية البيانات الحساسة، يمكن تشفير التخزين المتجهي المُدار باستخدام مفتاح AWS Key Management Service (AWS KMS) مُدار من قبل العميل، مما يضيف طبقة إضافية من الأمان للبيانات المالية والشخصية المخزنة ضمن ملفات المطالبات.",
+              "links": [
+                {
+                  "text": "AWS Key Management Service (AWS KMS)",
+                  "url": "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون ويب سيرفيسز",
+        "Bedrock",
+        "الذكاء الاصطناعي",
+        "إدارة المطالبات",
+        "RAG",
+        "S3",
+        "تقنية"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Amazon S3",
+        "AWS KMS",
+        "Boto3"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "30 سبتمبر 2026",
+      "modifiedLabel": "30 سبتمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 592
+    },
+    "en": {
+      "title": "Query Claims in Natural Language With Amazon Bedrock",
+      "description": "Learn how to build a conversational claims assistant using Amazon Bedrock Knowledge Bases to answer natural-language queries with citations.",
+      "deck": "A new technical how-to demonstrates building a conversational claims assistant that answers natural-language questions using Amazon Bedrock Knowledge Bases.",
+      "summaryBullets": [
+        "AWS outlines a technical guide for building a conversational claims assistant utilizing Amazon Bedrock Knowledge Bases.",
+        "The architecture ingests claim documents and metadata directly from Amazon Simple Storage Service (Amazon S3).",
+        "Developers can query records in plain language using the AgenticRetrieveStream API for multi-turn follow-ups.",
+        "Contextual grounding guardrails help ensure answers remain tightly tied to source documents and provide accurate citations."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Conversational Claims Assistants",
+          "paragraphs": [
+            {
+              "text": "Claim information is frequently distributed across diverse files such as adjuster diary entries, repair estimates, police reports, payment ledgers, and scanned attachments rather than residing in a single searchable field. Policyholders often seek simple status updates, while adjusters require complex data aggregation across multiple records. Addressing these distinct needs efficiently demands robust retrieval and processing capabilities.",
+              "links": []
+            },
+            {
+              "text": "To streamline these workflows, Retrieval Augmented Generation (RAG) uses retrieved documents to ground model responses effectively. Using Amazon Bedrock Knowledge Bases, organizations gain a fully managed RAG capability designed for documents. This service manages parsing, chunking, embeddings, and vector storage natively, enabling developers to construct conversational interfaces that return cited answers straight from claim files.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Knowledge Bases",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Core Features and Ingestion Architecture",
+          "paragraphs": [
+            {
+              "text": "The technical guide details a setup utilizing synthetic claim records to demonstrate how applications can ingest documents and metadata from Amazon S3. Claim files arrive in formats such as PDF, Word, or text alongside matching metadata sidecars. An ingestion job synchronizes the S3 data source with the knowledge base as documents undergo changes.",
+              "links": []
+            },
+            {
+              "text": "Once ingested, the knowledge base parses, chunks, embeds, and indexes the documents and their accompanying metadata inside managed vector storage. Before deployment, developers must verify that they have an AWS account with proper permissions, access to a foundation model enabled via Amazon Bedrock model access, and operate within an supported AWS Region.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock model access",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Querying and Agentic Retrieval",
+          "paragraphs": [
+            {
+              "text": "When users interact with the assistant, plain-language queries are processed using advanced retrieval mechanisms. Agentic retrieval through AgenticRetrieveStream plans an answer by breaking multi-part user questions down into distinct sub-queries, executing one or more retrieval passes, and verifying that the gathered evidence is sufficient before generating a response.",
+              "links": [
+                {
+                  "text": "Agentic retrieval",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-agentic-retrieve.html"
+                }
+              ]
+            },
+            {
+              "text": "The API streams trace events, answer text, and citations back to the application. Trace events expose the underlying retrieval plan, while individual citations map specific parts of the generated answer directly back to the source claim document. This structure ensures high transparency and traceability for contact center agents and supervisors auditing the responses.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Metadata Filtering and Contextual Grounding",
+          "paragraphs": [
+            {
+              "text": "To scope retrieval accurately, applications can apply metadata filters on specific attributes such as claim ID and claim type using scalar string, number, and Boolean values found in sidecar files. Additionally, a contextual grounding guardrail evaluates the output to block answers that lack support from the retrieved records.",
+              "links": []
+            },
+            {
+              "text": "By integrating these guardrails and metadata structures, developers using the AWS SDK for Python (Boto3) can programmatically build secure assistants that handle conflicting revisions, supersede earlier drafts, and maintain strict adherence to regulatory compliance requirements.",
+              "links": [
+                {
+                  "text": "AWS SDK for Python (Boto3)",
+                  "url": "https://aws.amazon.com/sdk-for-python/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Creating the Knowledge Base",
+          "paragraphs": [
+            {
+              "text": "Building the solution involves configuring the managed knowledge base utilizing the bedrock-agent client. Developers set the knowledgeBaseConfiguration type and embeddingModelType to managed, eliminating the need for manual vector store configurations. A dedicated service role must also be created to grant the knowledge base necessary permissions to read the S3 bucket and use the managed embedding model.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, managed vector storage can be secured using customer-managed encryption keys through AWS Key Management Service (AWS KMS) by supplying the appropriate Amazon Resource Name during the setup process.",
+              "links": [
+                {
+                  "text": "AWS Key Management Service (AWS KMS)",
+                  "url": "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "AWS",
+        "RAG",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Amazon S3",
+        "AWS KMS"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "September 30, 2026",
+      "modifiedLabel": "September 30, 2026",
+      "readMinutes": 3,
+      "wordCount": 588
+    }
+  },
+  "datePublished": "2026-09-30T19:16:37.504833+03:00",
+  "dateModified": "2026-09-30T19:16:37.504833+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/09/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/hero.webp",
+    "card": "/forum/assets/posts/2026/09/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/card.webp",
+    "social": "/forum/assets/posts/2026/09/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح استعلامات ذكية عن المطالبات عبر Bedrock Knowledge Bases",
+      "en": "Query Claims in Natural Language With Amazon Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/28/ML-21629-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/09/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/inline-01.webp",
+        "width": 1400,
+        "height": 722,
+        "alt": {
+          "ar": "أمازون تتيح استعلامات ذكية عن المطالبات عبر Bedrock Knowledge Bases",
+          "en": "Architecture with an ingestion lane from Amazon S3 to Amazon Bedrock Knowledge Bases and managed vector storage, and a retrieval lane from the user through the claims assistant, AgenticRetrieveStream, and Amazon Bedrock"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/28/ML-21629-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/inline-02.webp",
+        "width": 776,
+        "height": 1050,
+        "alt": {
+          "ar": "أمازون تتيح استعلامات ذكية عن المطالبات عبر Bedrock Knowledge Bases",
+          "en": "A synthetic claim record showing its file-control fields and evidence index"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/28/ML-21629-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/09/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/inline-03.webp",
+        "width": 1400,
+        "height": 600,
+        "alt": {
+          "ar": "أمازون تتيح استعلامات ذكية عن المطالبات عبر Bedrock Knowledge Bases",
+          "en": "Bar chart comparing expected-source retrieval and citation recall for the full suite and the adversarial subset"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/28/ML-21629-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases/",
+      "type": "official",
+      "title": "Query claims in natural language with Amazon Bedrock Knowledge Bases"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases",
+  "sourceTitle": "Query claims in natural language with Amazon Bedrock Knowledge Bases",
+  "trendScore": 107.69,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-09-30T16:16:37+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/09/query-claims-in-natural-language-with-amazon-bedrock-knowledge-bases.json"
+}
