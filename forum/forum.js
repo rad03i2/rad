@@ -53,8 +53,76 @@ function brandAssets(){
   setTimeout(normalizePlatformNav,1400);
 }
 
-const BRAND_INTRO_SRC='/assets/images/06_Mikhbar_Sticker_Animated_512.webp?v=20260930-brandintro6';
+const BRAND_INTRO_SRC='/assets/images/06_Mikhbar_Sticker_Animated_512.webp?v=20260930-brandintro7';
 const BRAND_INTRO_MS=2050;
+const BRAND_SAMPLE_SIZE=112;
+const BRAND_ALPHA_TRIM=.018;
+
+function brandAlphaBounds(imageData,w,h,trim=BRAND_ALPHA_TRIM){
+  const rows=new Float64Array(h);
+  const cols=new Float64Array(w);
+  const data=imageData.data;
+  let total=0;
+  for(let y=0;y<h;y++){
+    const rowOffset=y*w*4;
+    for(let x=0;x<w;x++){
+      const a=data[rowOffset+x*4+3];
+      if(a<=8)continue;
+      rows[y]+=a;
+      cols[x]+=a;
+      total+=a;
+    }
+  }
+  if(total<=0)return{x:0,y:0,width:w,height:h};
+
+  const cut=total*trim;
+  const edge=(arr,reverse=false)=>{
+    let sum=0;
+    if(!reverse){
+      for(let i=0;i<arr.length;i++){sum+=arr[i];if(sum>=cut)return i}
+      return 0;
+    }
+    for(let i=arr.length-1;i>=0;i--){sum+=arr[i];if(sum>=cut)return i}
+    return arr.length-1;
+  };
+
+  const left=edge(cols,false);
+  const right=edge(cols,true);
+  const top=edge(rows,false);
+  const bottom=edge(rows,true);
+  return{
+    x:left,
+    y:top,
+    width:Math.max(1,right-left+1),
+    height:Math.max(1,bottom-top+1)
+  };
+}
+
+function brandSampleBounds(img,size=BRAND_SAMPLE_SIZE){
+  const canvas=document.createElement('canvas');
+  canvas.width=size;
+  canvas.height=size;
+  const ctx=canvas.getContext('2d',{alpha:true,willReadFrequently:true});
+  if(!ctx)return{x:0,y:0,width:size,height:size};
+  ctx.clearRect(0,0,size,size);
+  ctx.drawImage(img,0,0,size,size);
+  try{
+    return brandAlphaBounds(ctx.getImageData(0,0,size,size),size,size);
+  }catch{
+    return{x:0,y:0,width:size,height:size};
+  }
+}
+
+function brandImageReady(img){
+  if(img.complete&&img.naturalWidth>0)return Promise.resolve(true);
+  return new Promise(resolve=>{
+    const done=ok=>resolve(ok);
+    img.addEventListener('load',()=>done(true),{once:true});
+    img.addEventListener('error',()=>done(false),{once:true});
+    window.setTimeout(()=>done(false),2200);
+  });
+}
+
 function brandIntro(){
   const marks=$$('.mikhbar-brand-mark');
   if(!marks.length)return;
@@ -64,57 +132,123 @@ function brandIntro(){
     return;
   }
 
-  marks.forEach(mark=>{
+  marks.forEach(async mark=>{
+    const staticImg=Array.from(mark.children).find(node=>node.tagName==='IMG'&&!node.classList.contains('mikhbar-brand-intro-source'));
+    if(!staticImg){mark.classList.add('is-brand-static');return}
+
+    $$('.mikhbar-brand-intro,.mikhbar-brand-intro-source',mark).forEach(node=>node.remove());
     mark.classList.remove('is-brand-static');
-    let intro=$('.mikhbar-brand-intro',mark);
-    if(!intro){
-      intro=document.createElement('img');
-      intro.className='mikhbar-brand-intro';
-      intro.src=BRAND_INTRO_SRC;
-      intro.alt='';
-      intro.setAttribute('aria-hidden','true');
-      intro.decoding='async';
-      mark.appendChild(intro);
+
+    const source=document.createElement('img');
+    source.className='mikhbar-brand-intro-source';
+    source.src=BRAND_INTRO_SRC;
+    source.alt='';
+    source.setAttribute('aria-hidden','true');
+    source.decoding='async';
+
+    const canvas=document.createElement('canvas');
+    canvas.className='mikhbar-brand-intro';
+    canvas.setAttribute('aria-hidden','true');
+
+    mark.appendChild(source);
+    mark.appendChild(canvas);
+
+    const ready=await Promise.all([brandImageReady(staticImg),brandImageReady(source)]);
+    if(!ready[0]||!ready[1]){
+      mark.classList.add('is-brand-static');
+      source.remove();
+      canvas.remove();
+      return;
     }
-  });
 
-  const finish=()=>{
-    marks.forEach(mark=>{
-      const intro=$('.mikhbar-brand-intro',mark);
-      if(!intro){mark.classList.add('is-brand-static');return}
+    const cssW=mark.clientWidth||52;
+    const cssH=mark.clientHeight||52;
+    const dpr=Math.min(Math.max(window.devicePixelRatio||1,1),3);
+    canvas.width=Math.max(1,Math.round(cssW*dpr));
+    canvas.height=Math.max(1,Math.round(cssH*dpr));
+
+    const ctx=canvas.getContext('2d',{alpha:true});
+    if(!ctx){
+      mark.classList.add('is-brand-static');
+      source.remove();
+      canvas.remove();
+      return;
+    }
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.imageSmoothingEnabled=true;
+    ctx.imageSmoothingQuality='high';
+
+    const target=brandSampleBounds(staticImg);
+    const targetX=target.x/BRAND_SAMPLE_SIZE*cssW;
+    const targetY=target.y/BRAND_SAMPLE_SIZE*cssH;
+    const targetW=target.width/BRAND_SAMPLE_SIZE*cssW;
+    const targetH=target.height/BRAND_SAMPLE_SIZE*cssH;
+    const targetCX=targetX+targetW/2;
+    const targetCY=targetY+targetH/2;
+
+    const probe=document.createElement('canvas');
+    probe.width=BRAND_SAMPLE_SIZE;
+    probe.height=BRAND_SAMPLE_SIZE;
+    const pctx=probe.getContext('2d',{alpha:true,willReadFrequently:true});
+    const started=performance.now();
+    let raf=0;
+    let done=false;
+
+    const finish=()=>{
+      if(done)return;
+      done=true;
+      if(raf)cancelAnimationFrame(raf);
+      mark.classList.add('is-brand-static');
+      canvas.classList.add('is-finishing');
+      window.setTimeout(()=>{
+        canvas.remove();
+        source.remove();
+      },90);
+    };
+
+    const paint=now=>{
+      if(done)return;
+      if(!pctx){finish();return}
+
+      pctx.clearRect(0,0,BRAND_SAMPLE_SIZE,BRAND_SAMPLE_SIZE);
+      pctx.drawImage(source,0,0,BRAND_SAMPLE_SIZE,BRAND_SAMPLE_SIZE);
+
+      let bounds;
       try{
-        const w=intro.naturalWidth||512;
-        const h=intro.naturalHeight||512;
-        const canvas=document.createElement('canvas');
-        canvas.className='mikhbar-brand-intro';
-        canvas.width=w;
-        canvas.height=h;
-        canvas.setAttribute('aria-hidden','true');
-        const ctx=canvas.getContext('2d',{alpha:true});
-        if(!ctx)throw new Error('canvas unavailable');
-        ctx.clearRect(0,0,w,h);
-        ctx.drawImage(intro,0,0,w,h);
-        intro.replaceWith(canvas);
+        bounds=brandAlphaBounds(
+          pctx.getImageData(0,0,BRAND_SAMPLE_SIZE,BRAND_SAMPLE_SIZE),
+          BRAND_SAMPLE_SIZE,
+          BRAND_SAMPLE_SIZE
+        );
       }catch{
-        mark.classList.add('is-brand-static');
-        intro.remove();
+        bounds={x:0,y:0,width:BRAND_SAMPLE_SIZE,height:BRAND_SAMPLE_SIZE};
       }
-    });
-  };
 
-  const probe=new Image();
-  let started=false;
-  const startTimer=()=>{
-    if(started)return;
-    started=true;
-    window.setTimeout(finish,BRAND_INTRO_MS);
-  };
-  probe.addEventListener('load',startTimer,{once:true});
-  probe.addEventListener('error',startTimer,{once:true});
-  probe.src=BRAND_INTRO_SRC;
-  if(probe.complete)startTimer();
-  window.setTimeout(startTimer,800);
+      const naturalW=source.naturalWidth||512;
+      const naturalH=source.naturalHeight||512;
+      const sx=bounds.x/BRAND_SAMPLE_SIZE*naturalW;
+      const sy=bounds.y/BRAND_SAMPLE_SIZE*naturalH;
+      const sw=Math.max(1,bounds.width/BRAND_SAMPLE_SIZE*naturalW);
+      const sh=Math.max(1,bounds.height/BRAND_SAMPLE_SIZE*naturalH);
+
+      const scale=Math.min(targetW/sw,targetH/sh);
+      const dw=Math.max(.5,sw*scale);
+      const dh=Math.max(.5,sh*scale);
+      const dx=targetCX-dw/2;
+      const dy=targetCY-dh/2;
+
+      ctx.clearRect(0,0,cssW,cssH);
+      ctx.drawImage(source,sx,sy,sw,sh,dx,dy,dw,dh);
+
+      if(now-started>=BRAND_INTRO_MS){finish();return}
+      raf=requestAnimationFrame(paint);
+    };
+
+    raf=requestAnimationFrame(paint);
+    window.setTimeout(finish,BRAND_INTRO_MS+350);
+  });
 }
+
 const ABOUT_TRANSITION_VIDEO='/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-logo-mark-alpha.webm?v=20260922-about1';
 const ABOUT_TRANSITION_POSTER='/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-logo-mark-poster-transparent.png';
 const ABOUT_TRANSITION_MS=2000;
