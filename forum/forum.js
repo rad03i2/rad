@@ -235,12 +235,15 @@ function smartHeader(){
 }
 function articleProgress(){
   const article=$('.rt-article');if(!article)return;
-  const bar=document.createElement('div');
-  bar.className='rt-reading-progress';
-  bar.setAttribute('aria-hidden','true');
-  const fill=document.createElement('span');
-  bar.append(fill);
-  document.body.append(bar);
+  let bar=$('.rt-reading-progress');
+  if(!bar){
+    bar=document.createElement('div');
+    bar.className='rt-reading-progress';
+    bar.setAttribute('aria-hidden','true');
+    document.body.append(bar);
+  }
+  let fill=$('span',bar);
+  if(!fill){fill=document.createElement('span');bar.append(fill)}
   let ticking=false;
   const update=()=>{
     const rect=article.getBoundingClientRect();
