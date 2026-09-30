@@ -530,3 +530,17 @@ body{background-image:none!important}
   .rt-home .rt-wordmark b{font-size:8px;padding:6px 8px}
   .rt-home .rt-lead{min-height:310px}
 }
+
+
+/* Smart disappearing navbar */
+.rt-site-header{
+  transition:transform .28s cubic-bezier(.22,.8,.22,1),box-shadow .2s ease!important;
+  will-change:transform;
+}
+.rt-site-header.rt-nav-hidden{
+  transform:translateY(calc(-100% - 2px));
+  box-shadow:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .rt-site-header{transition:none!important}
+}

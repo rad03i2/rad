@@ -207,6 +207,31 @@ function bind(){
   if(next)next.addEventListener('click',()=>stepHero(1));
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stopHero();else startHero()});
 }
+function smartHeader(){
+  const header=$('.rt-site-header');if(!header)return;
+  let lastY=Math.max(0,window.scrollY||0);
+  let ticking=false;
+  const update=()=>{
+    const y=Math.max(0,window.scrollY||0);
+    const delta=y-lastY;
+    const menuOpen=$('#navigation')?.classList.contains('is-open');
+    if(y<80||menuOpen){
+      header.classList.remove('rt-nav-hidden');
+    }else if(delta>8){
+      header.classList.add('rt-nav-hidden');
+    }else if(delta<-4){
+      header.classList.remove('rt-nav-hidden');
+    }
+    lastY=y;
+    ticking=false;
+  };
+  window.addEventListener('scroll',()=>{
+    if(ticking)return;
+    ticking=true;
+    window.requestAnimationFrame(update);
+  },{passive:true});
+  window.addEventListener('pageshow',()=>{lastY=Math.max(0,window.scrollY||0);header.classList.remove('rt-nav-hidden')});
+}
 function year(){$$('[data-year]').forEach(e=>e.textContent=new Date().getFullYear())}
-brandAssets();menu();bind();bindAboutTransition();year();load();
+brandAssets();menu();smartHeader();bind();bindAboutTransition();year();load();
 })();
