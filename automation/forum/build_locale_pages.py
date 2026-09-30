@@ -76,6 +76,7 @@ def _head(locale: str, path: str, title: str, description: str, image: str = "/a
     return f'''<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
+<link rel="preload" as="image" type="image/webp" fetchpriority="high" href="/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-logo-mark-alpha.webp?v=20260930-brandintro1">
 <title>{escape(title)}</title>
 <meta name="description" content="{escape(description, quote=True)}">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
