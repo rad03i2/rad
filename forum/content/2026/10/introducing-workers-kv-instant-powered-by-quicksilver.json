@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "56a2cbce0a0b4c9dfca4",
+  "slug": "introducing-workers-kv-instant-powered-by-quicksilver",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/introducing-workers-kv-instant-powered-by-quicksilver/",
+    "en": "/forum/en/web/introducing-workers-kv-instant-powered-by-quicksilver/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cloudflare تطلق KV Instant بتقنية Quicksilver",
+      "description": "تقدّم Cloudflare وضعاً جديداً لخدمة Workers KV يوفّر زمن استجابة قراءات أقل من 2 مللي ثانية، مع تكرار فوري للبيانات عبر 300 موقع حافة حول العالم.",
+      "deck": "أعلنت Cloudflare عن إطلاق وضع جديد لخدمة تخزين المفاتيح والقيم، يعتمد على بنية داخلية متطورة لتسريع الوصول إلى البيانات.",
+      "summaryBullets": [
+        "زمن استجابة قراءات p99 أقل من 2 مللي ثانية.",
+        "تكرار البيانات عالمياً خلال 250 مللي ثانية تقريباً.",
+        "استخدام نفس واجهة برمجة التطبيقات (API) الخاصة بـ Workers KV.",
+        "تخفيض تكلفة عمليات القراءة بنسبة 60% مقارنة بالوضع الكلاسيكي."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق وضع KV Instant",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Cloudflare اليوم عن إطلاق وضع جديد لخدمتها المعروفة باسم Workers KV، يحمل اسم KV Instant. يهدف هذا الوضع إلى دفع التغييرات إلى جميع المواقع حول العالم لتصبح متاحة فوراً دون الحاجة إلى انتظار انتهاء صلاحية البيانات (TTL)، مما يلغي ما يُعرف بعقوبات القراءة الباردة (cold read penalties). ويمكن الرجوع إلى Cloudflare Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Workers KV",
+                  "url": "https://developers.cloudflare.com/kv/"
+                },
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/workers-kv-instant/"
+                }
+              ]
+            },
+            {
+              "text": "تُعد خدمة Workers KV من أكثر الخدمات شعبية على منصة المطورين لدى Cloudflare منذ إطلاقها خلال أسبوع عيد الميلاد (Birthday Week) في عام 2018. تُستخدم هذه الخدمة بشكل واسع للوصول السريع إلى البيانات مثل الأصول الثابتة وإعدادات المستخدمين التي تُكتب نادراً ولكن تُقرأ بشكل متكرر، وتستخدمها Cloudflare نفسها عبر العديد من منتجاتها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اعتماد تقنية Quicksilver الداخلية",
+          "paragraphs": [
+            {
+              "text": "يعتمد وضع KV Instant على تقنية داخلية طورتها Cloudflare تُسمى Quicksilver. وقد كتبت الشركة العديد من المدونات حول هذه التقنية منذ تقديمها لأول مرة في عام 2020. صُممت Quicksilver لتوفير تكرار عالمي فائق السرعة وإمكانية وصول بزمن استجابة منخفض، حيث تعتمد عليها Cloudflare في معالجة الطلبات الواردة إليها.",
+              "links": []
+            },
+            {
+              "text": "على الرغم من أن العملاء كانوا يطلبون إتاحة هذه التقنية لهم لسنوات، إلا أن Cloudflare لم تكن قد جعلتها متاحة خارجياً من قبل. ومع إطلاق KV Instant، أصبحت هذه البنية الداخلية متاحة للعملاء، مما يوفر سرعة قراءات أعلى بمئة مرة وتحديثات فورية دون الحاجة إلى انتظار انتهاء مدة الصلاحية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أداء فائق في القراءات والكتابات",
+          "paragraphs": [
+            {
+              "text": "يوفر وضع KV Instant زمن استجابة للقراءات أسرع بمئة مرة من الوضع الكلاسيكي. تتحقق القراءات في أقل من مللي ثانية واحدة عند النسبة المئوية 99 (p99) من زمن الاستجابة، بينما تُقاس أوقات النسبة المئوية 95 (p95) بالمللي ثانية. كما يتم دفع عمليات الكتابة إلى الحافة (Edge) أسرع بعشرين مرة، حيث يتم تكرار 99% من جميع عمليات الكتابة في حوالي 250 مللي ثانية.",
+              "links": []
+            },
+            {
+              "text": "تجعل هذه الخصائص عالية الأداء من KV Instant الخيار المثالي لقراءة البيانات في المسارات الحرجة (hot path) للتطبيقات، خاصةً الأعلام (flags) والإعدادات التي يجب أن تكون متاحة عالمياً بشكل شبه فوري بعد كتابتها. يمتد التكرار إلى جميع مواقع الحافة، والتي تتجاوز 300 موقعاً حول العالم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "واجهة برمجة التطبيقات والتوافق",
+          "paragraphs": [
+            {
+              "text": "يستخدم KV Instant نفس واجهة برمجة التطبيقات (API) المألوفة الخاصة بـ Workers KV، مما يعني أن المطورين يمكنهم استخدام الدوال المعروفة مثل get() و put() و list() و delete(). ومع ذلك، هناك ثلاث فوارق رئيسية عند العمل مع KV Instant: يجب تحديد وضع KV Instant عند إنشاء مساحة الأسماء (namespace)، ولا يتم دعم البيانات الوصفية (Metadata)، كما أن عمليات list تعيد جميع المفاتيح المطابقة دون تقسيم للصفحات (pagination).",
+              "links": []
+            },
+            {
+              "text": "للاطلاع على أمثلة إضافية لواجهة برمجة التطبيقات، يمكن للمطورين الرجوع إلى توثيقات Workers KV. على سبيل المثال، إذا كنت تعمل على إطلاق منتج كبير وتحتاج إلى تبديل محتوى الصفحة الرئيسية في وقت محدد، يوفر KV Instant مفتاحاً يمكن قراءته بزمن استجابة شبه معدوم وتحديثه فورياً عند تغييره.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نموذج التسعير والقيود",
+          "paragraphs": [
+            {
+              "text": "تم تسعير KV Instant ليناسب أحمال العمل التي تعتمد بشكل كبير على القراءة وتتعامل مع بيانات صغيرة. نظراً لأن Cloudflare تنشر البيانات في جميع مواقعها باستخدام نفس مخزن المفاتيح والقيم الذي تعمل عليه منذ سنوات، يمكنها تقديم تسعير لعمليات القراءة أرخص بنسبة 60% من Workers KV الكلاسيكي.",
+              "links": []
+            },
+            {
+              "text": "في المقابل، تكون تكاليف التخزين وعمليات الفئة A (Class A) أعلى بكثير. إذا كنت بحاجة إلى تخزين كميات كبيرة من البيانات أو تحديثها بشكل متكرر، يظل Workers KV الكلاسيكي مناسباً. تُسعّر مساحات أسماء KV Instant في ثلاثة أبعاد: تخزين البيانات، وعمليات الفئة A، وعمليات الفئة B.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تفاصيل التسعير والإطلاق التجريبي",
+          "paragraphs": [
+            {
+              "text": "يتم فوترة التخزين بمبلغ 100 دولار لكل ميجابايت شهرياً. يمكن أن يصل حجم كل مفتاح إلى 300 بايت، ويمكن أن تكون القيم بأي حجم بشرط ألا يتجاوز حجم مساحة الأسماء الإجمالي ميجابايتاً واحداً. يمكن لمساحات أسماء KV Instant أن تحتوي على ما يصل إلى 10,000 زوج من المفاتيح والقيم.",
+              "links": []
+            },
+            {
+              "text": "تُفوتر عمليات الفئة A (put, delete, list) بمبلغ 0.10 دولار لكل عملية. وتُفوتر عمليات الفئة B (get) بمبلغ 0.20 دولار لكل مليون مفتاح مطلوب، وهو ما يمثل تخفيضاً بنسبة 60% مقارنة بوضع Workers KV الافتراضي. كما تفرض KV Instant حداً لعمليات الكتابة بمعدل كتابة واحدة لكل مساحة أسماء في الثانية. يُطلق KV Instant اليوم في بيتا خاصة (private beta)، ويمكن للمهتمين التسجيل للمشاركة في البرنامج التجريبي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Workers KV",
+        "Quicksilver",
+        "Edge Computing",
+        "API",
+        "Database",
+        "Latency"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Workers KV",
+        "Quicksilver",
+        "KV Instant"
+      ],
+      "category": "الويب",
+      "dateLabel": "1 أكتوبر 2026",
+      "modifiedLabel": "1 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 717
+    },
+    "en": {
+      "title": "Cloudflare Introduces Workers KV Instant Powered by Quicksilver",
+      "description": "Cloudflare announces Workers KV Instant, a new mode offering sub-2ms p99 read latencies and global replication across its edge network.",
+      "deck": "Cloudflare has introduced Workers KV Instant, a high-performance mode for Workers KV powered by its internal Quicksilver key-value store, designed to eliminate cold-read penalties and provide rapid global replication.",
+      "summaryBullets": [
+        "Workers KV Instant delivers sub-2ms p99 read latencies and 250ms global replication across more than 300 edge locations.",
+        "The new mode is powered by Quicksilver v2, an internal key-value store previously unavailable to customers.",
+        "It maintains the familiar Workers KV API, supporting standard methods like get(), put(), list(), and delete().",
+        "Read operations are priced 60% less than classic Workers KV, though storage and Class A operations carry higher costs."
+      ],
+      "sections": [
+        {
+          "heading": "A New Mode for Workers KV",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has announced Workers KV Instant, a new operational mode designed to push changes globally for instant availability while eliminating cold read penalties. Since its initial debut during Birthday Week in 2018, Workers KV has grown to become one of the most popular services on the company's Developer Platform. It has traditionally served as a reliable solution for quickly accessing data like static assets and user configurations that are written occasionally but read frequently.",
+              "links": [
+                {
+                  "text": "Birthday Week",
+                  "url": "https://blog.cloudflare.com/tag/birthday-week/"
+                }
+              ]
+            },
+            {
+              "text": "While classic Workers KV handles a broad range of general workloads, developers have frequently requested access to Quicksilver, the high-speed key-value store that Cloudflare has utilized internally since introducing it in 2020. With the arrival of Workers KV Instant, developers can now leverage the performance characteristics of Quicksilver directly through the familiar Workers KV API.",
+              "links": [
+                {
+                  "text": "introducing it in 2020",
+                  "url": "https://blog.cloudflare.com/introducing-quicksilver-configuration-distribution-at-internet-scale/"
+                },
+                {
+                  "text": "Workers KV API",
+                  "url": "https://developers.cloudflare.com/kv/api/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Powered by Quicksilver v2 Architecture",
+          "paragraphs": [
+            {
+              "text": "Workers KV Instant is driven by Quicksilver v2, a globally distributed key-value store engineered by Cloudflare for low-latency access and rapid data propagation. According to the company, the new mode achieves read latency over 100 times faster than classic mode, resolving reads in under two milliseconds even at the 99th percentile (p99), with 95th percentile times measured in microseconds.",
+              "links": [
+                {
+                  "text": "Quicksilver v2",
+                  "url": "https://blog.cloudflare.com/quicksilver-v2-evolution-of-a-globally-distributed-key-value-store-part-1/"
+                }
+              ]
+            },
+            {
+              "text": "In addition to rapid reads, writes are propagated to the edge more than 20 times faster than classic mode. Approximately 99% of all writes replicate across more than 300 edge locations in roughly 250 milliseconds. These performance metrics make the system well-suited for applications requiring feature flags and configuration settings to update instantly across a global audience.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "API Compatibility and Key Differences",
+          "paragraphs": [
+            {
+              "text": "Developers building with Workers KV Instant can continue using the core methods they already know, including get(), put(), list(), and delete(). However, because the underlying architecture differs significantly from classic mode, developers should review the official documentation to account for specific behavioral changes.",
+              "links": []
+            },
+            {
+              "text": "There are three primary distinctions when implementing KV Instant namespaces. First, developers must explicitly specify instant mode by passing the 'mode' attribute during namespace creation. Second, metadata is unsupported, meaning getWithMetadata calls always return null and put operations cannot accept metadata. Third, list operations return all matching keys in a namespace without pagination.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Pricing Structure and Resource Limits",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has structured the pricing for Workers KV Instant to accommodate small, read-heavy workloads. Because data is propagated to every edge location using Quicksilver, Class B read operations cost 60% less than classic Workers KV default mode, billed at $0.20 per million keys requested.",
+              "links": []
+            },
+            {
+              "text": "Conversely, storage and Class A operations carry a higher cost. Storage is billed at $100 per megabyte monthly, with namespaces capped at 10,000 key-value pairs and a total size limit of one megabyte. Class A operations—including put, delete, and list—are charged at $0.10 per operation. Furthermore, write frequency is restricted to one write per namespace per second to maintain update order consistency through the system of record.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Private Beta Availability",
+          "paragraphs": [
+            {
+              "text": "Workers KV Instant is currently launching in a private beta phase. Cloudflare is inviting developers interested in testing the high-performance configuration store to apply and share details about their projects before a wider public rollout.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Workers KV",
+        "Quicksilver",
+        "Edge Computing",
+        "Distributed Systems",
+        "Cloud Storage",
+        "Web Development"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Workers KV Instant",
+        "Quicksilver"
+      ],
+      "category": "Web",
+      "dateLabel": "October 1, 2026",
+      "modifiedLabel": "October 1, 2026",
+      "readMinutes": 3,
+      "wordCount": 609
+    }
+  },
+  "datePublished": "2026-10-01T19:13:17.540436+03:00",
+  "dateModified": "2026-10-01T19:13:17.540436+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/introducing-workers-kv-instant-powered-by-quicksilver/hero.webp",
+    "card": "/forum/assets/posts/2026/10/introducing-workers-kv-instant-powered-by-quicksilver/card.webp",
+    "social": "/forum/assets/posts/2026/10/introducing-workers-kv-instant-powered-by-quicksilver/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تطلق KV Instant بتقنية Quicksilver",
+      "en": "Cloudflare Introduces Workers KV Instant Powered by Quicksilver"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3VEKFJ2MXMCNB0J008305V4.01M3VEKGPXTJDYC3F5AM7MC3FW.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-workers-kv-instant-powered-by-quicksilver/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "Cloudflare تطلق KV Instant بتقنية Quicksilver",
+          "en": "Introducing Workers KV Instant — powered by Quicksilver"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/workers-kv-instant/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3VEK5CZPP518SSR4GMX7CJ0.01M3VEK5ZY7PD7P6Q6ZA4MGAGS.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/workers-kv-instant/",
+      "type": "official",
+      "title": "Introducing Workers KV Instant — powered by Quicksilver"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/workers-kv-instant",
+  "sourceTitle": "Introducing Workers KV Instant — powered by Quicksilver",
+  "trendScore": 116.86,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-01T16:13:17+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/introducing-workers-kv-instant-powered-by-quicksilver.json"
+}
