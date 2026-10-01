@@ -1,5 +1,326 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-01T18:53:17+00:00",
-  "last_published_story_id": "3f1df7d1e497a618a33d"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-01T18:56:49+00:00",
+  "target_publish_at": "2026-10-01T22:13:17.776805+03:00",
+  "story": {
+    "title": "Introducing Olmo-core 3: Open, scalable training infrastructure for large MoEs",
+    "url": "https://huggingface.co/blog/allenai/olmocore3",
+    "domain": "huggingface.co",
+    "summary": "",
+    "published_at": "2026-10-01T15:01:43+00:00",
+    "discovered_at": "2026-10-01T15:06:20+00:00",
+    "source": {
+      "name": "Hugging Face Blog",
+      "feed": "https://huggingface.co/blog/feed.xml",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 26,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 62,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "f928531f963725197f57",
+    "trend": {
+      "score": 114.41,
+      "age_hours": 3.92,
+      "corroboration_count": 0,
+      "entity_momentum": 13.93,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://huggingface.co/blog/allenai/olmocore3",
+      "name": "Hugging Face Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Introducing Olmo-core 3: Open, scalable training infrastructure for large MoEs",
+      "title": "Introducing Olmo-core 3: Open, scalable training infrastructure for large MoEs",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "إطلاق Olmo-core 3: بنية تحتية مفتوحة لتدريب نماذج MoE الضخمة",
+      "description": "أطلقت مؤسسة Ai2 إطار Olmo-core 3، وهو نظام مفتوح المصدر مصمم لتدريب نماذج مزيج الخبراء (MoE) بكفاءة عالية، مما يوسع نطاق الوصول لأبحاث الذكاء الاصطناعي المتقدمة.",
+      "deck": "يُعيد Olmo-core 3 تصميم بنية تدريب النماذج اللغوية الكبيرة، مما يتيح توسيع نماذج مزيج الخبراء إلى نطاق التريليون مع الحفاظ على كفاءة الحسابات وتقليل التكاليف.",
+      "summary_bullets": [
+        "تحسين كفاءة التدريب بنسبة تصل إلى 2.7 مرة مقارنة بالإصدارات السابقة عبر الانتقال من FSDP إلى DDP.",
+        "دعم نماذج تصل إلى 2.38 تريليون معلمة في الاختبارات الأولية، مع الحفاظ على ثبات عدد المعلمات النشطة لكل رمز.",
+        "تقليل استهلاك الذاكرة وتحسين سرعة المعالجة باستخدام تقنية MXFP8 بدقة منخفضة.",
+        "توفير أدوات مفتوحة المصدر للباحثين والمختبرات الصغيرة لتجاوز حواجز التكلفة والحوسبة."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق إطار عمل جديد لتدريب النماذج",
+          "paragraphs": [
+            {
+              "text": "أعلنت مؤسسة Ai2 عن إطلاق Olmo-core 3، وهو ترقية جوهرية لإطارها التطويري الخاص بالنماذج اللغوية الكبيرة. يركز هذا الإصدار على نظام تدريب مفتوح ومُعاد تصميمه خصيصاً لنماذج مزيج الخبراء (MoE)، بهدف تمكين الباحثين من تدريب نماذج ضخمة بكفاءة أعلى. يأتي هذا الإطلاق ضمن التزام المؤسسة المستمر بفتح الأدوات والبنية التحتية للتدريب أمام المجتمع العلمي، مما يسهل على المختبرات الأصغر والأفراد الوصول إلى تقنيات الذكاء الاصطناعي المتقدمة دون الحاجة إلى موارد حوسبة باهظة.",
+              "links": [
+                {
+                  "text": "Olmo-core 3",
+                  "url": "https://github.com/allenai/olmo-core"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحديات تدريب نماذج مزيج الخبراء",
+          "paragraphs": [
+            {
+              "text": "تواجه نماذج مزيج الخبراء تحديات فريدة تتعلق بالتكلفة والكفاءة. على الرغم من أن هذه النماذج توفر كفاءة أعلى عن طريق تفعيل جزء فقط من المعلمات لكل إدخال، إلا أن تخزين النموذج الكامل وتحديثه عبر وحدات معالجة الرسومات (GPU) يولد تكاليف اتصال وتنسيق مرتفعة. مع نمو حجم هذه النماذج، يمكن أن تتآكل المزايا الحسابية الناتجة عن استخدام جزء من النموذج فقط. صُمم Olmo-core 3 لسد هذه الفجوة، حيث أظهرت الاختبارات زيادة في حوض الخبراء من 8 إلى 128 مع الحفاظ على اختيار أربعة خبراء فقط لكل رمز، مما حافظ على عدد المعلمات النشطة ثابتاً تقريباً عند 3.2 مليار، بينما ارتفع إجمالي السعة من 4.6 إلى 47 مليار معلمة دون انخفاض كبير في الإنتاجية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إعادة هيكلة البنية التحتية للتدريب",
+          "paragraphs": [
+            {
+              "text": "شهد إطار Olmo-core تطوراً عبر أجيال متعددة، بدءاً من OlmoE الذي استخدم بنية MoE بخبراء موجهين، وصولاً إلى Olmo 3 الذي اعتمد بنية كثيفة. في الإصدار الجديد، انتقل النظام من توازى البيانات المشرذمة بالكامل (FSDP) الذي كان يجمع أوزان النموذج لكل دفعة صغيرة، إلى نظام يعتمد على توازى البيانات الموزعة (DDP). هذا التغيير يسمح بإبقاء الخبراء مقيمين على وحدات GPU وتوجيه البيانات ذات الصلة إليهم، مما يتجنب التكرار المكلف لجمع الأوزان. كما يقدم النظام حلاً متكاملاً يتفوق في الإنتاجية على التنفيذ السابق، حيث أظهرت الاختبارات الأولية على وحدات NVIDIA B300 معالجة 52,000 رمز في الثانية لكل وحدة GPU، مقارنة بـ 19,400 في الإصدار السابق، أي ما يعادل زيادة في الإنتاجية بنسبة 2.7 مرة.",
+              "links": [
+                {
+                  "text": "OlmoE",
+                  "url": "https://allenai.org/blog/olmoe-an-open-small-and-state-of-the-art-mixture-of-experts-model-c258432d0514"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تقنيات التوزيع والتوزيع المتوازي",
+          "paragraphs": [
+            {
+              "text": "يعتمد Olmo-core 3 على ثلاث تقنيات رئيسية لتوزيع النموذج وحالة التدريب عبر العتاد. أولاً، توازى الخبراء الذي يوزع الخبراء عبر وحدات GPU بحيث تخزن كل وحدة جزءاً فقط من الحوض الكامل. ثانياً، توازى الخطوط (Pipeline parallelism) الذي يقسم طبقات النموذج عبر مجموعات من وحدات GPU لتقليل الذاكرة المطلوبة لكل وحدة. ثالثاً، المحسّن الموزع الذي يوزع حالة المحسّن بدلاً من تخزين نسخة كاملة على كل وحدة. هذه التقنيات مجتمعة تتيح توسيع نطاق نماذج MoE دون الحاجة إلى إبقاء النموذج الكامل وحالة التدريب في ذاكرة كل وحدة GPU، مما يفتح المجال لتدريب نماذج أكبر بكثير.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات في التوجيه والدقة",
+          "paragraphs": [
+            {
+              "text": "لتقليل تكلفة توجيه البيانات إلى الخبراء المناسبين، يطبق النظام توازى الخبراء الصفّي الذي يضع البيانات الموجهة مباشرة في مخازن مدخلات الخبراء، مما يقلل العمل الإضافي لإعادة ترتيبها. كما يحافظ على بيانات التوجيه على وحدات GPU، مما يسمح لوحدة المعالجة المركزية (CPU) بجدولة العمل دون انتظار نسخ هذه البيانات. بالإضافة إلى ذلك، يجمع النظام عمليات GEMM الصغيرة معاً لتنفيذها بكفاءة أعلى. يدعم النظام أيضاً صيغة الأرقام منخفضة الدقة MXFP8، التي تمثل بعض القيم بعدد أقل من البتات. أظهرت الاختبارات على وحدات NVIDIA B300 أن تفعيل MXFP8 رفع الإنتاجية بنسبة 21% مقارنة بصيغة BF16، مع انخفاض ذروة الذاكرة النشطة من 103 GiB إلى 95 GiB.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج الاختبارات على نطاق واسع",
+          "paragraphs": [
+            {
+              "text": "خضع Olmo-core 3 لاختبارات واسعة النطاق على وحدات NVIDIA B300، شملت نموذجاً بحجم 1.2 تريليون معلمة مع 58.36 مليار معلمة نشطة لكل رمز عبر 512 وحدة GPU. سجل النظام أعلى معدل إنتاجية ملاحظ بلغ 858 TFLOP/s/GPU. كما جرب الفريق تقنية DeepEP v2 للتعامل مع الاتصالات بين الخبراء، مما أدى إلى الوصول إلى تكوين يحتوي على 2.38 تريليون معلمة إجمالاً. على الرغم من أن هذه الاختبارات الأخيرة كانت قصيرة المدى وتستخدم توجيهات عشوائية لقياس أداء النظام وليس جودة النموذج المدرب، إلا أنها توضح المقياس الهائل الذي يمكن أن يصل إليه Olmo-core 3. توفر هذه النتائج رؤى قيمة حول كيفية تدريب نماذج MoE وقياس أدائها، مع توثيق تجارب حول تحديات مثل عدم توازن الأحمال على الخبراء.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "ذكاء اصطناعي",
+        "نماذج لغوية كبيرة",
+        "MoE",
+        "بنية تحتية مفتوحة",
+        "تدريب النماذج",
+        "Ai2",
+        "حوسبة عالية الأداء"
+      ],
+      "entities": [
+        "Ai2",
+        "Olmo-core 3",
+        "NVIDIA",
+        "Hugging Face",
+        "DeepEP v2"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من المدونة الرسمية لـ Ai2 على Hugging Face، مع التركيز على الحقائق التقنية والأرقام المذكورة في التقرير."
+    },
+    "en": {
+      "title": "Olmo-core 3 Released for Open MoE Training",
+      "description": "Discover Olmo-core 3, the open and scalable training infrastructure designed for large Mixture-of-Experts models up to the trillion-parameter scale.",
+      "deck": "The Allen Institute for AI has launched Olmo-core 3, introducing a redesigned open mixture-of-experts training infrastructure built to scale large language models into the trillion-parameter range while preserving computational efficiency.",
+      "summary_bullets": [
+        "Olmo-core 3 is designed to scale Mixture-of-Experts (MoE) training into the trillion-parameter range.",
+        "Switches from an FSDP-based framework to a distributed data parallelism (DDP) system that keeps experts resident on GPUs.",
+        "Achieved significant throughput improvements, reaching up to 2.7 times the throughput of previous implementations in preliminary tests.",
+        "Supports MXFP8 lower-precision number formatting to enhance training throughput and reduce peak active memory."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Olmo-core 3",
+          "paragraphs": [
+            {
+              "text": "The development team behind open artificial intelligence models has released Olmo-core 3, a significant upgrade to their framework for developing large language models featuring a redesigned open mixture-of-experts (MoE) training system. According to details shared on the Hugging Face Blog, the new infrastructure is designed to scale MoE training into the trillion-parameter range while preserving computational efficiency.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/allenai/olmocore3"
+                }
+              ]
+            },
+            {
+              "text": "Training large AI models demands substantial compute resources, driving up both costs and energy use, which often puts advanced model development out of reach for academic researchers and smaller laboratories. While MoE models offer a more efficient approach by containing many more learned components or parameters without requiring every input to use all of them, storing the full model across GPU memory and directing inputs to the right specialized components creates communication and coordination costs that can erode computational advantages.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architectural Evolution and Throughput Gains",
+          "paragraphs": [
+            {
+              "text": "Olmo-core 3 shifts away from earlier implementations that relied on fully sharded data parallelism (FSDP). Instead, the updated framework utilizes a system based on distributed data parallelism (DDP) that keeps experts resident on GPUs and routes relevant data directly to them, thereby avoiding repeated weight gathering operations.",
+              "links": []
+            },
+            {
+              "text": "In preliminary tests conducted on eight NVIDIA B300 GPUs, a 47-billion-parameter MoE processed 52,000 tokens per second per GPU utilizing the new stack, compared to 19,400 tokens using the earlier implementation. This represents approximately 2.7 times the throughput. Further architectural insights, benchmark data, and technical specifications are detailed in the official Tech Report published by the research team.",
+              "links": [
+                {
+                  "text": "Tech Report",
+                  "url": "https://allenai.org/papers/olmocore3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Scaling Techniques and GPU Optimization",
+          "paragraphs": [
+            {
+              "text": "To effectively distribute large MoEs across GPU clusters, Olmo-core 3 combines several core techniques. Expert parallelism spreads the expert pool across multiple GPUs, pipeline parallelism splits model layers across groups of GPUs, and a distributed optimizer spreads the optimizer state rather than storing a full copy on every device. Developers interested in exploring the codebase can review the source repository via the project's Code link.",
+              "links": [
+                {
+                  "text": "Code",
+                  "url": "https://github.com/allenai/olmo-core"
+                }
+              ]
+            },
+            {
+              "text": "Additionally, the framework reduces the cost of routing data and running computations through rowwise expert parallelism, GPU-resident routing, and grouped GEMM execution. These combined optimizations allow massive MoE architectures to scale without requiring every single GPU to hold the entire model and its associated training state in memory simultaneously.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Precision Formats and Trillion-Parameter Benchmarks",
+          "paragraphs": [
+            {
+              "text": "Olmo-core 3 also introduces support for MXFP8, a lower-precision number format designed to reduce computation overhead and minimize data movement between GPUs. Controlled benchmarks on four NVIDIA B300 GPUs demonstrated that enabling MXFP8 across optimized system components yielded a training throughput roughly 21% higher than the baseline BF16 format, while peak active memory decreased from 103 GiB to 95 GiB.",
+              "links": []
+            },
+            {
+              "text": "The framework has been thoroughly benchmarked across various configurations on NVIDIA B300 hardware, including a massive 1.2-trillion-parameter model operating across 512 GPUs. Researchers can also engage with an Interactive demo to visualize how data, expert, and pipeline parallelism interact during large-scale MoE training configurations.",
+              "links": [
+                {
+                  "text": "Interactive demo",
+                  "url": "https://narrative.allen.ai/scaling-up-training"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Mixture of Experts",
+        "Open Source",
+        "GPU Infrastructure",
+        "Language Models"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Allen Institute for AI",
+        "NVIDIA"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly synthesized from the provided Hugging Face Blog source regarding the release of Olmo-core 3."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 719,
+      "word_count_en": 571
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "f928531f963725197f57",
+      "title": "Introducing Olmo-core 3: Open, scalable training infrastructure for large MoEs",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 719,
+          "word_count_en": 571
+        }
+      ]
+    }
+  ],
+  "slug": "introducing-olmo-core-open-scalable-training-infrastructure-for-large-moes",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/introducing-olmo-core-open-scalable-training-infrastructure-for-large-moes/hero.webp",
+    "card": "/forum/assets/posts/2026/10/introducing-olmo-core-open-scalable-training-infrastructure-for-large-moes/card.webp",
+    "social": "/forum/assets/posts/2026/10/introducing-olmo-core-open-scalable-training-infrastructure-for-large-moes/social.jpg",
+    "alt": {
+      "ar": "إطلاق Olmo-core 3: بنية تحتية مفتوحة لتدريب نماذج MoE الضخمة",
+      "en": "Olmo-core 3 Released for Open MoE Training"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/uKnK93gjkKbmJmSx94WO2.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-olmo-core-open-scalable-training-infrastructure-for-large-moes/inline-01.webp",
+        "width": 1134,
+        "height": 810,
+        "alt": {
+          "ar": "إطلاق Olmo-core 3: بنية تحتية مفتوحة لتدريب نماذج MoE الضخمة",
+          "en": "Olmo-core 3: expert-pool scaling and training throughput"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/olmocore3",
+        "originalUrl": "https://www.datocms-assets.com/64837/1790799330-olmo-core-3-blog-draft-google-docs-image-2.png?fit=max&h=810&w=1550"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-olmo-core-open-scalable-training-infrastructure-for-large-moes/inline-02.webp",
+        "width": 1134,
+        "height": 810,
+        "alt": {
+          "ar": "إطلاق Olmo-core 3: بنية تحتية مفتوحة لتدريب نماذج MoE الضخمة",
+          "en": "Olmo-core 3 training throughput compared with the earlier implementation"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/olmocore3",
+        "originalUrl": "https://www.datocms-assets.com/64837/1790799917-olmo-core-3-blog-draft-google-docs-image-3.png?fit=max&h=810&w=1550"
+      }
+    ]
+  }
 }
