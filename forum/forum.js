@@ -53,80 +53,6 @@ function brandAssets(){
   setTimeout(normalizePlatformNav,1400);
 }
 
-const BRAND_MOTION_SRC='/assets/images/06_Mikhbar_Sticker_Animated_512.webp?v=20261001-brandmotion1';
-const BRAND_MOTION_MS=2050;
-let brandMotionTimer=0;
-let brandMotionHideTimer=0;
-
-function ensureBrandMotion(){
-  let overlay=$('#mikhbarScreenMotion');
-  if(overlay)return overlay;
-  overlay=document.createElement('div');
-  overlay.id='mikhbarScreenMotion';
-  overlay.className='mikhbar-screen-motion';
-  overlay.setAttribute('aria-hidden','true');
-  document.body.appendChild(overlay);
-  return overlay;
-}
-
-function playBrandMotion(){
-  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced)return;
-
-  const overlay=ensureBrandMotion();
-  const old=$('.mikhbar-screen-motion__mark',overlay);
-  if(old)old.remove();
-
-  const img=document.createElement('img');
-  img.className='mikhbar-screen-motion__mark';
-  img.src=BRAND_MOTION_SRC;
-  img.alt='';
-  img.setAttribute('aria-hidden','true');
-  img.decoding='async';
-  overlay.appendChild(img);
-
-  overlay.classList.remove('is-visible','is-leaving');
-  void overlay.offsetWidth;
-  overlay.classList.add('is-visible');
-  overlay.setAttribute('aria-hidden','false');
-
-  if(brandMotionTimer)window.clearTimeout(brandMotionTimer);
-  if(brandMotionHideTimer)window.clearTimeout(brandMotionHideTimer);
-
-  brandMotionTimer=window.setTimeout(()=>{
-    overlay.classList.add('is-leaving');
-    brandMotionHideTimer=window.setTimeout(()=>{
-      overlay.classList.remove('is-visible','is-leaving');
-      overlay.setAttribute('aria-hidden','true');
-      img.remove();
-    },150);
-  },Math.max(0,BRAND_MOTION_MS-150));
-}
-
-function bindBrandMotion(){
-  ensureBrandMotion();
-  window.requestAnimationFrame(()=>playBrandMotion());
-
-  window.addEventListener('pageshow',event=>{
-    if(event.persisted)playBrandMotion();
-  });
-
-  document.addEventListener('click',event=>{
-    if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
-    const target=event.target.closest&&event.target.closest('button,[role="button"],a[href]');
-    if(!target||target.closest('#mikhbarScreenMotion'))return;
-    if(target.matches(':disabled,[aria-disabled="true"]'))return;
-
-    if(target.tagName==='A'){
-      let url;
-      try{url=new URL(target.href,location.href)}catch{return}
-      if(url.origin!==location.origin)return;
-    }
-
-    playBrandMotion();
-  },true);
-}
-
 const dict={
  ar:{count:n=>`${n} منشور`,fallbackCat:'تقنية',emptyNow:'ستظهر هنا الموضوعات الأحدث فور بدء النشر اليومي.',read:'',imgAlt:'صورة الخبر'},
  en:{count:n=>`${n} ${n===1?'post':'posts'}`,fallbackCat:'Technology',emptyNow:'The latest and most important stories will appear here as they are published.',read:'',imgAlt:'Story image'}
@@ -267,5 +193,5 @@ function articleProgress(){
   update();
 }
 function year(){$$('[data-year]').forEach(e=>e.textContent=new Date().getFullYear())}
-brandAssets();bindBrandMotion();menu();smartHeader();articleProgress();bind();year();load();
+brandAssets();menu();smartHeader();articleProgress();bind();year();load();
 })();
