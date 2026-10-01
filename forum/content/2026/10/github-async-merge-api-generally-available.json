@@ -1,0 +1,334 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "e77dbfb3ff372c839752",
+  "slug": "github-async-merge-api-generally-available",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/github-async-merge-api-generally-available/",
+    "en": "/forum/en/web/github-async-merge-api-generally-available/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إطلاق واجهة برمجة تطبيقات الدمج غير المتزامن على جيت هب",
+      "description": "أعلنت منصة جيت هب عن التوفر العام لواجهة برمجة تطبيقات الدمج غير المتزامن لطلبات السحب، لتسهيل إدارة المستودعات النشطة بمرونة وأمان.",
+      "deck": "أعلنت منصة جيت هب رسمياً عن الإطلاق العام لواجهة برمجة تطبيقات الدمج غير المتزامن (async merge API)، والتي تهدف إلى تسهيل وتطوير عملية دمج طلبات السحب في المستودعات البرمجية الكبيرة والمزدحمة.",
+      "summaryBullets": [
+        "إطلاق واجهة برمجة تطبيقات الدمج غير المتزامن رسمياً للمستخدمين على جيت هب.",
+        "دعم دمج طلبات السحب الفردية والمكدسة وإضافتها لقوائم الانتظار البرمجية.",
+        "توفير معالجة غير متزامنة للطلبات عبر طلبات PUT وGET لتفادي الانتظار الطويل.",
+        "اعتماد الواجهة الجديدة كمسار موصى به بدلاً من نقاط النهاية التزامنية القديمة."
+      ],
+      "sections": [
+        {
+          "heading": "تفاصيل إطلاق واجهة الدمج غير المتزامن",
+          "paragraphs": [
+            {
+              "text": "أعلنت منصة جيت هب في التحديثات الرسمية عن التوفر العام لواجهة برمجة تطبيقات الدمج غير المتزامن، والتي تتيح للمطورين والفِرق البرمجية إدارة طلبات السحب بمرونة عالية، سواء كانت فردية أو مكدسة. تمنح هذه الأداة الجديدة المستخدمين القدرة على إضافة طلبات السحب مباشرة إلى طوابير الانتظار الخاصة بالدمج، أو تنفيذ عمليات الدمج بشكل مباشر، مع إمكانية تجاوز القواعد البرمجية المحددة في حال امتلاك الصلاحيات اللازمة لذلك. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-01-github-async-merge-api-generally-available/"
+                }
+              ]
+            },
+            {
+              "text": "تأتي هذه الخطوة استجابة للتحديات التي تواجه المستودعات البرمجية النشطة وكثيفة الاستخدام، حيث تسعى جيت هب دائماً لتطوير أدوات التعاون ودعم المطورين بأحدث التقنيات البرمجية التي ترفع من كفاءة العمل الجماعي وسير العمل في المشاريع المفتوحة والمغلقة على حد سواء. ويمكن الرجوع إلى Back to changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل البرمجية والأداء غير المتزامن",
+          "paragraphs": [
+            {
+              "text": "تعمل الواجهة الجديدة على معالجة عمليات الدمج بأسلوب غير متزامن تماماً، وهو ما يساعد الأنظمة الآلية وسير العمل المؤتمت على التعامل مع المستودعات المزدحمة دون الحاجة للانتظار حتى تنتهي عمليات الدمج المعقدة ضمن طلب HTTP تزامني واحد. يمكن للمطورين إرسال طلب الدمج باستخدام طريقة PUT، ثم متابعة الحالة عبر استخدام طلب GET مستخدمين معرف الطلب المُسترجع.",
+              "links": []
+            },
+            {
+              "text": "يضمن هذا التصميم التقني عدم استنزاف موارد الاتصال، ويقلل من معدلات المهلات الزمنية (Timeouts) التي عانت منها الفِرق البرمجية سابقاً عند محاولة دمج مجموعات ضخمة من التعديلات أو الطلبات المكدسة في وقت واحد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحول نحو المعايير الموصى بها في واجهات جيت هب",
+          "paragraphs": [
+            {
+              "text": "أكدت منصة جيت هب أن واجهة الدمج غير المتزامن أصبحت الآن المسار الموصى به رسمياً لتنفيذ عمليات دمج طلبات السحب برمجياً، بدلاً من الاعتماد على نقطة نهاية REST التزامنية القديمة أو تحولات GraphQL. وعلاوة على ذلك، تُعد هذه الواجهة هي الحل الوحيد لدمج طلبات السحب المكدسة (Stacked pull requests) بطريقة مدعومة ومنظمة.",
+              "links": []
+            },
+            {
+              "text": "تدعو المنصة كافة المطورين ومديري المستودعات إلى مراجعة الوثائق التقنية والأمثلة البرمجية المتاحة للتعرف على معاملات الطلب وتحديث أنظمتهم لتتوافق مع المعايير الحديثة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات مستمرة وتكاملات متقدمة في بيئة المطورين",
+          "paragraphs": [
+            {
+              "text": "تتزامن هذه الإطلاقات التقنية مع سلسلة من التحديثات المتواصلة التي تطرأ على بيئة عمل المطورين في جيت هب، بما في ذلك التحديثات المستمرة لأدوات الذكاء الاصطناعي والتكاملات البرمجية المتاحة عبر منصات المحادثة مثل سلاك ومايكروسوفت تيمز، والتي تسعى إلى تبسيط التفاعل البرمجي وزيادة الإنتاجية.",
+              "links": []
+            },
+            {
+              "text": "كما تولي المنصة اهتماماً بالغاً بتطوير تجربة المستخدم داخل واجهات التصفح الخاصة بالمستودعات، وقد ظهر ذلك جلياً في التحديثات الأخيرة لصفحات طلبات السحب التي انتقلت من مرحلة المعاينة العامة إلى الإطلاق الشامل لخدمة كافة المستخدمين والمؤسسات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توسيع خيارات الأمان وإدارة المشاريع المؤسسية",
+          "paragraphs": [
+            {
+              "text": "في سياق متصل بخدمات المؤسسات والمستودعات الشخصية، وفرت جيت هب خيارات إضافية تمنح المطورين تحكماً أكبر في الخصوصية وأمان الشيفرات البرمجية، مثل النقاط البرمجية الجديدة للبيانات الآمنة وخيارات حظر المستخدمين من التعليقات في المستودعات الشخصية.",
+              "links": []
+            },
+            {
+              "text": "تؤكد هذه التحسينات المتتالية التزام جيت هب بتوفير بيئة تطوير متكاملة وآمنة، تلبي تطلعات الأفراد والشركات الكبرى على حد سواء في إدارة الشيفرات البرمجية المعقدة بكفاءة عالية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "جيت هب",
+        "تطوير البرمجيات",
+        "واجهات برمجة التطبيقات",
+        "طلب سحب",
+        "أدوات المطورين",
+        "إدارة المشاريع"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Changelog",
+        "REST API",
+        "GraphQL"
+      ],
+      "category": "الويب",
+      "dateLabel": "1 أكتوبر 2026",
+      "modifiedLabel": "1 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 543
+    },
+    "en": {
+      "title": "GitHub Async Merge API Reaches General Availability",
+      "description": "GitHub announces general availability for its async merge API, offering better automation support for busy repositories and stacked pull requests.",
+      "deck": "GitHub has officially launched its async merge API into general availability, introducing a new recommended path for programmatically managing and executing pull request merges.",
+      "summaryBullets": [
+        "The GitHub async merge API is now generally available for production use.",
+        "It supports merging individual or stacked pull requests, direct merges, and adding items to merge queues.",
+        "Automations can submit requests via PUT and poll statuses using GET to prevent timeouts on busy repositories.",
+        "The API is now the recommended approach over synchronous REST endpoints and GraphQL mutations."
+      ],
+      "sections": [
+        {
+          "heading": "General Availability Announcement",
+          "paragraphs": [
+            {
+              "text": "GitHub has announced the official general availability of the new GitHub async merge API, providing developers and automation scripts with an advanced toolset for managing code integrations. According to the official GitHub Changelog, the release enables engineering teams to programmatically merge individual pull requests, handle stacked pull requests, submit pull requests directly, or route them straight into a merge queue.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-01-github-async-merge-api-generally-available/"
+                }
+              ]
+            },
+            {
+              "text": "This functionality also permits authorized users to optionally bypass repository rules when executing merges through the programmatic interface. The introduction of this capability addresses long-standing bottlenecks in continuous integration and continuous deployment pipelines, offering an improved foundation for complex repository management workflows.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Asynchronous Processing for Busy Repositories",
+          "paragraphs": [
+            {
+              "text": "Traditional synchronous merge operations often struggle under heavy workloads or complex codebases, frequently resulting in timeouts or blocked request threads. The newly released asynchronous merge API addresses this by processing merges in the background, allowing developer automations to interact seamlessly with busy repositories without waiting for intricate merge calculations to conclude within a single HTTP transaction.",
+              "links": []
+            },
+            {
+              "text": "To utilize the new architecture, developers submit a merge request utilizing the PUT HTTP method. The system then returns a unique request ID, which client scripts can poll using a standard GET request to monitor the progression and final status of the merge operation.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "New Standard for Programmatic Merging",
+          "paragraphs": [
+            {
+              "text": "With this general availability release, the async merge API is now established as the recommended path for programmatically merging pull requests across the platform. It officially supersedes older synchronous REST endpoints and GraphQL mutations for these specific operations.",
+              "links": []
+            },
+            {
+              "text": "Crucially, platform maintainers note that the async merge API represents the only merge API across the ecosystem that fully supports stacked pull requests, making it a critical utility for advanced development workflows. Developers looking to integrate the system can consult the official async merge API documentation for detailed request parameters, structural specifications, and implementation examples.",
+              "links": [
+                {
+                  "text": "async merge API documentation",
+                  "url": "https://docs.github.com/rest/pulls/pulls?apiVersion=2026-03-10#merge-a-pull-request-asynchronously"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Broader Platform Updates and Resources",
+          "paragraphs": [
+            {
+              "text": "The release of the async merge API arrives alongside a series of recent platform enhancements and administrative features designed to improve developer productivity and repository security. Recent updates span multiple areas of the ecosystem, including enhancements to collaboration tools and repository interfaces.",
+              "links": [
+                {
+                  "text": "collaboration tools",
+                  "url": "https://github.blog/changelog/2026/?label=collaboration-tools"
+                }
+              ]
+            },
+            {
+              "text": "For ongoing guidance and updates regarding developer workflows, users can explore related resources or review documentation covering recent platform capabilities. Technical teams are encouraged to migrate their legacy scripts to the new asynchronous endpoint to take full advantage of improved reliability and support for stacked pull request structures.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "API",
+        "Pull Requests",
+        "DevOps",
+        "Version Control",
+        "Software Development"
+      ],
+      "entities": [
+        "GitHub"
+      ],
+      "category": "Web",
+      "dateLabel": "October 1, 2026",
+      "modifiedLabel": "October 1, 2026",
+      "readMinutes": 3,
+      "wordCount": 486
+    }
+  },
+  "datePublished": "2026-10-01T17:53:17.417184+03:00",
+  "dateModified": "2026-10-01T17:53:17.417184+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/github-async-merge-api-generally-available/hero.webp",
+    "card": "/forum/assets/posts/2026/10/github-async-merge-api-generally-available/card.webp",
+    "social": "/forum/assets/posts/2026/10/github-async-merge-api-generally-available/social.jpg",
+    "alt": {
+      "ar": "إطلاق واجهة برمجة تطبيقات الدمج غير المتزامن على جيت هب",
+      "en": "GitHub Async Merge API Reaches General Availability"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/themes/github-2021-child/dist/img/social-v3-new-releases.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/github-async-merge-api-generally-available/inline-01.webp",
+        "width": 1400,
+        "height": 735,
+        "alt": {
+          "ar": "إطلاق واجهة برمجة تطبيقات الدمج غير المتزامن على جيت هب",
+          "en": "social"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من GitHub Changelog",
+          "en": "Image related to the report from GitHub Changelog"
+        },
+        "credit": "GitHub Changelog",
+        "sourceUrl": "https://github.blog/changelog/2026-10-01-github-async-merge-api-generally-available/",
+        "originalUrl": "https://github.com/user-attachments/assets/44e34a1f-28e5-4d61-a147-fc7bd49a9b23"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/github-async-merge-api-generally-available/inline-02.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "إطلاق واجهة برمجة تطبيقات الدمج غير المتزامن على جيت هب",
+          "en": "GitHub Async Merge API Reaches General Availability"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/ai-search-ga/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3SPF381A5ZFP5JJT0DGXF1T.png&w=3998&h=2250&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/github-async-merge-api-generally-available/inline-03.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "إطلاق واجهة برمجة تطبيقات الدمج غير المتزامن على جيت هب",
+          "en": "AI Search is now generally available"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/ai-search-ga/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3SPQ70XBZAYXE25E4E9551N.01M3SPQ7SEHVV38VNFVQ3ZG3MD.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/github-async-merge-api-generally-available/inline-04.webp",
+        "width": 806,
+        "height": 1050,
+        "alt": {
+          "ar": "إطلاق واجهة برمجة تطبيقات الدمج غير المتزامن على جيت هب",
+          "en": "GitHub Async Merge API Reaches General Availability"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "The life of an AI Search query"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/ai-search-ga/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3SPF4DQJEF4XQTBF8H37P47.png&w=1430&h=1864&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-10-01-github-async-merge-api-generally-available/",
+      "type": "official",
+      "title": "GitHub async merge API generally available"
+    },
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/ai-search-ga/",
+      "type": "corroborating",
+      "title": "AI Search is now generally available"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-10-01-github-async-merge-api-generally-available",
+  "sourceTitle": "GitHub async merge API generally available",
+  "trendScore": 125.28,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-01T14:53:17+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/10/github-async-merge-api-generally-available.json"
+}
