@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "393d9953f42c221c5b9e",
+  "slug": "implementing-multi-environment-access-for-claude-platform-on-aws",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/implementing-multi-environment-access-for-claude-platform-on-aws/",
+    "en": "/forum/en/web/implementing-multi-environment-access-for-claude-platform-on-aws/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إعداد بيئات متعددة لمنصة كلود على أيه دبليو إس",
+      "description": "دليل تقني حول كيفية تكوين وصول آمن ومتعدد البيئات لمنصة كلود على أيه دبليو إس عبر اشتراك واحد وعزل مساحات العمل.",
+      "deck": "تستعرض أمازون وبدعم من منصة كلود كيفية تكوين وصول آمن ومتعدد البيئات من خلال اشتراك واحد يشمل بيئات الإنتاج والمطورين.",
+      "summaryBullets": [
+        "تكوين وصول آمن ومتعدد البيئات لمنصة كلود على أيه دبليو إس عبر اشتراك واحد.",
+        "استخدام توقيع SigV4 عبر الحسابات لأحمال العمل على أيه دبليو إس لضمان الأمان.",
+        "تخصيص مفاتيح واجهة برمجة تطبيقات لمساحات العمل للمطورين وأجهزة الحاسوب.",
+        "ربط الاتحاد عبر بروتوكول OIDC للبيئات الخارجية لتقليل الاعتماد على بيانات الاعتماد."
+      ],
+      "sections": [
+        {
+          "heading": "مقدمة حول إدارة الوصول متعدد البيئات",
+          "paragraphs": [
+            {
+              "text": "تحتاج العديد من المؤسسات إلى تشغيل أحمال العمل الخاصة بها عبر بيئات مختلفة، مثل بيئات الإنتاج على أيه دبليو إس، وأجهزة المطورين للتطوير المحلي، والخدمات الخارجية أو مسارات التكامل المستمر. يتيح لك دليل الاستخدام الصادر ضمن مدونة أيه دبليو إس للتعلم الآلي (AWS Machine Learning Blog) تكوين وصول آمن ومتعدد البيئات لمنصة كلود على أيه دبليو إس من خلال اشتراك واحد يضمن عزل حركة المرور بين بيئات الإنتاج والتطوير.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/implementing-multi-environment-access-for-claude-platform-on-aws/"
+                }
+              ]
+            },
+            {
+              "text": "يتطلب هذا النهج استخدام بنية تعتمد على حساب خدمات ذكاء اصطناعي مخصص داخل المؤسسة، حيث يستضيف الحساب الاشتراك ومساحات العمل، بينما تتصل الحسابات الأخرى عبر أدوار عابرة للحسابات لتنفيذ عمليات الاستدلال بأمان ودون مشاركة مفاتيح حساسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "هوية الحسابات وبنية مساحات العمل",
+          "paragraphs": [
+            {
+              "text": "تعتمد البنية المقترحة على هيكل يضم ثلاثة حسابات رئيسية: حساب إدارة الفواتير والحوكمة، وحساب خدمات الذكاء الاصطناعي المخصص الذي يستضيف اشتراك منصة كلود على أيه دبليو إس، وحسابات أحمال العمل التي تستهلك الاستدلال عبر أدوار مخصصة. لضمان التنفيذ السليم، يمكن للمطورين الرجوع إلى دليل الاستخدام الرسمي المتاح عبر صفحة دعم منصة كلود على أيه دبليو إس.",
+              "links": []
+            },
+            {
+              "text": "تتيح هذه البنية إنشاء مساحات عمل منفصلة لكل فريق أو حمل عمل داخل المؤسسة، مما يضمن عزل بيانات الإنتاج عن بيئات التطوير والاختبار بشكل كامل. ويمكن للمهندسين إدارة الموارد المختلفة عبر وحدة تحكم إدارة أيه دبليو إس (AWS Management Console) المخصصة لكل حساب.",
+              "links": [
+                {
+                  "text": "AWS Management Console",
+                  "url": "https://console.aws.amazon.com/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تفعيل توقيع SigV4 لأحمال العمل على أيه دبليو إس",
+          "paragraphs": [
+            {
+              "text": "تتطلب أحمال العمل العاملة ضمن حاويات إلكترس (مثل مجموعات الخدمات المدارة على Amazon EKS) الوصول إلى الاستدلال بأمان ودون تخزين مفاتيح واجهة برمجة التطبيقات. يتم تحقيق ذلك عبر افتراض دور داخل حساب خدمات الذكاء الاصطناعي وإجراء استدلالات موقعة باستخدام بروتوكول التوقيع SigV4.",
+              "links": []
+            },
+            {
+              "text": "تضمن هذه الطريقة عدم وجود أي مفاتيح API مخزنة أو حاجة لتدوير الأسرار بانتظام، حيث يتم الاعتماد على أدوار إدارة الهوية والوصول (IAM) لربط أحمال العمل بمساحة عمل الإنتاج المحددة مسبقاً في إعدادات المنصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مفاتيح واجهة برمجة التطبيقات للمطورين",
+          "paragraphs": [
+            {
+              "text": "بالنسبة للمطورين الذين يعملون على أجهزة الحاسوب المحمولة الخاصة بهم للاختبار والتطوير المحلي، توفر المنصة إمكانية توليد مفاتيح واجهة برمجة تطبيقات مقيدة بنطاق مساحة العمل الخاصة بالتطوير حصراً.",
+              "links": []
+            },
+            {
+              "text": "تسمح هذه المفاتيح للمطورين بالاتصال بالخدمة محلياً باستخدام حزم تطوير البرامج القياسية من أنثروبيك، مع الحفاظ على عزل تام يمنع هذه المفاتيح من الوصول إلى مساحات الإنتاج الحساسة داخل المؤسسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دمج البيئات الخارجية عبر بروتوكول OIDC",
+          "paragraphs": [
+            {
+              "text": "تستفيد أحمال العمل المستضافة خارج سحاب أمازون أو في خطوط التكامل والتسليم المستمر (CI/CD) من اتحاد الهوية عبر بروتوكول OpenID Connect (OIDC). يتيح هذا النهج للبيئات الخارجية المصادقة والحصول على بيانات اعتماد مؤقتة وقصيرة الأجل.",
+              "links": []
+            },
+            {
+              "text": "من خلال هذه الآلية، يمكن لتلك الأنظمة إجراء عمليات الاستدلال دون الحاجة إلى أي بيانات اعتماد دائمة قد تشكل ثغرة أمنية محتملة، مما يرفع من مستوى الأمان العام للبنية التحتية السحابية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاعتبارات الجغرافية ومسارات المصادقة",
+          "paragraphs": [
+            {
+              "text": "تتطلب إدارة البيئات المتعددة الانتباه إلى الجغرافيا الخاصة بالاستدلال ونقاط النهاية الإقليمية المتاحة. يتم التحكم في جغرافيا الاستدلال من خلال إعدادات الأمان في وحدة تحكم كلود، مع توفر خيارات مثل التوجيه العالمي أو مناطق محددة حسب متطلبات الامتثال التنظيمي للمؤسسة.",
+              "links": []
+            },
+            {
+              "text": "وللمزيد من التفاصيل حول أنماط البنية المعمارية ومسارات المصادقة الموصى بها عند تقييم الهيكل الأنسب لمؤسستك، يمكنك الاطلاع على المقالات الإضافية المتاحة ضمن وثائق المنصة ومصادر المطورين.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Claude Platform",
+        "SigV4",
+        "OIDC",
+        "الذكاء الاصطناعي",
+        "الحوسبة السحابية",
+        "أمن المعلومات"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon EKS",
+        "Anthropic",
+        "Claude Platform"
+      ],
+      "category": "الويب",
+      "dateLabel": "1 أكتوبر 2026",
+      "modifiedLabel": "1 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 575
+    },
+    "en": {
+      "title": "AWS details multi-environment access for Claude Platform",
+      "description": "AWS outlines a secure architecture for Claude Platform on AWS, using cross-account SigV4, workspace-scoped API keys, and OIDC federation for isolated access.",
+      "deck": "AWS has published a detailed guide for implementing secure, multi-environment access to Claude Platform on AWS. The solution enables organizations to manage production, development, and external workloads from a single subscription using distinct authentication paths.",
+      "summaryBullets": [
+        "AWS recommends a dedicated AI Services account to host Claude Platform subscriptions and workspaces.",
+        "Production AWS workloads use cross-account SigV4 signing to avoid storing API keys.",
+        "Developers access the platform via workspace-scoped API keys for local iteration.",
+        "External environments utilize OIDC federation to generate short-lived inference tokens."
+      ],
+      "sections": [
+        {
+          "heading": "Dedicated Account Architecture",
+          "paragraphs": [
+            {
+              "text": "AWS has released a technical guide detailing how to configure secure, multi-environment access to Claude Platform on AWS from a single subscription. The recommended architecture places the platform subscription in a dedicated AI Services linked account within an AWS Organizations structure. This account owns the subscription, workspaces, API keys, and cross-account roles, while workload accounts assume roles into the AI Services account to make inference calls. This three-account structure separates billing and governance in the payer account from the AI Services account and the workload accounts that consume inference. Further details are available from AWS Machine Learning Blog in the original source material.",
+              "links": [
+                {
+                  "text": "Claude Platform on AWS",
+                  "url": "https://aws.amazon.com/claude-platform/"
+                },
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/implementing-multi-environment-access-for-claude-platform-on-aws/"
+                }
+              ]
+            },
+            {
+              "text": "The guide emphasizes workspace-level isolation to separate production and development traffic. Organizations are advised to create a workspace per team or workload and repeat the cross-account role pattern for each. This approach ensures that different environments have distinct authentication requirements while sharing a single subscription. The implementation covers three primary access patterns: cross-account SigV4 for AWS workloads, workspace-scoped API keys for developers, and OIDC federation for external environments.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Cross-Account SigV4 for Production",
+          "paragraphs": [
+            {
+              "text": "For production workloads hosted on AWS, the guide recommends using cross-account SigV4 signing. In this configuration, a pod hosted on Amazon Elastic Kubernetes Service in a workload account assumes a role in the AI Services account. The workload then makes SigV4-signed inference calls without storing API keys or managing secrets for rotation. This method enhances security by ensuring that no persistent credentials are required for the inference process.",
+              "links": []
+            },
+            {
+              "text": "To implement this, administrators must create a trust policy in the AI Services account that allows a specific role in the workload account to assume the cross-account role. The permission policy attached to this role is scoped strictly to the production workspace ARN, preventing access to development or other workspaces. The EKS pod role in the workload account is then granted permission to assume the cross-account role, enabling secure communication between the two accounts.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Developer Access via API Keys",
+          "paragraphs": [
+            {
+              "text": "For local iteration and development tasks, the guide suggests using workspace-scoped API keys. Developers can generate a long-lived API key that is locked to a specific development workspace. This allows them to use the standard Anthropic SDK on their laptops without configuring complex cross-account role chains. The key is isolated to the development workspace, ensuring that local testing does not interfere with production traffic or access production data.",
+              "links": []
+            },
+            {
+              "text": "The process involves generating the key in the AI Services account and scoping it to the development workspace. This method provides a straightforward authentication path for developers who need frequent access to the platform for code testing and debugging. By isolating these keys to a specific workspace, organizations can maintain clear boundaries between development and production environments while simplifying the developer experience.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "OIDC Federation for External Workloads",
+          "paragraphs": [
+            {
+              "text": "For services hosted outside AWS, such as on other cloud providers or on-premises CI/CD pipelines, the guide details the use of OpenID Connect federation. Workloads in these external environments authenticate through OIDC to obtain temporary AWS credentials. These credentials are then used to generate a short-lived token for inference calls. This approach ensures that external workloads operate with zero persistent credentials, significantly reducing the attack surface.",
+              "links": []
+            },
+            {
+              "text": "The implementation requires configuring OIDC federation to allow external identities to assume roles in the AI Services account. Once authenticated, the workload generates a short-lived token that is valid only for a specific duration and region. This method is particularly useful for continuous integration and continuous delivery pipelines that need to interact with the Claude Platform without storing long-term secrets in the external environment.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Regional Endpoints and Isolation",
+          "paragraphs": [
+            {
+              "text": "The guide highlights the importance of regional endpoints in the Claude Platform architecture. Workspaces are created in a specific AWS Region, and API calls must target the matching regional endpoint. It is noted that the workspace region determines the API endpoint, not the location where inference runs. Inference geography is controlled separately through the workspace’s Security settings in the Claude Console, with options for US or Global routing.",
+              "links": []
+            },
+            {
+              "text": "For short-term keys, regional enforcement is strict; the token only works against the same regional endpoint where it was generated. In contrast, long-lived API keys are not region-locked. Organizations are advised to record workspace ARNs and note the regional endpoints to ensure proper configuration. For details on supported regions and available models, users are directed to the official documentation.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Implementation Requirements",
+          "paragraphs": [
+            {
+              "text": "To follow the implementation guide, organizations need an AWS Organizations structure with a payer account, an AI Services linked account, and one or more workload linked accounts. The AI Services account will host the Claude Platform subscription, while workload accounts, such as a production account, will consume inference services. The guide requires the AWS Command Line Interface v2 installed and configured with named profiles for both accounts.",
+              "links": []
+            },
+            {
+              "text": "Additionally, Python 3.12 or later is required with specific packages including anthropic[aws], boto3, and token-generator-for-aws-external-anthropic. The walkthrough is divided into four parts, each configuring a layer of the architecture: the subscription and workspace structure, cross-account SigV4 access, workspace-scoped API keys, and OIDC federation. Each step includes CLI commands, console instructions, or code snippets to facilitate a complete setup.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Claude Platform",
+        "AI Security",
+        "Multi-Cloud",
+        "IAM",
+        "OIDC",
+        "SigV4"
+      ],
+      "entities": [
+        "AWS",
+        "Anthropic",
+        "Claude Platform on AWS",
+        "Amazon EKS",
+        "AWS Organizations"
+      ],
+      "category": "Web",
+      "dateLabel": "October 1, 2026",
+      "modifiedLabel": "October 1, 2026",
+      "readMinutes": 5,
+      "wordCount": 930
+    }
+  },
+  "datePublished": "2026-10-01T20:13:17.622957+03:00",
+  "dateModified": "2026-10-01T20:13:17.622957+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/implementing-multi-environment-access-for-claude-platform-on-aws/hero.webp",
+    "card": "/forum/assets/posts/2026/10/implementing-multi-environment-access-for-claude-platform-on-aws/card.webp",
+    "social": "/forum/assets/posts/2026/10/implementing-multi-environment-access-for-claude-platform-on-aws/social.jpg",
+    "alt": {
+      "ar": "إعداد بيئات متعددة لمنصة كلود على أيه دبليو إس",
+      "en": "AWS details multi-environment access for Claude Platform"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21203-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/implementing-multi-environment-access-for-claude-platform-on-aws/inline-01.webp",
+        "width": 1400,
+        "height": 609,
+        "alt": {
+          "ar": "إعداد بيئات متعددة لمنصة كلود على أيه دبليو إس",
+          "en": "Three-account structure: a payer account, an AI Services account that hosts the CPonAWS subscription, and workload accounts that connect through cross-account roles"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/implementing-multi-environment-access-for-claude-platform-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21203-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/implementing-multi-environment-access-for-claude-platform-on-aws/inline-02.webp",
+        "width": 1302,
+        "height": 855,
+        "alt": {
+          "ar": "إعداد بيئات متعددة لمنصة كلود على أيه دبليو إس",
+          "en": "Three access paths into the AI Services account: cross-account SigV4 from an Amazon EKS pod, a workspace-scoped API key from a developer laptop, and OIDC federation from an external workload"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/implementing-multi-environment-access-for-claude-platform-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21203-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/implementing-multi-environment-access-for-claude-platform-on-aws/inline-03.webp",
+        "width": 1400,
+        "height": 880,
+        "alt": {
+          "ar": "إعداد بيئات متعددة لمنصة كلود على أيه دبليو إس",
+          "en": "Claude Console dashboard with the workspace menu open in the top left corner and the Create Workspace option"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/implementing-multi-environment-access-for-claude-platform-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21203-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/implementing-multi-environment-access-for-claude-platform-on-aws/inline-04.webp",
+        "width": 1400,
+        "height": 701,
+        "alt": {
+          "ar": "إعداد بيئات متعددة لمنصة كلود على أيه دبليو إس",
+          "en": "Claude Console API Keys page showing the long-term key generation dialog with expiration options"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/implementing-multi-environment-access-for-claude-platform-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21203-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/implementing-multi-environment-access-for-claude-platform-on-aws/",
+      "type": "official",
+      "title": "Implementing Multi-Environment Access for Claude Platform on AWS"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/implementing-multi-environment-access-for-claude-platform-on-aws",
+  "sourceTitle": "Implementing Multi-Environment Access for Claude Platform on AWS",
+  "trendScore": 118.78,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-01T17:13:17+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/implementing-multi-environment-access-for-claude-platform-on-aws.json"
+}
