@@ -1,5 +1,363 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-01T13:13:17+00:00",
-  "last_published_story_id": "4956a0a6fc6c843e3db9"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-01T13:16:29+00:00",
+  "target_publish_at": "2026-10-01T16:33:17.268608+03:00",
+  "story": {
+    "title": "Introducing Cloudflare Basin: an open, serverless data platform, now generally available",
+    "url": "https://blog.cloudflare.com/cloudflare-basin",
+    "domain": "blog.cloudflare.com",
+    "summary": "Cloudflare Basin is built on Apache Iceberg and R2 Object Storage. With general availability, developers can ingest, manage, and query large datasets at scale without paying data egress fees.",
+    "published_at": "2026-10-01T12:58:00+00:00",
+    "discovered_at": "2026-10-01T13:01:58+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "web",
+    "category_label": "الويب",
+    "score": 64,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "dc3e517494209dd7ca39",
+    "trend": {
+      "score": 125.88,
+      "age_hours": 0.3,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/cloudflare-basin/",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Introducing Cloudflare Basin: an open, serverless data platform, now generally available",
+      "title": "Introducing Cloudflare Basin: an open, serverless data platform, now generally available | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "Cloudflare Basin: منصة بيانات Serverless متاحة الآن",
+      "description": "أطلقت Cloudflare منصة Basin للتحليلات، مبنية على Apache Iceberg وR2، تتيح معالجة البيانات دون رسوم إخراج، مع أداء عالٍ وتكامل سلس مع أدوات المطورين.",
+      "deck": "أصبحت منصة التحليلات الجديدة من Cloudflare متاحة للجميع، مما يفتح آفاقاً جديدة لإدارة البيانات الضخمة بكفاءة وتكلفة أقل.",
+      "summary_bullets": [
+        "إطلاق عام لمنصة Basin المبنية على معايير مفتوحة مثل Apache Iceberg.",
+        "إزالة رسوم إخراج البيانات (Egress) لتسهيل الوصول من أي منطقة أو سحابة.",
+        "بنية Serverless تتيح الدفع حسب الاستخدام فقط دون تكاليف بنية تحتية ثابتة.",
+        "أدوات Pipelines وCatalog وSQL لإدارة دورة حياة البيانات من الاستقبال إلى الاستعلام."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق عام لمنصة Basin",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Cloudflare رسمياً عن توفر منصة Basin بشكل عام (GA)، وهي منصة تحليلات بيانات خالية من الخوادم (Serverless). تأتي هذه الخطوة بعد عام من الإطلاق التجريبي المفتوح، حيث تم إعادة تسمية منصة البيانات السابقة لتعكس طموحات الشركة في توحيد أدواتها. تعتمد المنصة بشكل أساسي على معيار Apache Iceberg المفتوح لتخزين البيانات، ومخزن الكائنات R2، مما يجعلها حلاً شاملاً لمعالجة البيانات الضخمة.",
+              "links": [
+                {
+                  "text": "Apache Iceberg",
+                  "url": "https://iceberg.apache.org/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مكونات المنصة الرئيسية",
+          "paragraphs": [
+            {
+              "text": "تتكون عائلة Basin من ثلاثة منتجات مترابطة تغطي دورة حياة البيانات التحليلية. أولاً، Basin Pipelines (المعروفة سابقاً بـ Cloudflare Pipelines) مسؤولة عن استقبال الأحداث من مصادر متنوعة مثل Workers أو HTTP أو Logpush، وتحويلها باستخدام SQL، ثم كتابتها كجداول Iceberg أو ملفات في R2. ثانياً، Basin Catalog (سابقاً R2 Data Catalog) يدير بيانات Iceberg الوصفية (Metadata) ويحافظ تلقائياً على الجداول لضمان السرعة وكفاءة التكلفة. ثالثاً، Basin SQL (سابقاً R2 SQL) هو محرك SQL موزّع وخالي من الخوادم يتيح الاستعلام المباشر عن جداول Iceberg على شبكة Cloudflare.",
+              "links": [
+                {
+                  "text": "Basin Pipelines",
+                  "url": "http://developers.cloudflare.com/basin-pipelines/"
+                },
+                {
+                  "text": "Basin Catalog",
+                  "url": "http://developers.cloudflare.com/basin-catalog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "السرعة وكفاءة الأداء",
+          "paragraphs": [
+            {
+              "text": "ركّزت Cloudflare خلال العام الماضي على تحسين سرعة المنصة، سواء في بدء التشغيل أو تنفيذ الاستعلامات الكبيرة. يتيح للمطورين إنشاء كتالوج، وإعداد خط أنابيب لاستقبال البيانات، والاستعلام عنها في ثوانٍ معدودة. هذا الأمر حاسم مع تزايد بناء تطبيقات البيانات عبر وكلاء البرمجة (Coding Agents) التي تتطلب استجابة فورية دون انتظار موارد. كما يعمل Basin Catalog على ضغط البيانات الوصفية وملفات البيانات لتقليل عمليات الإدخال والإخراج، بينما يستخدم Basin SQL الإحصائيات لتقسيم الاستعلامات إلى مهام أصغر وتوزيعها عبر Workers، مما يحافظ على الأداء حتى مع نمو حجم البيانات.",
+              "links": [
+                {
+                  "text": "Basin SQL",
+                  "url": "http://developers.cloudflare.com/basin-sql/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الانفتاح وقابلية نقل البيانات",
+          "paragraphs": [
+            {
+              "text": "يعتمد نجاح Basin جزئياً على نمو نظام Apache Iceberg المفتوح، الذي يسمح للمطورين بالاحتفاظ ببياناتهم والتحكم فيها، مع فصل طبقة التخزين عن طبقة الحساب. بفضل Basin، يمكن قراءة وكتابة البيانات باستخدام أي محرك متوافق مع Iceberg، بما في ذلك PyIceberg وDuckDB وSnowflake وApache Spark. هذه القابلية للنقل (Portability) ممكنة بفضل عدم فرض رسوم على إخراج البيانات (Zero Egress)، مما يتيح للمطورين الوصول إلى بياناتهم المخزنة لدى Cloudflare من أي أداة أو منطقة سحابية دون تكاليف إضافية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نموذج التسعير والمرونة",
+          "paragraphs": [
+            {
+              "text": "تقدم المنصة نموذج تسعير مبنياً على الاستخدام (Usage-based) بفضل بنيتها الخالية من الخوادم. لا يتم احتساب الرسوم إلا عند استهلاك البيانات أو معالجتها أو الاستعلام عنها، مما يلغي الحاجة لدفع تكاليف بنية تحتية ثابتة أو رسوم شهرية. هذا النموذج يجعل بناء حلول تحليلية للمشاريع الصغيرة أو الهواة شبه مجاني، بينما يتوسع الاقتصاد بشكل منطقي مع احتياجات المؤسسات الكبيرة. كما أشارت شركة Bobsled، التي تستخدم المنصة لبناء منتجات بيانات جاهزة للذكاء الاصطناعي، إلى أن Basin تتيح الوصول في أي منطقة بتكاليف أقل بكثير وموثوقية إنتاجية عالية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قدرات الاستقبال والتحويل",
+          "paragraphs": [
+            {
+              "text": "منذ الإطلاق التجريبي، أنشأ المستخدمون عشرات الآلاف من خطوط الأنابيب (Pipelines) لاستخدامات متنوعة. من الأمثلة الشائعة تحويل سجلات HTTP الخاصة بـ Cloudflare قبل تخزينها، مما يقلل من حجم التخزين المطلوب ويمنع كتابة القيم الحساسة أو غير الضرورية. وسعت Cloudflare من قابلية التوسع لتدعم استقبال ما يصل إلى 3 جيجابايت في الثانية لكل تدفق. كما أُضيفت تكاملات جديدة، مثل دمج Logpush لتحويل السجلات إلى ملفات Parquet مضغوطة أو جداول Iceberg، وجعل روابط Worker واعية بالمخطط (Schema-aware) لتوليد أنواع TypeScript تلقائياً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الخطوات التالية للمطورين",
+          "paragraphs": [
+            {
+              "text": "لبدء استخدام المنصة، توفر Cloudflare شروحات تفصيلية توضح كيفية استخدام Basin Pipelines لتسليم الأحداث إلى جداول Iceberg يديرها Basin Catalog، ثم الاستعلام عنها باستخدام Basin SQL. يمثل هذا الإطلاق العام مرحلة مهمة في استراتيجية Cloudflare لتقديم منصة تحليلات متكاملة على الحافة (Edge)، تجمع بين السرعة والانفتاح وكفاءة التكلفة، وتستهدف تلبية احتياجات فرق البيانات المتقدمة في بناء وتوزيع بيانات جاهزة للذكاء الاصطناعي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Basin",
+        "Data Analytics",
+        "Serverless",
+        "Apache Iceberg",
+        "R2",
+        "Web Infrastructure"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Basin",
+        "Apache Iceberg",
+        "R2 Object Storage",
+        "Bobsled",
+        "DuckDB",
+        "Snowflake",
+        "Apache Spark"
+      ],
+      "article_type": "news",
+      "confidence_note": "الخبر مستمد حصرياً من المدونة الرسمية لـ Cloudflare، مع التركيز على الميزات التقنية ونموذج التسعير المذكور في المصدر."
+    },
+    "en": {
+      "title": "Cloudflare Basin Reaches General Availability for Analytics",
+      "description": "Cloudflare Basin, formerly known as Cloudflare Data Platform, is now generally available as an open, serverless data platform built on Apache Iceberg.",
+      "deck": "Cloudflare has announced the general availability of its serverless data analytics platform, rebranding the former Cloudflare Data Platform to Cloudflare Basin.",
+      "summary_bullets": [
+        "Cloudflare Basin is built on Apache Iceberg and R2 Object Storage for scalable data analytics.",
+        "The platform family includes Basin Pipelines, Basin Catalog, and Basin SQL.",
+        "Developers can ingest, manage, and query large datasets without paying data egress fees.",
+        "The service supports popular Iceberg-compatible engines like PyIceberg, DuckDB, Snowflake, and Apache Spark."
+      ],
+      "sections": [
+        {
+          "heading": "General Availability and Platform Rebranding",
+          "paragraphs": [
+            {
+              "text": "Initially introduced during Birthday Week 2025 as the Cloudflare Data Platform, the suite of products designed to ingest, store, and query analytical data is now officially generally available under the new name Cloudflare Basin, according to the Cloudflare Blog.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/cloudflare-basin/"
+                }
+              ]
+            },
+            {
+              "text": "Basin operates as a serverless data analytics platform built directly on top of Apache Iceberg, the open standard for data lakes, alongside R2 Object Storage. This combination aims to provide developers with a robust infrastructure to manage large datasets efficiently.",
+              "links": [
+                {
+                  "text": "Apache Iceberg",
+                  "url": "https://iceberg.apache.org/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "The Core Components of Basin",
+          "paragraphs": [
+            {
+              "text": "The Basin family consists of three distinct products covering ingestion, storage, and querying. Basin Pipelines, formerly known as Cloudflare Pipelines, receives events from HTTP, Workers, or Cloudflare Logpush, transforms them via SQL, and writes them into Apache Iceberg tables or files.",
+              "links": []
+            },
+            {
+              "text": "Additionally, Basin Catalog manages Iceberg metadata and automatically maintains tables to preserve speed and cost-efficiency. Meanwhile, Basin SQL serves as the distributed serverless SQL engine enabling direct querying of Apache Iceberg tables on Cloudflare.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Development Background and Architecture",
+          "paragraphs": [
+            {
+              "text": "Cloudflare built the data platform after recognizing two foundational developments in modern data application architecture: the emergence of Apache Iceberg as a standard open table format and the adoption of R2 Object Storage, where zero egress charges made accessing data from various tools practical.",
+              "links": [
+                {
+                  "text": "R2 Object Storage",
+                  "url": "https://developers.cloudflare.com/r2/"
+                }
+              ]
+            },
+            {
+              "text": "During the open beta phase, internal teams and external developers adopted the services for use cases ranging from real-time e-commerce optimization to telemetry ingestion and long-term billing metric storage. Early adopters helped shape the platform around speed, openness, and cost efficiency.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Speed and Ecosystem Portability",
+          "paragraphs": [
+            {
+              "text": "Basin is engineered for rapid execution, allowing users to establish a Catalog, configure an ingestion Pipeline, and execute queries using Basin SQL within seconds. As datasets scale, Basin Catalog compacts files to reduce I/O while Basin SQL distributes query tasks across Workers.",
+              "links": []
+            },
+            {
+              "text": "The open nature of the ecosystem allows developers to retain control of their data by separating storage from compute. Teams can read and write data using any Iceberg-compatible engine, including DuckDB, Snowflake, Apache Spark, and PyIceberg, enabled by zero egress fees.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Pricing Model and Getting Started",
+          "paragraphs": [
+            {
+              "text": "The serverless architecture supports a usage-based pricing structure where customers are billed solely when Basin ingests, processes, or queries data, eliminating hourly charges or separate infrastructure costs for hobby projects or enterprise workloads.",
+              "links": []
+            },
+            {
+              "text": "Developers looking to begin building can consult the Basin tutorial for a step-by-step walkthrough on delivering events to an Iceberg table managed by Basin Catalog and querying them via Basin SQL.",
+              "links": [
+                {
+                  "text": "Basin tutorial",
+                  "url": "http://developers.cloudflare.com/basin/get-started/guide/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Basin",
+        "Apache Iceberg",
+        "Serverless",
+        "Data Analytics",
+        "R2 Object Storage"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Apache Iceberg",
+        "Cloudflare Basin",
+        "Basin Pipelines",
+        "Basin Catalog",
+        "Basin SQL"
+      ],
+      "article_type": "news",
+      "confidence_note": "The information is strictly derived from the provided Cloudflare official blog post source text regarding the general availability and rebranding of Cloudflare Basin."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 624,
+      "word_count_en": 482
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "dc3e517494209dd7ca39",
+      "title": "Introducing Cloudflare Basin: an open, serverless data platform, now generally available",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 624,
+          "word_count_en": 482
+        }
+      ]
+    }
+  ],
+  "slug": "introducing-cloudflare-basin-an-open-serverless-data-platform-now-generally-available",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/introducing-cloudflare-basin-an-open-serverless-data-platform-now-generally-available/hero.webp",
+    "card": "/forum/assets/posts/2026/10/introducing-cloudflare-basin-an-open-serverless-data-platform-now-generally-available/card.webp",
+    "social": "/forum/assets/posts/2026/10/introducing-cloudflare-basin-an-open-serverless-data-platform-now-generally-available/social.jpg",
+    "alt": {
+      "ar": "Cloudflare Basin: منصة بيانات Serverless متاحة الآن",
+      "en": "Cloudflare Basin Reaches General Availability for Analytics"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3TBHN0F85Z2NSDVC4T3HF05.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-cloudflare-basin-an-open-serverless-data-platform-now-generally-available/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "Cloudflare Basin: منصة بيانات Serverless متاحة الآن",
+          "en": "Introducing Cloudflare Basin: an open, serverless data platform, now generally available"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/cloudflare-basin/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3TBTECNN2CB5JQCJDGR2AWD.01M3TBTFNMD8XSXG134218KMQX.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-cloudflare-basin-an-open-serverless-data-platform-now-generally-available/inline-02.webp",
+        "width": 1400,
+        "height": 1050,
+        "alt": {
+          "ar": "Cloudflare Basin: منصة بيانات Serverless متاحة الآن",
+          "en": "Cloudflare Basin Reaches General Availability for Analytics"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Lake VÃ¤nern, Sweden - A basin created from tectonic activity 200-300 million years ago."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/cloudflare-basin/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3TBHJX9WGXWD3N702DWC4QP.jpg&w=1430&h=1072&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
