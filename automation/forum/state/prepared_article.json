@@ -1,5 +1,394 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-01T09:13:17+00:00",
-  "last_published_story_id": "7e911f97559cfd3a875a"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-01T09:16:54+00:00",
+  "target_publish_at": "2026-10-01T12:33:16.909823+03:00",
+  "story": {
+    "title": "Open TTS Leaderboard: Scalable Evaluation for Multilingual Text-to-Speech and Voice Cloning",
+    "url": "https://huggingface.co/blog/open-tts-leaderboard",
+    "domain": "huggingface.co",
+    "summary": "",
+    "published_at": "2026-09-30T00:00:00+00:00",
+    "discovered_at": "2026-09-30T14:51:15+00:00",
+    "source": {
+      "name": "Hugging Face Blog",
+      "feed": "https://huggingface.co/blog/feed.xml",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 26,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 53,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "74c2ff7e2707d1f61043",
+    "trend": {
+      "score": 87.06,
+      "age_hours": 33.27,
+      "corroboration_count": 0,
+      "entity_momentum": 12.0,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://huggingface.co/blog/open-tts-leaderboard",
+      "name": "Hugging Face Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Open TTS Leaderboard: Scalable Evaluation for Multilingual Text-to-Speech and Voice Cloning",
+      "title": "Open TTS Leaderboard: Scalable Evaluation for Multilingual Text-to-Speech and Voice Cloning",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "إطلاق لوحة صدارة تحويل النص إلى كلام وتقنيات الاستنساخ الصوتي",
+      "description": "تعرف على Open TTS Leaderboard الجديدة لتقييم نماذج تحويل النص إلى كلام واستنساخ الأصوات بلغات متعددة عبر معايير موضوعية سريعة.",
+      "deck": "أطلق فريق Hugging Face لوحة صدارة جديدة تسمى Open TTS Leaderboard لتقييم نماذج تحويل النص إلى كلام واستنساخ الأصوات بدقة وسرعة عبر معايير موضوعية متعددة.",
+      "summary_bullets": [
+        "إطلاق لوحة صدارة Open TTS Leaderboard للتعامل مع التزايد الهائل لنماذج تحويل النص إلى كلام المفتوحة المصدر.",
+        "الاعتماد على مقاييس موضوعية مثل الوضوح والسرعة والتشابه الصوتي لتقليص مدة التقييم من أسابيع إلى ساعات.",
+        "دعم تقييم الأداء بلغات متعددة وتقنيات استنساخ الأصوات وقدرات البث المباشر على بطاقات H200 والمعالجات المركزية.",
+        "توفير تبويب مخصص للاستماع إلى النواتج وجمع آراء المجتمع لضمان دقة وملاءمة التقييمات المستمرة."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات تقييم نماذج تحويل النص إلى كلام المفتوحة",
+          "paragraphs": [
+            {
+              "text": "يشهد مجال نماذج تحويل النص إلى كلام المفتوحة المصدر تطوراً متسارعاً للغاية، حيث تجاوز عدد النماذج المتاحة على منصة Hugging Face ثمانية آلاف نموذج، مما خلق فجوة واضحة بين سرعة إطلاق النماذج وآليات تقييمها التي تظل مجزأة وغير موحدة، وتعتمد غالباً على تفضيلات بشرية بطيئة لا تتماشى مع هذا الكم الهائل من الإصدارات الحديثة، وفق ما أورده المدونون في مدونة Hugging Face Blog.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/open-tts-leaderboard"
+                }
+              ]
+            },
+            {
+              "text": "تواجه أنظمة التقييم المعتمدة على الس ساحات التنافسية عقبات عملية تؤدي إلى تراجع تمثيل النماذج مفتوحة المصدر، إذ تتطلب النماذج التجارية واجهات برمجة تطبيقات سهلة الربط بينما تحتاج النماذج المفتوحة إلى استضافة وتشغيل فعلي من مشغلي المنصة، فضلاً عن صعوبة الحفاظ على اتساق تقييمات المحكمين البشريين بمرور الوقت.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "منهجية القياس الموضوعية في لوحة الصدارة",
+          "paragraphs": [
+            {
+              "text": "تعتمد لوحة الصدارة الجديدة على مقاييس أداء موضوعية تكمل التقييم البشري بدلاً من أن تعوضه بالكامل، حيث يتم قياس وضوح النطق باستخدام معدلات خطأ الكلمات والحروف استناداً إلى نماذج التعرف الآلي على الكلام، ويجري تقييم السرعة عبر قياس زمن الاستجابة للبث المباشر ومعامل الاستدلال الفعلي على وحدات المعالجة الرسومية.",
+              "links": []
+            },
+            {
+              "text": "إلى جانب ذلك، يتم حساب التشابه الصوتي عبر مقارنة التضمينات الصوتية المستخرجة من الأصوات المولدة وتلك الموجودة في المقاطع المرجعية الأساسية، مما يقلل الوقت اللازم لإنجاز التقييم الشامل من أسابيع إلى ساعات معدودة، مع إمكانية الوصول المباشر إلى المنصة عبر رابط TTS leaderboard للاطلاع على النتائج.",
+              "links": [
+                {
+                  "text": "TTS leaderboard",
+                  "url": "https://huggingface.co/spaces/hf-audio/open_tts_leaderboard"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تقييم الأداء متعدد اللغات واستنساخ الأصوات",
+          "paragraphs": [
+            {
+              "text": "لا يعكس تفوق النماذج في اللغة الإنجليزية بالضرورة كفاءتها في اللغات الأخرى، ولذلك تتيح اللوحة تبديل اللغات لتقييم الأداء متعدد اللغات للنماذج المتاحة، بما في ذلك اللغات المعتمدة على الحروف مثل الصينية واليابانية والكورية حيث يتم الإبلاغ عن معدل خطأ الحروف بدلاً من الكلمات.",
+              "links": []
+            },
+            {
+              "text": "كما يمكن للمستخدمين تفعيل خاصية استنساخ الأصوات لمقارنة النماذج الداعمة لهذه الوظيفة، حيث تظهر أعمدة إضافية تقيس مدى دقة التشابه الصوتي، وتتحسن أداء بعض النماذج البارزة بشكل ملحوظ فور تزويد النظام بمقطع صوتي مرجي للإشارة إليه أثناء عملية توليد الكلام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قدرات البث المباشر واختبارات الأداء التفاعلي",
+          "paragraphs": [
+            {
+              "text": "تتضمن اللوحة تبويباً مخصصاً للمقارنة بين قدرات البث المباشر للنماذج، حيث ترتب وفقاً لزمن وصول المقطع الصوتي الأول، وهو مؤشر حاسم لتطبيقات الوكلاء الصوتين والبرمجيات التفاعلية التي تتطلب استجابة فورية، ويتم تشغيل الاختبارات في بيئة موحدة تحاسين ظروف التشغيل وتوفر مقارنات دقيقة على الأجهزة المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مشاركة المجتمع واستكشاف النواتج الصوتية",
+          "paragraphs": [
+            {
+              "text": "لإتاحة رؤية شاملة تتجاوز مجرد الأرقام المجردة، يوفر قسم الاستماع فرصة استكشاف النواتج الصوتية الكامنة خلف المقاييس الكمية ومقارنة تفضيلات المستخدمين للنماذج المختلفة، مع إمكانية تقديم التعليقات والآراء للمساهمة في تطوير التقييمات المستقبلية بالتعاون مع مجتمع المطورين والمستخدمين المهتمين بتقنيات الذكاء الاصطناعي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "تحويل النص إلى كلام",
+        "استنساخ الصوت",
+        "معالجة اللغات الطبيعية",
+        "Hugging Face",
+        "تعلم الآلة"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Open TTS Leaderboard",
+        "Qwen3 ASR",
+        "WavLM"
+      ],
+      "article_type": "news",
+      "confidence_note": "الخبر مستمد حصراً من مدونة Hugging Face الصادرة في 30 سبتمبر 2026 دون إضافة أي معلومات خارجية أو افتراضات."
+    },
+    "en": {
+      "title": "Open TTS Leaderboard Launches for Scalable Evaluation",
+      "description": "Discover the Open TTS Leaderboard, a new platform designed to deliver scalable, objective evaluations for multilingual text-to-speech and voice cloning models.",
+      "deck": "The Hugging Face community has introduced a scalable evaluation framework for text-to-speech and voice cloning models to address fragmentation in open-source assessment.",
+      "summary_bullets": [
+        "The Hugging Face Hub hosts over 8,000 text-to-speech models, but evaluation methods have remained fragmented and slow.",
+        "The new Open TTS Leaderboard relies on objective metrics to reduce evaluation times from weeks to hours.",
+        "The platform assesses models across intelligibility, speed, and speaker similarity using specialized hardware benchmarks.",
+        "Community members can explore generated outputs and provide feedback through dedicated tabs."
+      ],
+      "sections": [
+        {
+          "heading": "The Growing Need for Scalable TTS Evaluation",
+          "paragraphs": [
+            {
+              "text": "The rapid proliferation of open-source text-to-speech technologies has created a unique evaluation challenge. On the Hugging Face Hub, there are currently more than 8K TTS models available for developers and researchers. Despite this massive volume of releases, evaluation methods have historically struggled to keep pace, remaining fragmented and unstandardized across the industry. Further details are available from Hugging Face Blog in the original source material.",
+              "links": [
+                {
+                  "text": "8K TTS models",
+                  "url": "https://huggingface.co/models?pipeline_tag=text-to-speech"
+                },
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/open-tts-leaderboard"
+                }
+              ]
+            },
+            {
+              "text": "Traditionally, the gold standard for assessing text-to-speech generation has relied on human preference scores such as Mean Opinion Score (MOS) or MUSHRA. While human perception is vital for capturing nuance, arena-style leaderboards cannot scale effectively to match the sheer velocity of modern model releases. This structural bottleneck helps explain why open-source models have often been underrepresented on traditional arena platforms, where commercial API models enjoy smoother integration pathways.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Introducing the Open TTS Leaderboard",
+          "paragraphs": [
+            {
+              "text": "To solve these scaling challenges, the community has introduced the Open TTS Leaderboard on Hugging Face. Rather than depending exclusively on slow human voting cycles, the new system leverages objective metrics to evaluate complementary aspects of model performance. By shifting toward automated, objective metrics, the time required to evaluate a model drops significantly from a couple of weeks to a mere couple of hours.",
+              "links": []
+            },
+            {
+              "text": "The core evaluation framework focuses on three primary pillars of performance: intelligibility, processing speed, and speaker similarity. Intelligibility is measured using word and character error rates between prompts and generated audio transcripts, leveraging advanced automatic speech recognition models. Speed is quantified using inverse real-time factors and time-to-first-audio latency benchmarks on high-performance hardware, while speaker similarity is evaluated through cosine similarity of WavLM speaker embeddings.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Analyzing English and Multilingual Performance",
+          "paragraphs": [
+            {
+              "text": "By default, the leaderboard ranks models according to their macro-average word error rate across specific English benchmark splits. Prominent models currently lead these English evaluations, demonstrating strong baseline intelligibility. However, developers behind the platform emphasize that strong performance in English does not automatically translate to multilingual capabilities.",
+              "links": []
+            },
+            {
+              "text": "To address global use cases, users can toggle between different languages to rank models on multilingual performance. Because languages like Chinese, Japanese, and Korean are character-based, the system reports character error rates accordingly, generating a comprehensive macro-average across multiple supported languages. Several specialized models consistently rank near the top for robust multilingual output.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Voice Cloning and Speaker Similarity",
+          "paragraphs": [
+            {
+              "text": "Voice cloning functionality represents another critical dimension tracked by the new platform. By enabling the voice cloning toggle, users can directly compare models that support customized speaker adaptation against reference audio clips. When a reference audio file is supplied, the evaluation table automatically incorporates a speaker similarity column alongside dedicated Pareto plots.",
+              "links": []
+            },
+            {
+              "text": "Interestingly, testing shows that certain architectures exhibit notable improvements in average word error rate when utilizing voice cloning features with reference audio. This highlights the practical benefit of evaluating models both in zero-shot settings and under reference-guided voice cloning workflows.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Exploring Model Outputs and Streaming Latency",
+          "paragraphs": [
+            {
+              "text": "Numbers alone cannot capture the complete listening experience. To bridge this gap, the platform features a dedicated listening tab that lets users explore raw generated audio outputs behind the benchmark metrics. Community members can listen to various models, evaluate specific datasets, and even submit feedback on the generated audio to help shape future updates.",
+              "links": []
+            },
+            {
+              "text": "Additionally, the streaming tab evaluates latency by measuring the time-to-first-audio metric across standardized prompts. This metric is essential for interactive voice agents and real-time applications where low latency dictates user experience. Performance data is currently provided across advanced GPU hardware configurations, with growing support for CPU-based evaluations as well.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Community-Driven Open Science",
+          "paragraphs": [
+            {
+              "text": "The overarching goal of the Open TTS Leaderboard is to democratize artificial intelligence evaluation by keeping pace with rapid open-source developments. Organizers intend for the platform to remain deeply collaborative, incorporating feedback from developers and researchers to ensure the metrics stay insightful and relevant over time.",
+              "links": []
+            },
+            {
+              "text": "To foster complete transparency, the project plans to open-source its underlying evaluation scripts in the near future. Contributors will be able to share suggestions, report issues, and submit pull requests directly, ensuring that the community actively shapes the future of text-to-speech benchmarking.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Text-to-Speech",
+        "Artificial Intelligence",
+        "Hugging Face",
+        "Voice Cloning",
+        "Open Source",
+        "Speech Recognition",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Open TTS Leaderboard",
+        "WavLM",
+        "Qwen3"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based entirely on the provided Hugging Face Blog announcement regarding the Open TTS Leaderboard."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "en:article_too_short"
+      ],
+      "word_count_ar": 593,
+      "word_count_en": 443
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 496,
+      "word_count_en": 757
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "74c2ff7e2707d1f61043",
+      "title": "Open TTS Leaderboard: Scalable Evaluation for Multilingual Text-to-Speech and Voice Cloning",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "en:article_too_short"
+          ],
+          "word_count_ar": 593,
+          "word_count_en": 443
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 496,
+          "word_count_en": 757
+        }
+      ]
+    }
+  ],
+  "slug": "open-tts-leaderboard-scalable-evaluation-for-multilingual-text-to-speech-and-voice-cloning",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/open-tts-leaderboard-scalable-evaluation-for-multilingual-text-to-speech-and-voice-cloning/hero.webp",
+    "card": "/forum/assets/posts/2026/10/open-tts-leaderboard-scalable-evaluation-for-multilingual-text-to-speech-and-voice-cloning/card.webp",
+    "social": "/forum/assets/posts/2026/10/open-tts-leaderboard-scalable-evaluation-for-multilingual-text-to-speech-and-voice-cloning/social.jpg",
+    "alt": {
+      "ar": "إطلاق لوحة صدارة تحويل النص إلى كلام وتقنيات الاستنساخ الصوتي",
+      "en": "Open TTS Leaderboard Launches for Scalable Evaluation"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/open-tts-leaderboard/thumbnail.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/open-tts-leaderboard-scalable-evaluation-for-multilingual-text-to-speech-and-voice-cloning/inline-01.webp",
+        "width": 1400,
+        "height": 829,
+        "alt": {
+          "ar": "إطلاق لوحة صدارة تحويل النص إلى كلام وتقنيات الاستنساخ الصوتي",
+          "en": "thumbnail"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/open-tts-leaderboard",
+        "originalUrl": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/open-tts-leaderboard/english_table.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/open-tts-leaderboard-scalable-evaluation-for-multilingual-text-to-speech-and-voice-cloning/inline-02.webp",
+        "width": 1400,
+        "height": 531,
+        "alt": {
+          "ar": "إطلاق لوحة صدارة تحويل النص إلى كلام وتقنيات الاستنساخ الصوتي",
+          "en": "thumbnail"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/open-tts-leaderboard",
+        "originalUrl": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/open-tts-leaderboard/english_pareto.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/open-tts-leaderboard-scalable-evaluation-for-multilingual-text-to-speech-and-voice-cloning/inline-03.webp",
+        "width": 1400,
+        "height": 518,
+        "alt": {
+          "ar": "إطلاق لوحة صدارة تحويل النص إلى كلام وتقنيات الاستنساخ الصوتي",
+          "en": "thumbnail"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/open-tts-leaderboard",
+        "originalUrl": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/open-tts-leaderboard/english_bars.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/open-tts-leaderboard-scalable-evaluation-for-multilingual-text-to-speech-and-voice-cloning/inline-04.webp",
+        "width": 1400,
+        "height": 824,
+        "alt": {
+          "ar": "إطلاق لوحة صدارة تحويل النص إلى كلام وتقنيات الاستنساخ الصوتي",
+          "en": "thumbnail"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/open-tts-leaderboard",
+        "originalUrl": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/open-tts-leaderboard/multilingual.png"
+      }
+    ]
+  }
 }
