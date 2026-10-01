@@ -113,8 +113,8 @@ body{background-image:none!important}
 }
 
 
-/* Mikhbar About transition */
-.mikhbar-about-transition{
+/* Mikhbar centered screen animation */
+.mikhbar-screen-motion{
   position:fixed;
   inset:0;
   z-index:2147483000;
@@ -126,45 +126,42 @@ body{background-image:none!important}
   visibility:hidden;
   transition:opacity .14s ease,visibility 0s linear .14s;
 }
-.mikhbar-about-transition.is-visible{
+.mikhbar-screen-motion.is-visible{
   opacity:1;
   visibility:visible;
-  pointer-events:all;
   transition:opacity .14s ease;
 }
-.mikhbar-about-transition.is-leaving{
+.mikhbar-screen-motion.is-leaving{
   opacity:0;
 }
-.mikhbar-about-transition__mark{
+.mikhbar-screen-motion__mark{
   display:block;
-  width:clamp(190px,24vw,300px);
+  width:clamp(190px,22vw,270px);
   height:auto;
-  max-height:56vh;
+  max-width:70vw;
+  max-height:48vh;
   object-fit:contain;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
   background:transparent!important;
-  border:0!important;
-  border-radius:0!important;
   box-shadow:none!important;
-  filter:drop-shadow(0 12px 28px rgba(1,71,150,.16));
-  transform:scale(.94);
-  opacity:0;
-  transition:transform .18s cubic-bezier(.22,1,.36,1),opacity .14s ease;
-}
-.mikhbar-about-transition.is-visible .mikhbar-about-transition__mark{
-  transform:scale(1);
+  filter:drop-shadow(0 14px 30px rgba(1,71,150,.14));
+  transform:scale(.98);
   opacity:1;
 }
-.mikhbar-about-transition.is-leaving .mikhbar-about-transition__mark{
-  transform:scale(1.035);
-  opacity:0;
-}
 @media(max-width:760px){
-  .mikhbar-about-transition__mark{width:clamp(170px,48vw,230px)}
+  .mikhbar-screen-motion__mark{
+    width:clamp(165px,42vw,220px);
+    max-width:68vw;
+    max-height:42vh;
+  }
 }
 @media(prefers-reduced-motion:reduce){
-  .mikhbar-about-transition,
-  .mikhbar-about-transition__mark{transition:none!important}
+  .mikhbar-screen-motion{display:none!important}
 }
+
 /* Mikhbar 2026 homepage + navbar refresh */
 .rt-site-header{
   position:sticky;
@@ -546,57 +543,9 @@ body{background-image:none!important}
 }
 
 
-/* Mikhbar header intro animation — frame-normalized, zero size jump */
-.mikhbar-brand-mark{
-  position:relative!important;
-  isolation:isolate;
-  overflow:visible!important;
-}
-.mikhbar-brand-mark>img:not(.mikhbar-brand-intro-source){
-  position:relative;
-  z-index:1;
-  opacity:0;
-  transition:opacity .07s linear!important;
-}
-.mikhbar-brand-mark.is-brand-static>img:not(.mikhbar-brand-intro-source){
-  opacity:1;
-}
-.mikhbar-brand-intro{
-  position:absolute!important;
-  inset:0!important;
-  z-index:2!important;
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  max-width:none!important;
-  max-height:none!important;
-  margin:0!important;
-  padding:0!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  pointer-events:none!important;
+/* Header logo is always the original static mark */
+.mikhbar-brand-mark>img{
   opacity:1!important;
-  transition:opacity .07s linear!important;
+  visibility:visible!important;
 }
-.mikhbar-brand-intro.is-finishing{
-  opacity:0!important;
-}
-.mikhbar-brand-intro-source{
-  position:absolute!important;
-  left:50%!important;
-  top:50%!important;
-  width:1px!important;
-  height:1px!important;
-  min-width:0!important;
-  min-height:0!important;
-  opacity:0!important;
-  visibility:hidden!important;
-  pointer-events:none!important;
-  transform:translate(-50%,-50%)!important;
-}
-@media(prefers-reduced-motion:reduce){
-  .mikhbar-brand-mark>img:not(.mikhbar-brand-intro-source){opacity:1!important}
-  .mikhbar-brand-intro,.mikhbar-brand-intro-source{display:none!important}
-}
+
