@@ -1,5 +1,378 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-01T17:53:17+00:00",
-  "last_published_story_id": "ab4b9eb7ed70e5469f81"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-01T17:56:57+00:00",
+  "target_publish_at": "2026-10-01T21:13:17.683291+03:00",
+  "story": {
+    "title": "Build agent memory with NVIDIA NeMo Agent Toolkit and Amazon S3 Vectors",
+    "url": "https://aws.amazon.com/blogs/machine-learning/build-agent-memory-with-nvidia-nemo-agent-toolkit-and-amazon-s3-vectors",
+    "domain": "aws.amazon.com",
+    "summary": "Learn how to use Amazon S3 Vectors as the persistent memory layer within the NVIDIA NeMo Agent Toolkit (NAT), deployed on Amazon Elastic Kubernetes Service (Amazon EKS). This post shows how NAT's memory subsystem works and how to implement Amazon S3 Vectors as a custom memory provider, using a multi-agent investment research use case.",
+    "published_at": "2026-10-01T17:34:56+00:00",
+    "discovered_at": "2026-10-01T17:36:20+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "67198745ebf529c8c209",
+    "trend": {
+      "score": 117.37,
+      "age_hours": 0.36,
+      "corroboration_count": 0,
+      "entity_momentum": 15.51,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-agent-memory-with-nvidia-nemo-agent-toolkit-and-amazon-s3-vectors/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Build agent memory with NVIDIA NeMo Agent Toolkit and Amazon S3 Vectors",
+      "title": "Build agent memory with NVIDIA NeMo Agent Toolkit and Amazon S3 Vectors | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "دمج ذاكرة الوكلاء مع NVIDIA NeMo Agent Toolkit وAmazon S3 Vectors",
+      "description": "تعرف على كيفية استخدام Amazon S3 Vectors كطبقة ذاكرة مستدامة ضمن أدوات وكلاء الذكاء الاصطناعي NVIDIA NeMo Agent Toolkit على منصة Amazon EKS.",
+      "deck": "تستعرض مدونة إيه دبليو إس تطبيقاً عملياً لربط تقنيات التخزين المتطورة مع أطر عمل وكلاء الذكاء الاصطناعي لتحسين الأداء وإدارة الذاكرة بمرونة عالية.",
+      "summary_bullets": [
+        "تكامل بين أدوات وكلاء الذكاء الاصطناعي وحلول التخزين المتقدمة لتعزيز الذاكرة المستدامة.",
+        "استخدام Amazon S3 Vectors لتوفير استرجاع دلالي، وسياق غني، وقابلية للتوسع المربي.",
+        "نشر التطبيق على منصة Amazon Elastic Kubernetes Service للتحكم التشغيلي الكامل.",
+        "اعتماد نموذج أبحاث الاستثمار متعدد الوكلاء كدراسة حالة عملية لاختبار النظام."
+      ],
+      "sections": [
+        {
+          "heading": "مقدمة حول الذاكرة المستدامة لأنظمة الوكلاء المتعددة",
+          "paragraphs": [
+            {
+              "text": "تعتبر هندسة الذاكرة الانضباط الأساسي لبناء أنظمة متعددة الوكلاء قادرة على العمل في بيئات الإنتاج الفعلية. وفي هذا السياق، تتيح قدرات التخزين المتقدمة تلبية المتطلبات المعمارية المعقدة مثل الاسترجاع الدلالي، والبيانات التعريفية الغنية، والاتساق القوي، فضلاً عن التوسع المرن لمواجهة متطلبات الأداء العالي. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/build-agent-memory-with-nvidia-nemo-agent-toolkit-and-amazon-s3-vectors/"
+                }
+              ]
+            },
+            {
+              "text": "تنتقل التطبيقات العملية اليوم من مجرد التصميم المعماري إلى مرحلة التنفيذ الفعلي عبر دمج حلول التخزين كطبقة ذاكرة مستدامة ضمن إطار عمل NVIDIA NeMo Agent Toolkit، مما يمنح المطورين سيطرة تشغيلية كاملة عند النشر والتشغيل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بنية نظام الذاكرة في إطار عمل NVIDIA NeMo",
+          "paragraphs": [
+            {
+              "text": "يُعد إطار العمل منصة مفتوحة المصدر لبناء وتقييم وتحسين وكلاء الذكاء الاصطناعي، وهو يتميز بكونه مرناً ليتوافق مع مختلف الأدوات والتقنيات. يوفر النظام الداخلي لإدارة الذاكرة القدرة على تخزين واسترجاع سجل المحادثات وتفضيلات المستخدمين والمعرفة طويلة الأجل عبر استدعاءات الوكلاء المختلفة.",
+              "links": []
+            },
+            {
+              "text": "يحتوي النظام الفرعي للذاكرة على واجهات برمجية مجردة ونماذج بيانات متقدمة تمكن المطورين من إنشاء موفري ذاكرة مخصصين بسهولة. ومن خلال غلاف الذاكرة التلقائي، يمكن التقاط الاستجابات وسجل الرسائل وضخ السياق المناسب دون الحاجة لأن يقوم النموذج اللغوي الكبير باستدعاء أدوات الذاكرة صراحةً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور Amazon S3 Vectors كخلفية للذاكرة المستدامة",
+          "paragraphs": [
+            {
+              "text": "بالرغم من وجود موفري ذاكرة مدمجين يغطيان الاستخدامات الشائعة، إلا أن أنظمة الإنتاج متعددة الوكلاء تتطلب تخزناً متجهياً مرناً واتساقاً قوياً في الكتابة. وهنا يبرز دور الحلول المتقدمة مثل Amazon S3 Vectors لتلبية هذه الاحتياجات التشغيلية الكبيرة.",
+              "links": [
+                {
+                  "text": "Amazon S3 Vectors",
+                  "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-vectors.html"
+                }
+              ]
+            },
+            {
+              "text": "تتطلب عملية التنفيذ والتشغيل بيئة مناسبة تضم حساباً موثوقاً على منصة السحابة، وعنقود خدمات حاويات جاهزاً، بالإضافة إلى أدوات تشغيل وإدارة مخصصة للتعامل مع النشر والعمليات البرمجية بكفاءة عالية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التنفيذ العملي ونشر المكونات على منصة EKS",
+          "paragraphs": [
+            {
+              "text": "يبدأ التطبيق العملي بإنشاء البنية التحتية اللازمة التي تتضمن إنشاء حاوية متجهات وفهرس بمخطط بيانات تعريفي مخصص لذاكرة الوكلاء. يتطابق هذا الفهرس مع مخرجات نماذج التضمين النصية المعتمدة لضمان دقة تمثيل البيانات واسترجاعها.",
+              "links": []
+            },
+            {
+              "text": "بعد إعداد البنية التحتية، يتم تنفيذ الإضافات البرمجية الخاصة بقراءة وكتابة البيانات، وضبط ملفات التهيئة ليتمكن نظام الوكلاء من اكتشاف المكون الجديد وتوظيفه ضمن سير العمل الخاص بالوكلاء الموزعين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اعتبارات الذكاء الاصطناعي المسؤول وإدارة البيانات",
+          "paragraphs": [
+            {
+              "text": "نظراً لأن هذه الحلول تقوم بالاحتفاظ بسجلات المحادثات وذاكرة المستخدمين، فإنه من الضروري التخطيط الجيد لكيفية الاحتفاظ بالبيانات والوصول إليها. ويشمل ذلك وضع سياسات واضحة للاحتفاظ بالمعلومات، واستخدام مسارات إزالة البيانات ودمجها لضمان انتهاء صلاحية المعلومات التي لم تعد هناك حاجة لها.",
+              "links": []
+            },
+            {
+              "text": "تتطلب الاعتبارات الأمنية تجنب تخزين معلومات التعريف الشخصية ضمن البيانات التعريفية للذاكرة، وتطبيق سياسات الحد الأدنى من الصلاحيات لضمان عدم وصول أي وكيل إلا للبيانات الخاصة به فقط.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دراسة حالة: تطبيقات أبحاث الاستثمار متعددة الوكلاء",
+          "paragraphs": [
+            {
+              "text": "لتوضيح هذا النمط البرمجي في الواقع العملي، يمكن النظر في نظام يضم ثلاثة وكلاء متخصرين يتعاونون معاً في أداة أبحاث استثمارية. يختص الوكلاء بجمع البيانات السوقية، وإجراء التحليلات الكمية، وإنتاج التقارير الشاملة التي تدمج النتائج المختلفة.",
+              "links": []
+            },
+            {
+              "text": "بفضل الذاكرة المستدامة، يستطيع كل وكيل البناء على الأعمال السابقة، حيث يتذكر وكيل الأبحاث البيانات التي جُمعت مسبقاً لتجنب الطلبات المتكررة، بينما يستفيد وكيل التحليل من الأنماط المكتشفة في الجلسات السابقة لتقديم تقارير أكثر دقة وشمولية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "الحوسبة السحابية",
+        "إدارة الذاكرة",
+        "وكلاء الذكاء الاصطناعي",
+        "معالجة البيانات"
+      ],
+      "entities": [
+        "NVIDIA NeMo Agent Toolkit",
+        "Amazon S3 Vectors",
+        "Amazon Elastic Kubernetes Service",
+        "Amazon Titan Text Embeddings V2"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر استناداً حصرياً إلى تفاصيل المقال التقني المنشور على مدونة إي دبليو إس حول دمج أدوات وكلاء نيفيديا مع متجهات أمازون إس 3."
+    },
+    "en": {
+      "title": "Build Agent Memory With NVIDIA NeMo and Amazon S3 Vectors",
+      "description": "Learn how to use Amazon S3 Vectors as a persistent memory layer within the NVIDIA NeMo Agent Toolkit deployed on Amazon EKS.",
+      "deck": "A new implementation guide demonstrates how developers can integrate Amazon S3 Vectors as a persistent memory backend for multi-agent workflows built on the NVIDIA NeMo Agent Toolkit.",
+      "summary_bullets": [
+        "Integrates Amazon S3 Vectors as a custom persistent memory provider within the NVIDIA NeMo Agent Toolkit (NAT).",
+        "Deployed on Amazon Elastic Kubernetes Service (Amazon EKS) for full operational control and elastic scale.",
+        "Utilizes Amazon Titan Text Embeddings V2 to generate vector representations for semantic search and retrieval.",
+        "Features an automated memory wrapper that captures and retrieves conversation history without explicit LLM tool invocation."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Agent Memory Engineering",
+          "paragraphs": [
+            {
+              "text": "Memory engineering serves as a foundational discipline for production multi-agent systems, enabling applications to maintain context, user preferences, and long-term knowledge across invocations. Previous architectural explorations examined how <a href=\"https://aws.amazon.com/blogs/storage/building-persistent-memory-for-multi-agent-ai-systems-with-amazon-s3-vectors/\">Building persistent memory for multi-agent AI systems with Amazon S3 Vectors</a> meets core requirements like semantic retrieval, rich metadata, strong consistency, and elastic scale. Transitioning from high-level architecture to practical implementation, developers can now combine this storage capability with orchestration frameworks.",
+              "links": [
+                {
+                  "text": "Building persistent memory for multi-agent AI systems with Amazon S3 Vectors",
+                  "url": "https://aws.amazon.com/blogs/storage/building-persistent-memory-for-multi-agent-ai-systems-with-amazon-s3-vectors/"
+                }
+              ]
+            },
+            {
+              "text": "By deploying the stack on <a href=\"https://aws.amazon.com/eks/\">Amazon Elastic Kubernetes Service (Amazon EKS)</a>, engineering teams gain full operational control over their workloads. This setup provides an ideal environment for running complex, multi-agent artificial intelligence pipelines that demand robust scalability and reliable infrastructure.",
+              "links": [
+                {
+                  "text": "Amazon Elastic Kubernetes Service (Amazon EKS)",
+                  "url": "https://aws.amazon.com/eks/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "The NVIDIA NeMo Agent Toolkit",
+          "paragraphs": [
+            {
+              "text": "The <a href=\"https://docs.nvidia.com/nemo/agent-toolkit/latest/index.html\">NVIDIA NeMo Agent Toolkit (NAT)</a> operates as an open-source framework designed for building, profiling, and optimizing AI agents. Because it is framework-agnostic, NAT integrates smoothly with tools like Strands Agents, LangChain, LlamaIndex, and CrewAI, while offering vital capabilities such as agent orchestration, profiling, evaluation, and automated hyperparameter optimization.",
+              "links": [
+                {
+                  "text": "NVIDIA NeMo Agent Toolkit (NAT)",
+                  "url": "https://docs.nvidia.com/nemo/agent-toolkit/latest/index.html"
+                }
+              ]
+            },
+            {
+              "text": "NAT incorporates a dedicated memory subsystem engineered to manage conversation history and long-term knowledge across sessions. While the framework ships with several built-in memory providers like Mem0, MemMachine, Redis, and Zep, production environments handling massive vector scales benefit from utilizing <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-vectors.html\">Amazon S3 Vectors</a> as a custom backend.",
+              "links": [
+                {
+                  "text": "Amazon S3 Vectors",
+                  "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-vectors.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and Infrastructure Setup",
+          "paragraphs": [
+            {
+              "text": "To follow the implementation guide and deploy the memory provider, developers must prepare a specific set of tools and cloud resources. Requirements include an active <a href=\"https://aws.amazon.com/account/\">AWS account</a> equipped with the necessary permissions to provision Amazon S3 Vectors infrastructure and configure container clusters.",
+              "links": [
+                {
+                  "text": "AWS account",
+                  "url": "https://aws.amazon.com/account/"
+                }
+              ]
+            },
+            {
+              "text": "Additionally, operators need an existing cluster established via <a href=\"https://aws.amazon.com/eks/getting-started/\">Getting started with Amazon EKS</a>, alongside the <a href=\"https://docs.nvidia.com/nemo/agent-toolkit/latest/index.html\">NVIDIA NeMo Agent Toolkit</a> installed at version 1.6 or higher. The environment also relies on Python 3.11 or 3.12, container management utilities like Docker, command-line cluster tools such as <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html\">kubectl</a>, and an embedding model like <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/titan-embedding-models.html\">Amazon Titan Text Embeddings V2</a> to generate vector representations.",
+              "links": [
+                {
+                  "text": "Getting started with Amazon EKS",
+                  "url": "https://aws.amazon.com/eks/getting-started/"
+                },
+                {
+                  "text": "NVIDIA NeMo Agent Toolkit",
+                  "url": "https://docs.nvidia.com/nemo/agent-toolkit/latest/index.html"
+                },
+                {
+                  "text": "kubectl",
+                  "url": "https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html"
+                },
+                {
+                  "text": "Amazon Titan Text Embeddings V2",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/titan-embedding-models.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Implementing the Custom Memory Plugin",
+          "paragraphs": [
+            {
+              "text": "The custom memory integration process involves configuring the underlying cloud storage infrastructure to match the exact dimensions of the chosen embedding model. For instance, the storage index can be initialized to use 1024 dimensions in order to align with <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/titan-embedding-models.html\">Amazon Titan Text Embeddings V2</a> output specifications while marking large content fields as non-filterable metadata.",
+              "links": [
+                {
+                  "text": "Amazon Titan Text Embeddings V2",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/titan-embedding-models.html"
+                }
+              ]
+            },
+            {
+              "text": "Developers then implement NAT's MemoryEditor abstract interface, creating methods for adding items, searching data, and removing records. The plugin handles embedding generation, stores memories with scoped metadata, and translates search filters into targeted metadata queries against <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-vectors.html\">Amazon S3 Vectors</a>.",
+              "links": [
+                {
+                  "text": "Amazon S3 Vectors",
+                  "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-vectors.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Automated Workflows and Multi-Agent Research",
+          "paragraphs": [
+            {
+              "text": "Integrating the custom memory layer with NAT workflows utilizes an automatic memory wrapper that captures user messages and agent responses seamlessly. This architecture removes the necessity for large language models to manually invoke memory tools, ensuring relevant context is injected automatically prior to execution.",
+              "links": []
+            },
+            {
+              "text": "Practical multi-agent applications, such as an investment research tool featuring specialized research, analysis, and synthesis agents, demonstrate the value of this persistent approach. Each agent stores findings with distinct metadata tags, allowing collaborative workflows to build upon prior sessions without redundant data collection.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon S3 Vectors",
+        "NVIDIA NeMo",
+        "Amazon EKS",
+        "Artificial Intelligence",
+        "Vector Databases",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "NVIDIA",
+        "Amazon EKS",
+        "Amazon S3 Vectors"
+      ],
+      "article_type": "news",
+      "confidence_note": "All details are derived exclusively from the official AWS Machine Learning Blog post, ensuring 100% factual accuracy against the provided source text."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 449,
+      "word_count_en": 694
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 555,
+      "word_count_en": 611
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "67198745ebf529c8c209",
+      "title": "Build agent memory with NVIDIA NeMo Agent Toolkit and Amazon S3 Vectors",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 449,
+          "word_count_en": 694
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 555,
+          "word_count_en": 611
+        }
+      ]
+    }
+  ],
+  "slug": "build-agent-memory-with-nvidia-nemo-agent-toolkit-and-amazon-s3-vectors",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/build-agent-memory-with-nvidia-nemo-agent-toolkit-and-amazon-s3-vectors/hero.webp",
+    "card": "/forum/assets/posts/2026/10/build-agent-memory-with-nvidia-nemo-agent-toolkit-and-amazon-s3-vectors/card.webp",
+    "social": "/forum/assets/posts/2026/10/build-agent-memory-with-nvidia-nemo-agent-toolkit-and-amazon-s3-vectors/social.jpg",
+    "alt": {
+      "ar": "دمج ذاكرة الوكلاء مع NVIDIA NeMo Agent Toolkit وAmazon S3 Vectors",
+      "en": "Build Agent Memory With NVIDIA NeMo and Amazon S3 Vectors"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/28/ML-21981-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
