@@ -53,268 +53,80 @@ function brandAssets(){
   setTimeout(normalizePlatformNav,1400);
 }
 
-const BRAND_INTRO_SRC='/assets/images/06_Mikhbar_Sticker_Animated_512.webp?v=20260930-brandintro7';
-const BRAND_INTRO_MS=2050;
-const BRAND_SAMPLE_SIZE=112;
-const BRAND_ALPHA_TRIM=.018;
+const BRAND_MOTION_SRC='/assets/images/06_Mikhbar_Sticker_Animated_512.webp?v=20261001-brandmotion1';
+const BRAND_MOTION_MS=2050;
+let brandMotionTimer=0;
+let brandMotionHideTimer=0;
 
-function brandAlphaBounds(imageData,w,h,trim=BRAND_ALPHA_TRIM){
-  const rows=new Float64Array(h);
-  const cols=new Float64Array(w);
-  const data=imageData.data;
-  let total=0;
-  for(let y=0;y<h;y++){
-    const rowOffset=y*w*4;
-    for(let x=0;x<w;x++){
-      const a=data[rowOffset+x*4+3];
-      if(a<=8)continue;
-      rows[y]+=a;
-      cols[x]+=a;
-      total+=a;
-    }
-  }
-  if(total<=0)return{x:0,y:0,width:w,height:h};
-
-  const cut=total*trim;
-  const edge=(arr,reverse=false)=>{
-    let sum=0;
-    if(!reverse){
-      for(let i=0;i<arr.length;i++){sum+=arr[i];if(sum>=cut)return i}
-      return 0;
-    }
-    for(let i=arr.length-1;i>=0;i--){sum+=arr[i];if(sum>=cut)return i}
-    return arr.length-1;
-  };
-
-  const left=edge(cols,false);
-  const right=edge(cols,true);
-  const top=edge(rows,false);
-  const bottom=edge(rows,true);
-  return{
-    x:left,
-    y:top,
-    width:Math.max(1,right-left+1),
-    height:Math.max(1,bottom-top+1)
-  };
-}
-
-function brandSampleBounds(img,size=BRAND_SAMPLE_SIZE){
-  const canvas=document.createElement('canvas');
-  canvas.width=size;
-  canvas.height=size;
-  const ctx=canvas.getContext('2d',{alpha:true,willReadFrequently:true});
-  if(!ctx)return{x:0,y:0,width:size,height:size};
-  ctx.clearRect(0,0,size,size);
-  ctx.drawImage(img,0,0,size,size);
-  try{
-    return brandAlphaBounds(ctx.getImageData(0,0,size,size),size,size);
-  }catch{
-    return{x:0,y:0,width:size,height:size};
-  }
-}
-
-function brandImageReady(img){
-  if(img.complete&&img.naturalWidth>0)return Promise.resolve(true);
-  return new Promise(resolve=>{
-    const done=ok=>resolve(ok);
-    img.addEventListener('load',()=>done(true),{once:true});
-    img.addEventListener('error',()=>done(false),{once:true});
-    window.setTimeout(()=>done(false),2200);
-  });
-}
-
-function brandIntro(){
-  const marks=$$('.mikhbar-brand-mark');
-  if(!marks.length)return;
-  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced){
-    marks.forEach(mark=>mark.classList.add('is-brand-static'));
-    return;
-  }
-
-  marks.forEach(async mark=>{
-    const staticImg=Array.from(mark.children).find(node=>node.tagName==='IMG'&&!node.classList.contains('mikhbar-brand-intro-source'));
-    if(!staticImg){mark.classList.add('is-brand-static');return}
-
-    $$('.mikhbar-brand-intro,.mikhbar-brand-intro-source',mark).forEach(node=>node.remove());
-    mark.classList.remove('is-brand-static');
-
-    const source=document.createElement('img');
-    source.className='mikhbar-brand-intro-source';
-    source.src=BRAND_INTRO_SRC;
-    source.alt='';
-    source.setAttribute('aria-hidden','true');
-    source.decoding='async';
-
-    const canvas=document.createElement('canvas');
-    canvas.className='mikhbar-brand-intro';
-    canvas.setAttribute('aria-hidden','true');
-
-    mark.appendChild(source);
-    mark.appendChild(canvas);
-
-    const ready=await Promise.all([brandImageReady(staticImg),brandImageReady(source)]);
-    if(!ready[0]||!ready[1]){
-      mark.classList.add('is-brand-static');
-      source.remove();
-      canvas.remove();
-      return;
-    }
-
-    const cssW=mark.clientWidth||52;
-    const cssH=mark.clientHeight||52;
-    const dpr=Math.min(Math.max(window.devicePixelRatio||1,1),3);
-    canvas.width=Math.max(1,Math.round(cssW*dpr));
-    canvas.height=Math.max(1,Math.round(cssH*dpr));
-
-    const ctx=canvas.getContext('2d',{alpha:true});
-    if(!ctx){
-      mark.classList.add('is-brand-static');
-      source.remove();
-      canvas.remove();
-      return;
-    }
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    ctx.imageSmoothingEnabled=true;
-    ctx.imageSmoothingQuality='high';
-
-    const target=brandSampleBounds(staticImg);
-    const targetX=target.x/BRAND_SAMPLE_SIZE*cssW;
-    const targetY=target.y/BRAND_SAMPLE_SIZE*cssH;
-    const targetW=target.width/BRAND_SAMPLE_SIZE*cssW;
-    const targetH=target.height/BRAND_SAMPLE_SIZE*cssH;
-    const targetCX=targetX+targetW/2;
-    const targetCY=targetY+targetH/2;
-
-    const probe=document.createElement('canvas');
-    probe.width=BRAND_SAMPLE_SIZE;
-    probe.height=BRAND_SAMPLE_SIZE;
-    const pctx=probe.getContext('2d',{alpha:true,willReadFrequently:true});
-    const started=performance.now();
-    let raf=0;
-    let done=false;
-
-    const finish=()=>{
-      if(done)return;
-      done=true;
-      if(raf)cancelAnimationFrame(raf);
-      mark.classList.add('is-brand-static');
-      canvas.classList.add('is-finishing');
-      window.setTimeout(()=>{
-        canvas.remove();
-        source.remove();
-      },90);
-    };
-
-    const paint=now=>{
-      if(done)return;
-      if(!pctx){finish();return}
-
-      pctx.clearRect(0,0,BRAND_SAMPLE_SIZE,BRAND_SAMPLE_SIZE);
-      pctx.drawImage(source,0,0,BRAND_SAMPLE_SIZE,BRAND_SAMPLE_SIZE);
-
-      let bounds;
-      try{
-        bounds=brandAlphaBounds(
-          pctx.getImageData(0,0,BRAND_SAMPLE_SIZE,BRAND_SAMPLE_SIZE),
-          BRAND_SAMPLE_SIZE,
-          BRAND_SAMPLE_SIZE
-        );
-      }catch{
-        bounds={x:0,y:0,width:BRAND_SAMPLE_SIZE,height:BRAND_SAMPLE_SIZE};
-      }
-
-      const naturalW=source.naturalWidth||512;
-      const naturalH=source.naturalHeight||512;
-      const sx=bounds.x/BRAND_SAMPLE_SIZE*naturalW;
-      const sy=bounds.y/BRAND_SAMPLE_SIZE*naturalH;
-      const sw=Math.max(1,bounds.width/BRAND_SAMPLE_SIZE*naturalW);
-      const sh=Math.max(1,bounds.height/BRAND_SAMPLE_SIZE*naturalH);
-
-      const scale=Math.min(targetW/sw,targetH/sh);
-      const dw=Math.max(.5,sw*scale);
-      const dh=Math.max(.5,sh*scale);
-      const dx=targetCX-dw/2;
-      const dy=targetCY-dh/2;
-
-      ctx.clearRect(0,0,cssW,cssH);
-      ctx.drawImage(source,sx,sy,sw,sh,dx,dy,dw,dh);
-
-      if(now-started>=BRAND_INTRO_MS){finish();return}
-      raf=requestAnimationFrame(paint);
-    };
-
-    raf=requestAnimationFrame(paint);
-    window.setTimeout(finish,BRAND_INTRO_MS+350);
-  });
-}
-
-const ABOUT_TRANSITION_VIDEO='/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-logo-mark-alpha.webm?v=20260922-about1';
-const ABOUT_TRANSITION_POSTER='/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-logo-mark-poster-transparent.png';
-const ABOUT_TRANSITION_MS=2000;
-let aboutTransitionActive=false;
-
-function ensureAboutTransition(){
-  let overlay=$('#mikhbarAboutTransition');
+function ensureBrandMotion(){
+  let overlay=$('#mikhbarScreenMotion');
   if(overlay)return overlay;
   overlay=document.createElement('div');
-  overlay.id='mikhbarAboutTransition';
-  overlay.className='mikhbar-about-transition';
+  overlay.id='mikhbarScreenMotion';
+  overlay.className='mikhbar-screen-motion';
   overlay.setAttribute('aria-hidden','true');
-  overlay.innerHTML='<video class="mikhbar-about-transition__mark" muted playsinline preload="auto" poster="'+ABOUT_TRANSITION_POSTER+'"><source src="'+ABOUT_TRANSITION_VIDEO+'" type="video/webm"></video>';
   document.body.appendChild(overlay);
-  const video=$('video',overlay);
-  try{video.load()}catch{}
   return overlay;
 }
 
-function playAboutTransition(destination){
-  if(aboutTransitionActive)return;
-  aboutTransitionActive=true;
-  const overlay=ensureAboutTransition();
-  const video=$('video',overlay);
-  overlay.classList.remove('is-leaving');
+function playBrandMotion(){
+  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced)return;
+
+  const overlay=ensureBrandMotion();
+  const old=$('.mikhbar-screen-motion__mark',overlay);
+  if(old)old.remove();
+
+  const img=document.createElement('img');
+  img.className='mikhbar-screen-motion__mark';
+  img.src=BRAND_MOTION_SRC;
+  img.alt='';
+  img.setAttribute('aria-hidden','true');
+  img.decoding='async';
+  overlay.appendChild(img);
+
+  overlay.classList.remove('is-visible','is-leaving');
+  void overlay.offsetWidth;
   overlay.classList.add('is-visible');
   overlay.setAttribute('aria-hidden','false');
-  let navigated=false;
-  const go=()=>{
-    if(navigated)return;
-    navigated=true;
-    window.location.href=destination;
-  };
-  const leave=()=>{
+
+  if(brandMotionTimer)window.clearTimeout(brandMotionTimer);
+  if(brandMotionHideTimer)window.clearTimeout(brandMotionHideTimer);
+
+  brandMotionTimer=window.setTimeout(()=>{
     overlay.classList.add('is-leaving');
-    window.setTimeout(go,150);
-  };
-  window.setTimeout(leave,Math.max(0,ABOUT_TRANSITION_MS-150));
-  window.setTimeout(go,ABOUT_TRANSITION_MS+120);
-  if(video){
-    try{video.pause();video.currentTime=0}catch{}
-    const p=video.play();
-    if(p&&typeof p.catch==='function')p.catch(()=>{});
-  }
+    brandMotionHideTimer=window.setTimeout(()=>{
+      overlay.classList.remove('is-visible','is-leaving');
+      overlay.setAttribute('aria-hidden','true');
+      img.remove();
+    },150);
+  },Math.max(0,BRAND_MOTION_MS-150));
 }
 
-function bindAboutTransition(){
-  const preload=ensureAboutTransition();
-  const warm=()=>{const v=$('video',preload);if(v&&v.readyState<2){try{v.load()}catch{}}};
-  document.addEventListener('pointerover',e=>{
-    const a=e.target.closest&&e.target.closest('a[href]');
-    if(a&&new URL(a.href,location.href).pathname.replace(/\/+$/,'')==='/forum/about')warm();
-  },{passive:true});
-  document.addEventListener('click',e=>{
-    if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
-    const a=e.target.closest&&e.target.closest('a[href]');
-    if(!a)return;
-    let url;
-    try{url=new URL(a.href,location.href)}catch{return}
-    if(url.origin!==location.origin)return;
-    if(url.pathname.replace(/\/+$/,'')!=='/forum/about')return;
-    if(location.pathname.replace(/\/+$/,'')==='/forum/about')return;
-    e.preventDefault();
-    playAboutTransition(url.href);
+function bindBrandMotion(){
+  ensureBrandMotion();
+  window.requestAnimationFrame(()=>playBrandMotion());
+
+  window.addEventListener('pageshow',event=>{
+    if(event.persisted)playBrandMotion();
   });
+
+  document.addEventListener('click',event=>{
+    if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+    const target=event.target.closest&&event.target.closest('button,[role="button"],a[href]');
+    if(!target||target.closest('#mikhbarScreenMotion'))return;
+    if(target.matches(':disabled,[aria-disabled="true"]'))return;
+
+    if(target.tagName==='A'){
+      let url;
+      try{url=new URL(target.href,location.href)}catch{return}
+      if(url.origin!==location.origin)return;
+    }
+
+    playBrandMotion();
+  },true);
 }
+
 const dict={
  ar:{count:n=>`${n} منشور`,fallbackCat:'تقنية',emptyNow:'ستظهر هنا الموضوعات الأحدث فور بدء النشر اليومي.',read:'',imgAlt:'صورة الخبر'},
  en:{count:n=>`${n} ${n===1?'post':'posts'}`,fallbackCat:'Technology',emptyNow:'The latest and most important stories will appear here as they are published.',read:'',imgAlt:'Story image'}
@@ -455,5 +267,5 @@ function articleProgress(){
   update();
 }
 function year(){$$('[data-year]').forEach(e=>e.textContent=new Date().getFullYear())}
-brandAssets();brandIntro();menu();smartHeader();articleProgress();bind();bindAboutTransition();year();load();
+brandAssets();bindBrandMotion();menu();smartHeader();articleProgress();bind();year();load();
 })();
