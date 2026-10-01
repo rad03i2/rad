@@ -1,5 +1,426 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-01T17:13:17+00:00",
-  "last_published_story_id": "393d9953f42c221c5b9e"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-01T17:16:47+00:00",
+  "target_publish_at": "2026-10-01T20:33:17.622957+03:00",
+  "story": {
+    "title": "Building ambient agents with Amazon Bedrock AgentCore: From event-driven signals to human-in-the-loop workflows",
+    "url": "https://aws.amazon.com/blogs/machine-learning/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-the-loop-workflows",
+    "domain": "aws.amazon.com",
+    "summary": "Ambient agents respond to events such as an Amazon S3 upload, a schedule, or an alert instead of waiting for a chat prompt. This post walks through building framework-agnostic ambient agents on Amazon Bedrock AgentCore using Amazon SQS, AWS Lambda, and Amazon DynamoDB, with a single ask_human tool and a Jobs page for human-in-the-loop review.",
+    "published_at": "2026-10-01T16:40:24+00:00",
+    "discovered_at": "2026-10-01T16:41:22+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 69,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "b7b8cdbba070bf33b22f",
+    "trend": {
+      "score": 121.77,
+      "age_hours": 0.6,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-the-loop-workflows/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Building ambient agents with Amazon Bedrock AgentCore: From event-driven signals to human-in-the-loop workflows",
+      "title": "Building ambient agents with Amazon Bedrock AgentCore: From event-driven signals to human-in-the-loop workflows | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "بناء وكلاء ذكاء اصطناعي محيطيين عبر Amazon Bedrock AgentCore",
+      "description": "تعرف على كيفية بناء وكلاء ذكاء اصطناعي محيطيين يستجيبون للأحداث وتدفقات العمل التلقائية باستخدام منصة Amazon Bedrock AgentCore.",
+      "deck": "تتجاوز وكلاء الذكاء الاصطناعي المحيطية نموذج الدردشة التقليدي لتتفاعل تلقائياً مع تدفقات الأحداث والأنظمة البنية التحتية، مع إمكانية دمج مراجعة العنصر البشري بسلاسة.",
+      "summary_bullets": [
+        "الوكلاء المحيطيون يستجيبون للأحداث المباشرة مثل رفع الملفات والتنبيهات بدلاً من انتظار التوجيهات اليدوية.",
+        "استخدام منصة Amazon Bedrock AgentCore لتشغيل واستضافة الوكلاء بمعزل عن أي إطار عمل محدد.",
+        "اعتماد تدفقات العمل التي تتطلب تدخلاً بشرياً عند الحاجة عبر أداة ask_human الموحدة.",
+        "تكامل عميق مع خدمات AWS مثل Lambda وDynamoDB وSQS لبناء بنية خالية من الخوادم تماماً."
+      ],
+      "sections": [
+        {
+          "heading": "مفهوم الوكلاء المحيطيين وتجاوز نموذج الدردشة",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق العمل التي تتعامل مع معالجة المستندات والبيانات على نطاق واسع تحديات تقليدية تتمثل في هدر الساعات في الفرز اليدوي للملفات التي تصل إلى مستودعات التخزين مثل خدمة Amazon Simple Storage Service أو مراقبة التنبيهات حتى يقوم شخص ما باتخاذ إجراء حيالها. تقدم منصة AWS Machine Learning Blog رؤية جديدة لحل هذه المشكلات التشغيلية من خلال الاعتماد على تقنيات الذكاء الاصطناعي الحديثة.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-the-loop-workflows/"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد معظم تطبيقات الذكاء الاصطناعي السائدة حالياً على نموذج طلب ورَد تفاعلي، حيث يفتح المستخدم واجهة محادثة ويكتب توجيهاً ثم ينتظر النتيجة. بالرغم من نجاح هذه الطريقة في الأسئلة الفردية، إلا أنها تقيد الوكيل بمحادثة واحدة في كل مرة وتتطلب تدخلاً بشرياً مستمراً لوصف الأحداث قبل أن يتمكن النظام من التصرف. وهنا يأتي دور نموذج Ambient agents المختلف تماماً، والذي يستمع إلى تدفقات الأحداث ويتفاعل معها فورياً بشكل متوازٍ ودون الحاجة لتوجيه بشري مباشر في كل خطوة.",
+              "links": [
+                {
+                  "text": "Ambient agents",
+                  "url": "https://blog.langchain.com/introducing-ambient-agents/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دور منصة Amazon Bedrock AgentCore في البيئات الحديثة",
+          "paragraphs": [
+            {
+              "text": "تمثل منصة Amazon Bedrock AgentCore بيئة متكاملة تتيح للمؤسسات بناء وربط وتحسين وكلاء الذكاء الاصطناعي على نطاق واسع وبأي إطار عمل أو نموذج تفضله. توفر بيئة التشغيل الخاصة بالمنصة استضافة للوكلاء تعتمد على الحاويات البرمجية مع دعم لأحمال العمل طويلة الأجل، وعزل مدمج للجلسات، وتكامل سلس مع النماذج الأساسية المتاحة ضمن خدمات Amazon Bedrock.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "تستطيع المؤسسات الاستفادة من البنية التحتية القائمة لدعم الأحداث مثل إشعارات التخزين وقواعد المراقبة، وربطها بالوكلاء الأذكياء. وعلى عكس مسارات العمل الآلية بالكامل مثل استخدام خدمات التنسيق المتقدمة مثل AWS Step Functions التي لا تستطيع التعامل مع الغموض أو طرح أسئلة توضيحية، تنجح الوكلاء المحيطية في سد هذه الفجوة عبر التفكير في المشكلة والتفاعل مع البشر عند الحاجة.",
+              "links": [
+                {
+                  "text": "AWS Step Functions",
+                  "url": "https://aws.amazon.com/step-functions/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية التشغيل المعتمدة على الأحداث والإشارات المحيطية",
+          "paragraphs": [
+            {
+              "text": "تختلف الآلية البرمجية للوكلاء المحيطيين جذرياً عن الوكلاء التقلديين الذين يبدأ عملهم بطلب المستخدم. في النظام الجديد، يؤدي أي حدث نظامي مثل رفع ملف أو تغيير في قاعدة البيانات إلى تشغيل إشارة محيطية تقوم تلقائياً بإنشاء مهمة خاصة للوكيل المعني. وتحدد إعدادات هذه الإشارة ما إذا كان الوكيل سيقوم بالتنفيذ التلقائي أو انتظار مراجعة بشرية.",
+              "links": []
+            },
+            {
+              "text": "تتيح هذه الهندسة المرنة خيارين أساسيين عند رصد الحدث: إما الانتظار والظهور في لوحة المهام بحالة خمول للمراجعة البشرية الآمنة، أو التنفيذ الفوري للمهمة دون تدخل مسبق واللجوء إلى الإنسان فقط عند الحاجة لتوضيح أو موافقة عبر أداة تفاعلية مخصصة ومصممة خصيصاً لهذا الغرض.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات التقنية والأدوات اللازمة للنشر",
+          "paragraphs": [
+            {
+              "text": "يتطلب نشر وتفعيل نظام الوكلاء المحيطين اعتماد مجموعة من أدوات الإدارة والبنية التحتية السحابية. يجب على الفرق التقنية التأكد من توفر حساب سحابي يمتلك الصلاحيات اللازمة لإنشاء الأدوار والأدوات البرمجية، بالإضافة إلى تكوين واجهة سطر الأوامر الشهيرة AWS Command Line Infrastructure للتفاعل المباشر مع الموارد المتاحة في السحابة.",
+              "links": []
+            },
+            {
+              "text": "إلى جانب ذلك، تعتمد عملية النشر على مجموعة أدوات تطوير البنية التحتية البرمجية AWS Cloud Development Kit لتنفيذ عمليات الإعداد الأولي، واستخدام حاويات البرمجيات عبر منصة Docker لتغليف ونشر تطبيقات الوكلاء بكفاءة عالية داخل المستودعات المخصصة.",
+              "links": []
+            },
+            {
+              "text": "ولضمان عمل النماذج الأساسية بكفاءة، يتوجب على المسؤولين التحقق من تفعيل صلاحيات النماذج المطلوبة مثل نماذج الذكاء الاصطناعي المتقدمة من خلال دليل إدارة الوصول إلى النماذج في الخدمات المعنية، مع إمكانية مراجعة التفاصيل البرمجية الشاملة عبر مستودع الأمثلة المرجعية المخصص.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة دورة حياة المهام والتفاعل البشري",
+          "paragraphs": [
+            {
+              "text": "تعتمد دورة حياة الوكيل المحيطي على التكامل السلس بين معالجة الأحداث وإدارة الحالة لضمان عدم فقدان أي بيانات أثناء التوقف المؤقت بانتظار موافقة المستخدم. عندما يتطلب الأمر تدخلاً بشرياً، يرسل الوكيل استعلاماً عبر أداة مخصصة ليتوقف التنفيذ مؤقتاً حتى يتلقى الرد، ثم يستأنف عمله بدقة من نقطة التوقف السابقة.",
+              "links": []
+            },
+            {
+              "text": "تقدم الأمثلة البرمجية المتوفرة عبر كود المصدر والمرجع المتاح للمطورين فرصة مثالية لفهم كيفية بناء وتخصيص هذه المنظومة بالكامل بما يتناسب مع احتياجات المؤسسات المختلفة، مما يقلل من تعقيدات النشر في بيئات الإنتاج الحية.",
+              "links": []
+            },
+            {
+              "text": "باستخدام تقنيات الحاويات وأدوات التطوير السحابية الحديثة بما فيها بيئات تشغيل الحاويات مثل Docker، يمكن للفرق التقنية نشر تطبيقات تتسم بالموثوقية العالية والقابلية للتوسع لتلبية متطلبات معالجة البيانات المعقدة.",
+              "links": [
+                {
+                  "text": "Docker",
+                  "url": "https://www.docker.com/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Amazon Bedrock",
+        "AWS",
+        "الوكلاء المحيطيون",
+        "حوسبة سحابية",
+        "أتمتة"
+      ],
+      "entities": [
+        "Amazon Bedrock AgentCore",
+        "AWS",
+        "Amazon S3",
+        "AWS Lambda",
+        "Amazon DynamoDB",
+        "Docker"
+      ],
+      "article_type": "news",
+      "confidence_note": "تم الالتزام حصراً بالمعلومات الواردة في المصدر الرسمي مع الوفاء بالحد الأدنى لعدد الكلمات والمراجع المطلوبة."
+    },
+    "en": {
+      "title": "Building Ambient Agents with Amazon Bedrock AgentCore",
+      "description": "Learn how to build framework-agnostic ambient agents on Amazon Bedrock AgentCore that respond to event-driven signals and human-in-the-loop workflows.",
+      "deck": "A new architectural pattern for AI agents shifts the paradigm from chat prompts to event-driven signals using Amazon Bedrock AgentCore and AWS serverless infrastructure.",
+      "summary_bullets": [
+        "Ambient agents respond directly to event streams such as Amazon S3 file uploads, schedules, or monitoring alerts instead of relying solely on chat prompts.",
+        "The platform leverages Amazon Bedrock AgentCore Runtime to provide container-based hosting, session isolation, and long-running workload support.",
+        "Human-in-the-loop workflows are supported through a single ask_human tool and a dedicated Jobs page for reviews.",
+        "A reference implementation showcases how developers can combine AWS Lambda, Amazon SQS, and Amazon DynamoDB into a serverless ambient-agent platform."
+      ],
+      "sections": [
+        {
+          "heading": "Shifting From Chat Prompts to Event-Driven Signals",
+          "paragraphs": [
+            {
+              "text": "Traditional artificial intelligence experiences typically require a user to open a chat interface, type a prompt, and wait for a response. While effective for one-time queries, this request-response model limits agents to single-threaded conversations and requires manual intervention before any system can act. To address these operational bottlenecks, developers are exploring new architectural models like Ambient agents as detailed by industry frameworks.",
+              "links": [
+                {
+                  "text": "Ambient agents",
+                  "url": "https://blog.langchain.com/introducing-ambient-agents/"
+                }
+              ]
+            },
+            {
+              "text": "Ambient agents listen directly to event streams across infrastructure components—such as file uploads, database changes, or system alerts—and execute workflows in parallel. Instead of waiting for a human message, the event itself acts as the initial prompt. Organizations running on cloud infrastructure already maintain robust event sources like Amazon S3 event notifications, Amazon EventBridge rules, and AWS Lambda triggers, making it possible to bridge event data with intelligent agent reasoning.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Leveraging Amazon Bedrock AgentCore Runtime",
+          "paragraphs": [
+            {
+              "text": "The core infrastructure enabling this event-driven paradigm is Amazon Bedrock AgentCore, a platform designed to build, connect, and optimize agents at scale using any framework or model. AgentCore Runtime delivers a container-based execution environment equipped with built-in session isolation and long-running workload capabilities. Detailed information on platform features can be found in the official Amazon Bedrock AgentCore documentation.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "The execution environment supports session lengths capable of handling complete signal-to-agent and human-in-the-loop lifecycles. By integrating AWS Lambda for event processing and Amazon DynamoDB for state management, developers can construct fully serverless ambient-agent platforms. Furthermore, teams can switch foundation models with minimal configuration changes once they manage access to Amazon Bedrock foundation models properly within their target region.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Signal Configuration and Human-in-the-Loop Workflows",
+          "paragraphs": [
+            {
+              "text": "An ambient signal maps specific event sources directly to an agent, automatically generating a job when an event occurs. The behavior of this signal depends heavily on execution settings. When autoExecute is set to false, jobs sit on a review page in an idle status, awaiting human oversight. Conversely, setting autoExecute to true pushes jobs straight to worker queues for immediate autonomous execution, utilizing a single ask_human tool only when clarification or approval is required.",
+              "links": []
+            },
+            {
+              "text": "This human-in-the-loop framework lowers deployment stakes and increases user trust. While traditional orchestrators like AWS Step Functions handle automated routing, they lack the nuanced reasoning required to pause for ambiguity and ask clarifying questions. Ambient agents combine this conversational reasoning with automated system monitoring.",
+              "links": [
+                {
+                  "text": "AWS Step Functions",
+                  "url": "https://aws.amazon.com/step-functions/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Deployment Prerequisites and Reference Implementation",
+          "paragraphs": [
+            {
+              "text": "Deploying a complete ambient-agent platform requires several foundational tools and environment configurations. Developers need an active AWS account with sandbox administrator permissions, Python 3.11 or later for backend functions, Node.js 18 or later for frontend interfaces, and a locally running instance of Docker for managing container images.",
+              "links": [
+                {
+                  "text": "Docker",
+                  "url": "https://www.docker.com/"
+                }
+              ]
+            },
+            {
+              "text": "Additionally, administrators must configure the AWS Command Line Interface (AWS CLI) alongside the AWS Cloud Development Kit (AWS CDK) v2 to properly bootstrap resources in their designated region. Teams can review the complete codebase and deployment steps via the reference implementation provided by AWS samples.",
+              "links": [
+                {
+                  "text": "AWS Command Line Interface (AWS CLI)",
+                  "url": "https://docs.aws.amazon.com/cli/"
+                },
+                {
+                  "text": "AWS Cloud Development Kit (AWS CDK)",
+                  "url": "https://docs.aws.amazon.com/cdk/"
+                },
+                {
+                  "text": "reference implementation",
+                  "url": "https://github.com/aws-samples/sample-ambient-agent"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AgentCore",
+        "Ambient Agents",
+        "AWS Lambda",
+        "Artificial Intelligence",
+        "Cloud Computing",
+        "Serverless"
+      ],
+      "entities": [
+        "Amazon Bedrock",
+        "Amazon Bedrock AgentCore",
+        "AWS",
+        "Amazon S3",
+        "LangChain"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based on the provided official AWS Machine Learning Blog post detailing the Amazon Bedrock AgentCore ambient agent architecture."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 415,
+      "word_count_en": 573
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 698,
+      "word_count_en": 582
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "b7b8cdbba070bf33b22f",
+      "title": "Building ambient agents with Amazon Bedrock AgentCore: From event-driven signals to human-in-the-loop workflows",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 415,
+          "word_count_en": 573
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 698,
+          "word_count_en": 582
+        }
+      ]
+    }
+  ],
+  "slug": "building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-/hero.webp",
+    "card": "/forum/assets/posts/2026/10/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-/card.webp",
+    "social": "/forum/assets/posts/2026/10/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-/social.jpg",
+    "alt": {
+      "ar": "بناء وكلاء ذكاء اصطناعي محيطيين عبر Amazon Bedrock AgentCore",
+      "en": "Building Ambient Agents with Amazon Bedrock AgentCore"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/25/ML-19851-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-/inline-01.webp",
+        "width": 1400,
+        "height": 414,
+        "alt": {
+          "ar": "بناء وكلاء ذكاء اصطناعي محيطيين عبر Amazon Bedrock AgentCore",
+          "en": "Ambient agent overview diagram"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-the-loop-workflows/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/25/ML-19851-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-/inline-02.webp",
+        "width": 1400,
+        "height": 532,
+        "alt": {
+          "ar": "بناء وكلاء ذكاء اصطناعي محيطيين عبر Amazon Bedrock AgentCore",
+          "en": "Human-in-the-loop interaction patterns"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-the-loop-workflows/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/25/ML-19851-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-/inline-03.webp",
+        "width": 1308,
+        "height": 428,
+        "alt": {
+          "ar": "بناء وكلاء ذكاء اصطناعي محيطيين عبر Amazon Bedrock AgentCore",
+          "en": "Signals page showing the autoExecute toggle on a signal definition"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-the-loop-workflows/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/25/ML-19851-4.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-/inline-04.webp",
+        "width": 1400,
+        "height": 772,
+        "alt": {
+          "ar": "بناء وكلاء ذكاء اصطناعي محيطيين عبر Amazon Bedrock AgentCore",
+          "en": "Job execution sequence: API enqueue, SQS worker, AgentCore invocation, DynamoDB write-back"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-the-loop-workflows/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/25/ML-19851-5.png"
+      }
+    ]
+  }
 }
