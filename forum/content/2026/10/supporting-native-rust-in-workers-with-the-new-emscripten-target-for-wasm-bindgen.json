@@ -1,0 +1,379 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "15e7841ebe7c1dd7b7c4",
+  "slug": "supporting-native-rust-in-workers-with-the-new-emscripten-target-for-wasm-bindgen",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/supporting-native-rust-in-workers-with-the-new-emscripten-target-for-wasm-bindgen/",
+    "en": "/forum/en/apps/supporting-native-rust-in-workers-with-the-new-emscripten-target-for-wasm-bindgen/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cloudflare تتيح دعم Emscripten لتطبيق Rust على Workers",
+      "description": "تُعلن Cloudflare عن دعم تجريبي لاستهداف Emscripten في wasm-bindgen، مما يتيح تشغيل تطبيقات Rust الأصلية ومكتبات Tokio على منصة Workers العالمية بسلاسة.",
+      "deck": "تفتح Cloudflare الباب أمام مطوري Rust لبناء تطبيقات أصلية متقدمة على Workers عبر دعم Emscripten، مما يوسع نطاق التوافق مع مكتبات النظام وحلول الشبكات.",
+      "summaryBullets": [
+        "إطلاق معاينة تجريبية عامة لدعم هدف wasm32-unknown-emscripten في سلسلة أدوات wasm-bindgen.",
+        "تمكين تشغيل تطبيقات Rust الأصلية التي تعتمد على Tokio على منصة Cloudflare Workers.",
+        "توفير بنية تحتية افتراضية للميزات الأصلية مثل الجوارب والملفات عبر توافق Node.js.",
+        "نجاح تجربة تشغيل خادم Minecraft (Pumpkin) داخل Durable Object باستخدام جوارب TCP حقيقية."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق الدعم التجريبي لاستهداف Emscripten",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Cloudflare اليوم عن إطلاق أول معاينة تجريبية عامة لميزة جديدة تهدف إلى تحسين دعم كود Rust الأصلي على منصتها، بما في ذلك التطبيقات المعتمدة على إطار عمل Tokio. تمثل هذه الخطوة إضافة دعم من الدرجة الأولى لاستهداف مترجم Rust الخاص بـ Emscripten (wasm32-unknown-emscripten) ضمن سلسلة أدوات wasm-bindgen مفتوحة المصدر.",
+              "links": [
+                {
+                  "text": "wasm-bindgen",
+                  "url": "https://github.com/wasm-bindgen/wasm-bindgen"
+                }
+              ]
+            },
+            {
+              "text": "يعمل wasm-bindgen كسلسلة أدوات أساسية لتشغيل تطبيقات WebAssembly المبنية على Rust على بيئة تشغيل Workers التي تعتمد على محرك V8 لدى Cloudflare. كان تفعيل هدف Emscripten ضمن هذه السلسلة جهداً طويل الأمد بدأته Google قبل أكثر من عام، ثم تابعه مهندسو Cloudflare المسؤولون عن صيانة wasm-bindgen لمراجعته ودعمه فنياً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تعزيز التوافق مع المكتبات الأصلية",
+          "paragraphs": [
+            {
+              "text": "على الرغم من أن الميزة لا تزال في مرحلة ما قبل الإصدار النهائي، إلا أن الاختبارات الأولية أظهرت تحسناً كبيراً في توافق المكتبات مع Rust Workers. تتيح هذه التحديثات بناء ونشر العديد من المكتبات والتطبيقات التي كانت غير مدعومة سابقاً مباشرة على المنصة العالمية لـ Cloudflare، مع دعم قادم لإطار عمل Tokio غير المتزامن.",
+              "links": []
+            },
+            {
+              "text": "تُعد Emscripten سلسلة أدوات مترجم WebAssembly مفتوحة المصدر، أنشأتها Mozilla في البداية وتديرها حالياً مهندسون من Google. تتيح هذه الأداة تشغيل الكود الأصلي وربطه بمنصة الويب، مع دعم وتقليد الميزات المنصة مثل المؤقتات، عمليات نظام الملفات، والجوارب (Sockets).",
+              "links": [
+                {
+                  "text": "Emscripten",
+                  "url": "https://emscripten.org/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الاستفادة من توافق Node.js",
+          "paragraphs": [
+            {
+              "text": "بما أن Cloudflare Workers يدعم واجهات برمجة تطبيقات منصة الويب وميزات توافق Node.js، فقد تمكّن الفريق من دعم Emscripten على Workers باستخدام أعلام التجميع الخاصة بـ Node.js. هذا النهج يتيح التقليد الكامل للميزات المنصة الأصلية، مثل المؤقتات وعمليات نظام الملفات والجوارب، فوق واجهات Node.js الموجودة مسبقاً في المنصة.",
+              "links": [
+                {
+                  "text": "Node.js",
+                  "url": "http://node.js"
+                }
+              ]
+            },
+            {
+              "text": "بالإضافة إلى ذلك، يتيح العمل الجاري على دعم Tokio دمج الكود المصنوع فوق بيئة تشغيل Tokio غير المتزامنة بشكل كامل في بيئات الاستضافة القائمة على JavaScript. هذا التكامل يفتح آفاقاً جديدة للتطبيقات المعقدة التي تتطلب إدارة متقدمة للمهام غير المتزامنة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تعاون تقني بين Google وCloudflare",
+          "paragraphs": [
+            {
+              "text": "بدأت الحاجة إلى هذا التكامل عندما واجه Mitch Foley من فريق Google للأدوات القابلة للنقل (Portable Toolchains) تحدياً في تفاعل أدوات Rust WebAssembly مع لغة C++. كان الهدف هو استخدام wasm-bindgen لتوليد JavaScript المرافق، بينما يتولى رابط Emscripten (wasm-ld) ربط أي تبعيات C++ اللازمة.",
+              "links": []
+            },
+            {
+              "text": "واجه الفريق تعارضاً بين الأداةين، حيث افترض كل منهما مسؤوليته عن تحميل JavaScript وتوليد المخرجات النهائية. لحل هذه المشكلة، صاغ Foley وزميله Yifan Yang خطة تعاونية: تستمر Emscripten في قيادة البناء وتحميل وحدة Wasm وتوفير JavaScript المرافق، بينما ينتج wasm-bindgen نسخة أصغر وقابلة للنقل من روابط JavaScript الخاصة به، يمكن تضمينها مباشرة في نظام مكتبات Emscripten.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إمكانات التشغيل على Workers",
+          "paragraphs": [
+            {
+              "text": "بعد دمج دعم هدف wasm32-unknown-emscripten في wasm-bindgen، أظهرت النماذج الأولية المبكرة من مهندسي Cloudflare نجاحاً واضحاً في دعم هذا الهدف على Workers. عملت العديد من المكتبات فوراً دون تعديلات، بما في ذلك مكتبات النظام منخفضة المستوى، نظراً لدعم Emscripten المسبق لخاصية target_family = unix في Rust.",
+              "links": []
+            },
+            {
+              "text": "تطلبت بعض مكتبات النظام منخفضة المستوى التي لم تكن على دراية بـ Emscripten تعديلات بسيطة، مثل libc وsocket2 وMio. تركزت هذه التعديلات بشكل أساسي على إضافة هدف Emscripten إلى بوابات المنصة الحالية للسماح صراحةً بـ target_os = \"emscripten\" بدلاً من بوابات Wasm العامة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحدي دمج إطار عمل Tokio",
+          "paragraphs": [
+            {
+              "text": "كان أحد التحديات الأساسية هو دعم مكتبة Tokio، حيث أن Workers تعمل في خيط واحد وتستضيف داخل حلقة أحداث JavaScript، بينما صُمم Tokio حول عمليات الحجب المدعومة عبر دلالات إيقاف الخيوط (threaded parking). لا تتوافق هاتان النمودجان معاً، إذ لا يمكن لعمليات الحجب مثل قراءة جوارب معلقة أن تحجب حلقة أحداث JavaScript المشتركة.",
+              "links": []
+            },
+            {
+              "text": "لتجاوز هذه العقبة، ساهم فريق Cloudflare في حزم تعديلات كاملة لدعم Tokio قيد المراجعة حالياً في المشروع الأصلي (upstream)، مع دمج أول تعديل لدعم الهدف في Tokio. تتيح هذه التعديلات دعم كلا النهجين: دمج وعود JavaScript مع WebAssembly (JSPI) الذي يطابق دلالات الإيقاف في Tokio، أو تعديل Tokio لدعم تكامل حلقة الأحداث.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تجربة عملية: خادم Minecraft",
+          "paragraphs": [
+            {
+              "text": "لإظهار القدرات المدعومة، نجح الفريق في تشغيل خادم Minecraft أصلي بلغة Rust (يُعرف باسم Pumpkin) داخل كائن دائم (Durable Object) مع استقبال TCP، باستخدام جوارب TCP حقيقية عبر Tokio. توفر هذه التجربة أمثلة تطبيقية يمكن للمستخدمين تجربتها اليوم، بما في ذلك جوارب TCP على Workers باستخدام Emscripten وTokio.",
+              "links": []
+            },
+            {
+              "text": "يمكن للمطورين الاطلاع على توثيق Emscripten الخاص بـ wasm-bindgen لمزيد من المعلومات حول استخدام هذا الهدف، بما في ذلك إعدادات -sWASM_BINDGEN التي تضمن التوافق السلس بين سلسلة أدوات Emscripten وروابط wasm-bindgen.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Rust",
+        "Cloudflare Workers",
+        "Emscripten",
+        "wasm-bindgen",
+        "WebAssembly",
+        "Tokio",
+        "تطوير البرمجيات"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Google",
+        "Mozilla",
+        "wasm-bindgen",
+        "Emscripten",
+        "Tokio",
+        "Node.js",
+        "Pumpkin Minecraft Server"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "1 أكتوبر 2026",
+      "modifiedLabel": "1 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 758
+    },
+    "en": {
+      "title": "Cloudflare Adds Emscripten Target to Rust Workers",
+      "description": "Cloudflare announces an experimental preview supporting the Emscripten target for wasm-bindgen in Rust Workers, boosting library compatibility.",
+      "deck": "Cloudflare has announced a first public experimental preview bringing first-class support for the Emscripten Rust compiler target to wasm-bindgen and Cloudflare's Rust Workers.",
+      "summaryBullets": [
+        "Experimental support for the wasm32-unknown-emscripten target arrives for wasm-bindgen and Rust Workers.",
+        "The collaboration bridges the gap between C++ Emscripten codebases and Rust WebAssembly applications.",
+        "Upcoming support enables Tokio async and real TCP sockets on Cloudflare's global platform.",
+        "Developers can build previously unsupported libraries and run applications like a Rust-native Minecraft server."
+      ],
+      "sections": [
+        {
+          "heading": "Emscripten Target Arrives for Rust Workers",
+          "paragraphs": [
+            {
+              "text": "Cloudflare announced the first public experimental preview of a feature designed to better support native Rust code and Tokio-based applications directly on Workers. The update delivers first-class support for the Emscripten wasm32-unknown-emscripten Rust compiler target on the wasm-bindgen open source toolchain and Cloudflare's Rust Workers.",
+              "links": [
+                {
+                  "text": "wasm-bindgen",
+                  "url": "https://github.com/wasm-bindgen/wasm-bindgen"
+                }
+              ]
+            },
+            {
+              "text": "The toolchain powers Rust-based WebAssembly applications on Cloudflare's V8-based Workers Runtime. Enabling this target has been a long-term initiative initially started by Google over a year ago and further reviewed and supported by Cloudflare engineers who maintain the toolchain.",
+              "links": []
+            },
+            {
+              "text": "While still in a pre-release state, the integration opens new workflow possibilities for running native applications with Emscripten on the web, Node.js, and Cloudflare's global platform. Testing has shown significantly improved library compatibility for Rust Workers.",
+              "links": [
+                {
+                  "text": "Node.js",
+                  "url": "http://node.js"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Bridging C++ and Rust Ecosystems",
+          "paragraphs": [
+            {
+              "text": "The path to this release began when Mitch Foley on Google's Portable Toolchains team identified a need for Rust WebAssembly toolchains to interoperate seamlessly with C++. Another internal Google team wanted to use wasm-bindgen to interface with their JavaScript while allowing Emscripten's linker to handle C++ dependencies.",
+              "links": []
+            },
+            {
+              "text": "Internally, Google uses Emscripten in C++ codebases to generate JavaScript alongside applications. However, Emscripten previously lacked a robust binding system between Rust and JavaScript comparable to what was provided by the wasm-bindgen ecosystem.",
+              "links": []
+            },
+            {
+              "text": "Both tools historically assumed they were solely responsible for loading JavaScript and generating final outputs, creating a conflict that forced developers to choose one toolchain over the other. Foley and colleague Yifan Yang created a cooperative plan allowing Emscripten to drive the build while wasm-bindgen produces portable JavaScript bindings compatible with Emscripten's library system.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Interoperability and Configuration",
+          "paragraphs": [
+            {
+              "text": "With feedback from Google's Portable Toolchains team, the Wasm Tools team, and Cloudflare engineers, the required changes successfully landed in both projects. C++ code driven by Emscripten can now be built against static wasm-bindgen Rust code, supporting both binding layers simultaneously.",
+              "links": []
+            },
+            {
+              "text": "Similarly, Rust applications using wasm-bindgen can now target Emscripten. Developers can review the official wasm-bindgen Emscripten documentation page for comprehensive technical details on utilizing this target configuration.",
+              "links": [
+                {
+                  "text": "wasm-bindgen Emscripten documentation",
+                  "url": "https://wasm-bindgen.github.io/wasm-bindgen/reference/emscripten.html"
+                }
+              ]
+            },
+            {
+              "text": "The Emscripten toolchain, initially created by Mozilla and maintained by Google engineers, virtualizes platform features like timers, file system operations, and sockets. By leveraging Node.js compilation flags, Cloudflare Workers fully virtualize these native capabilities.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Library Compatibility and Tokio Support",
+          "paragraphs": [
+            {
+              "text": "Early prototypes by Cloudflare engineers demonstrated immediate success with low-level systems libraries because Emscripten already supports the target_family equal to unix environment in Rust. Libraries requiring minor patches primarily involved adding the Emscripten target to existing platform gates.",
+              "links": []
+            },
+            {
+              "text": "A critical foundational library requiring substantial work was Tokio. Because Cloudflare Workers are single-threaded and hosted within a JavaScript event loop, they do not inherently align with Tokio's threaded blocking operations.",
+              "links": []
+            },
+            {
+              "text": "To resolve this, Cloudflare contributed full Tokio support patchsets that are currently under upstream review, with the first target support patch already accepted. These advancements allowed engineers to run a Rust-native Minecraft server inside a Durable Object with TCP ingress using real TCP sockets via Tokio.",
+              "links": []
+            },
+            {
+              "text": "Cloudflare has made experimental patchsets and example applications available, including resources for building Emscripten Rust Workers and utilizing TCP Sockets on Workers with Emscripten and Tokio.",
+              "links": [
+                {
+                  "text": "TCP Sockets on Workers with Emscripten and Tokio",
+                  "url": "https://github.com/cloudflare/workers-rs/tree/main/examples/emscripten-tokio"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Rust",
+        "Emscripten",
+        "wasm-bindgen",
+        "WebAssembly",
+        "Workers",
+        "Tokio"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Google",
+        "Mozilla",
+        "Emscripten",
+        "wasm-bindgen",
+        "Tokio"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "October 1, 2026",
+      "modifiedLabel": "October 1, 2026",
+      "readMinutes": 3,
+      "wordCount": 591
+    }
+  },
+  "datePublished": "2026-10-01T03:36:46.962287+03:00",
+  "dateModified": "2026-10-01T03:36:46.962287+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/supporting-native-rust-in-workers-with-the-new-emscripten-target-for-wasm-bindgen/hero.webp",
+    "card": "/forum/assets/posts/2026/10/supporting-native-rust-in-workers-with-the-new-emscripten-target-for-wasm-bindgen/card.webp",
+    "social": "/forum/assets/posts/2026/10/supporting-native-rust-in-workers-with-the-new-emscripten-target-for-wasm-bindgen/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تتيح دعم Emscripten لتطبيق Rust على Workers",
+      "en": "Cloudflare Adds Emscripten Target to Rust Workers"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3AJHGRFR0ZE6MB7TYYXX16K.01M3AJHKNFWTPGSZVRX4VC9KM0.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/supporting-native-rust-in-workers-with-the-new-emscripten-target-for-wasm-bindgen/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "Cloudflare تتيح دعم Emscripten لتطبيق Rust على Workers",
+          "en": "Supporting native Rust in Workers with the new Emscripten target for wasm-bindgen"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/rust-workers-emscripten-target/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3AJHNET6S40HMF1AN5F4S7T.01M3AJHQ4Y8EQS3VYT88722YF1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/supporting-native-rust-in-workers-with-the-new-emscripten-target-for-wasm-bindgen/inline-02.webp",
+        "width": 1400,
+        "height": 787,
+        "alt": {
+          "ar": "Cloudflare تتيح دعم Emscripten لتطبيق Rust على Workers",
+          "en": "BLOG-3429 2.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/rust-workers-emscripten-target/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3AJHGMPHKMEVGVE0Z21PS1B.01M3AJHJV8Y7S8Q7TZSZW8JV8A.png&w=1430&h=804&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/supporting-native-rust-in-workers-with-the-new-emscripten-target-for-wasm-bindgen/inline-03.webp",
+        "width": 1119,
+        "height": 1050,
+        "alt": {
+          "ar": "Cloudflare تتيح دعم Emscripten لتطبيق Rust على Workers",
+          "en": "BLOG-3429 3.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/rust-workers-emscripten-target/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3HS8EF13M0YNPTD7AN9E51G.01M3HS8FGHK4FHG67Q9EFVQM60.png&w=1430&h=1342&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/rust-workers-emscripten-target/",
+      "type": "official",
+      "title": "Supporting native Rust in Workers with the new Emscripten target for wasm-bindgen"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/rust-workers-emscripten-target",
+  "sourceTitle": "Supporting native Rust in Workers with the new Emscripten target for wasm-bindgen",
+  "trendScore": 90.92,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-01T00:36:46+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/supporting-native-rust-in-workers-with-the-new-emscripten-target-for-wasm-bindgen.json"
+}
