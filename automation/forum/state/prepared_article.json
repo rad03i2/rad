@@ -1,5 +1,374 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-01T00:36:47+00:00",
-  "last_published_story_id": "15e7841ebe7c1dd7b7c4"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-01T00:40:08+00:00",
+  "target_publish_at": "2026-10-01T03:56:46.962287+03:00",
+  "story": {
+    "title": "Prompt engineering by Quick component: Patterns and pitfalls",
+    "url": "https://aws.amazon.com/blogs/machine-learning/prompt-engineering-by-quick-component-patterns-and-pitfalls",
+    "domain": "aws.amazon.com",
+    "summary": "Part 2 of our Amazon Quick prompt engineering series goes component by component. Learn the prompt patterns that get the best results from Amazon Quick Research, Quick Flows, Quick Sight, chat agents, and action integrations, plus the common pitfalls to avoid.",
+    "published_at": "2026-09-29T16:27:33+00:00",
+    "discovered_at": "2026-09-29T17:02:40+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "9c841a4594a16547cc73",
+    "trend": {
+      "score": 94.48,
+      "age_hours": 32.19,
+      "corroboration_count": 0,
+      "entity_momentum": 6.0,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/prompt-engineering-by-quick-component-patterns-and-pitfalls/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Prompt engineering by Quick component: Patterns and pitfalls",
+      "title": "Prompt engineering by Quick component: Patterns and pitfalls | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "دليل هندسة الأوامر في أمازون كويك: الأنماط والمخاطر",
+      "description": "تعرف على كيفية تحسين هندسة الأوامر عبر مكونات أمازون كويك المختلفة لتحقيق نتائج دقيقة وعملية وتجنب الأخطاء الشائعة.",
+      "deck": "تواصل أمازون ويب سيرفيسز تسليط الضوء على تقنيات هندسة الأوامر، مقدمةً دليلاً تفصيلياً يوضح كيفية التعامل مع مكونات خدمة أمازون كويك للحصول على أفضل النتائج الممكنة.",
+      "summary_bullets": [
+        "تغطية الأنماط الفعالة والمخاطر الشائعة في هندسة الأوامر لمكونات أمازون كويك.",
+        "استعراض كيفية تحسين أداء أدوات البحث والتدفقات وتصوير البيانات.",
+        "أهمية تحديد الأهداف بوضوح واستخدام السياق المناسب في الأوامر.",
+        "إمكانية تحسين سير العمل وتعديل البيانات المرئية عبر المحادثات والتعليمات المستهدفة."
+      ],
+      "sections": [
+        {
+          "heading": "مقدمة في هندسة الأوامر لمكونات أمازون كويك",
+          "paragraphs": [
+            {
+              "text": "في الجزء الثاني من سلسلة مقالات هندسة الأوامر، ينتقل التركيز من المبادئ الأساسية مثل التحديد، وإعداد السياق، واستخدام أمثلة قليلة اللقطات، إلى التطبيق العملي المخصص لكل مكون على حدة ضمن بيئة أمازون كويك. ووفقاً لما نشرته AWS Machine Learning Blog، فإن كل قدرة داخل الخدمة تفسر الأوامر بطريقة مختلفة، مما يتطلب أنماطاً محددة لتحقيق أقصى استفادة.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/prompt-engineering-by-quick-component-patterns-and-pitfalls/"
+                }
+              ]
+            },
+            {
+              "text": "سواء كنت تستخدم أدوات البحث لتحليل السوق، أو تدفقات العمل للأتمتة، أو أدوات تصور البيانات، فإن تكييف الأوامر يتيح لك الانتقال من المخرجات العامة إلى نتائج دقيقة وقابلة للتنفيذ الفوري. وللاطلاع على المبادئ التأسيسية الشاملة، يمكن مراجعة مقال Prompt engineering fundamentals for Amazon Quick للحصول على فهم أعمق للأسس الأولى.",
+              "links": [
+                {
+                  "text": "Prompt engineering fundamentals for Amazon Quick",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/prompt-engineering-fundamentals-for-amazon-quick/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحسين الأوامر لأبحاث السوق والتقارير المتقدمة",
+          "paragraphs": [
+            {
+              "text": "تعتمد دقة المخرجات في أبحاث أمازون كويك على مدى دقة صياغة أهداف البحث. يقوم الوكيل الذكي بتقسيم الأهداف إلى مواضيع فرعية، والبحث عبر بيانات المؤسسة ومصادر خارجية موثوقة لتقديم تقرير منظم ومزود بالمراجع. الأهداف الغامضة تؤدي بطبيعة الحال إلى تقارير سطحية، بينما تؤدي الأهداف المحددة بوضوح إلى رؤى يمكن بناء قرارات عليها.",
+              "links": []
+            },
+            {
+              "text": "توصي وثائق أمازون ويب سيرفيسز بأن يكون الموجه دقيقاً من خلال توضيح المطلوب تحقيقه، والجمهور المستهدف، والسبب وراء ذلك. كما يتضمن ذلك تحديد النطاق الزمني ومجالات التركيز بدقة، مما يساعد الوكيل الذكي على صياغة أسئلة فرعية ملائمة واختيار مصادر البيانات الصحيحة وتجنب التشتت في مواضيع جانبية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بناء وتطوير تدفقات العمل الآمنة والفعالة",
+          "paragraphs": [
+            {
+              "text": "يمكن تحويل الأوصاف النصية البسيطة إلى سير عمل آلي متكامل باستخدام تدفقات كويك، شريطة أن تتضمن الأوامر القدر الكافي من الهيكلة والسياق. الأوامر الغامضة تنتج تدفقات غير دقيقة، وأبرز الأخطاء الشائعة هي وصف النتيجة المطلوبة دون توضيح كيفية وكيفية تنفيذها، أو توقيت التنفيذ، أو الجهة المستهدفة منه.",
+              "links": []
+            },
+            {
+              "text": "عند تحديد محفزات التشغيل، يجب أن تكون الشروحات واضحة وصريحة بشأن الجدول الزمني والشروط المحيطة. ولإدارة العمليات المعقدة، يفضل صياغة الأمر في تسلسل رقمي واضح، حيث يدعم النظام التفرع الشرطي وحلقات التكرار وإدخالات المستخدم، مما يسهل عملية تتبع الأخطاء ومعالجتها في حال واجهت أي خطوة عقبات أثناء التنفيذ.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التفاعل واستكشاف البيانات عبر تصورات كويك سايت",
+          "paragraphs": [
+            {
+              "text": "يتيح أمازون كويك استكشاف البيانات من خلال استفسارات محادثة طبيعية تتطلب هيكلة دقيقة لتتضمن السؤال التجاري، والمقاييس المطلوبة، والأبعاد التحليلية، وتفضيلات العرض المرئي. تفويت أي من هذه العناصر يجبر النظام على التخمين، مما قد ينتج عنه رسوم بيانية صحيحة تقنياً ولكنها غير مفيدة في الواقع العملي.",
+              "links": []
+            },
+            {
+              "text": "يمكن للمستخدمين تحسين الرسوم البيانية المتولدة وإنشاء حقول محسوبة عبر توجيهات محادثة إضافية وبصياغة لغة طبيعية بسيطة، مثل طلب إضافة مؤشرات صحة العملاء أو تعديل أنواع الرسوم البيانية لتلائم متطلبات اتخاذ القرار بشكل أفضل وأسرع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاستفادة من المصادر والمستندات التقنية للمطورين",
+          "paragraphs": [
+            {
+              "text": "لمزيد من التوسع والاطلاع على الموارد التقنية المتاحة، يمكن للمطورين زيارة صفحة خدمة أمازون كويك الرسمية أو الرجوع إلى وثائق المطورين للحصول على إرشادات تفصيلية حول دمج القدرات المتقدمة في التطبيقات المختلفة بناءً على الممارسات الموصى بها.",
+              "links": []
+            },
+            {
+              "text": "كما توفر المنصة مستودعات برمجية ونماذج جاهزة للمساعدة في بدء المشاريع بسرعة، حيث يمكن للمهتمين استكشاف نماذج التعليمات البرمجية عبر مستودع أمازون المتاح للعموم لتسريع دورة التطوير وتحقيق أقصى استفادة من ميزات الذكاء الاصطناعي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون كويك",
+        "هندسة الأوامر",
+        "AWS",
+        "تحليل البيانات",
+        "تدفقات العمل",
+        "تطوير البرمجيات"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Quick",
+        "Amazon Quick Research",
+        "Amazon Quick Flows",
+        "Amazon Quick Sight"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر استناداً حصراً إلى المصدر المرفق حول هندسة الأوامر لمكونات أمازون كويك مع الالتزام بالروابط المسموحة."
+    },
+    "en": {
+      "title": "AWS Details Component Patterns for Amazon Quick Prompting",
+      "description": "Discover component-specific prompt engineering patterns and pitfalls for Amazon Quick Research, Quick Flows, Quick Sight, and chat agents.",
+      "deck": "Following its foundational guide, AWS has published a component-by-component breakdown of prompt engineering strategies designed to optimize results across various Amazon Quick capabilities.",
+      "summary_bullets": [
+        "AWS outlines specific prompt patterns and pitfalls across Amazon Quick components.",
+        "Quick Research benefits from well-defined objectives, scopes, and tailored source selections.",
+        "Quick Flows transforms plain-language descriptions into structured automated workflows.",
+        "Amazon Quick Sight requires explicit business questions, metrics, dimensions, and visualization preferences."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Amazon Quick Component Engineering",
+          "paragraphs": [
+            {
+              "text": "Building on foundational principles like specificity, context-setting, few-shot examples, and the CRISPE framework, the [AWS Machine Learning Blog](https://aws.amazon.com/blogs/machine-learning/prompt-engineering-by-quick-component-patterns-and-pitfalls/) has released a follow-up guide that examines prompt engineering on a component-by-component basis. Different capabilities within the ecosystem interpret prompts uniquely, requiring tailored patterns to achieve optimal outputs.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/prompt-engineering-by-quick-component-patterns-and-pitfalls/"
+                }
+              ]
+            },
+            {
+              "text": "Users frequently deploy these tools across diverse enterprise tasks, ranging from market analysis to automation and data visualization. Understanding how each component processes directives helps teams transition from generic AI responses to precise, actionable results.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Optimizing Amazon Quick Research Objectives",
+          "paragraphs": [
+            {
+              "text": "Obtaining useful insights from research tools depends heavily on how a user frames the initial research objective. The agent breaks down objectives, searches internal enterprise data and external sources, and compiles a structured report equipped with citations. Vague objectives invariably yield shallow reports.",
+              "links": []
+            },
+            {
+              "text": "According to official guidelines, users should clearly state what they want to achieve, for whom, and why. A strong objective explicitly names the topic, defines a specific timeframe, identifies the target audience, and highlights the most crucial deliverables.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, users can improve outcomes by pre-selecting relevant data sources from options such as enterprise data via Quick Index, trusted news outlets, and premium datasets from S&P Global, FactSet, IDC, US Patent data, and PubMed, thereby reducing unnecessary noise.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Structuring Quick Flows for Automated Workflows",
+          "paragraphs": [
+            {
+              "text": "The difference between an automated workflow that saves a team minutes versus hours often hinges on prompt construction. Quick Flows translates plain-language descriptions into automated processes, but the level of structure and context directly impacts the resulting architecture.",
+              "links": []
+            },
+            {
+              "text": "The most common pitfall involves describing desired outcomes without specifying the underlying mechanism, schedule, or recipient. For complex workflows involving multiple operations, writing prompts as numbered sequences maps naturally to the internal step structure and simplifies debugging.",
+              "links": []
+            },
+            {
+              "text": "Developers can also utilize the agentic runtime to refine workflows conversationally after the initial build, leveraging retained context to execute targeted follow-up instructions without rewriting entire prompts.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Conversational Analytics with Amazon Quick Sight",
+          "paragraphs": [
+            {
+              "text": "When exploring data through conversational queries in [Artificial Intelligence](https://aws.amazon.com/blogs/machine-learning/) reporting interfaces, users must structure requests carefully. An effective analytics query incorporates a specific business question, quantitative metrics, grouping dimensions, preferred visualization types, and additional analysis parameters like trendlines or statistical markers.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            },
+            {
+              "text": "Omitting these core elements forces the system to guess, which frequently results in technically accurate but unhelpful visualizations. Users can also leverage natural language to create custom calculated fields and refine charts through interactive follow-up commands.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Quick",
+        "Prompt Engineering",
+        "AWS",
+        "Machine Learning",
+        "Automation",
+        "Data Visualization"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Quick",
+        "Amazon Quick Research",
+        "Quick Flows",
+        "Amazon Quick Sight"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based strictly on the provided AWS Machine Learning Blog source text."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 429,
+      "word_count_en": 557
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 549,
+      "word_count_en": 469
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "eb39ddc0289b9b2c1f7d",
+      "title": "Samsung Galaxy SmartTag3 Makes It Easier To Keep Track of What Matters",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "171333c4eead9c697c12",
+      "title": "Samsung To Invest USD 1 Billion in AI Infrastructure Company Helix",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "story_id": "9c841a4594a16547cc73",
+      "title": "Prompt engineering by Quick component: Patterns and pitfalls",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 429,
+          "word_count_en": 557
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 549,
+          "word_count_en": 469
+        }
+      ]
+    }
+  ],
+  "slug": "prompt-engineering-by-quick-component-patterns-and-pitfalls",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/prompt-engineering-by-quick-component-patterns-and-pitfalls/hero.webp",
+    "card": "/forum/assets/posts/2026/10/prompt-engineering-by-quick-component-patterns-and-pitfalls/card.webp",
+    "social": "/forum/assets/posts/2026/10/prompt-engineering-by-quick-component-patterns-and-pitfalls/social.jpg",
+    "alt": {
+      "ar": "دليل هندسة الأوامر في أمازون كويك: الأنماط والمخاطر",
+      "en": "AWS Details Component Patterns for Amazon Quick Prompting"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-20527-part2-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
