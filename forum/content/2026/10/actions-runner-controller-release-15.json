@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "a343b310e28c339784b3",
+  "slug": "actions-runner-controller-release-15",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/actions-runner-controller-release-15/",
+    "en": "/forum/en/apps/actions-runner-controller-release-15/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إطلاق الإصدار 0.15.0 من Actions Runner Controller لتعزيز استقرار Kubernetes",
+      "description": "أطلقت GitHub تحديثاً جديداً لـ Actions Runner Controller يركز على تحسين الموثوقية وقابلية التوسع. تعرف على كيفية تقليل الانقطاعات أثناء الترقية وإدارة أساطيل أكبر من المنفذين بكفاءة.",
+      "deck": "يهدف التحديث الجديد إلى تسهيل إدارة مجموعات المنفذين الكبيرة من خلال تحسينات جوهرية في الأداء والمراقبة، مما يقلل من تعقيد العمليات اليومية على بيئات Kubernetes.",
+      "summaryBullets": [
+        "تحسين آلية الترقية لتقليل الانقطاعات عبر تحديث الموارد في مكانها بدلاً من إعادة بنائها.",
+        "إمكانية إعادة تسجيل مجموعات المنفذين تلقائياً عند فقدانها من خدمة Actions.",
+        "تقليل حجم الطلبات المرسلة إلى واجهة Kubernetes API باستخدام طلبات التصحيح (Patch) بدلاً من التحديث الكامل.",
+        "إضافة خيارات لضبط معدل الطلبات (QPS) والتوازي (Concurrency) لتحسين أداء المتحكم في العناقيد الكبيرة."
+      ],
+      "sections": [
+        {
+          "heading": "تحديثات جوهرية في إدارة المنفذين",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة GitHub عن إصدار الإصدار 0.15.0 من أداة Actions Runner Controller، وهو تحديث يركز بشكل أساسي على تعزيز الموثوقية وقابلية التوسع ومراقبة مجموعات المنفذين (Runner Scale Sets). يهدف هذا التحديث إلى تمكين المطورين من تشغيل أساطيل أكبر من المنفذين مع تقليل الانقطاعات التي قد تحدث أثناء عمليات الترقية أو تحديثات واجهة Kubernetes API. تأتي هذه التحسينات استجابةً لاحتياجات المؤسسات التي تعتمد على بيئات Kubernetes واسعة النطاق لتنفيذ عملياتها التلقائية. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-01-actions-runner-controller-release-0-15-0/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تقليل الانقطاعات أثناء الترقية",
+          "paragraphs": [
+            {
+              "text": "من أبرز الميزات الجديدة في هذا الإصدار هو تغيير آلية ترقية إصدارات التصحيح (Patch version upgrades). بدلاً من إعادة إنشاء الموارد، يقوم المتحكم الآن بتحديث الموارد في مكانها (in-place). هذا التغيير يقلل بشكل كبير من الانقطاعات بين مجموعات المنفذين التلقائية (Autoscaling runner sets) ومجموعات المنفذين المؤقتة (Ephemeral runner sets). كما أصبحت سلوكيات إيقاف تشغيل المتحكم أكثر موثوقية، حيث أصبح من الممكن ضبط فترة سماح الإنهاء (terminationGracePeriodSeconds) لتتوافق مع مهلة الإيقاف السليم لإدارة المتحكم، مما يضمن معالجة الطلبات الجارية بشكل صحيح قبل الإغلاق. ويمكن الرجوع إلى Back to changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات في كفاءة واجهة Kubernetes API",
+          "paragraphs": [
+            {
+              "text": "ركّز فريق التطوير على تحسين كفاءة التفاعل مع واجهة Kubernetes API لتقليل الحمل على العنقود. أصبحت تحديثات المتحكم تستخدم طلبات التصحيح (Patch requests) بدلاً من طلبات التحديث الكاملة، مما يقلل من حجم البيانات المرسلة. بالإضافة إلى ذلك، تم نقل تجميع حالة المنفذين (Runner status aggregation) إلى مقاييس (Metrics) لمجموعات EphemeralRunnerSet وAutoscalingRunnerSet، مما يقلل من عدد طلبات التصحيح المطلوبة لتحديث الحالة. هذه التغييرات تساهم في تحسين الأداء العام وتقليل استهلاك الموارد في العناقيد الكبيرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة التوازي ومعدل الطلبات",
+          "paragraphs": [
+            {
+              "text": "أضاف الإصدار الجديد خيارات متقدمة لضبط أداء المتحكم. أصبح من الممكن الآن ضبط حدود معدل عميل Kubernetes الخاص بالمتحكم (Listener Kubernetes client) من خلال إعدادات QPS وburst. كما يمكن ضبط التوازي (Concurrency) للمتحكم على مستوى عام أو لكل متحكم على حدة باستخدام أعلام max-concurrent-reconciles. كما قام المتحكم بترشيح الأحداث الواردة، مما يؤدي إلى إجراء عدد أقل من عمليات المصالحة (reconciliations) مقارنة بالإصدارات السابقة، مما يحسن من استجابة النظام للأحداث الفعلية المهمة فقط.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات في إدارة المنفذين المؤقتين",
+          "paragraphs": [
+            {
+              "text": "شهدت إدارة المنفذين المؤقتين (Ephemeral runners) تحسينات في سرعة الحذف. يتم الآن تخطي الفحص الخادمي لإزالة المنفذ عندما ينتهي حاوية المنفذ (runner pod) بنجاح، مما يسرّع من عملية تحرير الموارد. كما أصبحت مجموعات المنفذين قابلة لإعادة التسجيل (reregistered) إذا لم تعد مجموعة المنفذين المسجلة موجودة في خدمة Actions، مما يزيد من مرونة النظام في التعامل مع حالات عدم الاتساق المحتملة بين المتحكم وخدمة GitHub Actions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاستخدام الأمثل للعناقيد الكبيرة",
+          "paragraphs": [
+            {
+              "text": "تكون هذه التغييرات مفيدة بشكل خاص للعناقيد التي تحتوي على العديد من مجموعات المنفذين، حيث تلعب من خلال المتحكم، والإيقاف السليم، والمقاييس الدقيقة دوراً حاسماً في العمليات اليومية. توفر هذه التحديثات أدوات أفضل للمهندسين لضمان استقرار بيئات التنفيذ الخاصة بهم. يمكن للمستخدمين الاطلاع على التفاصيل التقنية الكاملة وإرشادات الإعداد في وثائق Actions Runner Controller الرسمية، التي توفر أدلة مفصلة حول كيفية الاستفادة من هذه الميزات الجديدة في بيئات الإنتاج.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub Actions",
+        "Kubernetes",
+        "DevOps",
+        "Actions Runner Controller",
+        "Self-hosted Runners",
+        "CI/CD"
+      ],
+      "entities": [
+        "GitHub",
+        "Actions Runner Controller",
+        "Kubernetes",
+        "GitHub Actions"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "1 أكتوبر 2026",
+      "modifiedLabel": "1 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 560
+    },
+    "en": {
+      "title": "GitHub Releases Actions Runner Controller 0.15.0",
+      "description": "GitHub announces the release of Actions Runner Controller 0.15.0, featuring significant reliability, scalability, and observability improvements.",
+      "deck": "The latest version of the Actions Runner Controller introduces key updates designed to help development teams operate larger runner fleets with fewer disruptions during upgrades and Kubernetes changes.",
+      "summaryBullets": [
+        "Actions Runner Controller 0.15.0 brings reliability, scalability, and observability enhancements for runner scale sets.",
+        "Patch version upgrades now update resources in place to minimize disruptions between autoscaling and ephemeral runner sets.",
+        "Controller shutdown behavior is improved with configurable terminationGracePeriodSeconds matching graceful shutdown timeouts.",
+        "Performance optimizations reduce Kubernetes API payload sizes, status patch requests, and incoming event reconciliations."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of Actions Runner Controller 0.15.0",
+          "paragraphs": [
+            {
+              "text": "GitHub has officially released the Actions Runner Controller 0.15.0 update, delivering a series of critical improvements focused on reliability, scalability, and observability for runner scale sets. Detailed in the official [GitHub Changelog](https://github.blog/changelog/2026-10-01-actions-runner-controller-release-0-15-0/), these new updates are specifically engineered to assist organizations in operating significantly larger runner fleets while experiencing fewer disruptions during routine upgrades and Kubernetes API modifications.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-01-actions-runner-controller-release-0-15-0/"
+                }
+              ]
+            },
+            {
+              "text": "Managing extensive Kubernetes infrastructure for continuous integration workloads often presents challenges during cluster maintenance and scaling events. The latest release addresses several underlying operational hurdles, making day-to-day management more predictable for platform engineers and system administrators who rely on robust automation pipelines.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Enhancing Upgrades and Lifecycle Management",
+          "paragraphs": [
+            {
+              "text": "Among the prominent changes introduced in version 0.15.0 is the handling of patch version upgrades. These upgrades now update resources directly in place, effectively reducing the disruption experienced between autoscaling runner sets and ephemeral runner sets.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, controller shutdown behavior has been made notably more reliable. The terminationGracePeriodSeconds setting is now fully configurable and properly aligns with the controller manager's graceful shutdown timeout. Additionally, runner scale sets now possess the ability to be reregistered automatically if the recorded scale set is found to no longer exist within the Actions service.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Kubernetes API and Performance Optimizations",
+          "paragraphs": [
+            {
+              "text": "To improve efficiency and lower the strain on Kubernetes clusters, controller updates have transitioned to using patch requests instead of full update requests. This structural shift substantially reduces the overall Kubernetes API payload size.",
+              "links": []
+            },
+            {
+              "text": "In addition, runner status aggregation has successfully moved to metrics for both EphemeralRunnerSet and AutoscalingRunnerSet, which directly cuts down on unnecessary status patch requests. Listener Kubernetes client rate limits can now also be conveniently configured via QPS and burst settings, giving operators deeper control over network traffic.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Throughput and Event Handling Improvements",
+          "paragraphs": [
+            {
+              "text": "Throughput and resource consumption have received notable tuning in this release. Controller concurrency is now adjustable both globally and on a per-controller basis utilizing max-concurrent-reconciles flags. Moreover, controllers actively filter incoming events so that they execute fewer reconciliations than in previous versions.",
+              "links": []
+            },
+            {
+              "text": "Ephemeral runners can also be deleted more rapidly because the server-side check for runner removal is bypassed whenever the runner pod exits successfully. These combined modifications prove especially beneficial for clusters managing a high volume of runner scale sets, where maintaining precise controller throughput, graceful shutdowns, and accurate metrics remains critical.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Documentation and Further Resources",
+          "paragraphs": [
+            {
+              "text": "Organizations looking to implement these updates and review configuration best practices can consult the official [Actions Runner Controller documentation](https://docs.github.com/actions/hosting-your-own-runners/managing-self-hosted-runners-with-actions-runner-controller) provided by GitHub for comprehensive technical guidelines and setup instructions.",
+              "links": [
+                {
+                  "text": "Actions Runner Controller documentation",
+                  "url": "https://docs.github.com/actions/hosting-your-own-runners/managing-self-hosted-runners-with-actions-runner-controller"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "Actions Runner Controller",
+        "Kubernetes",
+        "DevOps",
+        "CI/CD",
+        "Container Orchestration",
+        "Software Development"
+      ],
+      "entities": [
+        "GitHub",
+        "Actions Runner Controller",
+        "Kubernetes"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "October 1, 2026",
+      "modifiedLabel": "October 1, 2026",
+      "readMinutes": 3,
+      "wordCount": 503
+    }
+  },
+  "datePublished": "2026-10-01T17:33:17.386618+03:00",
+  "dateModified": "2026-10-01T17:33:17.386618+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/actions-runner-controller-release-15/hero.webp",
+    "card": "/forum/assets/posts/2026/10/actions-runner-controller-release-15/card.webp",
+    "social": "/forum/assets/posts/2026/10/actions-runner-controller-release-15/social.jpg",
+    "alt": {
+      "ar": "إطلاق الإصدار 0.15.0 من Actions Runner Controller لتعزيز استقرار Kubernetes",
+      "en": "GitHub Releases Actions Runner Controller 0.15.0"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/09/662413020-3d7150c4-5663-4416-b959-8bed4331f5b4.jpeg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-10-01-actions-runner-controller-release-0-15-0/",
+      "type": "official",
+      "title": "Actions Runner Controller release 0.15.0"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-10-01-actions-runner-controller-release-0-15-0",
+  "sourceTitle": "Actions Runner Controller release 0.15.0",
+  "trendScore": 123.52,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-01T14:33:17+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/actions-runner-controller-release-15.json"
+}
