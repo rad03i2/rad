@@ -1,5 +1,385 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-02T17:13:20+00:00",
-  "last_published_story_id": "ee989b2407ae159e7383"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-02T17:17:19+00:00",
+  "target_publish_at": "2026-10-02T20:33:19.835843+03:00",
+  "story": {
+    "title": "Announcing Cloudflare OHTTP Gateway – expanding access to Cloudflare’s privacy-preserving infrastructure",
+    "url": "https://blog.cloudflare.com/announcing-cloudflare-ohttp-gateway",
+    "domain": "blog.cloudflare.com",
+    "summary": "We’re announcing the closed beta of a self-serve Cloudflare OHTTP Gateway. We’re also renaming our Privacy Gateway to Cloudflare OHTTP Relay to better distinguish the two products.",
+    "published_at": "2026-10-02T13:00:00+00:00",
+    "discovered_at": "2026-10-02T13:11:16+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "web",
+    "category_label": "الويب",
+    "score": 61,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "8d178ea4e16be1f9543e",
+    "trend": {
+      "score": 107.85,
+      "age_hours": 4.28,
+      "corroboration_count": 0,
+      "entity_momentum": 9.51,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/announcing-cloudflare-ohttp-gateway/",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Announcing Cloudflare OHTTP Gateway – expanding access to Cloudflare’s privacy-preserving infrastructure",
+      "title": "Announcing Cloudflare OHTTP Gateway â expanding access to Cloudflareâs privacy-preserving infrastructure | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "كلودفلير تطلق بوابة OHTTP وتعيد تسمية منتج الخادم الوسيط",
+      "description": "أعلنت شركة كلودفلير عن النسخة التجريبية المغلقة لبوابة OHTTP الجديدة لتعزيز البنية التحتية لحماية الخصوصية عبر الإنترنت، مع إعادة تسمية Privacy Gateway.",
+      "deck": "تسعى شركة كلودفلير لتوسيع نطاق البنية التحتية المحافظة على الخصوصية عبر إطلاق بوابة OHTTP الجديدة، وإعادة تسمية منتج الخادم الوسيط التابع لها لتوضيح الفوارق بين المنتجات.",
+      "summary_bullets": [
+        "إطلاق النسخة التجريبية المغلقة لبوابة Cloudflare OHTTP Gateway الجديدة.",
+        "إعادة تسمية Privacy Gateway الحالية لتصبح Cloudflare OHTTP Relay.",
+        "اعتماد بروتوكول Oblivious HTTP (OHTTP) القيعي الصادر عن منظمة IETF.",
+        "فصل الثقة بين الخادم الوسيط (Relay) والبوابة (Gateway) لحماية بيانات المستخدمين.",
+        "تقليل زمن الانتقال واستغلال شبكة التوزيع العالمية للشركة بكفاءة عالية."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الخصوصية الرقمية والبنية التحتية",
+          "paragraphs": [
+            {
+              "text": "يتحمل المستخدمون العاديون اليوم عبئاً كبيراً فيما يتعلق بحماية الخصوصية عبر الإنترنت، حيث يُطلب منهم غالباً استخدام شبكات افتراضية خاصة VPN، أو تعطيل ملفات تعريف الارتباط، أو تثبيت برامج حظر الإعلانات لتجنب أدوات التتبع الخاصة بالأطراف الثالثة أو الإعلانات المستهدفة. وفي المقابل، قد ينتهي المطاف ببعض مطوري التطبيقات بمعرفة معلومات عن مستخدميهم أكثر مما ينبغي؛ إذ تؤدي عمليات تبادل البيانات التقليدية بين العميل والخادم إلى ترك أثر رقمي يضم عنوان بروتوكول الإنترنت الخاص بالعميل أو بصمة بروتوكول الأمان TLS، مما يمنح الجهات المرتبطة بالموقع قدرة كبيرة على تتبع الأنشطة.",
+              "links": []
+            },
+            {
+              "text": "ولهذا السبب، تعمل الشركات التقنية الكبرى على بناء بنية تحتية تساعد المطورين على دمج ميزات الخصوصية في تطبيقاتهم بشكل افتراضي. ويعد بروتوكول Oblivious HTTP (OHTTP) معياراً أقرته منظمة IETF ومصمماً خصيصاً لتمكين خلفيات التطبيقات من استقبال طلبات HTTP دون الاطلاع على عناوين بروتوكول الإنترنت الخاصة بالمستخدمين. وتتيح هذه التقنية فصل الهويات الشخصية عن محتوى الطلبات المرسلة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إطلاق بوابة Cloudflare OHTTP Gateway",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة كلودفلير رسمياً عن إطلاق النسخة التجريبية المغلقة من منتجها الجديد المسمى Cloudflare OHTTP Gateway. وستتيح هذه الخطوة للعملاء تفعيل بوابة OHTTP الجديدة كإضافة مدفوعة لأنظمتهم، والبدء في استقبال حركة بيانات OHTTP ببضع نقرات بسيطة، حيث يمكن للمهتمين الانضمام إلى قائمة الانتظار عبر تعبئة النموذج المخصص المتاح على موقع الشركة.",
+              "links": []
+            },
+            {
+              "text": "وفي سياق متصل، أعلنت الشركة أيضاً عن إعادة تسمية منتج Privacy Gateway التابع لها ليصبح Cloudflare OHTTP Relay، وذلك بهدف التمييز بوضوح بين المنتجين المختلفين وضمان فهم آليات العمل لكل منهما ضمن البنية التحتية للشبكة.",
+              "links": [
+                {
+                  "text": "Privacy Gateway",
+                  "url": "https://blog.cloudflare.com/building-privacy-into-internet-standards-and-how-to-make-your-app-more-private-today/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "كيف تعمل بنية OHTTP وفصل الثقة",
+          "paragraphs": [
+            {
+              "text": "تعتمد بنية OHTTP على مرور الطلبات عبر نقطتي عبور تعملان بشكل مستقل تماماً عن بعضهما البعض وهما: الخادم الوسيط (Relay) والبوابة (Gateway). يقوم خادم OHTTP الوسيط بإعادة توجيه الطلبات المشفرة بصورة عمياء لإخفاء معرفات العميل عن خوادم التطبيقات، بينما تتولى بوابة OHTTP تنفيذ المهام التشفيرية المعقدة المتمثلة في فك تغليف الطلبات المشفرة وتغليف الاستجابات مجدداً بحيث تستطيع خوادم التطبيقات التعامل معها كأنها طلبات HTTP عادية تماماً.",
+              "links": []
+            },
+            {
+              "text": "إن فصل الثقة بين الخادم الوسيط والبوابة يُعد ركناً أساسياً وحيوياً في هذا النموذج؛ لأنه يضمن عدم قدرة أي طرف منفرد على رؤية معرفات العميل ومحتوى الطلبات في آن واحد، مما يمنع ربط هوية المستخدم بالبيانات التي يطلبها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تطبيقات عملية وخيارات متعددة للمطورين",
+          "paragraphs": [
+            {
+              "text": "استخدمت العديد من المنصات الكبرى هذه التقنية لحماية مستخدميها؛ فعلى سبيل المثال، تستخدم شركة Flo Health ميزة OHTTP لتشغيل وضع الخصوصية المعروف باسم Anonymous Mode داخل تطبيقها الصحي، بينما تستخدم شركة آبل تقنية Private Cloud Compute لفصل طلبات الاستدلال الذطائي عن هويات المستخدمين الحقيقية.",
+              "links": [
+                {
+                  "text": "Anonymous Mode",
+                  "url": "https://www.theverge.com/2022/9/14/23351957/flo-period-tracker-privacy-anonymous-mode?cf_target_id=3398BA9F2A5670DBF3A1B9D158C4F3B0"
+                }
+              ]
+            },
+            {
+              "text": "وبات بإمكان العملاء الاختيار بين خيارين رئيسيين للحصول على بنية تحتية متكاملة لـ OHTTP تتضمن فصل الثقة المطلوب: إما استخدام خادم OHTTP الوسيط الخاص بكلودفلير وتشغيل البوابة بأنفسهم في حال كانت خوادم التطبيقات تستضيف خارج شبكة كلودفلير، أو استخدام بوابة OHTTP الجديدة مع خادم وسيط تابع لطرف ثالث إذا كانت خوادم التطبيقات محمية بالفعل خلف شبكة كلودفلير مثل شبكات التوزيع أو العمال، أو عند الرغبة في تقليل زمن الانتقال والنفقات التشغيلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المزايا التقنية لشبكة الحوسبة وحل مشكلة زمن الانتقال",
+          "paragraphs": [
+            {
+              "text": "تتسبب هياكل الوكيل عادة في حدوث بعض التأخير الزمني لأن الطلبات تحتاج إلى السفر عبر نقاط إضافية عبر شبكة الإنترنت. ومع تكلفة فك تشفير الطلبات وتشفير الاستجابات، قد يكون تأثير التأخير في الأنظمة التقليدية ملحوظاً. غير أن الاعتماد على تقنيات التوزيع الجغرافي مثل شبكات أي كاست يتيح تشغيل بوابة OHTTP على كل خادم ضمن شبكة الحواف العالمية لكلودفلير، مما يقلل من زمن الانتقال بين الوسيط والبوابة.",
+              "links": []
+            },
+            {
+              "text": "علاوة على ذلك، تستفيد البنية التحتية من الخبرات المتراكمة في تشغيل خدمات مثل خدمة DNS الأمنية الشهيرة وخدمة الترحيل الخاص من آبل، مما يجعل هذه البوابة ملائمة لمعالجة البيانات بكفاءة عالية وبأقل قدر ممكن من الهدر التشغيلي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "كلودفلير",
+        "أمن المعلومات",
+        "الخصوصية",
+        "الويب",
+        "الحوسبة السحابية",
+        "تكنولوجيا"
+      ],
+      "entities": [
+        "Cloudflare",
+        "IETF",
+        "Flo Health",
+        "Apple"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر استناداً حصراً إلى المصدر الرسمي المعتمد لشركة كلودفلير دون إضافة أي تفاصيل خارجية أو افتراضات."
+    },
+    "en": {
+      "title": "Cloudflare Announces OHTTP Gateway Closed Beta",
+      "description": "Cloudflare announces a closed beta for its new self-serve OHTTP Gateway and renames Privacy Gateway to Cloudflare OHTTP Relay.",
+      "deck": "Cloudflare has announced a closed beta for its new self-serve Cloudflare OHTTP Gateway, expanding access to its privacy-preserving infrastructure for developers.",
+      "summary_bullets": [
+        "Cloudflare is launching a closed beta for a self-serve Cloudflare OHTTP Gateway.",
+        "The existing Privacy Gateway product has been renamed to Cloudflare OHTTP Relay.",
+        "Oblivious HTTP (OHTTP) is an IETF standard that allows application backends to receive HTTP requests without seeing user IP addresses.",
+        "Customers can now register for the waitlist through an online form."
+      ],
+      "sections": [
+        {
+          "heading": "Introducing the Cloudflare OHTTP Gateway",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has announced the closed beta of a self-serve Cloudflare OHTTP Gateway, giving developers a new way to bake privacy into their applications. Alongside this launch, the company is renaming its existing Privacy Gateway product to Cloudflare OHTTP Relay to better distinguish between the two distinct infrastructure components.",
+              "links": []
+            },
+            {
+              "text": "End users frequently carry a heavy burden when trying to protect their online privacy, often relying on VPNs, disabled cookies, or adblockers. Meanwhile, standard client-server exchanges routinely expose sensitive data such as client IP addresses and TLS fingerprints. To address this, Oblivious HTTP (OHTTP) operates as an IETF standard defined by the IETF standard to help app backends receive HTTP requests without exposing user IP addresses.",
+              "links": [
+                {
+                  "text": "IETF standard",
+                  "url": "https://www.rfc-editor.org/rfc/rfc9458.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "How the OHTTP Architecture Works",
+          "paragraphs": [
+            {
+              "text": "The OHTTP architecture relies on requests traveling through two independently-operated hops: a relay and a gateway. An OHTTP relay blindly forwards encrypted requests to hide client identifiers, while an OHTTP gateway handles the cryptographic work of decapsulating requests and encapsulating responses. This separation of trust ensures that no single party handles both the client identifiers and the request contents simultaneously.",
+              "links": []
+            },
+            {
+              "text": "Previously, Cloudflare offered its Privacy Gateway product, which has now been rebranded. Applications like Flo Health have utilized OHTTP for features such as Anonymous Mode, and Apple has implemented OHTTP within systems like Private Cloud Compute to separate AI inference requests from user identities.",
+              "links": [
+                {
+                  "text": "Privacy Gateway",
+                  "url": "https://blog.cloudflare.com/building-privacy-into-internet-standards-and-how-to-make-your-app-more-private-today/"
+                },
+                {
+                  "text": "Anonymous Mode",
+                  "url": "https://www.theverge.com/2022/9/14/23351957/flo-period-tracker-privacy-anonymous-mode?cf_target_id=3398BA9F2A5670DBF3A1B9D158C4F3B0"
+                },
+                {
+                  "text": "Private Cloud Compute",
+                  "url": "https://security.apple.com/documentation/private-cloud-compute/requestflow#Network-transport"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Choosing Between Relay and Gateway Architecture",
+          "paragraphs": [
+            {
+              "text": "With the introduction of the new gateway option, customers looking to implement an OHTTP architecture with proper trust separation now have two primary choices depending on their infrastructure setup.",
+              "links": []
+            },
+            {
+              "text": "Developers whose application servers are hosted off Cloudflare can utilize Cloudflare's OHTTP Relay while running their own gateway. Alternatively, customers whose application servers are already behind Cloudflare, or those accepting OHTTP requests from third parties like Apple's LiveCallerID, can opt for the new managed gateway option.",
+              "links": [
+                {
+                  "text": "LiveCallerID",
+                  "url": "https://developer.apple.com/documentation/identitylookup/understanding-how-live-caller-id-lookup-preserves-privacy"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Global Network Integration and Low Latency",
+          "paragraphs": [
+            {
+              "text": "Building and operating an OHTTP gateway at scale presents performance and operational challenges, particularly because proxying adds extra hops and encryption overhead. Cloudflare notes that its experience running services like 1.1.1.1 and iCloud Private Relay positions it well to handle this infrastructure.",
+              "links": [
+                {
+                  "text": "1.1.1.1",
+                  "url": "https://blog.cloudflare.com/1111-privacy-examination-2026/"
+                },
+                {
+                  "text": "iCloud Private Relay",
+                  "url": "https://blog.cloudflare.com/icloud-private-relay/"
+                }
+              ]
+            },
+            {
+              "text": "By leveraging an anycast network configuration, the new OHTTP Gateway will execute across every server on Cloudflare's global edge network. This design minimizes latency during relay-to-gateway hops and allows requests to be decrypted and resolved on the same infrastructure if customers already use Cloudflare's CDN.",
+              "links": [
+                {
+                  "text": "anycast",
+                  "url": "https://www.cloudflare.com/learning/cdn/glossary/anycast-network/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Participation and Availability",
+          "paragraphs": [
+            {
+              "text": "The self-serve Cloudflare OHTTP Gateway is currently available in a closed beta release. Customers interested in adding the service as a paid add-on to their zone can register through the waitlist form provided by Cloudflare.",
+              "links": []
+            },
+            {
+              "text": "By expanding its suite of privacy tools, Cloudflare aims to make advanced cryptographic privacy standards easier for developers to adopt by default across modern web applications.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "OHTTP",
+        "Privacy",
+        "Web Security",
+        "IETF",
+        "Networking"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Flo Health",
+        "Apple",
+        "IETF"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly based on the provided Cloudflare official blog announcement regarding the OHTTP Gateway closed beta and OHTTP Relay renaming."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 425,
+      "word_count_en": 450
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 657,
+      "word_count_en": 542
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "8d178ea4e16be1f9543e",
+      "title": "Announcing Cloudflare OHTTP Gateway – expanding access to Cloudflare’s privacy-preserving infrastructure",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 425,
+          "word_count_en": 450
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 657,
+          "word_count_en": 542
+        }
+      ]
+    }
+  ],
+  "slug": "announcing-cloudflare-ohttp-gateway-expanding-access-to-cloudflare-privacy-preserving-infras",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/announcing-cloudflare-ohttp-gateway-expanding-access-to-cloudflare-privacy-preserving-infras/hero.webp",
+    "card": "/forum/assets/posts/2026/10/announcing-cloudflare-ohttp-gateway-expanding-access-to-cloudflare-privacy-preserving-infras/card.webp",
+    "social": "/forum/assets/posts/2026/10/announcing-cloudflare-ohttp-gateway-expanding-access-to-cloudflare-privacy-preserving-infras/social.jpg",
+    "alt": {
+      "ar": "كلودفلير تطلق بوابة OHTTP وتعيد تسمية منتج الخادم الوسيط",
+      "en": "Cloudflare Announces OHTTP Gateway Closed Beta"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3WRXEHESBYZBGWPN9T2Z19C.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/announcing-cloudflare-ohttp-gateway-expanding-access-to-cloudflare-privacy-preserving-infras/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "كلودفلير تطلق بوابة OHTTP وتعيد تسمية منتج الخادم الوسيط",
+          "en": "Announcing Cloudflare OHTTP Gateway – expanding access to Cloudflare’s privacy-preserving infrastructure"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/announcing-cloudflare-ohttp-gateway/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3XZ8QDSM1TSSYPVFW13B39E.01M3XZ8RDWEX6N8XXP6ZRDY0DK.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/announcing-cloudflare-ohttp-gateway-expanding-access-to-cloudflare-privacy-preserving-infras/inline-02.webp",
+        "width": 1088,
+        "height": 516,
+        "alt": {
+          "ar": "كلودفلير تطلق بوابة OHTTP وتعيد تسمية منتج الخادم الوسيط",
+          "en": "Cloudflare Announces OHTTP Gateway Closed Beta"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "A diagram showing how requests flow from end users through the OHTTP Gateway to app servers. A response from app servers follows the same path in reverse to the end user. Note that with the Gateway, you can choose whether or not to put your servers behind Cloudflare."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/announcing-cloudflare-ohttp-gateway/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3WRXG4Z9RE4A337TVG6WY5T.png&w=1430&h=678&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
