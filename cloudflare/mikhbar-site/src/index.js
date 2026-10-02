@@ -416,59 +416,7 @@ async function addRelatedStories(response, request, env, pathname) {
 }
 
 function renderRadwanTestPage() {
-  const html = `<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#ffffff">
-<title>مختبر مِخبار — صفحة رضوان التجريبية</title>
-<meta name="description" content="صفحة تجريبية خاصة داخل مِخبار لاختبار التصاميم والمكونات قبل اعتمادها في الموقع.">
-<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
-<link rel="canonical" href="https://mikhbar.website/ar/radwantest/">
-<link rel="stylesheet" href="/styles.css">
-<link rel="stylesheet" href="/forum.css?v=20261002-radwantest1">
-<link rel="stylesheet" href="/forum-media.css?v=20261002-radwantest1">
-<link rel="icon" type="image/png" sizes="1024x1024" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon-large.png?v=20260922-tab4">
-<style>
-.rt-test-page{padding:28px 0 72px}
-.rt-test-hero{position:relative;overflow:hidden;border:1px solid var(--rt-line,#e5e7eb);border-radius:28px;padding:clamp(28px,6vw,64px);background:linear-gradient(135deg,rgba(0,0,0,.025),rgba(0,0,0,.065));min-height:360px;display:flex;align-items:end}
-.rt-test-hero:after{content:"";position:absolute;inset:auto -70px -110px auto;width:300px;height:300px;border:1px solid currentColor;border-radius:50%;opacity:.08}
-.rt-test-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid currentColor;border-radius:999px;font-size:.78rem;font-weight:800;opacity:.78}
-.rt-test-title{font-size:clamp(2.3rem,8vw,5.8rem);line-height:.95;margin:18px 0 16px;letter-spacing:-.04em}
-.rt-test-lead{max-width:720px;font-size:clamp(1rem,2.3vw,1.25rem);line-height:1.9;opacity:.76;margin:0}
-.rt-test-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:22px}
-.rt-test-card{border:1px solid var(--rt-line,#e5e7eb);border-radius:22px;padding:24px;min-height:190px;background:var(--rt-card,#fff)}
-.rt-test-card span{display:block;font:800 .72rem/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.08em;opacity:.5;margin-bottom:28px}
-.rt-test-card h2{font-size:1.18rem;margin:0 0 10px}
-.rt-test-card p{margin:0;line-height:1.8;opacity:.7}
-.rt-test-note{margin-top:22px;border:1px dashed currentColor;border-radius:18px;padding:18px 20px;opacity:.76}
-@media(max-width:820px){.rt-test-grid{grid-template-columns:1fr}.rt-test-hero{min-height:300px;border-radius:22px}.rt-test-title{font-size:clamp(2.4rem,15vw,4.3rem)}}
-</style>
-</head>
-<body class="rt-locale-ar" data-locale="ar">
-<header class="rt-site-header"><div class="rt-navbar">
-<a class="mikhbar-brand" href="/ar/" aria-label="مِخبار"><span class="mikhbar-brand-mark"><img src="/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png" alt="" width="64" height="64"></span><span class="mikhbar-brand-copy"><strong>مِخبار</strong><small dir="ltr">MIKHBAR</small></span></a>
-<button class="menu-button rt-menu-button" type="button" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="navigation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-<nav class="nav-links rt-platform-nav" id="navigation" aria-label="التنقل الرئيسي"><a href="/ar/">الرئيسية</a><a href="/ar/#latest">أحدث الأخبار</a><a href="/ar/#sections">الأقسام</a><a href="/ar/#top-stories">الأهم الآن</a><a href="/about/">عن مِخبار</a></nav>
-</div></header>
-<main class="rt-main rt-test-page" id="main"><div class="rt-shell">
-<section class="rt-test-hero">
-<div><span class="rt-test-badge">مختبر داخلي · RADWAN TEST</span><h1 class="rt-test-title">صفحة الاختبار</h1><p class="rt-test-lead">مساحة مستقلة داخل مِخبار لتجربة الواجهات، البطاقات، ترتيب المحتوى وأي مكوّن جديد قبل نقله إلى الصفحات العامة للموقع.</p></div>
-</section>
-<section class="rt-test-grid" aria-label="مناطق الاختبار">
-<article class="rt-test-card"><span>01 / LAYOUT</span><h2>اختبار التخطيط</h2><p>نجرب هنا أحجام الحاويات، توزيع الأعمدة والمسافات على الهاتف والكمبيوتر.</p></article>
-<article class="rt-test-card"><span>02 / COMPONENTS</span><h2>اختبار المكوّنات</h2><p>مكان لتجربة بطاقات الأخبار، التسلسل الزمني، الأخبار المرتبطة والأزرار.</p></article>
-<article class="rt-test-card"><span>03 / READY</span><h2>جاهزة للتعديل</h2><p>أي تصميم نريده لاحقًا يمكن تركيبه هنا أولًا دون التأثير على واجهة مِخبار الأساسية.</p></article>
-</section>
-<div class="rt-test-note"><strong>ملاحظة:</strong> هذه الصفحة تجريبية وممنوعة من الفهرسة حاليًا، ولن تظهر ضمن الأخبار أو الأقسام أو نتائج البحث.</div>
-</div></main>
-<footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> مِخبار · صفحة اختبار داخلية · <a href="/ar/">العودة للرئيسية</a></div></footer>
-<script>
-(()=>{const y=document.querySelector("[data-year]");if(y)y.textContent=new Date().getFullYear();const b=document.querySelector(".rt-menu-button");const n=document.getElementById("navigation");if(b&&n)b.addEventListener("click",()=>{const open=b.getAttribute("aria-expanded")==="true";b.setAttribute("aria-expanded",String(!open));n.classList.toggle("is-open",!open)})})();
-</script>
-</body>
-</html>`;
+  const html = "<!doctype html>\n<html lang=\"ar\" dir=\"rtl\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1,viewport-fit=cover\">\n<meta name=\"theme-color\" content=\"#ffffff\">\n<title>عارض شعارات مِخبار</title>\n<meta name=\"robots\" content=\"noindex,nofollow,noarchive,nosnippet\">\n<link rel=\"canonical\" href=\"https://mikhbar.website/ar/radwantest/\">\n<link rel=\"icon\" href=\"/assets/brand/mikhbar/06-web-ready/favicon/favicon.svg\">\n<style>\n*{box-sizing:border-box}\nhtml,body{width:100%;height:100%;margin:0;background:#fff}\nbody{overflow:hidden;font-family:system-ui,-apple-system,\"Segoe UI\",sans-serif;color:#111;user-select:none}\n.logo-stage{position:fixed;inset:0;display:grid;place-items:center;background:#fff}\n.logo-wrap{width:100%;height:100%;display:grid;place-items:center;padding:8vh 7vw}\n#brandAsset{display:block;object-fit:contain;object-position:center;opacity:1;transform:scale(1);transition:opacity .16s ease,transform .22s cubic-bezier(.2,.7,.2,1);filter:none}\n#brandAsset.mark{width:min(60vmin,680px);height:min(60vmin,680px);max-width:82vw;max-height:72vh}\n#brandAsset.icon{width:min(54vmin,620px);height:min(54vmin,620px);max-width:78vw;max-height:68vh}\n#brandAsset.wide{width:min(78vw,1120px);height:auto;max-height:68vh}\n#brandAsset.is-changing{opacity:0;transform:scale(.965)}\n.logo-counter{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);font:600 12px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.08em;color:#aaa;background:rgba(255,255,255,.86);padding:7px 10px;border-radius:999px}\n.key-hint{position:fixed;right:22px;bottom:22px;font:600 12px/1.2 system-ui;color:#bbb}\n@media(max-width:720px){\n  .logo-wrap{padding:7vh 5vw}\n  #brandAsset.mark{width:min(72vmin,560px);height:min(72vmin,560px)}\n  #brandAsset.icon{width:min(68vmin,520px);height:min(68vmin,520px)}\n  #brandAsset.wide{width:90vw;max-height:64vh}\n  .key-hint{display:none}\n}\n</style>\n</head>\n<body>\n<main class=\"logo-stage\" aria-label=\"عارض شعارات مِخبار\">\n  <div class=\"logo-wrap\">\n    <img id=\"brandAsset\" class=\"mark\" alt=\"شعار مِخبار\" decoding=\"async\">\n  </div>\n</main>\n<div class=\"logo-counter\" id=\"counter\" aria-live=\"polite\"></div>\n<div class=\"key-hint\" aria-hidden=\"true\">← السابق&nbsp;&nbsp;&nbsp;التالي →</div>\n<script>\nconst assets = [\n  {src:\"/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png\", kind:\"mark\"},\n  {src:\"/assets/brand/mikhbar/01-logo-mark/transparent/mikhbar-logo-mark-transparent-master-4096.png\", kind:\"mark\"},\n  {src:\"/assets/brand/mikhbar/02-full-logo/transparent/mikhbar-full-logo-transparent-4096w.png\", kind:\"wide\"},\n  {src:\"/assets/brand/mikhbar/04-animated-logo-mark/web-optimized/mikhbar-logo-mark-web-alpha.webp\", kind:\"mark\"},\n  {src:\"/assets/brand/mikhbar/05-animated-full-logo/web-optimized/mikhbar-full-logo-web-alpha.webp\", kind:\"wide\"},\n  {src:\"/assets/brand/mikhbar/03-icon/transparent/mikhbar-icon-1024.png\", kind:\"icon\"},\n  {src:\"/assets/brand/mikhbar/01-logo-mark/monochrome/mikhbar-logo-mark-black-2048.png\", kind:\"mark\"},\n  {src:\"/assets/brand/mikhbar/02-full-logo/monochrome/mikhbar-full-logo-black-2400w.png\", kind:\"wide\"},\n  {src:\"/assets/brand/mikhbar/01-logo-mark/svg/mikhbar-logo-mark-monochrome-vector.svg\", kind:\"mark\"},\n  {src:\"/assets/brand/mikhbar/02-full-logo/svg/mikhbar-full-logo-monochrome-vector.svg\", kind:\"wide\"},\n  {src:\"/assets/brand/mikhbar/03-icon/svg/mikhbar-icon-preserved-artwork.svg\", kind:\"icon\"},\n  {src:\"/assets/brand/mikhbar/01-logo-mark/svg/mikhbar-logo-mark-preserved-artwork.svg\", kind:\"mark\"},\n  {src:\"/assets/brand/mikhbar/02-full-logo/svg/mikhbar-full-logo-preserved-artwork.svg\", kind:\"wide\"},\n  {src:\"/assets/brand/mikhbar/06-web-ready/header-logo/mikhbar-header-logo-transparent.png\", kind:\"wide\"},\n  {src:\"/assets/brand/mikhbar/06-web-ready/favicon/favicon.svg\", kind:\"icon\"},\n  {src:\"/assets/brand/mikhbar/04-animated-logo-mark/white-background/mikhbar-logo-mark-animated-white.gif\", kind:\"mark\"},\n  {src:\"/assets/brand/mikhbar/05-animated-full-logo/white-background/mikhbar-full-logo-animated-white.gif\", kind:\"wide\"}\n];\nlet index = 0;\nconst image = document.getElementById(\"brandAsset\");\nconst counter = document.getElementById(\"counter\");\n\nfunction show(nextIndex, animate=true){\n  index = (nextIndex + assets.length) % assets.length;\n  const item = assets[index];\n  if (animate) image.classList.add(\"is-changing\");\n  const apply = () => {\n    image.className = item.kind;\n    image.alt = \"شعار مِخبار \" + (index + 1);\n    // Cache-busting only for animated assets so the animation restarts when revisited.\n    const animated = /animated|alpha|\\.gif|\\.webp/i.test(item.src);\n    image.src = item.src + (animated ? \"?slide=\" + Date.now() : \"\");\n    counter.textContent = (index + 1) + \" / \" + assets.length;\n    requestAnimationFrame(() => image.classList.remove(\"is-changing\"));\n  };\n  animate ? setTimeout(apply, 120) : apply();\n}\n\ndocument.addEventListener(\"keydown\", (event) => {\n  if (event.key === \"ArrowRight\") { event.preventDefault(); show(index + 1); }\n  if (event.key === \"ArrowLeft\") { event.preventDefault(); show(index - 1); }\n  if (event.key === \" \" || event.key === \"Enter\") { event.preventDefault(); show(index + 1); }\n});\n\nlet touchStartX = null;\ndocument.addEventListener(\"touchstart\", e => { touchStartX = e.changedTouches[0]?.clientX ?? null; }, {passive:true});\ndocument.addEventListener(\"touchend\", e => {\n  if (touchStartX == null) return;\n  const endX = e.changedTouches[0]?.clientX ?? touchStartX;\n  const dx = endX - touchStartX;\n  if (Math.abs(dx) > 45) show(index + (dx < 0 ? 1 : -1));\n  touchStartX = null;\n}, {passive:true});\n\nshow(0,false);\n</script>\n</body>\n</html>";
   return new Response(html, {
     headers: {
       "Content-Type": "text/html; charset=UTF-8",
@@ -500,7 +448,9 @@ function withHeaders(response, pathname = "") {
   }
 
   const type = (headers.get("content-type") || "").toLowerCase();
-  if (type.includes("text/html") || type.includes("xml") || type.includes("json")) {
+  if (String(pathname || "").toLowerCase().startsWith("/ar/radwantest")) {
+    headers.set("Cache-Control", "no-store");
+  } else if (type.includes("text/html") || type.includes("xml") || type.includes("json")) {
     headers.set("Cache-Control", "public, max-age=60, s-maxage=300, stale-while-revalidate=86400");
   } else if (type.includes("image/") || type.includes("text/css") || type.includes("javascript") || type.includes("font/")) {
     headers.set("Cache-Control", "public, max-age=86400, s-maxage=604800, immutable");
