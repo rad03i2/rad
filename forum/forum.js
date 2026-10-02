@@ -65,7 +65,7 @@ const categoryMaps={
 const categoryMap=categoryMaps[locale];
 const slugFor=p=>p.categorySlug||'general';
 const imageFor=p=>p.image||p.images?.card||p.images?.hero||'/assets/social/home.jpg';
-const pageSize=document.body.classList.contains('rt-home')?24:12;
+const pageSize=document.body.classList.contains('rt-home')?36:12;
 let allPosts=[],visibleCount=pageSize,currentFilter=document.body.dataset.category||'all';
 const HERO_INTERVAL_MS=3000;
 let heroPosts=[],heroIndex=0,heroTimer=null;
@@ -136,7 +136,7 @@ function renderCategory(){const slug=document.body.dataset.category;if(!slug)ret
 async function load(){const urls=locale==='ar'?['/posts-ar.json','/forum/posts-ar.json','/posts.json','/forum/posts.json']:['/posts-en.json','/forum/posts-en.json'];for(const url of urls){try{const r=await fetch(url,{cache:'no-store'});if(!r.ok)continue;const data=await r.json();allPosts=(Array.isArray(data)?data:(data.posts||[])).slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));renderHome();renderFeed();renderCategory();return}catch{}}}
 function bind(){
   const search=$('#rtSearch');if(search)search.addEventListener('input',()=>{visibleCount=pageSize;renderFeed()});
-  $$('[data-filter]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();currentFilter=b.dataset.filter||'all';visibleCount=12;$$('[data-filter]').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','page');renderFeed()}));
+  $$('[data-filter]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();currentFilter=b.dataset.filter||'all';visibleCount=pageSize;$('[data-filter]').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','page');renderFeed()}));
   const prev=$('#rtLeadPrev'),next=$('#rtLeadNext');
   if(prev)prev.addEventListener('click',()=>stepHero(-1));
   if(next)next.addEventListener('click',()=>stepHero(1));
