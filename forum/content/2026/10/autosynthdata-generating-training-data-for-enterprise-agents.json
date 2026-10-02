@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "56c490db040147f1def4",
+  "slug": "autosynthdata-generating-training-data-for-enterprise-agents",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/autosynthdata-generating-training-data-for-enterprise-agents/",
+    "en": "/forum/en/ai/autosynthdata-generating-training-data-for-enterprise-agents/"
+  },
+  "locales": {
+    "ar": {
+      "title": "ServiceNow تكشف عن AutoSynthData لتوليد بيانات تدريب الوكلاء",
+      "description": "تقدّم ServiceNow نظام AutoSynthData الذي يحول نقاط ضعف نماذج الذكاء الاصطناعي إلى مهام تدريبية مخصصة، مما يعزز أداء الوكلاء في بيئات الأعمال المعقدة عبر منهجية تعليمية تكيفية.",
+      "deck": "أطلقت خدمة ServiceNow إطار عمل جديد يحوّل الفجوات المعرفية في نماذج الذكاء الاصطناعي إلى بيانات تدريبية عالية الجودة، بهدف تحسين أداء الوكلاء في بيئات المؤسسات.",
+      "summaryBullets": [
+        "يعتمد النظام على تحليل أخطاء النموذج المستهدف ونجاحات نموذج أقوى (المعلم) لتحديد المهارات المطلوبة.",
+        "يولّد النظام مهاماً جديدة تحقق معايير الجدوى والواقعية والصعوبة المناسبة للتدريب.",
+        "يشمل الإطار مرحلة توسيع للبيانات عبر إنشاء نسخ متغيرة من المهام الأساسية المعتمدة.",
+        "تمت توثيق المنهجية في بيئة EnterpriseOps Gym مع إتاحة مجموعة بيانات مفتوحة للمجتمع التقني."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي تخصيص الوكلاء لبيئات المؤسسات",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات صعوبة في تكييف نماذج الذكاء الاصطناعي مع بيئاتها الداخلية، حيث تتأثر المهام بأنظمة محددة وقواعد صارمة وحالة بيانات فريدة. قد تكون النماذج العامة قادرة على أداء مهام واسعة، لكنها تفشل في التعامل مع سيناريوهات محددة، مثل سوء استخدام أدوات معينة أو تجاهل قيود سياسية داخلية. هذه الفجوات هي ما تحتاج الشركات إلى سدّه لتحسين كفاءة وكلاء الذكاء الاصطناعي في العمليات التشغيلية اليومية. ويمكن الرجوع إلى Hugging Face Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/ServiceNow-AI/autosynthdata"
+                }
+              ]
+            },
+            {
+              "text": "يكمن التحدي الحقيقي في تحويل هذه نقاط الضعف إلى بيانات تدريبية فعالة. فالاعتماد على فشل فردي لا يكفي لتدريب نموذج، بل يتطلب إنشاء العديد من المهام الجديدة التي تختبر نفس القدرة في سياقات مختلفة. يجب أن تكون هذه المهام قابلة للتنفيذ في البيئة المستهدفة، وأن تشبه الطلبات الواقعية التي قد يطرحها المستخدمون، مع وجود آلية موثوقة للتحقق من نجاح الوكيل في إتمامها. ويمكن الرجوع إلى Back to Articles للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Back to Articles",
+                  "url": "https://huggingface.co/blog"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل إطار AutoSynthData",
+          "paragraphs": [
+            {
+              "text": "طوّرت خدمة ServiceNow، وتحديداً فريق CoreAI، إطار عمل AutoSynthData لتحويل الفجوات القدرية إلى بيانات تدريبية. يعتمد النظام على تقييم أداء النموذج المستهدف ومقارنته بأداء نموذج أقوى يعمل كمعلم. من خلال تحليل أخطاء النموذج المستهدف ونجاحات المعلم، يحدد النظام المهارات التي يجب تعلمها، ثم يولّد مهاماً جديدة تختبر هذه القدرات وتحققها في البيئة الفعلية.",
+              "links": []
+            },
+            {
+              "text": "تتضمن العملية تقييم النموذجين على مهام تشخيصية لتحديد أنماط الفشل والنجاح. يتم بعد ذلك استخلاص هذه النتائج في بطاقات مواصفات قدرات معقمة، لا تحتوي على تفاصيل المهام الأصلية أو المسارات، بل تركز على الخصائص المطلوبة. يستخدم المولّد هذه البطاقات لإنشاء مهام جديدة ذات صياغات وحالات ومسارات حل مختلفة، مما يضمن تنوع البيانات وتجنب التكرار.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معايير جودة المهام المولدة",
+          "paragraphs": [
+            {
+              "text": "لتكون المهمة مفيدة للتدريب، يجب أن تحقق ثلاث خصائص أساسية: الجدوى، والواقعية، والصعوبة. الجدوى تعني وجود مسار واحد على الأقل في البيئة الحالية يحقق طلب المستخدم مع احترام المواصفات النظامية، مما يستبعد المهام التي تعتمد على أدوات غير متوفرة أو انتقالات حالة مستحيلة. الواقعية تتطلب أن تشبه صياغة المستخدم طلباً طبيعياً في البيئة المستهدفة، لأن مساحة السلوكيات القابلة للتنفيذ أكبر بكثير من مساحة سير العمل الواقعي.",
+              "links": []
+            },
+            {
+              "text": "أما الصعوبة، فتتطلب أن تكشف المهمة عن نقطة ضعف في النموذج الحالي. فالمهام التي يحلها النموذج بثقة لا تقدم إشارات تدريبية جديدة. المنطقة المفيدة هي المهام القابلة للتنفيذ والواقعية، لكنها لم تُحل بشكل متسق بعد. يلعب الموثّق (Verifier) دوراً حاسماً هنا، حيث يجب أن يتسم بالاتساق مع المواصفات، والصحة في رفض المسارات الخاطئة، والاستكمال في قبول الحلول الصالحة دون تشفير مسار مرجعي واحد فقط.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "منهجية توليد البيانات في مرحلتين",
+          "paragraphs": [
+            {
+              "text": "يعتمد AutoSynthData على منهجية من مرحلتين لبناء مجموعة البيانات. المرحلة الأولى هي مرحلة الهدف (Target)، حيث يتم إنشاء مجموعة أساسية من العينات التدريبية بناءً على مواصفات القدرات. تعمل العمّال (Workers) بشكل متوازٍ لتوليد مهام مستقلة، وتخضع كل مرشحة لعملية تحقق وتنفيذ وتقييم للمحلل قبل القبول. النتيجة هي دفعة من الأمثلة المدققة التي تركز على ما يحتاج النموذج إلى تعلمه.",
+              "links": []
+            },
+            {
+              "text": "المرحلة الثانية هي مرحلة التضاعف (Multiply)، حيث يتم توسيع المجموعة الأساسية من خلال إنشاء نسخ متغيرة جديدة من العينات المقبولة. لكل نسخة طلب مستخدم وحالة بيئة وتكوين كيانات ومسار مرجعي وموثّق خاص بها، وتخضع لنفس اختبارات التحقق. يمنع النظام استخدام العينة المضاعفة كمرجع لتوليد نسخة أخرى، مما يرسخ التوسع على مجموعة الهدف المدققة ويحد من الانحراف عبر الأجيال المتعاقبة من البيانات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التطبيق في بيئة EnterpriseOps Gym",
+          "paragraphs": [
+            {
+              "text": "تمت توثيق خط أنابيب AutoSynthData باستخدام بيئة EnterpriseOps Gym، وهي بيئة تجريبية مصممة لمحاكاة عمليات المؤسسات. في هذه التجربة، تم تشغيل كل من النموذج المستهدف والمعلم الأقوى على مهام التقييم. تم فحص هذه التشغيلات لتحديد أماكن فشل النموذج المستهدف وكيفية نجاح المعلم، بالإضافة إلى الخصائص التي يجب أن يحققها الحالة النهائية الصحيحة، والأبعاد التي يمكن أن تتغير مع الحفاظ على اختبار القدرة المستهدفة.",
+              "links": []
+            },
+            {
+              "text": "أدت هذه العملية إلى إنشاء بطاقات مواصفات قدرات معقمة، حيث لم يتلقِ المولّد الموجهات الأصلية أو الكيانات أو المسارات من مهام التقييم، بل استلم البطاقات فقط لإنشاء مهام جديدة. هذا الفصل بين التقييم والتوليد يضمن أن البيانات التدريبية الجديدة تكون متنوعة وغير مرتبطة مباشرةً ببيانات الاختبار، مما يعزز قدرة النموذج على التعميم في بيئات مشابهة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إتاحة البيانات والمجتمع التقني",
+          "paragraphs": [
+            {
+              "text": "لتسهيل تطبيق هذه المنهجية، تم إصدار مجموعة بيانات مفتوحة تتيح للمطورين والباحثين الوصول إلى البيانات المولدة. توفر هذه المجموعة أمثلة على كيفية تحويل الفجوات القدرية إلى مهام تدريبية قابلة للتنفيذ، مما يساهم في تسريع تطوير وكلاء الذكاء الاصطناعي المتخصصين. يمكن للمجتمع التقني استخدام هذه البيانات لفهم أفضل لآليات التوليد والتحقق في بيئات الوكلاء المعقدة.",
+              "links": []
+            },
+            {
+              "text": "تُعد هذه المبادرة خطوة مهمة نحو حل مشكلة ندرة البيانات عالية الجودة للتدريب المخصص (Fine-tuning) في بيئات المؤسسات. من خلال أتمتة عملية اكتشاف الفجوات وتوليد البيانات، يوفر AutoSynthData إطاراً قابلاً للتوسع يمكن تكييفه مع مختلف الأنظمة والسياسات المؤسسية، مما يعزز جاهزية الشركات لتبني تقنيات الوكلاء الذكية بشكل أكثر فعالية وأماناً.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "ذكاء اصطناعي",
+        "وكلاء ذكاء اصطناعي",
+        "ServiceNow",
+        "توليد بيانات",
+        "تدريب نماذج",
+        "تقنية",
+        "بيانات اصطناعية"
+      ],
+      "entities": [
+        "ServiceNow",
+        "AutoSynthData",
+        "EnterpriseOps Gym",
+        "Hugging Face",
+        "CoreAI"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "2 أكتوبر 2026",
+      "modifiedLabel": "2 أكتوبر 2026",
+      "readMinutes": 5,
+      "wordCount": 831
+    },
+    "en": {
+      "title": "ServiceNow AI Introduces AutoSynthData for Enterprise Agents",
+      "description": "ServiceNow CoreAI has introduced AutoSynthData, a new pipeline designed to turn model capability gaps into training data for enterprise agents.",
+      "deck": "ServiceNow CoreAI details AutoSynthData, a pipeline built to convert target model weaknesses and teacher successes into dynamic training tasks for enterprise environments.",
+      "summaryBullets": [
+        "ServiceNow CoreAI developed AutoSynthData to address environment-specific agent failures.",
+        "The pipeline leverages target model failures and stronger teacher successes to build training curricula.",
+        "AutoSynthData constructs tasks through target and multiply phases while ensuring feasibility, realism, and soundness.",
+        "Experiments illustrate the pipeline using EnterpriseOps Gym and its released dataset."
+      ],
+      "sections": [
+        {
+          "heading": "Addressing Enterprise Environment Gaps",
+          "paragraphs": [
+            {
+              "text": "Enterprises frequently require agents that operate reliably within their specific environments. However, the work requested is heavily shaped by unique systems, strict rules, and the state of underlying data. While a model may possess broad capabilities, it can still struggle with a particular environment, such as a poorly handled workflow, a mismanaged combination of tools, or an unrespected constraint. According to the [Hugging Face Blog](https://huggingface.co/blog/ServiceNow-AI/autosynthdata), these precise weaknesses are the ones an enterprise needs to improve through targeted training data.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/ServiceNow-AI/autosynthdata"
+                }
+              ]
+            },
+            {
+              "text": "Turning individual failures into effective training data presents a distinct difficulty. Although a single failure highlights a problem, training a model requires numerous new tasks that exercise the same capability across diverse situations. Furthermore, these tasks must remain possible to complete within the environment, resemble realistic work requests, and feature reliable verification methods to check for agent success.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The AutoSynthData Pipeline Architecture",
+          "paragraphs": [
+            {
+              "text": "To solve this challenge, [ServiceNow-AI](https://huggingface.co/ServiceNow-AI) built AutoSynthData to convert capability gaps into actionable training data. The system utilizes a target model's failures alongside a stronger teacher's successes to determine what the model should learn next. As the target model improves, the curriculum dynamically shifts toward areas that remain difficult. The pipeline is illustrated through EnterpriseOps Gym (Malay et al., 2026), utilizing the [released dataset](https://huggingface.co/datasets/ServiceNow-AI/EnterpriseOps-Gym).",
+              "links": [
+                {
+                  "text": "ServiceNow-AI",
+                  "url": "https://huggingface.co/ServiceNow-AI"
+                },
+                {
+                  "text": "released dataset",
+                  "url": "https://huggingface.co/datasets/ServiceNow-AI/EnterpriseOps-Gym"
+                }
+              ]
+            },
+            {
+              "text": "An agentic environment defines the operational world, including observable and modifiable states, available tools, APIs, and state transitions produced by actions. Within this setup, tasks are instantiated using specific system specifications and user prompts. A generated task must satisfy properties of feasibility, realism, and difficulty, ensuring that the tasks expose genuine weaknesses without relying on unavailable tools or inaccessible knowledge.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Evaluation and Specification Cards",
+          "paragraphs": [
+            {
+              "text": "AutoSynthData evaluates target models in the target environment using diagnostic tasks to identify patterns in areas where the model struggles. A stronger teacher assists in characterizing which tasks are solvable and what successful behavior looks like. The resulting findings are distilled into sanitized capability specification cards. These cards guide the generator in creating new tasks featuring different prompts, states, and solution paths without exposing the original evaluation prompts or trajectories.",
+              "links": []
+            },
+            {
+              "text": "Once a capability gap is identified, the system generates multiple varied tasks that exercise the target workflow. By altering entities, initial environment states, workflow compositions, and tool combinations, the generator creates diverse learning opportunities. A stronger teacher then demonstrates successful trajectories for supervised fine-tuning, teaching the target model how to apply the capability in novel situations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Dataset Building Phases: Target and Multiply",
+          "paragraphs": [
+            {
+              "text": "AutoSynthData constructs datasets through two distinct phases: creating core samples and expanding them into novel variants. The target phase builds the core training set from capability specifications. Parallel workers generate independent tasks that undergo rigorous validation, execution, solver evaluation, and repair before acceptance, yielding a vetted batch of examples tailored to what the model needs to learn.",
+              "links": []
+            },
+            {
+              "text": "Following the target phase, the multiply phase expands the dataset by producing novel variants of accepted target samples. Each variant incorporates its own user request, environment state, entity configuration, reference trajectory, and verifier, and must pass the same validation and execution checks. To prevent drift across generations, a multiplied sample is restricted from seeding another multiplied sample, anchoring expansion securely to the vetted target set.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AutoSynthData",
+        "ServiceNow CoreAI",
+        "Enterprise Agents",
+        "Training Data",
+        "Machine Learning",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "ServiceNow CoreAI",
+        "ServiceNow-AI",
+        "EnterpriseOps Gym",
+        "Hugging Face"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 2, 2026",
+      "modifiedLabel": "October 2, 2026",
+      "readMinutes": 3,
+      "wordCount": 598
+    }
+  },
+  "datePublished": "2026-10-02T07:33:18.659981+03:00",
+  "dateModified": "2026-10-02T07:33:18.659981+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/autosynthdata-generating-training-data-for-enterprise-agents/hero.webp",
+    "card": "/forum/assets/posts/2026/10/autosynthdata-generating-training-data-for-enterprise-agents/card.webp",
+    "social": "/forum/assets/posts/2026/10/autosynthdata-generating-training-data-for-enterprise-agents/social.jpg",
+    "alt": {
+      "ar": "ServiceNow تكشف عن AutoSynthData لتوليد بيانات تدريب الوكلاء",
+      "en": "ServiceNow AI Introduces AutoSynthData for Enterprise Agents"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/68642da9885da181fde1ad70/8kSzlHLOdu5hchCtPnK8D.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/ServiceNow-AI/autosynthdata",
+      "type": "official",
+      "title": "AutoSynthData: Generating Training Data for Enterprise Agents"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/ServiceNow-AI/autosynthdata",
+  "sourceTitle": "AutoSynthData: Generating Training Data for Enterprise Agents",
+  "trendScore": 120.9,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-02T04:33:18+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/autosynthdata-generating-training-data-for-enterprise-agents.json"
+}
