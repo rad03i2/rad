@@ -325,7 +325,7 @@ function postCardImage(post) {
   ).trim();
 }
 
-function chronologicalHtml(neighbors, pathname) {
+function chronologicalHtml(neighbors, currentPost, pathname) {
   const match = String(pathname || "").match(ARTICLE_PARTS);
   if (!match) return "";
   const [, locale] = match;
@@ -333,7 +333,8 @@ function chronologicalHtml(neighbors, pathname) {
   const title = isAr ? "تابع التسلسل الزمني" : "Continue chronologically";
   const newerLabel = isAr ? "الخبر الأحدث" : "Newer story";
   const olderLabel = isAr ? "الخبر الأقدم" : "Older story";
-  const cards = [];
+  const currentLabel = isAr ? "أنت تقرأ الآن" : "You are reading";
+  const steps = [];
 
   for (const [kind, post] of [["newer", neighbors?.newer], ["older", neighbors?.older]]) {
     const href = publicPath(post?.url || "");
@@ -344,13 +345,22 @@ function chronologicalHtml(neighbors, pathname) {
     const date = String(post?.dateLabel || "").trim();
     const readTime = String(post?.readTime || "").trim();
     const meta = [date, readTime].filter(Boolean).join(" · ");
-    cards.push(`<a class="rt-chronology-card" data-chronology="${esc(kind)}" href="${esc(href)}"><div class="rt-chronology-copy"><span class="rt-chronology-label">${esc(label)}</span><b>${esc(postTitle)}</b>${meta ? `<small>${esc(meta)}</small>` : ""}</div><div class="rt-thumb rt-chronology-thumb"><img src="${esc(image)}" alt="${esc(postTitle)}" width="800" height="450" loading="lazy" decoding="async"></div></a>`);
+    steps.push({
+      kind,
+      html: `<a class="rt-chronology-step rt-chronology-${esc(kind)}" data-chronology="${esc(kind)}" href="${esc(href)}"><span class="rt-chronology-node" aria-hidden="true"></span><div class="rt-thumb rt-chronology-thumb"><img src="${esc(image)}" alt="${esc(postTitle)}" width="800" height="450" loading="lazy" decoding="async"></div><div class="rt-chronology-copy"><span class="rt-chronology-label">${esc(label)}</span><b>${esc(postTitle)}</b>${meta ? `<small>${esc(meta)}</small>` : ""}</div></a>`
+    });
   }
 
-  if (!cards.length) return "";
-  return `<section class="rt-section rt-article-chronology" aria-labelledby="article-chronology-title"><header class="rt-section-head"><div><h2 id="article-chronology-title">${esc(title)}</h2></div></header><div class="rt-chronology-grid">${cards.join("")}</div></section>`;
-}
+  if (!steps.length) return "";
+  const newer = steps.find((item) => item.kind === "newer")?.html || "";
+  const older = steps.find((item) => item.kind === "older")?.html || "";
+  const currentTitle = String(currentPost?.title || "").trim();
+  const current = currentTitle
+    ? `<div class="rt-chronology-current" aria-current="step"><span class="rt-chronology-node" aria-hidden="true"></span><div><small>${esc(currentLabel)}</small><strong>${esc(currentTitle)}</strong></div></div>`
+    : "";
 
+  return `<section class="rt-section rt-article-chronology" aria-labelledby="article-chronology-title"><header class="rt-section-head"><div><h2 id="article-chronology-title">${esc(title)}</h2></div></header><div class="rt-chronology-timeline">${newer}${current}${older}</div></section>`;
+}
 function relatedHtml(posts, pathname) {
   const match = String(pathname || "").match(ARTICLE_PARTS);
   if (!match) return "";
@@ -396,7 +406,7 @@ async function addRelatedStories(response, request, env, pathname) {
   const chronology = selectChronologicalNeighbors(posts, pathname);
   const current = publicPath(pathname);
   const currentPost = posts.find((post) => publicPath(post?.url || "") === current);
-  const html = chronologicalHtml(chronology, pathname)
+  const html = chronologicalHtml(chronology, currentPost, pathname)
     + entityHubHtml(currentPost, locale)
     + relatedHtml(related, pathname);
   if (!html) return response;
