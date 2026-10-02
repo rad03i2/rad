@@ -415,9 +415,73 @@ async function addRelatedStories(response, request, env, pathname) {
     .transform(response);
 }
 
+function renderRadwanTestPage() {
+  const html = \`<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>مختبر مِخبار — صفحة رضوان التجريبية</title>
+<meta name="description" content="صفحة تجريبية خاصة داخل مِخبار لاختبار التصاميم والمكونات قبل اعتمادها في الموقع.">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<link rel="canonical" href="https://mikhbar.website/ar/radwantest/">
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/forum.css?v=20261002-radwantest1">
+<link rel="stylesheet" href="/forum-media.css?v=20261002-radwantest1">
+<link rel="icon" type="image/png" sizes="1024x1024" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon-large.png?v=20260922-tab4">
+<style>
+.rt-test-page{padding:28px 0 72px}
+.rt-test-hero{position:relative;overflow:hidden;border:1px solid var(--rt-line,#e5e7eb);border-radius:28px;padding:clamp(28px,6vw,64px);background:linear-gradient(135deg,rgba(0,0,0,.025),rgba(0,0,0,.065));min-height:360px;display:flex;align-items:end}
+.rt-test-hero:after{content:"";position:absolute;inset:auto -70px -110px auto;width:300px;height:300px;border:1px solid currentColor;border-radius:50%;opacity:.08}
+.rt-test-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid currentColor;border-radius:999px;font-size:.78rem;font-weight:800;opacity:.78}
+.rt-test-title{font-size:clamp(2.3rem,8vw,5.8rem);line-height:.95;margin:18px 0 16px;letter-spacing:-.04em}
+.rt-test-lead{max-width:720px;font-size:clamp(1rem,2.3vw,1.25rem);line-height:1.9;opacity:.76;margin:0}
+.rt-test-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:22px}
+.rt-test-card{border:1px solid var(--rt-line,#e5e7eb);border-radius:22px;padding:24px;min-height:190px;background:var(--rt-card,#fff)}
+.rt-test-card span{display:block;font:800 .72rem/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.08em;opacity:.5;margin-bottom:28px}
+.rt-test-card h2{font-size:1.18rem;margin:0 0 10px}
+.rt-test-card p{margin:0;line-height:1.8;opacity:.7}
+.rt-test-note{margin-top:22px;border:1px dashed currentColor;border-radius:18px;padding:18px 20px;opacity:.76}
+@media(max-width:820px){.rt-test-grid{grid-template-columns:1fr}.rt-test-hero{min-height:300px;border-radius:22px}.rt-test-title{font-size:clamp(2.4rem,15vw,4.3rem)}}
+</style>
+</head>
+<body class="rt-locale-ar" data-locale="ar">
+<header class="rt-site-header"><div class="rt-navbar">
+<a class="mikhbar-brand" href="/ar/" aria-label="مِخبار"><span class="mikhbar-brand-mark"><img src="/assets/brand/mikhbar/06-web-ready/icon/mikhbar-logo-mark.png" alt="" width="64" height="64"></span><span class="mikhbar-brand-copy"><strong>مِخبار</strong><small dir="ltr">MIKHBAR</small></span></a>
+<button class="menu-button rt-menu-button" type="button" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="navigation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+<nav class="nav-links rt-platform-nav" id="navigation" aria-label="التنقل الرئيسي"><a href="/ar/">الرئيسية</a><a href="/ar/#latest">أحدث الأخبار</a><a href="/ar/#sections">الأقسام</a><a href="/ar/#top-stories">الأهم الآن</a><a href="/about/">عن مِخبار</a></nav>
+</div></header>
+<main class="rt-main rt-test-page" id="main"><div class="rt-shell">
+<section class="rt-test-hero">
+<div><span class="rt-test-badge">مختبر داخلي · RADWAN TEST</span><h1 class="rt-test-title">صفحة الاختبار</h1><p class="rt-test-lead">مساحة مستقلة داخل مِخبار لتجربة الواجهات، البطاقات، ترتيب المحتوى وأي مكوّن جديد قبل نقله إلى الصفحات العامة للموقع.</p></div>
+</section>
+<section class="rt-test-grid" aria-label="مناطق الاختبار">
+<article class="rt-test-card"><span>01 / LAYOUT</span><h2>اختبار التخطيط</h2><p>نجرب هنا أحجام الحاويات، توزيع الأعمدة والمسافات على الهاتف والكمبيوتر.</p></article>
+<article class="rt-test-card"><span>02 / COMPONENTS</span><h2>اختبار المكوّنات</h2><p>مكان لتجربة بطاقات الأخبار، التسلسل الزمني، الأخبار المرتبطة والأزرار.</p></article>
+<article class="rt-test-card"><span>03 / READY</span><h2>جاهزة للتعديل</h2><p>أي تصميم نريده لاحقًا يمكن تركيبه هنا أولًا دون التأثير على واجهة مِخبار الأساسية.</p></article>
+</section>
+<div class="rt-test-note"><strong>ملاحظة:</strong> هذه الصفحة تجريبية وممنوعة من الفهرسة حاليًا، ولن تظهر ضمن الأخبار أو الأقسام أو نتائج البحث.</div>
+</div></main>
+<footer class="rt-footer"><div class="rt-shell rt-copyright">© <span data-year></span> مِخبار · صفحة اختبار داخلية · <a href="/ar/">العودة للرئيسية</a></div></footer>
+<script>
+(()=>{const y=document.querySelector("[data-year]");if(y)y.textContent=new Date().getFullYear();const b=document.querySelector(".rt-menu-button");const n=document.getElementById("navigation");if(b&&n)b.addEventListener("click",()=>{const open=b.getAttribute("aria-expanded")==="true";b.setAttribute("aria-expanded",String(!open));n.classList.toggle("is-open",!open)})})();
+</script>
+</body>
+</html>\`;
+  return new Response(html, {
+    headers: {
+      "Content-Type": "text/html; charset=UTF-8",
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
 function shouldNoIndexTechnicalPath(pathname) {
   const path = String(pathname || "").toLowerCase();
   return path === "/healthz"
+    || path === "/ar/radwantest"
+    || path === "/ar/radwantest/"
     || path.endsWith(".json")
     || /^\/feed(?:-(?:ar|en))?\.xml$/.test(path)
     || /^\/[a-f0-9]{32}\.txt$/.test(path);
@@ -469,6 +533,16 @@ export default {
           "Vary": "Accept-Language",
         },
       }), url.pathname);
+    }
+
+    if (url.pathname === "/ar/radwantest") {
+      const canonical = canonicalUrl(url);
+      canonical.pathname = "/ar/radwantest/";
+      return Response.redirect(canonical.toString(), 308);
+    }
+
+    if (url.pathname === "/ar/radwantest/") {
+      return withHeaders(renderRadwanTestPage(), url.pathname);
     }
 
     if (url.pathname === "/healthz") {
