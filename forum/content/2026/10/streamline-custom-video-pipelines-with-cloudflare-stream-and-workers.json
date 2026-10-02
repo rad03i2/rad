@@ -1,0 +1,333 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "eb876aa30cda95b3d677",
+  "slug": "streamline-custom-video-pipelines-with-cloudflare-stream-and-workers",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/streamline-custom-video-pipelines-with-cloudflare-stream-and-workers/",
+    "en": "/forum/en/ai/streamline-custom-video-pipelines-with-cloudflare-stream-and-workers/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cloudflare تطلق Streamline لبناء خطوط معالجة فيديو مخصصة",
+      "description": "تقدّم Cloudflare منصة Streamline التي تدمج Workers وDurable Objects مع حاويات معالجة الوسائط، لتمكين المطورين من بناء خطوط إنتاج فيديو مستمرة ومخصصة على نطاق واسع.",
+      "deck": "تتيح التقنية الجديدة للمطورين تنفيذ عمليات معالجة فيديو معقدة ومستمرة دون الحاجة لإبقاء طلبات الشبكة مفتوحة، مما يفتح آفاقاً جديدة للتخصيص في البث المباشر.",
+      "summaryBullets": [
+        "إطلاق Streamline كساحة تجريبية مطورين لبناء خطوط معالجة فيديو مخصصة.",
+        "اعتماد معمارية تجمع بين Cloudflare Containers للمعالجة وDurable Objects للتنسيق.",
+        "دعم بروتوكولات متعددة مثل RTMP وHLS مع إمكانية إدخال الفيديو من كاميرات الويب.",
+        "توفير واجهة برمجية عالية المستوى (API) تتيح التحكم الكامل في دورة حياة جلسات المعالجة.",
+        "إمكانية التشغيل محلياً باستخدام Docker أو على منصة Cloudflare العالمية."
+      ],
+      "sections": [
+        {
+          "heading": "تجاوز حدود البث التقليدي",
+          "paragraphs": [
+            {
+              "text": "على الرغم من أن منصة Cloudflare Stream تُعد نظام بث قويًا يلائم احتياجات العديد من العملاء، إلا أن هناك طلبًا متزايدًا على ميزات متقدمة تتطلب تدخلًا برمجيًا مباشرًا. يبرز هذا الطلب في الرغبة بإضافة تعليقات ديناميكية على البث المباشر، أو إنشاء نسخ بديلة من الفيديوهات المضافة مع إدراج ترجمة نصية ثابتة داخل الصورة. لتحقيق هذه الأهداف، يحتاج المطورون إلى تشغيل خط معالجة فيديو مخصص (Custom Video Pipeline) يتجاوز قدرات المنصة القياسية.",
+              "links": [
+                {
+                  "text": "Cloudflare Stream",
+                  "url": "https://www.cloudflare.com/products/stream/"
+                },
+                {
+                  "text": "Cloudflare Stream",
+                  "url": "https://blog.cloudflare.com/tag/cloudflare-stream/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "معمارية مبنية على الحاويات والتنسيق",
+          "paragraphs": [
+            {
+              "text": "أعلنت Cloudflare عن إطلاق Streamline، وهي ساحة تجريبية للمطورين (Developer Playground) توضح كيفية بناء أنظمة لتسليم تجارب فيديو مخصصة على منصة المطورين. تعتمد هذه التقنية على مبدأ أساسي: تحتاج خطوط المعالجة إلى بيئة تشغيل دائمة وطويلة الأمد (Long-running) قادرة على تنفيذ أكواد مُجمّعة متخصصة مع سعة ذاكرة ومعالج متوقعة. نظرًا لأن تدفقات الفيديو قد تستمر لعدة دقائق أو ساعات، يجب أن تكون دورة حياة عملية الوسائط مستقلة تمامًا عن الطلب الشبكي الذي بدأها.",
+              "links": []
+            },
+            {
+              "text": "لتحقيق ذلك، تستخدم Streamline ثلاث ركائز تقنية من Cloudflare: الحاويات (Containers) كبيئة تشغيل طويلة الأمد مناسبة لمعالجة الوسائط، وأجسام الموثوقية (Durable Objects) لتنسيق العمليات، وWorkers لإشارات التحكم والمراقبة. تم بناء محرك وسائط يعمل داخل حاوية لمعالجة البيانات في الوقت الفعلي، بينما يتحكم فيه Worker يعرض خيارات التحكم والمعاينة للمستخدم أو للوكيل البرمجي (Agent).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مكونات النظام: محرك الوسائط والتطبيق",
+          "paragraphs": [
+            {
+              "text": "تتكون كل عملية نشر لنظام Streamline من مكونين رئيسيين: محرك الوسائط (Media Engine) الذي يتعامل مع مدخلات ومخرجات الفيديو ومعالجتها، وتطبيق التحكم (Controlling Application) الذي ينشئ جلسات المعالجة ويضبطها ويراقبها ويوقفها. يعمل محرك الوسائط داخل حاوية ويستطيع سحب البث عبر بروتوكول RTMPS من مدخلات Stream Live، أو نشر المخرجات إلى مدخلات أخرى. كما يدعم سحب قوائم HLS من الفيديوهات المضافة لاستخدامها كمدخلات، أو استقبال الفيديو من مصادر خارجية مثل كاميرات الويب.",
+              "links": []
+            },
+            {
+              "text": "من ناحية أخرى، يُبنى تطبيق التحكم باستخدام Workers، ويمكن أن يكون تطبيق ويب كامل، أو وكيلًا برمجيًا، أو نظامًا مدمجًا. يتضمن هذا التطبيق واجهة مستخدم (UI) تحتوي على منطق العميل وسياسات الوصول، بالإضافة إلى منسق (Orchestrator) يُنفذ بواسطة Durable Object. يتولى هذا المنسق تنسيق الجلسة ودورة حياة الحاوية ونقاط التحويل للمعاينة (Preview Relay).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة دورة حياة المعالجة المستمرة",
+          "paragraphs": [
+            {
+              "text": "تتميز هذه البنية بقدرتها على فصل عملية المعالجة عن اتصال المستخدم. بمجرد بدء جلسة معالجة وسائط، يمكن للتطبيق المتحكم فيه أن يفصل الاتصال ويعيد الاتصال بأمان، بينما تستمر الحاوية في المعالجة حتى يوقفها التطبيق المتحكم فيه صراحةً. لضمان عدم استنزاف الموارد، يتضمن النظام مدة زمنية قصوى تضمن إغلاق الجلسة دائمًا، حتى في حالة غياب التحكم الخارجي. إذا لم تستلم الحاوية أي طلبات خلال فترة محددة، فإنها تدخل في وضع السكون تلقائيًا، إلا أن Streamline يتجاوز هذا السلوك الافتراضي.",
+              "links": []
+            },
+            {
+              "text": "لتحقيق الاستمرارية، يقوم النظام بتجاوز استدعاء onActivityExpired() على الحاوية. إذا لم يتم الوصول إلى وقت الانتهاء، يتم تجديد النشاط، وإلا يتم تدمير الحاوية. هذا يضمن أن خط المعالجة يستمر في العمل حتى إذا انقطع تطبيق التحكم ولم تصل أي طلبات جديدة، مما يوفر استقرارًا عاليًا للعمليات الطويلة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "واجهات برمجية مرنة وموحدة",
+          "paragraphs": [
+            {
+              "text": "لتبسيط التعامل مع النظام، توفر Streamline حزمين برمجيين رئيسيين: @cloudflare/streamline/client الذي يعرّف واجهة برمجية عالية المستوى مبنية على الجلسات، و @cloudflare/streamline/ الذي يكشف عن فئة Durable Object الأساسية المرتبطة بالحاوية. في النشر عن بُعد، يُتوقع من Worker المتحكم فيه استيراد الحزمة وتعريف فئة فرعية محددة يمكن استخدامها للمنطق الخاص بالتطبيق والتخزين. هذا التصميم يجعل النظام محايدًا تجاه هوية المتحكم (سواء كان شخصًا أو وكيلًا ذكيًا) ويخفي التفاصيل غير الضرورية للتنفيذ الخلفي.",
+              "links": []
+            },
+            {
+              "text": "في الوضع المحلي، حيث لا يوجد Durable Object، يعرّف الواجهة الأمامية طبقة تكيف رقيقة تحافظ على واجهة الجلسات البرمجية، لكنها تتصل مباشرةً بمثال Docker المحلي دون ضوابط وصول. هذا يتيح للمطورين اختبار خطوط المعالجة محليًا بسهولة قبل نشرها على البنية التحتية السحابية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحكم في خط المعالجة عبر JSON",
+          "paragraphs": [
+            {
+              "text": "يعتمد تشغيل خط المعالجة على استدعاء session.start() الذي يستقبل كائن JSON واحد يحدد المعالجة المطلوبة. يسمح هذا التصميم بتكوين خطوط معقدة من خلال تعريف المدخلات والمخرجات والتحويلات المطلوبة بشكل برمجي. على سبيل المثال، يمكن بدء خط يأخذ بث RTMP كمدخل، ثم تطبيق فلاتر أو تحويلات، ونشر النتيجة كمعاينة عبر WebSocket أو كفيديو نهائي. يوفر النظام أيضًا نقاط نهاية لإرسال مقاطع فيديو قصيرة في وضع 'كاميرا الويب'، مما يوسع نطاق الاستخدامات المحتملة للتطبيق.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Streamline",
+        "معالجة الفيديو",
+        "Workers",
+        "Durable Objects",
+        "حاويات",
+        "بث مباشر",
+        "منصات المطورين"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Streamline",
+        "Cloudflare Stream",
+        "Workers",
+        "Durable Objects",
+        "Containers",
+        "FFmpeg"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "2 أكتوبر 2026",
+      "modifiedLabel": "2 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 741
+    },
+    "en": {
+      "title": "Cloudflare Releases Streamline for Custom Video Pipelines",
+      "description": "Cloudflare has introduced Streamline, a developer playground demonstrating how to build custom video processing pipelines using Workers and Containers.",
+      "deck": "Cloudflare has launched Streamline, a new developer playground designed to showcase how developers can build continuous, long-running video processing pipelines using its developer platform.",
+      "summaryBullets": [
+        "Cloudflare introduced Streamline to help developers build custom video processing pipelines.",
+        "The architecture pairs Cloudflare Workers and Durable Objects with a containerized media engine.",
+        "Streamline handles complex tasks like rendering dynamic annotations or creating alternate versions with burned-in subtitles.",
+        "Developers can run the system locally with Docker or deploy it remotely on Cloudflare's platform."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Streamline and Bespoke Video",
+          "paragraphs": [
+            {
+              "text": "Cloudflare Stream serves as a powerful broadcasting platform for numerous clients, yet rendering dynamic annotations on a livestream or generating alternate versions of hosted videos with burned-in subtitles requires custom video pipelines. To address this need, Cloudflare announced a new developer playground called Streamline.",
+              "links": [
+                {
+                  "text": "a powerful broadcasting platform",
+                  "url": "https://www.cloudflare.com/products/stream/"
+                }
+              ]
+            },
+            {
+              "text": "The release demonstrates how developers can construct systems to deliver bespoke video experiences on Cloudflare's Developer Platform by leveraging Workers, Containers, and various media protocols to modify video feeds and immediately publish outputs as livestreams or new hosted videos.",
+              "links": [
+                {
+                  "text": "Containers",
+                  "url": "https://blog.cloudflare.com/tag/containers/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Architectural Design and Core Components",
+          "paragraphs": [
+            {
+              "text": "Video processing pipelines demand durable, long-running environments capable of executing specialized compiled code with predictable memory and CPU capacity. Because video streams can run for extended periods, the media process requires an independent lifecycle separate from the initial request.",
+              "links": []
+            },
+            {
+              "text": "To achieve this, Streamline pairs Containers for long-lived media processing runtimes, Durable Objects for orchestration, and Workers for control signaling and monitoring. The architecture consists of a media engine running inside a container alongside a controlling application built with Workers.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Media Engine and Controlling Application",
+          "paragraphs": [
+            {
+              "text": "The media engine handles media input, output, and processing. It features a control harness written in Go that acts as an HTTP server to translate incoming requests into operations executable by the media engine, which currently implements FFmpeg as an internal detail.",
+              "links": []
+            },
+            {
+              "text": "The engine can pull RTMPS playback from a Stream Live input, publish RTMPS output to another Stream Live input, pull Cloudflare Stream HLS manifests, accept webcam inputs, and publish preview video over an outbound WebSocket to a Durable Object relay.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Session Management and Lifecycle Control",
+          "paragraphs": [
+            {
+              "text": "Once a controlling Worker application initiates a session, it can safely disconnect and reconnect while the container continues processing. To prevent instances from running indefinitely without external oversight, a maximum duration is enforced.",
+              "links": []
+            },
+            {
+              "text": "Normally, Cloudflare Containers automatically sleep after defined periods of inactivity. Streamline overrides the onActivityExpired() callback to ensure continuous processing even when the controlling application disconnects and receives no incoming requests.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "API Packages and Local Development",
+          "paragraphs": [
+            {
+              "text": "Cloudflare exports specific packages to provide a high-level session-based API and a Durable Object base class associated with the container. These components route API requests, implement the preview relay server, and offer hooks for security and access policy.",
+              "links": []
+            },
+            {
+              "text": "Developers can also run the system locally during development using a local Docker instance without requiring a Durable Object or complex authorization controls, making testing straightforward.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Streamline",
+        "Workers",
+        "Containers",
+        "Video Processing",
+        "Durable Objects",
+        "Streaming"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Streamline",
+        "FFmpeg"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 2, 2026",
+      "modifiedLabel": "October 2, 2026",
+      "readMinutes": 3,
+      "wordCount": 475
+    }
+  },
+  "datePublished": "2026-10-02T21:13:19.920687+03:00",
+  "dateModified": "2026-10-02T21:13:19.920687+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/streamline-custom-video-pipelines-with-cloudflare-stream-and-workers/hero.webp",
+    "card": "/forum/assets/posts/2026/10/streamline-custom-video-pipelines-with-cloudflare-stream-and-workers/card.webp",
+    "social": "/forum/assets/posts/2026/10/streamline-custom-video-pipelines-with-cloudflare-stream-and-workers/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تطلق Streamline لبناء خطوط معالجة فيديو مخصصة",
+      "en": "Cloudflare Releases Streamline for Custom Video Pipelines"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3XKCAN8X5Q5KQ1Q5EW20NBG.01M3XKCB43AH4EZPQE0QQ7MNND.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/streamline-custom-video-pipelines-with-cloudflare-stream-and-workers/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "Cloudflare تطلق Streamline لبناء خطوط معالجة فيديو مخصصة",
+          "en": "Streamline: custom video pipelines with Cloudflare Stream and Workers"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/streamline/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3XKQEZWPQRGSGGDW5CV9AF6.01M3XKQFTYW63D87Y4VTQ32HJS.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/streamline-custom-video-pipelines-with-cloudflare-stream-and-workers/inline-02.webp",
+        "width": 1400,
+        "height": 774,
+        "alt": {
+          "ar": "Cloudflare تطلق Streamline لبناء خطوط معالجة فيديو مخصصة",
+          "en": "Cloudflare Releases Streamline for Custom Video Pipelines"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/streamline/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3XKBENJCAB7M1N0K384578G.png&w=1430&h=792&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/streamline-custom-video-pipelines-with-cloudflare-stream-and-workers/inline-03.webp",
+        "width": 1400,
+        "height": 568,
+        "alt": {
+          "ar": "Cloudflare تطلق Streamline لبناء خطوط معالجة فيديو مخصصة",
+          "en": "Cloudflare Releases Streamline for Custom Video Pipelines"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/streamline/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3XKBFY5MZA5TEY754FQWWJ4.png&w=1430&h=580&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/streamline/",
+      "type": "official",
+      "title": "Streamline: custom video pipelines with Cloudflare Stream and Workers"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/streamline",
+  "sourceTitle": "Streamline: custom video pipelines with Cloudflare Stream and Workers",
+  "trendScore": 99.85,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-02T18:13:19+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/streamline-custom-video-pipelines-with-cloudflare-stream-and-workers.json"
+}
