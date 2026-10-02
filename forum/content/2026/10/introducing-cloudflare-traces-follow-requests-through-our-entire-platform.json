@@ -1,0 +1,379 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "ef80b61ccca2d8037312",
+  "slug": "introducing-cloudflare-traces-follow-requests-through-our-entire-platform",
+  "categorySlug": "robotics",
+  "urls": {
+    "ar": "/forum/ar/robotics/introducing-cloudflare-traces-follow-requests-through-our-entire-platform/",
+    "en": "/forum/en/robotics/introducing-cloudflare-traces-follow-requests-through-our-entire-platform/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cloudflare تطلق Traces لتتبع الطلبات عبر المنصة بالكامل",
+      "description": "أعلنت Cloudflare عن إطلاق ميزة Traces في بيتا مفتوحة، مما يتيح للمطورين تتبع مسار الطلبات عبر قواعد الأمان والتخزين المؤقت والتوجيه، مع دعم كامل لمعايير OpenTelemetry.",
+      "deck": "توفر Cloudflare Traces رؤية شاملة لمسار الطلبات، مما يسهل استكشاف الأخطاء وإصلاحها في بيئات الإنتاج المعقدة.",
+      "summaryBullets": [
+        "تتبع تلقائي للطلبات عبر قواعد الأمان، التحويلات، والتخزين المؤقت دون الحاجة لإعدادات إضافية.",
+        "دعم كامل لمعايير OpenTelemetry وتصدير البيانات إلى أي منصة مراقبة متوافقة عبر OTLP.",
+        "إمكانية التحكم في نسبة أخذ العينات باستخدام Trace Rules لتحديد الطلبات المستهدفة بدقة.",
+        "تكامل مع وكلاء البرمجة (Coding Agents) لاستكشاف الأخطاء عبر استعلامات SQL API.",
+        "تتبع موزع (Distributed Tracing) يربط مسار الطلب داخل Cloudflare مع الخدمات الخارجية."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق ميزة التتبع الشامل",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Cloudflare رسمياً عن إطلاق ميزة Cloudflare Traces في وضع بيتا مفتوح، مما يوسع نطاق التتبع التلقائي ليتجاوز حدود Workers ليشمل بقية مسار الطلب بالكامل. تتيح هذه الميزة للمستخدمين رؤية كيفية تحرك الطلب عبر قواعد الأمان، والتحويلات، والتخزين المؤقت، والتوجيه، وتنفيذ Workers، ومعالجة الأصل (Origin) في خط زمني واحد متكامل.",
+              "links": [
+                {
+                  "text": "Cloudflare Traces",
+                  "url": "https://developers.cloudflare.com/observability/traces/"
+                }
+              ]
+            },
+            {
+              "text": "يأتي هذا الإطلاق كجزء من استثمار طويل الأمد في معايير OpenTelemetry، بهدف جعل Cloudflare الجزء الأكثر قابلية للمراقبة في بنية التطبيقات. تتيح الميزة الجديدة للمستخدمين تتبع الطلبات عبر الخدمات التي تعمل على Cloudflare، أو على الأصل، أو في أي مكان آخر ضمن البنية التحتية الخاصة بهم، مما يوفر رؤية شاملة دون الحاجة لإعادة بناء المسار من سجلات منفصلة.",
+              "links": [
+                {
+                  "text": "OpenTelemetry",
+                  "url": "https://opentelemetry.io/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "رؤية داخلية متاحة للجميع",
+          "paragraphs": [
+            {
+              "text": "تسعى Cloudflare إلى تقديم نفس مستوى الرؤية الذي تستخدمه فرقها الداخلية لاستكشاف الأخطاء وإصلاحها. تعتمد الفرق الداخلية على التتبعات التي قد تتضمن آلاف النطاقات (Spans) لطلب واحد، مولدة بواسطة عشرات الخدمات والميزات. وتهدف Cloudflare Traces إلى إتاحة هذا المستوى من التفصيل لجميع المستخدمين، سواء كانوا يبنيون تطبيقاتهم على المنصة أو يستخدمونها فقط كطبقة أمامية للأصل.",
+              "links": []
+            },
+            {
+              "text": "من خلال هذه الميزة، يمكن للمستخدمين ربط نقاط الإعدادات التي قاموا بتكوينها في Cloudflare بكيفية تأثيرها على وقت معالجة الطلبات وقرارات التوجيه. بدلاً من الاعتماد على السجلات المنفصلة، يوفر النظام خطاً زمنياً واحداً يوضح مسار الطلب عبر النظام، مما يسهل فهم التفاعلات المعقدة بين المكونات المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تتبع تلقائي دون إعدادات إضافية",
+          "paragraphs": [
+            {
+              "text": "تتميز Cloudflare Traces بقدرتها على التقاط عمليات المنصة المدعومة في خط زمني على مستوى الطلب دون الحاجة إلى أي إعداد إضافي أو أدوات قياس خاصة. بمجرد تفعيل التتبع لنطاق معين، تولد Cloudflare النطاقات (Spans) تلقائياً، مما يتيح للمستخدمين تتبع الطلبات عبر خدمات طرف ثالث والعودة إليها مرة أخرى من خلال الالتزام بالمعايير المفتوحة.",
+              "links": []
+            },
+            {
+              "text": "توفر الميزة إجابات مباشرة على أسئلة شائعة مثل: لماذا تم حظر الطلب أو تحديه، وما هي قاعدة الأمان التي اتخذت الإجراء؟ يمكن للمستخدمين رؤية متى تم تقييم القواعد المخصصة أو المدارة، وكم استغرق التقييم، والإجراء الناتج. كما تتيح الميزة تتبع إعادة كتابة عناوين URL بواسطة قواعد التحويل (Transform Rules) قبل وصولها إلى التطبيق، مع تحديد القاعدة المسؤولة عن كل تغيير.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحكم في نسبة أخذ العينات",
+          "paragraphs": [
+            {
+              "text": "توفر Cloudflare أدوات دقيقة للتحكم في الطلبات التي يتم تتبعها. يمكن للمستخدمين تحديد نسبة أخذ عينات أساسية (Baseline Sampling Rate) لتوازن بين الرؤية وحجم البيانات والتكلفة. على سبيل المثال، يمكن تتبع 1% من الطلبات أثناء التشغيل الطبيعي للحصول على رؤية مستمرة دون جمع تتبع لكل طلب. كما تتيح الميزة استخدام Trace Rules لتجاوز هذه النسبة الأساسية للطلب المراد التحقيق فيه.",
+              "links": [
+                {
+                  "text": "Trace Rules",
+                  "url": "https://developers.cloudflare.com/observability/traces/configuration/#trace-rules"
+                }
+              ]
+            },
+            {
+              "text": "تستخدم Trace Rules لغة قواعد Cloudflare نفسها، مما يسمح باستهداف المسارات، وطرق الطلب، والترويسات، وعناوين IP، والمواقع الجغرافية، أو مجموعات من هذه الخصائص. هذا يتيح للمستخدمين تتبع 100% من حركة المرور لعميل معين أو عنوان IP محدد أثناء التحقيق في مشكلة، مع الحفاظ على النسبة الأساسية لبقية المستخدمين، مما يسهل إعادة إنتاج المشكلة دون زيادة التتبع عبر النطاق بأكمله.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تتبع موزع وتصدير البيانات",
+          "paragraphs": [
+            {
+              "text": "تدعم Cloudflare Traces التتبع الموزع الحقيقي (Distributed Tracing) من خلال قبول وتحويل ترويسات W3C traceparent. تتيح هذه الميزة لـ Cloudflare الانضمام إلى تتبع بدأ قبل وصول الطلب إلى المنصة، كما يمكنها تحويل ترويسة traceparent جديدة إلى الأصل. يمكن للخدمات الأخرى المجهزة لاستخراج هذا السياق متابعة التتبع عبر واجهات برمجة التطبيقات وقواعد البيانات والخدمات الأخرى.",
+              "links": []
+            },
+            {
+              "text": "لتصدير البيانات، تدعم Cloudflare بروتوكول OpenTelemetry (OTLP) لإرسال النطاقات إلى أي منصة مراقبة متوافقة. يمكن للمستخدمين تكوين وجهة على مستوى الحساب واختيار النطاقات التي ترسل التتبعات إليها. هذا يضمن قابلية نقل البيانات عبر أدوات المراقبة المختلفة، حيث تمثل Cloudflare نشاط الطلبات كنطاقات OpenTelemetry قياسية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تكامل مع وكلاء البرمجة",
+          "paragraphs": [
+            {
+              "text": "توفر Cloudflare أيضاً تكاملاً مع وكلاء البرمجة (Coding Agents) من خلال خادم Cloudflare Observability MCP. يتيح هذا التكامل للوكلاء استخدام واجهة برمجة التطبيقات SQL للاستعلام عن التتبعات وبيانات المراقبة الأخرى، مما يمنحهم الوصول إلى بيانات الإنتاج أثناء استكشاف الأخطاء. يمكن للوكلاء مقارنة التتبعات الفاشلة بالناجحة وتحديد حيث تتباعد النطاقات، وربط هذه النتائج بالكود ذي الصلة في المستودع لتضييق نطاق المشكلة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "OpenTelemetry",
+        "تتبع الطلبات",
+        "مراقبة التطبيقات",
+        "DevOps",
+        "أمان",
+        "بنية تحتية"
+      ],
+      "entities": [
+        "Cloudflare",
+        "OpenTelemetry",
+        "Workers",
+        "W3C",
+        "OTLP"
+      ],
+      "category": "الروبوتات",
+      "dateLabel": "2 أكتوبر 2026",
+      "modifiedLabel": "2 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 705
+    },
+    "en": {
+      "title": "Cloudflare Launches Traces in Open Beta for End-to-End Request Visibility",
+      "description": "Cloudflare has introduced Cloudflare Traces in open beta, extending automated request tracing across security rules, caches, Workers, and origin infrastructure.",
+      "deck": "The new open beta release brings deep, end-to-end platform observability to developers, allowing teams to track requests across security settings, caching layers, and custom code.",
+      "summaryBullets": [
+        "Cloudflare Traces extends automatic tracing beyond Workers to the entire request path.",
+        "Platform operations are captured in a single request-level timeline without requiring additional setup.",
+        "Users can set baseline sampling rates and control specific captures using Trace Rules.",
+        "Supports end-to-end trace context propagation through W3C traceparent headers and OpenTelemetry exports."
+      ],
+      "sections": [
+        {
+          "heading": "Expanding Platform Observability",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has introduced [Cloudflare Traces](https://developers.cloudflare.com/observability/traces/) in open beta, extending automatic tracing capabilities beyond Workers to the rest of the request path. According to the Cloudflare Blog, users can now view supported security rules, transformations, cache decisions, routing, Worker execution, and origin handling within a single timeline. This feature represents a long-term investment in [OpenTelemetry](https://opentelemetry.io/) and aims to provide deeper visibility into request behavior across the entire stack.",
+              "links": [
+                {
+                  "text": "Cloudflare Traces",
+                  "url": "https://developers.cloudflare.com/observability/traces/"
+                },
+                {
+                  "text": "OpenTelemetry",
+                  "url": "https://opentelemetry.io/"
+                }
+              ]
+            },
+            {
+              "text": "The platform previously launched automatic instrumentation for Worker invocations last year, showing work performed inside the runtime. The launch of [automatic tracing beyond Workers](https://blog.cloudflare.com/workers-tracing-now-in-open-beta/) brings that same level of platform-wide visibility to everyone using Cloudflare, whether they are building directly on the platform or placing Cloudflare in front of an origin server.",
+              "links": [
+                {
+                  "text": "automatic tracing beyond Workers",
+                  "url": "https://blog.cloudflare.com/workers-tracing-now-in-open-beta/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Capturing Request Timelines and Spans",
+          "paragraphs": [
+            {
+              "text": "A request path through modern web infrastructure can be complicated, passing through security rules, transformations, routing, and caching. [Automatically trace requests across Cloudflare](https://developers.cloudflare.com/observability/traces/spans/) records each supported step as a span, including timing, outcomes, and relevant attributes. Instead of manually reconstructing requests from separate logs and configurations, engineers can inspect the entire path in one unified place.",
+              "links": [
+                {
+                  "text": "Automatically trace requests across Cloudflare",
+                  "url": "https://developers.cloudflare.com/observability/traces/spans/"
+                }
+              ]
+            },
+            {
+              "text": "Engineers can investigate specific issues such as why a request was blocked or challenged by security settings. Spans show when custom or managed rules evaluated a request, how long the evaluation took, and which rule was responsible. Similarly, developers can check Transform Rules to see URL rewrites, or inspect routing spans to verify which Page Rules, Snippets, or Workers handled the incoming traffic.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Sampling Control and Trace Rules",
+          "paragraphs": [
+            {
+              "text": "To balance visibility, data volume, and operational costs, users can [enable tracing in the Cloudflare dashboard](https://developers.cloudflare.com/observability/traces/#enable-tracing) and configure a baseline sampling rate. For example, a team might choose to trace 1 percent of traffic during normal operations to maintain a continuous view of request behavior without generating excessive telemetry data.",
+              "links": [
+                {
+                  "text": "enable tracing in the Cloudflare dashboard",
+                  "url": "https://developers.cloudflare.com/observability/traces/#enable-tracing"
+                }
+              ]
+            },
+            {
+              "text": "When a deeper investigation is necessary, [Trace Rules](https://developers.cloudflare.com/observability/traces/configuration/#trace-rules) allow teams to override the baseline sampling rate for matching traffic. Administrators can capture 100 percent of requests for a specific hostname, source IP, or debugging header without increasing tracing volume across the rest of the domain.",
+              "links": [
+                {
+                  "text": "Trace Rules",
+                  "url": "https://developers.cloudflare.com/observability/traces/configuration/#trace-rules"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Distributed Tracing and Standards Integration",
+          "paragraphs": [
+            {
+              "text": "Cloudflare Traces supports true distributed tracing by accepting [W3C traceparent headers](https://www.w3.org/TR/trace-context-1/#traceparent-header) from incoming requests. This allows Cloudflare spans to seamlessly join an existing trace that began before the request reached the platform. Cloudflare can also forward a new traceparent header to the origin server.",
+              "links": [
+                {
+                  "text": "W3C traceparent headers",
+                  "url": "https://www.w3.org/TR/trace-context-1/#traceparent-header"
+                }
+              ]
+            },
+            {
+              "text": "Teams can [Investigate traces in Cloudflare](https://developers.cloudflare.com/observability/traces/#inspect-a-trace) directly through the dashboard or [Export traces with OpenTelemetry](https://developers.cloudflare.com/observability/export/opentelemetry/#enable-export-for-cloudflare-traces) to any destination supporting an Open Telemetry Protocol [endpoint](https://opentelemetry.io/docs/specs/otlp/). This design ensures that platform telemetry remains portable and integrates smoothly with existing enterprise observability tooling.",
+              "links": [
+                {
+                  "text": "Investigate traces in Cloudflare",
+                  "url": "https://developers.cloudflare.com/observability/traces/#inspect-a-trace"
+                },
+                {
+                  "text": "Export traces with OpenTelemetry",
+                  "url": "https://developers.cloudflare.com/observability/export/opentelemetry/#enable-export-for-cloudflare-traces"
+                },
+                {
+                  "text": "endpoint",
+                  "url": "https://opentelemetry.io/docs/specs/otlp/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "OpenTelemetry",
+        "Distributed Tracing",
+        "Observability",
+        "Web Security",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "Cloudflare",
+        "OpenTelemetry",
+        "W3C"
+      ],
+      "category": "Robotics",
+      "dateLabel": "October 2, 2026",
+      "modifiedLabel": "October 2, 2026",
+      "readMinutes": 3,
+      "wordCount": 510
+    }
+  },
+  "datePublished": "2026-10-02T16:53:19.512316+03:00",
+  "dateModified": "2026-10-02T16:53:19.512316+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/introducing-cloudflare-traces-follow-requests-through-our-entire-platform/hero.webp",
+    "card": "/forum/assets/posts/2026/10/introducing-cloudflare-traces-follow-requests-through-our-entire-platform/card.webp",
+    "social": "/forum/assets/posts/2026/10/introducing-cloudflare-traces-follow-requests-through-our-entire-platform/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تطلق Traces لتتبع الطلبات عبر المنصة بالكامل",
+      "en": "Cloudflare Launches Traces in Open Beta for End-to-End Request Visibility"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3XE9TZRDPWVKPPQNAVJDCYT.01M3XE9W5HREEF8Q70M7G034M2.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-cloudflare-traces-follow-requests-through-our-entire-platform/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "Cloudflare تطلق Traces لتتبع الطلبات عبر المنصة بالكامل",
+          "en": "Introducing Cloudflare Traces: follow requests through our entire platform"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/cloudflare-tracing/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3XERG2M3W0AF6DR6E14218A.01M3XERHCQTS14NJ390N327RG1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-cloudflare-traces-follow-requests-through-our-entire-platform/inline-02.webp",
+        "width": 1400,
+        "height": 625,
+        "alt": {
+          "ar": "Cloudflare تطلق Traces لتتبع الطلبات عبر المنصة بالكامل",
+          "en": "image3.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/cloudflare-tracing/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3XE76PJXWGQ86MMXRXPYYED.png&w=1430&h=638&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-cloudflare-traces-follow-requests-through-our-entire-platform/inline-03.webp",
+        "width": 1400,
+        "height": 543,
+        "alt": {
+          "ar": "Cloudflare تطلق Traces لتتبع الطلبات عبر المنصة بالكامل",
+          "en": "image7.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/cloudflare-tracing/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3XE7C96A091RSXKVQZ6Z146.png&w=1430&h=556&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-cloudflare-traces-follow-requests-through-our-entire-platform/inline-04.webp",
+        "width": 1400,
+        "height": 551,
+        "alt": {
+          "ar": "Cloudflare تطلق Traces لتتبع الطلبات عبر المنصة بالكامل",
+          "en": "image8.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/cloudflare-tracing/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3XE79N2WXESWBXHEV6S25AC.png&w=1430&h=564&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/cloudflare-tracing/",
+      "type": "official",
+      "title": "Introducing Cloudflare Traces: follow requests through our entire platform"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/cloudflare-tracing",
+  "sourceTitle": "Introducing Cloudflare Traces: follow requests through our entire platform",
+  "trendScore": 126.27,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-02T13:53:19+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/introducing-cloudflare-traces-follow-requests-through-our-entire-platform.json"
+}
