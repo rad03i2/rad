@@ -1,5 +1,361 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-02T20:13:20+00:00",
-  "last_published_story_id": "e81b1dea7ce0fb42c978"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-02T20:16:28+00:00",
+  "target_publish_at": "2026-10-02T23:33:20.099909+03:00",
+  "story": {
+    "title": "Protected Quick Tunnels: simple accountless authentication for your next dev project",
+    "url": "https://blog.cloudflare.com/protected-quick-tunnels",
+    "domain": "blog.cloudflare.com",
+    "summary": "Quick Tunnels now support email authentication. Add --allowed-mail to one cloudflared command, and only the addresses or domains you list can reach your local app. No Cloudflare account required on either side.",
+    "published_at": "2026-10-02T13:00:00+00:00",
+    "discovered_at": "2026-10-02T13:11:16+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 61,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "73dfdf5e63504fc91ff8",
+    "trend": {
+      "score": 93.17,
+      "age_hours": 7.27,
+      "corroboration_count": 0,
+      "entity_momentum": 0,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/protected-quick-tunnels/",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Protected Quick Tunnels: simple accountless authentication for your next dev project",
+      "title": "Protected Quick Tunnels: simple accountless authentication for your next dev project | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "كلاودفلير تضيف المصادقة عبر البريد إلى الأنفاق السريعة",
+      "description": "أطلقت كلاودفلير ميزة جديدة لحماية الأنفاق السريعة عبر المصادقة بالبريد الإلكتروني، مما يتيح للمطورين تقييد الوصول لتطبيقاتهم المحلية دون الحاجة لإنشاء حسابات.",
+      "deck": "تتيح أداة cloudflared الآن حماية الأنفاق السريعة باستخدام بريد إلكتروني واحد، مما يضمن وصول المطورين فقط إلى تطبيقاتهم المحلية.",
+      "summary_bullets": [
+        "إضافة خيار --allowed-mail لتقييد الوصول عبر عناوين بريدية محددة.",
+        "لا يتطلب النظام إنشاء حساب كلاودفلير من قبل المطور أو الزائر.",
+        "تعمل المصادقة عبر رمز PIN لمرة واحدة يُرسل إلى صندوق البريد.",
+        "تُحفظ قواعد الوصول محلياً على جهاز المطور لضمان الخصوصية."
+      ],
+      "sections": [
+        {
+          "heading": "حماية الأنفاق السريعة من الوصول غير المصرح به",
+          "paragraphs": [
+            {
+              "text": "أعلنت كلاودفلير عن إطلاق ميزة جديدة في إصدار cloudflared 2026.9.3 تتيح حماية الأنفاق السريعة (Quick Tunnels) باستخدام المصادقة عبر البريد الإلكتروني. تتيح هذه الميزة للمطورين تقييد الوصول إلى تطبيقاتهم المحلية التي يتم نشرها مؤقتاً عبر الإنترنت، بحيث لا يمكن الوصول إليها إلا من قبل العناوين البريدية أو النطاقات المصرح بها مسبقاً.",
+              "links": [
+                {
+                  "text": "كلاودفلير",
+                  "url": "https://blog.cloudflare.com/protected-quick-tunnels/"
+                }
+              ]
+            },
+            {
+              "text": "تستند هذه الميزة إلى استخدام خيار --allowed-mail في الأمر، مما يسمح للمطور بتحديد قائمة ضيوف محددة. عند محاولة الزائر الوصول إلى الرابط، يُطلب منه إدخال بريد إلكتروني ورمز تحقق لمرة واحدة (PIN) يُرسل إلى صندوق بريده. إذا كان البريد ضمن القائمة المسموحة، يُسمح بالوصول، وإلا يتم رفض الطلب قبل وصوله إلى جهاز المطور.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تصميم بدون حسابات لضمان الخصوصية",
+          "paragraphs": [
+            {
+              "text": "تتميز هذه الميزة بأنها لا تتطلب إنشاء حساب كلاودفلير من قبل أي من الطرفين، سواء المطور أو الزائر. هذا التصميم يهدف إلى الحفاظ على بساطة الأنفاق السريعة التي تم إطلاقها عام 2021، حيث كانت تعتمد على مبدأ عدم الحاجة إلى تسجيل أو نطاقات مخصصة. بدلاً من تخزين قواعد الوصول في خوادم كلاودفلير، تُحفظ هذه القواعد محلياً على جهاز المطور، مما يضمن بقاء قائمة الضيوف الخاصة به بعيداً عن أي خادم مركزي.",
+              "links": []
+            },
+            {
+              "text": "فصل المصادقة عن التفويض هو جوهر هذا التصميم. تتولى خدمة Cloudflare Access التحقق من هوية الزائر عبر البريد الإلكتروني، بينما يتولى برنامج cloudflared على جهاز المطور قرار السماح بالوصول بناءً على القواعد المحلية. هذا النهج يحمي خصوصية المطورين الذين قد يخشون مشاركة عناوينهم البريدية مع مزود الخدمة.",
+              "links": [
+                {
+                  "text": "Cloudflare Access",
+                  "url": "https://www.cloudflare.com/sase/products/access/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دعم وكلاء الذكاء الاصطناعي في تطوير البرمجيات",
+          "paragraphs": [
+            {
+              "text": "أصبحت الأنفاق السريعة أداة أساسية لوكلاء الذكاء الاصطناعي الذين يكتبون الكود ويحتاجون إلى عرض النتائج للمستخدمين. تتيح هذه الوكلاء إنشاء روابط مؤقتة لتطبيقاتها المحلية دون الحاجة إلى نماذج تسجيل معقدة. مع إضافة خيار المصادقة بالبريد، يمكن لوكلاء الذكاء الاصطناعي حماية هذه الروابط تلقائياً، مما يمنع أي شخص غير مصرح له من الوصول إلى التطبيقات قيد التطوير أو البيانات الحساسة.",
+              "links": []
+            },
+            {
+              "text": "أشارت كلاودفلير إلى أن تبنّي الأنفاق السريعة نما بشكل كبير منذ انتشار وكلاء الذكاء الاصطناعي. في سبتمبر 2026، وصل رابط صفحة الأنفاق السريعة إلى قمة موقع Hacker News، حيث ناقش المستخدمون كيفية استخدام هذه الأداة في سير عمل الوكلاء. أثار أحد المعلقين تساؤلاً حول احتمال قيام وكيل ذكاء اصطناعي بإنفاق نفق يعرض معلومات حساسة، وهو ما تجيب عنه هذه الميزة الجديدة.",
+              "links": [
+                {
+                  "text": "Hacker News",
+                  "url": "https://news.ycombinator.com/item?id=49754785"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل المصادقة والتفويض",
+          "paragraphs": [
+            {
+              "text": "عند فتح رابط محمي، يهبط الزائر على صفحة تسجيل دخول Cloudflare Access. بعد إدخال البريد الإلكتروني ورمز التحقق، يتولى وسيط مصادقة صغير يعمل على Cloudflare Workers تحويل الهوية الموثقة إلى ترحيل موقّع قصير العمر. لا يخزن هذا الوسيط أي سياسات نفق أو جلسات زوار، مما يجعله بلا حالة (stateless) وآمناً.",
+              "links": [
+                {
+                  "text": "Cloudflare Workers",
+                  "url": "https://www.cloudflare.com/products/workers/"
+                }
+              ]
+            },
+            {
+              "text": "يتلقى برنامج cloudflared هذا الترحيل الموقّع ويقوم بفحصه في الذاكرة ضد القواعد التي أدخلها المطور. إذا تطابق البريد الإلكتروني مع القائمة المسموحة، يُسمح بالطلب، وإلا يُرفض. هذا يضمن أن قرار التفويض يتم محلياً، مما يمنع أي تسريب لقائمة الضيوف إلى خوادم كلاودفلير.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع أدوات المطورين",
+          "paragraphs": [
+            {
+              "text": "تدعم أداة wrangler، المستخدمة لتطوير تطبيقات Cloudflare Workers، خيار --allowed-mail. تتيح هذه الأداة استخدام أعلام متعددة وقيم مفصولة بفواصل ونطاقات برية (wildcard domains)، كما تحذف قيم --allowed-mail من سجلات التصحيح (debug logs) لحماية الخصوصية. يمكن للمطورين أيضاً إضافة سطر واحد إلى ملفات التعليمات مثل AGENTS.md لتوجيه وكلاء الذكاء الاصطناعي لحماية الأنفاق تلقائياً.",
+              "links": []
+            },
+            {
+              "text": "لتغيير قائمة الضيوف، يجب على المطور إيقاف عملية cloudflared وبدء نفق جديد. تنتهي صلاحية الوصول للجميع فور انتهاء العملية.对于那些 الذين يحتاجون إلى اسم نطاق ثابت أو قواعد أكثر تعقيداً مثل مجموعات مزودي الهوية، تنصح كلاودفلير باستخدام Cloudflare Tunnel مع Cloudflare Access.",
+              "links": [
+                {
+                  "text": "Cloudflare Tunnel",
+                  "url": "https://developers.cloudflare.com/tunnel/get-started/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "كلاودفلير",
+        "الذكاء الاصطناعي",
+        "أمن المعلومات",
+        "تطوير البرمجيات",
+        "الأنفاق السريعة",
+        "المصادقة"
+      ],
+      "entities": [
+        "كلاودفلير",
+        "cloudflared",
+        "Cloudflare Access",
+        "Cloudflare Workers",
+        "wrangler",
+        "Hacker News"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من مدونة كلاودفلير الرسمية، مع التركيز على آلية عمل الميزة الجديدة وتكاملها مع وكلاء الذكاء الاصطناعي."
+    },
+    "en": {
+      "title": "Protected Quick Tunnels Add Email Authentication",
+      "description": "Cloudflare updates Quick Tunnels with email authentication via cloudflared, allowing secure local app previews without requiring accounts.",
+      "deck": "Cloudflare has introduced email authentication support for Quick Tunnels, enabling developers to secure local development servers with an optional command-line flag.",
+      "summary_bullets": [
+        "Quick Tunnels now support email authentication through the --allowed-mail command-line flag.",
+        "Visitors prove ownership of specified email addresses or domains using a one-time PIN from Cloudflare Access.",
+        "No Cloudflare account is required on either the developer or visitor side.",
+        "Guest lists and authorization decisions remain entirely on the local machine."
+      ],
+      "sections": [
+        {
+          "heading": "Securing Local Development Environments",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has updated its lightweight connector to support email authentication, offering developers a way to restrict access to their local applications. Originally launched to provide an easy way to share services running in local development environments, Quick Tunnels publish local services at a random trycloudflare.com URL without demanding an account, domain, or cost. However, because these endpoints were previously public, anyone with the link could access them.",
+              "links": [
+                {
+                  "text": "Quick Tunnels",
+                  "url": "https://blog.cloudflare.com/quick-tunnels-anytime-anywhere/"
+                }
+              ]
+            },
+            {
+              "text": "Starting with version 2026.9.3 of the client connector, developers can add a specific command-line parameter to restrict tunnel access to chosen email addresses or domains. Visitors verify their identity by proving they own an approved address using a one-time PIN provided by Cloudflare Access. Neither party requires a Cloudflare account to use this feature.",
+              "links": [
+                {
+                  "text": "Cloudflare Access",
+                  "url": "https://www.cloudflare.com/sase/products/access/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Growing Adoption Among Coding Agents",
+          "paragraphs": [
+            {
+              "text": "The demand for secure, accountless endpoints has grown alongside the rise of coding agents. These automated systems frequently need to expose local servers—such as a dev server running on a local port or a Model Context Protocol server—so that users can review features on external devices or allow hosted assistants to call them. Because Quick Tunnels operate via a single command, agents can run them autonomously without getting stuck on signup forms.",
+              "links": [
+                {
+                  "text": "Quick Tunnel",
+                  "url": "https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/"
+                }
+              ]
+            },
+            {
+              "text": "The ecosystem surrounding these tunnels has experienced significant expansion. Recent community discussions on platforms like Hacker News highlighted numerous automated workflows where AI agents independently utilized Quick Tunnels to publish newly built websites, prompting discussions around secure access control for works-in-progress.",
+              "links": [
+                {
+                  "text": "Hacker News",
+                  "url": "https://news.ycombinator.com/item?id=49754785"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "How the Authentication Architecture Works",
+          "paragraphs": [
+            {
+              "text": "The mechanism separates visitor authentication from authorization. When a user opens a protected URL, they encounter the Cloudflare Access sign-in page where they enter their email address and a one-time PIN. This step confirms that the visitor controls the email address, but the final authorization decision occurs locally on the developer's machine.",
+              "links": [
+                {
+                  "text": "Cloudflare Access",
+                  "url": "https://www.cloudflare.com/sase/products/access/"
+                }
+              ]
+            },
+            {
+              "text": "Rather than storing temporary guest lists centrally or creating temporary Cloudflare Access applications for hundreds of thousands of ephemeral tunnels, the system uses a stateless authentication broker running on Cloudflare Workers. The broker converts the verified identity into a short-lived, signed handoff. The local connector then evaluates this handoff in memory against the developer's rules, ensuring the guest list never leaves the local machine.",
+              "links": [
+                {
+                  "text": "Cloudflare Workers",
+                  "url": "https://www.cloudflare.com/products/workers/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Implementation and Usage Options",
+          "paragraphs": [
+            {
+              "text": "Developers can implement the restriction by appending the appropriate flag to their command execution or by integrating it into instructions for coding agents. If the flag is omitted, public tunnels behave exactly as they have previously. Access to the tunnel ends immediately once the underlying process exits.",
+              "links": []
+            },
+            {
+              "text": "For builders utilizing Wrangler, similar capabilities are supported from the command line, allowing repeated flags, comma-separated values, and wildcard domains while scrubbing sensitive details from debug logs. For more permanent hostnames or advanced team management structures involving identity provider groups, standard tunnels and access policies remain available.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Quick Tunnels",
+        "Cloudflare Access",
+        "Cloudflare Workers",
+        "Developer Tools",
+        "Authentication"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Hacker News"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly reflects the provided Cloudflare Blog source details regarding the new protected Quick Tunnels update, its architecture, and command usage."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 614,
+      "word_count_en": 533
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "73dfdf5e63504fc91ff8",
+      "title": "Protected Quick Tunnels: simple accountless authentication for your next dev project",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 614,
+          "word_count_en": 533
+        }
+      ]
+    }
+  ],
+  "slug": "protected-quick-tunnels-simple-accountless-authentication-for-your-next-dev-project",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/protected-quick-tunnels-simple-accountless-authentication-for-your-next-dev-project/hero.webp",
+    "card": "/forum/assets/posts/2026/10/protected-quick-tunnels-simple-accountless-authentication-for-your-next-dev-project/card.webp",
+    "social": "/forum/assets/posts/2026/10/protected-quick-tunnels-simple-accountless-authentication-for-your-next-dev-project/social.jpg",
+    "alt": {
+      "ar": "كلاودفلير تضيف المصادقة عبر البريد إلى الأنفاق السريعة",
+      "en": "Protected Quick Tunnels Add Email Authentication"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3WEQNPRWNJ6R5MEB2300BRQ.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/protected-quick-tunnels-simple-accountless-authentication-for-your-next-dev-project/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "كلاودفلير تضيف المصادقة عبر البريد إلى الأنفاق السريعة",
+          "en": "Protected Quick Tunnels: simple accountless authentication for your next dev project"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/protected-quick-tunnels/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3WF11EFDMBPVYJVR18D29GB.01M3WF120JP4JSCV3QW2JRCGQT.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/protected-quick-tunnels-simple-accountless-authentication-for-your-next-dev-project/inline-02.webp",
+        "width": 1400,
+        "height": 688,
+        "alt": {
+          "ar": "كلاودفلير تضيف المصادقة عبر البريد إلى الأنفاق السريعة",
+          "en": "Four-step flow. A visitor opens your link, Cloudflare Access verifies their email with a one-time PIN, cloudflared on your machine checks it against your allowed emails, and only invited visitors reach your app."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/protected-quick-tunnels/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3WEQPPSBFQSKRNK84673MEC.png&w=1430&h=704&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
