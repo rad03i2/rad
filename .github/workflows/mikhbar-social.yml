@@ -9,9 +9,18 @@ on:
         default: dry-run
         type: choice
         options: [dry-run, live]
+      story_ids:
+        description: Optional comma-separated story IDs to publish/backfill
+        required: false
+        default: ''
+        type: string
   workflow_run:
     workflows: ['Mikhbar 20-Minute Publisher']
     types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - 'automation/social/manual-facebook.json'
 
 permissions:
   contents: write
@@ -22,12 +31,13 @@ concurrency:
 
 jobs:
   social:
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
       FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
       FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+      MANUAL_STORY_IDS: ${{ inputs.story_ids }}
     steps:
       - name: Checkout latest website state
         uses: actions/checkout@v4
@@ -43,8 +53,8 @@ jobs:
       - name: Test social publishing
         run: python -m unittest discover -s automation/social/tests -v
 
-      - name: Publish new Mikhbar story to Facebook
-        if: github.event_name == 'workflow_run' || inputs.mode == 'live'
+      - name: Publish Mikhbar stories to Facebook
+        if: github.event_name == 'workflow_run' || github.event_name == 'push' || inputs.mode == 'live'
         shell: bash
         run: |
           python - <<'PY'
@@ -56,6 +66,7 @@ jobs:
           from urllib.request import Request, urlopen
 
           API = 'https://graph.facebook.com/v26.0'
+          SITE = 'https://mikhbar.website'
           REQUIRED_USER_SCOPES = {
               'pages_show_list',
               'pages_read_engagement',
@@ -76,33 +87,95 @@ jobs:
                       headers={'Content-Type': 'application/x-www-form-urlencoded'},
                   )
               try:
-                  with urlopen(req, timeout=30) as response:
+                  with urlopen(req, timeout=45) as response:
                       return json.loads(response.read().decode())
               except HTTPError as exc:
                   body = exc.read().decode(errors='replace')
-                  raise RuntimeError(f'Facebook Graph API HTTP {exc.code}: {body}') from None
+                  try:
+                      payload = json.loads(body)
+                      error = payload.get('error', {})
+                      safe = {
+                          'message': error.get('message'),
+                          'type': error.get('type'),
+                          'code': error.get('code'),
+                          'error_subcode': error.get('error_subcode'),
+                          'fbtrace_id': error.get('fbtrace_id'),
+                      }
+                      raise RuntimeError(
+                          f'Facebook Graph API HTTP {exc.code}: '
+                          + json.dumps(safe, ensure_ascii=False)
+                      ) from None
+                  except json.JSONDecodeError:
+                      raise RuntimeError(
+                          f'Facebook Graph API HTTP {exc.code}: request failed'
+                      ) from None
+
+          def absolute_site_url(value):
+              value = str(value or '').strip()
+              if not value:
+                  return ''
+              parsed = urlsplit(value)
+              if parsed.netloc:
+                  if parsed.hostname not in {
+                      'mikhbar.website',
+                      'www.mikhbar.website',
+                      'rdwan.dev',
+                      'www.rdwan.dev',
+                  }:
+                      raise RuntimeError('Article/media URL is outside the Mikhbar website.')
+                  return SITE + parsed.path
+              return SITE + ('/' if not value.startswith('/') else '') + value
+
+          def clean_excerpt(value, limit=240):
+              text = ' '.join(str(value or '').split()).strip()
+              if len(text) <= limit:
+                  return text
+              shortened = text[:limit - 1].rsplit(' ', 1)[0].rstrip('،؛,. ')
+              return (shortened or text[:limit - 1]).rstrip() + '…'
+
+          def choose_description(ar):
+              candidates = [
+                  ar.get('description'),
+                  ar.get('deck'),
+                  (ar.get('summaryBullets') or [''])[0],
+              ]
+              for candidate in candidates:
+                  value = clean_excerpt(candidate)
+                  if len(value) >= 45:
+                      return value
+              return clean_excerpt(next((x for x in candidates if x), 'أحدث الأخبار التقنية من مِخبار.'))
 
           root = Path('.')
           history = json.loads(
               (root / 'automation/forum/state/published.json').read_text(encoding='utf-8')
           )
-          item = history['items'][0]
-          article = json.loads((root / item['content_file']).read_text(encoding='utf-8'))
-          ar = article.get('locales', {}).get('ar', {})
-          title = ar.get('title') or item.get('title') or 'خبر جديد'
-          description = ar.get('description') or ar.get('deck') or ''
-          path = article.get('urls', {}).get('ar') or item.get('published_url')
-          parsed = urlsplit(str(path))
-          if parsed.netloc and parsed.hostname not in {'rdwan.dev', 'www.rdwan.dev', 'mikhbar.website', 'www.mikhbar.website'}:
-              raise RuntimeError('Article URL is outside the Mikhbar website.')
-          article_path = parsed.path
-          if article_path.startswith('/forum/'):
-              article_path = article_path[len('/forum'):]
-          if not article_path.startswith('/ar/'):
-              raise RuntimeError('Missing canonical Arabic article URL.')
-          link = 'https://mikhbar.website' + article_path
-          link += ('&' if '?' in link else '?') + 'utm_source=facebook&utm_medium=social&utm_campaign=mikhbar_social'
-          story_id = str(item.get('story_id') or article.get('id') or link.split('?', 1)[0])
+          items = history.get('items', [])
+          items_by_id = {str(row.get('story_id')): row for row in items if row.get('story_id')}
+
+          event_name = os.environ.get('GITHUB_EVENT_NAME', '').strip()
+          requested = []
+
+          if event_name == 'push':
+              manual_path = root / 'automation/social/manual-facebook.json'
+              if manual_path.exists():
+                  manual = json.loads(manual_path.read_text(encoding='utf-8'))
+                  requested = [str(x).strip() for x in manual.get('story_ids', []) if str(x).strip()]
+          else:
+              raw = os.environ.get('MANUAL_STORY_IDS', '').strip()
+              if raw:
+                  requested = [x.strip() for x in raw.split(',') if x.strip()]
+
+          if not requested:
+              if not items:
+                  raise RuntimeError('No published Mikhbar stories are available.')
+              requested = [str(items[0].get('story_id'))]
+
+          targets = []
+          for story_id in requested:
+              item = items_by_id.get(story_id)
+              if not item:
+                  raise RuntimeError(f'Unknown story_id in published history: {story_id}')
+              targets.append(item)
 
           state_path = root / 'automation/social/state/facebook.json'
           state = (
@@ -110,12 +183,7 @@ jobs:
               if state_path.exists()
               else {'published_story_ids': []}
           )
-          if story_id in state.get('published_story_ids', []):
-              print(json.dumps({
-                  'status': 'skipped_duplicate',
-                  'story_id': story_id,
-              }, ensure_ascii=False))
-              raise SystemExit(0)
+          published_ids = set(str(x) for x in state.get('published_story_ids', []))
 
           page_id = os.environ.get('FACEBOOK_PAGE_ID', '').strip()
           supplied_token = os.environ.get('FACEBOOK_PAGE_ACCESS_TOKEN', '').strip()
@@ -124,8 +192,6 @@ jobs:
           if not supplied_token:
               raise RuntimeError('FACEBOOK_PAGE_ACCESS_TOKEN is empty.')
 
-          # Accept either a real Page token or a User token. If a User token was
-          # stored by mistake, derive the correct Page token from /me/accounts.
           me = request_json('/me', supplied_token, params={'fields': 'id,name'})
           effective_token = supplied_token
           token_kind = 'page'
@@ -169,45 +235,117 @@ jobs:
               raise RuntimeError(
                   f'Facebook token resolved to Page {page.get("id")}, expected {page_id}.'
               )
+
           print(json.dumps({
               'facebook_auth': 'ok',
               'token_kind_supplied': token_kind,
               'page_id': page_id,
               'page_name': page.get('name'),
+              'requested_count': len(targets),
           }, ensure_ascii=False))
 
-          message = (
-              f'{title}\n\n{description}\n\n'
-              f'اقرأ التفاصيل على مِخبار:\n{link}\n\n#مخبار'
-          )
-          result = request_json(
-              f'/{page_id}/feed',
-              effective_token,
-              method='POST',
-              params={'message': message, 'link': link},
-          )
+          changed = False
+          for item in targets:
+              story_id = str(item.get('story_id'))
+              if story_id in published_ids:
+                  print(json.dumps({
+                      'status': 'skipped_duplicate',
+                      'story_id': story_id,
+                  }, ensure_ascii=False))
+                  continue
 
-          state.setdefault('published_story_ids', []).append(story_id)
-          state['last_success'] = {
-              'story_id': story_id,
-              'facebook_post_id': result.get('id'),
-              'page_id': page_id,
-          }
-          state_path.parent.mkdir(parents=True, exist_ok=True)
-          state_path.write_text(
-              json.dumps(state, ensure_ascii=False, indent=2) + '\n',
-              encoding='utf-8',
-          )
-          print(json.dumps({
-              'status': 'published',
-              'story_id': story_id,
-              'facebook_post_id': result.get('id'),
-              'page_id': page_id,
-          }, ensure_ascii=False))
+              article = json.loads((root / item['content_file']).read_text(encoding='utf-8'))
+              ar = article.get('locales', {}).get('ar', {})
+              title = clean_excerpt(ar.get('title') or item.get('title') or 'خبر جديد', 180)
+              description = choose_description(ar)
+
+              article_path = (
+                  article.get('urls', {}).get('ar')
+                  or item.get('published_urls', {}).get('ar')
+                  or item.get('published_url')
+              )
+              parsed = urlsplit(str(article_path))
+              if parsed.netloc and parsed.hostname not in {
+                  'mikhbar.website',
+                  'www.mikhbar.website',
+                  'rdwan.dev',
+                  'www.rdwan.dev',
+              }:
+                  raise RuntimeError('Article URL is outside the Mikhbar website.')
+              path = parsed.path
+              if path.startswith('/forum/'):
+                  path = path[len('/forum'):]
+              if not path.startswith('/ar/'):
+                  raise RuntimeError('Missing canonical Arabic article URL.')
+
+              link = SITE + path
+              link += ('&' if '?' in link else '?') + (
+                  'utm_source=facebook&utm_medium=social&utm_campaign=mikhbar_social'
+              )
+
+              social_image = article.get('images', {}).get('social')
+              image_url = absolute_site_url(social_image) if social_image else ''
+
+              message = (
+                  f'{title}\n\n'
+                  f'{description}\n\n'
+                  f'اقرأ التفاصيل كاملة على مِخبار:\n{link}\n\n'
+                  f'#مخبار'
+              )
+
+              if image_url:
+                  result = request_json(
+                      f'/{page_id}/photos',
+                      effective_token,
+                      method='POST',
+                      params={
+                          'url': image_url,
+                          'caption': message,
+                          'published': 'true',
+                      },
+                  )
+                  facebook_post_id = result.get('post_id') or result.get('id')
+                  publish_mode = 'photo'
+              else:
+                  result = request_json(
+                      f'/{page_id}/feed',
+                      effective_token,
+                      method='POST',
+                      params={'message': message, 'link': link},
+                  )
+                  facebook_post_id = result.get('id')
+                  publish_mode = 'link_fallback'
+
+              state.setdefault('published_story_ids', []).append(story_id)
+              published_ids.add(story_id)
+              state['last_success'] = {
+                  'story_id': story_id,
+                  'facebook_post_id': facebook_post_id,
+                  'page_id': page_id,
+                  'publish_mode': publish_mode,
+                  'image_url': image_url or None,
+              }
+              changed = True
+
+              print(json.dumps({
+                  'status': 'published',
+                  'story_id': story_id,
+                  'facebook_post_id': facebook_post_id,
+                  'page_id': page_id,
+                  'publish_mode': publish_mode,
+                  'has_image': bool(image_url),
+              }, ensure_ascii=False))
+
+          if changed:
+              state_path.parent.mkdir(parents=True, exist_ok=True)
+              state_path.write_text(
+                  json.dumps(state, ensure_ascii=False, indent=2) + '\n',
+                  encoding='utf-8',
+              )
           PY
 
       - name: Commit social state only
-        if: always() && (github.event_name == 'workflow_run' || inputs.mode == 'live')
+        if: always() && (github.event_name == 'workflow_run' || github.event_name == 'push' || inputs.mode == 'live')
         shell: bash
         run: |
           git config user.name 'Mikhbar Social Automation'
