@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "64b26cd7121410600b30",
+  "slug": "under-the-hood-prompt-tuning-shake-to-summarize-for-recipes",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/under-the-hood-prompt-tuning-shake-to-summarize-for-recipes/",
+    "en": "/forum/en/ai/under-the-hood-prompt-tuning-shake-to-summarize-for-recipes/"
+  },
+  "locales": {
+    "ar": {
+      "title": "كيف حسّنت فايرفوكس خوارزمية تلخيص وصفات الطبخ عبر الذكاء الاصطناعي",
+      "description": "تفاصيل تقنية عن كيفية ضبط أوامر النموذج اللغوي في فايرفوكس لتحسين دقة تلخيص وصفات الطبخ، مع التركيز على الحفاظ على المكونات الأساسية.",
+      "deck": "بعد إطلاق ميزة الاهتزاز للتلخيص على أندرويد، كشفت موزيلا عن التحسينات التقنية التي أجرتها على النموذج اللغوي لضمان دقة تلخيص وصفات الطبخ.",
+      "summaryBullets": [
+        "واجهت موزيلا تحدياً في تلخيص وصفات الطبخ حيث كان النموذج يلغي المكونات الأساسية.",
+        "تم تطوير أوامر مخصصة (Prompts) موجهة خصيصاً لوصفات الطبخ بدلاً من استخدام أمر عام.",
+        "اعتمد النظام على البيانات المهيكلة في صفحات الويب لتوجيه طلبات التلخيص إلى الأمر الصحيح.",
+        "أظهرت الاختبارات أن النظام الجديد أصبح أكثر من مرتين في احتمالية تقديم تلخيص كامل ودقيق."
+      ],
+      "sections": [
+        {
+          "heading": "الخلفية التقنية لميزة الاهتزاز للتلخيص",
+          "paragraphs": [
+            {
+              "text": "بعد أن أصبحت ميزة الاهتزاز للتلخيص متاحة على كلا النظامين iOS و Android منذ عدة أشهر، قررت موزيلا التعمق في العمل النموذجي (Modeling) الذي يقف وراء هذه الميزة. في منشور سابق، ناقشت الشركة عملية اختيار النموذج اللغوي، لكن الهدف الحالي هو توضيح نهج تطوير الأوامر (Prompt Development) وتحديداً في حالة استخدام وصفات الطبخ عبر الإنترنت.",
+              "links": [
+                {
+                  "text": "Android",
+                  "url": "https://support.mozilla.org/en-US/kb/summarize-pages-android"
+                },
+                {
+                  "text": "iOS",
+                  "url": "https://blog.mozilla.org/en/firefox/shake-to-summarize/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحدّي دقة التلخيص في المحتوى المتخصص",
+          "paragraphs": [
+            {
+              "text": "أول خطوة في تطوير أمر مفيد هي الوصف الدقيق لما يريد النموذج اللغوي الكبير (LLM) القيام به. تعتمد النماذج اللغوية على التحديد الدقيق، وكلما كان تعريف المهمة حاداً، كانت النتائج أفضل. هذا الأمر بالغ الأهمية عند استخدام نماذج لغوية أصغر حجماً، لأنها أقل قدرة على استنتاج النوايا غير المعلنة مقارنة بنظيراتها الأقوى. اكتشف فريق موزيلا أثناء التكرار على الأوامر أن ما يُعد تلخيصاً \"جيداً\" يعتمد بشكل كبير على نوع المحتوى. فبينما يجب أن يوفر تلخيص الرواية نظرة عامة سريعة على الحبكة دون تفاصيل مفرطة، يجب أن يتضمن تلخيص وصفة الطبخ المكونات والإجراءات كما هي مكتوبة بدقة، دون اختصار الكميات أو التوابل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تصميم أوامر مخصصة لكل نوع محتوى",
+          "paragraphs": [
+            {
+              "text": "أدرك الفريق أنه لا يكفي وجود أمر \"تلخيص\" واحد عام، بل يحتاجون إلى مجموعة من الأوامر، كل منها مخصص لنوع معين من صفحات الويب. عملت موزيلا مع فريق المنتج لجمع قائمة بأنواع المقالات المستهدفة، وقدمت وصفاً موجزاً لما يجب أن يبدو عليه التلخيص الجيد لكل نوع. بالنسبة للوصفات، شمل ذلك المكونات كما هي، الخطوات الرئيسية، الوقت المطلوب، وأي نصائح. أما للأخبار، فركز الأمر على التفاصيل المهمة فقط مثل ما حدث ومتى. هذا النهج أدى إلى صياغة أمر مبدئي يوجه النموذج ليكون \"ملخصاً للمحتوى\" ويحدد متطلبات التنسيق لكل فئة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اكتشاف المشكلة في تلخيص وصفات العدس",
+          "paragraphs": [
+            {
+              "text": "عند اختبار الأمر المبدئي داخلياً (Foxfooding)، وجد الفريق أنه يعمل بشكل جيد عموماً، لكن عند تطبيقه على وصفات الطبخ، كان النموذج يميل إلى التلخيص المفرط. في كثير من الأحيان، كان يستبعد مكونات أساسية أو حتى يستبعد الوصفة بالكامل. على سبيل المثال، عند طلب تلخيص وصفة حساء العدس، أعاد النموذج ملخصاً عاماً يذكر المكونات الرئيسية دون تقديم الوصفة الفعلية. ورغم دقة الملخص نظرياً، إلا أنه لم يكن مفيداً عملياً للمستخدم الذي يريد الوصول السريع إلى الوصفة نفسها دون قراءة المقدمة الطويلة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حل مشكلة التوجيه عبر البيانات المهيكلة",
+          "paragraphs": [
+            {
+              "text": "لمعالجة هذه المشكلة، كان على الفريق أن يكون أكثر صراحة في تعليمات تلخيص الوصفات. بدلاً من إضافة هذه التوجيهات إلى الأمر العام (مما قد يجعل النموذج يركز بشكل مفرط على الوصفات ويتجاهل الأنواع الأخرى)، طوروا أمراً منفصلاً يحتوي فقط على تعليمات الوصفات. تم توجيه طلبات تلخيص الوصفات لاستخدام هذا الأمر المخصص بدلاً من العام. لتنفيذ هذا التوجيه، استخدمت موزيلا البيانات المهيكلة المضمنة في كل صفحة ويب. سمح هذا النهج بتحديد فئات الصفحات بسرعة وحتمية دون الحاجة إلى عبء استدلال إضافي من نموذج آخر. كما احتفظ الفريق بتوجيهات خفيفة للوصفات في الأمر العام لتغطية الحالات التي تكون فيها البيانات المفقودة أو غير دقيقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج الاختبارات والدروس المستفادة",
+          "paragraphs": [
+            {
+              "text": "بعد إدخال هذا التغيير، أصبح الملخص العائد من النموذج لوصفة العدس أكثر قابلية للاستخدام بكثير، حيث تضمن خطوات الطبخ الفعلية والمكونات الدقيقة. أجرى الفريق اختباراً سريعاً على مجموعة من مواقع الوصفات المختارة، ووجد أن النظام الجديد أصبح أكثر من مرتين في احتمالية إرجاع تلخيص كامل ودقيق مقارنة بالنظام السابق. من هذه التجربة، تعلم الفريق أن النموذج ينتج أفضل النتائج عندما يُخبر صراحةً بما هو مطلوب. عندما تكون التعليمات غامضة أو تترك مساحة كبيرة للنموذج، يتأدى الأداء. أثبتت صياغة المشكلة كمسألة توجيه (Routing) - حيث تُوجه أنواع المقالات المحددة إلى أوامر محددة - فعاليتها. رغم أن النهج الحالي يستخدم أمراً واحداً مخصصاً للفئة، يفترض الفريق أن النظام سيشهد مكاسب إضافية من خلال استخدام أوامر مخصصة لأنواع صفحات أخرى أيضاً.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "فايرفوكس",
+        "ذكاء اصطناعي",
+        "موزيلا",
+        "تلخيص المحتوى",
+        "نماذج لغوية",
+        "تطوير البرمجيات"
+      ],
+      "entities": [
+        "Mozilla",
+        "Firefox",
+        "Shake to Summarize",
+        "LLM",
+        "Prompt Tuning"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "2 أكتوبر 2026",
+      "modifiedLabel": "2 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 655
+    },
+    "en": {
+      "title": "Mozilla Details Prompt Tuning for Firefox Shake to Summarize",
+      "description": "Mozilla shares insights into its prompt tuning and modeling work for the Firefox Shake to Summarize feature on mobile devices.",
+      "deck": "Mozilla outlines the prompt engineering and routing strategies used to improve the accuracy of its mobile summarization feature.",
+      "summaryBullets": [
+        "Mozilla detailed the modeling and prompt tuning behind the Shake to Summarize feature.",
+        "The feature first rolled out to Android devices in May.",
+        "Developers found that smaller LLMs require high specificity to handle different webpage types accurately.",
+        "A separate prompt and routing system was implemented specifically for online recipes to deliver complete ingredient lists and steps."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Mobile Summarization",
+          "paragraphs": [
+            {
+              "text": "Following the rollout of Firefox’s Shake to Summarize feature to Android devices this May, Mozilla took a closer look at the modeling work behind the feature. In a previous blog post, the team discussed its model selection process. Now that Shake to Summarize has been available on both iOS and Android for a few months, developers outlined their approach to prompt development, highlighting a specific use case that required extra prompt tuning: online recipes.",
+              "links": [
+                {
+                  "text": "Shake to Summarize feature to Android devices",
+                  "url": "https://blog.mozilla.org/en/firefox/shake-to-summarize-expansion/"
+                },
+                {
+                  "text": "previous blog post",
+                  "url": "https://blog.mozilla.org/en/firefox/firefox-ai/ai-powering-firefox-shake-to-summarize/"
+                }
+              ]
+            },
+            {
+              "text": "Developing a useful prompt begins with clearly describing what the Large Language Model should do. Because LLMs thrive on specificity, defining tasks sharply yields better results. This principle is especially critical when deploying smaller LLMs, which lack the advanced capability of larger models to read between the lines and intuit unstated intentions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Categorizing Web Content for LLMs",
+          "paragraphs": [
+            {
+              "text": "Summarization tasks initially appear straightforward, but iteration reveals that what constitutes a good summary depends heavily on the content type. For instance, a novel summary requires a quick plot overview without verbatim text or deep specific details. Conversely, a recipe summary must include the recipe essentially as written, retaining precise measurements like four cups of vegetable broth or specific spices rather than vague descriptions.",
+              "links": []
+            },
+            {
+              "text": "To address these varying needs, the product team compiled a targeted list of article types, assigning a description of an ideal summary for each category. Recipes require ingredients, key steps, time required, and author tips. News summaries focus on important details such as events, timelines, and consequences. How-to guides start with required materials, tools, and warnings, while reviews highlight ratings, pros, cons, pricing, and target audiences. Research summaries target key findings, confidence levels, and real-world impact, and opinion pieces capture main arguments and supporting evidence.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Refining Prompts and Addressing Recipe Shortfalls",
+          "paragraphs": [
+            {
+              "text": "Mozilla wrapped these categories into general instructions to ground the model. Developers then foxfooded the initial prompt and found it performed well overall, producing concise, accurate, and informative summaries for many article types.",
+              "links": []
+            },
+            {
+              "text": "However, when applied to recipes, the model tended to over-summarize, often omitting key ingredients or the recipe entirely. For example, when testing a lentil soup recipe, the model generated a descriptive overview of the soup and its ingredients but left out the actual cooking instructions, failing to serve as a quick way to access the recipe without reading the narrative preamble.",
+              "links": [
+                {
+                  "text": "a lentil soup recipe",
+                  "url": "https://cookieandkate.com/best-lentil-soup-recipe/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Implementing Routing and Specialized Prompts",
+          "paragraphs": [
+            {
+              "text": "To solve the recipe summarization issue without causing the model to over-index on recipe formatting for other article types, developers created a separate prompt dedicated solely to recipes. They used structured data embedded in each webpage to route requests to the correct prompt. Relying on existing webpage metadata allowed for quick, deterministic categorization without adding inference overhead.",
+              "links": []
+            },
+            {
+              "text": "After deploying this change and running tests across a curated set of recipe websites, Mozilla found that the new system was more than twice as likely to return complete and accurate summaries compared to the previous iteration. The experience demonstrated that models yield the best results when given explicit instructions, and that treating summarization as a routing problem with category-specific prompts successfully improves output quality.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Mozilla",
+        "Firefox",
+        "AI",
+        "Prompt Tuning",
+        "LLM",
+        "Mobile",
+        "Summarization"
+      ],
+      "entities": [
+        "Mozilla",
+        "Firefox"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 2, 2026",
+      "modifiedLabel": "October 2, 2026",
+      "readMinutes": 3,
+      "wordCount": 585
+    }
+  },
+  "datePublished": "2026-10-02T06:53:18.598163+03:00",
+  "dateModified": "2026-10-02T06:53:18.598163+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/under-the-hood-prompt-tuning-shake-to-summarize-for-recipes/hero.webp",
+    "card": "/forum/assets/posts/2026/10/under-the-hood-prompt-tuning-shake-to-summarize-for-recipes/card.webp",
+    "social": "/forum/assets/posts/2026/10/under-the-hood-prompt-tuning-shake-to-summarize-for-recipes/social.jpg",
+    "alt": {
+      "ar": "كيف حسّنت فايرفوكس خوارزمية تلخيص وصفات الطبخ عبر الذكاء الاصطناعي",
+      "en": "Mozilla Details Prompt Tuning for Firefox Shake to Summarize"
+    },
+    "credit": "Mozilla Blog",
+    "sourceUrl": "https://blog.mozilla.org/wp-content/blogs.dir/278/files/2026/07/Media_AIEnabled_D-1080x720.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/under-the-hood-prompt-tuning-shake-to-summarize-for-recipes/inline-01.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "كيف حسّنت فايرفوكس خوارزمية تلخيص وصفات الطبخ عبر الذكاء الاصطناعي",
+          "en": "A picture of three phones demonstrating how shake to summarize can be used on recipe sites."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Mozilla Blog",
+          "en": "Image related to the report from Mozilla Blog"
+        },
+        "credit": "Mozilla Blog",
+        "sourceUrl": "https://blog.mozilla.org/en/firefox/firefox-ai/prompt-tuning-firefox-shake-to-summarize-recipes/",
+        "originalUrl": "https://blog.mozilla.org/wp-content/blogs.dir/278/files/2026/07/Media_AIEnabled_D-2048x1152.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Mozilla Blog",
+      "url": "https://blog.mozilla.org/en/firefox/firefox-ai/prompt-tuning-firefox-shake-to-summarize-recipes/",
+      "type": "official",
+      "title": "Under the Hood: Prompt tuning Shake to Summarize for recipes"
+    }
+  ],
+  "sourceUrl": "https://blog.mozilla.org/en/firefox/firefox-ai/prompt-tuning-firefox-shake-to-summarize-recipes",
+  "sourceTitle": "Under the Hood: Prompt tuning Shake to Summarize for recipes",
+  "trendScore": 89.49,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-02T03:53:18+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/under-the-hood-prompt-tuning-shake-to-summarize-for-recipes.json"
+}
