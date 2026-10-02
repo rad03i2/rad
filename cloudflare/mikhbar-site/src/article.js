@@ -261,7 +261,7 @@ export async function renderDynamicArticle(request, env, pathname) {
 
   const rewriter = new HTMLRewriter()
     .on("html", new AttrHandler({ lang: locale, dir: ui.dir }))
-    .on("body", new AttrHandler({ class: `rt-locale-${locale}`, "data-ssr-rendered": "true" }))
+    .on("body", new AttrHandler({ class: `rt-locale-${locale} rt-article-page`, "data-ssr-rendered": "true" }))
     .on("title", new TextHandler(`${view.title} | ${ui.site}`))
     .on("#meta-description", new AttrHandler({ content: view.description || view.deck || "" }))
     .on("#meta-robots", new AttrHandler({ content: "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" }))
