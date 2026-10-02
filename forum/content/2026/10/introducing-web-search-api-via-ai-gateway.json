@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "88129a7df0c27a75b639",
+  "slug": "introducing-web-search-api-via-ai-gateway",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/introducing-web-search-api-via-ai-gateway/",
+    "en": "/forum/en/web/introducing-web-search-api-via-ai-gateway/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cloudflare تطلق واجهة برمجية للبحث في الويب عبر بوابة الذكاء الاصطناعي",
+      "description": "أعلنت Cloudflare عن دمج البحث في الويب مباشرةً في AI Gateway بالتعاون مع Exa وCeramic.ai وLinkup، مما يتيح للوكلاء الوصول إلى معلومات حية وموثوقة.",
+      "deck": "تتيح هذه الإضافة الجديدة للمطورين حقن سياق الويب الفوري في استدعاءات نماذج الذكاء الاصطناعي، مما يحل مشكلة الاعتماد على بيانات تدريب قديمة.",
+      "summaryBullets": [
+        "إطلاق شراكة مع مزودي بحث الويب Ceramic.ai وExa وLinkup لتوفير بيانات حية.",
+        "دمج البحث في الويب ضمن AI Gateway مع إمكانية الفوترة الموحدة ومراقبة الطلبات.",
+        "التزام الشركاء بمعايير Cloudflare للزواحف الموثوقة واحترام قواعد robots.txt.",
+        "دعم طرق متعددة للاستخدام تشمل REST APIs وWorkers bindings ومفتاح BYOK."
+      ],
+      "sections": [
+        {
+          "heading": "حل مشكلة التخمين العشوائي للروابط",
+          "paragraphs": [
+            {
+              "text": "تواجه وكلاء الذكاء الاصطناعي مشكلة تقنية شائعة تتمثل في محاولة تخمين عناوين URLs لجلب صفحات الويب، مما يؤدي غالباً إلى أخطاء 404 Not Found. بدلاً من هذا النهج غير الكفء، تتيح تقنية البحث في الويب للوكلاء تصفح الإنترنت بشكل مشابه لما يفعله البشر، حيث يبدأون باستعلام بحثي للعثور على البيانات ذات الصلة. هذا النهج يضمن أن تكون استجابات الوكلاء مبنية على معلومات حية ودقيقة من الويب، مما يعزز موثوقيتها وكفاءتها التشغيلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "شراكة استراتيجية مع مزودي البحث",
+          "paragraphs": [
+            {
+              "text": "أعلنت Cloudflare رسمياً عن شراكتها مع مزودي خدمات البحث في الويب، بدءاً من شركاء رئيسيين هم Ceramic.ai وExa وLinkup. تهدف هذه المبادرة إلى تقديم ما أسمته 'الذكاء المأصّل' (Grounded Intelligence) عبر بوابة الذكاء الاصطناعي الخاصة بها. نظراً لأن نماذج اللغة الكبيرة تُدرَّب وتُجمَّد عند نقطة زمنية محددة، فإنها تعاني من نقص المعلومات حول الأحداث الأخيرة أو التغيرات السريعة في واجهات برمجة التطبيقات. من خلال دمج البحث في الويب في خط الأنابيب الاستنتاجي، يحصل المطورون على مقاطع نصية منظمة ومحدثة من الويب تُحقن مباشرةً في سياق النموذج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معايير صارمة للزواحف الموثوقة",
+          "paragraphs": [
+            {
+              "text": "تؤكد Cloudflare على أهمية أن تكون الزواحف (Crawlers) صادقة وشفافة وتحترم قواعد البوتات. كجزء من هذا الإطلاق، التزم الشركاء بمعايير Cloudflare للزواحف الموثوقة (Verified Bots)، وهي متطلبات منشورة في توثيق المطورين. يشترط أن تلتزم الزواحف المستخدمة من قبل مزودي البحث بهذه المعايير، وأن تتضمن نتائج البحث رابطاً يشير إلى موقع المحتوى الذي تم زحفه. تهدف هذه القواعد إلى حماية أصحاب المواقع ومنحهم سيطرة ذات معنى على كيفية استخدام محتواهم، مما يساهم في بناء إنترنت أكثر عدلاً وشفافية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تكامل سلس مع AI Gateway",
+          "paragraphs": [
+            {
+              "text": "تعمل بوابة الذكاء الاصطناعي (AI Gateway) كنقطة تكامل رئيسية لمنتج البحث في الويب الجديد. صُممت البوابة لتكون مستوى التحكم للتطبيقات، حيث توفر المراقبة، والفوترة الموحدة، والأمان، وضوابط الوصول. يمكن للمطورين الآن استهلاك خدمات البحث في الويب باستخدام أرصدة AI Gateway الخاصة بهم، مع تسجيل سجلات الطلبات وبياناتها. كما تتيح المنصة تحديد الشركاء الذين يدعمون سياسة عدم الاحتفاظ بالبيانات (Zero Data Retention)، مما يضمن خصوصية بيانات المستخدمين. وتوفر Cloudflare هذه الخدمة بسعر قائمة API المباشر من الشركاء دون أي هامش ربح إضافي.",
+              "links": [
+                {
+                  "text": "AI Gateway",
+                  "url": "https://blog.cloudflare.com/tag/ai-gateway/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "خيارات متعددة للمطورين",
+          "paragraphs": [
+            {
+              "text": "تقدم المنصة مرونة عالية في كيفية دمج البحث في الويب. للمطورين الذين يستخدمون استدعاءات HTTP من خوادم خلفية أو تطبيقات جوال، يمكنهم الاستعلام مباشرةً عبر نقطة نهاية REST قياسية عن طريق تمرير رمز المصادقة وتحديد المزود المفضل. أما أولئك الذين يبنون على Cloudflare Workers، فيكفي سطر واحد من الكود لإتمام التكامل، مع توفر ربط مستقل (Standalone Binding) للبحث. كما تدعم المنصة خيار 'جلب مفتاحك الخاص' (BYOK)، مما يسمح للمؤسسات باستخدام إعداداتها التنظيمية الحالية للبدء بسرعة. تتوفر تفاصيل تقنية إضافية في توثيق المطورين الخاص بالبحث في الويب.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مستقبل أدوات الخادم الأصلية",
+          "paragraphs": [
+            {
+              "text": "تعمل Cloudflare بنشاط على بناء 'أدوات الخادم' (Server Tools) الأصلية مباشرةً داخل AI Gateway. في المستقبل القريب، لن يحتاج المطورون إلى تعريف الأدوات بأنفسهم، حيث ستأتي مدمجة في مستوى التحكم، مما يوفر وقتاً أكبر للبناء بدلاً من التنسيق. يُعد البحث في الويب من أوائل الأدوات التي سيتم دمجها في هذه البنية. يمكن للمطورين حالياً تجربة هذه الأدوات من خلال AI Playground باستخدام حسابهم ومفتاحهم الخاص، أو البدء فوراً عبر توثيق المطورين. يمثل هذا الإطلاق خطوة مهمة نحو تمكين الوكلاء من الوصول إلى المعرفة الحية بشكل آمن وشفاف.",
+              "links": [
+                {
+                  "text": "AI Playground",
+                  "url": "https://playground.ai.cloudflare.com/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "AI Gateway",
+        "Web Search API",
+        "ذكاء اصطناعي",
+        "مطورون",
+        "Exa",
+        "Ceramic.ai",
+        "Linkup"
+      ],
+      "entities": [
+        "Cloudflare",
+        "AI Gateway",
+        "Ceramic.ai",
+        "Exa",
+        "Linkup",
+        "Web Search API"
+      ],
+      "category": "الويب",
+      "dateLabel": "2 أكتوبر 2026",
+      "modifiedLabel": "2 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 581
+    },
+    "en": {
+      "title": "Cloudflare Introduces Web Search API via AI Gateway",
+      "description": "Cloudflare has announced native web search API integration for AI Gateway in partnership with Ceramic.ai, Exa, and Linkup for real-time model context.",
+      "deck": "Cloudflare is expanding its AI Gateway capabilities by introducing native web search API integration, allowing developers to inject real-time web context directly into model inference calls.",
+      "summaryBullets": [
+        "Cloudflare AI Gateway now supports native web search integration through an initial partnership with Ceramic.ai, Exa, and Linkup.",
+        "Developers can inject real-time web context into model inference calls using AI Gateway, REST APIs, or Workers bindings.",
+        "Search partners have committed to Cloudflare's bot crawling standards, requiring compliance with verified bot requirements and linking crawled content.",
+        "Features include observability logs, unified billing via AI Gateway credits, Bring-Your-Own-Key support, and identification of Zero Data Retention partners."
+      ],
+      "sections": [
+        {
+          "heading": "Bringing Real-Time Context to AI Models",
+          "paragraphs": [
+            {
+              "text": "When autonomous agents need to fetch live web pages, they frequently resort to guessing URLs and executing tool calls to curl them, often resulting in 404 Not Found errors when the guess is incorrect. To solve this inefficiency, Cloudflare has announced native web search API integration via AI Gateway in partnership with Ceramic.ai, Exa, and Linkup. More details can be found on the web search developer docs.",
+              "links": [
+                {
+                  "text": "web search developer docs",
+                  "url": "https://developers.cloudflare.com/web-search"
+                }
+              ]
+            },
+            {
+              "text": "Because AI models are typically trained and frozen at a specific point in time, they operate strictly on information existing prior to their knowledge cutoff date. This restriction makes it difficult for models to interact naturally with recent events, changing application programming interfaces, or fast-evolving news developments. By integrating web search directly into the inference pipeline, applications receive fresh, structured snippets from the web injected straight into the model's context layer.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Setting Standards for Responsible Web Crawling",
+          "paragraphs": [
+            {
+              "text": "Cloudflare emphasizes that web crawlers should remain transparent, honest, and respectful of all bot rules and preferences, while giving site owners meaningful control over their content. Under the new launch, search partners have committed to meeting strict bot crawling standards. The crawler utilized by the web search provider must comply with Cloudflare's publicly stated requirements for verified bots, as defined in our developer documentation, and responses must provide a link pointing back to the crawled content location.",
+              "links": [
+                {
+                  "text": "defined in our developer documentation",
+                  "url": "https://developers.cloudflare.com/bots/concepts/bot/verified-bots/"
+                }
+              ]
+            },
+            {
+              "text": "These established rules aim to foster a fair internet environment, allowing content creators to decide how their data is handled. By utilizing these web search integrations, consumers draw search knowledge from operators committed to transparency, control, and visibility by identifying crawlers, respecting robots.txt files, and citing original sources.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Integration and Control via AI Gateway",
+          "paragraphs": [
+            {
+              "text": "Cloudflare positions AI Gateway as the flagship integration point and control plane for the new Web Search API product. The platform offers built-in observability, unified billing, security, and access controls. Users can consume web search capabilities using their existing AI Gateway credits, collect logs and request data on search calls, and configure access permissions for different web search providers.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, all requests surface in standard AI Gateway observability logs, and search queries draw directly from the active credit balance. Cloudflare identifies partners supporting Zero Data Retention to ensure data privacy, offering web search directly at list API pricing from partners without adding any extra markup. Additional configuration guidance is available through the developer docs.",
+              "links": [
+                {
+                  "text": "developer docs",
+                  "url": "https://developers.cloudflare.com/web-search"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Flexible Deployment Options for Developers",
+          "paragraphs": [
+            {
+              "text": "The platform supports Bring-Your-Own-Key integration with web search providers, mirroring how model inference providers are handled. This allows organizations to leverage existing setups within AI Gateway seamlessly. Developers making HTTP calls from mobile applications, existing backends, or external services can query the web search feature directly through a standard REST endpoint by passing an AI Gateway authentication token and specifying the preferred provider.",
+              "links": []
+            },
+            {
+              "text": "For developers building directly on Cloudflare Workers, integration requires minimal code through a standalone worker binding. Cloudflare is also actively developing native server tools directly into AI Gateway to remove the need for manual tool definitions, with web search slated as one of the earliest incorporated features. Users can begin experimenting immediately with their AI Gateway account and key on the AI Playground.",
+              "links": [
+                {
+                  "text": "AI Playground",
+                  "url": "https://playground.ai.cloudflare.com/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "AI Gateway",
+        "Web Search API",
+        "Ceramic.ai",
+        "Exa",
+        "Linkup",
+        "Cloudflare Workers",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Ceramic.ai",
+        "Exa",
+        "Linkup"
+      ],
+      "category": "Web",
+      "dateLabel": "October 2, 2026",
+      "modifiedLabel": "October 2, 2026",
+      "readMinutes": 3,
+      "wordCount": 626
+    }
+  },
+  "datePublished": "2026-10-02T17:33:19.570277+03:00",
+  "dateModified": "2026-10-02T17:33:19.570277+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/introducing-web-search-api-via-ai-gateway/hero.webp",
+    "card": "/forum/assets/posts/2026/10/introducing-web-search-api-via-ai-gateway/card.webp",
+    "social": "/forum/assets/posts/2026/10/introducing-web-search-api-via-ai-gateway/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تطلق واجهة برمجية للبحث في الويب عبر بوابة الذكاء الاصطناعي",
+      "en": "Cloudflare Introduces Web Search API via AI Gateway"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3XMA3KN5CDQCSF0YHZ0WFBH.01M3XMA452ZT41JBXKRPY1HH3F.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-web-search-api-via-ai-gateway/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "Cloudflare تطلق واجهة برمجية للبحث في الويب عبر بوابة الذكاء الاصطناعي",
+          "en": "Introducing Web Search API via AI Gateway"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/introducing-web-search-api/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M3XMD1R3RKTSPGW4TNF59S9D.01M3XMD2FKJAHHSQP0E10VYFXD.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-web-search-api-via-ai-gateway/inline-02.webp",
+        "width": 1400,
+        "height": 911,
+        "alt": {
+          "ar": "Cloudflare تطلق واجهة برمجية للبحث في الويب عبر بوابة الذكاء الاصطناعي",
+          "en": "Cloudflare Introduces Web Search API via AI Gateway"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/introducing-web-search-api/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M3XM9HE47XBWP8CA3AT4B233.png&w=1430&h=932&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/introducing-web-search-api/",
+      "type": "official",
+      "title": "Introducing Web Search API via AI Gateway"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/introducing-web-search-api",
+  "sourceTitle": "Introducing Web Search API via AI Gateway",
+  "trendScore": 118.69,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-02T14:33:19+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/introducing-web-search-api-via-ai-gateway.json"
+}
