@@ -185,6 +185,24 @@ jobs:
           )
           published_ids = set(str(x) for x in state.get('published_story_ids', []))
 
+          pending_targets = []
+          for item in targets:
+              story_id = str(item.get('story_id'))
+              if story_id in published_ids:
+                  print(json.dumps({
+                      'status': 'skipped_duplicate',
+                      'story_id': story_id,
+                  }, ensure_ascii=False))
+              else:
+                  pending_targets.append(item)
+
+          # Preserve the original fail-fast duplicate behavior: if every requested
+          # story is already published, make zero Facebook API calls.
+          if not pending_targets:
+              raise SystemExit(0)
+
+          targets = pending_targets
+
           page_id = os.environ.get('FACEBOOK_PAGE_ID', '').strip()
           supplied_token = os.environ.get('FACEBOOK_PAGE_ACCESS_TOKEN', '').strip()
           if not page_id:
@@ -247,12 +265,6 @@ jobs:
           changed = False
           for item in targets:
               story_id = str(item.get('story_id'))
-              if story_id in published_ids:
-                  print(json.dumps({
-                      'status': 'skipped_duplicate',
-                      'story_id': story_id,
-                  }, ensure_ascii=False))
-                  continue
 
               article = json.loads((root / item['content_file']).read_text(encoding='utf-8'))
               ar = article.get('locales', {}).get('ar', {})
