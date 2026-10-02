@@ -416,7 +416,7 @@ async function addRelatedStories(response, request, env, pathname) {
 }
 
 function renderRadwanTestPage() {
-  const html = \`<!doctype html>
+  const html = `<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
@@ -468,7 +468,7 @@ function renderRadwanTestPage() {
 (()=>{const y=document.querySelector("[data-year]");if(y)y.textContent=new Date().getFullYear();const b=document.querySelector(".rt-menu-button");const n=document.getElementById("navigation");if(b&&n)b.addEventListener("click",()=>{const open=b.getAttribute("aria-expanded")==="true";b.setAttribute("aria-expanded",String(!open));n.classList.toggle("is-open",!open)})})();
 </script>
 </body>
-</html>\`;
+</html>`;
   return new Response(html, {
     headers: {
       "Content-Type": "text/html; charset=UTF-8",
