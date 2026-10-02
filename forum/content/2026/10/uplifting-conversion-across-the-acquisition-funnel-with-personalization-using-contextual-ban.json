@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "737dfbe33a956c8e1a00",
+  "slug": "uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-ban",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-ban/",
+    "en": "/forum/en/ai/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-ban/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون بايمنتس ترفع التحويل عبر خوارزميات الذكاء الاصطناعي",
+      "description": "تستعرض أمازون بايمنتس كيف استعانت بخوارزميات الأذرع متعددة الأهداف على SageMaker AI لتحسين مسار اكتساب العملاء، محققةً زيادة في التحويل وتوضيحاً لأهمية المحتوى.",
+      "deck": "بينما سهّلت النماذج التوليدية إنتاج المحتوى المخصص، تبقى التحدي الأكبر في اختيار النسخة الأنسب لكل عميل. هنا تدخل خوارزميات التعلم الآلي لتوازن بين الاستكشاف والاستغلال.",
+      "summaryBullets": [
+        "استخدمت أمازون بايمنتس نموذج LinUCB متعدد الأهداف على Amazon SageMaker AI لتخصيص مسار اكتساب العملاء.",
+        "حققت التجربة الـ A/B التي استمرت 7 أسابيع زيادة نسبية في التحويل النهائي لشرائح محددة من العملاء.",
+        "أظهرت النتائج أن جودة المحتوى كانت العامل المحدد للأداء، وليس الخوارزمية نفسها.",
+        "توفر أمازون مستودعاً للكود ومفكرة Jupyter لاختبار هذه المنهجية على بيانات اصطناعية."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي الاختيار بعد وفرة المحتوى",
+          "paragraphs": [
+            {
+              "text": "أصبحت النماذج التوليدية قادرة على إنتاج كميات هائلة من المحتوى المخصص بسرعة وتكلفة منخفضة. في منشور سابق، أوضحنا كيف يمكن لـ Amazon Bedrock إنتاج محتوى مخصص يحترم إرشادات العلامة التجارية. لكن التحدي الجديد لم يعد الإنتاج، بل الاختيار: أي نسخة من بين عشرات الخيارات يجب عرضها لكل عميل، وكم من الوقت يستغرق تعلم الإجابة الصحيحة؟ ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-bandits-on-aws/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "خوارزميات الأذرع متعددة الأهداف",
+          "paragraphs": [
+            {
+              "text": "تعتمد أمازون بايمنتس على خوارزميات الأذرع متعددة الأهداف (MAB)، وهي طريقة تعلم تقوياتي مصممة للبيئات التي تتسم بوفرة الخيارات وقلة حركة المرور. تتعامل الخوارزمية مع كل نسخة محتوى كـ \"ذراع\"، وتجربها أمام حركة المرور الحية، ثم تحوّل الانطباعات تدريجياً نحو الخيارات الأفضل أداءً مع الاحتفاظ بنسبة للاستكشاف المستمر. هذا التوازن بين الاستغلال والاستكشاف يسمح للنموذج بالتحسن المستمر دون انتظار انتهاء التجربة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التخصيص عبر النطاق السياقي",
+          "paragraphs": [
+            {
+              "text": "بدلاً من تحديد أفضل محتوى للجميع، تعتمد الخوارزمية السياقية على إشارات عن الزائر. تم اختيار خوارزمية LinUCB، التي تفترض أن المكافأة المتوقعة دالة خطية لمتجه السياق. يمثل كل عميل متجه سلوكي (مثل سلوك الدفع وتكوين المعاملات) بدلاً من شرائح ثابتة. هذا يتيح للنموذج تعميم الأنماط المتعلمة على زوار جدد دون الحاجة لحركة مرور منفصلة لكل مجموعة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسين مسار التحويل متعدد المراحل",
+          "paragraphs": [
+            {
+              "text": "يتكون مسار العميل من ثلاث مراحل: بدء الطلب، الإرسال، والاعتماد. المشكلة هنا هي \"مشكلة الأرجوحة\"؛ فالتحسين لمرحلة البدء قد يجذب جمهوراً واسعاً لكنه قد يضر بمرحلة الاعتماد. لحل ذلك، شغّل الفريق نموذج LinUCB واحداً لكل مرحلة، ودمج درجاتها عبر تركيبة خطية. هذا يتيح تحسين المسار ككل بدلاً من معزولة، مع مراعاة أولويات الأعمال في توزيع الأوزان.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النتائج والتحديات العملية",
+          "paragraphs": [
+            {
+              "text": "في اختبار A/B على الإنترنت استمر 7 أسابيع، رصد الفريق زيادة نسبية في التحويل النهائي (بأرقام أحادية مرتفعة) لشرائح معينة من العملاء، بينما لم تظهر تحسن لشرائح أخرى مقارنة بالتجربة الحالية. الدرس المستفاد هو أن المحتوى نفسه كان هو القيد الحقيقي، وليس النموذج. كما عالجت البنية التحتية مشكلة التأخير في التغذية الراجعة، حيث تتأخر قرارات الاعتماد لأيام، مما يتطلب آليات خاصة لتقدير المكافآت.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التطبيق العملي والموارد",
+          "paragraphs": [
+            {
+              "text": "لتسهيل فهم المنهجية، شاركت أمازون مستودعاً للكود يحتوي على مفكرة Jupyter سريعة البدء لاختبار هذه الطريقة على بيانات اصطناعية باستخدام Amazon SageMaker AI. يشمل المستودع أيضاً عرضاً سطر أوامر واختبارات وحدة، مما يتيح للمطورين تجربة الخوارزمية وفهم آليات ضبط معامل الاستكشاف (Alpha) عملياً.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "التعلم الآلي",
+        "أمازون",
+        "تخصيص المحتوى",
+        "تحسين التحويل",
+        "SageMaker"
+      ],
+      "entities": [
+        "Amazon Payments",
+        "Amazon SageMaker AI",
+        "Amazon Bedrock",
+        "LinUCB",
+        "AWS"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "2 أكتوبر 2026",
+      "modifiedLabel": "2 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 451
+    },
+    "en": {
+      "title": "Amazon Payments Boosts Funnel Conversion with AWS AI",
+      "description": "Amazon Payments applied multi-objective contextual bandits on Amazon SageMaker AI to personalize acquisition funnels and drive conversion lifts.",
+      "deck": "Amazon Payments leveraged multi-objective contextual bandits on AWS to optimize a product acquisition funnel, yielding a high single-digit conversion lift for one audience.",
+      "summaryBullets": [
+        "Amazon Payments utilized a multi-objective contextual multi-armed bandit on Amazon SageMaker AI.",
+        "A seven-week online A/B test showed a high single-digit percentage relative lift in final-funnel conversion for one customer population.",
+        "The team found that content constraints, rather than model limitations, explained why another population saw no improvement.",
+        "A publicly available code repository and Jupyter notebook allow developers to test the multi-objective contextual bandit method."
+      ],
+      "sections": [
+        {
+          "heading": "Tackling the Content Selection Challenge",
+          "paragraphs": [
+            {
+              "text": "Generative artificial intelligence has drastically reduced the cost and time required to produce large volumes of personalized content. As detailed in the AWS Machine Learning Blog, a previous post showed how generative AI on Amazon Bedrock can generate personalized material at scale while adhering to brand guidelines and guardrails. However, this proliferation creates a new selection challenge: deciding which content variation to show each customer and determining how quickly the system can learn the optimal choice.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-bandits-on-aws/"
+                },
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "To address this hurdle, Amazon Payments deployed a multi-objective contextual multi-armed bandit (MAB) architecture using Amazon SageMaker AI. During a seven-week online A/B test, the system achieved a high single-digit percentage relative lift in final-funnel conversion for a specific customer population. Interestingly, another customer segment experienced no improvement over the existing experience, leading the team to conclude that the content itself, rather than the underlying model, was the constraining factor.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker/ai/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "The Role of Multi-Armed Bandits in Personalization",
+          "paragraphs": [
+            {
+              "text": "A multi-armed bandit is a reinforcement learning method tailored for environments featuring numerous options and limited traffic. It continually learns which variation performs best while simultaneously serving live customers. By treating each content variation as an individual arm, the algorithm tests options against live traffic and gradually shifts impressions toward high-performing arms while reserving a fraction of traffic for ongoing testing.",
+              "links": []
+            },
+            {
+              "text": "This mechanism manages the fundamental trade-off between exploitation—serving the current best arm—and exploration, which tries less-certain arms to gather evidence. Because a bandit continuously performs both tasks, it adapts as new variations are introduced without requiring traditional testing cycles to conclude.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Transitioning from Standard Bandits to Contextual Models",
+          "paragraphs": [
+            {
+              "text": "While standard bandit algorithms select a single best arm for an entire audience, true personalization requires conditioning decisions on specific visitor attributes. Contextual bandits accomplish this by evaluating feature vectors representing visitor characteristics. Rather than maintaining separate instances for hand-defined groups, a contextual bandit applies patterns learned in one context to any similar visit.",
+              "links": []
+            },
+            {
+              "text": "For its production pipeline, Amazon Payments selected Linear Upper Confidence Bound (LinUCB), a battle-tested method noted for computational efficiency and deterministic arm selection. To understand broader deployment paradigms and deployment strategies on AWS, developers often reference resources covering dynamic A/B testing frameworks for machine learning models.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Optimizing the Entire Funnel and Handling Delayed Feedback",
+          "paragraphs": [
+            {
+              "text": "The customer journey in this application comprised three distinct phases: application start, submission, and approval. Because these stages do not move in unison, optimizing a single stage in isolation can degrade another. To overcome this seesaw problem, the team optimized the entire funnel simultaneously by running one LinUCB model per stage and combining their scores through a linear combination.",
+              "links": []
+            },
+            {
+              "text": "Handling delayed feedback, such as approval decisions that lag by days, requires careful ledger updates. Developers interested in experimenting with this architecture can explore a code repository provided by AWS, which includes a quick start Jupyter notebook designed to demonstrate the multi-objective contextual bandit method hands-on.",
+              "links": [
+                {
+                  "text": "a code repository",
+                  "url": "https://github.com/aws-samples/sample-multi-objective-contextual-bandit-with-sagemaker"
+                },
+                {
+                  "text": "a quick start Jupyter notebook",
+                  "url": "https://github.com/aws-samples/sample-multi-objective-contextual-bandit-with-sagemaker/blob/main/notebooks/walkthrough.ipynb"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "AWS",
+        "Amazon SageMaker AI",
+        "Personalization",
+        "Reinforcement Learning"
+      ],
+      "entities": [
+        "Amazon Payments",
+        "Amazon SageMaker AI",
+        "Amazon Bedrock",
+        "AWS"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 2, 2026",
+      "modifiedLabel": "October 2, 2026",
+      "readMinutes": 3,
+      "wordCount": 568
+    }
+  },
+  "datePublished": "2026-10-02T05:33:18.475233+03:00",
+  "dateModified": "2026-10-02T05:33:18.475233+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-ban/hero.webp",
+    "card": "/forum/assets/posts/2026/10/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-ban/card.webp",
+    "social": "/forum/assets/posts/2026/10/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-ban/social.jpg",
+    "alt": {
+      "ar": "أمازون بايمنتس ترفع التحويل عبر خوارزميات الذكاء الاصطناعي",
+      "en": "Amazon Payments Boosts Funnel Conversion with AWS AI"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-ban/inline-01.webp",
+        "width": 1400,
+        "height": 663,
+        "alt": {
+          "ar": "أمازون بايمنتس ترفع التحويل عبر خوارزميات الذكاء الاصطناعي",
+          "en": "Vetted building blocks (industry-themed images and benefit-focused taglines) combined into the full arm pool"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-bandits-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-ban/inline-02.webp",
+        "width": 1400,
+        "height": 572,
+        "alt": {
+          "ar": "أمازون بايمنتس ترفع التحويل عبر خوارزميات الذكاء الاصطناعي",
+          "en": "End-to-end batch bandit architecture with Amazon S3 model state and low-latency key-value serving"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-bandits-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-2.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-bandits-on-aws/",
+      "type": "official",
+      "title": "Uplifting conversion across the acquisition funnel with personalization using contextual bandits on AWS"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-bandits-on-aws",
+  "sourceTitle": "Uplifting conversion across the acquisition funnel with personalization using contextual bandits on AWS",
+  "trendScore": 97.34,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-02T02:33:18+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-ban.json"
+}
