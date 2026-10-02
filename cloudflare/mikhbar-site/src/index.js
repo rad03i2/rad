@@ -315,6 +315,16 @@ function entityHubHtml(post, locale) {
   return `<section class="rt-section rt-article-entity-hubs" data-article-entity-hubs="true" aria-labelledby="article-entity-hubs-title"><header class="rt-section-head"><div><h2 id="article-entity-hubs-title">${esc(title)}</h2></div></header><div class="rt-topic-grid">${cards}</div></section>`;
 }
 
+function postCardImage(post) {
+  return String(
+    post?.image
+    || post?.images?.card
+    || post?.images?.hero
+    || post?.images?.social
+    || "/assets/social/home.jpg"
+  ).trim();
+}
+
 function chronologicalHtml(neighbors, pathname) {
   const match = String(pathname || "").match(ARTICLE_PARTS);
   if (!match) return "";
@@ -330,11 +340,15 @@ function chronologicalHtml(neighbors, pathname) {
     const postTitle = String(post?.title || "").trim();
     if (!href || !postTitle) continue;
     const label = kind === "newer" ? newerLabel : olderLabel;
-    cards.push(`<a class="rt-topic-card" data-chronology="${esc(kind)}" href="${esc(href)}"><span>${esc(label)}</span><b>${esc(postTitle)}</b></a>`);
+    const image = postCardImage(post);
+    const date = String(post?.dateLabel || "").trim();
+    const readTime = String(post?.readTime || "").trim();
+    const meta = [date, readTime].filter(Boolean).join(" · ");
+    cards.push(`<a class="rt-chronology-card" data-chronology="${esc(kind)}" href="${esc(href)}"><div class="rt-chronology-copy"><span class="rt-chronology-label">${esc(label)}</span><b>${esc(postTitle)}</b>${meta ? `<small>${esc(meta)}</small>` : ""}</div><div class="rt-thumb rt-chronology-thumb"><img src="${esc(image)}" alt="${esc(postTitle)}" width="800" height="450" loading="lazy" decoding="async"></div></a>`);
   }
 
   if (!cards.length) return "";
-  return `<section class="rt-section rt-article-chronology" aria-labelledby="article-chronology-title"><header class="rt-section-head"><div><h2 id="article-chronology-title">${esc(title)}</h2></div></header><div class="rt-topic-grid">${cards.join("")}</div></section>`;
+  return `<section class="rt-section rt-article-chronology" aria-labelledby="article-chronology-title"><header class="rt-section-head"><div><h2 id="article-chronology-title">${esc(title)}</h2></div></header><div class="rt-chronology-grid">${cards.join("")}</div></section>`;
 }
 
 function relatedHtml(posts, pathname) {
@@ -352,8 +366,12 @@ function relatedHtml(posts, pathname) {
     const postTitle = String(post?.title || "").trim();
     const excerpt = String(post?.excerpt || "").trim();
     const date = String(post?.dateLabel || "").trim();
+    const readTime = String(post?.readTime || "").trim();
+    const categoryLabel = String(post?.category || "").trim();
+    const image = postCardImage(post);
+    const meta = [date, readTime].filter(Boolean).join(" · ");
     if (!href || !postTitle) return "";
-    return `<a class="rt-feed-item" href="${esc(href)}"><div class="rt-feed-copy"><h3>${esc(postTitle)}</h3>${excerpt ? `<p>${esc(excerpt)}</p>` : ""}${date ? `<div class="rt-feed-time">${esc(date)}</div>` : ""}</div></a>`;
+    return `<a class="rt-feed-item rt-related-card" href="${esc(href)}"><div class="rt-feed-copy">${categoryLabel ? `<div class="rt-feed-kicker"><span>${esc(categoryLabel)}</span></div>` : ""}<h3>${esc(postTitle)}</h3>${excerpt ? `<p>${esc(excerpt)}</p>` : ""}${meta ? `<div class="rt-feed-time">${esc(meta)}</div>` : ""}</div><div class="rt-thumb"><img src="${esc(image)}" alt="${esc(postTitle)}" width="800" height="450" loading="lazy" decoding="async"></div></a>`;
   }).filter(Boolean).join("");
 
   const stories = cards
