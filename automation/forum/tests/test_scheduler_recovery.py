@@ -64,7 +64,8 @@ class PreparationBoundaryTests(unittest.TestCase):
         with patch.object(scheduler, "load_json", side_effect=load), \
              patch.object(scheduler, "_prepared_is_valid", return_value=False), \
              patch.object(scheduler, "_prepare_next", return_value=None), \
-             patch.object(scheduler.publisher, "_save_report") as report:
+             patch.object(scheduler.publisher, "_save_report") as report, \
+             patch("builtins.print"):
             self.assertEqual(scheduler.main(), 0)
             self.assertEqual(report.call_args.args, ("publication_blocked",))
             self.assertEqual(report.call_args.kwargs["reason"], "no_candidate_to_prepare")
