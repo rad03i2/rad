@@ -10,7 +10,7 @@
 <link rel="canonical" href="https://mikhbar.website/ar/live/">
 <link rel="icon" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon.svg">
 <link rel="preload" href="/assets/fonts/cairo-4.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-full-logo-alpha.webp" as="image" type="image/webp">
+<link rel="preload" href="/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-logo-mark-alpha.webp" as="image" type="image/webp">
 <style>
 @font-face{font-family:Cairo;src:url('/assets/fonts/cairo-1.woff2') format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:Cairo;src:url('/assets/fonts/cairo-2.woff2') format('woff2');font-weight:600;font-display:swap}
@@ -26,9 +26,12 @@ img{display:block}b,strong{font-weight:800}[hidden]{display:none!important}
 .topbar::after{content:"";position:absolute;bottom:-1px;right:40px;width:235px;height:3px;background:var(--blue)}
 .brand-zone{display:flex;align-items:center;gap:24px;min-width:340px}
 .brand-logo{position:relative;display:block;flex:none;width:228px;height:67px;overflow:hidden}
-/* Trim the transparent animation canvas in CSS; retain the original looping asset. */
-.brand-logo img{position:absolute;width:129%;max-width:none;height:auto;left:-7.1%;top:50%;transform:translateY(-47.5%)}
-.brand-logo.is-static img{inset:0;width:100%;height:100%;object-fit:contain;transform:none}
+/* Keep the original lettering still; animate only the separate M artwork. */
+.brand-wordmark{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;clip-path:inset(0 0 0 28.4%)}
+.brand-mark{position:absolute;left:0;top:0;width:28.8%;height:100%;overflow:hidden}
+.brand-mark img{position:absolute;width:122%;max-width:none;height:auto;left:-10.5%;top:47%;transform:translateY(-45.9%)}
+.brand-logo.is-static .brand-mark{display:none}
+.brand-logo.is-static .brand-wordmark{clip-path:none}
 .channel-copy{border-right:1px solid var(--line);padding-right:23px;display:grid;gap:3px}
 .channel-copy strong{font-size:20px;line-height:1.4;color:var(--navy)}
 .channel-copy span{font-size:12px;color:var(--muted);white-space:nowrap}
@@ -123,7 +126,7 @@ img{display:block}b,strong{font-weight:800}[hidden]{display:none!important}
 <div class="broadcast" id="broadcast" data-live-design="newsroom-v2">
   <header class="topbar">
     <div class="brand-zone">
-      <span class="brand-logo"><img id="brandLogo" src="/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-full-logo-alpha.webp" alt="مِخبار" decoding="async"></span>
+      <span class="brand-logo" role="img" aria-label="مِخبار"><img class="brand-wordmark" src="/assets/brand/mikhbar/02-full-logo/transparent/mikhbar-full-logo-transparent-1200w.png" alt="" aria-hidden="true"><span class="brand-mark"><img id="brandLogo" src="/assets/brand/mikhbar/06-web-ready/lightweight-animations/mikhbar-logo-mark-alpha.webp" alt="" aria-hidden="true" decoding="async"></span></span>
       <div class="channel-copy"><strong>التقنية الآن</strong><span>تغطية على مدار الساعة</span></div>
     </div>
     <div class="live-zone" aria-label="بث مباشر"><div class="live-badge"><i class="live-dot" aria-hidden="true"></i>مباشر <span lang="en">LIVE</span></div><span class="live-caption">مِخبار • البث المستمر</span></div>
@@ -215,7 +218,7 @@ window.addEventListener("resize",()=>{fitTitle();sizeTicker()});
 window.addEventListener("online",refreshFeed);
 heroImage.addEventListener("error",()=>{if(heroImage.getAttribute("src")!==FALLBACK){heroImage.src=FALLBACK;heroImage.style.objectFit="contain";heroImage.style.padding="60px";heroImage.style.background="#f3f7fb"}});
 const brandLogo=$("brandLogo");
-function restoreBrandLogo(){brandLogo.parentElement.classList.add("is-static");brandLogo.src=FALLBACK}
+function restoreBrandLogo(){brandLogo.closest(".brand-logo").classList.add("is-static")}
 brandLogo.addEventListener("error",restoreBrandLogo,{once:true});
 if(brandLogo.complete&&!brandLogo.naturalWidth)restoreBrandLogo();
 if(document.fonts)document.fonts.ready.then(()=>{fitTitle();sizeTicker()});
