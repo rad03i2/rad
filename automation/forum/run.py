@@ -4,7 +4,7 @@ import argparse
 from collector import collect
 from common import CONFIG, STATE, load_json, now_iso, save_json
 from deduplicator import deduplicate
-from queue_lifecycle import limit_queue, pending_queue, reconcile_seen
+from queue_lifecycle import candidate_retry_due, limit_queue, pending_queue, reconcile_seen
 from trend import rank_candidates
 from verifier import refresh_queue_verification, verify_and_score
 
@@ -52,7 +52,8 @@ def main() -> int:
     save_json(STATE / "seen.json", seen)
 
     posts_doc = load_json(CONFIG.parent.parent.parent / "forum" / "posts-ar.json", {"posts": []})
-    candidates = rank_candidates(queue_items, settings, posts_doc.get("posts", []))
+    available = [item for item in queue_items if candidate_retry_due(item)]
+    candidates = rank_candidates(available, settings, posts_doc.get("posts", []))
     save_json(STATE / "candidates.json", {
         "updated_at": finished,
         "publishing_enabled": publishing_enabled,
@@ -73,6 +74,7 @@ def main() -> int:
         "finished_at": finished,
         "sources_ok": collection_report["sources_ok"],
         "sources_failed": collection_report["sources_failed"],
+        "sources_cached": collection_report.get("sources_cached", 0),
         "fetched": collection_report["fetched"],
         "verified": len(verified),
         "accepted_new": len(fresh),
@@ -83,6 +85,7 @@ def main() -> int:
         "released_orphan_seen": released_seen,
         "deferred_by_capacity": pending_count - len(queue_items),
         "publish_eligible": len(candidates),
+        "temporarily_deferred": len(queue_items) - len(available),
         "publishing_enabled": publishing_enabled,
         "errors": collection_report["errors"],
     }

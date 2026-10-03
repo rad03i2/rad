@@ -1,7 +1,19 @@
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
 from common import canonicalize_url, normalize_title, stable_id
 from trend import is_current_story
+
+
+def candidate_retry_due(item: dict) -> bool:
+    try:
+        retry_at = datetime.fromisoformat(str(item.get("publisher_retry_at") or "").replace("Z", "+00:00"))
+        if retry_at.tzinfo is None:
+            retry_at = retry_at.replace(tzinfo=timezone.utc)
+        return datetime.now(timezone.utc) >= retry_at
+    except ValueError:
+        return True
 
 
 def pending_queue(items: list[dict], history: dict, settings: dict) -> list[dict]:
@@ -30,11 +42,16 @@ def reconcile_seen(seen: dict, retained: list[dict], history: dict, previous_ite
             url = canonicalize_url(item["url"])
             rejected[url] = item.get("id") or stable_id(url)
 
-    urls = dict(rejected)
+    published = dict(seen.get("published_urls", {}))
     for item in history.get("items", []):
         if item.get("source_url"):
             url = canonicalize_url(item["source_url"])
-            urls[url] = item.get("story_id") or stable_id(url)
+            published[url] = item.get("story_id") or stable_id(url)
+    for item in previous_items:
+        if item.get("status") == "published" and item.get("url"):
+            url = canonicalize_url(item["url"])
+            published[url] = item.get("id") or stable_id(url)
+    urls = {**rejected, **published}
     for item in retained:
         if item.get("url"):
             url = canonicalize_url(item["url"])
@@ -45,6 +62,7 @@ def reconcile_seen(seen: dict, retained: list[dict], history: dict, previous_ite
         "urls": urls,
         "titles": {normalize_title(item["title"]): item.get("id") for item in retained if item.get("title")},
         "rejected_urls": rejected,
+        "published_urls": published,
     }
 
 

@@ -5,11 +5,23 @@ import os
 import re
 import shutil
 import subprocess
+import time
 from html import unescape
 from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
+from request_budget import RequestBudgetExceeded, bounded_requests, request_timeout
+
+_unavailable_until: dict[str, float] = {}
+
+
+def _model_available(key: str) -> bool:
+    return time.monotonic() >= _unavailable_until.get(key, 0)
+
+
+def _defer_model(key: str, seconds: float = 600) -> None:
+    _unavailable_until[key] = time.monotonic() + seconds
 
 
 def _clean_text(text: str) -> str:
@@ -137,7 +149,7 @@ def _extract_link_candidates(root, base_url: str, limit: int = 18) -> list[dict]
 def _extract_page(url: str, user_agent: str) -> dict:
     headers = {"User-Agent": user_agent, "Accept": "text/html,application/xhtml+xml"}
     try:
-        response = requests.get(url, headers=headers, timeout=18, allow_redirects=True)
+        response = requests.get(url, headers=headers, timeout=request_timeout(18), allow_redirects=True)
         response.raise_for_status()
     except Exception as exc:
         return {"url": url, "ok": False, "error": str(exc), "text": "", "image_url": "", "images": [], "link_candidates": []}
@@ -232,17 +244,23 @@ def _extract_json(text: str) -> dict:
     text = re.sub(r"^```(?:json)?\s*", "", text, flags=re.I)
     text = re.sub(r"\s*```$", "", text)
     try:
-        return json.loads(text)
+        result = json.loads(text)
     except json.JSONDecodeError:
-        start, end = text.find("{"), text.rfind("}")
-        if start >= 0 and end > start:
-            return json.loads(text[start:end + 1])
-        raise
+        start = text.find("{")
+        if start < 0:
+            raise
+        result, _ = json.JSONDecoder().raw_decode(text[start:])
+    if not isinstance(result, dict):
+        raise ValueError("Article generation must return a JSON object")
+    return result
 
 
 def _call_openai_compatible(prompt: str, api_key: str, endpoint: str, model: str, provider: str, extra_headers: dict | None = None) -> dict:
     if not api_key:
         raise RuntimeError(f"{provider} API key is not configured")
+    key = f"{provider}/{model}"
+    if not _model_available(key):
+        raise RuntimeError(f"{provider}/{model} is temporarily deferred after an API failure")
 
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -262,9 +280,12 @@ def _call_openai_compatible(prompt: str, api_key: str, endpoint: str, model: str
     last_error = None
     for _ in range(2):
         try:
-            response = requests.post(endpoint, headers=headers, json=payload, timeout=180)
+            response = requests.post(endpoint, headers=headers, json=payload, timeout=request_timeout(180))
             if response.status_code >= 400:
                 last_error = f"{provider} API failed ({response.status_code}): {response.text[:1600]}"
+                if response.status_code in (400, 401, 403, 404, 429, 500, 502, 503, 504):
+                    _defer_model(key)
+                    break
                 continue
 
             data = response.json()
@@ -286,9 +307,13 @@ def _call_openai_compatible(prompt: str, api_key: str, endpoint: str, model: str
                 last_error = f"{provider} returned no text: {json.dumps(data)[:1200]}"
                 continue
             return _extract_json(text)
+        except RequestBudgetExceeded:
+            raise
         except Exception as exc:
             last_error = f"{provider} request failed: {type(exc).__name__}: {exc}"
 
+    if _model_available(key):
+        _defer_model(key, 60)
     raise RuntimeError(last_error or f"{provider} API failed")
 
 
@@ -314,7 +339,7 @@ def _groq_available_models(api_key: str) -> set[str]:
                 "Content-Type": "application/json",
                 "User-Agent": "RDWAN-Tech-Publisher/1.0",
             },
-            timeout=20,
+            timeout=request_timeout(20),
         )
         if response.status_code >= 400:
             return set()
@@ -324,6 +349,8 @@ def _groq_available_models(api_key: str) -> set[str]:
             for item in (data.get("data") or [])
             if str(item.get("id") or "").strip()
         }
+    except RequestBudgetExceeded:
+        raise
     except Exception:
         return set()
 
@@ -348,6 +375,8 @@ def _call_groq(prompt: str, models: list[str]) -> dict:
                 model=model,
                 provider=f"Groq/{model}",
             )
+        except RequestBudgetExceeded:
+            raise
         except Exception as exc:
             errors.append(str(exc))
     raise RuntimeError("No Groq model succeeded: " + " | ".join(errors))
@@ -375,6 +404,10 @@ def _call_gemini(prompt: str, models: list[str]) -> dict:
     endpoint = "https://generativelanguage.googleapis.com/v1beta/interactions"
     errors = []
     for model in models:
+        key = f"Gemini/{model}"
+        if not _model_available(key):
+            errors.append(f"{model} is temporarily deferred after an API failure")
+            continue
         payload = {
             "model": model,
             "input": prompt,
@@ -393,13 +426,14 @@ def _call_gemini(prompt: str, models: list[str]) -> dict:
                         "User-Agent": "RDWAN-Tech-Publisher/1.0",
                     },
                     json=payload,
-                    timeout=180,
+                    timeout=request_timeout(180),
                 )
                 if response.status_code >= 400:
                     body = response.text[:1600]
                     last_error = f"{model} failed ({response.status_code}): {body}"
                     # Quota/service pressure can be model-specific, so try the next model.
-                    if response.status_code in (404, 429, 500, 502, 503, 504):
+                    if response.status_code in (400, 401, 403, 404, 429, 500, 502, 503, 504):
+                        _defer_model(key)
                         break
                     continue
 
@@ -421,14 +455,20 @@ def _call_gemini(prompt: str, models: list[str]) -> dict:
                     last_error = f"{model} returned no text: {json.dumps(data)[:1200]}"
                     continue
                 return _extract_json(text)
+            except RequestBudgetExceeded:
+                raise
             except Exception as exc:
                 last_error = f"{model} request failed: {type(exc).__name__}: {exc}"
+        if _model_available(key):
+            _defer_model(key, 60)
         errors.append(last_error or f"{model} failed")
 
     raise RuntimeError("No Gemini model succeeded: " + " | ".join(errors))
 
 
 def _call_copilot(prompt: str) -> dict:
+    if not _model_available("Copilot"):
+        raise RuntimeError("Copilot is temporarily deferred after a quota or authentication failure")
     if not shutil.which("copilot"):
         raise RuntimeError("GitHub Copilot CLI is not installed")
     if not (os.environ.get("GITHUB_TOKEN") or os.environ.get("COPILOT_GITHUB_TOKEN")):
@@ -441,12 +481,15 @@ def _call_copilot(prompt: str) -> dict:
     last_error = None
     for _ in range(2):
         try:
-            proc = subprocess.run(command, text=True, capture_output=True, timeout=180, env=os.environ.copy())
+            proc = subprocess.run(command, text=True, capture_output=True, timeout=request_timeout(180), env=os.environ.copy())
         except subprocess.TimeoutExpired as exc:
             last_error = f"Copilot CLI timed out: {exc}"
             continue
         if proc.returncode != 0:
             last_error = f"Copilot CLI failed ({proc.returncode}): {(proc.stderr or proc.stdout)[-1200:]}"
+            if any(term in last_error.lower() for term in ("quota", "unauthorized", "authentication", "permission")):
+                _defer_model("Copilot")
+                break
             continue
         try:
             return _extract_json(proc.stdout)
@@ -456,6 +499,7 @@ def _call_copilot(prompt: str) -> dict:
 
 
 def _call_model(prompt: str, settings: dict) -> dict:
+    request_timeout(180)
     errors = []
 
     groq_models = _unique_models(
@@ -466,7 +510,8 @@ def _call_model(prompt: str, settings: dict) -> dict:
     )
     if os.environ.get("GROQ_API_KEY", "").strip():
         try:
-            return _call_groq(prompt, groq_models)
+            with bounded_requests(120):
+                return _call_groq(prompt, groq_models)
         except Exception as exc:
             errors.append(f"Groq: {exc}")
 
@@ -480,21 +525,25 @@ def _call_model(prompt: str, settings: dict) -> dict:
     )
     if os.environ.get("GEMINI_API_KEY", "").strip():
         try:
-            return _call_gemini(prompt, gemini_models)
+            with bounded_requests(120):
+                return _call_gemini(prompt, gemini_models)
         except Exception as exc:
             errors.append(f"Gemini: {exc}")
 
     if os.environ.get("OPENROUTER_API_KEY", "").strip():
         try:
-            return _call_openrouter(prompt, settings.get("openRouterModel", "openrouter/free"))
+            with bounded_requests(120):
+                return _call_openrouter(prompt, settings.get("openRouterModel", "openrouter/free"))
         except Exception as exc:
             errors.append(f"OpenRouter: {exc}")
 
     try:
-        return _call_copilot(prompt)
+        with bounded_requests(120):
+            return _call_copilot(prompt)
     except Exception as exc:
         errors.append(f"Copilot: {exc}")
 
+    request_timeout(1)
     raise RuntimeError("All article generation providers failed: " + " | ".join(errors))
 
 

@@ -11,6 +11,8 @@ from common import CONFIG, STATE, load_json, now_iso, save_json
 from image_pipeline import prepare_images
 from indexes import write_all
 from renderer import render_to_files
+from queue_lifecycle import candidate_retry_due
+from request_budget import RequestBudgetExceeded, bounded_requests
 from trend import rank_candidates
 from writer import build_source_pack, write_article
 
@@ -336,6 +338,8 @@ def _generate_qualified_editions(
             attempts.append({"attempt": attempt_number, "status": "generation_error", "error": message})
             last_errors = [f"generation_error:{message}"]
             feedback = last_errors
+            if isinstance(exc, RequestBudgetExceeded):
+                break
             continue
 
         ok, errors = _quality_gate(story, source_pack, editions, settings)
@@ -483,10 +487,22 @@ def _mark_candidate_result(queue_doc: dict, story: dict, status: str, errors: li
         item["publisher_attempts"] = attempts
         if status == "quality_rejected":
             item["status"] = "quality_rejected"
+        if status in {"generation_error", "source_error"}:
+            failures = min(6, int(item.get("publisher_failures", 0)) + 1)
+            item["publisher_failures"] = failures
+            item["publisher_retry_at"] = (datetime.now(timezone.utc) + timedelta(seconds=min(3600, 600 * 2 ** (failures - 1)))).isoformat()
+        else:
+            item.pop("publisher_failures", None)
+            item.pop("publisher_retry_at", None)
         break
 
 
 def main(ignore_cooldown: bool = False) -> int:
+    with bounded_requests(600):
+        return _publish_cycle(ignore_cooldown)
+
+
+def _publish_cycle(ignore_cooldown: bool = False) -> int:
     settings = load_json(CONFIG / "settings.json", {})
     if not settings.get("publishingEnabled", False) or settings.get("dryRun", False):
         _save_report("publishing_disabled")
@@ -514,6 +530,7 @@ def main(ignore_cooldown: bool = False) -> int:
         if item.get("url") not in published_urls
         and item.get("id") not in published_ids
         and item.get("status") not in terminal_statuses
+        and candidate_retry_due(item)
     ]
     ranked = rank_candidates(queue, settings, posts_by_locale["ar"])
     if not ranked:

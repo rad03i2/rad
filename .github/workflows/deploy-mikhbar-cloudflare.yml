@@ -36,6 +36,8 @@ on:
       - 'automation/forum/audit_search_quality.py'
       - 'automation/forum/audit_deployed_sitemap.py'
       - 'automation/forum/prune_legacy_article_html.py'
+      - 'automation/forum/publication_deployment.py'
+      - 'automation/forum/request_budget.py'
       - 'assets/brand/mikhbar/**'
       - 'assets/images/**'
       - 'assets/social/**'
@@ -199,6 +201,10 @@ jobs:
           DEPLOY_TARGET: ${{ steps.target.outputs.value }}
         run: |
           if [ -z "${CLOUDFLARE_API_TOKEN:-}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
+            if [ "$DEPLOY_TARGET" = "production" ]; then
+              echo "::error::Production deployment requires CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID; the website was not updated."
+              exit 1
+            fi
             echo "::notice title=Cloudflare deploy skipped::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID is not configured. Build validation succeeded, but no remote deployment was attempted."
             exit 0
           fi
@@ -354,3 +360,7 @@ jobs:
             exit 1
           fi
           echo "Live Mikhbar SSR, semantic links and entity hub smoke tests passed for ${ARTICLE_PATH} -> ${ENTITY_PATH}"
+
+      - name: Verify newest Arabic and English publication
+        if: steps.target.outputs.value == 'production'
+        run: python automation/forum/publication_deployment.py verify

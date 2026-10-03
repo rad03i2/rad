@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 
 import requests
 from PIL import Image, ImageDraw, ImageFilter, ImageOps
+from request_budget import request_timeout
 
 ROOT = Path(__file__).resolve().parents[2]
 FORUM = ROOT / "forum"
@@ -94,7 +95,7 @@ def _download_image(url: str, user_agent: str) -> Image.Image | None:
         "Referer": f"{urlparse(url).scheme}://{urlparse(url).netloc}/",
     }
     try:
-        response = requests.get(url, headers=headers, timeout=24, allow_redirects=True, stream=True)
+        response = requests.get(url, headers=headers, timeout=request_timeout(24), allow_redirects=True, stream=True)
         response.raise_for_status()
         content_type = (response.headers.get("content-type") or "").lower()
         if "svg" in content_type:

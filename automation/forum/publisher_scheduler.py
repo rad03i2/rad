@@ -4,6 +4,8 @@ from datetime import datetime, timedelta, timezone
 import time
 
 import publisher
+from queue_lifecycle import candidate_retry_due
+from request_budget import bounded_requests
 from common import CONFIG, STATE, load_json, now_iso, save_json
 
 PREPARED_PATH = STATE / "prepared_article.json"
@@ -57,6 +59,7 @@ def _eligible_queue(queue_doc: dict, history: dict) -> list[dict]:
         if item.get("url") not in published_urls
         and item.get("id") not in published_ids
         and item.get("status") not in terminal_statuses
+        and candidate_retry_due(item)
     ]
 
 
@@ -130,6 +133,11 @@ def _choose_slug(story: dict, posts_by_locale: dict[str, list[dict]]) -> str:
 
 
 def _prepare_next(settings: dict, queue_doc: dict, history: dict, now: datetime, target: datetime) -> dict | None:
+    with bounded_requests(600):
+        return _prepare_within_budget(settings, queue_doc, history, now, target)
+
+
+def _prepare_within_budget(settings: dict, queue_doc: dict, history: dict, now: datetime, target: datetime) -> dict | None:
     posts_by_locale = publisher._load_posts()
     queue = _eligible_queue(queue_doc, history)
     ranked = publisher.rank_candidates(queue, settings, posts_by_locale["ar"])
@@ -204,6 +212,8 @@ def _prepare_next(settings: dict, queue_doc: dict, history: dict, now: datetime,
                 item["last_publisher_status"] = "prepared"
                 item["last_publisher_at"] = now_iso()
                 item["publisher_attempts"] = attempts
+                item.pop("publisher_failures", None)
+                item.pop("publisher_retry_at", None)
                 break
         queue_doc["updated_at"] = now_iso()
         save_json(STATE / "queue.json", queue_doc)
@@ -292,6 +302,12 @@ def _publish_prepared(prepared: dict, ignore_cooldown: bool = False) -> int:
 
 
 def main() -> int:
+    # Preparation before and after a publication share the same request budget.
+    with bounded_requests(600):
+        return _schedule_cycle()
+
+
+def _schedule_cycle() -> int:
     settings = load_json(CONFIG / "settings.json", {})
     if not settings.get("publishingEnabled", False) or settings.get("dryRun", False):
         publisher._save_report("publishing_disabled")
