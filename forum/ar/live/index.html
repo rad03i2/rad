@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>مِخبار مباشر — تغطية تقنية على مدار الساعة</title>
+<meta name="description" content="شاشة مِخبار للبث المباشر المستمر وعرض أحدث الأخبار التقنية تلقائيًا.">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<link rel="canonical" href="https://mikhbar.website/ar/live/">
+<link rel="icon" href="/assets/brand/mikhbar/06-web-ready/favicon/favicon.svg">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#fff;
+  --text:#111827;
+  --muted:#667085;
+  --line:#e5e7eb;
+  --blue:#2563eb;
+  --blue-soft:#eff6ff;
+  --red:#d92d20;
+  --panel:#fff;
+  --shadow:0 18px 48px rgba(17,24,39,.10);
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;background:var(--bg);color:var(--text);overflow:hidden}
+body{
+  font-family:Cairo,Tahoma,"Segoe UI",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+  cursor:none;
+}
+button,a{font:inherit}
+.broadcast{
+  width:100vw;
+  height:100vh;
+  min-height:540px;
+  display:grid;
+  grid-template-rows:86px minmax(0,1fr) 78px;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(37,99,235,.05),transparent 28%),
+    linear-gradient(#fff,#fff);
+}
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:0 38px;
+  border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.97);
+}
+.brand-zone,.live-zone,.clock-zone{display:flex;align-items:center}
+.brand-zone{gap:18px;min-width:300px}
+.brand-logo{height:54px;width:auto;display:block;object-fit:contain}
+.divider{width:1px;height:36px;background:var(--line)}
+.channel-copy{display:grid;gap:4px}
+.channel-copy strong{font-size:18px;line-height:1;font-weight:900;letter-spacing:-.3px}
+.channel-copy span{font-size:10px;line-height:1;color:var(--muted);font-weight:700;letter-spacing:.02em}
+.live-zone{
+  gap:12px;
+  padding:9px 14px;
+  border:1px solid #fecaca;
+  border-radius:999px;
+  background:#fff;
+  color:#991b1b;
+  font-size:12px;
+  font-weight:900;
+}
+.live-dot{
+  width:9px;height:9px;border-radius:50%;background:var(--red);
+  box-shadow:0 0 0 5px rgba(217,45,32,.10);
+  animation:pulse 1.8s ease-in-out infinite;
+}
+.clock-zone{min-width:300px;justify-content:flex-end;gap:14px}
+.clock-copy{text-align:left;direction:ltr}
+#clock{font:900 25px/1 "Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+#date{margin-top:5px;color:var(--muted);font-size:10px;font-weight:700;direction:rtl}
+.connection{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:7px 10px;border-radius:999px;background:#f8fafc;color:#475467;
+  font-size:9px;font-weight:800;
+}
+.connection i{width:7px;height:7px;border-radius:50%;background:#12b76a}
+.connection.offline i{background:#f79009}
+.stage{
+  min-height:0;
+  display:grid;
+  grid-template-columns:minmax(0,2.15fr) minmax(320px,.85fr);
+  gap:18px;
+  padding:18px 28px;
+}
+.hero{
+  position:relative;
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:28px;
+  background:#0f172a;
+  box-shadow:var(--shadow);
+}
+.hero-media,.hero-shade,.hero-content,.overview-scene{position:absolute;inset:0}
+.hero-media{
+  width:100%;height:100%;object-fit:cover;display:block;
+  opacity:1;transform:scale(1.01);
+  transition:opacity .48s ease,transform 12s linear;
+}
+.hero.is-switching .hero-media{opacity:.08;transform:scale(1.045)}
+.hero-shade{
+  background:
+    linear-gradient(90deg,rgba(2,6,23,.18) 0%,rgba(2,6,23,.58) 60%,rgba(2,6,23,.84) 100%),
+    linear-gradient(0deg,rgba(2,6,23,.72),transparent 48%);
+}
+.hero-content{
+  z-index:2;
+  display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;
+  padding:clamp(30px,4.2vw,72px);
+  color:#fff;
+  text-shadow:0 2px 18px rgba(0,0,0,.2);
+  transition:opacity .3s ease,transform .35s ease;
+}
+.hero.is-switching .hero-content{opacity:0;transform:translateY(12px)}
+.kicker-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.category-chip{
+  padding:7px 11px;border-radius:999px;background:#fff;color:#1d4ed8;
+  font-size:11px;font-weight:900;text-shadow:none;
+}
+.new-chip{
+  display:none;padding:7px 11px;border-radius:999px;background:var(--red);color:#fff;
+  font-size:11px;font-weight:900;text-shadow:none;
+}
+.new-chip.show{display:inline-flex;animation:newsFlash 1s ease 2}
+.hero h1{
+  max-width:1050px;
+  margin:0;
+  font-size:clamp(34px,4.15vw,74px);
+  line-height:1.25;
+  letter-spacing:-1.7px;
+  font-weight:900;
+}
+.hero p{
+  max-width:960px;
+  margin:16px 0 0;
+  font-size:clamp(15px,1.18vw,22px);
+  line-height:1.9;
+  color:rgba(255,255,255,.88);
+  font-weight:600;
+}
+.meta-row{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  margin-top:20px;color:rgba(255,255,255,.72);font-size:11px;font-weight:700;
+}
+.meta-row span+span::before{content:"•";margin-inline-end:12px;color:rgba(255,255,255,.45)}
+.progress{
+  position:absolute;z-index:4;right:0;left:0;bottom:0;height:5px;background:rgba(255,255,255,.18);
+}
+.progress span{display:block;width:0;height:100%;background:#60a5fa;transform-origin:right center}
+.progress span.running{animation:slideProgress var(--scene-duration,17s) linear forwards}
+.side{
+  min-height:0;
+  display:grid;
+  grid-template-rows:auto minmax(0,1fr) auto;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:var(--panel);
+  overflow:hidden;
+}
+.side-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:22px 22px 16px;border-bottom:1px solid var(--line);
+}
+.side-head h2{margin:0;font-size:18px;font-weight:900}
+.side-head span{color:var(--blue);font-size:10px;font-weight:900}
+.queue{min-height:0;display:grid;align-content:start;overflow:hidden;padding:4px 18px}
+.queue-item{
+  display:grid;grid-template-columns:92px minmax(0,1fr);gap:13px;align-items:center;
+  min-height:108px;padding:12px 0;border-bottom:1px solid var(--line);
+}
+.queue-item:last-child{border-bottom:0}
+.queue-thumb{
+  width:92px;height:72px;object-fit:cover;border-radius:12px;background:#f1f5f9;display:block;
+}
+.queue-copy{min-width:0}
+.queue-copy b{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
+  font-size:13px;line-height:1.55;font-weight:900;
+}
+.queue-copy small{
+  display:block;margin-top:6px;color:var(--muted);font-size:9px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.side-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:14px 18px;border-top:1px solid var(--line);background:#f8fafc;color:var(--muted);
+  font-size:9px;font-weight:800;
+}
+.side-foot strong{color:var(--text);font-size:10px}
+.ticker{
+  position:relative;
+  display:grid;
+  grid-template-columns:142px minmax(0,1fr);
+  border-top:1px solid var(--line);
+  background:#fff;
+  overflow:hidden;
+}
+.ticker-label{
+  position:relative;z-index:3;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  background:var(--blue);color:#fff;font-size:13px;font-weight:900;
+  box-shadow:-12px 0 26px rgba(37,99,235,.18);
+}
+.ticker-label::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;opacity:.95}
+.ticker-window{position:relative;overflow:hidden;display:flex;align-items:center;direction:rtl}
+.ticker-track{
+  display:flex;align-items:center;width:max-content;white-space:nowrap;
+  animation:tickerMove var(--ticker-duration,75s) linear infinite;
+}
+.ticker-item{display:inline-flex;align-items:center;gap:18px;font-size:15px;font-weight:800;color:#344054}
+.ticker-item::after{content:"◆";margin:0 26px;color:#93c5fd;font-size:8px}
+.overview-scene{
+  z-index:3;
+  display:none;
+  padding:clamp(28px,4vw,64px);
+  color:#fff;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(37,99,235,.4),transparent 28%),
+    linear-gradient(135deg,#0f172a,#111827 70%);
+}
+.overview-scene.show{display:grid;grid-template-rows:auto 1fr;animation:sceneIn .45s ease}
+.overview-title{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:24px}
+.overview-title div{display:grid;gap:6px}
+.overview-title small{color:#93c5fd;font-size:11px;font-weight:900;letter-spacing:.08em}
+.overview-title h2{margin:0;font-size:clamp(32px,4vw,64px);line-height:1.1}
+.overview-title img{height:54px;width:auto;filter:brightness(0) invert(1)}
+.overview-list{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;align-content:start}
+.overview-item{
+  display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;
+  padding:15px 16px;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:rgba(255,255,255,.055);
+}
+.overview-num{font:900 24px/1 "Segoe UI",Arial,sans-serif;color:#60a5fa}
+.overview-item b{font-size:16px;line-height:1.55}
+.overview-item small{display:block;margin-top:5px;color:#cbd5e1;font-size:9px}
+.empty-state{
+  position:absolute;inset:0;z-index:8;display:none;place-items:center;text-align:center;
+  padding:40px;background:#fff;color:var(--text);
+}
+.empty-state.show{display:grid}
+.empty-state img{width:min(330px,38vw);height:auto}
+.empty-state h2{margin:22px 0 6px;font-size:28px}
+.empty-state p{margin:0;color:var(--muted);font-size:13px}
+@keyframes pulse{50%{transform:scale(.75);opacity:.58}}
+@keyframes newsFlash{50%{transform:scale(1.04)}}
+@keyframes slideProgress{from{width:0}to{width:100%}}
+@keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(50%)}}
+@keyframes sceneIn{from{opacity:0;transform:scale(1.008)}to{opacity:1;transform:scale(1)}}
+@media(max-width:1050px){
+  .broadcast{grid-template-rows:76px minmax(0,1fr) 68px}
+  .topbar{padding:0 22px}.brand-logo{height:46px}.channel-copy{display:none}.brand-zone,.clock-zone{min-width:auto}
+  .stage{grid-template-columns:minmax(0,1.85fr) minmax(280px,.8fr);padding:14px 18px;gap:14px}
+  .queue-item{grid-template-columns:72px 1fr;min-height:94px}.queue-thumb{width:72px;height:58px}
+  .hero h1{font-size:clamp(30px,4.2vw,52px)}.hero p{font-size:14px}
+}
+@media(max-width:760px){
+  body{cursor:auto}
+  .broadcast{height:100dvh;grid-template-rows:68px minmax(0,1fr) 62px}
+  .topbar{padding:0 14px;gap:10px}.brand-logo{height:40px}.divider,.connection{display:none}
+  .live-zone{padding:7px 10px;font-size:10px}.clock-zone{gap:0}#clock{font-size:18px}#date{display:none}
+  .stage{grid-template-columns:1fr;padding:10px}.side{display:none}
+  .hero{border-radius:20px}.hero-content{padding:24px 20px}.hero h1{font-size:clamp(28px,8vw,46px)}.hero p{font-size:13px;line-height:1.7}
+  .ticker{grid-template-columns:102px 1fr}.ticker-label{font-size:11px}.ticker-item{font-size:12px}
+  .overview-list{grid-template-columns:1fr}.overview-item:nth-child(n+5){display:none}.overview-title img{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .live-dot{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="broadcast" id="broadcast">
+  <header class="topbar">
+    <div class="brand-zone">
+      <img class="brand-logo" src="/assets/brand/mikhbar/06-web-ready/header-logo/mikhbar-header-logo-transparent.png" alt="مِخبار">
+      <span class="divider" aria-hidden="true"></span>
+      <div class="channel-copy">
+        <strong>مِخبار مباشر</strong>
+        <span>تغطية تقنية على مدار الساعة</span>
+      </div>
+    </div>
+    <div class="live-zone" aria-label="بث مباشر">
+      <span class="live-dot" aria-hidden="true"></span>
+      <span>مباشر</span>
+      <b>LIVE</b>
+    </div>
+    <div class="clock-zone">
+      <div class="connection" id="connection"><i></i><span id="connectionText">تحديث تلقائي</span></div>
+      <div class="clock-copy">
+        <div id="clock">--:--:--</div>
+        <div id="date">مِخبار • بغداد</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="stage">
+    <section class="hero" id="hero" aria-live="polite">
+      <img class="hero-media" id="heroImage" alt="">
+      <div class="hero-shade"></div>
+      <article class="hero-content" id="heroContent">
+        <div class="kicker-row">
+          <span class="category-chip" id="heroCategory">مِخبار</span>
+          <span class="new-chip" id="newChip">خبر جديد</span>
+        </div>
+        <h1 id="heroTitle">جارٍ تجهيز البث المباشر…</h1>
+        <p id="heroDescription">يتم الآن جلب أحدث أخبار مِخبار وترتيب دورة البث تلقائيًا.</p>
+        <div class="meta-row">
+          <span id="heroTime">الآن</span>
+          <span>mikhbar.website</span>
+        </div>
+      </article>
+      <section class="overview-scene" id="overviewScene" aria-label="أبرز الأخبار الآن">
+        <div class="overview-title">
+          <div><small>MIKHBAR LIVE</small><h2>أبرز الأخبار الآن</h2></div>
+          <img src="/assets/brand/mikhbar/06-web-ready/header-logo/mikhbar-header-logo-transparent.png" alt="">
+        </div>
+        <div class="overview-list" id="overviewList"></div>
+      </section>
+      <div class="progress"><span id="progressBar"></span></div>
+      <div class="empty-state" id="emptyState">
+        <div>
+          <img src="/assets/brand/mikhbar/06-web-ready/header-logo/mikhbar-header-logo-transparent.png" alt="مِخبار">
+          <h2>التغطية مستمرة</h2>
+          <p>جارٍ تحديث موجز الأخبار تلقائيًا…</p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="side" aria-label="الأخبار التالية">
+      <div class="side-head"><h2>التالي في مِخبار</h2><span>يتحدث تلقائيًا</span></div>
+      <div class="queue" id="queue"></div>
+      <div class="side-foot">
+        <span>آخر مزامنة</span>
+        <strong id="lastSync">--:--</strong>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="ticker" aria-label="شريط الأخبار">
+    <div class="ticker-label">آخر الأخبار</div>
+    <div class="ticker-window"><div class="ticker-track" id="tickerTrack"></div></div>
+  </footer>
+</div>
+
+<script>
+(()=>{
+"use strict";
+
+const FEED_URL="/feed-ar.xml";
+const POLL_MS=15000;
+const STORY_MS=17000;
+const OVERVIEW_MS=12000;
+const OVERVIEW_EVERY=6;
+const CACHE_KEY="mikhbar-live-feed-v1";
+const MAX_STORIES=30;
+const BAGHDAD="Asia/Baghdad";
+
+const $=id=>document.getElementById(id);
+const hero=$("hero");
+const heroImage=$("heroImage");
+const heroTitle=$("heroTitle");
+const heroDescription=$("heroDescription");
+const heroCategory=$("heroCategory");
+const heroTime=$("heroTime");
+const newChip=$("newChip");
+const queue=$("queue");
+const tickerTrack=$("tickerTrack");
+const overviewScene=$("overviewScene");
+const overviewList=$("overviewList");
+const progressBar=$("progressBar");
+const connection=$("connection");
+const connectionText=$("connectionText");
+const lastSync=$("lastSync");
+const emptyState=$("emptyState");
+
+let stories=[];
+let current=0;
+let transitions=0;
+let timer=null;
+let paused=false;
+let showingOverview=false;
+let latestGuid="";
+let hasLoadedOnce=false;
+let lastRenderAt=Date.now();
+let lastSuccessfulSync=0;
+
+function clean(value){return String(value||"").replace(/\s+/g," ").trim()}
+function text(node,selector){return clean(node.querySelector(selector)?.textContent)}
+function esc(value){
+  return String(value??"")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#39;");
+}
+function storyFromNode(item){
+  const enclosure=item.querySelector("enclosure");
+  const link=text(item,"link");
+  const guid=text(item,"guid")||link;
+  return {
+    id:guid,
+    title:text(item,"title"),
+    link,
+    description:text(item,"description"),
+    category:text(item,"category")||"تقنية",
+    published:text(item,"pubDate"),
+    image:clean(enclosure?.getAttribute("url")||"")
+  };
+}
+function parseFeed(xmlText){
+  const xml=new DOMParser().parseFromString(xmlText,"application/xml");
+  if(xml.querySelector("parsererror")) throw new Error("invalid_feed");
+  return [...xml.querySelectorAll("channel > item")]
+    .map(storyFromNode)
+    .filter(x=>x.title&&x.link)
+    .slice(0,MAX_STORIES);
+}
+function ago(dateString){
+  const t=Date.parse(dateString);
+  if(!Number.isFinite(t)) return "مِخبار";
+  const min=Math.max(0,Math.floor((Date.now()-t)/60000));
+  if(min<1) return "الآن";
+  if(min<60) return "قبل "+min+" دقيقة";
+  const h=Math.floor(min/60);
+  if(h<24) return "قبل "+h+" ساعة";
+  const d=Math.floor(h/24);
+  return "قبل "+d+" يوم";
+}
+function displayTime(dateString){
+  const t=Date.parse(dateString);
+  if(!Number.isFinite(t)) return "الآن";
+  return new Intl.DateTimeFormat("ar-IQ",{timeZone:BAGHDAD,hour:"2-digit",minute:"2-digit",hour12:false}).format(t);
+}
+function setConnection(ok,label){
+  connection.classList.toggle("offline",!ok);
+  connectionText.textContent=label||(ok?"تحديث تلقائي":"آخر نسخة محفوظة");
+}
+function cacheStories(){
+  try{localStorage.setItem(CACHE_KEY,JSON.stringify({savedAt:Date.now(),stories}))}catch{}
+}
+function restoreCache(){
+  try{
+    const parsed=JSON.parse(localStorage.getItem(CACHE_KEY)||"null");
+    if(Array.isArray(parsed?.stories)&&parsed.stories.length){
+      stories=parsed.stories.slice(0,MAX_STORIES);
+      latestGuid=stories[0]?.id||"";
+      setConnection(false,"آخر نسخة محفوظة");
+      renderAll(false);
+      return true;
+    }
+  }catch{}
+  return false;
+}
+function preload(items){
+  items.slice(0,8).forEach(s=>{if(s.image){const img=new Image();img.src=s.image}});
+}
+function runProgress(duration){
+  progressBar.classList.remove("running");
+  progressBar.style.setProperty("--scene-duration",(duration/1000)+"s");
+  void progressBar.offsetWidth;
+  if(!paused) progressBar.classList.add("running");
+}
+function schedule(duration){
+  clearTimeout(timer);
+  runProgress(duration);
+  if(!paused) timer=setTimeout(nextScene,duration);
+}
+function applyStory(index,{announceNew=false}={}){
+  if(!stories.length){emptyState.classList.add("show");return}
+  emptyState.classList.remove("show");
+  showingOverview=false;
+  overviewScene.classList.remove("show");
+  current=(index+stories.length)%stories.length;
+  const s=stories[current];
+  hero.classList.add("is-switching");
+  setTimeout(()=>{
+    heroImage.src=s.image||"/assets/social/home.jpg";
+    heroImage.alt=s.title;
+    heroTitle.textContent=s.title;
+    heroDescription.textContent=s.description||"تابع أحدث التفاصيل والتطورات عبر مِخبار.";
+    heroCategory.textContent=s.category;
+    heroTime.textContent=ago(s.published)+" • "+displayTime(s.published);
+    newChip.classList.toggle("show",announceNew);
+    hero.classList.remove("is-switching");
+    lastRenderAt=Date.now();
+    renderQueue();
+  },240);
+  if(!announceNew) newChip.classList.remove("show");
+  schedule(STORY_MS);
+}
+function renderOverview(){
+  if(!stories.length)return applyStory(0);
+  showingOverview=true;
+  const selected=stories.slice(0,6);
+  overviewList.innerHTML=selected.map((s,i)=>
+    '<div class="overview-item"><span class="overview-num">'+String(i+1).padStart(2,"0")+'</span><div><b>'+esc(s.title)+'</b><small>'+esc(s.category)+' • '+esc(ago(s.published))+'</small></div></div>'
+  ).join("");
+  overviewScene.classList.add("show");
+  lastRenderAt=Date.now();
+  schedule(OVERVIEW_MS);
+}
+function nextScene(){
+  if(paused)return;
+  if(showingOverview){
+    overviewScene.classList.remove("show");
+    applyStory((current+1)%stories.length);
+    return;
+  }
+  transitions++;
+  if(transitions%OVERVIEW_EVERY===0){
+    renderOverview();
+    return;
+  }
+  applyStory((current+1)%stories.length);
+}
+function previousStory(){
+  if(showingOverview)overviewScene.classList.remove("show");
+  applyStory((current-1+stories.length)%stories.length);
+}
+function renderQueue(){
+  if(!stories.length){queue.innerHTML="";return}
+  const next=[];
+  for(let step=1;step<Math.min(5,stories.length);step++) next.push(stories[(current+step)%stories.length]);
+  queue.innerHTML=next.map(s=>
+    '<div class="queue-item">'+
+      '<img class="queue-thumb" src="'+esc(s.image||"/assets/social/home.jpg")+'" alt="" loading="eager">'+
+      '<div class="queue-copy"><b>'+esc(s.title)+'</b><small>'+esc(s.category)+' • '+esc(ago(s.published))+'</small></div>'+
+    '</div>'
+  ).join("");
+}
+function renderTicker(){
+  const items=stories.slice(0,16);
+  if(!items.length){tickerTrack.innerHTML="";return}
+  const once=items.map(s=>'<span class="ticker-item">'+esc(s.title)+'</span>').join("");
+  tickerTrack.innerHTML=once+once;
+  const duration=Math.max(62,items.reduce((n,s)=>n+s.title.length,0)*0.105);
+  tickerTrack.style.setProperty("--ticker-duration",duration+"s");
+}
+function renderAll(reset){
+  if(!stories.length){emptyState.classList.add("show");return}
+  preload(stories);
+  renderTicker();
+  if(reset||!hasLoadedOnce){
+    applyStory(0);
+    hasLoadedOnce=true;
+  }else{
+    renderQueue();
+  }
+}
+async function refreshFeed(){
+  try{
+    const response=await fetch(FEED_URL+"?live="+Date.now(),{cache:"no-store",headers:{"Accept":"application/rss+xml, application/xml, text/xml"}});
+    if(!response.ok)throw new Error("feed_"+response.status);
+    const incoming=parseFeed(await response.text());
+    if(!incoming.length)throw new Error("empty_feed");
+    const previousLatest=latestGuid;
+    stories=incoming;
+    latestGuid=incoming[0].id;
+    lastSuccessfulSync=Date.now();
+    cacheStories();
+    setConnection(true,"تحديث تلقائي");
+    lastSync.textContent=new Intl.DateTimeFormat("en-GB",{timeZone:BAGHDAD,hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date());
+    renderTicker();
+    renderQueue();
+
+    const isNew=hasLoadedOnce&&previousLatest&&latestGuid!==previousLatest;
+    if(isNew){
+      current=0;
+      clearTimeout(timer);
+      setTimeout(()=>applyStory(0,{announceNew:true}),900);
+    }else if(!hasLoadedOnce){
+      renderAll(true);
+    }
+  }catch(err){
+    setConnection(false,stories.length?"آخر نسخة محفوظة":"إعادة الاتصال…");
+    if(!stories.length&&!restoreCache())emptyState.classList.add("show");
+    console.error("[Mikhbar Live] feed refresh failed",err);
+  }
+}
+function updateClock(){
+  const now=new Date();
+  $("clock").textContent=new Intl.DateTimeFormat("en-GB",{timeZone:BAGHDAD,hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).format(now);
+  $("date").textContent=new Intl.DateTimeFormat("ar-IQ",{timeZone:BAGHDAD,weekday:"long",day:"numeric",month:"long"}).format(now)+" • بغداد";
+}
+function togglePause(){
+  paused=!paused;
+  if(paused){
+    clearTimeout(timer);
+    progressBar.classList.remove("running");
+    setConnection(true,"متوقف يدويًا");
+  }else{
+    setConnection(lastSuccessfulSync>0,"تحديث تلقائي");
+    showingOverview?schedule(OVERVIEW_MS):schedule(STORY_MS);
+  }
+}
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"){e.preventDefault();nextScene()}
+  else if(e.key==="ArrowLeft"){e.preventDefault();previousStory()}
+  else if(e.code==="Space"){e.preventDefault();togglePause()}
+  else if(e.key.toLowerCase()==="r"){location.reload()}
+});
+window.addEventListener("online",()=>{setConnection(true,"إعادة المزامنة…");refreshFeed()});
+window.addEventListener("offline",()=>setConnection(false,"بدون اتصال"));
+
+updateClock();
+setInterval(updateClock,1000);
+restoreCache();
+refreshFeed();
+setInterval(refreshFeed,POLL_MS);
+
+// Watchdog: if rendering/scene timers stop unexpectedly, recover the browser source.
+setInterval(()=>{
+  if(!paused&&Date.now()-lastRenderAt>120000) location.reload();
+},30000);
+})();
+</script>
+</body>
+</html>
