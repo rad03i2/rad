@@ -51,6 +51,25 @@ class WakeupRecoveryTests(unittest.TestCase):
 
 
 class PreparationBoundaryTests(unittest.TestCase):
+    def test_overdue_empty_slot_reports_blocked_publication(self):
+        last = datetime.now(timezone.utc) - timedelta(hours=3)
+        def load(path, default):
+            if path.name == "settings.json":
+                return {"publishingEnabled": True, "minimumMinutesBetweenPosts": 20}
+            if path.name == "published.json":
+                return {"last_published_at": last.isoformat(), "items": []}
+            if path.name == "publisher_report.json":
+                return {"status": "no_candidate_to_prepare"}
+            return default
+        with patch.object(scheduler, "load_json", side_effect=load), \
+             patch.object(scheduler, "_prepared_is_valid", return_value=False), \
+             patch.object(scheduler, "_prepare_next", return_value=None), \
+             patch.object(scheduler.publisher, "_save_report") as report:
+            self.assertEqual(scheduler.main(), 0)
+            self.assertEqual(report.call_args.args, ("publication_blocked",))
+            self.assertEqual(report.call_args.kwargs["reason"], "no_candidate_to_prepare")
+            self.assertGreater(report.call_args.kwargs["overdue_minutes"], 150)
+
     def test_ready_article_waits_for_slot_and_publishes_without_early_release(self):
         last = datetime(2026, 9, 29, 12, 0, tzinfo=timezone.utc)
         start = last + timedelta(minutes=19, seconds=35)

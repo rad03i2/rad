@@ -49,6 +49,11 @@ def _age_hours(item: dict) -> float:
     return max(0.0, (datetime.now(timezone.utc) - published.astimezone(timezone.utc)).total_seconds() / 3600)
 
 
+def is_current_story(item: dict, settings: dict) -> bool:
+    max_age = min(float(settings.get("maxAgeHours", 96)), max(float(settings.get("trendWindowHours", 24)), 36))
+    return _age_hours(item) <= max_age
+
+
 def _tokens(title: str) -> set[str]:
     return {t for t in re.findall(r"[a-z0-9][a-z0-9+.-]{1,}", title.lower()) if t not in STOP_ENTITIES}
 
@@ -84,7 +89,7 @@ def rank_candidates(items: list[dict], settings: dict, published_posts: list[dic
     verified_fallback: list[dict] = []
     for item in items:
         age = _age_hours(item)
-        if age > max(window, 36):
+        if not is_current_story(item, settings):
             continue
 
         source = item.get("source", {})
@@ -93,7 +98,7 @@ def rank_candidates(items: list[dict], settings: dict, published_posts: list[dic
         for other in items:
             if other is item or other.get("domain") == source_domain:
                 continue
-            if _age_hours(other) > max(window, 36):
+            if not is_current_story(other, settings):
                 continue
             if _story_similarity(item, other) >= 0.58:
                 corroboration.append({

@@ -333,7 +333,18 @@ def main() -> int:
         return 0
 
     if not prepared:
+        preparation_report = load_json(STATE / "publisher_report.json", {})
+        publisher._save_report(
+            "publication_blocked",
+            reason=preparation_report.get("status", "no_prepared_story"),
+            last_published_at=history.get("last_published_at"),
+            target_publish_at=target.isoformat(),
+            overdue_minutes=round(max(0, (now - target).total_seconds()) / 60, 1),
+            pending_stories=len(_eligible_queue(queue_doc, history)),
+            candidates=preparation_report.get("candidates", []),
+        )
         print("20-minute pipeline: publication is due, but no quality-approved prepared story is available.")
+        print("::warning::Mikhbar publication is overdue; no article was published. See publisher_report.json for the blocking reason.")
         return 0
 
     result = _publish_prepared(prepared, ignore_cooldown=force_publish)

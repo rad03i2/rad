@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, timezone
-
 from collector import collect
 from common import CONFIG, STATE, load_json, now_iso, save_json
 from deduplicator import deduplicate
+from queue_lifecycle import limit_queue, pending_queue, reconcile_seen
+from trend import rank_candidates
 from verifier import refresh_queue_verification, verify_and_score
 
 
@@ -20,7 +20,13 @@ def main() -> int:
 
     queue_doc = load_json(STATE / "queue.json", {"updated_at": None, "items": []})
     seen = load_json(STATE / "seen.json", {"urls": {}, "titles": {}})
-    queue_items = list(queue_doc.get("items", []))
+    previous_items = list(queue_doc.get("items", []))
+    history = load_json(STATE / "published.json", {"items": []})
+    queue_items = pending_queue(previous_items, history, settings)
+    removed_items = len(previous_items) - len(queue_items)
+    old_seen_urls = set(seen.get("urls", {}))
+    seen = reconcile_seen(seen, queue_items, history, previous_items)
+    released_seen = len(old_seen_urls - set(seen["urls"]))
 
     started = now_iso()
     stories, collection_report = collect(settings)
@@ -34,24 +40,19 @@ def main() -> int:
 
     queue_items.extend(fresh)
     queue_items = refresh_queue_verification(queue_items, settings)
-    queue_items.sort(
-        key=lambda item: (item.get("score", 0), item.get("published_at") or item.get("discovered_at") or ""),
-        reverse=True,
-    )
-    max_queue = int(settings.get("maxQueueItems", 500))
-    queue_items = queue_items[:max_queue]
+    queue_items = pending_queue(queue_items, history, settings)
+    pending_count = len(queue_items)
+    prepared = load_json(STATE / "prepared_article.json", {})
+    queue_items = limit_queue(queue_items, settings, prepared)
+    seen = reconcile_seen(seen, queue_items, history, previous_items)
 
     finished = now_iso()
     queue_doc = {"updated_at": finished, "items": queue_items}
     save_json(STATE / "queue.json", queue_doc)
     save_json(STATE / "seen.json", seen)
 
-    candidates = [
-        item for item in queue_items
-        if item.get("verification", {}).get("publish_eligible")
-        and item.get("status") not in {"published", "quality_rejected"}
-    ]
-    candidates.sort(key=lambda x: x.get("score", 0), reverse=True)
+    posts_doc = load_json(CONFIG.parent.parent.parent / "forum" / "posts-ar.json", {"posts": []})
+    candidates = rank_candidates(queue_items, settings, posts_doc.get("posts", []))
     save_json(STATE / "candidates.json", {
         "updated_at": finished,
         "publishing_enabled": publishing_enabled,
@@ -78,6 +79,9 @@ def main() -> int:
         "duplicates": duplicates,
         "rejected": rejected,
         "queue_size": len(queue_items),
+        "removed_terminal_or_expired": removed_items,
+        "released_orphan_seen": released_seen,
+        "deferred_by_capacity": pending_count - len(queue_items),
         "publish_eligible": len(candidates),
         "publishing_enabled": publishing_enabled,
         "errors": collection_report["errors"],
