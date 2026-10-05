@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "726fc16e67cb364ffbed",
+  "slug": "command-line-tool-quickly-removes-apple-intelligence-from-macos-27",
+  "categorySlug": "computers",
+  "urls": {
+    "ar": "/forum/ar/computers/command-line-tool-quickly-removes-apple-intelligence-from-macos-27/",
+    "en": "/forum/en/computers/command-line-tool-quickly-removes-apple-intelligence-from-macos-27/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أداة RemoveMacAI تحذف ميزات Apple Intelligence من macOS 27",
+      "description": "أداة RemoveMacAI مفتوحة المصدر تتيح لمستخدمي macOS 27 تعطيل ميزات Apple Intelligence وحذف نماذج الذكاء الاصطناعي، مما يوفر حتى 12 جيجابايت من مساحة التخزين.",
+      "deck": "في ظل غياب خيار التبديل المركزي في الإصدار الجديد، توفر أداة سطر أوامر حلاً عكوساً لتحرير مساحة القرص الصلب.",
+      "summaryBullets": [
+        "أداة RemoveMacAI تتيح تعطيل Siri وWriting Tools وGenmoji دفعة واحدة.",
+        "الحذف يستهدف نماذج الذكاء الاصطناعي التي تستهلك ما يصل إلى 30 جيجابايت.",
+        "الأداة تعتمد على ملفات إعدادات النظام وتحتفظ بـ System Integrity Protection مفعلاً.",
+        "يمكن عكس العملية بالكامل عبر أمر revert لإعادة تحميل النماذج.",
+        "الأداة مفتوحة المصدر وحصلت على 1700 نجمة على GitHub."
+      ],
+      "sections": [
+        {
+          "heading": "غياب خيار التعطيل المركزي",
+          "paragraphs": [
+            {
+              "text": "أدخلت شركة Apple تغييرات جذرية في نظام التشغيل macOS 27 Golden Gate، حيث أزالت خيار التبديل المركزي الذي كان يتيح للمستخدمين تعطيل ميزات Apple Intelligence بضغطة زر واحدة. هذا التغيير جعل من الصعب على المستخدمين الذين لا يرغبون في استخدام تقنيات الذكاء الاصطناعي تعطيلها بشكل شامل، إذ أصبحت الميزات موزعة على عدة أقسام في إعدادات النظام، بعضها مخفي خلف إعدادات وقت الشاشة. نتيجة لذلك، تستمر النماذج الأساسية للذكاء الاصطناعي في شغل مساحة على القرص الصلب، حتى إذا قام المستخدم بإيقاف كل الميزات يدوياً، وهو ما أثار استياءً واسعاً في مجتمع مستخدمي ماك.",
+              "links": [
+                {
+                  "text": "macOS 27 Golden Gate",
+                  "url": "https://arstechnica.com/gadgets/2026/09/macos-27-golden-gate-the-ars-technica-review/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "حل RemoveMacAI لتحرير المساحة",
+          "paragraphs": [
+            {
+              "text": "استجابةً لهذا التحدي، طور المطور المعروف باسم Om Lahore على GitHub أداة سطر أوامر جديدة تسمى RemoveMacAI. تهدف الأداة إلى استعادة القدرة على تعطيل Apple Intelligence بسهولة، مع توفير مساحة تخزينية كبيرة. وفقاً للمطور، تستهلك نماذج Apple Intelligence حوالي 12 جيجابايت، لكن بعض المستخدمين لاحظوا أن الحجم الفعلي قد يتجاوز 30 جيجابايت، وهو ما أكده تقرير من The Verge الذي أشار إلى أن حجم النماذج على أجهزة MacBook Air قد يصل إلى 35 جيجابايت. توفر الأداة حلاً شاملاً لإدارة هذه الموارد.",
+              "links": [
+                {
+                  "text": "The Verge",
+                  "url": "https://www.theverge.com/ai-artificial-intelligence/1004672/mac-delete-apple-intelligence-ai-tool"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل الأداة",
+          "paragraphs": [
+            {
+              "text": "تعمل RemoveMacAI من خلال تعطيل ميزات محددة مثل Siri وWriting Tools وGenmoji وImage Playground وإضافة ChatGPT، بالإضافة إلى ملخصات الذكاء الاصطناعي. بعد تعطيل هذه الميزات، تقوم الأداة بحذف النماذج من القرص ومنع macOS من إعادة تحميلها تلقائياً. يوضح المطور أن الأداة تستخدم ملف إعدادات (Configuration Profile) يوافق عليه المستخدم في إعدادات النظام، معتمدة على خدمة الأصول الخاصة بـ Apple، مما يضمن بقاء حماية سلامة النظام (System Integrity Protection) مفعلة دون لمس ملفات النظام الأساسية مباشرة.",
+              "links": [
+                {
+                  "text": "System Integrity Protection",
+                  "url": "https://support.apple.com/en-us/102149"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "قابلية عكس العملية",
+          "paragraphs": [
+            {
+              "text": "من المزايا المهمة التي يروج لها المطور هي قابلية عكس العملية بالكامل. إذا غيّر المستخدم رأيه في المستقبل، يمكنه استخدام الأمر removemacai revert لإزالة ملف الإعدادات، مما يسمح لنظام macOS بإعادة تحميل النماذج وتفعيل الميزات مرة أخرى. كما توفر الأداة أمراً آخر هو removemacai status لعرض حجم كل نموذج ذكاء اصطناعي على الجهاز، مما يساعد المستخدمين على اتخاذ قرارات مستنيرة بشأن الموارد التي يريدون تحريرها. يؤكد المطور أن هذه التغييرات تستمر عبر تحديثات نظام التشغيل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ردود الفعل والمجتمع التقني",
+          "paragraphs": [
+            {
+              "text": "لاقت الأداة رواجاً سريعاً، حيث حصلت على 1700 نجمة على GitHub حتى وقت كتابة هذا الخبر. أشار بعض المستخدمين على Reddit إلى أن الأداة تعمل بفعالية، مما يعكس رغبة شريحة كبيرة من المستخدمين في استعادة السيطرة على أجهزتهم. قارن مستخدم على Hacker News الوضع بحالة أنظمة ويندوز، حيث كان من المعتاد استخدام أدوات خارجية لإزالة البرامج غير المرغوب فيها (Cruft) بعد التثبيت، معتبراً أن macOS وصل إلى مرحلة تتطلب مثل هذه الأدوات لاستعادة الموارد. كما لاحظ MacRumors اهتماماً متزايداً بالأداة في أوساط مجتمع ماك.",
+              "links": [
+                {
+                  "text": "MacRumors",
+                  "url": "https://www.macrumors.com/2026/10/05/apple-intelligence-removal-tool-frees-mac-storage/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التأثير على تجربة المستخدم",
+          "paragraphs": [
+            {
+              "text": "على الرغم من تركيز Apple المتزايد على دمج تقنيات الذكاء الاصطناعي في أجهزة حواسيبها وأجهزتها الأخرى، يظل هناك قطاع واسع من المستخدمين يفضلون البساطة والتحكم الكامل في موارد أجهزتهم. توفر RemoveMacAI حلاً بسيطاً ومفتوح المصدر لمن يرغبون في تقليل البصمة الرقمية لـ Apple Intelligence دون التضحية بأمان النظام. يعكس انتشار الأداة توتراً مستمراً بين توجهات الشركات نحو فرض ميزات الذكاء الاصطناعي، ورغبة المستخدمين في خيارات تخصيص أوسع ومساحة تخزينية أكبر.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "macOS 27",
+        "Apple Intelligence",
+        "RemoveMacAI",
+        "الذكاء الاصطناعي",
+        "أدوات سطر الأوامر",
+        "تخزين البيانات",
+        "مصادر مفتوحة"
+      ],
+      "entities": [
+        "Apple",
+        "macOS 27 Golden Gate",
+        "RemoveMacAI",
+        "Om Lahore",
+        "GitHub",
+        "System Integrity Protection"
+      ],
+      "category": "الحواسيب",
+      "dateLabel": "5 أكتوبر 2026",
+      "modifiedLabel": "5 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 571
+    },
+    "en": {
+      "title": "RemoveMacAI Tool Clears Apple Intelligence From macOS 27",
+      "description": "A new open-source command-line tool lets macOS 27 users turn off Apple Intelligence and reclaim significant disk space by deleting AI models.",
+      "deck": "A newly released open-source command-line utility provides a streamlined method to disable Apple Intelligence on macOS 27 and delete its underlying AI models.",
+      "summaryBullets": [
+        "macOS 27 lacks a direct master settings toggle for turning off Apple Intelligence completely.",
+        "The open-source command-line tool RemoveMacAI disables features like Siri writing tools, Genmoji, and Image Playground.",
+        "The utility deletes local AI models, freeing up over 12GB and potentially up to over 30GB of storage space.",
+        "The changes are fully reversible by using a specific revert command that allows macOS to download the models again."
+      ],
+      "sections": [
+        {
+          "heading": "The Challenge of Removing Apple Intelligence in macOS 27",
+          "paragraphs": [
+            {
+              "text": "Unlike previous versions of the operating system, macOS 27 Golden Gate does not include a direct, single settings toggle for turning off Apple Intelligence. Instead, users who want to disable unwanted artificial intelligence features must navigate through roughly a dozen individual settings panes, with several tucked away under Screen Time. Furthermore, even when individual AI capabilities are manually deactivated, the foundational models remain stored on the computer's disk.",
+              "links": [
+                {
+                  "text": "macOS 27 Golden Gate",
+                  "url": "https://arstechnica.com/gadgets/2026/09/macos-27-golden-gate-the-ars-technica-review/"
+                }
+              ]
+            },
+            {
+              "text": "These built-in AI components occupy a substantial amount of local storage, taking up anywhere from roughly 12GB to over 30GB of disk space depending on the system configuration and models present, even if the user never utilizes the features.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Introduction of the RemoveMacAI Utility",
+          "paragraphs": [
+            {
+              "text": "To address the absence of a master toggle and help users recover valuable disk space, a developer known as Om Lahore created an open-source command-line utility called RemoveMacAI. First highlighted by MacRumors and detailed extensively by outlets such as The Verge, the tool provides an automated way to clean up AI assets from compatible Mac computers running macOS 27.",
+              "links": [
+                {
+                  "text": "MacRumors",
+                  "url": "https://www.macrumors.com/2026/10/05/apple-intelligence-removal-tool-frees-mac-storage/"
+                },
+                {
+                  "text": "The Verge",
+                  "url": "https://www.theverge.com/ai-artificial-intelligence/1004672/mac-delete-apple-intelligence-ai-tool"
+                }
+              ]
+            },
+            {
+              "text": "According to the developer's explanations shared on Reddit and GitHub, the utility executes multiple cleanup steps simultaneously. It turns off Siri, Writing Tools, Genmoji, Image Playground, the ChatGPT integration, and automatic summaries, while deleting the associated local models and preventing macOS from downloading them again automatically.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "How the Command-Line Tool Operates Under the Hood",
+          "paragraphs": [
+            {
+              "text": "The developer explained on Reddit that RemoveMacAI achieves its functionality by utilizing a configuration profile approved through System Settings alongside Apple’s native asset service framework. This design ensures that System Integrity Protection remains fully active and that system files in protected directories are not directly altered.",
+              "links": [
+                {
+                  "text": "System Integrity Protection",
+                  "url": "https://support.apple.com/en-us/102149"
+                }
+              ]
+            },
+            {
+              "text": "Users who wish to examine the source code, inspect individual model sizes, or review installation instructions can visit the repository on the official project page.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Reversibility and System Impact",
+          "paragraphs": [
+            {
+              "text": "The utility is designed to be fully reversible. By executing a simple revert command within the terminal, users can remove the configuration profile, allowing macOS to download the required AI models again if a specific feature is later re-enabled. Additionally, the tool allows individuals to selectively remove only the specific Apple Intelligence components they prefer not to use while retaining others.",
+              "links": []
+            },
+            {
+              "text": "Standard dictation capabilities continue to operate normally after running the script because dictation relies on a separate system setting rather than the core Apple Intelligence framework.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Broader Reception Within the Community",
+          "paragraphs": [
+            {
+              "text": "The fast adoption and widespread interest in the command-line utility highlight a distinct resistance among some consumers toward forced or heavily integrated artificial intelligence software upgrades. Forum participants and power users frequently compare the cleanup process to traditional system optimization routines required on other operating systems to remove unwanted background software.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Apple Intelligence",
+        "macOS 27",
+        "RemoveMacAI",
+        "macOS",
+        "Command Line",
+        "Open Source",
+        "Storage Management"
+      ],
+      "entities": [
+        "Apple",
+        "RemoveMacAI",
+        "Om Lahore",
+        "GitHub",
+        "MacRumors",
+        "The Verge"
+      ],
+      "category": "Computing",
+      "dateLabel": "October 5, 2026",
+      "modifiedLabel": "October 5, 2026",
+      "readMinutes": 3,
+      "wordCount": 542
+    }
+  },
+  "datePublished": "2026-10-05T23:27:01.696750+03:00",
+  "dateModified": "2026-10-05T23:27:01.696750+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/command-line-tool-quickly-removes-apple-intelligence-from-macos-27/hero.webp",
+    "card": "/forum/assets/posts/2026/10/command-line-tool-quickly-removes-apple-intelligence-from-macos-27/card.webp",
+    "social": "/forum/assets/posts/2026/10/command-line-tool-quickly-removes-apple-intelligence-from-macos-27/social.jpg",
+    "alt": {
+      "ar": "أداة RemoveMacAI تحذف ميزات Apple Intelligence من macOS 27",
+      "en": "RemoveMacAI Tool Clears Apple Intelligence From macOS 27"
+    },
+    "credit": "Ars Technica",
+    "sourceUrl": "https://cdn.arstechnica.net/wp-content/uploads/2026/03/Screenshot-2026-03-03-at-10.30.27-AM-1152x648.jpeg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/command-line-tool-quickly-removes-apple-intelligence-from-macos-27/inline-01.webp",
+        "width": 1200,
+        "height": 637,
+        "alt": {
+          "ar": "أداة RemoveMacAI تحذف ميزات Apple Intelligence من macOS 27",
+          "en": "An open-source tool lets you delete 12GB of Apple Intelligence data on macOS"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من The Verge",
+          "en": "Image related to the report from The Verge"
+        },
+        "credit": "The Verge",
+        "sourceUrl": "https://www.theverge.com/ai-artificial-intelligence/1004672/mac-delete-apple-intelligence-ai-tool",
+        "originalUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/highlights_siri_conversations_endframe__d56qnw2oz22q_large_2x.jpg?quality=90&strip=all&crop=17.168746500778%2C34.087860369258%2C65.996740905563%2C64.026266887145&w=1200"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Ars Technica",
+      "url": "https://arstechnica.com/apple/2026/10/command-line-tool-quickly-removes-apple-intelligence-from-macos-27/",
+      "type": "journalism",
+      "title": "Command-line tool quickly removes Apple Intelligence from macOS 27"
+    },
+    {
+      "name": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1004672/mac-delete-apple-intelligence-ai-tool",
+      "type": "corroborating",
+      "title": "An open-source tool lets you delete 12GB of Apple Intelligence data on macOS"
+    }
+  ],
+  "sourceUrl": "https://arstechnica.com/apple/2026/10/command-line-tool-quickly-removes-apple-intelligence-from-macos-27",
+  "sourceTitle": "Command-line tool quickly removes Apple Intelligence from macOS 27",
+  "trendScore": 101.53,
+  "verification": {
+    "confidence": 0.92,
+    "reason": "trusted_journalism_with_corroboration",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-05T20:27:01+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/command-line-tool-quickly-removes-apple-intelligence-from-macos-27.json"
+}
