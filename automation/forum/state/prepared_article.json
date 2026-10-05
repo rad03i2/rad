@@ -1,5 +1,398 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-05T16:02:20+00:00",
-  "last_published_story_id": "d79f749fbb0d053816e0"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-05T16:07:04+00:00",
+  "target_publish_at": "2026-10-05T19:22:20.445791+03:00",
+  "story": {
+    "title": "Downgrading user roles in Amazon Quick",
+    "url": "https://aws.amazon.com/blogs/machine-learning/downgrading-user-roles-in-amazon-quick",
+    "domain": "aws.amazon.com",
+    "summary": "Amazon Quick doesn't offer a direct console path to downgrade a user from Admin or Author to Reader. This post walks through two reliable methods: a manual delete-and-recreate approach and an AWS CLI step-down sequence that downgrades roles safely while preserving asset ownership.",
+    "published_at": "2026-10-05T15:51:38+00:00",
+    "discovered_at": "2026-10-05T15:56:37+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "apps",
+    "category_label": "التطبيقات والبرامج",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "86270e4804bb2ac11cff",
+    "trend": {
+      "score": 124.9,
+      "age_hours": 0.25,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/downgrading-user-roles-in-amazon-quick/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Downgrading user roles in Amazon Quick",
+      "title": "Downgrading user roles in Amazon Quick | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تكشف طريقتين لتخفيض صلاحيات المستخدمين في Quick",
+      "description": "توضح أمازون طريقة تخفيض صلاحيات المستخدمين من مدير إلى قارئ في Quick عبر واجهة CLI، مع الحفاظ على ملكية الأصول وتقليل التكاليف التشغيلية.",
+      "deck": "تواجه فرق إدارة النظم تحدياً في تخفيض صلاحيات المستخدمين في Amazon Quick، حيث لا توفر الواجهة الموحدة خياراً مباشراً، مما يستلزم اتباع إجراءات تقنية دقيقة.",
+      "summary_bullets": [
+        "غياب خيار مباشر في واجهة Amazon Quick لتحويل المستخدمين من صلاحيات عالية إلى قراء.",
+        "استخدام AWS CLI لتسلسل التخفيض الآمن مع الحفاظ على ملكية الأصول.",
+        "أهمية إعادة تعيين ملكية اللوحات والبيانات قبل إجراء التغييرات لتجنب فقدان الوصول.",
+        "تأثير التخفيض على التكاليف حيث يتحول التسعير من شهري ثابت إلى استهلاك حسب الجلسة."
+      ],
+      "sections": [
+        {
+          "heading": "التحدي في إدارة دورة حياة المستخدمين",
+          "paragraphs": [
+            {
+              "text": "تُعد إدارة صلاحيات الوصول عنصراً حاسماً للحفاظ على بيئة آمنة وتعاونية في Amazon Quick. يدعم النظام خيارات إدارة مستخدمين متنوعة تتكيف مع احتياجات المؤسسات المختلفة، سواء عبر هوية Quick الأصلية أو مزودي الهوية المؤسسية مثل AWS IAM Identity Center و Active Directory. تسمح هذه الأنظمة بتعيين أدوار محددة مثل المدير (Admin) والمؤلف (Author) والقارئ (Reader) وتجميعها وفقاً لمتطلبات الوظائف والأمان. ومع انضمام أعضاء جدد للفريق أو تغير مسؤولياتهم أو مغادرتهم للمنظمة، يجب على المدراء التأكد من سلاسة هذه الانتقالات دون تعطيل سير العمل أو خلق ثغرات أمنية.",
+              "links": []
+            },
+            {
+              "text": "توصي أطر العمل المعمارية مثل AWS Well-Architected Framework بإجراء مراجعات دورية للصلاحيات، سواء شهرياً أو ربع سنوياً، للتأكد من أن كل مستخدم يمتلك الصلاحيات المناسبة فقط. عندما تتغير مسؤوليات الأعضاء، يُنصح بنقل ملكية لوحات المعلومات والتحليلات التي يملكونها بشكل استباقي لمنع تحولها إلى موارد يتيمة. يركز هذا التقرير على مهمة محددة في دورة حياة المستخدم وهي تخفيض الصلاحيات، تطبيقاً لمبدأ الامتياز الأدنى الذي يضمن حصول المستخدمين على ما يحتاجونه فقط لأداء وظائفهم.",
+              "links": [
+                {
+                  "text": "AWS Well-Architected Framework",
+                  "url": "https://aws.amazon.com/architecture/well-architected/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "قيود الواجهة الموحدة والتكاليف",
+          "paragraphs": [
+            {
+              "text": "رغم أهمية تخفيض الصلاحيات لتقليل المساحة السطحية الأمنية، لا توفر واجهة Amazon Quick الموحدة مساراً مباشراً لتحويل المستخدم من دور المدير أو المؤلف إلى قارئ. كما أن واجهة برمجة التطبيقات (API) الخاصة بتحديث المستخدمين تفرض هذا القيد، حيث ترفض الطلبات المباشرة للتخفيض وتعرض رسالة خطأ تنص على عدم إمكانية تخفيض دور المستخدم. هذا القيود يجعل من الضروري اعتماد حلول بديلة لضمان إدارة الوصول بشكل صحيح مع تطور هيكل الفريق.",
+              "links": []
+            },
+            {
+              "text": "يترتب على هذا الإجراء أيضاً فوائد مالية مباشرة، حيث يعتمد تسعير Amazon Quick على الأدوار. يدفع المؤلفون والمدراء رسوماً شهرية ثابتة لكل مستخدم، بينما يعتمد القراء على تسعير قائم على عدد الجلسات. يمكن للمؤسسات التي لديها مستخدمون مفعّلون كمؤلفين لكنهم يستهلكون اللوحات فقط، تقليل التكاليف بشكل كبير من خلال إعادة ضبط أدوارهم لتكون قراء. للمزيد من التفاصيل حول الهيكل التسعيري، يمكن الرجوع إلى صفحة تسعير Amazon Quick.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الحلول التقنية المتاحة",
+          "paragraphs": [
+            {
+              "text": "تقدم أمازون حلين موثوقين للتعامل مع هذا التحدي: الطريقة اليدوية التي تعتمد على حذف المستخدم وإعادة إنشائه، والطريقة التقنية التي تستخدم واجهة سطر الأوامر AWS CLI. تعتمد هذه المقالة بشكل أساسي على مستخدمي هوية Amazon Quick (المستخدمين المُدارين عبر Quick)، حيث أن المستخدمين الموثقين عبر IAM Identity Center أو Active Directory يتم إدارة تغييرات أدوارهم عادةً من خلال خرائط المجموعات في مزود الهوية الخارجي، دون الحاجة إلى تسلسل تخفيض معقد.",
+              "links": []
+            },
+            {
+              "text": "لتطبيق طريقة سطر الأوامر، يجب توفر حساب AWS نشط مع صلاحيات مدير في Amazon Quick، بالإضافة إلى تثبيت وتكوين AWS CLI على الجهاز المحلي. كما يُنصح بإعداد قائمة بالمستخدمين الذين تتطلب أدوارهم التغيير. توفر Amazon Quick مستويين للاشتراك بمجموعات أدوار مميزة، ولا توفر الواجهة الموحدة طريقة مباشرة للتخفيض من أي مستوى مؤلف إلى أي مستوى قارئ، مما يؤكد ضرورة استخدام الأدوات البرمجية أو الإجراءات اليدوية الدقيقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تسلسل التخفيض عبر سطر الأوامر",
+          "paragraphs": [
+            {
+              "text": "يعمل تسلسل التخفيض عبر AWS CLI بشكل موثوق للأدوار التقليدية (المدير، المؤلف، القارئ). يتبع هذا التسلسل خطوات محددة تضمن عدم فقدان البيانات أو الصلاحيات بشكل مفاجئ. كما يمكن تطبيق هذا التسلسل على مستخدمي النسخة الاحترافية (Pro)، بشرط استخدام الأدوار التقليدية في الخطوات الوسيطة. على سبيل المثال، يمكن تحويل مستخدم من Author Pro إلى Author ثم إلى Restricted Reader وأخيراً إلى Reader Pro بنجاح، مما يوفر مرونة في إدارة الأنظمة المعقدة.",
+              "links": []
+            },
+            {
+              "text": "قبل تنفيذ أي تغييرات، يجب التحقق من أن جميع المستخدمين في القائمة يحملون حالياً صلاحيات مدير أو مؤلف، حيث قد تؤدي محاولة تخفيض مستخدمين لديهم صلاحيات أقل بالفعل إلى أخطاء. كما يجب مراعاة مسألة ملكية الموارد، حيث لن يتمكن المستخدمون المخفوضون من تحرير الموارد التي كانوا يملكونها سابقاً. للمؤسسات الكبيرة، يُنصح بتحميل عناوين البريد الإلكتروني من ملف CSV بدلاً من كتابتها يدوياً في الأوامر لضمان الدقة وسهولة الصيانة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة ملكية الأصول والموارد",
+          "paragraphs": [
+            {
+              "text": "قبل حذف أي مستخدم أو تخفيض صلاحياته، من الضروري إعادة تعيين ملكية الأصول التي يملكها، مثل لوحات المعلومات ومجموعات البيانات والتحليلات، بشكل صحيح. يمنع هذا الإجراء التعطيلات ويجنب النظام وجود موارد يتيمة. إذا كان المستخدم مؤلفاً، يجب التحقق مما إذا كان يملك أي مجموعات بيانات أو لوحات معلومات، والالتزام بإجراءات إعادة تعيين الملكية الموصى بها. توفر Amazon Quick ثلاث طرق رئيسية للتعامل مع نقل ملكية الأصول.",
+              "links": []
+            },
+            {
+              "text": "الخيار الأول والأكثر تحكماً هو نقل الملكية استباقياً إلى مدير آخر يدوياً. يتم ذلك بالدخول إلى كل أصل في Quick، واختيار خيار المشاركة، وتعيين مدير آخر كمالك مشترك. تسمح هذه الطريقة بتحديد من يتولى كل مورد بدقة، وهو مفيد جداً للوحات المعلومات أو مجموعات البيانات ذات التأثير الكبير. رغم أن هذه الطريقة قد تستغرق وقتاً طويلاً في البيئات الكبيرة، إلا أنها تمنح المرونة اللازمة لتوزيع الأصول وفقاً لهيكل الفريق ومسؤولياته.",
+              "links": []
+            },
+            {
+              "text": "الخيار الثاني هو استخدام ميزة نقل الأصول الجماعي المتاحة في صفحة الإدارة. إذا كان المستخدم يملك عدداً كبيراً من الأصول، تصبح الطريقة اليدوية غير فعالة. في هذه الحالة، يمكن للمدراء استخدام أداة إدارة الأصول (Manage assets) في قسم الإدارة. تتيح هذه الأداة تنفيذ نقل ملكية جماعي أو تحديث صلاحيات المشاركة لعدة أصول دفعة واحدة، مما يبسط عملية إعادة التعيين بشكل كبير، خاصة عند مغادرة الموظفين أو تغيير أدوارهم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تعزيز الأمان عبر الصلاحيات المخصصة",
+          "paragraphs": [
+            {
+              "text": "للحصول على تحكم أدق يتجاوز الأدوار المدمجة في Amazon Quick، يُنصح بتكملة تعيين الأدوار باستخدام الصلاحيات المخصصة (Custom Permissions). تتيح هذه الميزة تقييد قدرات محددة ضمن مستوى الدور الواحد، مما يوفر طبقة إضافية من الأمان. كما يوفر تكامل Amazon Quick مع AWS Identity and Access Management (IAM) حدود صلاحيات إضافية تكمل نظام الأدوار الأساسي، مما يساعد المؤسسات على تكييف بيئة البيانات مع سياسات الأمن الصارمة لديها.",
+              "links": [
+                {
+                  "text": "Custom Permissions",
+                  "url": "https://docs.aws.amazon.com/quicksight/latest/user/custom-permissions-profiles.html"
+                },
+                {
+                  "text": "AWS Identity and Access Management (IAM)",
+                  "url": "https://aws.amazon.com/iam/"
+                }
+              ]
+            },
+            {
+              "text": "باستخدام هذه الأدوات والإجراءات، يمكن للمؤسسات الحفاظ على بيئة بيانات آمنة وفعالة من حيث التكلفة. يتطلب الأمر تخطيطاً مسبقاً وفهماً دقيقاً لقيود الواجهة الموحدة، ولكن من خلال اتباع تسلسل التخفيض الصحيح وإعادة تعيين الملكية، يمكن تحقيق التوازن بين الأمان التشغيلي ومرونة إدارة المستخدمين في Amazon Quick.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Quick",
+        "إدارة الصلاحيات",
+        "AWS CLI",
+        "الأمن السيبراني",
+        "تحليلات الأعمال",
+        "إدارة المستخدمين"
+      ],
+      "entities": [
+        "Amazon Quick",
+        "AWS",
+        "AWS CLI",
+        "IAM Identity Center",
+        "Active Directory"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال يعتمد حصرياً على المدونة الرسمية لـ AWS Machine Learning Blog، مع التركيز على الإجراءات التقنية المذكورة دون إضافة معلومات خارجية."
+    },
+    "en": {
+      "title": "Managing User Role Downgrades in Amazon Quick",
+      "description": "Learn how to safely downgrade user roles in Amazon Quick using manual deletion or the AWS CLI while preserving critical assets.",
+      "deck": "Amazon Quick features specific user management procedures for administrators looking to enforce the principle of least privilege and optimize subscription costs.",
+      "summary_bullets": [
+        "Amazon Quick lacks a direct console path to downgrade users from Admin or Author to Reader.",
+        "Role-based pricing allows organizations to reduce costs by right-sizing Authors to Reader roles.",
+        "Administrators can utilize a manual delete-and-recreate method or an AWS CLI step-down sequence.",
+        "Asset ownership must be properly transferred before user deletion to prevent orphaned dashboards and datasets."
+      ],
+      "sections": [
+        {
+          "heading": "Understanding User Lifecycle Management",
+          "paragraphs": [
+            {
+              "text": "Managing access permissions effectively is an important aspect of maintaining a secure and collaborative environment in Amazon Quick. Quick supports versatile user management options designed to accommodate various identity types and organizational needs. You can provision users natively through Quick Identity or manage them through enterprise identity providers such as AWS IAM Identity Center or Active Directory. These systems allow user roles including Admin, Author, and Reader to be assigned and grouped according to job functions and security requirements. As team members join, change roles, or leave the organization, administrators must make sure transitions happen smoothly without disrupting business workflows or creating security gaps.",
+              "links": []
+            },
+            {
+              "text": "Regular access reviews are important for maintaining security in your Quick environment. Plan monthly or quarterly audits of user roles to confirm everyone has appropriate permissions. When team members’ responsibilities change, proactively transfer ownership of their dashboards and analyses to prevent orphaned resources. This practice, recommended in the AWS Well-Architected Framework, helps maintain continuity for business-critical visualizations.",
+              "links": [
+                {
+                  "text": "AWS Well-Architected Framework",
+                  "url": "https://aws.amazon.com/architecture/well-architected/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Security and Cost Optimization Drivers",
+          "paragraphs": [
+            {
+              "text": "The principle of least privilege applies strongly to Quick administration. Users should have access only to what they need for their specific job functions. Downgrading user roles is a key part of enforcing least privilege. When a user’s responsibilities no longer require authoring or administrative capabilities, reduce their role accordingly to minimize the security surface area.",
+              "links": []
+            },
+            {
+              "text": "Quick pricing is also role-based: Authors and Admins pay a fixed monthly per-user fee, while Readers use session-based pricing. Organizations with users provisioned as Authors who only consume dashboards can reduce costs substantially by right-sizing them to Reader roles. For current pricing details, see the Amazon Quick pricing page.",
+              "links": [
+                {
+                  "text": "Amazon Quick pricing page",
+                  "url": "https://aws.amazon.com/quicksight/pricing/"
+                }
+              ]
+            },
+            {
+              "text": "For more granular control beyond the built-in roles in Amazon Quick, consider complementing role assignments with Custom Permissions, which restrict specific capabilities within a role tier. The integration of Amazon Quick with AWS Identity and Access Management (IAM) provides additional permission boundaries that complement the basic role system.",
+              "links": [
+                {
+                  "text": "Custom Permissions",
+                  "url": "https://docs.aws.amazon.com/quicksight/latest/user/custom-permissions-profiles.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Addressing Identity Types and Console Limitations",
+          "paragraphs": [
+            {
+              "text": "Although the exact steps depend on the user identity type, this official guidance primarily addresses Amazon Quick Identity users, also referred to as Quick-managed users. Users authenticated through IAM Identity Center or Active Directory typically have role changes managed through their external identity provider group mappings. If your environment uses IAM Identity Center, role downgrade is handled by moving the user from one IdC group to another, such as shifting from a Quick-Admins group to a Quick-Readers group, meaning no step-down sequence is required.",
+              "links": []
+            },
+            {
+              "text": "Although the Amazon Quick console doesn’t provide a direct downgrade path for all role transitions—specifically, you cannot downgrade from Admin to Reader or from Author to Reader directly through the console interface—two reliable solutions exist: a manual deletion-and-recreation method, and an approach that uses the AWS Command Line Interface (AWS CLI).",
+              "links": []
+            },
+            {
+              "text": "The console does not provide a direct way to downgrade from any Author tier to any Reader tier. The update-user API enforces this same constraint, rejecting direct downgrades with a error message stating that you cannot downgrade a user role.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Executing Role Transitions via AWS CLI",
+          "paragraphs": [
+            {
+              "text": "Before beginning the transition process, make sure you have an active AWS account with administrator access to Amazon Quick. If you plan to use the CLI method, you need the AWS CLI installed and configured on your machine. It is also helpful to prepare a list of users whose roles need changing.",
+              "links": []
+            },
+            {
+              "text": "The CLI step-down method works reliably for legacy BI-only roles including Admin, Author, and Reader, following a specific sequence. This sequence also works for Pro users as long as intermediate steps utilize legacy roles, such as moving from Author Pro to Author, then to Restricted Reader, and finally to Reader Pro.",
+              "links": []
+            },
+            {
+              "text": "When implementing role changes through either method, verify that all users in your list are currently Admin or Author users before making changes, as attempting to downgrade users who already have lower permissions might cause errors. For larger organizations using the CLI method, consider loading user email addresses from a CSV file rather than hardcoding them.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Preserving and Reassigning Asset Ownership",
+          "paragraphs": [
+            {
+              "text": "Before deleting a user, it is essential to make sure that any assets they own, such as dashboards, datasets, and analyses, are properly reassigned. This prevents disruptions and avoids leaving resources orphaned. If the user is an Author, verify whether they own any datasets or dashboards, and follow asset reassignment steps.",
+              "links": []
+            },
+            {
+              "text": "Option one involves proactively transferring ownership to another admin by manually going into each asset in Quick, choosing Share, and assigning another admin as a co-owner. This method gives you exact control over who takes over each resource, which is particularly useful for high-impact dashboards or datasets.",
+              "links": []
+            },
+            {
+              "text": "Alternatively, if the user owns many assets, administrators can use the bulk asset transfer features available in the administration section of Quick to streamline the reassignment process across multiple items simultaneously.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Quick",
+        "AWS",
+        "User Roles",
+        "Cloud Administration",
+        "Access Management",
+        "AWS CLI"
+      ],
+      "entities": [
+        "Amazon Quick",
+        "AWS",
+        "AWS CLI",
+        "IAM Identity Center"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly synthesized from the provided AWS Machine Learning Blog source text regarding user role downgrades in Amazon Quick."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 988,
+      "word_count_en": 881
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "86270e4804bb2ac11cff",
+      "title": "Downgrading user roles in Amazon Quick",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 988,
+          "word_count_en": 881
+        }
+      ]
+    }
+  ],
+  "slug": "downgrading-user-roles-in-amazon-quick",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/downgrading-user-roles-in-amazon-quick/hero.webp",
+    "card": "/forum/assets/posts/2026/10/downgrading-user-roles-in-amazon-quick/card.webp",
+    "social": "/forum/assets/posts/2026/10/downgrading-user-roles-in-amazon-quick/social.jpg",
+    "alt": {
+      "ar": "أمازون تكشف طريقتين لتخفيض صلاحيات المستخدمين في Quick",
+      "en": "Managing User Role Downgrades in Amazon Quick"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/25/ML-22009-featured-image-1.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/downgrading-user-roles-in-amazon-quick/inline-01.webp",
+        "width": 1400,
+        "height": 543,
+        "alt": {
+          "ar": "أمازون تكشف طريقتين لتخفيض صلاحيات المستخدمين في Quick",
+          "en": "Amazon Quick Suite user management page showing users and their assigned roles"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/downgrading-user-roles-in-amazon-quick/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/25/ML-22009-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/downgrading-user-roles-in-amazon-quick/inline-02.webp",
+        "width": 1400,
+        "height": 772,
+        "alt": {
+          "ar": "أمازون تكشف طريقتين لتخفيض صلاحيات المستخدمين في Quick",
+          "en": "Amazon Quick Suite Share dialog for adding a co-owner to an asset"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/downgrading-user-roles-in-amazon-quick/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/25/ML-22009-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/downgrading-user-roles-in-amazon-quick/inline-03.webp",
+        "width": 1400,
+        "height": 777,
+        "alt": {
+          "ar": "أمازون تكشف طريقتين لتخفيض صلاحيات المستخدمين في Quick",
+          "en": "Ownership transfer dialog prompting selection of an admin to receive the deleted user’s resources"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/downgrading-user-roles-in-amazon-quick/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/25/ML-22009-3.png"
+      }
+    ]
+  }
 }
