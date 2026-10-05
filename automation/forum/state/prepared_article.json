@@ -1,5 +1,373 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-05T16:42:20+00:00",
-  "last_published_story_id": "c8ccd8659baa50562e0c"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-05T16:47:10+00:00",
+  "target_publish_at": "2026-10-05T20:02:20.557588+03:00",
+  "story": {
+    "title": "Making Amazon Quick enterprise-ready: Automated, auditable cross-account resource promotion",
+    "url": "https://aws.amazon.com/blogs/machine-learning/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion",
+    "domain": "aws.amazon.com",
+    "summary": "Promoting Amazon Quick resources (agents, action connectors, knowledge bases, flows, and spaces) from a development to a production AWS account has been a manual, error-prone chore. This post shows how to automate cross-account promotion with an idempotent, auditable MCP server on Amazon Bedrock AgentCore.",
+    "published_at": "2026-10-05T15:56:28+00:00",
+    "discovered_at": "2026-10-05T16:01:50+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "4d588743fb5570036c6e",
+    "trend": {
+      "score": 114.6,
+      "age_hours": 0.84,
+      "corroboration_count": 0,
+      "entity_momentum": 13.93,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Making Amazon Quick enterprise-ready: Automated, auditable cross-account resource promotion",
+      "title": "Making Amazon Quick enterprise-ready: Automated, auditable cross-account resource promotion | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تتيح ترقية موارد Quick تلقائياً عبر حسابات AWS",
+      "description": "تقدّم أمازون حلاً جديداً لأتمتة ترقية موارد Amazon Quick من بيئات التطوير إلى الإنتاج، مع الحفاظ على أمان الصلاحيات وسجل التدقيق الكامل.",
+      "deck": "تستعرض أمازون كيف يمكن لأتمتة ترقية موارد الذكاء الاصطناعي عبر الحسابات أن تخفض الأخطاء البشرية وتضمن حوكمة صارمة.",
+      "summary_bullets": [
+        "تحويل عملية الترقية اليدوية إلى سير عمل آلي قابل للتكرار عبر خادم MCP.",
+        "نسخ الموارد والصلاحيات بدقة دون الحاجة لإعادة بناء كل عنصر يدوياً.",
+        "حماية البيانات عبر نسخ احتياطي مُرقّم قبل أي تحديث، مع إمكانية التراجع.",
+        "فصل الحسابات عبر نموذج من ثلاثة حسابات مع أدوار صلاحيات دقيقة."
+      ],
+      "sections": [
+        {
+          "heading": "تحدّي الترقية اليدوية في بيئات العمل",
+          "paragraphs": [
+            {
+              "text": "يعتمد فريق العمل على موارد Amazon Quick لبناء وكلاء ذكاء اصطناعي يتعاملون مع البيانات ويستدعون أدوات خارجية. كانت عملية نقل هذه الموارد من حساب التطوير إلى حساب الإنتاج تتم يدوياً، مما يجعلها عرضة للأخطاء ويستغرق وقتاً طويلاً. يتطلب الأمر إعادة إنشاء كل وكيل، وإعادة ربط الأدوات، وإعادة منح الصلاحيات، وهو ما يضعف حوكمة المؤسسات. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "البرمجة عبر واجهة API",
+          "paragraphs": [
+            {
+              "text": "تتيح واجهة Amazon Quick API التحكم الكامل في دورة حياة الموارد، بدءاً من الإنشاء وحتى الحذف. هذا السطح البرمجي هو ما يجعل الترقية المحكومة ممكنة؛ إذ يمكن قراءة الموارد وصلاحياتها من الحساب المصدر وإعادة تطبيقها في الحساب الهدف بدقة متناهية، دون الحاجة إلى إعادة البناء من الصفر. ويمكن الرجوع إلى Artificial Intelligence للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "خادم MCP على Bedrock AgentCore",
+          "paragraphs": [
+            {
+              "text": "يعتمد الحل على خادم MCP (بروتوكول سياق النموذج) يعمل على بيئة Amazon Bedrock AgentCore. يسمح هذا الخادم بتنفيذ الترقية في استدعاء واحد، حيث يمكن للمستخدم اختيار نوع المورد (وكيل، أداة، قاعدة معرفة، تدفق، أو مساحة) وتحديد الموارد المطلوبة بالاسم أو المعرف. العملية آمنة وقابلة لإعادة التشغيل دون تكرار الموارد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نموذج الترقية الآمن",
+          "paragraphs": [
+            {
+              "text": "تعمل العملية على مبدأ التحديث أو الإنشاء (Upsert)، حيث يتم إنشاء المورد إن لم يكن موجوداً، وتحديثه إن كان موجوداً. قبل أي تحديث، يتم إنشاء نسخة احتياطية مُرقّمة من المورد في دلو Amazon S3، مما يضمن إمكانية التراجع عن أي تغيير. كما يوفر النظام معاينة للقراءة فقط تُظهر ما سيحدث قبل تنفيذ الترقية الفعلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نسخ الموارد والصلاحيات",
+          "paragraphs": [
+            {
+              "text": "يتم نسخ الوكلاء مع تعليماتهم وأدواتهم، وقواعد المعرفة مع مصادر بياناتها، والتدفقات والمساحات مع إعادة ربطها بالموارد المرتبطة. لا يتم نسخ القيم السرية للأدوات، بل يتم إعادة المصادقة في الحساب الهدف. كما يتم نسخ الصلاحيات بدقة عبر استدعاء واجهات API الخاصة بها وإعادة تطبيقها مع تحويل المعرفات إلى مستخدمين مسجلين في الحساب الهدف.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "عزل الحسابات والأمان",
+          "paragraphs": [
+            {
+              "text": "يعتمد الحل على نموذج من ثلاثة حسابات: حساب مركزي لتشغيل الخادم، وحساب مصدر للقراءة فقط، وحساب هدف للقراءة والكتابة. يتم استخدام AWS STS لتبديل الأدوار، مما يلغي الحاجة لتخزين بيانات اعتماد طويلة الأمد. كما يتم مصادقة المستخدمين عبر توكنات Cognito، ويمكن تشغيل الخادم داخل شبكة VPC لعزل إضافي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الشفافية والتدقيق",
+          "paragraphs": [
+            {
+              "text": "توفر العملية سجل تدقيق كاملاً لكل تغيير، حيث يتم حفظ نسخة من كل مورد يُنشأ أو يُحدّث. يمكن استخدام أداة استعادة مدمجة للتراجع عن أي مورد إلى إصدار سابق. هذا المستوى من الشفافية يلبّي متطلبات الحوكمة التي تحتاجها المؤسسات الكبرى لضمان أمان وسلامة عملياتها.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Quick",
+        "AWS",
+        "الذكاء الاصطناعي",
+        "أتمتة",
+        "حوكمة",
+        "MCP",
+        "Bedrock AgentCore",
+        "أمن سحابي"
+      ],
+      "entities": [
+        "Amazon Quick",
+        "AWS",
+        "Amazon Bedrock AgentCore",
+        "MCP",
+        "Amazon S3",
+        "AWS STS",
+        "Cognito"
+      ],
+      "article_type": "news",
+      "confidence_note": "تم الاعتماد حصرياً على النص المستخرج من مدونة AWS الرسمية، مع الحفاظ على الدقة التقنية وتجنب الترجمة الحرفية."
+    },
+    "en": {
+      "title": "Automating Cross-Account Amazon Quick Promotion",
+      "description": "Learn how to automate cross-account promotion for Amazon Quick resources using an idempotent, auditable MCP server on Amazon Bedrock AgentCore.",
+      "deck": "A new automated approach addresses the manual challenges of promoting Amazon Quick resources between development and production AWS accounts.",
+      "summary_bullets": [
+        "Amazon Quick resources can now be promoted cross-account using an automated Model Context Protocol (MCP) server.",
+        "The migrator tool supports agents, action connectors, knowledge bases, flows, and spaces with an upsert model.",
+        "Built-in safeguards include versioned S3 backups, read-only source access, and permission fidelity.",
+        "The full source code is publicly available via the aws-samples repository."
+      ],
+      "sections": [
+        {
+          "heading": "The Challenge of Cross-Account Promotion",
+          "paragraphs": [
+            {
+              "text": "Amazon Quick functions as Amazon’s agentic AI companion built for work, allowing teams to build agents that reason over data, call action connectors, and execute multi-step tasks. However, moving these resources—including chat agents, action connectors, knowledge bases, flows, and spaces—from a development AWS account to a production account has historically been a manual and error-prone chore.",
+              "links": []
+            },
+            {
+              "text": "Enterprise environments typically segregate development, quality assurance, and production into separate AWS accounts. Previously, when teams validated resources in a development account, no native one-click promotion method existed, forcing engineers to manually recreate agents, re-attach action connectors, re-grant permissions, and reprovision underlying storage buckets.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Programmable Resource Architecture",
+          "paragraphs": [
+            {
+              "text": "Fortunately, Amazon Quick resources are fully programmable. Managed through the Amazon Quick API, which is part of the Amazon Quick Sight API surface, these components support full lifecycle management including create, read, update, delete, and list operations.",
+              "links": [
+                {
+                  "text": "Amazon Quick Sight API surface",
+                  "url": "https://docs.aws.amazon.com/cli/latest/reference/quicksight/"
+                }
+              ]
+            },
+            {
+              "text": "This programmable surface enables governed promotion. By reading resource configurations and permissions via the API, administrators can reapply them in target accounts with exact fidelity, executing repeatable workflows that only add or update resources without issuing destructive delete operations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Quick Resource Migrator Overview",
+          "paragraphs": [
+            {
+              "text": "The Quick Resource Migrator is a sample Model Context Protocol (MCP) server hosted on the Amazon Bedrock AgentCore runtime. It automates cross-account promotion in a single tool call, operating in a resource-driven manner where users can select specific resource types by ID, name, or choose all available items.",
+              "links": []
+            },
+            {
+              "text": "Developers seeking to implement this solution can examine the implementation details and full source code provided within the official aws-samples repository.",
+              "links": [
+                {
+                  "text": "aws-samples repository",
+                  "url": "https://github.com/aws-samples/sample-amazon-quick-suite-knowledge-hub/tree/main/infrastructure/multi-tenant-assets-deployment"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Resource Types and Selection Models",
+          "paragraphs": [
+            {
+              "text": "The migrator handles various resource categories uniquely. Chat agents are recreated with their custom instructions, tone, starter prompts, and welcome messages, with action connectors remapped to the target account. Action connectors are built using placeholder credentials due to security protocols, requiring re-authentication in the target environment.",
+              "links": []
+            },
+            {
+              "text": "Knowledge bases involve registering the resource in the target account, recreating data sources, and copying permissions. For Amazon S3-backed knowledge bases, the migrator provisions the target bucket and associated bucket policy while leaving the underlying S3 objects in place. Additionally, spaces bring their linked resources across seamlessly when migrated.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Security, Idempotency, and Backups",
+          "paragraphs": [
+            {
+              "text": "To ensure enterprise-grade security and governance, the server operates on a three-account model. A central runner account hosts the MCP server on Amazon Bedrock AgentCore runtime, utilizing AWS Security Token Service (AWS STS) to assume a read-only role in the source account and a read-write role in the target account.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, every update is protected by a versioned snapshot written to Amazon S3 before changes occur, ensuring that updates are fully auditable and capable of being rolled back using dedicated recovery tools if necessary.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Quick",
+        "AWS",
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "Cloud Governance",
+        "MCP Server"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Quick",
+        "Amazon Bedrock AgentCore"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly synthesized from the provided official AWS Machine Learning Blog post without introducing external facts or unverified speculations."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 462,
+      "word_count_en": 519
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "4d588743fb5570036c6e",
+      "title": "Making Amazon Quick enterprise-ready: Automated, auditable cross-account resource promotion",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 462,
+          "word_count_en": 519
+        }
+      ]
+    }
+  ],
+  "slug": "making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/hero.webp",
+    "card": "/forum/assets/posts/2026/10/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/card.webp",
+    "social": "/forum/assets/posts/2026/10/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح ترقية موارد Quick تلقائياً عبر حسابات AWS",
+      "en": "Automating Cross-Account Amazon Quick Promotion"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-21611-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/inline-01.webp",
+        "width": 1400,
+        "height": 1021,
+        "alt": {
+          "ar": "أمازون تتيح ترقية موارد Quick تلقائياً عبر حسابات AWS",
+          "en": "Three-account architecture: a runner account hosts the MCP server on Amazon Bedrock AgentCore and assumes roles into the source and target accounts"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/Figure-1-8.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/inline-02.webp",
+        "width": 951,
+        "height": 647,
+        "alt": {
+          "ar": "أمازون تتيح ترقية موارد Quick تلقائياً عبر حسابات AWS",
+          "en": "Quick App landing page with fields for source and target account IDs, resource type, and selector"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/Figure-2-8.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/inline-03.webp",
+        "width": 868,
+        "height": 430,
+        "alt": {
+          "ar": "أمازون تتيح ترقية موارد Quick تلقائياً عبر حسابات AWS",
+          "en": "Additional migration options on the Quick App landing page"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/Figure-3-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/inline-04.webp",
+        "width": 998,
+        "height": 777,
+        "alt": {
+          "ar": "أمازون تتيح ترقية موارد Quick تلقائياً عبر حسابات AWS",
+          "en": "Confirmation view shown after choosing Confirm and migrate"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/Figure-4-3.png"
+      }
+    ]
+  }
 }
