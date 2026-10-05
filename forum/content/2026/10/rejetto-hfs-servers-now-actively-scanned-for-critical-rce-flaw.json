@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "0d95aed7cfa060c29cb9",
+  "slug": "rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw",
+  "categorySlug": "security",
+  "urls": {
+    "ar": "/forum/ar/security/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw/",
+    "en": "/forum/en/security/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw/"
+  },
+  "locales": {
+    "ar": {
+      "title": "اختراق نشط: ثغرة حرجة في خوادم Rejetto HFS تتيح تنفيذ أوامر عن بُعد",
+      "description": "كشفت أنظمة المراقبة عن محاولات نشطة لاستغلال ثغرة CVE-2026-61500 في خوادم Rejetto HFS، مما يتيح للمهاجمين انتحال جلسات الإدارة وتنفيذ أكواد خبيثة عن بُعد.",
+      "deck": "بدأ مهاجمون بمسح نشط لاستغلال ثغرة توقيع ضعيفة في خوادم مشاركة الملفات Rejetto HFS، مما يهدد بخطر تنفيذ أوامر عن بُعد وانتحال هوية المستخدمين.",
+      "summaryBullets": [
+        "رصدت أنظمة العسل التابعة لشركة VulnCheck محاولات استطلاع تستهدف ثغرة CVE-2026-61500.",
+        "الثغرة تسمح للمهاجمين باستعادة مفتاح التوقيع وتزوير جلسات إدارية كاملة.",
+        "نشر فريق Horizon3 تفاصيل تقنية ونموذج استغلال (PoC) في أيلول/سبتمبر 2026.",
+        "يُنصح المستخدمون بالترقية الفورية إلى الإصدار 3.2.1 أو أحدث إصدار مستقر 3.3.4.",
+        "لا تتوفر حالياً معلومات مؤكدة عن استغلال ناجح واسع النطاق أو أنشطة ما بعد الاختراق."
+      ],
+      "sections": [
+        {
+          "heading": "رصد محاولات استطلاع نشطة",
+          "paragraphs": [
+            {
+              "text": "أفادت شركة VulnCheck بأن أنظمة العسل الخاصة بها رصدت نشاطاً استطلاعياً يستهدف ثغرة أمنية حرجة في خوادم Rejetto HFS. وقد أشارت كايتلين كوندون، نائبة الرئيس لبحوث الأمن في الشركة، إلى أن هذه المحاولات تبدو صغيرة النطاق وتصدر من عنوان IP واحد تابع لشركة China Telecom، وتستهدف نشرات في اليابان والولايات المتحدة. هذا النشاط يأتي في أعقاب نشر تفاصيل تقنية مفصلة عن الثغرة، مما قد يكون حافزاً للمهاجمين لتجربة الاستغلال الفعلي.",
+              "links": [
+                {
+                  "text": "VulnCheck",
+                  "url": "https://www.linkedin.com/posts/ccondon_new-kev-earlier-today-vulnchecks-canary-share-7511574376446590976-NNh3/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل الثغرة الأمنية",
+          "paragraphs": [
+            {
+              "text": "تتعلق الثغرة، المسجلة تحت الرقم CVE-2026-61500، بضعف في توليد مفتاح توقيع ملفات تعريف الارتباط (Session Cookies) المستخدمة في الخوادم. وفقاً لوصف الثغرة في قاعدة بيانات NIST NVD، فإن الإصدارات من 3.0.0 إلى 3.2.0 تعتمد على مولد الأرقام العشوائية غير التشفيري Math.random() لاستخراج مفتاح التوقيع. المشكلة الأخطر تكمن في أن التطبيق يكشف عن مخرجات هذا المولد للعملاء غير الموثقين أثناء عملية تسجيل الدخول، مما يتيح للمهاجم جمع عدد قليل من الاستجابات، وإعادة بناء حالة المولد، واستعادة مفتاح التوقيع بالكامل.",
+              "links": [
+                {
+                  "text": "NIST NVD",
+                  "url": "https://nvd.nist.gov/vuln/detail/cve-2026-61500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "من الاكتشاف إلى التنفيذ",
+          "paragraphs": [
+            {
+              "text": "اكتشف باحثون من شركة Horizon3 هذه الثغرة باستخدام نموذج الذكاء الاصطناعي Mythos التابع لشركة Anthropic. أوضح الفريق أن النموذج لم يكتفِ بتحديد مولد الأرقام العشوائية غير الآمن فحسب، بل حدد أيضاً مسار الكود الذي يسرب مخرجات Math.random() الخام، وربط بين الحقيقتين لتكوين سلسلة هجوم. هذا الاكتشاف سمح للباحثين بإعادة بناء حالة المولد واستعادة المفتاح، مما أدى إلى تزوير ملف تعريف ارتباط جلسة إدارية صالح، ومنح المهاجم وصولاً كاملاً إلى صلاحيات الإدارة.",
+              "links": [
+                {
+                  "text": "Horizon3",
+                  "url": "https://horizon3.ai/attack-research/disclosures/anthropic-mythos-rejetto-hfs-rce/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "خطر تنفيذ الأكواد عن بُعد",
+          "paragraphs": [
+            {
+              "text": "بعد الحصول على وصول إداري، يمكن للمهاجم استغلال ميزة server_code المدمجة في Rejetto HFS لتنفيذ جافاسكربت مخصص على جانب الخادم، مما يؤدي إلى تنفيذ أوامر عن بُعد (RCE). نشر فريق Horizon3 تفاصيل تقنية ونموذج استغلال (PoC) في تقرير صدر في 30 أيلول/سبتمبر 2026، مما زاد من احتمالية استغلال الثغرة من قبل جهات خبيثة. السيناريوهات المحتملة للهجوم تشمل الوصول إلى ملفات HFS وسرقتها أو حذفها، أو تثبيت برمجيات خبيثة على الخادم، أو استخدام الجهاز المخترق كنقطة انطلاق للوصول إلى الأنظمة الداخلية للشبكة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوصيات والإصلاحات",
+          "paragraphs": [
+            {
+              "text": "تم إصلاح هذه الثغرة في الإصدار 3.2.1 من Rejetto HFS، وهو خادم مشاركة ملفات مجاني ومفتوح المصدر يعمل على أنظمة Windows وLinux وmacOS. ينصح خبراء الأمن بشدة مستخدمي الخوادم بالترقية إلى الإصدار 3.2.1 على الأقل، أو بشكل مثالي إلى أحدث إصدار مستقر وهو 3.3.4، في أقرب وقت ممكن لتجنب مخاطر الاختراق. على الرغم من رصد محاولات الاستطلاع، لم تشارك VulnCheck أي تفاصيل عن استغلال ناجح مؤكد أو أنشطة ما بعد الاختراق، مما يشير إلى أن التهديد لا يزال في مرحلة الاستكشاف أو الاستهداف المحدد.",
+              "links": [
+                {
+                  "text": "Rejetto HFS",
+                  "url": "https://github.com/rejetto/hfs"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الأمن السيبراني",
+        "Rejetto HFS",
+        "CVE-2026-61500",
+        "تنفيذ أوامر عن بُعد",
+        "ثغرة أمنية",
+        "VulnCheck",
+        "Horizon3"
+      ],
+      "entities": [
+        "Rejetto HFS",
+        "VulnCheck",
+        "Horizon3",
+        "Anthropic",
+        "NIST NVD",
+        "China Telecom"
+      ],
+      "category": "الأمن التقني",
+      "dateLabel": "6 أكتوبر 2026",
+      "modifiedLabel": "6 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 486
+    },
+    "en": {
+      "title": "Rejetto HFS Servers Scanned for Critical RCE Flaw",
+      "description": "Hackers are actively scanning Rejetto HFS servers for a critical remote code execution vulnerability tracked as CVE-2026-61500.",
+      "deck": "Security researchers have detected active scanning activity targeting a critical session forgery and remote code execution vulnerability affecting Rejetto HFS servers.",
+      "summaryBullets": [
+        "Hackers are actively scanning for the Rejetto HFS weak signing key vulnerability tracked as CVE-2026-61500.",
+        "The vulnerability allows session forgery, account takeover, and remote code execution.",
+        "VulnCheck observed small-scale reconnaissance probes targeting deployments in Japan and the United States.",
+        "Users are strongly advised to upgrade to Rejetto HFS version 3.2.1 or the latest stable release."
+      ],
+      "sections": [
+        {
+          "heading": "Active Scans Target Rejetto HFS Flaw",
+          "paragraphs": [
+            {
+              "text": "Threat actors are actively scanning for a critical weak signing key vulnerability in Rejetto HFS servers, which is tracked under the identifier CVE-2026-61500. According to reports published by <a href=\"https://www.bleepingcomputer.com/news/security/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw/\">BleepingComputer</a>, this security flaw allows for session forgery, account takeover, and remote code execution.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw/"
+                }
+              ]
+            },
+            {
+              "text": "Caitlin Condon, the VP of Security Research at VulnCheck, revealed over the weekend that the company's Canary Intelligence honeypots detected probes targeting CVE-2026-61500. The observed reconnaissance activity appears to be small-scale, originating from a single China Telecom IP address and probing deployments located in Japan and the United States.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Understanding the Rejetto HFS Vulnerability",
+          "paragraphs": [
+            {
+              "text": "Rejetto HFS (HTTP File Server) is a popular <a href=\"https://github.com/rejetto/hfs\">open-source</a> file-sharing server tool utilized for self-hosted file sharing across Windows, Linux, and macOS platforms. The security issue itself involves a session-cookie signing weakness and leakage problem.",
+              "links": [
+                {
+                  "text": "open-source",
+                  "url": "https://github.com/rejetto/hfs"
+                }
+              ]
+            },
+            {
+              "text": "Tracked as CVE-2026-61500 and <a href=\"https://nvd.nist.gov/vuln/detail/cve-2026-61500\">first published on July 13, 2026</a>, the vulnerability impacts Rejetto HFS versions 3.0.0 through 3.2.0. The application derives its session-cookie signing key from the non-cryptographic Math.random() generator and discloses outputs of this generator to unauthenticated clients during the login process.",
+              "links": [
+                {
+                  "text": "first published on July 13, 2026",
+                  "url": "https://nvd.nist.gov/vuln/detail/cve-2026-61500"
+                }
+              ]
+            },
+            {
+              "text": "Because of this design flaw, a remote attacker can collect a small number of login responses, reconstruct the state of the random number generator, recover the signing key, and forge a valid administrator session cookie. This grants full administrative access and allows remote code execution via the server_code configuration feature.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Discovery via AI and Technical Details",
+          "paragraphs": [
+            {
+              "text": "Researchers at Horizon3 discovered the underlying flaw using Anthropic's Mythos model. The model successfully identified both the weak signing-key generation and the leakage path that enabled key recovery. Detailed technical findings were <a href=\"https://horizon3.ai/attack-research/disclosures/anthropic-mythos-rejetto-hfs-rce/\">explained Horizon3</a> in a write-up published on September 30, 2026.",
+              "links": [
+                {
+                  "text": "explained Horizon3",
+                  "url": "https://horizon3.ai/attack-research/disclosures/anthropic-mythos-rejetto-hfs-rce/"
+                }
+              ]
+            },
+            {
+              "text": "According to the researchers, the AI tool recognized that the application leaked raw Math.random() outputs through a separate code path, linked those facts together, and determined that the data leak produced the exact observations required to make state recovery feasible.",
+              "links": []
+            },
+            {
+              "text": "The proof-of-concept exploit published by Horizon3 demonstrates the attack chain by abusing the built-in ability of HFS to execute custom server-side JavaScript, ultimately achieving remote code execution. The release of these technical write-ups and scripts likely triggered the recent wave of scanning activity targeting CVE-2026-61500.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Potential Risks and Mitigation Guidance",
+          "paragraphs": [
+            {
+              "text": "Potential attack scenarios involving this vulnerability include accessing, stealing, or deleting files stored on the HFS server, installing malicious software directly onto the server, or leveraging the compromised host to gain access to broader internal systems.",
+              "links": []
+            },
+            {
+              "text": "Despite active scanning probes being detected, VulnCheck has not shared evidence of widespread <a href=\"https://www.bleepingcomputer.com/news/security/hackers-attack-hfs-servers-to-drop-malware-and-monero-miners/\">successful exploitation</a> or malicious post-exploitation activity in the wild at this time.",
+              "links": [
+                {
+                  "text": "successful exploitation",
+                  "url": "https://www.bleepingcomputer.com/news/security/hackers-attack-hfs-servers-to-drop-malware-and-monero-miners/"
+                }
+              ]
+            },
+            {
+              "text": "Administrators and users managing Rejetto HFS deployments are strongly encouraged to upgrade their installations immediately. The vulnerability is fully addressed in Rejetto HFS version 3.2.1, and users should ideally update to the latest stable release, version 3.3.4, to ensure complete protection against potential attacks.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Rejetto HFS",
+        "CVE-2026-61500",
+        "Remote Code Execution",
+        "Vulnerability",
+        "Cybersecurity",
+        "VulnCheck",
+        "Horizon3"
+      ],
+      "entities": [
+        "Rejetto HFS",
+        "VulnCheck",
+        "Horizon3",
+        "Anthropic"
+      ],
+      "category": "Cybersecurity",
+      "dateLabel": "October 6, 2026",
+      "modifiedLabel": "October 6, 2026",
+      "readMinutes": 3,
+      "wordCount": 555
+    }
+  },
+  "datePublished": "2026-10-06T01:57:44.248552+03:00",
+  "dateModified": "2026-10-06T01:57:44.248552+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw/hero.webp",
+    "card": "/forum/assets/posts/2026/10/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw/card.webp",
+    "social": "/forum/assets/posts/2026/10/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw/social.jpg",
+    "alt": {
+      "ar": "اختراق نشط: ثغرة حرجة في خوادم Rejetto HFS تتيح تنفيذ أوامر عن بُعد",
+      "en": "Rejetto HFS Servers Scanned for Critical RCE Flaw"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2025/11/05/Credit-card-hacker.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw/inline-01.webp",
+        "width": 844,
+        "height": 548,
+        "alt": {
+          "ar": "اختراق نشط: ثغرة حرجة في خوادم Rejetto HFS تتيح تنفيذ أوامر عن بُعد",
+          "en": "Recovering the session key"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Recovering the session key Source: Horizon3"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/u/1220909/2026/September/image-7.jpg"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw/",
+      "type": "journalism",
+      "title": "Rejetto HFS servers now actively scanned for critical RCE flaw"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/security/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw",
+  "sourceTitle": "Rejetto HFS servers now actively scanned for critical RCE flaw",
+  "trendScore": 93.01,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-05T22:57:44+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/rejetto-hfs-servers-now-actively-scanned-for-critical-rce-flaw.json"
+}
