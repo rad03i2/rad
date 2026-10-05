@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "c8ccd8659baa50562e0c",
+  "slug": "evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentc",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentc/",
+    "en": "/forum/en/ai/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentc/"
+  },
+  "locales": {
+    "ar": {
+      "title": "تقييم أنظمة الوكلاء المتعددين عبر Amazon Bedrock AgentCore",
+      "description": "تعرف على كيفية بناء وتقييم أنظمة الوكلاء المتعددين لسلاسل الإمداد باستخدام ميزات الأداء وقدرات التفسير في منصة Amazon Bedrock AgentCore بشكل عملي.",
+      "deck": "تستعرض أمازون ويب سيرفيسز آليات تقييم أداء الوكلاء المتعددين في النظم المؤسسية لضمان دقة اتخاذ القرار وقابلية التفسير عبر منصة متكاملة.",
+      "summaryBullets": [
+        "التركيز على قدرة أنظمة الوكلاء على اختيار الأدوات المناسبة والالتزام بالقيود وتفسير القرارات.",
+        "استخدام قدرات التقييم المدمجة والمخصصة لقياس الدقة ونجاح المهام وسلوك الوكلاء بمرونة.",
+        "بناء نظام تجريبي لسلسلة الإمداد يضم منسقاً وعدة وكلاء متخصصين لتحسين التوزيع والتوجيه.",
+        "دعم التشغيل عبر نمطين أساسيين للتقييم الفوري والإنتاجي لمراقبة الأداء واستمرارية التحسين."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الانتقال بالوكلاء إلى الإنتاج",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات التي تسعى للانتقال بأنظمة الوكلاء المتعددة من مرحلة التجريب إلى الإنتاج الفعلي تحديات هامة تتعلق بضمان الموثوقية والدقة والقدرة على تفسير النتائج في سيناريوهات العالم الحقيقي. فعلى عكس نماذج اللغة الكبيرة التي قد تكتفي بتقديم إجابات بليغة، تتطلب التطبيقات المؤسسية ضمانات أعمق بكثير؛ حيث يتعين على الوكلاء اتباع التعليمات بدقة، واختيار الأدوات الملائمة، واحترام قيود الأعمال، وتقديم مبررات واضحة وراء مخرجاتهم. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "تتطلب مجالات حيوية مثل تخطيط سلاسل الإمداد، والتحليل المالي، وعمليات العملاء تنسيقاً معقداً بين وكلاء متخصصين متعددين لاتخاذ القرارات وتنفيذ سير العمل. ولمعالجة هذه التحديات، تقدم أداة مثل Amazon Bedrock AgentCore إطار عمل متكامل لبناء وتوصيل وتحسين الوكلاء على نطاق واسع باستخدام أي إطار عمل أو نموذج مرغوب فيه.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آليات التقييم والتحكم في منصة أمازون",
+          "paragraphs": [
+            {
+              "text": "صُممت ميزة التقييمات في المنصة لمعالجة متطلبات تقييم أداء الوكلاء طوال مرحلتي التطوير والإنتاج، مما يتيح لفرق العمل قياس دقة العمليات ومعدل نجاح المهام والسلوك عبر أبعاد جودة متعددة. وتعتبر الأساليب التقليدية المكتفية بقياس جودة الاستجابة وحدها غير كافية للأنظمة الوكيلية، نظراً لارتباط صحة القرار بعمليات اختيار الأدوات وتنفيذ سير العمل والالتزام بقيود الأعمال.",
+              "links": []
+            },
+            {
+              "text": "إلى جانب إمكانيات التقييم، تتطلب بيئات الإنتاج وجود ضوابط أمان ذكية للذكاء الاصطناعي، وهو ما توفره أدوات الحماية المدمجة عبر توفير وسائل تصفية المحتوى، واكتشاف المواضيع المرفوعة، والتحقق من التأصيل لتعزيز سلامة التشغيل خلال التنفيذ الفعلي للوكلاء.",
+              "links": []
+            },
+            {
+              "text": "تعتمد فرق العمل على نوعين من أدوات التقييم؛ فالأدوات المدمجة توفر تقييمات جاهزة لأبعاد الجودة الشائعة مثل المساعدة ونجاح المهام والالتزام بالتعليمات لتكوين خط أساس سريع، بينما تتيح الأدوات المخصصة إجراء عمليات تحقق أعمق تتناسب مع متطلبات الأعمال المحددة لكل مؤسسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تطبيق عملي لأنظمة سلاسل الإمداد",
+          "paragraphs": [
+            {
+              "text": "لتوضيح كيفية عمل هذه المكونات معاً، يمكن بناء وتقييم نظام قرار لسلسلة الإمداد متعدد الوكلاء يستند إلى حزم تقنية متقدمة تمكن المطورين من ربط الوكلاء بالخدمات السحابية وتنفيذ المهام المطلوبة بكفاءة عالية وفق بنية مرجعية واضحة.",
+              "links": []
+            },
+            {
+              "text": "تستعين شركة تجزئة افتراضية عالمية تُدعى «آني كومباني ريتايل» بنظام وكيل مساعد لمعالجة اختلالات المخزون المتكررة، مثل نقص السلع في مناطق معينة وزيادتها في أخرى. ويعتمد النظام على وكيل منسق يتلقى طلبات المخططين ويوجه المهام إلى وكلاء فرعيين متخصصين يشملون وكيل التحسين، ووكيل التوزيع، ووكيل التوجيه، ووكيل التحليلات.",
+              "links": []
+            },
+            {
+              "text": "تتكامل هذه المكونات ضمن بيئة التشغيل لتبادل البيانات واستدعاء الواجهات البرمجية وتوفير الملاحظات اللحظية عبر أدوات المراقبة المتاحة في المنصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التفسير وقابلية المراجعة في اتخاذ القرار",
+          "paragraphs": [
+            {
+              "text": "تُعد قابلية التفسير بُعداً أساسياً للتقييم في الأنظمة المعقدة؛ إذ لا يكفي أن يقدم الوكيل استجابة صحيحة ظاهرياً، بل يجب أن يوضح بوضوح تبرير قرار العرض، ويشير إلى البيانات الداعمة أو مخرجات الأدوات، ويشرح المقايضات المختلفة مثل التكلفة مقارنة بمستوى الخدمة المقدمة للعملاء.",
+              "links": []
+            },
+            {
+              "text": "من خلال الجمع بين أدوات التقييم المدمجة والمخصصة، تتيح المنصة تجاوز مستويات الجودة السطحية وتقديم رؤى مهيكلة وقابلة للقياس توضح كيف ولماذا توصل الوكلاء إلى قراراتهم التشغيلية داخل سلاسل الإمداد.",
+              "links": []
+            },
+            {
+              "text": "تدعم المنصة طريقتين للتقييم تشملان نمط الطلب الفوري المخصص لاختبارات الانحدار وبناء المعايير في بيئات التطوير، والنمط المتصل بالإنتاج المخصص للمراقبة المستمرة وإرسال التنبيهات الفورية استناداً إلى مسارات التنفيذ الفعلية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون",
+        "الوكلاء المتعددين",
+        "سلاسل الإمداد",
+        "تقييم النظم",
+        "سحابة أمازون"
+      ],
+      "entities": [
+        "Amazon Bedrock",
+        "Amazon Bedrock AgentCore",
+        "AWS",
+        "Strands Agents SDK"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "5 أكتوبر 2026",
+      "modifiedLabel": "5 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 556
+    },
+    "en": {
+      "title": "Evaluating Multi-Agent Systems With Amazon Bedrock AgentCore",
+      "description": "Learn how to evaluate multi-agent supply chain systems for explainability, helpfulness, and business constraints using Amazon Bedrock AgentCore.",
+      "deck": "As enterprises move multi-agent systems into production, new evaluation approaches using Amazon Bedrock AgentCore help ensure accuracy, helpfulness, and decision explainability.",
+      "summaryBullets": [
+        "Multi-agent systems require deeper guarantees than simple fluent responses, including correct tool selection and explainability.",
+        "Amazon Bedrock AgentCore Evaluations provides fully managed capabilities to assess agent performance across development and production.",
+        "A reference multi-agent supply chain architecture demonstrates built-in, custom, and explainability evaluators in practice.",
+        "Both on-demand and online evaluation modes allow engineering teams to benchmark code or monitor live production traces."
+      ],
+      "sections": [
+        {
+          "heading": "Moving Multi-Agent Systems From Experimentation to Production",
+          "paragraphs": [
+            {
+              "text": "A critical challenge that emerges as multi-agent systems move from experimentation to production is making sure that these systems are consistently helpful, accurate, and explainable in real-world scenarios. Enterprises are increasingly adopting multi-agent systems to solve complex, real-world problems that require reasoning across data sources, tools, and business constraints. From supply chain planning to financial analysis and customer operations, these systems go beyond simple question answering by coordinating multiple specialized agents to make decisions, execute workflows, and generate actionable recommendations.",
+              "links": []
+            },
+            {
+              "text": "While large language models can generate fluent responses, enterprise applications require much deeper guarantees. Agents must follow instructions reliably, select the right tools, respect constraints, and provide clear reasoning behind their outputs. To address these demands, organizations are leveraging modern development and evaluation frameworks such as Amazon Bedrock AgentCore to build, connect, and optimize agents at scale.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Comprehensive Evaluations With Amazon Bedrock AgentCore",
+          "paragraphs": [
+            {
+              "text": "Traditional evaluation approaches that focus only on model response quality are insufficient for agentic systems, where correctness depends heavily on tool selection, workflow execution, and adherence to business constraints. To solve this, Amazon Bedrock AgentCore Evaluations serves as a fully managed capability for assessing agent performance across both development and production lifecycles.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Evaluations",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations.html"
+                }
+              ]
+            },
+            {
+              "text": "In addition to evaluations, production deployments require robust safety controls. While evaluations assess agent quality after execution, Amazon Bedrock Guardrails provides configurable safeguards such as content filtering, denied topic detection, and grounding validation that enforce safety constraints during execution.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Guardrails",
+                  "url": "https://aws.amazon.com/bedrock/guardrails/"
+                }
+              ]
+            },
+            {
+              "text": "The evaluation framework supports both built-in and custom evaluators. Built-in evaluators offer pre-defined assessments for common quality dimensions like helpfulness, task success, and instruction following. Meanwhile, custom evaluators allow development teams to define domain-specific, business-aware checks to validate operational logic.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Implementing a Multi-Agent Supply Chain Decisioning System",
+          "paragraphs": [
+            {
+              "text": "To demonstrate these concepts in a practical setting, a reference architecture uses a fictitious multinational retail company called AnyCompany Retail, which operates ecommerce channels, regional fulfillment centers, distribution hubs, and physical stores. AnyCompany faces common inventory imbalances and transportation hurdles, prompting the need for an intelligent agentic assistant that can optimize inventory allocation, recommend distribution adjustments, analyze inventory health, and simulate routing scenarios.",
+              "links": []
+            },
+            {
+              "text": "This reference solution is built using the Strands Agents SDK alongside the Amazon Bedrock AgentCore MCP Server. The system relies on an orchestrator agent that receives requests from a supply chain planner and delegates work to four specialized sub-agents: an optimization agent, distribution agent, routing agent, and analytics agent.",
+              "links": [
+                {
+                  "text": "Strands Agents SDK",
+                  "url": "https://strandsagents.com/"
+                },
+                {
+                  "text": "Amazon Bedrock AgentCore MCP Server",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-mcp.html"
+                }
+              ]
+            },
+            {
+              "text": "Each agent operates on the Amazon Bedrock AgentCore runtime, utilizing built-in platform capabilities such as Amazon Bedrock AgentCore memory and Amazon Bedrock AgentCore Observability. The optimization agent invokes tool interfaces backed by mock Amazon API Gateway REST endpoints to execute workflow decisions.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore runtime",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agents-tools-runtime.html"
+                },
+                {
+                  "text": "Amazon Bedrock AgentCore memory",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/memory.html"
+                },
+                {
+                  "text": "Amazon Bedrock AgentCore Observability",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability.html"
+                },
+                {
+                  "text": "Amazon API Gateway",
+                  "url": "https://aws.amazon.com/api-gateway/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Evaluating Explainability and Business Logic",
+          "paragraphs": [
+            {
+              "text": "Explainability is treated as a first-class evaluation dimension within the framework. While built-in evaluators assess general response clarity, custom evaluators verify whether agents explicitly articulate their decision rationale, properly reference supporting data or tool outputs, and thoroughly explain operational tradeoffs such as cost versus service levels.",
+              "links": []
+            },
+            {
+              "text": "By combining these layers, development teams move beyond surface-level response checks to gain structured, measurable insights into how and why multi-agent systems arrive at specific business decisions. The evaluation framework utilizes a progressive three-layer approach: starting with built-in evaluators for general quality, incorporating custom evaluators for business accuracy, and layering explainability evaluators to build long-term enterprise trust and auditability.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "On-Demand and Online Operational Modes",
+          "paragraphs": [
+            {
+              "text": "The evaluation platform supports both on-demand and online operational modes. On-demand mode is intended for development benchmarking, regression testing, and continuous integration and continuous delivery pipelines. In contrast, online mode enables continuous production monitoring by automatically reading traces from observability tooling, scoring them against configured evaluators, and streaming results directly to dashboards and alarms.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "Multi-Agent Systems",
+        "Artificial Intelligence",
+        "Supply Chain",
+        "Evaluations",
+        "Explainability",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Strands",
+        "AnyCompany Retail"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 5, 2026",
+      "modifiedLabel": "October 5, 2026",
+      "readMinutes": 4,
+      "wordCount": 694
+    }
+  },
+  "datePublished": "2026-10-05T19:42:20.557588+03:00",
+  "dateModified": "2026-10-05T19:42:20.557588+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentc/hero.webp",
+    "card": "/forum/assets/posts/2026/10/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentc/card.webp",
+    "social": "/forum/assets/posts/2026/10/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentc/social.jpg",
+    "alt": {
+      "ar": "تقييم أنظمة الوكلاء المتعددين عبر Amazon Bedrock AgentCore",
+      "en": "Evaluating Multi-Agent Systems With Amazon Bedrock AgentCore"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/ML-20163-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentc/inline-01.webp",
+        "width": 1120,
+        "height": 616,
+        "alt": {
+          "ar": "تقييم أنظمة الوكلاء المتعددين عبر Amazon Bedrock AgentCore",
+          "en": "Architecture of the multi-agent supply chain decisioning solution on Amazon Bedrock AgentCore"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/ML-20163-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentcore/",
+      "type": "official",
+      "title": "Evaluating multi-agent systems for explainability and helpfulness with Amazon Bedrock AgentCore"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentcore",
+  "sourceTitle": "Evaluating multi-agent systems for explainability and helpfulness with Amazon Bedrock AgentCore",
+  "trendScore": 123.76,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-05T16:42:20+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/10/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentc.json"
+}
