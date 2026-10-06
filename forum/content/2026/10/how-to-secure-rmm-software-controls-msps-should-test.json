@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "6af1267f376a010af79b",
+  "slug": "how-to-secure-rmm-software-controls-msps-should-test",
+  "categorySlug": "robotics",
+  "urls": {
+    "ar": "/forum/ar/robotics/how-to-secure-rmm-software-controls-msps-should-test/",
+    "en": "/forum/en/robotics/how-to-secure-rmm-software-controls-msps-should-test/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أكرونيس تكشف 8 ضوابط أمنية أساسية لتأمين برمجيات RMM لدى مزودي الخدمات",
+      "description": "تقدم أكرونيس قائمة تحقق من 8 ضوابط أمنية يجب على مزودي الخدمات المُدارة اختبارها لتقييم برمجيات RMM، بدءاً من إدارة الاختراق وصولاً إلى العزل بين المستأجرين.",
+      "deck": "أصبحت منصات مراقبة وإدارة الأجهزة عن بُعد (RMM) هدفاً رئيسياً للمهاجمين، مما يستلزم من مزودي الخدمات المُدارة (MSPs) اختبار ضوابط أمنية صارمة قبل اعتماد أي منصة.",
+      "summaryBullets": [
+        "توفر منصات RMM وصولاً إدارياً غير مراقب لآلاف الأجهزة، مما يجعلها نقطة ضعف حرجة إذا تم اختراق حساب واحد.",
+        "توصي أكرونيس باختبار 8 ضوابط تشمل: الاكتشاف المستمر، إدارة التصحيحات، التحكم في الصلاحيات، وأولوية التنبيهات.",
+        "يُشدد التقرير على أهمية العزل بين بيئات العملاء (Tenant Isolation) وسجلات التدقيق لضمان الامتثال والأمان.",
+        "تبرز أهمية التكامل بين أدوات المراقبة والاستجابة للحوادث والنسخ الاحتياطي لضمان عودة الأنظمة بأمان بعد الهجوم."
+      ],
+      "sections": [
+        {
+          "heading": "السياق الأمني: لماذا أصبحت RMM هدفاً للمهاجمين؟",
+          "paragraphs": [
+            {
+              "text": "منح برمجيات المراقبة والإدارة عن بُعد (RMM) الفنيين وصولاً إدارياً كاملاً عبر آلاف الأجهزة التابعة للعملاء، مما يجعل مستوى الإدارة (Management Plane) هدفاً جذاباً للمهاجمين. فاختراق حساب مميّز واحد أو خادم إدارة قد يمتد أثره ليشمل نطاقاً واسعاً يتجاوز جهازاً واحداً. وتُظهر الحوادث الأخيرة خطورة هذا التهديد؛ ففي سبتمبر 2026، أصدرت شركة N-able تصحيحاً طارئاً لثغرة حرجة (CVE-2026-86218) في منصتها N-central، وهي الثغرة الرابعة خلال خمسة أسابيع، مما أدى إلى تعرض حوالي 1500 خادم للهجوم. كما وثقت تقارير سابقة استغلال ثغرات يوم الصفر في Microsoft SharePoint، مما يؤكد أن تأخر التصحيحات يفتح الباب أمام استغلال سريع. ويمكن الرجوع إلى BleepingComputer للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/how-to-secure-rmm-software-8-controls-msps-should-test/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الضوابط الأساسية: من الاكتشاف إلى إدارة التصحيحات",
+          "paragraphs": [
+            {
+              "text": "تقدم أكرونيس، التي توفر خدمات RMM ضمن منصة Acronis Cyber Platform، قائمة تحقق مبنية على تأمين إدارة نقاط النهاية في آلاف البيئات. وتشمل الضوابط الأولى ضمان الاكتشاف المستمر للأجهزة والبرمجيات، حيث يجب على المنصة تصنيف الأجهزة الجديدة وتعيين السياسات المناسبة لها بسرعة. كما تبرز أهمية إدارة التصحيحات (Patching)، إذ يجب تقييم كيفية تحديد المنصة لأولويات التحديثات، ومعالجة حالات الفشل، ودعم التراجع عن التحديثات عند حدوث مشاكل. فالتصحيحات غير المطبقة تظل من أكثر مسارات الهجوم شيوعاً، ويمكن للكشف عن الفجوات التشغيلية من خلال نشر تصحيحات مُتحكم بها أثناء التقييم.",
+              "links": [
+                {
+                  "text": "Acronis Cyber Platform",
+                  "url": "https://www.acronis.com/en/products/cloud/cyber-protect/?utm_source=bleepingcomputer&utm_medium=referral&utm_campaign=bleepingcomputer-fy26-q4-x-x-x-en-ba-genairmm6Oct-bleepingcomputer-x-a"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التحكم في الوصول وإدارة التنبيهات",
+          "paragraphs": [
+            {
+              "text": "يعتمد أمان RMM بشكل كبير على حماية حسابات الفنيين. لذلك، يجب البحث عن مصادقة متعددة العوامل (MFA)، والتحكم في الوصول بناءً على الأدوار (RBAC)، وفصل المهام. وينبغي اختبار إنشاء أدوار مقيّدة للتأكد من عدم قدرة المستخدمين على تنفيذ إجراءات خارج نطاق مسؤولياتهم. ومن ناحية أخرى، يكمن التحدي في إدارة التنبيهات؛ فبدلاً من قلة التنبيهات، يعاني الفنيون من الإغراق بها. يجب أن توفر المنصة سياقاً كافياً للتمييز بين المشكلات الروتينية والأحداث الأمنية التي تتطلب تحقيقاً، مما يقلل من إرهاق التنبيهات (Alert Fatigue).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أتمتة آمنة وتكامل عمليات الاستجابة",
+          "paragraphs": [
+            {
+              "text": "تُحسّن الأتمتة الكفاءة لكنها توسّع نطاق المخاطر، خاصة عندما تنفذ السكربتات إجراءات مميّزة عبر أعداد كبيرة من الأجهزة. لذا، يجب تقييم ضوابط الموافقة، والتدقيق، وشفافية التنفيذ من خلال إنشاء وتعديل سكربتات اختبار. كما يجب أن تعمل سير عمل العمليات والأمن بسلاسة معاً؛ فعند اكتشاف تهديد، يجب أن يتمكن الفنيون من الانتقال السريع من التحقيق إلى المعالجة والاستعادة دون فقدان السياق. وغالباً ما يكون محاكاة الحوادث أفضل طريقة لتحديد فجوات التكامل بين الأدوات المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاستعادة الآمنة والعزل بين المستأجرين",
+          "paragraphs": [
+            {
+              "text": "الأمان لا يقتصر على الوقاية بل يشمل الاستعادة أيضاً. يجب تقييم كيفية عمل النسخ الاحتياطي وإدارة التصحيحات والاستجابة للحوادث معاً بعد الحادث. ويشمل اختبار الاستعادة التأكد من أن الأنظمة المستعادة تعود إلى حالة آمنة ومحدثة بالكامل. وتتيح منصة Acronis Cyber Platform دمج RMM مع النسخ الاحتياطي ومسح البرمجيات الخبيثة لنقاط الاستعادة، مما يضمن التحقق من سلامة النظام قبل إعادته للعمل. بالإضافة إلى ذلك، يُعد العزل القوي بين المستأجرين (Tenant Isolation) أمراً حاسمًا، حيث يجب التأكد من بقاء السياسات والصلاحيات والتقارير معزولة بين بيئات العملاء، مع توفر سجلات تدقيق تفصيلية تدعم مراجعات الامتثال والتحقيقات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مقابل الأدوات المنفصلة: قرار استراتيجي",
+          "paragraphs": [
+            {
+              "text": "قد توفر المنتجات المنفصلة قدرات متخصصة عميقة، لكن المنصة المتكاملة أصلياً يمكنها تقليل عدد الوكلاء (Agents) وتبديل لوحات التحكم والعمل المتعلق بالمطابقة. الاختبار العملي يكمن في استمرارية سير العمل: هل يمكن للفنيين الانتقال من الاكتشاف إلى التصحيح، والتحقيق، والاحتواء، والاستعادة مع الحفاظ على سياق العميل والجهاز والحدث؟ ومع ذلك، لا يعني التكامل تلقائياً أنه الأفضل؛ فعلى مزودي الخدمات الذين لديهم تكاملات ناضجة مقارنة الفائدة التشغيلية للمنصة الموحدة بمرونة أدواتهم الحالية. ويجب أن يكون القرار مبنياً على نتائج الاختبار والضوابط الأمنية ومتطلبات الخدمة، وليس على عدد الميزات وحدها. وتُسلّم أكرونيس خدمة RMM كجزء من منصتها، مما يعني مشاركة نفس لوحة التحكم والوكيل مع خدمات الأمن السيبراني وحماية البيانات المجاورة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "RMM",
+        "MSP",
+        "Acronis",
+        "أمن سيبراني",
+        "إدارة نقاط النهاية",
+        "تصحيحات أمنية",
+        "استجابة للحوادث"
+      ],
+      "entities": [
+        "Acronis",
+        "N-able",
+        "Microsoft",
+        "CISA",
+        "BleepingComputer"
+      ],
+      "category": "الروبوتات",
+      "dateLabel": "6 أكتوبر 2026",
+      "modifiedLabel": "6 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 674
+    },
+    "en": {
+      "title": "Securing RMM Software: 8 Essential Controls for MSPs",
+      "description": "Acronis outlines eight critical security controls that managed service providers should test when evaluating remote monitoring and management platforms.",
+      "deck": "As remote monitoring and management platforms become prime targets for attackers, security experts recommend rigorous testing across eight core operational controls.",
+      "summaryBullets": [
+        "RMM platforms grant privileged access across customer environments, making their management planes highly valuable to attackers.",
+        "Acronis outlines an eight-control evaluation checklist based on endpoint management across thousands of customer environments.",
+        "Recent real-world incidents, including critical vulnerabilities and zero-day exploits, highlight the risks of unpatched RMM infrastructure.",
+        "Managed service providers are urged to test workflow outcomes directly rather than relying solely on product feature lists."
+      ],
+      "sections": [
+        {
+          "heading": "The High Stakes of RMM Security",
+          "paragraphs": [
+            {
+              "text": "Remote monitoring and management platforms give technicians unattended administrative access across thousands of customer devices, making the management plane a lucrative target for malicious actors. Compromising a single privileged account or server can easily extend the blast radius far beyond an individual endpoint. Security frameworks and industry guidelines, such as those detailed by CISA regarding how they abuse legitimate RMM software, emphasize the urgent need for robust risk mitigation.",
+              "links": [
+                {
+                  "text": "abuse legitimate RMM software",
+                  "url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-025a"
+                }
+              ]
+            },
+            {
+              "text": "Recent high-profile security events illustrate the severe exposure facing organizations when management software is targeted. For example, BleepingComputer reported on an emergency hotfix for CVE-2026-86218 affecting an enterprise RMM platform, while past investigations into Microsoft SharePoint \"ToolShell\" zero-days demonstrated how quickly on-premises servers can be compromised before patches become available.",
+              "links": [
+                {
+                  "text": "emergency hotfix for CVE-2026-86218",
+                  "url": "https://www.bleepingcomputer.com/news/security/n-able-patches-max-severity-n-central-flaw-amid-ongoing-attacks/"
+                },
+                {
+                  "text": "Microsoft SharePoint \"ToolShell\" zero-days",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-sharepoint-zero-day-exploited-in-rce-attacks-no-patch-available/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Core Controls for Endpoint Discovery and Patching",
+          "paragraphs": [
+            {
+              "text": "An MSP cannot secure devices that it does not know exist within the network architecture. Effective platforms must continuously discover and inventory endpoints, servers, network devices, and software assets. During product evaluation, introducing a new device into a test environment helps assess how quickly the system discovers, classifies, and assigns the correct policy.",
+              "links": []
+            },
+            {
+              "text": "Unpatched vulnerabilities remain among the most prevalent attack vectors. Evaluating how an RMM platform prioritizes updates, handles deployment failures, and supports rollback functionality is critical. Conducting a controlled patch deployment often reveals operational gaps that are easily missed during a standard vendor product demonstration.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Identity, Access, and Alert Management",
+          "paragraphs": [
+            {
+              "text": "RMM security depends heavily on the security surrounding technician accounts. Evaluators should look for mandatory multifactor authentication, role-based access controls, and strict separation of duties. Establishing restricted technician roles ensures that users cannot execute actions outside their designated operational responsibilities.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, the challenge in security monitoring is frequently not a lack of alerts, but rather an overwhelming volume of them. An ideal platform provides sufficient context to help technicians rapidly distinguish routine notifications from events that require active investigation. Testing duplicate and security-related alerts helps measure whether a platform reduces or exacerbates alert fatigue.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Automation Safety and Incident Integration",
+          "paragraphs": [
+            {
+              "text": "While automation greatly improves operational efficiency, it also expands the overall risk surface. Scripts can perform privileged actions across massive numbers of devices simultaneously, making governance and oversight critical. Managed service providers should carefully evaluate approval controls, auditing mechanisms, and execution visibility by creating and modifying test scripts during the evaluation phase.",
+              "links": []
+            },
+            {
+              "text": "Operational and security workflows should function together seamlessly. When a threat is detected, technicians need the capability to move quickly from initial investigation to containment and recovery without losing vital context. Simulating a security incident remains one of the most effective methods for identifying integration gaps across management software tools.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Recovery and Tenant Isolation",
+          "paragraphs": [
+            {
+              "text": "Security is equally about effective recovery as it is about prevention. Organizations must evaluate how backup, patching, remote access, and incident response processes interact following an incident. Recovery testing must include verifying that restored systems return to a secure and fully updated operational state.",
+              "links": []
+            },
+            {
+              "text": "For service providers managing multiple clients, strong tenant isolation is indispensable. Verification is required to ensure that policies, permissions, reports, and administrative actions remain strictly isolated between separate client environments. Detailed audit trails are also necessary to support compliance reviews, customer reporting, and internal incident investigations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Evaluating Unified Platforms",
+          "paragraphs": [
+            {
+              "text": "Many security solutions integrate RMM capabilities within broader enterprise toolsets, such as the offerings provided through the Acronis Cyber Platform. While separate specialist products can offer deep capabilities, a natively integrated platform often reduces agent counts, console switching, and complex reconciliation work.",
+              "links": [
+                {
+                  "text": "Acronis Cyber Platform",
+                  "url": "https://www.acronis.com/en/products/cloud/cyber-protect/?utm_source=bleepingcomputer&utm_medium=referral&utm_campaign=bleepingcomputer-fy26-q4-x-x-x-en-ba-genairmm6Oct-bleepingcomputer-x-a"
+                }
+              ]
+            },
+            {
+              "text": "Ultimately, the practical test for any managed service provider remains workflow continuity. Evaluators should determine whether technicians can transition smoothly from discovery to patching, investigation, containment, and recovery while preserving client, device, and incident context. Decisions should be rooted in tested security controls rather than raw feature counts.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "RMM",
+        "Cybersecurity",
+        "Managed Service Providers",
+        "Acronis",
+        "Endpoint Protection",
+        "Software Patching"
+      ],
+      "entities": [
+        "Acronis",
+        "CISA",
+        "Microsoft",
+        "N-able"
+      ],
+      "category": "Robotics",
+      "dateLabel": "October 6, 2026",
+      "modifiedLabel": "October 6, 2026",
+      "readMinutes": 4,
+      "wordCount": 708
+    }
+  },
+  "datePublished": "2026-10-06T17:22:29.258005+03:00",
+  "dateModified": "2026-10-06T17:22:29.258005+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/how-to-secure-rmm-software-controls-msps-should-test/hero.webp",
+    "card": "/forum/assets/posts/2026/10/how-to-secure-rmm-software-controls-msps-should-test/card.webp",
+    "social": "/forum/assets/posts/2026/10/how-to-secure-rmm-software-controls-msps-should-test/social.jpg",
+    "alt": {
+      "ar": "أكرونيس تكشف 8 ضوابط أمنية أساسية لتأمين برمجيات RMM لدى مزودي الخدمات",
+      "en": "Securing RMM Software: 8 Essential Controls for MSPs"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/posts/2026/10/05/security-checklist.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/how-to-secure-rmm-software-8-controls-msps-should-test/",
+      "type": "journalism",
+      "title": "How to secure RMM software: 8 controls MSPs should test"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/security/how-to-secure-rmm-software-8-controls-msps-should-test",
+  "sourceTitle": "How to secure RMM software: 8 controls MSPs should test",
+  "trendScore": 98.96,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-06T14:22:29+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/how-to-secure-rmm-software-controls-msps-should-test.json"
+}
