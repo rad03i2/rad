@@ -1,5 +1,403 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-06T16:22:29+00:00",
-  "last_published_story_id": "39bef9470eb0772832c0"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-06T16:27:09+00:00",
+  "target_publish_at": "2026-10-06T19:42:29.592410+03:00",
+  "story": {
+    "title": "Best practices for Amazon SageMaker HyperPod administration and governance",
+    "url": "https://aws.amazon.com/blogs/machine-learning/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance",
+    "domain": "aws.amazon.com",
+    "summary": "Learn how to administer Amazon SageMaker HyperPod through Amazon SageMaker Unified Studio while preserving cluster governance. This post shows platform teams how to design infrastructure boundaries, govern access, allocate shared capacity, and operate HyperPod consistently across the organization, project, cluster, and workload control layers.",
+    "published_at": "2026-10-06T15:50:23+00:00",
+    "discovered_at": "2026-10-06T15:51:36+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "robotics",
+    "category_label": "الروبوتات",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "f56c96610a01b2446771",
+    "trend": {
+      "score": 130.76,
+      "age_hours": 0.61,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Best practices for Amazon SageMaker HyperPod administration and governance",
+      "title": "Best practices for Amazon SageMaker HyperPod administration and governance | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أفضل ممارسات إدارة حوكمة Amazon SageMaker HyperPod",
+      "description": "تفاصيل إدارة Amazon SageMaker HyperPod عبر Amazon SageMaker Unified Studio مع الحفاظ على حوكمة العناقيد، وتوزيع الطاقة المشتركة، وإدارة الوصول عبر طبقات متعددة.",
+      "deck": "توضح أحدث ممارسات AWS كيفية إدارة حوسبة التعلم الآلي المتسارعة مع الحفاظ على حدود البنية التحتية الصارمة.",
+      "summary_bullets": [
+        "إدارة العناقيد عبر Amazon SageMaker Unified Studio مع فصل صلاحيات البنية التحتية عن فرق التعلم الآلي.",
+        "تصميم حدود البنية التحتية عبر أربع طبقات: المؤسسة، المشروع، العنقود، والعبء التشغيلي.",
+        "توزيع الطاقة المشتركة باستخدام سياسات IAM و EKS و Slurm لضمان الإنصاف والأمان.",
+        "الحفاظ على حوكمة العناقيد المركزية مع تمكين فرق التعلم الآلي من إطلاق الأحمال من مساحة عمل المشروع."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات حوكمة الحوسبة المشتركة",
+          "paragraphs": [
+            {
+              "text": "يوفر Amazon SageMaker HyperPod لفرق التعلم الآلي وصولاً إلى مساحات كبيرة من الحوسبة المتسارعة لتدريب النماذج وضبطها. بينما تكون الإعدادات التقنية عادةً مباشرة عند مشاركة عدة فرق لعنقود واحد، فإن التحدي الحقيقي يكمن في الحوكمة. يجب تحديد الفرق المصرح لها باستخدام العنقود، وكمية الطاقة المخصصة لكل فريق، وآلية التعامل مع المنافسة على الموارد، ومن المسؤول عند انحراف الاستخدام عن السياسات.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod",
+                  "url": "https://aws.amazon.com/sagemaker/hyperpod/"
+                }
+              ]
+            },
+            {
+              "text": "تضيف Amazon SageMaker Unified Studio بعداً آخر لهذه المعادلة، حيث تتيح ربط عنقود HyperPod بمشروع محدد، مما يسمح لأعضاء الفريق بإطلاق الأحمال من مساحة عملهم. ورغم أن هذه الميزة تزيد من سهولة الاستخدام، إلا أن تعدد الفرق التي ترى نفس العنقود يجعل ضوابط التحكم في الصلاحيات أكثر أهمية لضمان عدم تجاوز الحدود المسموح بها.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker Unified Studio",
+                  "url": "https://aws.amazon.com/sagemaker/unified-studio/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "نموذج التشغيل والفصل بين الأدوار",
+          "paragraphs": [
+            {
+              "text": "يوفر هذا الفصل بين واجهات الاستخدام وإدارة البنية التحتية نموذج تشغيلي مفيداً. يمكن لفرق البنية التحتية إدارة العناقيد عبر عمليات السحابة القياسية، بينما تُعرض الحوسبة المعتمدة لفرق التعلم الآلي في سياق مشاريعهم. يهدف هذا النهج إلى تصميم حدود البنية التحتية، وإدارة الوصول، وتوزيع الطاقة المشتركة، وتشغيل HyperPod بشكل متسق عبر المؤسسة.",
+              "links": []
+            },
+            {
+              "text": "يعتمد النموذج المقترح على فصل الإدارة التنظيمية عن وصول المشروع وتشغيل العنقود. كل طبقة من هذه الطبقات تجيب عن سؤال مختلف وتستخدم ضوابط مختلفة. يجب النظر إلى هذه الضوابط كطبقات متكاملة، حيث لا يستبدل ربط HyperPod بالعنقود ضوابط IAM أو EKS أو Slurm الأصلية، بل يضيف طبقة تعاونية فوقها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "طبقات التحكم الأربع",
+          "paragraphs": [
+            {
+              "text": "تتكون بيئة الحوكمة الجيدة من أربع طبقات رئيسية: المؤسسة، المشروع، العنقود، والعبء التشغيلي. يجب مراجعة كل طبقة في حدودها الخاصة لضمان التوافق. يشمل ذلك مراجعة أدوار المشروع، وأدوار الوصول للربط، وضوابط الوصول إلى EKS أو Slurm، وهوية العبء التشغيلي، وسياسات البيانات ومفاتيح AWS KMS، وسياسات الشبكة، وتقييدات عرض المهام، وسياسات الجدولة.",
+              "links": []
+            },
+            {
+              "text": "تُعتبر مشاريع Amazon SageMaker Unified Studio حدوداً للتعاون وليست حدود أمان تشغيلية قوية. لذلك، يجب إبقاء العنقود والجدولة وسعة المعالجات النادرة تحت حساب سعة واحد مخصص. يمكن للمستخدمين المعتمدين ومجموعات البيانات البقاء في نفس الحساب أو في حسابات مستهلكين منفصلة، مع توحيد إدارة العنقود في حساب السعة المركزي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الوصول والبيانات",
+          "paragraphs": [
+            {
+              "text": "لضمان الأمان، يجب استخدام أدوار IAM وسياسات الموارد بدلاً من مجرد عضوية المشروع للتحكم في الوصول إلى دلاء Amazon S3 ومفاتيح AWS KMS والأسرار وسجلات الحاويات. تُستخدم سياسات المشروع ووحدات النطاق (domain units) لإدارة التعاون والتمثيل. في حالة استخدام Amazon EKS، يُنصح باستخدام مساحة اسم لكل مستأجر مع RBAC وأدوار هوية Pod، وسياسات شبكة ترفض الوصول افتراضياً، وأذونات تخزين ومفاتيح KMS محددة لكل مستأجر.",
+              "links": [
+                {
+                  "text": "domain units",
+                  "url": "https://docs.aws.amazon.com/sagemaker-unified-studio/latest/adminguide/domain-units.html"
+                }
+              ]
+            },
+            {
+              "text": "في حالة استخدام Slurm، يجب الاعتماد على محاسبة Slurm مع الحسابات الهرمية، وجودة الخدمة (QoS)، وسياسات الأولوية والمشاركة العادلة، والأقسام. كما يجب استخدام هوية نظام التشغيل وأذونات الملفات، وضوابط الشبكة، ومسارات البيانات المحددة لكل مستأجر لفصل البيانات بشكل فعال.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توزيع الطاقة والجدولة",
+          "paragraphs": [
+            {
+              "text": "لتوزيع مسرعات الحوسبة المركزية بشكل عادل، يجب استخدام حوكمة مهام HyperPod في عناقيد EKS، والتي تشمل الحصص، وفئات الأولوية، والإعارة والاستعارة، والإحلال. أما في عناقيد Slurm، فيتم استخدام الأقسام الأصلية، وجودة الخدمة، والأولوية، والمشاركة العادلة، والإحلال. تجدر الإشارة إلى أن Slurm لا يوفر نموذج إعارة واستعارة مماثلاً، وتحدد هذه الضوابط الجدولية متى يحصل العبء المصرح به على الحوسبة دون منح وصولاً للمساحات أو البيانات.",
+              "links": []
+            },
+            {
+              "text": "للعزل الأقوى داخل العنقود، يمكن استخدام عقد مخصصة أو مجموعات عقد وضوابط قبول. إذا كانت المتطلبات القانونية أو التنظيمية أو الأمنية تتطلب عزلاً بنيوياً صارماً، فيجب استخدام عنقود أو حساب منفصل. يمكن لوصول المستهلكين عبر الحسابات الحفاظ على ملكية مستوى الحساب دون تكرار العنقود المركزي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تجربة الإدارة عبر Unified Studio",
+          "paragraphs": [
+            {
+              "text": "تتيح Amazon SageMaker Unified Studio لفرق التعلم الآلي التي تعمل بالفعل في مشروع اتباع مسار معتمد للوصول إلى حوسبة HyperPod المشتركة. يمكن للأعضاء العثور على العناقيد المرتبطة، ومراجعة الحالة والبيانات الوصفية، وفحص المهام والمقاييس المدعومة، والانتقال إلى JupyterLab دون الحاجة إلى استخدام قائمة بنية تحتية منفصلة. هذا يسهل عملية الإدارة مع الحفاظ على فصل الأدوار.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker Unified Studio",
+                  "url": "https://aws.amazon.com/sagemaker/unified-studio/"
+                }
+              ]
+            },
+            {
+              "text": "يُظهر هذا النموذج كيف يمكن للفرق الاستفادة من الحوسبة المعتمدة في سياق مشروعها، بينما تبقى عمليات العنقود وهويته وسياسات الجدولة تحت إدارة فريق البنية التحتية. يوفر هذا نهجاً قابلاً للتكرار لتقديم حوسبة HyperPod المعتمدة لفرق التعلم الآلي مع الحفاظ على الحوكمة الصارمة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker",
+        "HyperPod",
+        "Unified Studio",
+        "حوكمة البيانات",
+        "بنية تحتية سحابية",
+        "تعلم آلي",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon SageMaker HyperPod",
+        "Amazon SageMaker Unified Studio",
+        "Amazon SageMaker AI",
+        "AWS",
+        "Amazon EKS",
+        "Slurm",
+        "AWS KMS"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال يعتمد حصرياً على مدونة AWS الرسمية ويوضح الممارسات التقنية المقترحة لإدارة الحوكمة دون إضافة تفاصيل غير مذكورة في المصدر."
+    },
+    "en": {
+      "title": "Best Practices for Amazon SageMaker HyperPod Administration",
+      "description": "Explore best practices for administering Amazon SageMaker HyperPod through Amazon SageMaker Unified Studio while maintaining cluster governance.",
+      "deck": "A comprehensive guide details how platform teams can administer Amazon SageMaker HyperPod through Amazon SageMaker Unified Studio while preserving vital cluster governance and infrastructure boundaries.",
+      "summary_bullets": [
+        "Platform teams can connect Amazon SageMaker HyperPod clusters to projects within Amazon SageMaker Unified Studio.",
+        "Effective governance requires separating organizational administration, project access, and cluster operations across four distinct layers.",
+        "Centralized capacity management ensures scarce accelerated compute pools are shared fairly among multiple teams using native scheduler controls.",
+        "Strict identity, data, and network policies must align alongside project roles to maintain secure cluster operations."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to SageMaker HyperPod Governance",
+          "paragraphs": [
+            {
+              "text": "Machine learning teams increasingly rely on accelerated compute pools for training and fine-tuning advanced models through platforms like <a href=\"https://aws.amazon.com/sagemaker/hyperpod/\">Amazon SageMaker HyperPod</a>. While sharing a single cluster among multiple teams simplifies technical deployment, establishing robust governance remains a significant operational challenge. Platform teams must determine team access limits, capacity allocations, competition resolutions, and accountability when resource usage drifts away from established policies.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod",
+                  "url": "https://aws.amazon.com/sagemaker/hyperpod/"
+                }
+              ]
+            },
+            {
+              "text": "With the introduction of <a href=\"https://aws.amazon.com/sagemaker/unified-studio/\">Amazon SageMaker Unified Studio</a>, administrators can connect a cluster directly to a project workspace. This integration allows team members to launch workloads conveniently, but it also increases the necessity of clear visibility controls and administrative boundaries.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker Unified Studio",
+                  "url": "https://aws.amazon.com/sagemaker/unified-studio/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Four Layers of Administrative Control",
+          "paragraphs": [
+            {
+              "text": "A well-governed environment separates organizational administration, project access, and cluster operations into distinct layers. These controls span the organization, project, cluster, and workload levels. Each layer serves a specific administrative purpose and relies on targeted governance mechanisms.",
+              "links": []
+            },
+            {
+              "text": "Connecting an infrastructure cluster via SageMaker Unified Studio does not replace underlying controls such as AWS Identity and Access Management, Slurm, or Amazon Elastic Kubernetes Service. Administrators must ensure that project roles, connection access roles, network policies, and task-view restrictions are properly aligned before making the cluster available.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Centralizing Capacity and Infrastructure Boundaries",
+          "paragraphs": [
+            {
+              "text": "Projects within the development environment function primarily as collaboration boundaries rather than hard runtime security boundaries. Consequently, platform teams should keep the core scheduler, scarce accelerator capacity, and cluster infrastructure centralized within a designated capacity account.",
+              "links": []
+            },
+            {
+              "text": "While On-Demand Capacity Reservations can span multiple accounts, maintaining central ownership simplifies task governance. For strict isolation requirements driven by legal, regulatory, or security policies, administrators should rely on dedicated nodes, separate clusters, or separate accounts rather than altering core project profiles.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Tenant Isolation and Scheduler Controls",
+          "paragraphs": [
+            {
+              "text": "When managing Amazon EKS clusters, administrators can implement namespace isolation per tenant, leveraging role-based access control, tenant-specific service accounts, default-deny network policies, and targeted permissions. For Slurm environments, administrators utilize hierarchical accounts, quality of service definitions, fair-share policies, and dedicated partitions.",
+              "links": []
+            },
+            {
+              "text": "Task-scheduling controls determine when an authorized workload receives compute time, but they do not automatically grant data or namespace access. To secure underlying data services, teams should enforce AWS Key Management Service (AWS KMS) key policies, container registry permissions, and Amazon Simple Storage Service bucket restrictions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Unified Experience for Machine Learning Teams",
+          "paragraphs": [
+            {
+              "text": "Using <a href=\"https://aws.amazon.com/sagemaker/ai/\">Amazon SageMaker AI</a> interfaces and APIs alongside the unified development environment enables organizations to present approved compute capabilities directly inside the project context. Machine learning practitioners can inspect connected clusters, review status metrics, and launch JupyterLab workflows smoothly.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker/ai/"
+                }
+              ]
+            },
+            {
+              "text": "This operational separation allows infrastructure teams to maintain centralized control over underlying cloud resources while providing development teams with an approved, streamlined path to shared compute resources.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker HyperPod",
+        "Amazon SageMaker Unified Studio",
+        "Machine Learning",
+        "Cloud Governance",
+        "Infrastructure",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker HyperPod",
+        "Amazon SageMaker Unified Studio",
+        "Amazon SageMaker AI"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is synthesized exclusively from the official AWS Machine Learning Blog source material detailing administrative best practices and governance frameworks for SageMaker HyperPod."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 720,
+      "word_count_en": 535
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "f56c96610a01b2446771",
+      "title": "Best practices for Amazon SageMaker HyperPod administration and governance",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 720,
+          "word_count_en": 535
+        }
+      ]
+    }
+  ],
+  "slug": "best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/hero.webp",
+    "card": "/forum/assets/posts/2026/10/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/card.webp",
+    "social": "/forum/assets/posts/2026/10/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/social.jpg",
+    "alt": {
+      "ar": "أفضل ممارسات إدارة حوكمة Amazon SageMaker HyperPod",
+      "en": "Best Practices for Amazon SageMaker HyperPod Administration"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/ML-21129-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/inline-01.webp",
+        "width": 1400,
+        "height": 864,
+        "alt": {
+          "ar": "أفضل ممارسات إدارة حوكمة Amazon SageMaker HyperPod",
+          "en": "Figure 1: The four layers of control—organization, project, cluster, and workload. Each layer answers a different question and uses a different control, so review each at its own boundary."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/ML-21129-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/inline-02.webp",
+        "width": 1400,
+        "height": 911,
+        "alt": {
+          "ar": "أفضل ممارسات إدارة حوكمة Amazon SageMaker HyperPod",
+          "en": "Figure 2: Centralized SageMaker HyperPod capacity. The cluster and scheduler remain in one capacity account. Each tenant receives workload, identity, data, network, and task-visibility controls. Hard-isolation requiremen"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/ML-21129-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/inline-03.webp",
+        "width": 1216,
+        "height": 1050,
+        "alt": {
+          "ar": "أفضل ممارسات إدارة حوكمة Amazon SageMaker HyperPod",
+          "en": "Recommended SageMaker HyperPod administration model. A collaboration plane in SageMaker Unified Studio (organization governance, project membership and role, project, and SageMaker HyperPod connection) has scoped access—"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/ML-21129-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/inline-04.webp",
+        "width": 1400,
+        "height": 418,
+        "alt": {
+          "ar": "أفضل ممارسات إدارة حوكمة Amazon SageMaker HyperPod",
+          "en": "Figure 4: Governing identity and task visibility. Assign access through groups, scope each role to its boundary, restrict task visibility, and separate the ability to see work from the ability to act on it."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/ML-21129-4.png"
+      }
+    ]
+  }
 }
