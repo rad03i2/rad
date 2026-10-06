@@ -1,5 +1,300 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-06T16:42:29+00:00",
-  "last_published_story_id": "f56c96610a01b2446771"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-06T16:47:31+00:00",
+  "target_publish_at": "2026-10-06T20:02:29.633832+03:00",
+  "story": {
+    "title": "NTS: Authenticated Time at Meta",
+    "url": "https://engineering.fb.com/2026/10/06/production-engineering/nts-authenticated-time-at-meta",
+    "domain": "engineering.fb.com",
+    "summary": "Meta’s public time service now speaks NTS (Network Time Security, RFC 8915) at nts.meta.com. Packets are authenticated, so a device can verify the time came from us and was not modified on the way. Our NTS servers hold no per-client state. Cookie keys are derived, not stored and not replicated. We’ve open sourced everything, including [...] Read More... The post NTS: Authenticated Time at Meta appeared first on Engineering at Meta .",
+    "published_at": "2026-10-06T16:00:06+00:00",
+    "discovered_at": "2026-10-06T16:01:55+00:00",
+    "source": {
+      "name": "Meta Engineering",
+      "feed": "https://engineering.fb.com/feed/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "social"
+    },
+    "category": "apps",
+    "category_label": "التطبيقات والبرامج",
+    "score": 61,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "088095ba66780fb4f295",
+    "trend": {
+      "score": 114.7,
+      "age_hours": 0.78,
+      "corroboration_count": 0,
+      "entity_momentum": 12.0,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://engineering.fb.com/2026/10/06/production-engineering/nts-authenticated-time-at-meta/",
+      "name": "Meta Engineering",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "NTS: Authenticated Time at Meta",
+      "title": "NTS: Authenticated Time at Meta - Engineering at Meta",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "ميتا تطلق خدمة الوقت المؤمن بدعم بروتوكول NTS",
+      "description": "أعلنت ميتا عن توفير خدمة الوقت العامة المدعومة ببروتوكول NTS لضمان التحقق من صحة التوقيت، مع إتاحة كافة الشيفرات والبروتوكولات عبر المصدر المفتوح.",
+      "deck": "أعلنت شركة ميتا عن تحديث بنيتها التحتية لخدمات الوقت العامة لتشمل بروتوكول أمان الوقت الشبكي (NTS)، مما يتيح للأنظمة التحقق من موثوقية التوقيت وعدم تعرضه للتلاعب أثناء النقل.",
+      "summary_bullets": [
+        "توفير خدمة الوقت الموثوقة عبر النطاق nts.meta.com باستخدام بروتوكول NTS وفق معيار RFC 8915.",
+        "إلغاء تخزين الحالات لكل عميل على خوادم NTS، مع اشتقاق مفاتيح ملفات تعريف الارتباط دون نسخ متماثل.",
+        "إطلاق الشيفرات المصدرية بالكامل عبر مكتبة الوقت الخاصة بالشركة على منصة جيثب.",
+        "تأتي هذه الخطوة لمواجهة التحديات المتزايدة لصلاحيات الشهادات الرقمية وتقليل فترات صلاحيتها."
+      ],
+      "sections": [
+        {
+          "heading": "تأمين الوقت الرقمي في عصر تتسارع فيه التغييرات",
+          "paragraphs": [
+            {
+              "text": "أعلنت ميتا عن نقل خدمة الوقت العامة التابعة لها للعمل ببروتوكول أمان الوقت الشبكي (NTS) الموثق في المعيار RFC 8915 عبر النطاق nts.meta.com. تتيح هذه الخطوة للبطاقات والحزم البرمجية المصادقة عليها، مما يمكن الأجهزة من التحقق من أن الوقت الوارد صادر بالفعل عن الشركة ولم يتم تعديله أو العبث به في الطريق. ويمكن الرجوع إلى Meta Engineering للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Meta Engineering",
+                  "url": "https://engineering.fb.com/2026/10/06/production-engineering/nts-authenticated-time-at-meta/"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد بروتوكولات الإنترنت التأسيسية ومنها بروتوكول الوقت الشبكي (NTP) على نقل البيانات دون مصادقة منذ عام 1985، وهو ما كان مقبولاً في فترات سابقة عندما كان انحراف الساعة يشكل إزعاجاً تشغيلياً بسيطاً فحسب. أما اليوم، فقد أصبح التوقيت الدقيق عنصراً أساسياً لا غنى عنه تعتمد عليه كافة العمليات الأمنية الحرجة والقرارات الرقمية. ويمكن الرجوع إلى Oleg Obleukhov للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Oleg Obleukhov",
+                  "url": "https://engineering.fb.com/author/oleg-obleukhov/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "أهمية التوقيت الدقيق في التحقق والتحقق الآلي",
+          "paragraphs": [
+            {
+              "text": "في الوقت الحالي، تعتمد عمليات التحقق من الشهادات الرقمية وتواريخ الصلاحية مثل وسمي البدء والانتهاء على دقة الساعة المحلية للنظام. كذلك فإن فترات انتهاء صلاحية الرموز وبيانات الاعتماد، والنوافذ الزمنية لطلبات إعادة التشغيل، وترتيب السجلات والارتباط الزمني، كلها تعتمد بشكل مباشر على معرفة دقيقة ومؤكدة للوقت الحالي.",
+              "links": []
+            },
+            {
+              "text": "تعتبر هذه الحاجة ملحة للغاية في ضوء التطورات التنظيمية، حيث تغيرت سياسات إصدار الشهادات وفق قرارات منتدى المحترفين والمتصفحات، مما أدى إلى تقليص فترات صلاحية شهادات الأمان بشكل ملحوظ مقارنة بالماضي، وتطلب ذلك تحول عمليات التجديد إلى أنظمة آلية دورية تعمل دون تدخل بشري مباشر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل بروتوكول NTS عبر مرحلتين رئيسيتين",
+          "paragraphs": [
+            {
+              "text": "يعمل بروتوكول NTS على مرحلتين مفصولتين لضمان سهولة النشر والمرونة؛ تبدأ الأولى بمرحلة تأسيس المفتاح عبر بروتوكول الاتصال الآمن، حيث يتم الاتفاق على خوارزميات التشفير واشتقاق مفاتيح جلسة الاتصال، ليصدر الخادم مجموعة من ملفات تعريف الارتباط ويغلق الاتصال بعد تحديد الخادم المستهدف. بينما تتولى المرحلة الثانية التعامل مع حزم البيانات القياسية عبر البروتوكول لإتمام المصادقة.",
+              "links": []
+            },
+            {
+              "text": "حرص المهندسون في الشركة على تصميم البنية التحتية بحيث لا تحتفظ خوادم NTS بأي حالة خاصة بكل عميل على حدة، بل تُشتق مفاتيح ملفات تعريف الارتباط ديناميكياً ولا يتم تخزينها أو نسخها بشكل متماثل، وهو ما يعزز استقرار الخدمة ويمنع استنزاف موارد النظام من قبل المهاجمين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المصدر المفتوح ودعوة المجتمع التقني للمشاركة",
+          "paragraphs": [
+            {
+              "text": "في إطار جهودها المستمرة لدعم المنظومة التقنية المفتوحة، أعلنت الشركة عن إتاحة كافة مكونات المشروع كمصدر مفتوح، بما يشمل البروتوكول، والخادم، والعميل، وذلك عبر مكتبة الوقت المتاحة للجمهور على منصة جيثب لتمكين المطورين من الاستفادة منها وتطوير تطبيقاتهم.",
+              "links": []
+            },
+            {
+              "text": "تأتي هذه الخطوة استكمالاً لجهود سابقة بذلتها الشركة في بناء بنية تحتية لخدمات الوقت تتسم بدقة متناهية مقارنة بالأنظمة التقليدية، حيث سبق وأن تناولت الفرق الهندسية مراحل الانتقال من البرمجيات القديمة لتحقيق دقة فائقة وفتح الخدمة أمام عموم المستخدمين والأنظمة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "ميتا",
+        "بروتوكول NTS",
+        "الأمن السيبراني",
+        "الشبكات",
+        "المصدر المفتوح"
+      ],
+      "entities": [
+        "ميتا",
+        "Meta Engineering",
+        "GitHub"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر استناداً حصرياً إلى المقال التقني المنشور على مدونة مهندسي ميتا حول إطلاق دعم بروتوكول NTS لخدمات الوقت العامة."
+    },
+    "en": {
+      "title": "Meta Introduces NTS Support for Public Time Service",
+      "description": "Meta has updated its public time service to support Network Time Security (NTS), bringing cryptographic authentication and verifiability to internet time synchronization.",
+      "deck": "Meta has upgraded its public time service to support Network Time Security (NTS), adding packet authentication and cryptographic verifiability to foundational network timing protocols.",
+      "summary_bullets": [
+        "Meta's public time service now natively supports NTS via nts.meta.com to authenticate timing packets.",
+        "The new infrastructure features stateless NTS servers that derive cookie keys without replication.",
+        "Meta has open-sourced the entire protocol, server, and client implementation via its GitHub repository.",
+        "The changes aim to secure load-bearing time checks required for modern TLS certificates and token expirations."
+      ],
+      "sections": [
+        {
+          "heading": "Upgrading Internet Time With Cryptographic Authentication",
+          "paragraphs": [
+            {
+              "text": "Meta has announced that its public time service now speaks Network Time Security (NTS) at nts.meta.com. Under this update, packets are fully authenticated so that connecting devices can independently verify that the time data genuinely originated from Meta and was not modified in transit.",
+              "links": []
+            },
+            {
+              "text": "This rollout builds directly upon previous engineering efforts aimed at building a more accurate time service at Meta scale, which involved migrating infrastructure from ntpd to chrony, improving precision from 10 milliseconds to 100 microseconds, and opening time.meta.com to the public.",
+              "links": [
+                {
+                  "text": "building a more accurate time service at Meta scale",
+                  "url": "https://engineering.fb.com/production-engineering/ntp-service/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Why Network Time Security Matters Today",
+          "paragraphs": [
+            {
+              "text": "Traditional Network Time Protocol (NTP) has remained unauthenticated since 1985, functioning without explicit digital signatures or verified identity checks. While historical clock drift was once considered a minor operational annoyance, modern digital infrastructure relies heavily on accurate timestamps for critical security decisions.",
+              "links": []
+            },
+            {
+              "text": "Today, precise time is load-bearing across multiple core functions. Certificate validation compares notBefore and notAfter values against local clocks, token and credential expirations rely on correct timestamps, replay windows depend on accurate duration measurements, and proper log correlation requires synchronized chronologies.",
+              "links": []
+            },
+            {
+              "text": "These dependencies have grown even more pressing following shifts in industry certificate lifespans. As noted in CA/Browser Forum ballot SC-081v3, caps on publicly trusted TLS certificates continue to drop rapidly, moving automated renewal loops closer to a monthly schedule.",
+              "links": [
+                {
+                  "text": "CA/Browser Forum ballot SC-081v3",
+                  "url": "https://cabforum.org/2025/04/11/ballot-sc081v3-introduce-schedule-of-reducing-validity-and-data-reuse-periods/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "How NTS Operates in Two Distinct Phases",
+          "paragraphs": [
+            {
+              "text": "The NTS implementation functions across two distinct phases to ensure deployability. Phase 1 handles Key Establishment (NTS-KE) using TLS 1.3 over TCP port 4460, negotiated via ALPN ntske/1. During this phase, the client and server agree on an Authenticated Encryption with Associated Data (AEAD) algorithm and derive session keys directly from the TLS session.",
+              "links": []
+            },
+            {
+              "text": "Phase 2 executes Authenticated NTP using standard NTPv4 over UDP port 123 equipped with NTS extension fields. Forged packets fail verification and are dropped quietly without generating an NTS NAK, ensuring that failures remain completely indistinguishable from normal packet loss.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Stateless Server Architecture and Key Derivation",
+          "paragraphs": [
+            {
+              "text": "Meta's NTS servers maintain no per-client state. Cookie keys are dynamically derived rather than stored or replicated across a shared cluster. Servers compute sealing keys using a shared master secret combined with the current day measured in whole 24-hour periods since the Unix epoch.",
+              "links": []
+            },
+            {
+              "text": "This design completely eliminates the need for key rings, session tables, or complex distributed state synchronization mechanisms. The key exchange endpoint and the actual NTP responders operate as separate machines while remaining entirely resilient against state exhaustion attacks.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Open Source Availability and Community Adoption",
+          "paragraphs": [
+            {
+              "text": "Meta has open-sourced the entire protocol implementation, including the server and client components, making them freely available through Meta’s Time library on GitHub for developers and network administrators looking to secure their own time synchronization pipelines.",
+              "links": [
+                {
+                  "text": "Meta’s Time library on GitHub",
+                  "url": "https://github.com/facebook/time"
+                }
+              ]
+            },
+            {
+              "text": "Furthermore, the engineering team is actively encouraging software maintainers, particularly those managing NTP clients on mobile operating systems like Android or iOS, to adopt NTS support and help secure the foundational time layer of the wider internet.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Meta",
+        "NTS",
+        "Network Time Security",
+        "NTP",
+        "Cybersecurity",
+        "Open Source",
+        "TLS Certificates"
+      ],
+      "entities": [
+        "Meta",
+        "GitHub",
+        "CA/Browser Forum"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based directly on the official Meta Engineering publication."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 506,
+      "word_count_en": 568
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "088095ba66780fb4f295",
+      "title": "NTS: Authenticated Time at Meta",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 506,
+          "word_count_en": 568
+        }
+      ]
+    }
+  ],
+  "slug": "nts-authenticated-time-at-meta",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/nts-authenticated-time-at-meta/hero.webp",
+    "card": "/forum/assets/posts/2026/10/nts-authenticated-time-at-meta/card.webp",
+    "social": "/forum/assets/posts/2026/10/nts-authenticated-time-at-meta/social.jpg",
+    "alt": {
+      "ar": "ميتا تطلق خدمة الوقت المؤمن بدعم بروتوكول NTS",
+      "en": "Meta Introduces NTS Support for Public Time Service"
+    },
+    "credit": "Meta Engineering",
+    "sourceUrl": "https://engineering.fb.com/wp-content/uploads/2026/10/NTS-at-Meta-Hero.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
