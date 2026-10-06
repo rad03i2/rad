@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "fb486e0cd45f6c875a84",
+  "slug": "boosting-agentic-ai-throughput-with-intel-xeon-cpus",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/boosting-agentic-ai-throughput-with-intel-xeon-cpus/",
+    "en": "/forum/en/ai/boosting-agentic-ai-throughput-with-intel-xeon-cpus/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إنتل تعزز إنتاجية الذكاء الاصطناعي الوكيل بمعالجات Xeon 6",
+      "description": "تُظهر معالجات Intel Xeon 6 أداءً متفوقاً في معالجة مهام الذكاء الاصطناعي الوكيل، مما يرفع الإنتاجية الكلية للأنظمة المعقدة ويقلل من اختناقات البنية التحتية.",
+      "deck": "تتجاوز أنظمة الذكاء الاصطناعي الحديثة مرحلة التفاعل البسيط لتصبح وكلاء قادرين على التخطيط والتنفيذ، مما يجعل معدل الإنتاجية (Throughput) المقياس الأهم. تكشف إنتل عن تفوق معالجات Xeon 6 في التعامل مع هذه الأحمال المعقدة.",
+      "summaryBullets": [
+        "تحول الذكاء الاصطناعي الوكيل التركيز من زمن الاستجابة إلى حجم العمل المنجز في وحدة الزمن.",
+        "تتفوق معالجات Intel Xeon 6 بنسبة تصل إلى 4.5 أضعاف مقارنة بمعماريات Arm في مهام الرعاية الصحية.",
+        "تعتمد إنتل على منهجية تسجيل وإعادة تشغيل لضمان دقة قراءات الأداء في بيئات الاختبار.",
+        "تتطلب وكلاء الذكاء الاصطناعي توازناً دقيقاً بين الحوسبة والذاكرة وإدارة المدخلات والمخرجات."
+      ],
+      "sections": [
+        {
+          "heading": "تغير معايير تقييم البنية التحتية",
+          "paragraphs": [
+            {
+              "text": "لطالما ركزت نقاشات بنية تحتية الذكاء الاصطناعي على جودة النماذج وأداء المعجلات وزمن الاستدلال (Inference Latency). كان هذا المنطق سائداً عندما كانت التطبيقات تقتصر على تفاعلات بسيطة: إرسال استعلام، توليد رد، وانتهاء العملية. لكن ظهور الذكاء الاصطناعي الوكيل (Agentic AI) غيّر هذا paradigma جذرياً. الأنظمة الحديثة اليوم يُتوقع منها أن تفكر، تخطط، تسترجع معلومات، تستدعي أدوات، تنفذ إجراءات، وتتحقق من النتائج بشكل تكراري. ما يبدو للمستخدم كتفاعل واحد قد يولّد عشرات المهام المستقلة عبر مكونات برمجية متعددة قبل تقديم النتيجة النهائية. وفقاً لما نشرته [Intel Newsroom](https://www.intel.com/content/www/us/en/newsroom/news/data-center/boosting-agentic-ai-throughput-with-intel-xeon-cpus.html)، فإن المؤسسات بدأت تسأل سؤالاً عملياً أكثر: كم من العمل المفيد يمكن للنظام إنجازه مع مرور الوقت؟",
+              "links": [
+                {
+                  "text": "Intel Newsroom",
+                  "url": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/boosting-agentic-ai-throughput-with-intel-xeon-cpus.html"
+                }
+              ]
+            },
+            {
+              "text": "في العديد من نشرات الوكلاء، أصبح معدل الإنتاجية (Throughput) هو المقياس الحاسم الذي يحدد الإنتاجية النهائية. لم يعد التركيز حصرياً على سرعة توليد النموذج، بل على الكفاءة الشاملة في تدفق العمل عبر مراحل متعددة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحديات جديدة تفرضها الوكلاء",
+          "paragraphs": [
+            {
+              "text": "تتبع تطبيقات الذكاء الاصطناعي التقليدية نموذج تنفيذ مباشر: من الاستعلام إلى النموذج ثم إلى الاستجابة. أما الذكاء الاصطناعي الوكيل فيدخل في حلقات من التخطيط، واختيار الأدوات، والتنفيذ، والتحقق، والتكرار. نتيجة لذلك، تولّد أحمال العمل هذه نشاطاً أكبر بكثير عبر طبقات النظام مقارنة بأحمال الاستدلال التقليدية.",
+              "links": []
+            },
+            {
+              "text": "تكتشف المؤسسات التي تنشر وكلاء البرمجة، أو مساعدي الشركات، أو أنظمة الأتمتة التشغيلية، أن العنصر المحدد للأداء غالباً ما يكون سرعة توليد النموذج. بدلاً من ذلك، تظهر الاختناقات في تنسيق المهام، وتنفيذ الأدوات، والوصول إلى الذاكرة، وعمليات التخزين، وإدارة وقت التشغيل. يتطلب هذا التوازن بين الموارد المختلفة لضمان استمرار تدفق العمل دون توقف.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "لماذا تناسب معالجات Xeon هذه المهام؟",
+          "paragraphs": [
+            {
+              "text": "توجد مفارقة شائعة مفادها أن أداء الذكاء الاصطناعي الوكيل يمكن قياسه حصرياً بسرعة استدلال النموذج. ومع ذلك، فإن أداء المعالج المركزي (CPU) القوي يبقى أساسياً للعمليات المنطقية، وتنفيذ الأدوات، والتنسيق، وعمليات الأمان. كما تفرض أحمال العمل الوكيلية متطلبات كبيرة على الذاكرة والتخزين وموارد الإدخال/الإخراج (I/O).",
+              "links": []
+            },
+            {
+              "text": "على عكس التطبيقات التقليدية، تحتفظ الوكلاء بسجل المحادثات، وسياق التنفيذ، والمعرفة المسترجعة، والمخرجات الوسيطة، وحالة سير العمل عبر مراحل متعددة. تستمر هذه الوكلاء في استدعاء الأدوات، والوصول إلى مصادر البيانات، وإطلاق العمليات الفرعية، وتنسيق المهام المعتمدة. لذلك، يعتمد الأداء الكلي ليس فقط على قدرة الحوسبة، بل على كفاءة المنصة في نقل العمل عبر كل مرحلة من مراحل سير العمل. تتميز معالجات [Intel® Xeon® 6 processors](https://www.intel.com/content/www/us/en/newsroom/home.html#intelxeon6processors97063510060prodgroup1711466112585) بدمج التسريع المدمج مع أداء حوسبة قوي، وسعة ذاكرة كبيرة، ونطاق ترددي ذاكرة كبير، وقدرة I/O قوية، مما يتيح تنفيذاً فعالاً عبر متطلبات أحمال العمل المتنوعة.",
+              "links": [
+                {
+                  "text": "Intel® Xeon® 6 processors",
+                  "url": "https://www.intel.com/content/www/us/en/newsroom/home.html#intelxeon6processors97063510060prodgroup1711466112585"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "منهجية الاختبار وضمان الدقة",
+          "paragraphs": [
+            {
+              "text": "من التحديات المرتبطة بمعايرة أداء الذكاء الاصطناعي الوكلي أن سلوك الوكلاء في العالم الحقيقي ديناميكي بطبيعته. قد تنتج استعلامات مختلفة مسارات تنفيذ مختلفة واختيارات أدوات مختلفة. لمعالجة هذه المشكلة، اعتمدت إنتل منهجية تسجيل وإعادة تشغيل (Record-and-Replay). خلال مرحلة التسجيل، تم تنفيذ سير عمل وكلاء تمثيلية مع التقاط تكوين سير العمل وخصائص التنفيذ. أثناء إعادة التشغيل، تعالج كل منصة نفس أثر الحمل (Workload Trace) بالضبط، مما يضمن أن الاختلافات المرصودة تُعزى إلى سلوك البنية التحتية بدلاً من العشوائية على مستوى التطبيق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج الأداء في قطاع الرعاية الصحية",
+          "paragraphs": [
+            {
+              "text": "لفهم كيف تتحول قدرات المنصة إلى أداء وكلاء حقيقي، قيّمت إنتل نفس حمل العمل الحتمي (Deterministic Terminal-Bench) عبر أمثلة مبنية على معالجات Intel Xeon 6، ومعالجات AMD EPYC من الجيل الخامس، ومعماريات Arm v9.2A. تضمنت المعايرة مجموعة تمثيلية من مهام الوكلاء المنفذة بتزامن 24 مساراً خلال نافذة تقييم مدتها 60 دقيقة، مع استخدام نفس الكود والمدخلات ومسارات الوكلاء عبر جميع المنصات.",
+              "links": []
+            },
+            {
+              "text": "شملت معايير الرعاية الصحية سير عمل وكلاء تمثيلية تغطي التوثيق السريري، واسترجع الأدلة، والتحليل التشخيصي، وكشف الاحتيال، وتقييم المخاطر، والبحث الجزيئي، والتحليل الجينومي، والتشخيصات المخبرية. أظهرت النتائج أن المثال المبني على معالج Intel Xeon 6 حقق أعلى إنتاجية مهام وكلاء معيارية، مقدماً 1.66 ضعف إنتاجية المثال المبني على معالج AMD EPYC من الجيل الخامس، و4.5 أضعاف إنتاجية المثال المبني على Arm v9.2A خلال فترة التقييم الـ 60 دقيقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تفوق شامل في فئات العمل المختلفة",
+          "paragraphs": [
+            {
+              "text": "لا يقود تفوق إنتاجية معالجات Intel Xeon 6 نوع واحد من أحمال العمل. بدلاً من ذلك، تقدم معدلات إكمال مهام أعلى باستمرار عبر فئات الاستدلال، والأمان، وعمليات التحكم، مما يتيح تنفيذاً أسرع من البداية إلى النهاية لسير عمل وكلاء الرعاية الصحية الحقيقية.",
+              "links": []
+            },
+            {
+              "text": "بالنسبة لأحمال العمل التحليلية والاستدلالية، حقق Intel Xeon 6 إنتاجية أعلى بنسبة 1.67 مرة مقارنة بـ AMD EPYC، و4.67 مرة مقارنة بـ Arm. وفي أحمال معالجة البيانات الآمنة، بلغت النسبة 1.63 مرة و4 مرات على التوالي. أما في أحمال التحكم، فكان التفوق 1.61 مرة و4.14 مرة. هذا الاتساق في الأداء عبر الفئات المختلفة يؤكد أن المنصة توازن بين الحوسبة والذاكرة والتخزين والتنسيق لتقليل الاختناقات والحفاظ على العمل تحت حمل مستمر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أثر التوسع على الإنتاجية المؤسسية",
+          "paragraphs": [
+            {
+              "text": "مع توسع المؤسسات من وكلاء فرديين إلى آلاف سير العمل المتزامنة، تصبح كفاءة المنصة عاملاً حاسماً في تحديد الإنتاجية الإجمالية. المنصات التي توفر أعلى إنتاجية هي تلك التي توازن بين موارد الحوسبة والذاكرة والتخزين والتنسيق لتقليل الاختناقات. هذا يجعل معالجات Intel Xeon مناسبة بشكل جيد لمتطلبات نشرات الذكاء الاصطناعي الوكيل الحديثة، حيث يمكن للمؤسسات دعم المزيد من سير العمل المتزامنة على نفس البنية التحتية، مما يحسن الإنتاجية الإجمالية ويسرع إكمال أحمال العمل الكبيرة المدفوعة بالوكلاء.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Intel Xeon",
+        "بنية تحتية",
+        "أداء الحوسبة",
+        "وكلاء الذكاء الاصطناعي",
+        "مراكز البيانات"
+      ],
+      "entities": [
+        "Intel",
+        "Intel Xeon 6",
+        "AMD EPYC",
+        "Arm v9.2A",
+        "Agentic AI"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "6 أكتوبر 2026",
+      "modifiedLabel": "6 أكتوبر 2026",
+      "readMinutes": 5,
+      "wordCount": 895
+    },
+    "en": {
+      "title": "Intel Xeon 6 Boosts Agentic AI Throughput Performance",
+      "description": "Intel demonstrates how Xeon 6 processors deliver superior agentic AI throughput compared to alternative processor architectures in real-world workflows.",
+      "deck": "Intel highlights the growing importance of throughput in agentic AI deployments, positioning its Intel Xeon 6 processors as high-performance solutions for complex workloads.",
+      "summaryBullets": [
+        "Agentic AI workloads shift focus from basic inference latency to total system throughput and useful work over time.",
+        "Intel Xeon 6 processors deliver up to 1.66 times the throughput of 5th Gen AMD EPYC and 4.5 times that of Arm v9.2A instances in healthcare agent tasks.",
+        "A record-and-replay evaluation methodology ensures consistent, deterministic testing across diverse infrastructure platforms.",
+        "Intel Xeon 6 demonstrates higher task completion rates across analytical, reasoning, secure data processing, and control operations."
+      ],
+      "sections": [
+        {
+          "heading": "The Evolution of AI Workloads and Throughput",
+          "paragraphs": [
+            {
+              "text": "For years, infrastructure discussions surrounding artificial intelligence primarily concentrated on model quality, accelerator performance, and inference latency. This approach aligned with early AI applications that relied on simple interactions where users submitted a prompt and models generated immediate responses. However, the emergence of modern agentic AI workflows is transforming this paradigm across enterprise deployments.",
+              "links": []
+            },
+            {
+              "text": "Modern AI systems are increasingly designed to reason, plan, retrieve information, invoke tools, execute actions, validate results, and iteratively refine their behavior. A single user interaction can trigger dozens of independent tasks across multiple software components before delivering a final result. Consequently, organizations are prioritizing system throughput over simple latency metrics to determine overall productivity in complex agentic deployments.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Infrastructure Challenges in Agentic AI",
+          "paragraphs": [
+            {
+              "text": "Traditional AI applications typically follow a straightforward execution pipeline from prompt to model and response. In contrast, agentic AI introduces intricate stages including planning, tool selection, execution, validation, and iteration. These modern workloads generate significantly higher activity across the entire system stack, shifting performance bottlenecks away from mere model generation speed.",
+              "links": []
+            },
+            {
+              "text": "Organizations deploying coding agents, enterprise copilots, research assistants, and operational automation systems often encounter limitations in task orchestration, tool execution, memory access, storage operations, and runtime management. Because agents must maintain conversation history, execution context, retrieved knowledge, and workflow states across multiple execution stages, overall performance relies heavily on how efficiently platforms handle heterogeneous tasks.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Advantages of Intel Xeon Processors",
+          "paragraphs": [
+            {
+              "text": "A common misconception in the industry is that agentic AI performance depends solely on model inference speed. While strong CPU performance remains essential for reasoning, tool execution, orchestration, and security operations, agentic workloads also impose substantial demands on memory, storage, and I/O resources.",
+              "links": []
+            },
+            {
+              "text": "Enterprise-scale agent deployments are defined by high concurrency, heavy memory utilization, and continuous task execution. Utilizing Intel® Xeon® 6 processors helps organizations address these demands by combining robust compute capabilities with large memory capacity, substantial memory bandwidth, and comprehensive I/O features designed to minimize execution bottlenecks.",
+              "links": [
+                {
+                  "text": "Intel® Xeon® 6 processors",
+                  "url": "https://www.intel.com/content/www/us/en/newsroom/home.html#intelxeon6processors97063510060prodgroup1711466112585"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Evaluating Real-World Workflows",
+          "paragraphs": [
+            {
+              "text": "Benchmarking dynamic agent behavior presents inherent challenges because different prompts can generate distinct execution paths and tool selections. To overcome this, engineers adopted a record-and-replay methodology. During the recording phase, representative agent workflows captured exact execution characteristics, while the replay phase ensured every platform processed identical workload traces.",
+              "links": []
+            },
+            {
+              "text": "Evaluations assessed the deterministic Terminal-Bench workload across Intel Xeon 6 processor-based, 5th Gen AMD EPYC processor-based, and Arm v9.2A-based instances. Tests maintained 24-way concurrency over a 60-minute evaluation window across three key industry verticals: healthcare, banking and financial services, and manufacturing.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Healthcare Benchmark Results and Throughput Gains",
+          "paragraphs": [
+            {
+              "text": "The healthcare benchmark incorporated representative agent workflows spanning clinical documentation, evidence retrieval, diagnostic analysis, fraud detection, risk assessment, molecular research, genomic analysis, and laboratory diagnostics. These tasks reflect core agentic characteristics such as reasoning, retrieval, analytics, and document processing.",
+              "links": []
+            },
+            {
+              "text": "According to performance evaluations detailed by the Intel Newsroom, the Intel Xeon 6 processor-based instance achieved the highest normalized agent-task throughput during the 60-minute evaluation window. It delivered 1.66 times the throughput of the 5th Gen AMD EPYC processor-based instance and 4.5 times the throughput of the Arm v9.2A-based instance.",
+              "links": [
+                {
+                  "text": "Intel Newsroom",
+                  "url": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/boosting-agentic-ai-throughput-with-intel-xeon-cpus.html"
+                }
+              ]
+            },
+            {
+              "text": "Furthermore, the throughput advantage extended across multiple operational categories. The Intel Xeon 6 instance achieved 1.67 times higher throughput for analytical and reasoning workloads, 1.63 times higher throughput for secure data processing, and 1.61 times higher throughput for control operations compared to the 5th Gen AMD EPYC instance. These results highlight the ability of Intel data center technologies to sustain high task completion rates under continuous enterprise load.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Intel Xeon 6",
+        "Agentic AI",
+        "Artificial Intelligence",
+        "Data Center",
+        "CPU Performance",
+        "Workload Optimization"
+      ],
+      "entities": [
+        "Intel",
+        "Intel Corporation",
+        "AMD",
+        "Arm"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 6, 2026",
+      "modifiedLabel": "October 6, 2026",
+      "readMinutes": 4,
+      "wordCount": 678
+    }
+  },
+  "datePublished": "2026-10-06T23:22:30.278627+03:00",
+  "dateModified": "2026-10-06T23:22:30.278627+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/boosting-agentic-ai-throughput-with-intel-xeon-cpus/hero.webp",
+    "card": "/forum/assets/posts/2026/10/boosting-agentic-ai-throughput-with-intel-xeon-cpus/card.webp",
+    "social": "/forum/assets/posts/2026/10/boosting-agentic-ai-throughput-with-intel-xeon-cpus/social.jpg",
+    "alt": {
+      "ar": "إنتل تعزز إنتاجية الذكاء الاصطناعي الوكيل بمعالجات Xeon 6",
+      "en": "Intel Xeon 6 Boosts Agentic AI Throughput Performance"
+    },
+    "credit": "Intel Newsroom",
+    "sourceUrl": "https://intelcorp.scene7.com/is/image/intelcorp/adobestock-402341966?qlt=80&wid=1650&ts=1791308116146&dpr=off",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/boosting-agentic-ai-throughput-with-intel-xeon-cpus/inline-01.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "إنتل تعزز إنتاجية الذكاء الاصطناعي الوكيل بمعالجات Xeon 6",
+          "en": "Intel Xeon 6 Boosts Agentic AI Throughput Performance"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Intel Newsroom",
+          "en": "Image related to the report from Intel Newsroom"
+        },
+        "credit": "Intel Newsroom",
+        "sourceUrl": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/boosting-agentic-ai-throughput-with-intel-xeon-cpus.html",
+        "originalUrl": "https://intelcorp.scene7.com/is/image/intelcorp/newsroom-agenti-ai-healthcare-2?qlt=80&wid=1650&ts=1790940637742&dpr=off"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/boosting-agentic-ai-throughput-with-intel-xeon-cpus/inline-02.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "إنتل تعزز إنتاجية الذكاء الاصطناعي الوكيل بمعالجات Xeon 6",
+          "en": "Intel Xeon 6 Boosts Agentic AI Throughput Performance"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Intel Newsroom",
+          "en": "Image related to the report from Intel Newsroom"
+        },
+        "credit": "Intel Newsroom",
+        "sourceUrl": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/boosting-agentic-ai-throughput-with-intel-xeon-cpus.html",
+        "originalUrl": "https://intelcorp.scene7.com/is/image/intelcorp/newsroom-agenti-ai-healthcare-3?qlt=80&wid=1650&ts=1790940726689&dpr=off"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/boosting-agentic-ai-throughput-with-intel-xeon-cpus/inline-03.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "إنتل تعزز إنتاجية الذكاء الاصطناعي الوكيل بمعالجات Xeon 6",
+          "en": "Intel Xeon 6 Boosts Agentic AI Throughput Performance"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Intel Newsroom",
+          "en": "Image related to the report from Intel Newsroom"
+        },
+        "credit": "Intel Newsroom",
+        "sourceUrl": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/boosting-agentic-ai-throughput-with-intel-xeon-cpus.html",
+        "originalUrl": "https://intelcorp.scene7.com/is/image/intelcorp/newsroom-agenti-ai-healthcare-8?qlt=80&wid=1650&ts=1791243091754&dpr=off"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/boosting-agentic-ai-throughput-with-intel-xeon-cpus/inline-04.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "إنتل تعزز إنتاجية الذكاء الاصطناعي الوكيل بمعالجات Xeon 6",
+          "en": "Intel Xeon 6 Boosts Agentic AI Throughput Performance"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Intel Newsroom",
+          "en": "Image related to the report from Intel Newsroom"
+        },
+        "credit": "Intel Newsroom",
+        "sourceUrl": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/boosting-agentic-ai-throughput-with-intel-xeon-cpus.html",
+        "originalUrl": "https://intelcorp.scene7.com/is/image/intelcorp/newsroom-agenti-ai-healthcare-9?qlt=80&wid=1650&ts=1790943069360&dpr=off"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Intel Newsroom",
+      "url": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/boosting-agentic-ai-throughput-with-intel-xeon-cpus.html",
+      "type": "official",
+      "title": "Boosting Agentic AI Throughput with Intel® Xeon® CPUs"
+    }
+  ],
+  "sourceUrl": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/boosting-agentic-ai-throughput-with-intel-xeon-cpus.html",
+  "sourceTitle": "Boosting Agentic AI Throughput with Intel® Xeon® CPUs",
+  "trendScore": 103.69,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-06T20:22:30+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/boosting-agentic-ai-throughput-with-intel-xeon-cpus.json"
+}
