@@ -1,0 +1,385 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "0567fdbbc0eed0f542b1",
+  "slug": "building-an-evidence-grounded-agentic-security-operations-harness-on-cloudflare",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/building-an-evidence-grounded-agentic-security-operations-harness-on-cloudflare/",
+    "en": "/forum/en/ai/building-an-evidence-grounded-agentic-security-operations-harness-on-cloudflare/"
+  },
+  "locales": {
+    "ar": {
+      "title": "كلاودفلير تطلق هارنس ذكاء اصطناعي لتشغيل عمليات الأمن السيبراني",
+      "description": "تستخدم كلاودفلير فريق وكلاء ذكاء اصطناعي متخصصين لفصل جمع الأدلة عن الاستدلال، مما يوفر توصيات مدعومة بالبيانات لتحليل التنبيهات الأمنية بدقة وسرعة.",
+      "deck": "اعتمدت كلاودفلير على بنية تحتية للذكاء الاصطناعي تدمج بين الشيفرة الحتمية ووكلاء متخصصين لتحسين كفاءة تحليل التنبيهات الأمنية وتقليل الأخطاء البشرية.",
+      "summaryBullets": [
+        "فصل عملية جمع الأدلة الحتمية عن مرحلة الاستدلال بالذكاء الاصطناعي لضمان دقة النتائج وتجنب الهلوسة.",
+        "استخدام نموذج Clef مفتوح المصدر للفرز الأولي السريع للتنبؤات الكاذبة قبل إحالتها للوكلاء المتخصصين.",
+        "توظيف أربعة وكلاء متخصصين للتحليل المتوازي: حركة المرور، سياق العميل، التلبيات العالمية، والاستخبارات.",
+        "دمج بيانات الشبكة العالمية مع الحفاظ على خصوصية العملاء عبر استخدام البيانات المجمعة فقط.",
+        "تقليل العبء على المحللين البشريين من خلال تقديم رؤية موحدة للتحليلات والتوصيات التالية."
+      ],
+      "sections": [
+        {
+          "heading": "تحدّي كثافة التنبيهات الأمنية",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق الأمن السيبراني تحدياً متزايداً مع تدفق التنبيهات التي نادراً ما تصل بشكل منفرد، حيث قد يؤدي تنبيه واحد إلى ارتفاع مفاجئ في النشاط عبر البيئة بأكملها. هذا الوضع يتطلب من المحلل البشري تحديد العلاقات بين التنبيهات وفهم دلالاتها، مما قد يعيد حتى الخبراء المخضرمين إلى حالة من الإجهاد المعرفي. لسد هذه الفجوة، طورت كلاودفلير هارنس تشغيل أمني متعدد الوكلاء يعتمد على الذكاء الاصطناعي للتعامل مع هذا الكم الهائل من البيانات على نطاق واسع.",
+              "links": []
+            },
+            {
+              "text": "يعمل هذا النظام الجديد ضمن خدمة Cloudflare Managed Defense لتسريع عملية جمع البيانات وربط الاكتشافات وتجميعها، مع مراعاة المصادر الناقصة بينما تستمر التنبيهات الجديدة بالوصول. يعتمد النظام على شبكة OpenAI Daybreak Defense Network والشراكة مع Anthropic لتحليل السياق بعمق، باستخدام نماذج معتمدة مثل GPT-5.6 Cyber وMythos للتحليل المدعوم بالنماذج، بينما يتم إجراء التحليل الأولي والتقييم باستخدام نموذج Clef مفتوح المصدر.",
+              "links": [
+                {
+                  "text": "Cloudflare Managed Defense",
+                  "url": "https://www.cloudflare.com/managed-defense/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دروس مستفادة من النموذج الأولي",
+          "paragraphs": [
+            {
+              "text": "أظهر النموذج الأولي الذي اعتمد على وكيل ذكاء اصطناعي واحد عام حدوداً واضحة في التعامل مع التحقيقات المعقدة. رغم إنتاج تحليلات مفيدة، إلا أن الوكيل أنتج ادعاءات لا تدعمها الأدلة، وهو ما يُعرف بالهلوسة. السبب الجذري كان دمج التلبيات، ووصف الكاشفات، والسياسات، والاستخبارات الأمنية في موجه واحد، مما أدى إلى اختلاط أدوارها المميزة.",
+              "links": []
+            },
+            {
+              "text": "حدد فريق التطوير ثلاثة مشكلات متكررة في هذا النهج الأحادي: أولاً، تحول السياق إلى سلطة، حيث أن الاكتشاف مجرد فرضية وليس دليلاً قاطعاً على نجاح الاستغلال، وقد يطمس الوكيل العام هذا التمييز. ثانياً، انحراف النطاق، حيث قد يستعلم الوكيل عن الحساب أو النطاق الزمني أو المصدر الخاطئ، ولا يمكن الاعتماد على موجهات اللغة وحدودها. ثالثاً، اختفاء الفشل، حيث قد لا تميز النتيجة بين \"لم يتم الفحص\" و\"تم الفحص ولم يُعثر على شيء\" عند انتهاء مهلة الاستعلام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "فصل جمع الأدلة عن الاستدلال",
+          "paragraphs": [
+            {
+              "text": "لمعالجة هذه التحديات، نقلت كلاودفلير عملية جمع الأدلات وإنفاذ النطاق إلى كود التطبيق قبل بدء تحليل النموذج. على عكس الإغراء بوضع وكيل ذكاء اصطناعي في كل خطوة، لا يحتوي النصف الأمامي من النظام على أي وكلاء. بدلاً من ذلك، يعمل كود حتمي ينفذ مجموعة ثابتة من سير عمل الاستطلاع باستخدام استدعاءات واجهات برمجية مُرقّمة.",
+              "links": []
+            },
+            {
+              "text": "يجمع هذا الكود هوية العميل، وسجل الاكتشافات، وخط الأساس لحركة المرور، ونتائج الإنفاذ، وملاحظات الشبكة. يتم تخزين كل قطعة بيانات مع مصدرها وإصدارها وطابعها الزمني. هذه الخطوة تمنح كلاودفلير رؤية مزدوجة للطلب والإجراء المطبق عليه، مما يسمح للتحقيق بربط السلوك الذي أطلق التنبيه بالتحكم الذي تم تفعيله ونتيجته. كما يجعل هذا اللقطة الثابتة التقييم قابلاً للتكرار، حيث يمكن إعادة تشغيل نفس اللقطة، مما يعني أن أي اختلافات في نتائج الوكلاء المتخصصين تنبع من التفسير وليس من اختلاف البيانات المدخلة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الفرز الأولي باستخدام Clef",
+          "paragraphs": [
+            {
+              "text": "بما أن معظم التنبيهات ليست حوادث أمنية حقيقية، حيث تطلق نفس القاعدة بشكل متكرر على أنماط مرور معروفة، كان هناك حاجة لنموذج فرز خفيف الوزن. يقارن هذا النموذج كل تنبيه مع بيانات الاستطلاع للإجابة عن أسئلة حاسمة: هل تم رصد هذا الحدث لهذا العميل من قبل؟ ما كانت قرارات المحللين سابقاً؟ وهل تبدو الحركة متسقة مع السلوك البشري الطبيعي؟",
+              "links": []
+            },
+            {
+              "text": "تُظهر التنبيهات ذات الاحتمالية العالية لتكون إيجابية كاذبة قفزة في تحليل الوكلاء المتخصصين. كان نموذج Clef، الذي يعمل على Workers AI، مناسباً تماماً لهذا النوع من الاستدلال الوكيل السريع. يتم تصنيف الضوضاء المعروفة عالية الحجم بشكل حتمي كسلبية عند وصولها، وتبقى متاحة كسياق دون دخولها في قائمة العمل النشطة، مما يحمي المحللين من الإشعارات الزائدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحقيق عبر الوكلاء المتخصصين",
+          "paragraphs": [
+            {
+              "text": "للتنبيهات التي تتطلب مراجعة أعمق، يعمل وكيل منسق على تشغيل أربعة وكلاء متخصصين بالتوازي. يراجع وكيل تحليل حركة مرور سلوك الطلبات والتغيرات التاريخية والإنفاذ. يراجع وكيل سياق العميل التنبيهات السابقة والتدابير المتخذة وقرارات المحللين. يقارن وكيل التلبيات العالمية النشاط مع إشارات على مستوى الإنترنت مع الحفاظ على الخصوصية. ويتحقق وكيل الاستخبارات الأمنية من المؤشرات المقبولة مسبقاً في التنبيه أو القضية.",
+              "links": []
+            },
+            {
+              "text": "يجمع وكيل التوليف النتائج المصنفة من هؤلاء الوكلاء في نصيحة واحدة. لا يمكن لهذا الوكيل جلب أدلة جديدة أو اختيار تصنيف خارج المفردات المعتمدة. الحفاظ على ضيق كل مهمة يجعل من الأسهل اكتشاف الادعاءات غير المدعومة ويجعل التوصيات أسهل في التدقيق. هذا النهج يضمن أن كل تقييم واعٍ بما سبقه: التنبيه، النمط، والعميل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دمج التلبيات العالمية مع الخصوصية",
+          "paragraphs": [
+            {
+              "text": "تعرف أداة الأمن بما حدث داخل البيئة التي تم نشرها فيها، لكنها تعرف القليل عن العالم الخارجي. لذلك، تقارن كلاودفلير التنبيه مع الأنماط المرصودة عبر شبكتها العالمية. على سبيل المثال، قد يكون عنوان IP يستهدف موقعاً واحداً، أو يفحص آلاف المواقع، أو يظهر لأول مرة. تحمل هذه الأنماط أوزاناً مختلفة في التقييم.",
+              "links": []
+            },
+            {
+              "text": "للحفاظ على خصوصية العملاء، يعمل وكيل التلبيات العالمية فقط مع البيانات المجمعة؛ فهو لا يستقبل أبداً السجلات الفردية أو هوية عميل آخر. يجمع هذا المنظور ميزات من خدمات CDN وWAF وDDoS وTurnstile وRate Limiting والاستخبارات الأمنية Cloudforce One. يزن وكيل التوليف السمعة العالمية وسجل العميل، مما يضمن أن النمط الشائع عالمياً يمكن استخدامه على أساس كل عميل، دون أن يعني تلقائياً حملة واسعة النطاق لجميع العملاء.",
+              "links": [
+                {
+                  "text": "CDN",
+                  "url": "https://www.cloudflare.com/products/cdn/"
+                },
+                {
+                  "text": "WAF",
+                  "url": "https://www.cloudflare.com/products/waf/"
+                },
+                {
+                  "text": "DDoS",
+                  "url": "https://www.cloudflare.com/products/ddos/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الاستمرارية في اتخاذ القرار",
+          "paragraphs": [
+            {
+              "text": "تسجل وثيقة الاستطلاع سجل التنبيه الخاص به، بما في ذلك عدد مرات إطلاق تنبيه الخدمة، وكمية منها تم تصنيفها كإيجابية كاذبة، وما استنتجه محللو الدفاع المُدار. نمط الهجوم الذي كان دائماً بريئاً في عينات المحللين هو كائن مختلف تماماً عن أول ظهور لشيء جديد، ويتم إخطار الوكلاء المتخصصين بأي منهما ينظرون إليه.",
+              "links": []
+            },
+            {
+              "text": "يتم استرجاع السياق الخلفي المعتمد من التنبيهات والقضايا السابقة، مما يعني أن استنتاجات الأمس تُنقل إلى قرار اليوم. هذا يخلق استمرارية في المعرفة ويمنع إعادة اكتشاف العجلة، مما يسمح للفرق بالتركيز على حل التنبيهات الأمنية ونشر التخفيفات بدلاً من إعادة تحليل المعلومات المتوفرة بالفعل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "الأمن السيبراني",
+        "كلاودفلير",
+        "وكلاء ذكاء اصطناعي",
+        "التلبيات",
+        "Clef",
+        "العمليات الأمنية"
+      ],
+      "entities": [
+        "كلاودفلير",
+        "OpenAI",
+        "Anthropic",
+        "Clef",
+        "Cloudflare Managed Defense"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "7 أكتوبر 2026",
+      "modifiedLabel": "7 أكتوبر 2026",
+      "readMinutes": 6,
+      "wordCount": 959
+    },
+    "en": {
+      "title": "Cloudflare Details Agentic Security Operations Harness",
+      "description": "Cloudflare Managed Defense introduces an AI agent harness combining Workers, deterministic evidence collection, and global telemetry for threat analysis.",
+      "deck": "Cloudflare has detailed a new multi-AI-agent security operations harness designed to tackle the alert paradox for security analysts at global scale.",
+      "summaryBullets": [
+        "Cloudflare Managed Defense employs specialized AI agents built on Workers and global network telemetry to analyze security alerts.",
+        "The system separates deterministic evidence collection from model inference to deliver grounded recommendations to analysts.",
+        "Initial analysis and scoring utilize Clef, Cloudflare’s open-source decision model running on Workers AI.",
+        "The framework integrates approved models from partners including the OpenAI Daybreak Defense Network and Anthropic."
+      ],
+      "sections": [
+        {
+          "heading": "Tackling the Alert Paradox with Multi-Agent Systems",
+          "paragraphs": [
+            {
+              "text": "Security alerts rarely arrive one at a time, often causing spikes across an environment that overwhelm human analysts. To address this alert paradox, Cloudflare has introduced a built-in, multi-AI-agent security operations harness for Cloudflare Managed Defense. The system speeds up data gathering, connects and aggregates detections, and accounts for missing sources while new alerts continue to arrive.",
+              "links": [
+                {
+                  "text": "Cloudflare Managed Defense",
+                  "url": "https://www.cloudflare.com/managed-defense/"
+                }
+              ]
+            },
+            {
+              "text": "According to the Cloudflare Blog, early prototypes revealed the limitations of relying on a single general-purpose agent. Flattening telemetry, detector descriptions, policies, and threat intelligence into one prompt caused distinct roles to merge, resulting in hallucinations where context became authority, scope drifted, and evidence retrieval failures disappeared.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/agentic-security-operations/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Deterministic Reconnaissance and Scope Enforcement",
+          "paragraphs": [
+            {
+              "text": "To solve the challenges of single-shot AI agents, Cloudflare moved evidence collection and scope enforcement into application code before any model analysis begins. Before calling inference, deterministic code runs a fixed set of reconnaissance workflows with versioned API calls to gather identity, detection history, traffic baselines, enforcement outcomes, and network observations.",
+              "links": []
+            },
+            {
+              "text": "This fixed reconnaissance snapshot makes evaluation reproducible. By ensuring that identical snapshots can be replayed, differences between specialist AI agent findings stem from interpretation rather than retrieval discrepancies.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Lightweight Triage and Open-Source Decision Models",
+          "paragraphs": [
+            {
+              "text": "Because many alerts are repetitive background noise rather than active incidents, paging analysts every time increases the risk of missing real threats. Cloudflare utilizes Clef, an open-source decision model running on Workers AI, to quickly compare alerts with reconnaissance data.",
+              "links": [
+                {
+                  "text": "Clef",
+                  "url": "https://blog.cloudflare.com/clef-decision-models/"
+                }
+              ]
+            },
+            {
+              "text": "Known high-volume noise is deterministically classified as passive upon arrival, remaining available as context while skipping active queues. Alerts with a high likelihood of being false positives bypass the specialist AI agents entirely.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Specialist AI Agents and Advanced Model Integration",
+          "paragraphs": [
+            {
+              "text": "For alerts requiring deeper investigation, a coordinator AI agent runs four specialist agents in parallel: traffic analysis, customer context, global telemetry, and threat intelligence. A synthesis AI agent then combines their typed findings into a single advisory without being able to fetch new evidence or choose classifications outside approved vocabularies.",
+              "links": []
+            },
+            {
+              "text": "For deeper model-backed analysis, Cloudflare incorporates approved models from the OpenAI Daybreak Defense Network and a partnership with Anthropic, utilizing models such as GPT-5.6 Cyber and Mythos.",
+              "links": [
+                {
+                  "text": "OpenAI Daybreak Defense Network",
+                  "url": "https://openai.com/daybreak/partners/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Leveraging Global Network Telemetry",
+          "paragraphs": [
+            {
+              "text": "Cloudflare compares incoming alerts with patterns observed across its massive global network to determine whether an IP is targeting a single site, scanning thousands, or appearing for the first time. To preserve customer privacy, the global telemetry specialist relies strictly on aggregates without receiving individual records or identities from other customers.",
+              "links": []
+            },
+            {
+              "text": "This holistic security overview combines intelligence features derived from multiple Cloudflare pillars, ensuring that global reputation is weighed alongside customer-specific historical dispositions to assist Managed Defense Analysts effectively.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Managed Defense",
+        "Artificial Intelligence",
+        "Security Operations",
+        "Workers AI",
+        "Threat Intelligence"
+      ],
+      "entities": [
+        "Cloudflare",
+        "OpenAI",
+        "Anthropic"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 7, 2026",
+      "modifiedLabel": "October 7, 2026",
+      "readMinutes": 3,
+      "wordCount": 524
+    }
+  },
+  "datePublished": "2026-10-07T20:02:50.264981+03:00",
+  "dateModified": "2026-10-07T20:02:50.264981+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/building-an-evidence-grounded-agentic-security-operations-harness-on-cloudflare/hero.webp",
+    "card": "/forum/assets/posts/2026/10/building-an-evidence-grounded-agentic-security-operations-harness-on-cloudflare/card.webp",
+    "social": "/forum/assets/posts/2026/10/building-an-evidence-grounded-agentic-security-operations-harness-on-cloudflare/social.jpg",
+    "alt": {
+      "ar": "كلاودفلير تطلق هارنس ذكاء اصطناعي لتشغيل عمليات الأمن السيبراني",
+      "en": "Cloudflare Details Agentic Security Operations Harness"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M32R921QMDZ1S2MHB3M7Q85H.01M32R93AJ8Q0D22GYW0163M3F.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/building-an-evidence-grounded-agentic-security-operations-harness-on-cloudflare/inline-01.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "كلاودفلير تطلق هارنس ذكاء اصطناعي لتشغيل عمليات الأمن السيبراني",
+          "en": "Building an evidence-grounded agentic security operations harness on Cloudflare"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/agentic-security-operations/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M32R921QMDZ1S2MHB3M7Q85H.01M32R93AJ8Q0D22GYW0163M3F.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/building-an-evidence-grounded-agentic-security-operations-harness-on-cloudflare/inline-02.webp",
+        "width": 872,
+        "height": 1050,
+        "alt": {
+          "ar": "كلاودفلير تطلق هارنس ذكاء اصطناعي لتشغيل عمليات الأمن السيبراني",
+          "en": "Cloudflare Details Agentic Security Operations Harness"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Using a general AI agent can lead to mistakes and scope drift. Cloudflare Managed Defense, as seen here, uses a team of specialized AI agents to improve quality and context."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/agentic-security-operations/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M4BHPEPPBT19Q6RV3QJRCPDT.01M4BHPYCW3AAAEHAJWQC0QNZC.png&w=1430&h=1722&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/building-an-evidence-grounded-agentic-security-operations-harness-on-cloudflare/inline-03.webp",
+        "width": 1400,
+        "height": 952,
+        "alt": {
+          "ar": "كلاودفلير تطلق هارنس ذكاء اصطناعي لتشغيل عمليات الأمن السيبراني",
+          "en": "Cloudflare Details Agentic Security Operations Harness"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "There are pitfalls to relying on just one main AI agent, as seen above. Cloudflare Managed Defense uses a different approach, described below."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/agentic-security-operations/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M4BH6DPW8371PN4Y8RNVY4BM.01M4BH745VB1E74PA33W0J698N.png&w=1430&h=972&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/building-an-evidence-grounded-agentic-security-operations-harness-on-cloudflare/inline-04.webp",
+        "width": 1400,
+        "height": 772,
+        "alt": {
+          "ar": "كلاودفلير تطلق هارنس ذكاء اصطناعي لتشغيل عمليات الأمن السيبراني",
+          "en": "Cloudflare Details Agentic Security Operations Harness"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Example analysis from the global telemetry specialist AI agent for a customer comparing global activity to customer-specific activity."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/agentic-security-operations/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M4BGW6S9Z2XFER129BBB7681.01M4BGWSVQW21PD5TGKCQKJE1R.png&w=1430&h=790&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/agentic-security-operations/",
+      "type": "official",
+      "title": "Building an evidence-grounded agentic security operations harness on Cloudflare"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/agentic-security-operations",
+  "sourceTitle": "Building an evidence-grounded agentic security operations harness on Cloudflare",
+  "trendScore": 113.89,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-07T17:02:50+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/building-an-evidence-grounded-agentic-security-operations-harness-on-cloudflare.json"
+}
