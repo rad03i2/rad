@@ -1,5 +1,419 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-07T22:02:51+00:00",
-  "last_published_story_id": "95b68c5e999debe42d3d"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-07T22:07:49+00:00",
+  "target_publish_at": "2026-10-08T01:22:51.142289+03:00",
+  "story": {
+    "title": "Automate remediation post AWS DevOps Agent investigation",
+    "url": "https://aws.amazon.com/blogs/machine-learning/automate-remediation-post-aws-devops-agent-investigation",
+    "domain": "aws.amazon.com",
+    "summary": "AWS DevOps Agent can diagnose production incidents but is kept in observe-and-report mode so it does not change resources directly. This post shows how to use AWS Lambda Durable Functions, Amazon EventBridge, and Amazon Bedrock to turn its investigation summaries into pre-validated fixes an on-call engineer can approve with a single action.",
+    "published_at": "2026-10-07T15:46:49+00:00",
+    "discovered_at": "2026-10-07T15:51:43+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "a4ae87b901ebb735cb43",
+    "trend": {
+      "score": 109.47,
+      "age_hours": 6.34,
+      "corroboration_count": 0,
+      "entity_momentum": 13.93,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/automate-remediation-post-aws-devops-agent-investigation/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Automate remediation post AWS DevOps Agent investigation",
+      "title": "Automate remediation post AWS DevOps Agent investigation | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أتمتة المعالجة بعد تشخيصات وكيل ديف أوبس في أيه دبليو إس",
+      "description": "تعرف على كيفية دمج وظائف لامدا المعمرة وإيفنت بريدج وبيدروك لتحويل تقارير وكيل ديف أوبس في أيه دبليو إس إلى إصلاحات جاهزة للموافقة البشرية السريعة.",
+      "deck": "تقدم منصة أيه دبليو إس حلاً متكاملاً لتحويل تقارير التشخيص الآلية لحوادث الإنتاج إلى إصلاحات جاهزة ومتحقق منها مسبقاً بموافقة أحادية.",
+      "summary_bullets": [
+        "الاعتماد على وضع المراقبة والتقرير في وكيل ديف أوبس لمنع التغييرات غير المخطط لها.",
+        "استخدام وظائف لامدا المعمرة لبناء مسارات عمل ذكية وآمنة دون تعقيدات إدارة البنية التحتية.",
+        "تفعيل دور أمازون بيدروك في تحليل المشكلات واقتراح أدوات المعالجة من قائمة مخصصة.",
+        "الفصل بين العمليات للقراءة فقط التي تعمل تلقائياً وتلك المعدلة التي تتطلب موافقة بشرية."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات حوادث الإنتاج ومعضلة التحكم",
+          "paragraphs": [
+            {
+              "text": "تواجه المنظمات التي تشغل أحمال عمل إنتاجية على خدمات الحوسبة السحابية تحديات مستمرة في تقليص الوقت الفاصل بين اكتشاف الحوادث وتشخيصها ومعالجتها بشكل جذري. وغالباً ما يضطر مهندسو المناوبة إلى الاستيقاظ في منتصف الليل لتشخيص الأعطال عبر مكونات التطبيق المختلفة وتحديد الأسباب الجذرية وتطبيق الإصلاحات اللازمة يدوياً. ويهدف استخدام [AWS DevOps Agent] إلى معالجة الجزء الأول من هذه المعادلة عبر الفحص التلقائي للحوادث طوال اليوم مستنداً إلى المقاييس والسجلات والطبولوجيا المرتبطة، لتقديم تحليلات دقيقة للأسباب الجذرية والإجراءات الموصى بها للحل دون تدخل مباشر.",
+              "links": [
+                {
+                  "text": "AWS DevOps Agent",
+                  "url": "https://aws.amazon.com/devops-agent/"
+                }
+              ]
+            },
+            {
+              "text": "وللحفاظ على السيطرة الكاملة ومنع التغييرات غير المقصودة في البنية التحتية الحية، تفضل المؤسسات عادة إبقاء وكلاء المراقبة التابعة لها في وضع المراقبة والتقرير فقط. وفي هذا النمط، يكتفي الوكيل بتشخيص المشكلات دون تعديل موارد الإنتاج مباشرة، مما يتطلب وجود مسار عمل تكميلي آمن لتحويل هذه الرؤى والمخرجات التشخيصية إلى أفعال تنفيذية ملموسة بعد مراجعتها واعتمادها من قبل الفريق التقني المختص.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بناء سير عمل المعالجة التلقائية",
+          "paragraphs": [
+            {
+              "text": "لتجسيد هذا التكامل الفعال، يتم توظيف قدرات متقدمة تشمل استخدام [AWS Lambda Durable Functions] كجزء من خدمة الحوسبة الخادمة، إلى جانب الاعتماد على [Amazon EventBridge] لتوجيه الأحداث، وتوظيف [Amazon Bedrock] للتحليل المعرفي المتقدم. يهدف هذا النهج الهندسي إلى خلق مسار عمل أوتوماتيكي متكامل يكمل دور وكيل ديف أوبس في إنجاز خطوة حل المشكلات بكفاءة عالية، مما يسهم في خفض متوسط وقت الإصلاح وإعفاء المهندسين من الأعمال التشخيصية المتكررة.",
+              "links": [
+                {
+                  "text": "AWS Lambda Durable Functions",
+                  "url": "https://aws.amazon.com/lambda/lambda-durable-functions/"
+                },
+                {
+                  "text": "Amazon EventBridge",
+                  "url": "https://aws.amazon.com/eventbridge/"
+                },
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "تتيح الوظائف المعمرة بناء تطبيقات مرنة ومتعددة الخطوات إضافة إلى سير عمل مدعوم بالذكاء الاصطناعي قادراً على العمل لمدة تصل إلى عام كامل دون الحاجة لإدارة بنية تحتية إضافية أو كتابة رموز مخصصة لإدارة الحالة ومعالجة الأخطاء. وتقوم هذه الوظائف تلقائياً بتثبيت النقاط المرجعية للتقدم وتعليق التنفيذ أثناء المهام طويلة الأجل والتعافي من الإخفاقات لضمان استمرار العمل بموثوقية عالية رغم الانقطاعات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خطوات المعالجة وأدوار الأنظمة الذكية",
+          "paragraphs": [
+            {
+              "text": "يبدأ مسار العمل عندما يكمل وكيل ديف أوبس تحقيقه في الحادث ويصدر حدثاً يحتوي على الأعراض والنتائج وتحليل السبب الجذري. يتلقى حدث اكتمال التحقيق عبر نظام التوجيه ليقوم بتشغيل الوظيفة البرمجية المخصصة محملة بمحتوى الحادث. وتقوم وظيفة لامدا بتغليف ملخص التحقيق واستدعاء الوظيفة المعمرة المسؤولة عن معالجة الحوادث.",
+              "links": []
+            },
+            {
+              "text": "في هذه المرحلة، ترسل الوظيفة المعمرة سياق التحقيق إلى نموذج الذكاء الاصطناعي لتحليل النتائج والبحث عن المعالجات المتاحة. يقوم النموذج بتحديد وسرد أدوات الإصلاح المتاحة من قائمة مخصصة ومعتمدة لشرائح الوظائف المحددة بدقة. ويقترح النموذج إجراءات علاجية محددة بناءً على نتائج التحقيق والأدوات المتاحة، لتبدأ مرحلة اتخاذ القرار الآلي أو البشري بحسب طبيعة التغيير المطلوب تنفيذه في النظام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الفصل بين العمليات الآلية والموافقة البشرية",
+          "paragraphs": [
+            {
+              "text": "يتعامل النظام مع العمليات المخصصة للقراءة فقط بشكل مستقل تماماً، حيث تقوم الوظيفة المعمرة بتشغيل أدوات الإصلاح ذات الصلة بشكل آلي. أما بالنسبة للتغييرات التي تطرأ على البنية التحتية وتستوجب تعديل الحالة، فإن سير العمل يعلق التنفيذ مؤقتاً وينتظر الحصول على الموافقة البشرية قبل المضي قدماً في الخطوات التالية. وهنا تبرز القيمة الحقيقية للوظائف المعمرة في الحفاظ على حالة التقدم لأسابيع أو أيام دون استهلاك موارد حوسبية حتى يتم تلقي إشارة الاعتماد.",
+              "links": []
+            },
+            {
+              "text": "بمجرد حصول النظام على الإشارة المطلوبة، تستأنف الوظيفة المعمرة عملها من حيث توقفت لتطبيق إجراءات الإصلاح الفعلية على البنية التحتية مستخدمة الأدوات المحددة. ويعمل هذا التنسيق كحلقة وكيلية تتولى استدعاء النماذج وتثبيت النتائج بشكل تكراري حتى اكتمال المعالجة ورفع مستوى الأمان والتدقيق في كافة العمليات المنفذة عبر المنصة السحابية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الأدوات والتجهيزات الميدانية للاختبار",
+          "paragraphs": [
+            {
+              "text": "تعتمد الأمانة التشغيلية على فرض قائمة مسمى بدقة لأدوات الإصلاح المصرح بها، حيث تمثل كل أداة وظيفة برمجية مخصصة ومصممة لأداء مهمة محددة بدقة مثل قراءة تكوين الدالة أو تحديث سياسات الأمان والهوية. ولا يُسمح لنموذج الذكاء الاصطناعي سوى باختيار واستدعاء الأدوات من هذه المجموعة المعتمدة مسبقاً، مما يحافظ على نطاق الإجراءات التلقائية تحت سيطرة صارمة ومدروسة.",
+              "links": []
+            },
+            {
+              "text": "لإثبات كفاءة سير العمل الشامل، يتم محاكاة سيناريو عملي شائع يتضمن دالة تجاوز الحد الأقصى لوقت التنفيذ المخصص، مما يمنح الوكيل السحابي حادثاً حقيقياً للتحقيق وإطلاق مسار المعالجة. ويمكن نشر هذه الموارد وتفعيلها باستخدام أدوات التطوير المتاحة مثل [AWS Command Line Interface] أو مجموعة التطوير السحابي المرتبطة بالمشروع.",
+              "links": [
+                {
+                  "text": "AWS Command Line Interface",
+                  "url": "https://aws.amazon.com/cli"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "DevOps",
+        "الذكاء الاصطناعي",
+        "الحوسبة السحابية",
+        "أتمتة",
+        "Amazon Bedrock"
+      ],
+      "entities": [
+        "AWS DevOps Agent",
+        "Amazon EventBridge",
+        "AWS Lambda Durable Functions",
+        "Amazon Bedrock",
+        "AWS Command Line Interface"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر استناداً حصرياً إلى المدونة الرسمية لخدمات التعلم الآلي في أيه دبليو إس، مع الالتزام التام بالروابط والكيانات المذكورة دون أي إضافة خارجية."
+    },
+    "en": {
+      "title": "Automate Remediation with AWS DevOps Agent and Bedrock",
+      "description": "Learn how to use AWS Lambda Durable Functions, Amazon EventBridge, and Amazon Bedrock to automate remediation workflows following incident investigations.",
+      "deck": "A new architectural pattern combines autonomous incident triage with pre-validated remediation steps to help engineers resolve production issues quickly and securely.",
+      "summary_bullets": [
+        "AWS DevOps Agent operates in observe-and-report mode to diagnose production incidents without modifying resources directly.",
+        "Amazon EventBridge triggers automated workflows using investigation summaries and findings.",
+        "Amazon Bedrock analyzes findings and proposes precise remediation actions from a curated allowlist.",
+        "AWS Lambda Durable Functions manage multi-step AI workflows, checkpointing progress and pausing for human approval."
+      ],
+      "sections": [
+        {
+          "heading": "Bridging Incident Diagnosis and Remediation",
+          "paragraphs": [
+            {
+              "text": "Reducing the time between incident detection, investigation, and remediation remains a critical priority for engineering teams running production workloads. When an issue occurs, on-call engineers typically need to diagnose problems across multiple application components, identify root causes, and apply fixes under high-pressure conditions. While the [AWS DevOps Agent] can autonomously triage incidents all day using correlated metrics, logs, and topologies to provide root cause analysis, organizations often maintain observability tools in an observe-and-report mode to retain control over production changes.",
+              "links": [
+                {
+                  "text": "AWS DevOps Agent",
+                  "url": "https://aws.amazon.com/devops-agent/"
+                }
+              ]
+            },
+            {
+              "text": "To bridge the gap between diagnosis and safe execution, technical guides demonstrate how to integrate [Amazon Bedrock], [Amazon EventBridge], and durable execution capabilities to transform investigation summaries into pre-validated fixes. This approach aims to reduce mean time to resolution while keeping human oversight central to mutating actions.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "Amazon EventBridge",
+                  "url": "https://aws.amazon.com/eventbridge/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Orchestrating Workflows with Durable Functions",
+          "paragraphs": [
+            {
+              "text": "Building resilient multi-step applications requires robust state management and error recovery. Utilizing [AWS Lambda Durable Functions] allows developers to construct AI workflows that can run for up to one year without custom state management code. These functions automatically checkpoint progress and recover from interruptions while maintaining reliable execution during long-running tasks.",
+              "links": [
+                {
+                  "text": "AWS Lambda Durable Functions",
+                  "url": "https://aws.amazon.com/lambda/lambda-durable-functions/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Step-by-Step Remediation Workflow",
+          "paragraphs": [
+            {
+              "text": "The automated workflow begins when the diagnostic agent completes an investigation and emits an event containing symptoms, findings, and root cause analysis. [Amazon EventBridge] receives this event and invokes the initial Lambda function, which packages the investigation summary and passes it to the durable orchestrator function.",
+              "links": [
+                {
+                  "text": "Amazon EventBridge",
+                  "url": "https://aws.amazon.com/eventbridge/"
+                }
+              ]
+            },
+            {
+              "text": "Next, [Amazon Bedrock] analyzes the context and reviews a curated allowlist of approved remediation tools. For read-only operations, the orchestrator executes tools autonomously. For actions that modify infrastructure state, the workflow suspends execution to wait for a human approval signal before proceeding.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Maintaining Safety and Control with Human Approval",
+          "paragraphs": [
+            {
+              "text": "To keep automated actions safe and auditable, the system enforces a strict allowlist where each tool is a purpose-built function handling a specific task. By distinguishing between read-only and mutating operations, the architecture ensures that risky changes pause execution until an engineer reviews the pre-validated plan. The orchestrator checkpoints its progress during this pause, consuming no compute resources until the approval signal is received.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deployment and Setup Options",
+          "paragraphs": [
+            {
+              "text": "Teams can deploy the entire solution architecture using the [AWS Cloud Development Kit]. Prerequisites include configuring the [AWS Command Line Interface] and optionally utilizing specialized agent toolkits to execute natural language prompts for incident simulation and stack deployment.",
+              "links": [
+                {
+                  "text": "AWS Cloud Development Kit",
+                  "url": "https://aws.amazon.com/cdk/"
+                },
+                {
+                  "text": "AWS Command Line Interface",
+                  "url": "https://aws.amazon.com/cli"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "DevOps",
+        "Artificial Intelligence",
+        "Cloud Computing",
+        "Automation",
+        "Serverless"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Bedrock",
+        "Amazon EventBridge",
+        "AWS Lambda"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based on official AWS Machine Learning Blog documentation detailing workflow architecture and components."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 385,
+      "word_count_en": 506
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 706,
+      "word_count_en": 466
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "a4ae87b901ebb735cb43",
+      "title": "Automate remediation post AWS DevOps Agent investigation",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 385,
+          "word_count_en": 506
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 706,
+          "word_count_en": 466
+        }
+      ]
+    }
+  ],
+  "slug": "automate-remediation-post-aws-devops-agent-investigation",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/automate-remediation-post-aws-devops-agent-investigation/hero.webp",
+    "card": "/forum/assets/posts/2026/10/automate-remediation-post-aws-devops-agent-investigation/card.webp",
+    "social": "/forum/assets/posts/2026/10/automate-remediation-post-aws-devops-agent-investigation/social.jpg",
+    "alt": {
+      "ar": "أتمتة المعالجة بعد تشخيصات وكيل ديف أوبس في أيه دبليو إس",
+      "en": "Automate Remediation with AWS DevOps Agent and Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/automate-remediation-post-aws-devops-agent-investigation/inline-01.webp",
+        "width": 1320,
+        "height": 980,
+        "alt": {
+          "ar": "أتمتة المعالجة بعد تشخيصات وكيل ديف أوبس في أيه دبليو إس",
+          "en": "Architecture diagram showing AWS DevOps Agent sending an investigation-completed event to Amazon EventBridge, which triggers an AWS Lambda function that invokes an AWS Lambda durable function; the durable function calls"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/automate-remediation-post-aws-devops-agent-investigation/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/automate-remediation-post-aws-devops-agent-investigation/inline-02.webp",
+        "width": 1400,
+        "height": 402,
+        "alt": {
+          "ar": "أتمتة المعالجة بعد تشخيصات وكيل ديف أوبس في أيه دبليو إس",
+          "en": "AWS DevOps Agent console with a prompt asking what is happening with the devops-agent-timeout function"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/automate-remediation-post-aws-devops-agent-investigation/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/automate-remediation-post-aws-devops-agent-investigation/inline-03.webp",
+        "width": 1343,
+        "height": 799,
+        "alt": {
+          "ar": "أتمتة المعالجة بعد تشخيصات وكيل ديف أوبس في أيه دبليو إس",
+          "en": "AWS DevOps Agent investigation in progress, correlating Amazon CloudWatch metrics, logs, and the function configuration"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/automate-remediation-post-aws-devops-agent-investigation/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/automate-remediation-post-aws-devops-agent-investigation/inline-04.webp",
+        "width": 1400,
+        "height": 443,
+        "alt": {
+          "ar": "أتمتة المعالجة بعد تشخيصات وكيل ديف أوبس في أيه دبليو إس",
+          "en": "CloudWatch log group showing the parsed investigation summary with symptoms, root causes, contributing causes, and investigation gaps"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/automate-remediation-post-aws-devops-agent-investigation/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-5.png"
+      }
+    ]
+  }
 }
