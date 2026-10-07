@@ -1,0 +1,319 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "0893f87c887f7e22117c",
+  "slug": "how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock/",
+    "en": "/forum/en/ai/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Qlik تبني الذكاء الاصطناعي المؤسسي الموثوق عبر Amazon Bedrock",
+      "description": "تستعرض Qlik كيف بنّت Qlik Answers على Amazon Bedrock لتقديم إجابات مدعومة بالمصادر لعملائها، مع معمارية متعددة الوكلاء تضمن السيادة على البيانات على نطاق عالمي.",
+      "deck": "تواجه المؤسسات تحدياً في الحصول على إجابات موثوقة وسريعة من بياناتها. تقدم Qlik حلاً جديداً يجمع بين الذكاء الاصطناعي التوليدي والبنية التحتية السحابية لضمان الدقة والامتثال.",
+      "summaryBullets": [
+        "أطلقت Qlik منتج Qlik Answers في فبراير 2026، مستهدفةً أكثر من 40,000 عميل حول العالم.",
+        "تعتمد المعمارية على طبقات متعددة وكلاء (Multi-agent) لفصل المهام وتحسين سرعة الاستجابة والدقة.",
+        "تستخدم المنصة Amazon Bedrock مع خاصية الاستدلال عبر المناطق (CRIS) لتلبية متطلبات السيادة على البيانات.",
+        "تضمن Amazon Bedrock Guardrails التحقق من صحة الإجابات ومنع حقن الأوامر وحماية المعلومات الشخصية.",
+        "أظهرت حالات استخدام عملاء مثل Bystronic وLintech تحسناً كبيراً في كفاءة البحث عن المعلومات وتقليل الوقت المستغرق."
+      ],
+      "sections": [
+        {
+          "heading": "تجاوز عوائق الذكاء الاصطناعي التوليدي",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات تحدياً شائعاً يتمثل في نقص الطرق السريعة لطرح أسئلة حقيقية على البيانات والحصول على إجابات يمكن الوثوق بها. يقضي المحللون ساعات في البحث عبر المستندات ولوحات التحكم، وعندما تحاول المنظمات سد هذه الفجوة بالذكاء الاصطناعي التوليدي، تصطدم غالباً بإجابات تفتقر إلى المصادر أو طرق التحقق. من أجل حل هذه المشكلة، طورت شركة Qlik، وهي رائدة عالمية في تكامل البيانات والتحليلات، منتج Qlik Answers.",
+              "links": [
+                {
+                  "text": "Qlik",
+                  "url": "http://www.qlik.com/"
+                }
+              ]
+            },
+            {
+              "text": "منذ إطلاقه العام في فبراير 2026، انتقل Qlik Answers من كونه ميزة تجريبية إلى أداة استخدام يومي. ساهم وكيل الاكتشاف (Discovery Agent) في تحديد أكثر من 100,000 اكتشاف غير متوقع للعملاء منذ الإطلاق، مما يعكس اعتماداً واسعاً على الأدوات الوكيلية في حسابات Qlik Cloud.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحديات التنفيذ على نطاق مؤسسي",
+          "paragraphs": [
+            {
+              "text": "حدد فريق Qlik ثلاثة تحديات رئيسية كان يجب حلها لمواكبة الإنتاجية عبر قاعدة عملائهم. أولاً، تنسيق الاستدلال المتخصص دون إبطاء المستخدمين، حيث تتطلب الأسئلة المؤسسية مسارات مختلفة من البحث السريع إلى الاستخراج من مستندات غير منظمة. ثانياً، تلبية متطلبات السيادة على البيانات عبر مناطق جغرافية مختلفة، حيث تخدم الشركة عملاء في أوروبا وآسيا والمحيط الهادئ والأمريكتين، ولكل منها توقعات مختلفة بشأن إقامة البيانات.",
+              "links": []
+            },
+            {
+              "text": "ثالثاً، التنبؤ بسعة النماذج قبل الطلبات بـ 3 إلى 6 أشهر. تطلب ذلك تخطيط استهلاك الرموز (Tokens) وتوفر النماذج مسبقاً، ثم التحقق من هذه التوقعات مقابل الاستخدام الفعلي بعد بدء العملاء باستخدام المنتج، لضمان عدم تحول النمو في الاعتماد إلى مشكلة سعة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معمارية متعددة الوكلاء والطبقات",
+          "paragraphs": [
+            {
+              "text": "للدعم على نطاق واسع، بنَت Qlik النظام حول حدود معمارية واضحة بدلاً من مساعد واحد كبير. تبدأ العملية بطبقة دخول مستقرة داخل Qlik Cloud، تليها طبقة توجيه خفيفة تقرر وجهة الطلب بناءً على سياق المحادثة. ثم تأتي طبقة الإجابة التي تنسق توليد الاستجابة، إما عبر مسار سريع للطلبات البسيطة أو مسار متعمق يقسم السؤال إلى أسئلة فرعية.",
+              "links": []
+            },
+            {
+              "text": "تشمل الطبقات الأخرى وكيل متخصص (Specialist agent layer) يحدد كيفية عمل الوكلاء والأدوات، وطبقة تحليلات محادثة للبيانات المنظمة، وطبقة استرجاع تعتمد على Amazon OpenSearch Service للمحتوى غير المنظم. وأخيراً، طبقة وصول للنماذج التي تصل إلى Amazon Bedrock عبر بوابة لغة كبيرة خاصة بـ Qlik.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-regions.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "ضمان الدقة والتحقق من المصدر",
+          "paragraphs": [
+            {
+              "text": "كان التأسيس (Grounding) من أهم قرارات التصميم في هذا الإطار. تستخرج طبقة الإجابة سياقات متعددة مثل بيانات التطبيقات المنظمة ومحتوى قاعدة المعرفة وتعريفات المصطلحات. لا يضمن الاسترجاع وحده الدقة، لذا تجري Qlik فحص تحقق من التأسيس على الإجابات المولدة، بمقارنتها بالمحتوى المصدر باستخدام قدرات Amazon Bedrock Guardrails.",
+              "links": []
+            },
+            {
+              "text": "هذا الفحص يحوّل التأسيس من مجرد خطوة استرجاع إلى ضابط إنتاجي مُتحقق منه. للأسئلة غير المنظمة، يجلب النظام محتوى محدداً للسؤال من Amazon OpenSearch Service ويضمن تضمين الاقتباسات في الإجابة النهائية. أما للأسئلة المنظمة، فيُحال العمل إلى مسار تحليلات محادثة متخصص.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حالات استخدام واقعية",
+          "paragraphs": [
+            {
+              "text": "توضح ثلاث حالات نشر كيف يبدو هذا التطبيق عملياً. شركة Bystronic، المتخصصة في معالجة المعادن، نشرت روبوت محادثة بالذكاء الاصطناعي في 15 دقيقة فقط، مما مكن موظفيها من استعلام بيانات العمليات الفورية والحصول على إجابات مدعومة بالمصادر عبر الأقسام المختلفة.",
+              "links": []
+            },
+            {
+              "text": "أما Lintech International، فقد فهرست أكثر من 17,000 مستند تقني في Qlik Answers، مما قلل وقت البحث اليدوي وسرّع زمن الاستجابة بنسبة 75 في المئة، مستعيداً ما يصل إلى 7 ساعات أسبوعياً لمديري الأعمال. بينما تستخدم TouchPoint Support Services، التي تخدم 650 موقعاً صحياً، الأداة لتقديم إرشادات سريعة ومتوافقة مع الامتثال لـ 15,000 موظف في بيئات منظمة وسريعة الإيقاع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "السيادة على البيانات وإدارة النماذج",
+          "paragraphs": [
+            {
+              "text": "لتلبية متطلبات السيادة على البيانات، تستخدم المعمارية الاستدلال عبر المناطق (Cross-Region Inference) في Amazon Bedrock. هذا يسمح بتوجيه الطلبات إلى مناطق محددة تلبي متطلبات الإقامة المحلية دون الحاجة إلى بناء 11 نسخة إقليمية منفصلة يصعب صيانتها وتحديثها باستمرار.",
+              "links": []
+            },
+            {
+              "text": "عندما لا يكون النموذج الذي يعتمد عليه العميل متاحاً إقليمياً عبر Bedrock بعد، تستضيفه Qlik على Amazon SageMaker AI بدلاً من ذلك، ثم تنقل هذا الحمل إلى Bedrock بعد توفره إقليمياً. كما تطبق Amazon Bedrock Guardrails على كل طلب واستجابة، بما في ذلك تصفية المحتوى لحقن الأوامر، وحماية المعلومات الشخصية، وفحص المواضيع المرفوضة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Qlik",
+        "Amazon Bedrock",
+        "تحليلات البيانات",
+        "السيادة على البيانات",
+        "الوكلاء الاصطناعيين"
+      ],
+      "entities": [
+        "Qlik",
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Qlik Answers",
+        "Bystronic",
+        "Lintech International",
+        "TouchPoint Support Services"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "7 أكتوبر 2026",
+      "modifiedLabel": "7 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 720
+    },
+    "en": {
+      "title": "Qlik Builds Grounded Enterprise AI With Amazon Bedrock",
+      "description": "Learn how Qlik leverages Amazon Bedrock and a multi-agent architecture to deliver trusted enterprise AI at a global scale for its customers.",
+      "deck": "Qlik has detailed the architectural framework behind Qlik Answers, leveraging Amazon Bedrock to provide grounded, sourced insights across structured and unstructured data for its global customer base.",
+      "summaryBullets": [
+        "Qlik Answers provides grounded, sourced answers across structured and unstructured data for more than 40,000 customers worldwide.",
+        "The system uses a layered, multi-agent architecture featuring a lightweight routing layer, specialist agent swarm runtime, and conversational analytics.",
+        "Amazon Bedrock Guardrails are integrated into the model access layer to enforce content filtering, PII protection, and grounding validation checks.",
+        "Customer implementations include rapid chatbot deployments, significant technical research time reductions, and compliance-aligned healthcare guidance."
+      ],
+      "sections": [
+        {
+          "heading": "Tackling Enterprise Data Gaps With Qlik Answers",
+          "paragraphs": [
+            {
+              "text": "Organizations frequently struggle with a common operational roadblock: employees have access to vast amounts of enterprise data, but lack a fast method to query it and receive trustworthy results. While analysts spend hours wading through documents, dashboards, and institutional memory, implementing generative AI solutions often presents hurdles such as unverified answers, a lack of verifiable sources, and difficulties deploying tools in highly regulated environments.",
+              "links": []
+            },
+            {
+              "text": "To address these challenges, Qlik developed Qlik Answers to serve its more than 40,000 customers worldwide. Since achieving general availability in February 2026, the offering has advanced into daily operational use, with specialized tools like Qlik’s Discovery Agent surfacing over 100,000 discoveries for customers since its launch. More details and demonstrations can be found directly through the Qlik Answers product page.",
+              "links": [
+                {
+                  "text": "Qlik Answers product page",
+                  "url": "https://www.qlik.com/us/products/qlik-answers"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Scaling Multi-Agent Architecture and Regional Compliance",
+          "paragraphs": [
+            {
+              "text": "When bringing Qlik Answers to production across its global customer base, Qlik identified three core engineering challenges: orchestrating specialized reasoning without adding latency, meeting diverse data sovereignty requirements across Europe, Asia Pacific, and the Americas, and forecasting model capacity months ahead of surging enterprise demand. Rather than relying on a single general-purpose assistant that slows down as capabilities expand, the company structured its architecture around clear, distinct boundaries.",
+              "links": []
+            },
+            {
+              "text": "The architecture features an entry layer within Qlik Cloud, a lightweight routing layer that directs user messages, an answer layer coordinating response generation, and a specialist agent layer utilizing a shared swarm runtime. Additionally, a dedicated conversational analytics layer handles structured data queries, while unstructured document indexing and retrieval run on Amazon OpenSearch Service. Further information regarding foundational model integrations and regional support can be referenced via Amazon Bedrock.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-regions.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Model Access Layer and Advanced Bedrock Guardrails",
+          "paragraphs": [
+            {
+              "text": "At the core of the system is the model access layer, which connects to Amazon Bedrock for chat, streaming, embeddings, and reranking via Qlik's proprietary large language model gateway. To ensure enterprise-grade safety and compliance, Amazon Bedrock Guardrails are applied to every incoming request and outgoing response, offering comprehensive content filtering against prompt injection, personally identifiable information, secrets, and denied topics.",
+              "links": []
+            },
+            {
+              "text": "Beyond basic content filtering, the framework executes a rigorous grounding-validation check on every generated answer, comparing the output directly against the source content from which it was drawn. When specific customer-reliant models are not yet natively available in a given region through Bedrock, workloads temporarily utilize Amazon SageMaker AI as an in-region fallback before returning to Bedrock once regional availability catches up.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Real-World Enterprise Implementations and Customer Impact",
+          "paragraphs": [
+            {
+              "text": "Several prominent customer deployments demonstrate the practical value of the architecture in production environments. Bystronic, a global sheet-metal processing specialist, successfully deployed an AI chatbot in 15 minutes, empowering employees to query real-time operations data across multiple departments. More insights into this implementation are detailed in Bystronic’s 15-minute chatbot deployment.",
+              "links": [
+                {
+                  "text": "Bystronic’s 15-minute chatbot deployment",
+                  "url": "https://www.qlik.com/us/solutions/customers/customer-stories/bystronic-group"
+                }
+              ]
+            },
+            {
+              "text": "Additional deployments highlight significant productivity gains across different industries. Lintech International indexed more than 17,000 technical documents into the platform, cutting manual research time and boosting response speeds by 75 percent to return up to seven hours a week to business managers. Meanwhile, TouchPoint Support Services utilizes the tool to deliver fast, compliance-aligned guidance to 15,000 staff members operating across 650 healthcare sites.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Technical Insights From the AWS Machine Learning Blog",
+          "paragraphs": [
+            {
+              "text": "The full technical breakdown of how these components interact at scale was originally outlined on the official AWS Machine Learning Blog. The documentation details how cross-region inference and layered multi-agent orchestration collaborate to maintain consistent performance and strict data governance across global enterprise deployments.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Qlik",
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "Enterprise AI",
+        "Cloud Analytics",
+        "Multi-Agent Systems",
+        "AWS"
+      ],
+      "entities": [
+        "Qlik",
+        "Amazon Web Services",
+        "AWS",
+        "Amazon OpenSearch Service",
+        "Amazon SageMaker AI",
+        "Bystronic",
+        "Lintech International",
+        "TouchPoint Support Services"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 7, 2026",
+      "modifiedLabel": "October 7, 2026",
+      "readMinutes": 4,
+      "wordCount": 674
+    }
+  },
+  "datePublished": "2026-10-07T19:22:50.167765+03:00",
+  "dateModified": "2026-10-07T19:22:50.167765+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/10/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/10/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "Qlik تبني الذكاء الاصطناعي المؤسسي الموثوق عبر Amazon Bedrock",
+      "en": "Qlik Builds Grounded Enterprise AI With Amazon Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/ML-21310-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock/inline-01.webp",
+        "width": 1400,
+        "height": 979,
+        "alt": {
+          "ar": "Qlik تبني الذكاء الاصطناعي المؤسسي الموثوق عبر Amazon Bedrock",
+          "en": "Diagram showing the specialist agent swarm architecture"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/ML-21310-2.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock/",
+      "type": "official",
+      "title": "How Qlik built grounded, enterprise-scale AI with Amazon Bedrock"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock",
+  "sourceTitle": "How Qlik built grounded, enterprise-scale AI with Amazon Bedrock",
+  "trendScore": 125.88,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-07T16:22:50+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock.json"
+}
