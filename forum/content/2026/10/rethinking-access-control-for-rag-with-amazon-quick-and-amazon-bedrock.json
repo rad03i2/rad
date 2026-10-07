@@ -1,0 +1,332 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "28e7ba2670cd654fe2e5",
+  "slug": "rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock/",
+    "en": "/forum/en/web/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock/"
+  },
+  "locales": {
+    "ar": {
+      "title": "حلول أمازون المتقدمة للتحكم في الوصول لتقنية RAG",
+      "description": "تعرف على كيفية تعامل أداة أمازون كويك وقواعد معارف أمازون بيدروك مع أذونات مستندات المؤسسات لضمان أمان الذكاء الاصطناعي.",
+      "deck": "تستعرض أمازون أسلوباً هجيناً يجمع بين البحث الدلالي والتحقق الفوري من الصلاحيات عبر المصادر الموثوقة لحماية بيانات المؤسسات الحساسة.",
+      "summaryBullets": [
+        "تعتمد المؤسسات على توليد الاسترجاع المعزز RAG لاستخلاص الرؤى من مصادر معرفية متعددة مثل مايكروسوفت شيربوينت وجوجل درايف.",
+        "تواجه أنظمة الذكاء الاصطناعي تحديات أمنية كبيرة تتمثل في احترام هياكل الأذونات المعقدة والتحكم في الوصول.",
+        "تطبق أمازون كويك وقواعد معارف أمازون بيدروك نظام التحقق الفوري من قوائم التحكم في الوصول عبر واجهات برمجة التطبيقات.",
+        "يعتمد النهج الجديد على مرحلتين لتوازن الأداء، تشمل البحث المبدئي ثم التحقق المباشر من المصدر الموثوق."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الأمان في أنظمة RAG المؤسسية",
+          "paragraphs": [
+            {
+              "text": "تتجه المنظمات الكبرى نحو اعتماد تقنية توليد الاسترجاع المعزز المعروفة اختصاراً بـ RAG بهدف استخلاص الرؤى والمعلومات من مصادر المعرفة الداخلية المتاحة عبر منصات مثل مايكروسوفت شيربوينت وجوجل درايف وأتلاسيان كونفلونس. غير أن هذه المصادر المعرفية تتضمن معلومات بالغة الحساسية تخضع لقواعد وهياكل أذونات معقدة للغاية، مما يجعل ضمان توافق الإجابات المولدة عبر الذكاء الاصطناعي مع تلك الصلاحيات أحد أبرز التحديات التي تواجه قطاع الذكاء الاصطناعي المؤسسي. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "تكمن المشكلة الحقيقية في أن ظهور مستند غير مصرح به في رد من أرقام الذكاء الاصطناعي قد يؤدي إلى تسريب وثائق استراتيجية سرية، أو بيانات مالية غير معلنة، أو معلومات حساسة تخص الموارد البشرية. ولهذا السبب، سلطت شركة أمازون عبر المدونات التقنية الرسمية الضوء على هذه المعضلة، موضحة كيف تقدم حلولاً مبتكرة عبر منصاتها المتقدمة مثل أمازون كويك وقواعد معارف أمازون بيدروك لمعالجة هذه الثغرات الأمنية. ويمكن الرجوع إلى Artificial Intelligence للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            },
+            {
+              "text": "تتطلب السيناريوهات التشغيلية المعتادة في الشركات الكبرى أن يحصل كل مستخدم على رؤى دقيقة من المستندات المصرح له بالاطلاع عليها فقط، بغض النظر عن الأقسام التي ينتمي إليها. ويتطلب ذلك فهماً عميقاً لكيفية التعامل مع قوائم التحكم في الوصول المرتبطة بكل وثيقة.",
+              "links": []
+            },
+            {
+              "text": "تسعى المنظمات إلى إتاحة الوصول إلى الرؤى المدعومة بالذكاء الاصطناعي لجميع الموظفين من دون الإخلال بالمستوى الأمني القائم لديها، وهو ما دفع المطورين للتفكير في آليات جديدة كلياً تتجاوز الأساليب التقليدية المتبعة في التصفية والنسخ المسبق للأذونات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "العيوب الجوهرية لأساليب التصفية التقليدية",
+          "paragraphs": [
+            {
+              "text": "اعتمدت النهج الشائعة سابقاً للتحكم في الوصول في أنظمة RAG على أسلوب النسخ والتصفية لفرض الأذونات على مستوى المستند الواحد. وغالباً ما تبدأ هذه العملية بقيام موصل بيانات محدد بسحب قوائم التحكم في الوصول خلال عمليات مزامنة دورية، ليتم تخزينها لاحقاً كخصائص داخل فهرس البيانات لاستخدامها لاحقاً في تصفية النتائج أثناء الاستعلام.",
+              "links": []
+            },
+            {
+              "text": "على الرغم من أن هذا النهج يبدو عملياً للوهلة الأولى، إلا أنه يعاني من ثلاث نقاط ضعف أساسية تجعله عرضة للمخاطر الأمنية. تتمثل المشكلة الأولى في أن نظام الذكاء الاصطناعي لا يمثل المصدر الموثوق والحقيقي للصلاحيات، بل يتحمل وحدها مسؤولية التنفيذ دون أن يمتلك سلطة الإصدار الأصلي لتلك الأذونات، مما يستدعي من موصلات البيانات مطابقة قواعد معقدة تختلف من مصدر لآخر.",
+              "links": []
+            },
+            {
+              "text": "أما المشكلة الثانية فتتعلق بأن الأذونات القديمة تخلق فجوات أمنية خطيرة؛ نظراً لأن موصلات البيانات تعتمد على عمليات مزامنة مجدولة أو تُجرى عند الطلب، مما يعني أن قوائم التحكم في الوصول تمثل لقطة زمنية قديمة تعود لآخر عملية مزامنة، ولا تتحدث فورياً عند تغيير العضويات.",
+              "links": []
+            },
+            {
+              "text": "علاوة على ذلك، فإن بعض مصادر البيانات مثل كونفلونس لا تُصدر تنبيهات فورية عند تعديل العضويات والمجموعات، مما قد يسمح لمستخدم سُحبت صلاحياته بالاستمرار في رؤية معلومات لم يعد مسموحاً له بالاطلاع عليها لفترات متفاوتة بين دورات المزامنة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النهج الهجين والتحقق الفوري من الأذونات",
+          "paragraphs": [
+            {
+              "text": "لمعالجة هذه التحديات التنظيمية والأمنية المعقدة، طوّرت أداة أمازون كويك وقواعد معارف أمازون بيدروك طبقة أمان إضافية تعتمد على التحقق الفوري من قوائم التحكم في الوصول، وذلك بالتكامل مع التصفية السابقة للاسترجاع لضمان تطبيق أحدث معايير الأمان المتاحة.",
+              "links": []
+            },
+            {
+              "text": "يعتمد هذا الحل الهجين المبتكر على مرحلتين أساسيتين؛ الأولى هي مرحلة البحث الدلالي المبدئي ضد الفهرس المتجه لتحديد المستندات الأكثر صلة باستخدام القوائم المخزنة مؤقتاً، والثانية هي مرحلة التحقق الفعلي والمباشر ضد المصادر الموثوقة لحظة إجراء الاستعلام.",
+              "links": []
+            },
+            {
+              "text": "عندما يقوم المستخدم بإرسال استعلام عبر وكيل ذكي يعتمد على قاعدة معارف مرتبطة بجوجل درايف، يقوم النظام بتنفيذ البحث الدلالي لاستخراج مجموعة مرشحة من الوثائق، ثم يتحقق منها فورياً عبر استدعاء واجهات برمجة التطبيقات للمصدر الموثوق لضمان استبعاد أي مستندات غير مصرح بها قبل تمرير المحتوى للنموذج اللغوي.",
+              "links": []
+            },
+            {
+              "text": "تساعد هذه الهندسة ثنائية المراحل في تحقيق التوازن المثالي بين كفاءة الأداء وسرعة الاستجابة من جهة، وبين دقة المعايير الأمنية وحماية السرية من جهة أخرى، مما يقلل من الأعباء التشغيلية الملقاة على عاتق فرق تقنية المعلومات وتأمين البيانات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التجارب العملية وآراء المؤسسات الكبرى",
+          "paragraphs": [
+            {
+              "text": "حظيت هذه الحلول التقنية المتقدمة بتقدير واسع من قبل الشركات الكبرى التي تبحث عن حوكمة موثوقة للذكاء الاصطناعي، حيث أشارت شركة مونديليز إنترناشيونال إلى أن مراجعات فرق الأمان والامتثال لديها وضعت ضمان رؤية الموظفين للمعلومات المصرح بها فقط كأولوية قصوى لا غنى عنها.",
+              "links": []
+            },
+            {
+              "text": "وأوضح جاماهل ويجينز، الاختصاصي الأول لابتكار منصة إم 365 في شركة مونديليز إنترناشيونال، أن أسلوب منصة أمازون كويك في التعامل مع آليات التحكم في الوصول بشكل فوري قد أجاب عن التحديات الأمنية بثقة عالية، مما منح لجنة المراجعة الداخلية القدرة على المضي قدماً في نشر التقنية لأكثر من 35 ألف موظف موزعين عبر أربع مناطق جغرافية مختلفة.",
+              "links": []
+            },
+            {
+              "text": "تُظهر هذه التجارب العملية الواقعية قدرة المنصات التقنية الحديثة على تلبية المتطلبات التنظيمية الصارمة للمؤسسات الضخمة، وتفتح آفاقاً جديدة لتطوير تطبيقات الذكاء الاصطناعي التوليدي بصورة آمنة ومستدامة.",
+              "links": []
+            },
+            {
+              "text": "وفي السياق ذاته، يمكن للمهتمين بمتابعة أحدث الابتكارات في مجالات الذكاء الاصطناعي التعرف على المزيد من التفاصيل عبر زيارة صفحة المدونات التقنية المتخصصة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون",
+        "أمان البيانات",
+        "توليد الاسترجاع المعزز",
+        "إدارة المستندات"
+      ],
+      "entities": [
+        "أمازون كويك",
+        "أمازون بيدروك",
+        "مونديليز إنترناشيونال",
+        "جوجل درايف",
+        "مايكروسوفت شيربوينت"
+      ],
+      "category": "الويب",
+      "dateLabel": "7 أكتوبر 2026",
+      "modifiedLabel": "7 أكتوبر 2026",
+      "readMinutes": 5,
+      "wordCount": 851
+    },
+    "en": {
+      "title": "Amazon Quick and Bedrock Tackle RAG Access Control",
+      "description": "Amazon Quick and Amazon Bedrock Knowledge Bases implement real-time ACL enforcement to secure enterprise RAG solutions against stale permissions.",
+      "deck": "Enterprise organizations adopting Retrieval-Augmented Generation face complex security challenges when indexing sensitive knowledge sources like SharePoint, Google Drive, and Confluence.",
+      "summaryBullets": [
+        "Enterprise RAG deployments require document-level access controls to protect sensitive internal knowledge.",
+        "Traditional replicate-and-filter methods suffer from stale permissions and complex, error-prone ACL synchronization models.",
+        "AWS implements a hybrid two-stage approach combining pre-retrieval filtering with real-time verification against authoritative sources.",
+        "Mondelēz International has deployed Amazon Quick for over 35,000 employees across four regions."
+      ],
+      "sections": [
+        {
+          "heading": "The Enterprise Challenge of RAG Access Control",
+          "paragraphs": [
+            {
+              "text": "Enterprise organizations are increasingly adopting Retrieval Augmented Generation (RAG) to unlock valuable insights from company knowledge repositories such as Microsoft SharePoint, Google Drive, and Atlassian Confluence. However, these knowledge sources contain highly sensitive information governed by intricate permission structures. Ensuring that AI-generated responses strictly respect those underlying user permissions remains one of the most formidable hurdles in enterprise artificial intelligence.",
+              "links": []
+            },
+            {
+              "text": "A single unauthorized document surfaced mistakenly in an automated AI response can expose confidential strategy documents, unreleased financial data, or restricted human resources information. To address these risks safely, organizations want to democratize access to AI-powered insights without compromising their existing corporate security posture.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Limitations of Traditional Replication Models",
+          "paragraphs": [
+            {
+              "text": "A common approach used for RAG access control relies on a replicate-and-filter method to enforce document-level permissions. In this typical model, a data source connector pulls access control lists (ACLs) during periodic sync jobs, storing those replicated ACLs as attributes within an index. At query time, the system maps the logged-in user to the stored attributes to filter results accordingly.",
+              "links": []
+            },
+            {
+              "text": "Despite appearing reasonable on the surface, this traditional model exhibits two fundamental weaknesses. First, the AI system takes responsibility for enforcement without acting as the authoritative source of permissions, forcing connectors to accurately replicate complex logic across diverse data sources. Second, stale permissions create security gaps because data connectors operate on pull-based sync schedules. Between synchronization cycles, a user who has had their access revoked might still receive AI-generated answers from restricted documents.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Real-Time ACL Enforcement with AWS",
+          "paragraphs": [
+            {
+              "text": "To counter these structural vulnerabilities, AWS implemented real-time ACL checks as an added security layer on top of existing pre-retrieval filtering for Amazon Quick and Amazon Bedrock Knowledge Bases. This architecture ensures the system enforces the most current access controls by verifying permissions directly with the authoritative source at query time, bypassing potentially stale or incorrectly mapped data.",
+              "links": [
+                {
+                  "text": "Amazon Quick",
+                  "url": "https://aws.amazon.com/quick/"
+                },
+                {
+                  "text": "Amazon Bedrock Knowledge Bases",
+                  "url": "https://aws.amazon.com/bedrock/knowledge-bases/"
+                }
+              ]
+            },
+            {
+              "text": "When a user submits a query to an Amazon Quick agent utilizing a knowledge base, the system executes access control in two distinct stages. First, a semantic search against the vector index identifies relevant document passages utilizing pre-stored access control attributes, producing a preliminary set of candidate documents for efficiency.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The Two-Stage Verification Architecture",
+          "paragraphs": [
+            {
+              "text": "In the second stage, Amazon Quick verifies the candidate documents in real time by calling authoritative source APIs, such as Google Drive APIs. Using service account credentials provided by administrators, the platform generates user-specific access tokens through impersonation. Documents that the user lacks authorization to view are excluded from the final result set, ensuring only verified and authorized passages pass to the large language model.",
+              "links": []
+            },
+            {
+              "text": "This hybrid mechanism successfully balances semantic search performance with strict security correctness. Furthermore, additional platform capabilities detailed on the AWS Machine Learning Blog provide responsible AI controls, including Amazon Bedrock Guardrails for content filtering, grounding checks to minimize hallucinations, and configurable safety policies.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Operational Benefits and Enterprise Adoption",
+          "paragraphs": [
+            {
+              "text": "By adopting real-time verification against authoritative sources, organizations eliminate security gaps between synchronization cycles, meaning revoked employee access reflects in AI responses within moments rather than hours or days. Companies gain the confidence to scale their knowledge base coverage while reducing the operational burden associated with managing sync frequencies.",
+              "links": []
+            },
+            {
+              "text": "Enterprise validation for this security approach is already underway. Mondelēz International has deployed Amazon Quick for over 35,000 employees across four regions. Jamahl Wiggins, Senior Specialist for M365 Innovation at Mondelēz International, noted that the platform's real-time access control approach successfully answered critical security requirements during their evaluation, providing their internal review board with the confidence to move forward with AI governance.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Exploring AI Innovation and Best Practices",
+          "paragraphs": [
+            {
+              "text": "As enterprises continue to refine their internal AI roadmaps, security and compliance teams remain focused on maintaining rigid data boundaries. Industry discussions highlighted on the Artificial Intelligence page continue to explore how organizations can deploy scalable generative AI applications without exposing confidential corporate intelligence or compromising user permissions.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Quick",
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "RAG",
+        "Access Control",
+        "AWS",
+        "Enterprise AI"
+      ],
+      "entities": [
+        "Amazon Quick",
+        "Amazon Bedrock",
+        "AWS",
+        "Mondelēz International",
+        "Google Drive",
+        "Microsoft SharePoint",
+        "Atlassian Confluence"
+      ],
+      "category": "Web",
+      "dateLabel": "October 7, 2026",
+      "modifiedLabel": "October 7, 2026",
+      "readMinutes": 4,
+      "wordCount": 717
+    }
+  },
+  "datePublished": "2026-10-07T22:02:50.581493+03:00",
+  "dateModified": "2026-10-07T22:02:50.581493+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/10/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/10/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "حلول أمازون المتقدمة للتحكم في الوصول لتقنية RAG",
+      "en": "Amazon Quick and Bedrock Tackle RAG Access Control"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/07/ML-22080-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock/inline-01.webp",
+        "width": 1400,
+        "height": 787,
+        "alt": {
+          "ar": "حلول أمازون المتقدمة للتحكم في الوصول لتقنية RAG",
+          "en": "Two-stage ACL enforcement architecture: pre-retrieval filtering then real-time verification against authoritative sources"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/07/ML-22080-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock/",
+      "type": "official",
+      "title": "Rethinking access control for RAG with Amazon Quick and Amazon Bedrock"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock",
+  "sourceTitle": "Rethinking access control for RAG with Amazon Quick and Amazon Bedrock",
+  "trendScore": 124.92,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-07T19:02:50+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock.json"
+}
