@@ -1,5 +1,395 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-08T16:27:58+00:00",
-  "last_published_story_id": "18d441cbd3f99a19e751"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-08T16:33:09+00:00",
+  "target_publish_at": "2026-10-08T19:47:58.598694+03:00",
+  "story": {
+    "title": "Share GPU clusters across teams with isolation and fairness using Amazon SageMaker HyperPod",
+    "url": "https://aws.amazon.com/blogs/machine-learning/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker-hyperpod",
+    "domain": "aws.amazon.com",
+    "summary": "A reference architecture for securely sharing one Amazon SageMaker HyperPod EKS cluster across multiple teams, using AWS IAM Identity Center for authentication, per-team SageMaker Domains and Kubernetes namespaces for isolation, HyperPod Task Governance for fairness, and namespace-level cost allocation for chargeback.",
+    "published_at": "2026-10-08T16:20:04+00:00",
+    "discovered_at": "2026-10-08T16:21:39+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "575f2b8d33878f21ab30",
+    "trend": {
+      "score": 124.92,
+      "age_hours": 0.2,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker-hyperpod/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Share GPU clusters across teams with isolation and fairness using Amazon SageMaker HyperPod",
+      "title": "Share GPU clusters across teams with isolation and fairness using Amazon SageMaker HyperPod | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تتيح مشاركة عناقيد GPU بين الفرق مع عزل كامل وعدالة في الموارد",
+      "description": "تقدم أمازون ويب خدمات معمارية مرجعية لمشاركة عناقيد SageMaker HyperPod بين فرق متعددة، مع ضمان العزل الأمني، توزيع الموارد بعدالة، وإمكانية تتبع التكاليف بدقة لكل فريق.",
+      "deck": "تواجه المؤسسات تحديات كبيرة في إدارة الموارد الحاسوبية المكلفة لفرق الذكاء الاصطناعي المختلفة، وتقدم أمازون حلاً موحداً يجمع بين الأمان والكفاءة التشغيلية.",
+      "summary_bullets": [
+        "معمارية مرجعية لمشاركة عناقيد EKS الخاصة بـ SageMaker HyperPod بين فرق متعددة مع الحفاظ على العزل التام.",
+        "استخدام AWS IAM Identity Center للمصادقة المركزية وربطها بمزودي الهوية الخارجيين مثل Microsoft Entra ID.",
+        "تطبيق حوكمة المهام (Task Governance) لضمان توزيع عادل للموارد الحاسوبية ومنع استنزافها من فريق واحد.",
+        "تخصيص نطاقات Kubernetes (Namespaces) لكل فريق لعزل الأحمال التشغيلية وتسهيل تتبع التكاليف (Chargeback)."
+      ],
+      "sections": [
+        {
+          "heading": "التحدي في إدارة الموارد المشتركة",
+          "paragraphs": [
+            {
+              "text": "تحتاج فرق البيانات والذكاء الاصطناعي داخل المؤسسات بشكل متزايد إلى الوصول المشترك إلى عناقيد وحدات معالجة الرسوميات (GPU) المكلفة لدعم عمليات توليد النماذج. قد تجد مؤسسة واحدة نفسها تدير فريقاً لتدريب النماذج اللغوية الكبيرة، وآخر للاستدلال على الرؤية الحاسوبية، وثالثاً للتجارب البحثية، وكلها تتطلب الوصول إلى نفس البنية التحتية. غياب المعمارية متعددة المستأجرين (Multi-tenant) المصممة جيداً يؤدي إلى استهلاك غير منضبط للموارد، وضعف العزل بين الفرق، وعجز عن إسناد التكاليف بدقة، مما يزيد العبء الإداري ويبطئ وتيرة الابتكار. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker-hyperpod/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "حل أمازون ويب: SageMaker HyperPod",
+          "paragraphs": [
+            {
+              "text": "تقدم أمازون ويب خدمة SageMaker HyperPod المصممة خصيصاً لتبسيط إدارة عناقيد الحوسبة الكبيرة لأحمال الذكاء الاصطناعي التوليدي. توفر هذه الخدمة عناقيد مرنة ومحسنة يتم تنسيقها عبر Amazon Elastic Kubernetes Service (EKS) أو Slurm، مما يتيح تنفيذ التدريب الموزع، والتطوير التفاعلي، والاستدلال على نطاق واسع. كما تتولى الخدمة تلقائياً مراقبة صحة العقد، واستعادة الأعطال، وإدارة دورة حياة العنقود، مما يحرر الفرق التقنية من المهام التشغيلية الروتينية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المصادقة المركزية عبر IAM Identity Center",
+          "paragraphs": [
+            {
+              "text": "تقوم المعمارية المرجعية على استخدام AWS IAM Identity Center كطبقة مصادقة مركزية. يتيح هذا النظام إدارة هويات الموظفين عبر حسابات وتطبيقات أمازون ويب من مكان واحد، بدلاً من الحفاظ على قواعد بيانات مستخدمين منفصلة لكل خدمة. يدعم النظام الفيدرالية (Federation) مع مزودي الهوية الخارجيين الشائعة مثل Microsoft Entra ID أو Okta، مما يسمح للمؤسسات بإعادة استخدام بنيتها التحتية للهوية الحالية دون تكرار الجهود. يوفر Identity Center أيضاً إدارة موحدة لعضويات المجموعات، مما يضمن أن كل مستخدم يحصل على الصلاحيات المناسبة بناءً على دوره في الفريق.",
+              "links": [
+                {
+                  "text": "AWS IAM Identity Center",
+                  "url": "https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "العزل المنطقي عبر النطاقات والمجالات",
+          "paragraphs": [
+            {
+              "text": "لضمان استقلالية العمليات، تعتمد المعمارية على تخصيص نطاقات Kubernetes (Namespaces) لكل فريق. يعمل كل نطاق كحدود أمنية ومنطقية تمنع فرق العمل من الوصول إلى موارد بعضها البعض. بالإضافة إلى ذلك، يتم إنشاء مجالات SageMaker AI (Domains) مخصصة لكل فريق، توفر واجهة مستخدم مخصصة (SageMaker Studio) وأدوار تنفيذ (Execution Roles) محددة. هذا التصميم يضمن أن كل فريق يعمل في مساحة معزولة تماماً، حيث لا يمكن للمستخدمين التفاعل إلا مع الموارد الموجودة في نطاقهم المخصص، سواء عبر واجهة المستخدم الرسومية أو عبر سطر الأوامر (CLI).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "العدالة في توزيع الموارد",
+          "paragraphs": [
+            {
+              "text": "من أكبر التحديات في مشاركة العناقيد هو منع استنزاف الموارد من قبل فريق واحد على حساب الآخرين. تحل هذه المشكلة عبر ميزة HyperPod Task Governance، التي تتيح إدارة حصص الحوسبة (Compute Quotas) وتحديد أولويات الجدولة. تسمح هذه الميزة للمديرين بتوزيع الموارد الحاسوبية بشكل عادل بين الفرق، مما يضمن أن أحمال العمل الحرجة أو ذات الأولوية العالية تحصل على الموارد اللازمة دون تعطيل عمليات الفرق الأخرى. هذا يخلق بيئة عمل متوازنة حيث يمكن لجميع الفرق المضي قدماً في مشاريعهم دون تعارض على الموارد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تتبع التكاليف والمخزنات",
+          "paragraphs": [
+            {
+              "text": "تدعم المعمارية أيضاً الشفافية المالية من خلال تخصيص التكاليف على مستوى النطاق (Namespace-level cost allocation). هذا يتيح للمؤسسات إجراء عمليات محاسبة عكسية (Chargeback) دقيقة، حيث يمكن إسناد تكاليف استخدام GPU إلى الفريق الذي استهلكها فعلياً. من ناحية التخزين، توفر البنية طبقتين: نظام ملفات POSIX متوافق (مثل Amazon FSx for Lustre) مع مجلدات مشتركة لكل فريق ومجلدات شخصية للمستخدمين، بالإضافة إلى دلاء Amazon S3 مخصصة أو مشتركة لإدارة التخزين الكائني، وتخضع جميعها لسياسات IAM الخاصة بدور التنفيذ التابع للفريق.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب",
+        "SageMaker HyperPod",
+        "Kubernetes",
+        "إدارة الموارد",
+        "بنية تحتية سحابية",
+        "أمن المعلومات"
+      ],
+      "entities": [
+        "أمازون ويب (AWS)",
+        "SageMaker HyperPod",
+        "Amazon EKS",
+        "IAM Identity Center",
+        "Kubernetes"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقالة مبنية حصرياً على المدونة الرسمية لأمازون ويب، مع التركيز على الميزات المعمارية المذكورة دون إضافة تقديرات خارجية."
+    },
+    "en": {
+      "title": "Share GPU Clusters Across Teams with Amazon SageMaker HyperPod",
+      "description": "Discover a reference architecture to share a single Amazon SageMaker HyperPod EKS cluster across multiple teams with isolation and fairness.",
+      "deck": "Organizations running generative AI operations can now utilize a reference architecture for securely sharing a single Amazon SageMaker HyperPod EKS cluster across multiple internal teams.",
+      "summary_bullets": [
+        "AWS Machine Learning Blog published a reference architecture for multi-tenant Amazon SageMaker HyperPod EKS clusters.",
+        "The architecture leverages AWS IAM Identity Center for centralized authentication and federation.",
+        "Per-team SageMaker AI domains and Kubernetes namespaces ensure strict workload isolation.",
+        "HyperPod Task Governance and namespace-level cost allocation provide compute fairness and spend visibility."
+      ],
+      "sections": [
+        {
+          "heading": "Addressing Multi-Tenant Challenges in Generative AI",
+          "paragraphs": [
+            {
+              "text": "As enterprises increasingly scale their generative AI operations, multiple internal teams often require simultaneous access to expensive GPU clusters. A data science group training large language models, a computer vision team executing inference workloads, and a research unit experimenting with alternative architectures frequently need to tap into the exact same underlying hardware infrastructure. Further details are available from AWS Machine Learning Blog in the original source material.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker-hyperpod/"
+                }
+              ]
+            },
+            {
+              "text": "Without a structured multi-tenant approach, companies often encounter uncontrolled resource consumption, weak team-level isolation, administrative overhead, and significant difficulties in attributing shared GPU expenditures accurately. To resolve these challenges, the AWS Machine Learning Blog detailed a comprehensive reference architecture designed to help organizations efficiently share a single compute cluster.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker-hyperpod/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Leveraging Amazon SageMaker HyperPod and EKS",
+          "paragraphs": [
+            {
+              "text": "Amazon SageMaker HyperPod is a specialized service built to simplify the administration of large-scale compute clusters dedicated to generative AI workloads. Orchestrated via Amazon Elastic Kubernetes Service or Slurm, it manages distributed training, interactive development, and inference scaling while automatically handling routine node health monitoring, fault recovery, and cluster lifecycle operations.",
+              "links": []
+            },
+            {
+              "text": "Building upon this foundation, the introduced blueprint establishes a multi-tenant environment using an Amazon EKS cluster. It incorporates AWS IAM Identity Center for streamlined authentication, per-team SageMaker AI domains for tailored user experiences, and dedicated Kubernetes namespaces to achieve complete workload isolation between different departments.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, the architecture integrates HyperPod Task Governance to maintain fair resource allocation among competing teams, alongside namespace-level cost tracking that grants enterprises clear visibility into individual team spending for accurate chargeback processes.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Centralized Authentication and User Identity Federation",
+          "paragraphs": [
+            {
+              "text": "Robust security and authentication form the bedrock of any reliable multi-tenant infrastructure. Centralizing identity management ensures that administrative teams can accurately verify users before granting them access to sensitive cluster resources and computing environments.",
+              "links": []
+            },
+            {
+              "text": "Organizations can utilize AWS IAM Identity Center to unify workforce identities across multiple AWS accounts and integrated applications. This service functions as a single source of truth for user identities and group memberships, eliminating the administrative friction of managing scattered user databases.",
+              "links": []
+            },
+            {
+              "text": "Additionally, the system allows enterprises to connect an external identity provider such as Microsoft Entra ID, Okta, or Ping Identity. By leveraging these existing corporate identity management systems, companies can seamlessly reuse their current infrastructure without duplicating user profiles.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Dual Access Pathways for Developers and Data Scientists",
+          "paragraphs": [
+            {
+              "text": "The multi-tenant reference architecture supports two primary operational paths for users interacting with the shared cluster. In the first pathway, users authenticate through the centralized portal and launch the SageMaker Studio application to access their designated workspace.",
+              "links": []
+            },
+            {
+              "text": "Each team accesses its own dedicated SageMaker AI domain, which provides a tailored Amazon SageMaker Studio GUI configured with a specific team execution role. These domains serve as the primary visual interface for running interactive notebooks and submitting machine learning tasks directly toward the underlying cluster.",
+              "links": []
+            },
+            {
+              "text": "The second pathway accommodates command-line operations. Users authenticate via the command line interface, obtain temporary credentials mapped to their team's permission set, and submit tasks directly to the EKS cluster using standard Kubernetes command tools.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Strict Isolation and Access Control at the Cluster Boundary",
+          "paragraphs": [
+            {
+              "text": "At the boundary of the EKS cluster, advanced access entries securely map specific IAM roles to appropriate Kubernetes permissions. Access entries must be configured for both the Studio execution roles and the CLI console roles provisioned by the identity service, mapping them to managed or custom role-based access control policies.",
+              "links": []
+            },
+            {
+              "text": "Because these authorization controls are strictly scoped to each team's designated namespace, users can only view and modify resources residing within their assigned environment, regardless of whether their requests originate from the graphical studio interface or the command line.",
+              "links": []
+            },
+            {
+              "text": "This rigorous partitioning extends into the underlying storage infrastructure as well. The environment incorporates POSIX-compliant file systems and object storage buckets organized cleanly into per-team shared directories, individual user home folders, and dedicated S3 storage locations governed by specific execution roles.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Task Governance and Cost Allocation",
+          "paragraphs": [
+            {
+              "text": "Beyond isolation and authentication, fairness and resource management remain essential considerations for shared GPU deployments. The architecture incorporates specialized platform layers including observability dashboards for monitoring system health and task governance tools to manage compute quotas and scheduling priorities.",
+              "links": []
+            },
+            {
+              "text": "These governance mechanisms prevent any single team from monopolizing the shared cluster resources, ensuring predictable performance for critical workloads across data science, computer vision, and research departments alike.",
+              "links": []
+            },
+            {
+              "text": "Finally, namespace-level cost allocation enables financial transparency by tracking resource consumption down to the individual team namespace. This capability allows organizations to execute accurate internal chargebacks, directly tying cloud infrastructure expenditures to the specific business units incurring them.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker HyperPod",
+        "Amazon EKS",
+        "Generative AI",
+        "AWS IAM Identity Center",
+        "Kubernetes",
+        "GPU Clusters"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "AWS",
+        "Amazon SageMaker",
+        "Amazon EKS"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly reflects the reference architecture details and explanations provided in the AWS Machine Learning Blog source text without introducing external assumptions."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 593,
+      "word_count_en": 828
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "575f2b8d33878f21ab30",
+      "title": "Share GPU clusters across teams with isolation and fairness using Amazon SageMaker HyperPod",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 593,
+          "word_count_en": 828
+        }
+      ]
+    }
+  ],
+  "slug": "share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker/hero.webp",
+    "card": "/forum/assets/posts/2026/10/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker/card.webp",
+    "social": "/forum/assets/posts/2026/10/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح مشاركة عناقيد GPU بين الفرق مع عزل كامل وعدالة في الموارد",
+      "en": "Share GPU Clusters Across Teams with Amazon SageMaker HyperPod"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/ML-22020-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker/inline-01.webp",
+        "width": 1400,
+        "height": 677,
+        "alt": {
+          "ar": "أمازون تتيح مشاركة عناقيد GPU بين الفرق مع عزل كامل وعدالة في الموارد",
+          "en": "Layered multi-tenant HyperPod EKS architecture from user identity through authorization to isolated team namespaces"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker-hyperpod/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/multi-tenant-hp-eks.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker/inline-02.webp",
+        "width": 1400,
+        "height": 836,
+        "alt": {
+          "ar": "أمازون تتيح مشاركة عناقيد GPU بين الفرق مع عزل كامل وعدالة في الموارد",
+          "en": "Microsoft Entra ID console showing dedicated groups for TeamA, TeamB, and Admin"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker-hyperpod/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/entra_id_groups.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker/inline-03.webp",
+        "width": 1400,
+        "height": 835,
+        "alt": {
+          "ar": "أمازون تتيح مشاركة عناقيد GPU بين الفرق مع عزل كامل وعدالة في الموارد",
+          "en": "AWS IAM Identity Center console showing TeamA, TeamB, and Admin groups provisioned from Entra ID"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker-hyperpod/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/iam_idc_groups.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker/inline-04.webp",
+        "width": 1400,
+        "height": 897,
+        "alt": {
+          "ar": "أمازون تتيح مشاركة عناقيد GPU بين الفرق مع عزل كامل وعدالة في الموارد",
+          "en": "AWS IAM Identity Center console showing per-team permission sets for CLI access"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker-hyperpod/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/iam_idc_permissionsets.png"
+      }
+    ]
+  }
 }
