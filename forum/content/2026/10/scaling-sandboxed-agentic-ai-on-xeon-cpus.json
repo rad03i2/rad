@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "57b9c0eb9ab7ff334297",
+  "slug": "scaling-sandboxed-agentic-ai-on-xeon-cpus",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/scaling-sandboxed-agentic-ai-on-xeon-cpus/",
+    "en": "/forum/en/ai/scaling-sandboxed-agentic-ai-on-xeon-cpus/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إنتل: معالجات Xeon 6 تتفوق في تسريع وكلاء الذكاء الاصطناعي",
+      "description": "تُظهر اختبارات إنتل أن معالجات Xeon 6 و6+ تتفوق على AMD EPYC في توفير بيئات العزل (Sandboxes) لوكلاء الذكاء الاصطناعي، مع الحفاظ على زمن استجابة منخفض وتوافر أعلى.",
+      "deck": "تُبرز نتائج جديدة قدرة معالجات إنتل على معالجة الأحمال المتزامنة لوكلاء الذكاء الاصطناعي بكفاءة، مما يعزز قابلية التوسع في البنية التحتية السحابية.",
+      "summaryBullets": [
+        "تتفوق معالجات Intel Xeon 6990E+ و6980P على AMD EPYC 9965 في عدد الطلبات المتزامنة ضمن زمن استجابة 200 مللي ثانية.",
+        "يصل تفوق معالج Xeon 6990E+ إلى 27% في الكثافة التشغيلية مقارنةً بالمعالج المنافس.",
+        "يعتمد الاختبار على أداة cube-bench لقياس كفاءة إنشاء وإتلاف بيئات العزل (Sandboxes) بشكل مستمر.",
+        "تُعد كفاءة توفير بيئات العزل عاملاً حاسماً في تقليل زمن الاستجابة الإجمالي لأنظمة الوكلاء الذكية."
+      ],
+      "sections": [
+        {
+          "heading": "تطور متطلبات البنية التحتية للوكلاء",
+          "paragraphs": [
+            {
+              "text": "تتجاوز أنظمة الذكاء الاصطناعي التوليدي الحديثة مرحلة التفاعل البسيط بين السؤال والجواب، لتصبح قادرة على تنفيذ الأكواد، ومعالجة الملفات، والاستعلام عن قواعد البيانات، والتفاعل مع واجهات برمجة التطبيقات (APIs). هذه القدرات تمنح الوكلاء (Agents) إمكانية أداء مهام متعددة الخطوات نيابة عن المستخدمين، لكنها في المقابل تفرض تحديات أمنية وبنية تحتية جديدة. فتنفيذ الأكواد التي يولدها الوكيل مباشرة على النظام المضيف قد يعرّض المؤسسات لمخاطر مثل ثغرات البرمجيات، وهجمات حقن الأوامر (Prompt Injection)، وتسريب البيانات، أو محاولات التصعيد في الصلاحيات. ويمكن الرجوع إلى Intel Newsroom للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Intel Newsroom",
+                  "url": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/scaling-sandboxed-agentic-ai-xeon-6.html"
+                }
+              ]
+            },
+            {
+              "text": "لمواجهة هذه المخاطر، تعتمد أطر عمل الذكاء الاصطناعي على بيئات تنفيذ معزولة تُعرف بـ \"الصناديق الرملية\" (Sandboxes). ومع تزايد انتشار الوكلاء، لم تعد العزلة مجرد ميزة أمنية اختيارية، بل أصبحت ضرورة تشغيلية. فالوكلاء ينشئون بيئات التنفيذ ويستخدمونها ثم يدمرونها في غضون ثوانٍ، مما يجعل كفاءة توفير هذه البيئات (Provisioning) عنصراً أساسياً في تحديد استجابة النظام وقابليته للتوسع على نطاق واسع. ويمكن الرجوع إلى News للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "News",
+                  "url": "https://www.intel.com/content/www/us/en/newsroom/home.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحدي الكفاءة في المسار الحرج",
+          "paragraphs": [
+            {
+              "text": "تتعدد طرق العزل المستخدمة حالياً، بما في ذلك الآلات الافتراضية، والحاويات، وآلات VM الدقيقة، وحلول مفتوحة المصدر مثل Tencent Cloud Cube Sandbox. ورغم أن هذه التقنيات توفر مستويات أمان عالية، إلا أنها تتطلب بنية تحتية قادرة على إدارة وتوفير هذه البيئات بكفاءة عند التعامل مع أعداد هائلة من الطلبات المتزامنة.",
+              "links": []
+            },
+            {
+              "text": "في النشر النموذجي لأنظمة الوكلاء، يقع إنشاء الصندوق الرملي مباشرة على المسار الحرج (Critical Path) لتنفيذ المهمة. فقبل أن يتمكن الوكيل من تشغيل أي كود أو استدعاء أدوات، يجب أولاً توفير بيئة العزل وتهيئتها. تتلخص هذه العملية في تسلسل: طلب الوكيل، ثم إنشاء الصندوق، ثم تنفيذ المهمة، وإرجاع النتيجة، وأخيراً تفكيك الصندوق. في الأنظمة الكبيرة، تحدث عمليات الإنشاء والتفكيك بشكل مستمر، مما يؤثر مباشرة على استجابة التطبيق، واستغلال الموارد، والإنتاجية الكلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "منهجية الاختبار والمقاييس المعتمدة",
+          "paragraphs": [
+            {
+              "text": "لتقييم أداء توفير الصناديق الرملية تحت ظروف تشغيل واقعية، استخدمت شركة إنتل (Intel) عبء عمل \"cube-bench create/delete\". يقيس هذا الاختبار مدى كفاءة المنصة في تقديم بيئات جديدة من خلال إرسال طلبات إنشاء مستمرة عبر واجهة CubeSandbox API مع زيادة التوازي الإجمالي تدريجياً. الهدف هو تقييم قدرة المنصة على استيعاب الطلبات المتزايدة دون تدهور في الأداء.",
+              "links": []
+            },
+            {
+              "text": "يعتمد التقييم على معيار رئيسي هو اتفاقية مستوى الخدمة (SLA) لإنشاء الصندوق خلال 200 مللي ثانية، والتي تمثل الحد الأقصى المقبول لزمن الاستجابة لتسليم بيئة جاهزة للاستخدام. بالإضافة إلى ذلك، تم تتبع متوسط زمن التأخير، ومعدل الإنتاجية (Throughput)، ومؤشرات التأخير الذيلي (Tail-latency) لفهم كيفية الحفاظ على الاستجابة تحت الأحمال الثقيلة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج الأداء: تفوق معالجات Xeon",
+          "paragraphs": [
+            {
+              "text": "أظهرت النتائج أن منصات إنتل القائمة على معالجات Xeon تتفوق على نظيراتها من AMD EPYC في قابلية التوسع. عند زيادة عدد الطلبات المتزامنة من 100 إلى 350 طلباً، حافظت منصات Xeon على أزمنة إنشاء أقل واستمرت في دعم عدد أكبر من العمليات المتزامنة ضمن هدف الـ 200 مللي ثانية. تحديداً، حافظ معالج Intel Xeon 6990E+ على أدائه دون تجاوز حد الـ 200 مللي ثانية حتى وصول عدد الطلبات المتزامنة إلى حوالي 313 طلباً.",
+              "links": []
+            },
+            {
+              "text": "من ناحية أخرى، حافظ معالج Intel Xeon 6980P على نفس المعيار حتى 277 طلباً متزامناً. في المقابل، تجاوز معالج AMD EPYC 9965 عتبة الـ 200 مللي ثانية عند حوالي 246 طلباً متزامناً. هذا يعني أن معالج Xeon 6990E+ يدعم كثافة تشغيلية أعلى بنسبة 27% تقريباً مقارنةً بمعالج AMD، بينما يدعم معالج Xeon 6980P كثافة أعلى بنسبة 12% تقريباً ضمن نفس اتفاقية مستوى الخدمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تفاصيل المنصات المختبرة",
+          "paragraphs": [
+            {
+              "text": "شملت الاختبارات منصات محددة بدقة. تضمنت منصة Xeon 6+ نظام Supermicro SYS-212HA-TN بمعالج Intel Xeon 6990E+ واحد (288 نواة)، وذاكرة 768GB من نوع DDR5-6400، ونظام تشغيل CentOS Stream 9. أما منصة Xeon 6 فاستخدمت نظام Intel Avenue City بمعالج Intel Xeon 6980P (128 نواة)، وذاكرة 768GB من نوع DDR5-8800، ونظام تشغيل CentOS Stream 9 أيضاً. جرت هذه الاختبارات في سبتمبر 2026.",
+              "links": []
+            },
+            {
+              "text": "تؤكد هذه النتائج أن معالجات Intel Xeon 6 و6+ توفر أساساً قوياً للنشر واسع النطاق للوكلاء المعزولين. فهي تجمع بين قابلية التوسع اللازمة لدعم أعداد متزايدة من تدفقات الوكلاء المتزامنة، والاستجابة المطلوبة للأنظمة الذكية الحديثة الموجهة نحو اتخاذ الإجراءات. ومع توسع أحمال عمل الذكاء الاصطناعي التوليدي، يصبح التنسيق الفعال والعزل السريع لعدد كبير من الوكلاء أمراً بالغ الأهمية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أثر تقني على مستقبل الحوسبة السحابية",
+          "paragraphs": [
+            {
+              "text": "تُبرز هذه البيانات أهمية اختيار البنية التحتية المناسبة لتطبيقات الذكاء الاصطناعي التفاعلي. فبينما تركز العديد من النقاشات على قوة الحساب الخام، يظهر أن كفاءة إدارة الموارد العابرة (مثل بيئات العزل) هي العامل الحاسم في تجربة المستخدم النهائية. إن القدرة على توفير بيئات آمنة وسريعة تتيح للمؤسسات توسيع نطاق عملياتها دون التضحية بالأمان أو الأداء.",
+              "links": []
+            },
+            {
+              "text": "يُعد هذا التقدم جزءاً من استراتيجية أوسع لتحسين كفاءة مراكز البيانات في التعامل مع الأحمال غير المتوقعة والمتغيرة. من خلال تقليل زمن التأخير في إنشاء بيئات التنفيذ، يمكن للمنصات السحابية تقديم خدمات ذكاء اصطناعي أكثر موثوقية وسرعة، مما يعزز مكانتها في سوق الحوسبة المتقدمة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Intel",
+        "Xeon 6",
+        "Agentic AI",
+        "Sandboxing",
+        "Data Center",
+        "AMD EPYC",
+        "Cloud Infrastructure"
+      ],
+      "entities": [
+        "Intel",
+        "AMD",
+        "Intel Xeon 6990E+",
+        "Intel Xeon 6980P",
+        "AMD EPYC 9965",
+        "Tencent Cloud Cube Sandbox"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "8 أكتوبر 2026",
+      "modifiedLabel": "8 أكتوبر 2026",
+      "readMinutes": 5,
+      "wordCount": 849
+    },
+    "en": {
+      "title": "Intel Xeon 6 CPUs Scale Sandboxed Agentic AI Workflows",
+      "description": "Intel Xeon 6 and 6+ processors improve sandboxed agentic AI deployments by enabling higher concurrency and low provisioning latency.",
+      "deck": "Intel showcases how its Xeon 6 and Xeon 6+ processors support secure, high-concurrency sandboxed agentic AI workflows while maintaining strict response SLAs.",
+      "summaryBullets": [
+        "Modern AI agents require isolated execution environments or sandboxes to safely execute code, process files, and query databases.",
+        "Sandbox creation sits directly on the critical execution path, making provisioning efficiency crucial for overall application responsiveness.",
+        "Intel's testing evaluated create/delete workloads using the open-source Tencent Cloud Cube Sandbox API and cube-bench tool.",
+        "Intel Xeon 6 processors maintained lower creation latency and supported higher concurrent provisioning requests within a 200-millisecond SLA compared to AMD EPYC processors."
+      ],
+      "sections": [
+        {
+          "heading": "The Rise of Agentic AI and Sandboxing Security",
+          "paragraphs": [
+            {
+              "text": "Modern artificial intelligence systems are rapidly evolving beyond basic question-and-answer interactions. Today's advanced AI agents can execute code, process files, query databases, interact with application programming interfaces, and execute complex multi-step workflows on behalf of users. While these capabilities unlock powerful new automation possibilities, they simultaneously introduce critical infrastructure and security challenges. Direct execution of agent-generated code on a host system can expose organizations to severe risks, including software bugs, prompt-injection attacks, data leakage, and privilege escalation.",
+              "links": []
+            },
+            {
+              "text": "To mitigate these security concerns, AI frameworks rely heavily on isolated execution environments known as sandboxes. As the adoption of agentic AI accelerates, sandboxing functions as much more than a routine security feature. Because AI agents dynamically create, utilize, and destroy execution environments within seconds, the efficiency of sandbox provisioning becomes a vital component of system responsiveness and scalability. Combining robust isolation with rapid provisioning is therefore essential for large-scale enterprise deployments.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Understanding the Sandbox Provisioning Lifecycle",
+          "paragraphs": [
+            {
+              "text": "Various sandboxing technologies are deployed across modern infrastructure, including standard virtual machines, traditional containers, lightweight microVMs, and the open-source Tencent Cloud Cube Sandbox. Although these technologies offer strong isolation guarantees, they demand underlying infrastructure capable of efficiently provisioning and managing isolated environments at scale.",
+              "links": []
+            },
+            {
+              "text": "In typical agentic AI deployments, sandbox creation sits directly on the critical path of task execution. Before any agent can run code or invoke external tools, a sandbox must be provisioned, initialized, and made available. The typical workflow moves from an agent request to sandbox creation, task execution, result return, and finally sandbox teardown. Because sandbox creation and teardown occur continuously at scale, lifecycle efficiency directly impacts application responsiveness, overall infrastructure utilization, and total throughput.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Evaluating Provisioning Performance Under Load",
+          "paragraphs": [
+            {
+              "text": "To measure sandbox provisioning performance under realistic operating conditions, Intel engineers utilized the cube-bench create/delete workload. This benchmark measures how efficiently a given platform can provision new sandbox environments under increasing stress. The workload continuously issues creation requests through the CubeSandbox API while scaling aggregate concurrency upwards, revealing how effectively platforms handle growing provisioning demands.",
+              "links": []
+            },
+            {
+              "text": "A primary metric in this evaluation is the 200-millisecond sandbox creation service-level agreement (SLA), which defines the target responsiveness threshold for delivering a usable sandbox environment. By examining average create-latency alongside throughput and tail-latency metrics, engineers can determine how well a platform preserves responsiveness under heavy operational loads.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Intel Xeon Processors Outperform Alternatives in Concurrency",
+          "paragraphs": [
+            {
+              "text": "According to data published by the Intel Newsroom, platforms powered by Intel processors maintained lower creation latency and sustained higher provisioning concurrency within the target 200-millisecond service-level objective when compared to competing configurations.",
+              "links": [
+                {
+                  "text": "Intel Newsroom",
+                  "url": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/scaling-sandboxed-agentic-ai-xeon-6.html"
+                }
+              ]
+            },
+            {
+              "text": "Specifically, the Intel Xeon 6990E+ processor remained below the 200-millisecond SLA threshold up to approximately 313 concurrent provisioning requests. Meanwhile, the Intel Xeon 6980P processor stayed below the threshold until reaching 277 concurrent requests. By contrast, the competing AMD EPYC 9965 processor crossed the 200-millisecond limit at approximately 246 concurrent requests.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Implications for Enterprise AI Infrastructure",
+          "paragraphs": [
+            {
+              "text": "Compared directly with the AMD EPYC 9965 processor, the Intel Xeon 6990E+ processor supports roughly 27% higher provisioning concurrency within the 200-millisecond SLA, while the Intel Xeon 6980P processor delivers approximately 12% higher concurrency. Both Intel-based platforms demonstrated strong scalability and predictable latency behavior under rising loads.",
+              "links": []
+            },
+            {
+              "text": "These findings highlight that the latest Intel® Xeon® 6+ processors provide a robust structural foundation for large-scale sandboxed agent deployments. As action-oriented AI systems continue to scale, the capability to efficiently orchestrate, isolate, and provision large fleets of agents remains a foundational requirement for enterprise architectures.",
+              "links": [
+                {
+                  "text": "Intel® Xeon® 6+ processors",
+                  "url": "https://www.intel.com/content/www/us/en/newsroom/home.html#intelxeon6processors104680510060prodgroup1773341884201"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Intel",
+        "Xeon 6",
+        "Agentic AI",
+        "Sandboxing",
+        "Cloud Computing",
+        "Artificial Intelligence",
+        "Data Center"
+      ],
+      "entities": [
+        "Intel Corporation",
+        "Intel Xeon 6",
+        "Intel Xeon 6990E+",
+        "Intel Xeon 6980P",
+        "AMD EPYC 9965",
+        "Tencent Cloud"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 8, 2026",
+      "modifiedLabel": "October 8, 2026",
+      "readMinutes": 4,
+      "wordCount": 674
+    }
+  },
+  "datePublished": "2026-10-08T21:43:36.728116+03:00",
+  "dateModified": "2026-10-08T21:43:36.728116+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/scaling-sandboxed-agentic-ai-on-xeon-cpus/hero.webp",
+    "card": "/forum/assets/posts/2026/10/scaling-sandboxed-agentic-ai-on-xeon-cpus/card.webp",
+    "social": "/forum/assets/posts/2026/10/scaling-sandboxed-agentic-ai-on-xeon-cpus/social.jpg",
+    "alt": {
+      "ar": "إنتل: معالجات Xeon 6 تتفوق في تسريع وكلاء الذكاء الاصطناعي",
+      "en": "Intel Xeon 6 CPUs Scale Sandboxed Agentic AI Workflows"
+    },
+    "credit": "Intel Newsroom",
+    "sourceUrl": "https://intelcorp.scene7.com/is/image/intelcorp/newsroom-intel-xeon-6990e-plus-metrics-graph-v1?qlt=80&wid=1650&ts=1791478265735&dpr=off",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/scaling-sandboxed-agentic-ai-on-xeon-cpus/inline-01.webp",
+        "width": 1400,
+        "height": 611,
+        "alt": {
+          "ar": "إنتل: معالجات Xeon 6 تتفوق في تسريع وكلاء الذكاء الاصطناعي",
+          "en": "Intel Xeon 6 CPUs Scale Sandboxed Agentic AI Workflows"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Intel Newsroom",
+          "en": "Image related to the report from Intel Newsroom"
+        },
+        "credit": "Intel Newsroom",
+        "sourceUrl": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/scaling-sandboxed-agentic-ai-xeon-6.html",
+        "originalUrl": "https://intelcorp.scene7.com/is/image/intelcorp/adobestock-433186924-2-4x3?qlt=80&wid=1650&ts=1791405396757&dpr=off"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Intel Newsroom",
+      "url": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/scaling-sandboxed-agentic-ai-xeon-6.html",
+      "type": "official",
+      "title": "Scaling Sandboxed Agentic AI on Xeon CPUs"
+    }
+  ],
+  "sourceUrl": "https://www.intel.com/content/www/us/en/newsroom/news/data-center/scaling-sandboxed-agentic-ai-xeon-6.html",
+  "sourceTitle": "Scaling Sandboxed Agentic AI on Xeon CPUs",
+  "trendScore": 101.82,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-08T18:43:36+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/scaling-sandboxed-agentic-ai-on-xeon-cpus.json"
+}
