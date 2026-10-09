@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "067650c4a8fbc2fe8310",
+  "slug": "cisco-warns-of-critical-flaws-allowing-nexus-switch-takeover",
+  "categorySlug": "security",
+  "urls": {
+    "ar": "/forum/ar/security/cisco-warns-of-critical-flaws-allowing-nexus-switch-takeover/",
+    "en": "/forum/en/security/cisco-warns-of-critical-flaws-allowing-nexus-switch-takeover/"
+  },
+  "locales": {
+    "ar": {
+      "title": "سايكو تحذّر من ثغرات حرجة تتيح السيطرة على مفاتيح Nexus",
+      "description": "كشفت سايكو عن خمس ثغرات حرجة في نظام NX-OS تتيح تنفيذ أكواد برمجية بصلاحيات root على مفاتيح Nexus، مع توصيات عاجلة للترقية.",
+      "deck": "أصدرت شركة سايكو تحذيرات أمنية عاجلة بشأن خمس ثغرات حرجة في نظام تشغيل NX-OS، والتي قد تسمح للمهاجمين بالسيطرة الكاملة على مفاتيح البيانات المركزية.",
+      "summaryBullets": [
+        "تتيح الثغرات تنفيذ أكواد برمجية عشوائية بصلاحيات root أو التسبب في انقطاع الخدمة.",
+        "تتأثر مفاتيح Nexus 3000 و9000 العاملة في وضع NX-OS المستقل عند تفعيل ميزات محددة.",
+        "تتطلب الاستغلال تفعيل ميزات مثل NX-API أو NGOAM أو MPLS OAM على الجهاز المتأثر.",
+        "توصي سايكو بالترقية الفورية أو تعطيل الميزات غير الضرورية، مع توفر حماية مؤقتة عبر Live Protect."
+      ],
+      "sections": [
+        {
+          "heading": "تحذير أمني عاجل من سايكو",
+          "paragraphs": [
+            {
+              "text": "أصدرت شركة سايكو سلسلة من النشرات الأمنية التي تحذر من وجود خمس ثغرات حرجة في نظام تشغيل NX-OS المخصص لشبكات مراكز البيانات. هذه الثغرات تتيح للمهاجمين تنفيذ أكواد برمجية عشوائية بصلاحيات root على مفاتيح Nexus، مما يمنحهم سيطرة كاملة على الجهاز. وفي حال تعذر تنفيذ هذا الهجوم، يمكن للمهاجم استغلال الثغرات لإسقاط العمليات الإجرائية وإجبار الجهاز المعرّض للخطر على إعادة التحميل، مما يؤدي إلى حالة من انقطاع الخدمة.",
+              "links": [
+                {
+                  "text": "سايكو",
+                  "url": "https://www.bleepingcomputer.com/news/security/cisco-warns-of-critical-flaws-allowing-nexus-switch-takeover/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الميزات المتأثرة وشروط الاستغلال",
+          "paragraphs": [
+            {
+              "text": "تشمل الثغرات ميزات NX-API وNext Generation OAM (NGOAM) وMPLS OAM في مفاتيح سلسلة Nexus 3000 وNexus 9000. تؤثر هذه المشاكل على المفاتيح العاملة في وضع NX-OS المستقل، ولكن نجاح الاستغلال يعتمد بشكل حاسم على تفعيل إحدى هذه الميزات الثلاث على الجهاز. جميع الثغرات الخمس تنبع من إخفاق في التحقق من صحة المدخلات، مما يجعلها قابلة للاستغلال فقط إذا كانت إحدى الميزات المذكورة نشطة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تفاصيل الثغرات الأمنية",
+          "paragraphs": [
+            {
+              "text": "تتضمن الثغرات CVE-2026-76471 التي تتعلق بعدم كفاية التحقق من صحة المدخلات، ويمكن استغلالها عبر طلب HTTP مصمم خصيصاً يُرسل إلى NX-API، وهي ميزة معطلة افتراضياً. كما تشمل CVE-2026-76485 وCVE-2026-76486 وCVE-2026-76501، والتي تتعلق بعدم الملاءمة في التحقق من حركة المرور عبر بروتوكول IP، ويمكن استغلالها عبر حزم مصممة تُرسل إلى واجهة IP، مع اشتراط تفعيل NGOAM. أما CVE-2026-76465 فتتعلق بعدم الملاءمة في التحقق من حزم MPLS echo-request.",
+              "links": [
+                {
+                  "text": "CVE-2026-76471",
+                  "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-napi-rce-r2shwu2j"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات إضافية للاستغلال",
+          "paragraphs": [
+            {
+              "text": "تتطلب استغلال ثغرة CVE-2026-76486 تفعيل إما Segment Routing over IPv6 (SRv6) أو Network Virtualization (NV) Overlay. يشير نشرة سايكو إلى أن NV Overlay يتطلب أيضاً تعيين معرّف شبكة VXLAN (VNI) لواجهة NVE مع تعلم نقطة نهاية نفق VXLAN (VTEP) واحدة على الأقل. أما CVE-2026-76501 فيمكن استغلالها إذا تم تفعيل SRv6، وهو ما تدعمه بعض نماذج Nexus 9000 فقط. وفي حالة CVE-2026-76465، يجب تفعيل MPLS OAM صراحةً، حيث أنها معطلة افتراضياً، ولا تتأثر مفاتيح Nexus 9000 المزودة بمعالجات Silicon One بهذه الثغرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الإجراءات التصحيحية الموصى بها",
+          "paragraphs": [
+            {
+              "text": "توصي سايكو بترقية إصدارات NX-OS إلى إصدارات مصححة، ويمكن تحديد هذه الإصدارات باستخدام أداة Software Checker الخاصة بالشركة. كما تنصح بتعطيل ميزات NGOAM أو NX-API أو MPLS OAM إذا لم تكن ضرورية، للقضاء على متجه الهجوم. توفر سايكو أيضاً دروع Live Protect المؤقتة لجميع الثغرات الخمس، وهي نظام حماية للمفاتيح التي لا يمكن ترحيلها وإعادة تشغيلها بعد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ثغرات إضافية في إدارة الترخيص",
+          "paragraphs": [
+            {
+              "text": "إلى جانب ثغرات Nexus الخمس، أصدرت سايكو تحديثات لتقوية الأمان لنظام Cisco License (المعروف سابقاً باسم Smart Software Manager). تشمل هذه المشاكل غياب المصادقة للوظائف الحرجة (CVE-2026-76480)، وعدم الملاءمة في التحقق من التواقيع التشفيرية (CVE-2026-76482)، والحماية غير الكافية للمعلومات المؤقتة (CVE-2026-76483)، وحقن الأكواد (CVE-2026-76484). الإصدارات المتأثرة عرضة للخطر بغض النظر عن الإعدادات، وتوصي سايكو بالترقية إلى الإصدار 10-202609، حيث لا تتوفر حلول مؤقتة. الإصدارات الأقدم التي تحمل علامة Smart Software Manager لن تتلقى تصحيحات لهذه الثغرات، لذا يُنصح بالانتقال إلى إصدار مدعوم.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "سايكو",
+        "NX-OS",
+        "أمن الشبكات",
+        "ثغرات حرجة",
+        "Nexus",
+        "RCE",
+        "مراكز البيانات"
+      ],
+      "entities": [
+        "سايكو",
+        "NX-OS",
+        "Nexus 3000",
+        "Nexus 9000",
+        "NX-API",
+        "NGOAM",
+        "MPLS OAM",
+        "CVE-2026-76471",
+        "CVE-2026-76485",
+        "CVE-2026-76486",
+        "CVE-2026-76501",
+        "CVE-2026-76465"
+      ],
+      "category": "الأمن التقني",
+      "dateLabel": "9 أكتوبر 2026",
+      "modifiedLabel": "9 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 522
+    },
+    "en": {
+      "title": "Cisco Warns of Critical Flaws Allowing Nexus Switch Takeover",
+      "description": "Cisco has issued security advisories for five critical vulnerabilities in its NX-OS operating system affecting Nexus 3000 and 9000 switches.",
+      "deck": "Cisco has released critical security advisories regarding five vulnerabilities impacting its NX-OS data center network operating system, which could allow malicious actors to achieve remote code execution with root privileges on affected hardware.",
+      "summaryBullets": [
+        "Five critical vulnerabilities impact Cisco Nexus 3000 and Nexus 9000 Series switches running in standalone NX-OS mode.",
+        "Successful exploitation can lead to arbitrary code execution with root privileges or trigger a denial-of-service condition.",
+        "The flaws affect the NX-API, Next Generation OAM (NGOAM), and MPLS OAM features, requiring specific features to be active.",
+        "Cisco recommends upgrading to fixed software versions, disabling unused features, or utilizing temporary Live Protect shields."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of the NX-OS Vulnerabilities",
+          "paragraphs": [
+            {
+              "text": "Cisco has issued security advisories addressing five critical vulnerabilities discovered within its NX-OS data center network operating system. According to details reported by BleepingComputer, these flaws could potentially be exploited to run arbitrary code with root privileges on vulnerable switches, or cause processes to crash and force a device reload leading to a denial-of-service condition.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/cisco-warns-of-critical-flaws-allowing-nexus-switch-takeover/"
+                }
+              ]
+            },
+            {
+              "text": "The issues specifically impact Cisco Nexus 3000 Series and Nexus 9000 Series switches operating in standalone NX-OS mode. However, exploitation relies on the activation of certain features, namely the NX-API, Next Generation OAM (NGOAM), and MPLS OAM features, as all five vulnerabilities stem from input validation failures.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Detailed Breakdown of Affected Features",
+          "paragraphs": [
+            {
+              "text": "The identified flaws carry specific conditions for exploitation based on device configuration and active features. For instance, CVE-2026-76471 involves insufficient input validation and can be exploited via a crafted HTTP request sent to the NX-API, which is disabled by default.",
+              "links": [
+                {
+                  "text": "CVE-2026-76471",
+                  "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-napi-rce-r2shwu2j"
+                }
+              ]
+            },
+            {
+              "text": "Meanwhile, three additional vulnerabilities—CVE-2026-76485, CVE-2026-76486, and CVE-2026-76501—involve improper validation of IP traffic and require NGOAM to be enabled. Specifically, leveraging the CVE-2026-76486 flaw also requires either Segment Routing over IPv6 (SRv6) or Network Virtualization (NV) Overlay to be enabled on the system.",
+              "links": [
+                {
+                  "text": "CVE-2026-76485, CVE-2026-76486, and CVE-2026-76501",
+                  "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ngoam-rce-LWKQ4BU"
+                }
+              ]
+            },
+            {
+              "text": "Additionally, CVE-2026-76465 stems from improper validation of MPLS echo-request packets, allowing exploitation through a crafted request sent directly to an affected device’s IP address when MPLS OAM is explicitly activated.",
+              "links": [
+                {
+                  "text": "CVE-2026-76465",
+                  "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-moam-rce-uBTzYV7"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Unaffected Models and Vendor Guidance",
+          "paragraphs": [
+            {
+              "text": "Cisco has clarified that Nexus 7000 switches and Nexus 9000 switches operating in ACI mode are entirely unaffected by any of the five vulnerabilities. Furthermore, Nexus 9000 switches equipped with Silicon One ASICs do not support MPLS OAM and remain safe from that particular flaw.",
+              "links": []
+            },
+            {
+              "text": "To mitigate these security risks, Cisco's advisory suggests upgrading NX-OS releases to a fixed version, which can be identified using the vendor's official tools. Network administrators can also disable NGOAM, NX-API, or MPLS OAM features if they are not actively required, effectively eliminating the corresponding attack vectors.",
+              "links": [
+                {
+                  "text": "Cisco's advisory",
+                  "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ngoam-rce-LWKQ4BU"
+                }
+              ]
+            },
+            {
+              "text": "For switches that cannot be immediately upgraded or rebooted, Cisco offers temporary shields through its protection system designed for continuity.",
+              "links": [
+                {
+                  "text": "protection system",
+                  "url": "https://www.cisco.com/c/en/us/td/docs/dcn/nx-os/nexus9000/106x/configuration/security/cisco-nexus-9000-series-nx-os-security-configuration-guide-release-106x/m-secure-nx-os-with-live-protect.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Additional Security Updates Released",
+          "paragraphs": [
+            {
+              "text": "In addition to addressing the five Nexus switch flaws, Cisco also published security hardening updates for Cisco License, formerly known as Smart Software Manager. These secondary issues involve missing authentication for critical functions, improper cryptographic signature verification, insufficiently protected credentials, and code injection vulnerabilities.",
+              "links": [
+                {
+                  "text": "security hardening updates",
+                  "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ssm-Ph77wdhf"
+                }
+              ]
+            },
+            {
+              "text": "Cisco noted that all five NX-OS vulnerabilities were discovered internally during security testing and that there were no public announcements or malicious exploitation detected at the time of publishing. Users seeking a comprehensive overview of all recently published alerts can check out this page for further details.",
+              "links": [
+                {
+                  "text": "check out this page",
+                  "url": "https://sec.cloudapps.cisco.com/security/center/publicationListing.x"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cisco",
+        "NX-OS",
+        "Nexus",
+        "Cybersecurity",
+        "Vulnerabilities",
+        "Network Security",
+        "Data Center"
+      ],
+      "entities": [
+        "Cisco",
+        "BleepingComputer"
+      ],
+      "category": "Cybersecurity",
+      "dateLabel": "October 9, 2026",
+      "modifiedLabel": "October 9, 2026",
+      "readMinutes": 3,
+      "wordCount": 537
+    }
+  },
+  "datePublished": "2026-10-09T06:45:36.936231+03:00",
+  "dateModified": "2026-10-09T06:45:36.936231+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/cisco-warns-of-critical-flaws-allowing-nexus-switch-takeover/hero.webp",
+    "card": "/forum/assets/posts/2026/10/cisco-warns-of-critical-flaws-allowing-nexus-switch-takeover/card.webp",
+    "social": "/forum/assets/posts/2026/10/cisco-warns-of-critical-flaws-allowing-nexus-switch-takeover/social.jpg",
+    "alt": {
+      "ar": "سايكو تحذّر من ثغرات حرجة تتيح السيطرة على مفاتيح Nexus",
+      "en": "Cisco Warns of Critical Flaws Allowing Nexus Switch Takeover"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2025/03/04/Cisco-headpic.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/cisco-warns-of-critical-flaws-allowing-nexus-switch-takeover/",
+      "type": "journalism",
+      "title": "Cisco warns of critical flaws allowing Nexus switch takeover"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/security/cisco-warns-of-critical-flaws-allowing-nexus-switch-takeover",
+  "sourceTitle": "Cisco warns of critical flaws allowing Nexus switch takeover",
+  "trendScore": 93.3,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-09T03:45:36+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/cisco-warns-of-critical-flaws-allowing-nexus-switch-takeover.json"
+}
