@@ -1,0 +1,321 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "c82eac134cb7c0f5d597",
+  "slug": "hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks",
+  "categorySlug": "security",
+  "urls": {
+    "ar": "/forum/ar/security/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks/",
+    "en": "/forum/en/security/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks/"
+  },
+  "locales": {
+    "ar": {
+      "title": "استغلال إعلانات جوجل وبينج لتنفيذ هجمات كلوود كليك فاكس",
+      "description": "يرصد باحثو الأمن السيبراني حملة خبيثة تستغل إعلانات جوجل وإعادة توجيه بينج لتنفيذ هجمات كليك فاكس عبر صفحات مزيفة لتنزيل مساعد الذكاء الاصطناعي كلوود.",
+      "deck": "تستغل حملة خبيثة حديثة روابط إعادة التوجيه في محرك بحث بينج ضمن إعلانات جوجل، بهدف خداع مستخدمي نظام ماك أو إس وتوريطهم في تثبيت برمجيات خبيثة عبر هجمات كليك فاكس.",
+      "summaryBullets": [
+        "استغلال إعلانات جوجل وروابط إعادة التوجيه في بينج لتجاوز الفحوصات الأمنية.",
+        "استخدام نطاق بينج الموثوق كوجهة إعلانية قبل تمرير الضحايا عبر مواقع مخترقة.",
+        "صفحات تنزيل مزيفة لمساعد كلوود تعرض أوامر تثبيت خبيثة خفية تحاكي الأوامر الرسمية.",
+        "تعتمد الحملة طبقات متعددة من التخفي لمنع الفاحصين الآليين والزوار المباشرين من كشف الحمولة."
+      ],
+      "sections": [
+        {
+          "heading": "آلية الحملة الخبيثة وإساءة استخدام إعلانات جوجل وبينج",
+          "paragraphs": [
+            {
+              "text": "كشف باحثو الأمن السيبراني في شركة بوش سيكيوريتي عن تقنية خبيثة جديدة أطلقوا عليها اسم أديسبشن، حيث يستغل المهاجمون روابط إعادة التوجيه الشرعية لنتائج بحث بينج باعتبارها عناوين نقر داخل إعلانات بحث جوجل. ويهدف هذا الاستغلال إلى توجيه المستخدمين نحو صفحات مزيفة لتنزيل مساعد الذكاء الاصطناعي كلوود وإيصال هجمات كليك فاكس بطريقة تخدع أنظمة الحماية.",
+              "links": [
+                {
+                  "text": "بوش سيكيوريتي",
+                  "url": "http://pushsecurity.com/blog/adception-malvertising-another-search-engines-search-results"
+                }
+              ]
+            },
+            {
+              "text": "بحسب التقارير التقنية الصادرة عن منصة بليدنج كمبيوتر، تم اكتشاف هذه الحملة إثر رصد إعلان غوغل خبيث يستهدف المستخدمين الذين يبحثون عن عبارات محددة تخص مستخدمي الحواسيب الشخصية لنظام ماك. وعلى عكس الحملات الإعلانية الخبيثة المعتادة التي تقود الضحايا نحو نطاقات يسيطر عليها المخترقون مباشرة، ظهر في هذه النتيجة الإعلانية نطاق بينج الموثوق، مما جعل الإعلان يبدو أقل إثارة للريبة.",
+              "links": [
+                {
+                  "text": "بليدنج كمبيوتر",
+                  "url": "https://www.bleepingcomputer.com/news/security/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مسار التوجيه عبر نقاط تتبع النقر والمواقع المخترقة",
+          "paragraphs": [
+            {
+              "text": "عند النقر على الإعلان المذكور، يمرر المتصفح عبر إعدادات إعادة التوجيه الإعلانية لشركة جوجل ليصل إلى نقطة نهاية تتبع النقر التابعة لبينج، والتي بدورها تحيل متصفح المستخدم إلى موقع ووردبريس شرعي لكنه مخترق ويعود لشركة تجزئة في أمريكا الجنوبية. بعد ذلك، يقوم الموقع المخترق بإعادة توجيه الزائر نحو صفحة تنزيل مزيفة مصممة خصيصاً لإيقاع مستخدمي نظام ماك أو إس في فخ تنفيذ أوامر خبيثة.",
+              "links": []
+            },
+            {
+              "text": "تعتمد نقاط إعادة توجيه تتبع النقر في بينج على لغة جافا سكربت لنقل الزائرين إلى وجهاتهم النهائية، وهو ما يتيح للمهاجمين تحويل مسار المستخدمين نحو مواقع ضارة مع إظهار حركة المرور وكأنها صادرة من محرك بحث بينج نفسه، مما يصعب من مهمة تتبع المصدر الحقيقي للهجوم وتجاوز الفلاتر الإعلانية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استخدام طبقات متعددة من التخفي لعرقلة الفحص الأمني",
+          "paragraphs": [
+            {
+              "text": "تستعين الحملة بتقنيات متقدمة لإخفاء الهوية والبيانات لمنع الزوار غير المرغوب بهم ومحركات الفحص الأمني من الوصول إلى الحمولة الخبيثة. يتحقق موقع ووردبريس المخترق من وجود مُحيل قادم من بينج وترويسات متصفح محددة قبل إتمام عملية إعادة التوجيه، بينما يستعمل موقع كلوود المزيف لغة جافا سكربت للتحقق من قدوم الزائرين حصرياً عبر جوجل أو بينج.",
+              "links": []
+            },
+            {
+              "text": "أما في حال حاول المستخدمون الوصول إلى الموقع الضار مباشرة دون مروره عبر مسار البحث والإعلانات، تتم إحالتهم إلى صفحة خطأ مخصصة، مما يؤدي إلى زيادة الصعوبات أمام أدوات الفحص الأمنية الآلية في تحليل طبيعة الهجوم بدقة وكشف محتواه الفعلي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أوامر التثبيت المخادعة وحيل النسخ في الحافظة",
+          "paragraphs": [
+            {
+              "text": "تصل رحلة الهجوم في نهايتها إلى صفحة تنزيل مقنعة للغاية تحاكي الصفحات الرسمية للحصول على أداة تثبيت مخصصة لنظام ماك عبر إدخال أمر تثبيت في تطبيق الطرفية. ورغم أن الصفحة تعرض أمراً رسمياً مشروعاً لشركة أنثروبيك، إلا أن زر النسخ المتاح للمستخدم يقوم باستبدال الأمر النصي وإدراج أمر خبيثة في حافظة النظام.",
+              "links": []
+            },
+            {
+              "text": "يعمل الأمر البديل على طباعة رسالة وهمية تدعي تنزيل المساعد الرقمي من الموقع الرسمي، بينما يقوم في الخلفية بفك تشفير رابط مشفر بصيغة بيز 64، ومن ثم تنزيل ملف بيانات بصمتها عبر أداة كارل وتوجيه محتوياتها مباشرة نحو صدفة نظام ماك أو إس للتنفيذ الفوري دون علم الضحية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "طبيعة الحمولة النهائية ونطاقات أداة كليك فاكس",
+          "paragraphs": [
+            {
+              "text": "حتى اللحظة الراهنة، ما زالت الحمولة النهائية التي يتم تسليمها عبر هذه الهجمات مجهولة تماماً، مما يجعل من غير الواضح نوع البرمجيات الخبيثة التي يتم زرعها في أجهزة الضحايا حال نجاح التثبيت. ويأتي هذا التطور متزامناً مع تحذيرات أمنية أخرى تتعلق بسياسات استغلال منصات الذكاء الاصطناعي، مثل الهجمات المرتبطة بتطبيقات شات جي بي تي المخصصة أو برمجيات سرقة الجلسات.",
+              "links": []
+            },
+            {
+              "text": "أكدت شركة بوش سيكيوريتي رصدها لعدة نطاقات مرتبطة بمجموعة أدوات كليك فاكس ذاتها، والتي يتم تتبعها داخلياً تحت اسم إيه سي سيغ، حيث تستخدم جميعها أوامر تثبيت متطابقة لنظام ماك وهياكل متشابهة لروابط الحمولات وواجهات التثبيت.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الأمن التقني",
+        "برمجيات خبيثة",
+        "إعلانات جوجل",
+        "هجمات كليك فاكس",
+        "بينج",
+        "ماك أو إس",
+        "أمن المعلومات"
+      ],
+      "entities": [
+        "بوش سيكيوريتي",
+        "بليدنج كمبيوتر",
+        "جوجل",
+        "بينج",
+        "كلوود",
+        "أنثروبيك"
+      ],
+      "category": "الأمن التقني",
+      "dateLabel": "10 أكتوبر 2026",
+      "modifiedLabel": "10 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 636
+    },
+    "en": {
+      "title": "Hackers Abuse Google Ads and Bing to Push Fake Claude",
+      "description": "Security researchers reveal a new malvertising campaign abusing Google Ads and Bing redirects to deliver ClickFix attacks via fake Claude installers.",
+      "deck": "Threat actors are combining Google Ads with legitimate Bing search-result redirects to deceive users searching for macOS Claude downloads into executing malicious commands.",
+      "summaryBullets": [
+        "A campaign dubbed 'Adception' abuses legitimate Bing click-tracking redirects inside Google search ads.",
+        "The malvertising campaign targets users searching for 'claude mac' and leads to a fake Claude download page.",
+        "Cloaking techniques are employed using browser headers and referrers to block automated security scanners.",
+        "Copy buttons on the fake site swap Anthropic's real installation command with a script that executes a malicious payload via zsh."
+      ],
+      "sections": [
+        {
+          "heading": "The 'Adception' Malvertising Campaign",
+          "paragraphs": [
+            {
+              "text": "Threat actors have developed a sophisticated new malvertising technique that abuses legitimate Bing search-result redirects as click URLs within Google search ads. According to a report published by [Push Security](http://pushsecurity.com/blog/adception-malvertising-another-search-engines-search-results), this approach—dubbed 'Adception'—is specifically engineered to evade traditional advertising security checks.",
+              "links": [
+                {
+                  "text": "Push Security",
+                  "url": "http://pushsecurity.com/blog/adception-malvertising-another-search-engines-search-results"
+                }
+              ]
+            },
+            {
+              "text": "The campaign was uncovered after security researchers detected a malicious Google advertisement targeting individuals searching for 'claude mac'. Unlike typical malvertising operations that route victims straight to attacker-controlled domains, the sponsored search result displayed the trusted bing.com domain, significantly reducing user suspicion.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "How the Redirect Chain Operates",
+          "paragraphs": [
+            {
+              "text": "When a user clicks on the deceptive advertisement, the traffic passes through Google's advertising redirect before landing on Bing's bing.com/ck/a click-tracking endpoint. This endpoint subsequently forwards the browser to a legitimate but compromised WordPress website belonging to a South American retailer.",
+              "links": []
+            },
+            {
+              "text": "Bing's click-tracking redirects rely on JavaScript to dispatch visitors to their final destination. This mechanism enables attackers to route users toward malicious destinations while making the inbound traffic appear as though it originated directly from Bing.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Multi-Layered Cloaking Mechanisms",
+          "paragraphs": [
+            {
+              "text": "Before presenting any malicious content, the campaign utilizes multiple layers of cloaking designed to obstruct security scanners and casual visitors. The compromised WordPress website checks for a valid Bing referrer and specific browser headers before proceeding with any redirection.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, the ultimate fake Claude destination page employs JavaScript to verify that visitors successfully arrived from either Google or inquisitive search pathways like Bing. Visitors who attempt to access the malicious URL directly are immediately redirected to a standard 404 error page, compounding the difficulty for automated security scanners attempting to analyze the threat.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The Fake Claude Installer and Clipboard Swap",
+          "paragraphs": [
+            {
+              "text": "The campaign's destination page closely mimics a legitimate Claude download portal, providing instructions for a macOS installer that requires execution inside the Terminal. Although the page text visibly displays Anthropic's genuine installation command—curl -fsSL https://claude.ai/install.sh | bash—interacting with the page's copy button places a completely different command onto the clipboard.",
+              "links": []
+            },
+            {
+              "text": "The substituted command deceptively prints a message implying it is downloading Claude from Anthropic's official repository, but it actually decodes a Base64-encoded URL pointing to lake-90[.]com. The script then uses curl to silently download a .dat file from the server controlled by the attacker and pipes its contents directly into the macOS Z shell (zsh) for execution.",
+              "links": []
+            },
+            {
+              "text": "Because the terminal window reflects the appearance of the official installation URL, victims remain unaware that an entirely different background script is executing. Security researchers note that the final payload delivered by this specific attack remains unidentified, meaning the precise malware installed is not yet clear.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Broader Context on ClickFix and AI Targeting",
+          "paragraphs": [
+            {
+              "text": "Push Security stated that it identified multiple infrastructure domains linked to this exact ClickFix toolkit, which is tracked internally under the name AcSig. These related domains share identical macOS installation commands, payload URL structures, and user interface designs.",
+              "links": []
+            },
+            {
+              "text": "The campaign highlights a wider industry trend where threat actors weaponize trusted AI platforms and associated search terms to deploy malicious payloads. Previous incidents analyzed by security analysts include [Custom ChatGPTs push ClickFix attacks to deploy RAT malware](https://www.bleepingcomputer.com/news/security/custom-chatgpts-push-clickfix-attacks-to-deploy-rat-malware/) and broader trends regarding [How Threat Actors Are Turning Trusted AI Platforms Into an Attack Surface](https://www.bleepingcomputer.com/news/security/how-threat-actors-are-turning-trusted-ai-platforms-into-an-attack-surface/).",
+              "links": [
+                {
+                  "text": "Custom ChatGPTs push ClickFix attacks to deploy RAT malware",
+                  "url": "https://www.bleepingcomputer.com/news/security/custom-chatgpts-push-clickfix-attacks-to-deploy-rat-malware/"
+                },
+                {
+                  "text": "How Threat Actors Are Turning Trusted AI Platforms Into an Attack Surface",
+                  "url": "https://www.bleepingcomputer.com/news/security/how-threat-actors-are-turning-trusted-ai-platforms-into-an-attack-surface/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Malvertising",
+        "ClickFix",
+        "Claude",
+        "macOS",
+        "Push Security",
+        "Google Ads",
+        "Bing",
+        "Cybersecurity"
+      ],
+      "entities": [
+        "Google",
+        "Bing",
+        "Anthropic",
+        "Push Security",
+        "Claude"
+      ],
+      "category": "Cybersecurity",
+      "dateLabel": "October 10, 2026",
+      "modifiedLabel": "October 10, 2026",
+      "readMinutes": 3,
+      "wordCount": 612
+    }
+  },
+  "datePublished": "2026-10-10T02:25:41.178563+03:00",
+  "dateModified": "2026-10-10T02:25:41.178563+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks/hero.webp",
+    "card": "/forum/assets/posts/2026/10/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks/card.webp",
+    "social": "/forum/assets/posts/2026/10/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks/social.jpg",
+    "alt": {
+      "ar": "استغلال إعلانات جوجل وبينج لتنفيذ هجمات كلوود كليك فاكس",
+      "en": "Hackers Abuse Google Ads and Bing to Push Fake Claude"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/05/07/ClaudeChats.png",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks/inline-01.webp",
+        "width": 1400,
+        "height": 637,
+        "alt": {
+          "ar": "استغلال إعلانات جوجل وبينج لتنفيذ هجمات كلوود كليك فاكس",
+          "en": "Google search ad ultimately redirecting to a fake Claude download page"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Google search ad ultimately redirecting to a fake Claude download page Source: Push Security"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/security/c/clickfix/claude-bing-google-redirects/bing-claude-clickfix.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks/inline-02.webp",
+        "width": 1400,
+        "height": 823,
+        "alt": {
+          "ar": "استغلال إعلانات جوجل وبينج لتنفيذ هجمات كلوود كليك فاكس",
+          "en": "ClickFix prompt disguised as installation steps for Claude for macOS"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "ClickFix prompt disguised as installation steps for Claude for macOS Source: Push Security"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/security/c/clickfix/claude-bing-google-redirects/clickfix-prompt.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks/",
+      "type": "journalism",
+      "title": "Hackers abuse Google Ads, Bing redirects to push Claude ClickFix attacks"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/security/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks",
+  "sourceTitle": "Hackers abuse Google Ads, Bing redirects to push Claude ClickFix attacks",
+  "trendScore": 93.97,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-09T23:25:41+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/hackers-abuse-google-ads-bing-redirects-to-push-claude-clickfix-attacks.json"
+}
