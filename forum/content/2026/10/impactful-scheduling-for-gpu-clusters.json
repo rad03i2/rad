@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "e05551817b225bef5e8c",
+  "slug": "impactful-scheduling-for-gpu-clusters",
+  "categorySlug": "computers",
+  "urls": {
+    "ar": "/forum/ar/computers/impactful-scheduling-for-gpu-clusters/",
+    "en": "/forum/en/computers/impactful-scheduling-for-gpu-clusters/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Ai2 تعيد تصميم جدولة الحوسبة بالذكاء الاصطناعي",
+      "description": "تستبدل مؤسسة Ai2 نظام الأولويات التقليدي بميزانيات زمنية موزونة لتوزيع موارد GPU، مما يحل مشكلة احتكار المعالجات ويضمن استغلالاً أمثل للبحث العلمي.",
+      "deck": "تواجه المؤسسات البحثية تحدياً في توزيع موارد الحوسبة النادرة. تكشف Ai2 عن نظام جديد يوازن بين الإنصاف والأثر العلمي.",
+      "summaryBullets": [
+        "استبدال نظام الأولويات بميزانيات زمنية موزونة لكل مشروع بحثي.",
+        "توزيع موارد GPU عبر هيكل هرمي يربط الاستراتيجية بالموارد الفعلية.",
+        "معالجة مشكلة احتكار المعالجات (Squatting) من خلال ربط الاستخدام بالميزانية.",
+        "تحسين استغلال الموارد لتقليل الهدر في البنية التحتية للذكاء الاصطناعي."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي توزيع موارد GPU النادرة",
+          "paragraphs": [
+            {
+              "text": "تدير مؤسسة Ai2 آلاف معالجات NVIDIA H100 وB200 وB300 موزعة على عناقيد تتراوح سعتها بين 88 و1024 معالجاً. تخدم هذه البنية التحتية نحو 150 باحثاً يعملون في مجالات متنوعة تشمل تدريب نماذج اللغة الكبيرة (LLM) والتعلم المعزز للروبوتات. يواجه الفريق تحدياً حقيقياً حيث تتجاوز الطلبات المقدمة سعة المعالجات المتاحة بمعدل يتراوح بين مرتين وثلاث مرات، مما يعني أن كل ساعة حوسبة متاحة تتنافس عليها عدة مشاريع بحثية في آن واحد. ويمكن الرجوع إلى Hugging Face Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/allenai/impactful-scheduling"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "أوجه القصور في نظام الأولويات التقليدي",
+          "paragraphs": [
+            {
+              "text": "اعتمدت المؤسسة سابقاً على نظام جدولة يعتمد على الأولويات، مما أدى إلى ظهور مشكلات تشغيلية متكررة. لاحظ الفريق ما يُعرف بـ \"احتكار المعالجات\" حيث يقوم المستخدمون بإبقاء مهام خاملة (No-op) على المعالجات لتجنب انقطاعها، مما يستهلك الموارد دون إنتاجية فعلية. كما حدث تضخم في الأولويات حتى أصبحت جميع المهام تحمل مستوى \"مرتفع\"، مما حرم المشاريع ذات الأولوية المنخفضة من الوصول إلى الموارد. اضطر مهندسو الدعم إلى قضاء وقت طويل في التفاوض مع الفرق لإيقاف المهام المحمية من الانقطاع عند الحاجة إلى صيانة العتاد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مفارقة المصالح الفردية والمصلحة العامة",
+          "paragraphs": [
+            {
+              "text": "يصف الباحثون هذا السيناريو بأنه \"مأساة الشائع\" (Tragedy of the Commons)، حيث يسعى كل فرد لتعظيم نتائجه الخاصة على حساب الكفاءة الكلية للنظام. تشير أبحاث سابقة، مثل ورقة عام 2011 حول الإنصاف في الموارد السائدة (Dominant Resource Fairness)، إلى أن المستخدمين يميلون إلى إخفاء القيمة الحقيقية لمهامهم أو الاحتفاظ بالموارد حتى عندما يؤدي ذلك إلى تدهور الأداء العام. حاولت Ai2 سابقاً معالجة ذلك عبر منح فرق معينة حصرية على مجموعات من المعالجات، لكن هذا الحل كان خشناً وأدى إلى ترك معالجات فارغة في أوقات عدم استعداد الفرق للتشغيل.",
+              "links": [
+                {
+                  "text": "Dominant Resource Fairness",
+                  "url": "https://www.semanticscholar.org/paper/Dominant-Resource-Fairness%3A-Fair-Allocation-of-Ghodsi-Zaharia/b1a47759dbcf87ed132838be39f8ab244e78e2d6"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الانتقال إلى نموذج الميزانيات الزمنية",
+          "paragraphs": [
+            {
+              "text": "قرر فريق البنية التحتية في Ai2 الانتقال من نموذج ملكية المعالجات إلى نموذج تخصيص الوقت. بدلاً من منح الفرق حصرية على أجهزة محددة، يتم تخصيص نسبة من إجمالي وقت المعالجات لكل مشروع. يعتمد هذا النظام على مبدأ أن أولويات البحث العلمي هي مسألة استراتيجية يمكن مناقشتها واتخاذ قرار بشأنها مسبقاً، بينما يصعب التنبؤ بالطلب الفعلي على الحوسبة. يتيح هذا النهج للقادة التفكير كمستثمرين، حيث يقررون كيفية تمويل كل جهد بحثي بوقت حوسبة بناءً على تقديرهم للأثر المتوقع، مما يحوّل الجدولة من عملية فنية معقدة إلى عملية إدارية شفافة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية التوزيع الهرمي والإنصاف",
+          "paragraphs": [
+            {
+              "text": "يعتمد النظام الجديد على هيكل هرمي يسمح للمديرين بتوزيع وقت المعالجات بشكل متناسب على المشاريع والباحثين الذين يشرفون عليهم. يترجم هذا الهيكل الاستراتيجية البرنامجية مباشرة إلى حصة مضمونة من السعة الكلية. على سبيل المثال، إذا تم تخصيص 35% من السعة لمشروع معين، فإن هذا المشروع يحق له الوصول إلى هذه النسبة بغض النظر عن عدد المشاريع الأخرى في قائمة الانتظار. يتطلب النظام أن تكون كل طلبات الحوسبة مدعومة بميزانية زمنية، وإلا فإنها تصبح عرضة للانقطاع (Preemption).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تأثير النظام الجديد على سلوك المستخدمين",
+          "paragraphs": [
+            {
+              "text": "في النظام السابق، كانت الأولوية العالية مجانية، مما شجع الجميع على استخدامها. أما الآن، فلا شيء مجاني؛ فأي محاولة للحصول على وقت حوسبة دون مبرر تستهلك من ميزانية الفريق. يؤدي هذا إلى جعل \"الغش\" في الجدولة مكلفاً مادياً (بموارد الحوسبة) مقارنة بالمشاركة الصادقة في النقاش حول زيادة الميزانية. يهدف هذا التصميم إلى جعل استغلال النظام أقل جدوى من الانخراط في عملية مراجعة الميزانيات المستمرة، مما يعزز الشفافية ويضمن أن تذهب الموارد إلى المشاريع ذات الأثر الحقيقي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "بنية تحتية",
+        "GPU",
+        "جدولة الموارد",
+        "Ai2",
+        "الحوسبة السحابية",
+        "إدارة النظم"
+      ],
+      "entities": [
+        "Ai2",
+        "NVIDIA",
+        "H100",
+        "B200",
+        "B300",
+        "Dominant Resource Fairness"
+      ],
+      "category": "الحواسيب",
+      "dateLabel": "9 أكتوبر 2026",
+      "modifiedLabel": "9 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 581
+    },
+    "en": {
+      "title": "Ai2 Overhauls GPU Cluster Scheduler for AI Research",
+      "description": "Ai2 updates its GPU cluster scheduling framework, introducing time budgets and hierarchical fair-share allocation to maximize impact and occupancy.",
+      "deck": "The AI Infrastructure team at Ai2 has replaced its traditional priority-based scheduler with a transparent administrative budgeting process to better manage large-scale GPU clusters.",
+      "summaryBullets": [
+        "Ai2 manages thousands of NVIDIA H100, B200, and B300 GPUs across clusters ranging from 88 to 1024 units.",
+        "Demand for compute capacity regularly outpaces supply, with outstanding requests exceeding available resources by two to three times.",
+        "A legacy priority-based scheduler led to issues such as GPU squatting and priority inflation.",
+        "The new system introduces GPU time budgets, hierarchical fair-share allocation, and a time-slicing contract."
+      ],
+      "sections": [
+        {
+          "heading": "Navigating GPU Compute Demand",
+          "paragraphs": [
+            {
+              "text": "The AI Infrastructure team at <A Hugging Face Blog link target is available here: allenai> manages thousands of high-performance NVIDIA accelerators, including H100, B200, and B300 GPUs, arranged into clusters ranging from 88 to 1024 units. These hardware configurations support approximately 150 internal researchers working across diverse artificial intelligence domains.",
+              "links": [
+                {
+                  "text": "allenai",
+                  "url": "https://huggingface.co/allenai"
+                }
+              ]
+            },
+            {
+              "text": "Workloads span the complete model flow of large language model and vision-language model training, robotics reinforcement learning simulation, and post-training for scientific agentic use cases. According to details shared on the <Hugging Face Blog link target can be utilized: Hugging Face Blog>, aggregate demand consistently outstrips available supply by a factor of two to three.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/allenai/impactful-scheduling"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Addressing Limitations of Priority-Based Schedulers",
+          "paragraphs": [
+            {
+              "text": "Historically, the infrastructure relied on a priority-based scheduling model that permitted workloads to opt out of preemptibility under concurrent GPU limits. This architecture introduced predictable operational pathologies, such as GPU squatting, where researchers parked no-op workloads to maintain immediate debugging access.",
+              "links": []
+            },
+            {
+              "text": "Over time, the system also experienced severe priority inflation, eventually resulting in 100% of scheduled workloads operating at high priority and starving lower priority tiers. These resource allocation challenges closely mirror the economic concepts explored in foundational scheduling studies like <Dominant Resource Fairness link target is available: Dominant Resource Fairness>, where individuals compete over scarce shared resources.",
+              "links": [
+                {
+                  "text": "Dominant Resource Fairness",
+                  "url": "https://www.semanticscholar.org/paper/Dominant-Resource-Fairness%3A-Fair-Allocation-of-Ghodsi-Zaharia/b1a47759dbcf87ed132838be39f8ab244e78e2d6"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Moving Past Static Resource Monopolies",
+          "paragraphs": [
+            {
+              "text": "Initial attempts to resolve scheduling friction involved assigning explicit GPU monopolies to critical projects. However, because research demands fluctuate due to seasonality, static allocations frequently left hardware sitting idle while other teams awaited capacity.",
+              "links": []
+            },
+            {
+              "text": "Managing these dynamic research requirements within static schedules essentially mirrors the computational challenges found in resolving a classic <knapsack problem link target is available: knapsack problem>. Rather than attempting to solve the scheduling puzzle via manual static partitions, the team sought an approach that combined ownership incentives with full hardware occupancy.",
+              "links": [
+                {
+                  "text": "knapsack problem",
+                  "url": "https://en.wikipedia.org/wiki/Knapsack_problem"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Implementing Time Budgets and Hierarchical Allocation",
+          "paragraphs": [
+            {
+              "text": "The updated scheduling framework shifts the focus from issuing physical GPUs to allocating specific portions of GPU time. This administrative budgeting process allows project leadership to function similarly to investors, assigning guaranteed shares of compute capacity based on strategic impact before workloads are created.",
+              "links": []
+            },
+            {
+              "text": "Under this new hierarchical model, any request for GPU compute must be backed by a valid budget to remain protected from preemption, effectively aligning individual project incentives with overall cluster efficiency and mitigating resource gaming.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GPU",
+        "Cluster Computing",
+        "AI Infrastructure",
+        "Scheduling",
+        "Machine Learning",
+        "Hugging Face",
+        "Allen Institute for AI"
+      ],
+      "entities": [
+        "Ai2",
+        "NVIDIA",
+        "Hugging Face"
+      ],
+      "category": "Computing",
+      "dateLabel": "October 9, 2026",
+      "modifiedLabel": "October 9, 2026",
+      "readMinutes": 3,
+      "wordCount": 475
+    }
+  },
+  "datePublished": "2026-10-09T18:45:39.544744+03:00",
+  "dateModified": "2026-10-09T18:45:39.544744+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/impactful-scheduling-for-gpu-clusters/hero.webp",
+    "card": "/forum/assets/posts/2026/10/impactful-scheduling-for-gpu-clusters/card.webp",
+    "social": "/forum/assets/posts/2026/10/impactful-scheduling-for-gpu-clusters/social.jpg",
+    "alt": {
+      "ar": "Ai2 تعيد تصميم جدولة الحوسبة بالذكاء الاصطناعي",
+      "en": "Ai2 Overhauls GPU Cluster Scheduler for AI Research"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/Kj0n5ea3ItoNIc2ha2SVL.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/impactful-scheduling-for-gpu-clusters/inline-01.webp",
+        "width": 1134,
+        "height": 810,
+        "alt": {
+          "ar": "Ai2 تعيد تصميم جدولة الحوسبة بالذكاء الاصطناعي",
+          "en": "Pyramid of GPU compute metrics, from availability at the base through occupancy and impact to utilization at the top."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/impactful-scheduling",
+        "originalUrl": "https://www.datocms-assets.com/64837/1791481674-impactful-scheduling-for-gpu-clusters-google-docs-image-2.png?fit=max&h=810&w=1550"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/impactful-scheduling-for-gpu-clusters/inline-02.webp",
+        "width": 1134,
+        "height": 810,
+        "alt": {
+          "ar": "Ai2 تعيد تصميم جدولة الحوسبة بالذكاء الاصطناعي",
+          "en": "Hierarchical allocation of GPU time across research programs and projects; project A1 has a 35% share of total capacity."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/impactful-scheduling",
+        "originalUrl": "https://www.datocms-assets.com/64837/1791481494-impactful-scheduling-for-gpu-clusters-google-docs-image-1.png?fit=max&h=810&w=1550"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/impactful-scheduling-for-gpu-clusters/inline-03.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "Ai2 تعيد تصميم جدولة الحوسبة بالذكاء الاصطناعي",
+          "en": "Simulator timelines comparing GPU occupancy under the baseline scheduler and the new allocations scheduler."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/impactful-scheduling",
+        "originalUrl": "https://www.datocms-assets.com/64837/1791481919-impactful-scheduling-for-gpu-clusters-google-docs-image-4.png?fit=max&h=810&w=1550"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/impactful-scheduling-for-gpu-clusters/inline-04.webp",
+        "width": 1134,
+        "height": 810,
+        "alt": {
+          "ar": "Ai2 تعيد تصميم جدولة الحوسبة بالذكاء الاصطناعي",
+          "en": "Allocation usage over time, showing how delivered GPU time tracks expected allocations."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/impactful-scheduling",
+        "originalUrl": "https://www.datocms-assets.com/64837/1791482152-impactful-scheduling-for-gpu-clusters-google-docs-image-5.png?fit=max&h=810&w=1550"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/allenai/impactful-scheduling",
+      "type": "official",
+      "title": "Impactful scheduling for GPU clusters"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/allenai/impactful-scheduling",
+  "sourceTitle": "Impactful scheduling for GPU clusters",
+  "trendScore": 105.93,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-09T15:45:39+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/impactful-scheduling-for-gpu-clusters.json"
+}
