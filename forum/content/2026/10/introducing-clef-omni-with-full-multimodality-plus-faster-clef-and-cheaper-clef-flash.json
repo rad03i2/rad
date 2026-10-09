@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "223b84f72a3aa8221e6e",
+  "slug": "introducing-clef-omni-with-full-multimodality-plus-faster-clef-and-cheaper-clef-flash",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/introducing-clef-omni-with-full-multimodality-plus-faster-clef-and-cheaper-clef-flash/",
+    "en": "/forum/en/ai/introducing-clef-omni-with-full-multimodality-plus-faster-clef-and-cheaper-clef-flash/"
+  },
+  "locales": {
+    "ar": {
+      "title": "كلاودفلار تكشف عن Clef-omni متعدد الوسائط وتسريع Clef",
+      "description": "أطلقت كلاودفلار نموذج Clef-omni للمعالجة متعددة الوسائط، مع خفض أسعار Clef-flash وتسريع أداء Clef بنسبة تصل إلى ضعف السرعة السابقة.",
+      "deck": "توسّع كلاودفلار عائلتها من نماذج اتخاذ القرار بإطلاق Clef-omni الذي يدعم الصوت والفيديو والصورة والنص، إلى جانب تحسينات سعرية وسرعية ملحوظة.",
+      "summaryBullets": [
+        "إطلاق Clef-omni للمعالجة الأصلية للصوت والفيديو والصورة والنص في مسار واحد.",
+        "خفض سعر Clef-flash إلى 0.038 دولار لكل مليون رمز إدخال، مما يجعله أرخص من منافسه Jev.",
+        "تسريع استنتاجات Clef بنسبة تصل إلى 2.0x بفضل التحسينات البنيوية.",
+        "تقليص نافذة السياق للنسخة المستضافة من Clef-flash إلى 24k لتقليل التكاليف.",
+        "نشر أوزان النماذج مفتوحة المصدر على HuggingFace مع دعم SGLang."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق Clef-omni متعدد الوسائط",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة كلاودفلار عن إضافة جديدة جوهرية لعائلتها من نماذج اتخاذ القرار المفتوحة الأوزان، وهي نموذج Clef-omni. يُمثل هذا الإطلاق نقلة نوعية في مجال النماذج المتخصصة في اتخاذ القرار، إذ يتيح للنموذج استقبال ومعالجة مدخلات متعددة الوسائط تشمل الصوت والفيديو والصور والنص ضمن مسار معالجة واحد متكامل. وتأتي هذه الخطوة بعد أيام قليلة من إطلاق النماذج الأساسية Clef وClef-flash، مما يعكس وتيرة تطوير سريعة تهدف إلى تلبية احتياجات المطورين المتزايدة.",
+              "links": [
+                {
+                  "text": "Clef-omni",
+                  "url": "https://developers.cloudflare.com/ai/models/clef-omni"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "معالجة أصلية دون خطوط متسلسلة",
+          "paragraphs": [
+            {
+              "text": "تتجاوز Clef-omni القيود التقليدية التي كانت تقتصر على النصوص أو الصور فقط، حيث تدعم ملفات الصوت بصيغتي WAV وMP3، والفيديو بصيغتي MP4 وWebM. بدلاً من الحاجة إلى بناء خطوط معالجة متسلسلة (Cascading Pipelines) تقوم بتحويل الكلام إلى نص أو فصل قنوات الصوت عن الصورة، يمكن للمطورين الآن استدعاء نموذج واحد لاتخاذ قرارات عبر أي نوع من الوسائط. هذا النهج يزيل الحاجة إلى خطوات وسيطة مثل التسمية التوضيحية (Captioning) أو النسخ الآلي، مما يبسط البنية التحتية للذكاء الاصطناعي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية التقنية والأداء",
+          "paragraphs": [
+            {
+              "text": "استندت كلاودفلار في بناء Clef-omni إلى بنية Qwen3-Omni-30B-A3B-Instruct المعتمدة على تقنية خلط الخبراء (Mixture-of-Experts). تم الحفاظ على العمود الفقري الأساسي للفهم والاستيعاب مع استبعاد مكونات توليد الكلام، نظراً لأن نماذج Clef ليست نماذج لغوية كبيرة (LLMs) تولد نصوصاً حرة، بل هي مصممة لاتخاذ قرارات محددة. يعتمد النظام على توجيه انتباه ثنائي المرحلة (Two-stage attention routing) لجمع الأدلة من المدخلات متعددة الوسائط وحساب درجات الثقة بدقة، مع الحفاظ على دلالات الخيارات المتاحة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات في السرعة والاستجابة",
+          "paragraphs": [
+            {
+              "text": "أظهرت الاختبارات أن النموذج الجديد يتمتع بأداء سريع جداً في معالجة المدخلات. تستغرق القرارات النصية البحتة حوالي 130 مللي ثانية في المتوسط، بينما تصل مدخلات الصور إلى 150 مللي ثانية. وبالنسبة للوسائط الأكثر تعقيداً، يمكن للنموذج معالجة مقطع فيديو كامل مدته 21 ثانية مع الصوت في حوالي 1.5 ثانية فقط عبر استدعاء API واحد. كما تم تسريع استنتاجات نموذج Clef الأساسي بنسبة تصل إلى 2.0x بفضل تحسينات في طبقة تقديم الخدمة (Serving Infrastructure) على منصة Workers AI، دون تغيير جوهري في أوزان النموذج نفسه.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خفض الأسعار وتغيير نافذة السياق",
+          "paragraphs": [
+            {
+              "text": "في خطوة تنافسية، خفّضت كلاودفلار سعر نموذج Clef-flash من 0.09 دولار إلى 0.038 دولار لكل مليون رمز إدخال، مما يجعله أرخص من نموذج Jev المنافس. ومع ذلك، جاء هذا الخفض في السعر مقترناً بتقليص نافذة السياق للنسخة المستضافة من Clef-flash من 64k إلى 24k رمزاً. وأوضح الفريق أن 99.76% من الطلبات الحالية لا تتجاوز 24k رمزاً، مما يجعل هذا التغيير منطقياً من حيث التكلفة. أما نموذج Clef الأساسي فيحتفظ بنافذة سياق 64k، بينما تبقى الأوزان المفتوحة على HuggingFace مدعومة لنافذة 256k لمن يختار الاستضافة الذاتية.",
+              "links": [
+                {
+                  "text": "Clef-flash",
+                  "url": "https://huggingface.co/Cloudflare/clef-flash"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الشفافية والمجتمع التقني",
+          "paragraphs": [
+            {
+              "text": "تواصل كلاودفلار التزامها بنشر الأوزان المفتوحة، حيث تتوفر أوزان Clef-omni على HuggingFace. كما عملت الشركة مع فريق SGLang لإدماج دعم نموذج Clef في إصدار 0.5.22 القادم، مما يسهل على المطورين استضافة النماذج ذاتياً. وتؤكد الشركة أن هذه التحديثات هي بداية فقط، مع وعود بمزيد من الابتكار والسرعة وانخفاض التكاليف في النماذج المستقبلية، مستندة إلى ملاحظات المستخدمين حول الحاجة إلى نماذج قرار ميسورة التكلفة وقابلة للتوسع في سير العمل الوكيلي (Agentic Workflows).",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "كلاودفلار",
+        "ذكاء اصطناعي",
+        "Clef-omni",
+        "نماذج مفتوحة الأوزان",
+        "متعدد الوسائط",
+        "اتخاذ القرار"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Clef-omni",
+        "Clef",
+        "Clef-flash",
+        "Jev",
+        "TypeSafe",
+        "HuggingFace",
+        "SGLang"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "9 أكتوبر 2026",
+      "modifiedLabel": "9 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 561
+    },
+    "en": {
+      "title": "Cloudflare Launches Clef-omni with Full Multimodality",
+      "description": "Cloudflare expands its open-weight decision model family with Clef-omni, featuring full multimodality, faster speeds, and cheaper Clef-flash pricing.",
+      "deck": "Cloudflare has expanded its open-weight decision model family with the introduction of Clef-omni, which natively processes audio, video, images, and text in a single pipeline.",
+      "summaryBullets": [
+        "Clef-omni natively processes audio, video, images, and text in a single pipeline.",
+        "Clef-flash pricing has been lowered, making it more affordable than Jev.",
+        "Clef inference speeds have been boosted by up to 2.0x through serving optimizations.",
+        "Clef-flash hosted context window is adjusted to 24k based on usage data."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction of Clef-omni",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has announced the expansion of its open-weight decision model family with the release of Clef-omni. Following the previous release of Clef and Clef-flash, the new model introduces native support for audio and video input alongside text and images, changing the paradigm for decision models which have traditionally been text-only.",
+              "links": [
+                {
+                  "text": "release of Clef and Clef-flash",
+                  "url": "https://blog.cloudflare.com/clef-decision-models/"
+                }
+              ]
+            },
+            {
+              "text": "Developers can explore the new capabilities and access technical details through the Cloudflare Blog announcement. The open weights are also available on HuggingFace for community use and deployment.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/clef-faster-cheaper-multimodal/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Multimodal Capabilities and Architecture",
+          "paragraphs": [
+            {
+              "text": "Clef-omni is built on a Qwen3-Omni-30B-A3B-Instruct mixture-of-experts foundation, allowing it to process text, imagery, audio, and video directly within a single pipeline. Rather than setting up cascading transcription pipelines or splitting audio and image channels from video, developers can call a single model to make decisions across any modality.",
+              "links": [
+                {
+                  "text": "Clef-omni",
+                  "url": "https://developers.cloudflare.com/ai/models/clef-omni"
+                }
+              ]
+            },
+            {
+              "text": "The model executes a quick prefill pass across the complete payload, scoring all modalities and valid parameter options simultaneously. By skipping output token generation, Clef-omni removes the overhead of transcribing or captioning incoming files, mapping media elements straight into a unified sequence.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Performance and Benchmarking",
+          "paragraphs": [
+            {
+              "text": "The architecture brings several core upgrades to the family, allowing calibrated, schema-bound decisions to seamlessly handle text, images, audio, and synchronized video in a single API call. Text-only decisions return in about 130 milliseconds at the median, while image inputs take about 150 milliseconds and audio clips take a few hundred milliseconds. A full 21-second video clip with sound is scored in approximately 1.5 seconds.",
+              "links": []
+            },
+            {
+              "text": "Cloudflare provides benchmark evaluations comparing the model against existing standards. Interested users can review TypeSafe evals to show how Clef-omni performs across various testing parameters.",
+              "links": [
+                {
+                  "text": "TypeSafe evals to show how Clef-omni performs",
+                  "url": "https://evals.typesafe.ai/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Pricing Adjustments and Clef-flash Updates",
+          "paragraphs": [
+            {
+              "text": "Alongside the new model launch, Cloudflare has restructured pricing for its existing lineup. Clef-flash has been reduced from $0.09 per million input tokens down to $0.038 per million input tokens, making it cheaper than Jev while maintaining performance.",
+              "links": []
+            },
+            {
+              "text": "To achieve this lower price point, the hosted version of Clef-flash now features a reduced context window of 24k tokens, down from 64k. According to usage data, only 0.24% of requests exceed 24k input tokens. The model weights on Hugging Face remain untouched and retain support for a 256k context window for self-hosted deployments.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Serving Infrastructure and Speed Boosts",
+          "paragraphs": [
+            {
+              "text": "Cloudflare also boosted Clef inference speeds by up to 2.0x through infrastructure-level optimizations on Workers AI. These improvements were achieved primarily by migrating to SGLang for serving the model.",
+              "links": []
+            },
+            {
+              "text": "The engineering team collaborated on pull request #42721 to incorporate Clef into the SGLang project. Developers looking to self-host can find updated launch commands and technical guidelines in the official developer docs.",
+              "links": [
+                {
+                  "text": "#42721",
+                  "url": "https://github.com/sgl-project/sglang/pull/42721"
+                },
+                {
+                  "text": "developer docs",
+                  "url": "https://developers.cloudflare.com/ai/models/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Clef-omni",
+        "Multimodal AI",
+        "Machine Learning",
+        "Decision Models",
+        "SGLang",
+        "Workers AI"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Qwen3",
+        "HuggingFace",
+        "SGLang"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 9, 2026",
+      "modifiedLabel": "October 9, 2026",
+      "readMinutes": 3,
+      "wordCount": 505
+    }
+  },
+  "datePublished": "2026-10-09T21:45:40.178318+03:00",
+  "dateModified": "2026-10-09T21:45:40.178318+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/introducing-clef-omni-with-full-multimodality-plus-faster-clef-and-cheaper-clef-flash/hero.webp",
+    "card": "/forum/assets/posts/2026/10/introducing-clef-omni-with-full-multimodality-plus-faster-clef-and-cheaper-clef-flash/card.webp",
+    "social": "/forum/assets/posts/2026/10/introducing-clef-omni-with-full-multimodality-plus-faster-clef-and-cheaper-clef-flash/social.jpg",
+    "alt": {
+      "ar": "كلاودفلار تكشف عن Clef-omni متعدد الوسائط وتسريع Clef",
+      "en": "Cloudflare Launches Clef-omni with Full Multimodality"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M4GV0AV5F55NC2CCEBK9XCTA.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-clef-omni-with-full-multimodality-plus-faster-clef-and-cheaper-clef-flash/inline-01.webp",
+        "width": 1200,
+        "height": 630,
+        "alt": {
+          "ar": "كلاودفلار تكشف عن Clef-omni متعدد الوسائط وتسريع Clef",
+          "en": "Introducing Clef-omni with full multimodality, plus a faster Clef and a cheaper Clef-flash"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/clef-faster-cheaper-multimodal/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M4GV09A421R27JWR0HM51SS9.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/clef-faster-cheaper-multimodal/",
+      "type": "official",
+      "title": "Introducing Clef-omni with full multimodality, plus a faster Clef and a cheaper Clef-flash"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/clef-faster-cheaper-multimodal",
+  "sourceTitle": "Introducing Clef-omni with full multimodality, plus a faster Clef and a cheaper Clef-flash",
+  "trendScore": 126.97,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-09T18:45:40+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/introducing-clef-omni-with-full-multimodality-plus-faster-clef-and-cheaper-clef-flash.json"
+}
