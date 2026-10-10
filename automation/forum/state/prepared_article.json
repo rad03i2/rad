@@ -1,5 +1,309 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-10T04:45:42+00:00",
-  "last_published_story_id": "4b1796d2b75ddbd455c7"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-10T04:52:48+00:00",
+  "target_publish_at": "2026-10-10T08:05:42.330461+03:00",
+  "story": {
+    "title": "Unpatched AhsayCBS flaws exploited to deploy webshells, mine crypto",
+    "url": "https://www.bleepingcomputer.com/news/security/unpatched-ahsaycbs-flaws-exploited-to-deploy-webshells-mine-crypto",
+    "domain": "bleepingcomputer.com",
+    "summary": "Threat actors are exploiting one critical and one medium-severity vulnerability still unpatched in the AhsayCBS backup management platform to deploy webshells and cryptocurrency miners. [...]",
+    "published_at": "2026-10-09T17:17:23+00:00",
+    "discovered_at": "2026-10-09T17:32:00+00:00",
+    "source": {
+      "name": "BleepingComputer",
+      "feed": "https://www.bleepingcomputer.com/feed/",
+      "type": "journalism",
+      "trust": 0.88,
+      "priority": 22,
+      "defaultCategory": "security"
+    },
+    "category": "security",
+    "category_label": "الأمن التقني",
+    "score": 46,
+    "verification": {
+      "confidence": 0.88,
+      "reason": "trusted_journalism_single_source",
+      "official": false,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "6357cd14602a52ca9762",
+    "trend": {
+      "score": 87.5,
+      "age_hours": 11.58,
+      "corroboration_count": 0,
+      "entity_momentum": 12.0,
+      "category_boost": 6
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://www.bleepingcomputer.com/news/security/unpatched-ahsaycbs-flaws-exploited-to-deploy-webshells-mine-crypto/",
+      "name": "BleepingComputer",
+      "domain": null,
+      "kind": "journalism",
+      "type": "journalism",
+      "feed_title": "Unpatched AhsayCBS flaws exploited to deploy webshells, mine crypto",
+      "title": "Unpatched AhsayCBS flaws exploited to deploy webshells, mine crypto",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "استغلال ثغرات AhsayCBS غير المُرقّعة لتعدين العملات الرقمية",
+      "description": "تستغل جماعات تهديد ثغرتين في منصة AhsayCBS لتثبيت شيفرات ويب ومعدّات عملات رقمية، مع تحذيرات من شركة Huntress حول استمرار الخطر في الإصدار الأخير.",
+      "deck": "رصدت شركة Huntress هجمات نشطة تستهدف أنظمة النسخ الاحتياطي AhsayCBS، حيث يتم استغلال ثغرات أمنية حرجة ومتوسطة الخطورة لتثبيت برمجيات خبيثة ومعدّات عملات رقمية.",
+      "summary_bullets": [
+        "استغلال ثغرتي CVE-2026-105133 وCVE-2026-105134 لتجاوز المصادقة وتنفيذ أوامر نظام التشغيل.",
+        "تثبيت شيفرات ويب (Webshells) ومعدّ XMRig متنكراً في شكل ملف edge.exe.",
+        "اكتشاف أن الإصدار الأخير 10.3.4 لا يزال متأثراً بالثغرات رغم إعلان الشركة عن إصلاحها.",
+        "توصيات أمنية تشمل تقييد الوصول عبر عناوين IP الموثوقة واستعادة النظام من نسخ احتياطية نظيفة."
+      ],
+      "sections": [
+        {
+          "heading": "هجمات نشطة على أنظمة النسخ الاحتياطي",
+          "paragraphs": [
+            {
+              "text": "كشفت شركة Huntress المتخصصة في الكشف عن التهديدات والاستجابة لها عن حملة هجمات نشطة تستهدف منصة إدارة النسخ الاحتياطي AhsayCBS. تستغل الجماعات التهديدية ثغرتين أمنيتين لم يتم إصلاحهما بعد، إحداهما حرجة والأخرى متوسطة الخطورة، بهدف نشر شيفرات ويب (Webshells) ومعدّات عملات رقمية. تُستخدم منصة AhsayCBS بشكل شائع من قبل مزودي الخدمات المُدارة (MSPs) ومكاتب تكامل الأنظمة، مما يجعلها هدفاً جذاباً للهاكرز الذين يسعون للوصول إلى شبكات واسعة. ويمكن الرجوع إلى BleepingComputer للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/unpatched-ahsaycbs-flaws-exploited-to-deploy-webshells-mine-crypto/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تفاصيل الثغرات المستغلة",
+          "paragraphs": [
+            {
+              "text": "تتعلق الثغرتان المستغلّتان بالمعرّفات CVE-2026-105133 وCVE-2026-105134. الثغرة الأولى هي ثغرة تجاوز مصادقة (Authentication Bypass) تتوفر لها أدوات استغلال عامة، بينما تسمح الثغرة الثانية بحقن أوامر نظام التشغيل (OS Command Injection). على الرغم من أن الشركة المطورة أعلنت عن إصلاح هذه الثغرات في الإصدار 10.3.2، إلا أن فريق البحث في Huntress اكتشف أن الإصدار الأحدث 10.3.4 لا يزال عرضة لهذين العيبين. وقد أكدت الشركة في تحديث لها أن الإصدار الأخير متأثر أيضاً، مما يطيل أمد الخطر على المستخدمين الذين يظنون أنهم محميون.",
+              "links": [
+                {
+                  "text": "CVE-2026-105133",
+                  "url": "https://nvd.nist.gov/vuln/detail/cve-2026-105133"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية التنفيذ والاختراق",
+          "paragraphs": [
+            {
+              "text": "في الهجمات المرصودة، قام المهاجمون بسلسلة الثغرتين معاً؛ حيث استغلوا CVE-2026-105133 أولاً لتجاوز آليات المصادقة والدخول إلى النظام دون صلاحيات مشروعة. بعد ذلك، استخدموا CVE-2026-105134 لتنفيذ أوامر خبيثة على مستوى نظام التشغيل. بمجرد الحصول على الوصول، قام المهاجمون بإجراء عمليات استطلاع (Reconnaissance) لفهم بنية الشبكة، ثم قاموا بتثبيت شيفرات ويب مكتوبة بلغة Java Server Pages (JSP) للحفاظ على السيطرة عن بُعد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تخفي معدّ العملات الرقمية",
+          "paragraphs": [
+            {
+              "text": "بعد تثبيت الشيفرات، قام المهاجمون بتنزيل معدّ عملات رقمية من نوع XMRig، لكنهم أخفوه خلف ملف يحمل اسم edge.exe. لضمان استمرار المعد في العمل حتى بعد إعادة تشغيل النظام، قام المهاجمون بإنشاء خدمة نظام باسم 'MicrosoftEdgeUpdateSvc'. هذه الخدمة تشغّل ملف msedge.exe، الذي تم تحديده على أنه نسخة معدّلة من أداة إدارة الخدمات المشروعة NSSM. هذا التخفي يجعل من الصعب على مراقبي النظام اكتشاف النشاط الخبيث في البداية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إخفاء النشاط عبر سكربتات ذكية",
+          "paragraphs": [
+            {
+              "text": "لإخفاء نشاط التعدين عن أعين المدراء، استخدم المهاجمون ملف PowerShell يحمل اسم Taskgmr.ps1، والذي تعتقد Huntress أنه سكريبت مُساعد بالذكاء الاصطناعي. يقوم هذا السكريبت بإيقاف خدمة التعدين تلقائياً بمجرد فتح مدير المهام (Task Manager)، ويعيد تشغيلها فور إغلاقه. بالإضافة إلى ذلك، يقوم السكريبت بإنهاء عمل مدير المهام تماماً عند الساعة 6 مساءً بتوقيت المنطقة المحلية، أو إذا بقي مفتوحاً لأكثر من ساعة خلال الليل، مما يعكس محاولة متقدمة لتجنب الرصد البشري المباشر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توصيات أمنية وإجراءات استجابة",
+          "paragraphs": [
+            {
+              "text": "نظراً لعدم توفر تصحيح شامل بعد، توصي شركة Huntress مسؤولي النظام بتقييد الوصول إلى واجهة إدارة AhsayCBS لعناوين IP الموثوقة فقط، والبحث عن مؤشرات الاختراق. إذا تم تأكيد الاختراق، يجب إجراء استعادة كاملة للجهاز من نسخة احتياطية آمنة، لأن المهاجم قد يكون قام بتثبيت أبواب خلفية إضافية لضمان بقاء طويل الأمد. كما قدّم فريق Huntress مؤشرات اختراق (IoCs) وقواعد Sigma للمساعدة في كشف هذه الأنشطة. تواصلت BleepingComputer مع شركة AhsayCBS للاستفسار عن خطط الإصلاح، لكن لم يتم الحصول على رد حتى وقت النشر.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمن سيبراني",
+        "AhsayCBS",
+        "ثغرات أمنية",
+        "عملات رقمية",
+        "Huntress",
+        "Webshells",
+        "CVE-2026-105133"
+      ],
+      "entities": [
+        "AhsayCBS",
+        "Huntress",
+        "BleepingComputer",
+        "XMRig",
+        "NSSM"
+      ],
+      "article_type": "news",
+      "confidence_note": "الخبر يعتمد على تقارير Huntress وتغطية BleepingComputer، مع تأكيد وجود ثغرات في الإصدار الأخير 10.3.4."
+    },
+    "en": {
+      "title": "Unpatched AhsayCBS Flaws Exploited for Webshells",
+      "description": "Threat actors are actively exploiting unpatched critical and medium-severity vulnerabilities in the AhsayCBS backup management platform.",
+      "deck": "Malicious actors are chaining critical and medium-severity vulnerabilities in the AhsayCBS backup management platform to deploy webshells and cryptocurrency miners across multiple targeted organizations.",
+      "summary_bullets": [
+        "Threat actors are exploiting unpatched vulnerabilities in the AhsayCBS backup management platform.",
+        "The attacks target the authentication bypass flaw CVE-2026-105133 and the OS command injection flaw CVE-2026-105134.",
+        "Managed detection and response company Huntress observed the malicious activity targeting at least five organizations.",
+        "Attackers deployed Java Server Page webshells and disguised the XMRig cryptocurrency miner as edge.exe."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of the AhsayCBS Vulnerabilities",
+          "paragraphs": [
+            {
+              "text": "Threat actors are actively exploiting one critical and one medium-severity vulnerability that remain unpatched in the AhsayCBS backup management platform. AhsayCBS is a platform typically utilized by managed service providers and system integrators. According to details shared by [BleepingComputer](https://www.bleepingcomputer.com/news/security/unpatched-ahsaycbs-flaws-exploited-to-deploy-webshells-mine-crypto/), the malicious activity was observed on October 7 and has targeted at least five organizations.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/unpatched-ahsaycbs-flaws-exploited-to-deploy-webshells-mine-crypto/"
+                }
+              ]
+            },
+            {
+              "text": "The two security issues being leveraged in these ongoing attacks are [CVE-2026-105133](https://nvd.nist.gov/vuln/detail/cve-2026-105133), an authentication bypass vulnerability featuring a public exploit, and [CVE-2026-105134, which](https://nvd.nist.gov/vuln/detail/cve-2026-105134) can be utilized for operating system command injection.",
+              "links": [
+                {
+                  "text": "CVE-2026-105133",
+                  "url": "https://nvd.nist.gov/vuln/detail/cve-2026-105133"
+                },
+                {
+                  "text": "CVE-2026-105134, which",
+                  "url": "https://nvd.nist.gov/vuln/detail/cve-2026-105134"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Discovery and Vulnerability Status",
+          "paragraphs": [
+            {
+              "text": "Although both vulnerabilities were reportedly fixed in version AhsayCBS 10.3.2, researchers at managed detection and response firm [Huntress observed](https://www.huntress.com/blog/ahsaycbs-flaws-exploit) that the security flaws also impact Ahsay 10.3.4, which is currently the latest version available.",
+              "links": [
+                {
+                  "text": "Huntress observed",
+                  "url": "https://www.huntress.com/blog/ahsaycbs-flaws-exploit"
+                }
+              ]
+            },
+            {
+              "text": "In an update shared by the security firm, researchers noted that after further investigation, they determined Ahsay 10.3.4 remains vulnerable. In the observed attacks, threat actors chained the two security issues together, utilizing the authentication bypass flaw first followed by the command injection flaw for code execution.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Attack Mechanics and Tooling",
+          "paragraphs": [
+            {
+              "text": "Once access was successfully gained, researchers noted that the attacker performed reconnaissance, deployed Java Server Page webshells, and downloaded the XMRig cryptocurrency miner disguised under the file name edge.exe.",
+              "links": []
+            },
+            {
+              "text": "The cryptomining software maintains persistence on the host machine through a service named MicrosoftEdgeUpdateSvc, which executes msedge.exe—identified by researchers as a modified copy of the legitimate Non-Sucking Service Manager utility.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Concealment and Hardware Manipulation",
+          "paragraphs": [
+            {
+              "text": "To hide the unauthorized mining activity, the attackers utilized a PowerShell file named Taskgmr.ps1. Huntress believes this script was created with AI assistance. The script is configured to stop the mining service whenever Windows Task Manager is opened and restart it once Task Manager is closed.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, the script automatically terminates Task Manager at 6 p.m. local time or if the application remains open for more than an hour during the overnight hours. In at least one analyzed case, the attacker also deployed the vulnerable WinRing0x64.sys driver, likely attempting to unlock additional hardware resources to boost mining operations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Recommendations and Mitigations",
+          "paragraphs": [
+            {
+              "text": "BleepingComputer reached out to AhsayCBS to inquire about their plans to address the two unpatched flaws, but no response had been received by the time of publication.",
+              "links": []
+            },
+            {
+              "text": "Until an official patch is released and made available, Huntress advises system administrators to restrict access to the AhsayCBS management interface exclusively to trusted IP addresses, as well as thoroughly investigate any indicators of compromise.",
+              "links": []
+            },
+            {
+              "text": "If administrators confirm that a system has been compromised, they should perform a complete restore of the host using a safe backup. This step is crucial because attackers may have installed additional backdoors to ensure prolonged persistence.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AhsayCBS",
+        "Huntress",
+        "Webshell",
+        "Cryptominer",
+        "Vulnerability",
+        "Cybersecurity"
+      ],
+      "entities": [
+        "AhsayCBS",
+        "Huntress",
+        "BleepingComputer"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based entirely on BleepingComputer reporting and Huntress advisory details."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 539,
+      "word_count_en": 522
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "6357cd14602a52ca9762",
+      "title": "Unpatched AhsayCBS flaws exploited to deploy webshells, mine crypto",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 539,
+          "word_count_en": 522
+        }
+      ]
+    }
+  ],
+  "slug": "unpatched-ahsaycbs-flaws-exploited-to-deploy-webshells-mine-crypto",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/unpatched-ahsaycbs-flaws-exploited-to-deploy-webshells-mine-crypto/hero.webp",
+    "card": "/forum/assets/posts/2026/10/unpatched-ahsaycbs-flaws-exploited-to-deploy-webshells-mine-crypto/card.webp",
+    "social": "/forum/assets/posts/2026/10/unpatched-ahsaycbs-flaws-exploited-to-deploy-webshells-mine-crypto/social.jpg",
+    "alt": {
+      "ar": "استغلال ثغرات AhsayCBS غير المُرقّعة لتعدين العملات الرقمية",
+      "en": "Unpatched AhsayCBS Flaws Exploited for Webshells"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/10/09/hacker-box.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
