@@ -1,5 +1,369 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-12T17:52:33+00:00",
-  "last_published_story_id": "c1f8d2394d44496f6bd1"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-12T17:57:05+00:00",
+  "target_publish_at": "2026-10-12T21:12:33.722722+03:00",
+  "story": {
+    "title": "Accessing OpenAI GPT models on Amazon Bedrock with global cross-Region inference in Thailand, Malaysia, Singapore, Indonesia, and Taiwan",
+    "url": "https://aws.amazon.com/blogs/machine-learning/accessing-openai-gpt-models-on-amazon-bedrock-with-global-cross-region-inference-in-thailand-malaysia-singapore-indonesia-and-taiwan",
+    "domain": "aws.amazon.com",
+    "summary": "Learn how to run OpenAI GPT-6 Sol, Luna, and Astra on Amazon Bedrock through global cross-Region inference from Singapore, Jakarta, Thailand, Malaysia, and Taipei. This post covers the Converse and OpenAI-compatible APIs, IAM and SCP permissions, quota sizing, and monitoring inference from your source Region.",
+    "published_at": "2026-10-12T17:52:22+00:00",
+    "discovered_at": "2026-10-12T17:56:48+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 75,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "6b4a7d58b32909d7acd0",
+    "trend": {
+      "score": 132.97,
+      "age_hours": 0.08,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/accessing-openai-gpt-models-on-amazon-bedrock-with-global-cross-region-inference-in-thailand-malaysia-singapore-indonesia-and-taiwan/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Accessing OpenAI GPT models on Amazon Bedrock with global cross-Region inference in Thailand, Malaysia, Singapore, Indonesia, and Taiwan",
+      "title": "Accessing OpenAI GPT models on Amazon Bedrock with global cross-Region inference in Thailand, Malaysia, Singapore, Indonesia, and Taiwan | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تتيح نماذج GPT-6 عبر Bedrock في خمس مناطق آسيوية",
+      "description": "تتيح أمازون ويب سيرفيسز الوصول إلى نماذج GPT-6 من OpenAI عبر Amazon Bedrock باستخدام الاستدلال عبر المناطق، مما يوسع نطاق التغطية في سنغافورة، ماليزيا، تايلاند، إندونيسيا، وتايوان.",
+      "deck": "توسّع أمازون نطاق توافر نماذج الذكاء الاصطناعي المتقدمة من OpenAI في آسيا عبر تقنية الاستدلال عبر المناطق، مما يتيح للشركات الوصول إلى قدرات معالجة متقدمة دون قيود السعة المحلية.",
+      "summary_bullets": [
+        "إتاحة نماذج GPT-6 Sol وLuna وAstra عبر Amazon Bedrock في خمس مناطق آسيوية.",
+        "استخدام تقنية الاستدلال عبر المناطق لتجاوز حدود السعة المحلية وتوزيع الأحمال.",
+        "دعم واجهات برمجة التطبيقات المتوافقة مع OpenAI وConverse API.",
+        "إدارة الصلاحيات عبر IAM وسياسات التحكم في الخدمة (SCP) لضمان الأمان.",
+        "تتبع الفوترة والمراقبة من المنطقة المصدر دون الحاجة لتفعيل مناطق الوجهة."
+      ],
+      "sections": [
+        {
+          "heading": "توسيع نطاق الوصول إلى نماذج GPT-6 في آسيا",
+          "paragraphs": [
+            {
+              "text": "أعلنت أمازون ويب سيرفيسز عن إتاحة الوصول إلى أحدث نماذج OpenAI، وهي GPT-6 Sol وGPT-6 Luna وGPT-6 Astra، عبر منصة Amazon Bedrock باستخدام تقنية الاستدلال عبر المناطق (Global Cross-Region Inference). تغطي هذه الخدمة مناطق سنغافورة، جاكرتا (إندونيسيا)، تايلاند، ماليزيا، وتايبيه (تايوان)، مما يتيح للفرق العاملة في هذه الأسواق الوصول إلى قدرات الذكاء الاصطناعي المتقدمة حتى عند تجاوز السعة المحلية المتاحة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "تهدف هذه المبادرة إلى معالجة تحديات الاختناق التي قد تحدث عندما تتجاوز الطلبات المحلية الطاقة الاستيعابية للمناطق الفردية. من خلال توجيه الطلبات عبر مناطق تجارية مدعومة أخرى حيث تكون النماذج موزعة، تضمن أمازون وصولاً أوسع إلى سعة Amazon Bedrock، مما يعزز مرونة البنية التحتية للذكاء الاصطناعي في المنطقة الآسيوية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مواصفات نماذج GPT-6 وقدراتها",
+          "paragraphs": [
+            {
+              "text": "تقدم عائلة GPT-6 ثلاثة نماذج رئيسية، كل منها مصمم لأغراض محددة. يوفر GPT-6 Sol قدرات قوية في الاستدلال والبرمجة للمهام المعقدة التي تُنجز على مدار الأسبوع، بينما يركز GPT-6 Luna على تنفيذ المهام المتكررة والمركزة بكفاءة عالية وحجم كبير. أما GPT-6 Astra فيتعامل مع مهام الاستدلال المعقدة والبرمجة ومعالجة المستندات الطويلة.",
+              "links": [
+                {
+                  "text": "GPT-6 Sol",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-6-sol.html"
+                }
+              ]
+            },
+            {
+              "text": "تدعم جميع النماذج الثلاثة مدخلات نصية وصورية، واستخدام الأدوات من جانب العميل، وتخزين المؤقتات (Prompt Caching). تختلف النماذج في مستويات جهد الاستدلال؛ حيث تقبل GPT-6 Sol وGPT-6 Luna مستويات من 'لا شيء' إلى 'الحد الأقصى'، بينما تقبل GPT-6 Astra نفس المستويات باستثناء 'لا شيء'.",
+              "links": [
+                {
+                  "text": "GPT-6 Astra",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-6-astra.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل الاستدلال عبر المناطق",
+          "paragraphs": [
+            {
+              "text": "يعمل الاستدلال عبر المناطق من خلال توجيه الطلبات عبر مناطق أمازون ويب التجارية المدعومة حيث يتم نشر النموذج. يقوم المطورون باستدعاء الخدمة عبر تمرير معرف ملف تعريف الاستدلال عبر المناطق (Global Cross-Region Inference Profile ID) بدلاً من معرف النموذج التقليدي. يتم تحديد المنطقة المصدر (Source Region) كالمكان الذي تتم منه استدعاء واجهة برمجة التطبيقات، بينما تختار Amazon Bedrock منطقة الوجهة للمعالجة تلقائياً.",
+              "links": []
+            },
+            {
+              "text": "من الناحية التشغيلية، تبقى عمليات الفوترة، وتتبع الحصص (Quotas)، وسجلات AWS CloudTrail، ومراقبة Amazon CloudWatch ضمن المنطقة المصدر. هذا يعني أن إدارة الموارد والمراقبة تتم من نفس الموقع الذي يبدأ منه الطلب، مما يبسط عمليات الإدارة للشركات متعددة المناطق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خطوات الإعداد والاستدعاء",
+          "paragraphs": [
+            {
+              "text": "لبدء الاستخدام، يجب على المطورين التأكد من تفعيل المنطقة المصدر في حساباتهم. بينما تعتبر سنغافورة (ap-southeast-1) مفعلة افتراضياً، فإن مناطق جاكرتا (ap-southeast-3)، وماليزيا (ap-southeast-5)، وتايلاند (ap-southeast-7)، وتايبيه (ap-east-2) تتطلب تفعيلاً اختيارياً مسبقاً. لا حاجة لتفعيل مناطق الوجهة لأنها تعمل على سعة مُدارة من قبل Amazon Bedrock.",
+              "links": []
+            },
+            {
+              "text": "تدعم المنصة ثلاث طرق للوصول: واجهة Converse API، وواجهات OpenAI المتوافقة (Responses API وChat Completions API)، وعبر عملاء البرمجة. تتطلب واجهات OpenAI المتوافقة استخدام مفتاح API الخاص بـ Amazon Bedrock أو توقيع SigV4، مع تمرير معرف الملف التعريفي في كل طلب. كما يمكن استخدام أدوات مثل ChatGPT desktop app وCodex CLI مع إعدادات محددة لاستخدام هذه الملفات التعريفية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الصلاحيات والأمان",
+          "paragraphs": [
+            {
+              "text": "توفر أمازون أدوات دقيقة للتحكم في الوصول عبر AWS Identity and Access Management (IAM) وسياسات التحكم في الخدمة (SCP). تتطلب سياسة IAM أربعة عبارات رئيسية: الوصول إلى ملف تعريف الاستدلال والموارد في المنطقة المصدر، الوصول إلى النموذج الأساسي مقيداً بملف التعريف، استخدام اسم مورد AWS (ARN) غير المرتبط بمنطقة محددة مع تعيين aws:RequestedRegion إلى 'غير محدد' للسماح بالتوجيه عبر المناطق، وصلاحيات bedrock:CallWithBearerToken للمصادقة عبر مفاتيح API.",
+              "links": [
+                {
+                  "text": "AWS Identity and Access Management",
+                  "url": "https://aws.amazon.com/iam/"
+                }
+              ]
+            },
+            {
+              "text": "تسمح سياسات التحكم في الخدمة (SCP) بتطبيق ضوابط على مستوى المنظمة، بما في ذلك تحديد نطاق المناطق المسموح بها. هذا يضمن بقاء البيانات والعمليات ضمن الحدود الجغرافية أو التنظيمية المطلوبة من قبل المؤسسات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المراقبة وإدارة الحصص",
+          "paragraphs": [
+            {
+              "text": "تتيح المنصة مراقبة أداء الاستدلال من المنطقة المصدر مباشرة. يجب على المطورين التحقق من توفر ملفات التعريف ودعم المناطق قبل البناء، حيث تتغير هذه التفاصيل مع إضافة أمازون لمناطق وملفات تعريف جديدة. يمكن الاطلاع على تفاصيل كل نموذج ومعدلات التسعير لكل رمز عبر بطاقات النماذج الرسمية وأدلة المستخدم.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Amazon Bedrock",
+        "OpenAI",
+        "GPT-6",
+        "أمازون ويب سيرفيسز",
+        "الاستدلال عبر المناطق",
+        "البنية التحتية السحابية"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "OpenAI",
+        "Amazon Bedrock",
+        "GPT-6 Sol",
+        "GPT-6 Luna",
+        "GPT-6 Astra",
+        "AWS Identity and Access Management"
+      ],
+      "article_type": "news",
+      "confidence_note": "النص يعتمد حصرياً على المدونة الرسمية لأمازون ويب سيرفيسز، مع التركيز على الجوانب التقنية والتشغيلية دون إضافة معلومات خارجية."
+    },
+    "en": {
+      "title": "OpenAI GPT Models Arrive on Amazon Bedrock in Asia",
+      "description": "Amazon Bedrock brings OpenAI GPT-6 models to Thailand, Malaysia, Singapore, Indonesia, and Taiwan using global cross-Region inference.",
+      "deck": "Teams across five Asian locations can now access advanced OpenAI GPT models on Amazon Bedrock, overcoming single-Region capacity limits through global cross-Region routing.",
+      "summary_bullets": [
+        "OpenAI GPT-6 Sol, Luna, and Astra models are now accessible via Amazon Bedrock.",
+        "Global cross-Region inference routes requests from Singapore, Jakarta, Thailand, Malaysia, and Taipei.",
+        "Configurations support the Converse API, OpenAI-compatible APIs, IAM permissions, and service control policies.",
+        "Billing, CloudWatch monitoring, and CloudTrail tracking remain securely within the user's source Region."
+      ],
+      "sections": [
+        {
+          "heading": "Expanding Access Through Global Cross-Region Inference",
+          "paragraphs": [
+            {
+              "text": "Single-Region infrastructure can frequently experience throttling when user demand outpaces local processing capacity. To address these limitations for development teams across Southeast Asia and Taiwan, <a href=\"https://aws.amazon.com/bedrock/\">Amazon Bedrock</a> now provides streamlined access to powerful artificial intelligence models without remaining constrained by local availability bottlenecks.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "Organizations operating in Thailand, Malaysia, Singapore, Indonesia, and Taiwan can utilize global <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">Cross-Region inference</a> capabilities to run advanced language architectures. While GPT-6 Sol and GPT-6 Luna are accessible from all five designated AWS source Regions, GPT-6 Astra is available directly from the Asia Pacific (Singapore) environment.",
+              "links": [
+                {
+                  "text": "Cross-Region inference",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Overview of the OpenAI GPT-6 Model Family",
+          "paragraphs": [
+            {
+              "text": "The integrated GPT-6 architecture offers three distinct model variations tailored for different operational workflows. GPT-6 Sol is designed to bring strong reasoning and coding capabilities to complex tasks performed throughout the week, while GPT-6 Luna makes focused, repeatable tasks practical at a high volume. For more details on these variants, consult the overview on <a href=\"https://aws.amazon.com/blogs/machine-learning/bring-more-intelligence-to-everyday-work-with-gpt-6-sol-and-gpt-6-luna-on-amazon-bedrock/\">Bring more intelligence to everyday work with GPT-6 Sol and GPT-6 Luna on Amazon Bedrock</a>.",
+              "links": [
+                {
+                  "text": "Bring more intelligence to everyday work with GPT-6 Sol and GPT-6 Luna on Amazon Bedrock",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/bring-more-intelligence-to-everyday-work-with-gpt-6-sol-and-gpt-6-luna-on-amazon-bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "Additionally, GPT-6 Astra handles highly ambitious work involving intricate reasoning, coding, and long-document processing. Developers can learn more about its capabilities by reading <a href=\"https://aws.amazon.com/blogs/machine-learning/take-on-your-most-ambitious-work-with-gpt-6-astra-on-amazon-bedrock/\">Take on your most ambitious work with GPT-6 Astra on Amazon Bedrock</a>. All three options accept text and image inputs, client-side tool use, and prompt caching features.",
+              "links": [
+                {
+                  "text": "Take on your most ambitious work with GPT-6 Astra on Amazon Bedrock",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/take-on-your-most-ambitious-work-with-gpt-6-astra-on-amazon-bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Regional Support Guidelines",
+          "paragraphs": [
+            {
+              "text": "When deploying these tools, engineers invoke a global cross-Region inference profile ID rather than a standard model identifier. The source Region serves as the origin point for the API call, while the platform dynamically selects an appropriate destination Region for heavy processing workloads.",
+              "links": []
+            },
+            {
+              "text": "Crucial operational data points—including billing calculations, quota tracking, AWS CloudTrail audits, and Amazon CloudWatch telemetry—remain natively anchored inside the user's source Region. Teams can reference <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html\">Supported Regions and models for inference profiles</a> to review comprehensive lists of source and destination pairings.",
+              "links": [
+                {
+                  "text": "Supported Regions and models for inference profiles",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Security, Permissions, and API Integration",
+          "paragraphs": [
+            {
+              "text": "Managing access securely requires proper configuration of <a href=\"https://aws.amazon.com/iam/\">AWS Identity and Access Management</a> policies and organizational service control policies. Administrators must ensure that IAM roles possess explicit permissions to invoke the chosen profile and route requests properly through the designated endpoints.",
+              "links": [
+                {
+                  "text": "AWS Identity and Access Management",
+                  "url": "https://aws.amazon.com/iam/"
+                }
+              ]
+            },
+            {
+              "text": "Developers can execute model calls via the Amazon Bedrock Converse API or OpenAI-compatible endpoints using standard software development kits. Because these integrations support SigV4 signing and token generation tools, engineering groups can quickly scale their deployments while maintaining strict governance over enterprise AI infrastructure.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "OpenAI",
+        "Artificial Intelligence",
+        "AWS",
+        "Cloud Computing",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "OpenAI"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly based on the provided AWS Machine Learning Blog source text, utilizing precise terminology and exact links."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 666,
+      "word_count_en": 479
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "6b4a7d58b32909d7acd0",
+      "title": "Accessing OpenAI GPT models on Amazon Bedrock with global cross-Region inference in Thailand, Malaysia, Singapore, Indonesia, and Taiwan",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 666,
+          "word_count_en": 479
+        }
+      ]
+    }
+  ],
+  "slug": "accessing-openai-gpt-models-on-amazon-bedrock-with-global-cross-region-inference-in",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/accessing-openai-gpt-models-on-amazon-bedrock-with-global-cross-region-inference-in/hero.webp",
+    "card": "/forum/assets/posts/2026/10/accessing-openai-gpt-models-on-amazon-bedrock-with-global-cross-region-inference-in/card.webp",
+    "social": "/forum/assets/posts/2026/10/accessing-openai-gpt-models-on-amazon-bedrock-with-global-cross-region-inference-in/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح نماذج GPT-6 عبر Bedrock في خمس مناطق آسيوية",
+      "en": "OpenAI GPT Models Arrive on Amazon Bedrock in Asia"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/09/ML-21759-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/accessing-openai-gpt-models-on-amazon-bedrock-with-global-cross-region-inference-in/inline-01.webp",
+        "width": 1400,
+        "height": 319,
+        "alt": {
+          "ar": "أمازون تتيح نماذج GPT-6 عبر Bedrock في خمس مناطق آسيوية",
+          "en": "The three global OpenAI GPT-6 inference profiles among the system-defined profiles in the Amazon Bedrock console."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accessing-openai-gpt-models-on-amazon-bedrock-with-global-cross-region-inference-in-thailand-malaysia-singapore-indonesia-and-taiwan/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/09/ML-21759-1-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/accessing-openai-gpt-models-on-amazon-bedrock-with-global-cross-region-inference-in/inline-02.webp",
+        "width": 1400,
+        "height": 900,
+        "alt": {
+          "ar": "أمازون تتيح نماذج GPT-6 عبر Bedrock في خمس مناطق آسيوية",
+          "en": "The ChatGPT desktop app running GPT-6 Astra on Amazon Bedrock."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accessing-openai-gpt-models-on-amazon-bedrock-with-global-cross-region-inference-in-thailand-malaysia-singapore-indonesia-and-taiwan/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/09/ML-21759-2-1.png"
+      }
+    ]
+  }
 }
