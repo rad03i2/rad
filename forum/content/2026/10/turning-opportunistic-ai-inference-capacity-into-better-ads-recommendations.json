@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "c1f8d2394d44496f6bd1",
+  "slug": "turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/",
+    "en": "/forum/en/ai/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/"
+  },
+  "locales": {
+    "ar": {
+      "title": "ميتا تحوّل سعة الذكاء الاصطناعي الخاملة إلى تحسينات إعلانية",
+      "description": "تكشف ميتا عن نظام جديد يستغل سعة الاستدلال الخاملة في أسطولها لتحسين توصيات الإعلانات، مما يرفع كفاءة الموارد دون التأثير على الأداء الأساسي.",
+      "deck": "أطلقت ميتا نظاماً هندسياً متقدماً يجمع السعة الخاملة الموزعة في أسطول الحوسبة الخاص بها، محوّلاً هذه الموارد غير المستغلة إلى تحسينات ملموسة في جودة التوصيات الإعلانية.",
+      "summaryBullets": [
+        "يعتمد النظام على قضيبين مرنين رئيسيين: تقييم المزيد من الإعلانات (RMA) واستخدام نماذج أقوى (SBM).",
+        "يحل النظام مشكلة المفارقة السعوية حيث يكون الأسطول مقيّداً عالمياً مع وجود فجوات خمول محلية.",
+        "تضمن العزل الفيزيائي والمنطقي حماية الأداء الأساسي من أي تقلبات في السعة الفرصية.",
+        "يتيح النظام استغلال فائض المعالجات العصبية (Accelerators) دون زيادة العبء على وحدات المعالجة المركزية (CPU)."
+      ],
+      "sections": [
+        {
+          "heading": "مفارقة السعة في أساطيل الاستدلال",
+          "paragraphs": [
+            {
+              "text": "تواجه أساطيل الاستدلال (Inference Fleets) تحدياً معقداً يتمثل في المفارقة السعوية؛ حيث قد يكون الأسطول مقيّداً من حيث الطاقة الإجمالية، بينما تبقى أجزاء منه خاملة محلياً. في [ميتا](https://engineering.fb.com/2026/10/12/ml-applications/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/)، تم بناء نظام يجمع هذه الفجوات الخاملة في حوض سعة مشترك وفرصي، مما يتيح تحويل الموارد غير المستغلة إلى توصيات إعلانية أفضل دون الحاجة إلى طلبات سعة إضافية. ويمكن الرجوع إلى Meta Engineering للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "ميتا",
+                  "url": "https://engineering.fb.com/2026/10/12/ml-applications/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/"
+                },
+                {
+                  "text": "Meta Engineering",
+                  "url": "https://engineering.fb.com/2026/10/12/ml-applications/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/"
+                }
+              ]
+            },
+            {
+              "text": "تنتج هذه المفارقة عن عدة عوامل هيكلية، أبرزها عدم التوافق بين التخصيص الذروي وتقلب الطلب، حيث تبقى السعة خاملة عندما ينخفض الطلب عن الذروة. كما يساهم التوقيت المختلف بين وصول سعة الحوسبة عبر سلاسل التوريد وإطلاق النماذج الجديدة في خلق فجوات استغلال. بالإضافة إلى ذلك، يؤدي عدم تناسب نسب الموارد (مثل المعالجات المركزية مقابل المعالجات العصبية) واختلاف أنواع المعالجات العصبية بين الأجيال إلى تعطيل جزء من السعة التي لا يمكنها تلبية الطلب الحالي مباشرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "من الاحتياطيات المجزأة إلى الحوض الفرصي",
+          "paragraphs": [
+            {
+              "text": "في أسطول متنوع بمقياس ميتا، السعة الخاملة اللحظية حتمية حتى مع التخطيط الاستباقي. ومع ذلك، تأتي هذه السعة بقيود تشغيلية صارمة؛ فهي قابلة للمصادرة في أي وقت، متقلبة جداً في توفرها، ولا تحمل ضمانات طويلة الأمد. لاستهلاك هذا المورد المتقلب بأمان دون المساس بالأداء الأساسي، يجب أن تمتلك الأحمال التشغيلية خصائص هيكلية محددة، أهمها مرونة عالية تسمح بإضافة أو إزالة كميات كبيرة من العمل الاختياري بسرعة، مع الحفاظ على جودة مخرجات مستدامة على نطاق واسع.",
+              "links": []
+            },
+            {
+              "text": "حدد فريق الهندسة في ميتا قضيبين مرنين متكاملين يلبيان هذه المعايير. الأول هو \"تقييم المزيد من الإعلانات\" (RMA)، والثاني هو \"تقديم نماذج أفضل\" (SBM). يعمل هذان القضيبان معاً لاستهلاك السعة الخاملة وتوليد قيمة إعلانية أعلى، مع تقليل الاعتماد على الأنظمة الخارجية التي قد تتأثر بتقلبات السعة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل قضيب تقييم المزيد من الإعلانات",
+          "paragraphs": [
+            {
+              "text": "يتطلب نظام التوصيات الإعلانية اختيار عدد صغير من الإعلانات من بين ملايين المرشحين في أقل من ثانية واحدة، باستخدام مراحل تقييم متسلسلة. يعمل قضيب RMA على زيادة عدد المرشحين الذين تخضعهم مراحل التقييم للنظر عندما تتوفر سعة فرصية. تقييم المزيد من المرشحين يزيد من احتمالية العثور على إعلانات ذات صلة أعلى بالمستخدم. ومع ذلك، يتطلب هذا القضيب فائضاً من كلا النوعين من الموارد؛ وحدات المعالجة المركزية (CPU) للمراحل الأولية مثل الاسترجاع ومعالجة الميزات، والمعالجات العصبية (Accelerators) للاستدلال الفعلي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استغلال الفائض عبر تقديم نماذج أقوى",
+          "paragraphs": [
+            {
+              "text": "بينما يتطلب RMA موارد متعددة، يعمل قضيب SBM على تغيير نسبة الطلبات التي تُقيَّم بنماذج أقوى وأكثر تعقيداً. يحافظ هذا القضيب على ثبات عدد الإعلانات الداخلة إلى مراحل التقييم، مما يبقي الطلب على وحدات المعالجة المركزية مستقراً نسبياً. هذا التصميم الذكي يسمح لـ SBM باستهلاك فائض المعالجات العصبية فقط، وهو مورد لا يمكن لـ RMA استغلاله بكفاءة عندما تكون وحدات المعالجة المركزية مشبعة. كما يستخدم موجه النماذج في SBM إشارات قيمة الطلب لأولوية المعالجة للطلبات المتوقعة أن تستفيد أكثر من النماذج القوية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الحماية المرنة والأداء الأساسي",
+          "paragraphs": [
+            {
+              "text": "يواجه استخدام السعة الفرصية تحدياً رئيسياً يتمثل في إمكانية استعادتها من قبل أصحابها الأصليين مع إشعار قصير أو بدون إشعار. لضمان عدم تأثير ذلك على الأداء الأساسي، يعتمد النظام على العزل الفيزيائي والمنطقي لحماية السعة المخصصة للخدمة الأساسية. تتحكم حلقات تغذية راجعة منفصلة في حجم المرشحين في RMA وتغطية النماذج في SBM، بينما تتيح آلية إسقاط الحمل الواعية بالقيمة (Value-aware load shedding) على مستوى الخوادم والعملاء تدهوراً سلساً (Graceful Degradation) عندما تُستعاد السعة فجأة. هذه الآليات مجتمعة تسمح بالعمل الاختياري بالتوسع والانكماش مع توافر السعة الفرصية، مع حماية زمن الاستجابة (Latency) والموثوقية بشكل صارم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "القيمة الإعلانية والكفاءة التشغيلية",
+          "paragraphs": [
+            {
+              "text": "يهدف هذا النظام إلى تحقيق قيمة إعلانية كبيرة وكفاءة في استخدام السعة. من خلال استغلال السعة الخاملة بشكل آمن، يساعد النظام المستخدمين على رؤية إعلانات أكثر صلة، مما يحسن نتائج المعلنين دون تكاليف رأسمالية إضافية لشراء سعة جديدة. كما أن التأثير التكاملي لكل قضيب يتغير حسب حركة المرور وتغطية التقييم الحالية ومزيج الموارد المتاحة، مما يجعل النظام ديناميكياً وقادراً على التكيف مع الظروف التشغيلية المتغيرة باستمرار في بنية ميتا التحتية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "ميتا",
+        "الذكاء الاصطناعي",
+        "توصيات إعلانية",
+        "كفاءة الحوسبة",
+        "البنية التحتية",
+        "استدلال النماذج"
+      ],
+      "entities": [
+        "ميتا",
+        "RMA (تقييم المزيد من الإعلانات)",
+        "SBM (تقديم نماذج أفضل)",
+        "أسطول الاستدلال"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "12 أكتوبر 2026",
+      "modifiedLabel": "12 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 701
+    },
+    "en": {
+      "title": "Meta Uses Idle AI Inference to Enhance Ads Recommendations",
+      "description": "Meta has built a new system that leverages idle inference capacity to improve ads recommendations without compromising baseline performance.",
+      "deck": "Meta details a system designed to turn fragmented pockets of idle inference capacity into improved ads recommendations at scale.",
+      "summaryBullets": [
+        "Meta addresses the inference capacity paradox where fleets are globally constrained but locally idle.",
+        "Two elasticity levers—Rank More Ads and Serve Better Models—help expand optional work safely.",
+        "Physical and logical isolation protect dedicated baseline serving capacity from volatile fluctuations.",
+        "The system drives significant advertiser value and capacity efficiency without requiring additional capacity orders."
+      ],
+      "sections": [
+        {
+          "heading": "The Inference Capacity Paradox",
+          "paragraphs": [
+            {
+              "text": "Inference fleets must maintain sufficient capacity to meet demand under strict latency and reliability targets, but demand and capacity rarely align perfectly. According to [Meta Engineering](https://engineering.fb.com/2026/10/12/ml-applications/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/), capacity can remain idle in parts of a fleet even when the fleet is constrained overall due to regional resource-ratio mismatches, accelerator-type mismatches, and demand variations. Further details are available from Meta Engineering in the original source material.",
+              "links": [
+                {
+                  "text": "Meta Engineering",
+                  "url": "https://engineering.fb.com/2026/10/12/ml-applications/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/"
+                },
+                {
+                  "text": "Meta Engineering",
+                  "url": "https://engineering.fb.com/2026/10/12/ml-applications/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/"
+                }
+              ]
+            },
+            {
+              "text": "Peak-provisioning and demand-variation mismatch further complicate resource usage. Because inference fleets must be provisioned for peak demand, capacity needed during peak periods often remains temporarily idle during lower-demand windows. Furthermore, model development schedules and supply-chain timelines for delivery rarely match up precisely, leaving temporary gaps.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "From Fragmented Pockets to a Shared Pool",
+          "paragraphs": [
+            {
+              "text": "To address these challenges, engineers built a system that aggregates local idle pockets into a shared opportunistic capacity pool. This approach turns otherwise unused infrastructure into better ads recommendations, helping people see more relevant ads and improving advertiser outcomes without requiring additional capacity orders.",
+              "links": []
+            },
+            {
+              "text": "However, consuming volatile and preemptible capacity safely presents unique engineering challenges. The system must adapt workloads as supply changes without overloading dedicated capacity that serves baseline operations. Physical and logical isolation protects baseline reservations, while value-aware load shedding allows graceful degradation when capacity is reclaimed.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Rank More Ads (RMA)",
+          "paragraphs": [
+            {
+              "text": "The architecture relies on two complementary elasticity levers to consume opportunistic capacity. The first lever, Rank More Ads (RMA), adjusts the number of candidates evaluated by the ranking stages. When opportunistic capacity is available, evaluating more candidates increases the likelihood of finding relevant ads for users.",
+              "links": []
+            },
+            {
+              "text": "Because additional candidates must pass through CPU-heavy upstream operations such as feature processing and retrieval, in addition to accelerator-heavy inference, RMA generally requires a surplus of both CPU and accelerator resources.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Serve Better Models (SBM)",
+          "paragraphs": [
+            {
+              "text": "The second lever, Serve Better Models (SBM), changes the share of requests routed to more powerful, complex models as accelerator capacity changes. SBM keeps the number of ads entering the ranking stages constant, maintaining relatively stable upstream CPU demand.",
+              "links": []
+            },
+            {
+              "text": "This design allows SBM to consume accelerator-only surplus that RMA cannot utilize. Additionally, the SBM model-router component uses request-value signals to prioritize requests that stand to benefit most from enhanced model complexity.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "System Scale and Operation",
+          "paragraphs": [
+            {
+              "text": "Operating the system at Meta's scale requires separate feedback loops to control RMA candidate volume and SBM model coverage. These mechanisms allow optional workloads to dynamically expand and contract in response to available supply while maintaining strict reliability and latency targets across the global fleet.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Meta",
+        "AI Inference",
+        "Ads Recommendations",
+        "Machine Learning",
+        "Capacity Management",
+        "System Architecture"
+      ],
+      "entities": [
+        "Meta"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 12, 2026",
+      "modifiedLabel": "October 12, 2026",
+      "readMinutes": 3,
+      "wordCount": 486
+    }
+  },
+  "datePublished": "2026-10-12T20:52:33.722722+03:00",
+  "dateModified": "2026-10-12T20:52:33.722722+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/hero.webp",
+    "card": "/forum/assets/posts/2026/10/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/card.webp",
+    "social": "/forum/assets/posts/2026/10/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/social.jpg",
+    "alt": {
+      "ar": "ميتا تحوّل سعة الذكاء الاصطناعي الخاملة إلى تحسينات إعلانية",
+      "en": "Meta Uses Idle AI Inference to Enhance Ads Recommendations"
+    },
+    "credit": "Meta Engineering",
+    "sourceUrl": "https://engineering.fb.com/wp-content/uploads/2026/10/Meta-AI-Inference-Capacity-Ads-hero.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Meta Engineering",
+      "url": "https://engineering.fb.com/2026/10/12/ml-applications/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations/",
+      "type": "official",
+      "title": "Turning Opportunistic AI Inference Capacity Into Better Ads Recommendations"
+    }
+  ],
+  "sourceUrl": "https://engineering.fb.com/2026/10/12/ml-applications/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations",
+  "sourceTitle": "Turning Opportunistic AI Inference Capacity Into Better Ads Recommendations",
+  "trendScore": 113.38,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-12T17:52:33+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/turning-opportunistic-ai-inference-capacity-into-better-ads-recommendations.json"
+}
