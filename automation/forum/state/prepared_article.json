@@ -1,5 +1,349 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-12T18:12:34+00:00",
-  "last_published_story_id": "6b4a7d58b32909d7acd0"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-12T18:17:15+00:00",
+  "target_publish_at": "2026-10-12T21:32:33.811027+03:00",
+  "story": {
+    "title": "Filter, reshape, and redact logs before export with Transformers",
+    "url": "https://blog.cloudflare.com/transformers-on-logpush",
+    "domain": "blog.cloudflare.com",
+    "summary": "Logpush now supports Transformers, allowing teams to filter, redact, and reshape log streams using SQL before export. Powered by Apache DataFusion and Apache Arrow, Transformers apply those changes directly to log data before it reaches the destination.",
+    "published_at": "2026-10-12T14:44:59+00:00",
+    "discovered_at": "2026-10-12T14:46:58+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "computers",
+    "category_label": "الحواسيب",
+    "score": 61,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "713dc1089bb69aefce6c",
+    "trend": {
+      "score": 104.63,
+      "age_hours": 3.53,
+      "corroboration_count": 0,
+      "entity_momentum": 0,
+      "category_boost": 5
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/transformers-on-logpush/",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Filter, reshape, and redact logs before export with Transformers",
+      "title": "Filter, reshape, and redact logs before export with Transformers | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "كلاودفلار تتيح معالجة سجلات Logpush عبر SQL قبل التصدير",
+      "description": "أطلقت كلاودفلار ميزة Transformers ضمن Logpush، مما يتيح للفرق تصفية وإخفاء وإعادة تشكيل تدفقات السجلات باستخدام SQL قبل التصدير مباشرة، مما يقلل التكاليف ويعزز الأمان.",
+      "deck": "تستطيع فرق المراقبة الآن تعديل بيانات السجلات داخل خط أنابيب التصدير مباشرة، دون الحاجة إلى خدمات معالجة خارجية.",
+      "summary_bullets": [
+        "تتيح Transformers كتابة استعلامات SQL لتصفية السجلات وإخفاء البيانات الحساسة قبل وصولها إلى الوجهة النهائية.",
+        "يعتمد النظام على محرك Apache DataFusion ومكتبة Apache Arrow لضمان أداء عالٍ واستهلاك متوقع للموارد.",
+        "تعمل الميزة داخل الخدمة الحالية (Bufstream) لتجنب التأخير الناتج عن استدعاءات الشبكة الخارجية.",
+        "توفر هذه الأداة إمكانية معاينة وإدارة التحويلات عبر لوحة التحكم أو واجهة برمجة التطبيقات (API)."
+      ],
+      "sections": [
+        {
+          "heading": "تسريع معالجة السجلات قبل التصدير",
+          "paragraphs": [
+            {
+              "text": "أعلنت كلاودفلار عن إطلاق ميزة Transformers ضمن خدمة Logpush، وهي أداة تتيح للفرق تصفية تدفقات السجلات وإعادة تشكيلها وإخفاء البيانات الحساسة باستخدام لغة SQL قبل عملية التصدير. تأتي هذه الخطوة كجزء من تحديثات واسعة لمنصة المراقبة، حيث تهدف إلى نقل عمليات المعالجة التي كانت تتطلب سابقاً خدمات خارجية مستقلة إلى داخل خط أنابيب التصدير نفسه. هذا التغيير يهدف إلى تبسيط البنية التحتية للبيانات وتقليل التعقيد التشغيلي على فرق الهندسة.",
+              "links": [
+                {
+                  "text": "Logpush",
+                  "url": "https://developers.cloudflare.com/logs/logpush/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تقليل التكاليف وتحسين جودة البيانات",
+          "paragraphs": [
+            {
+              "text": "عادةً ما تحتاج فرق الأمن والمراقبة إلى إزالة فحوصات الصحة أو إخفاء حقول محددة قبل إرسال السجلات إلى أنظمة إدارة المعلومات والأحداث (SIEM) أو منصات التحليلات. في النماذج التقليدية، يتطلب ذلك نشر خدمات معالجة إضافية يجب مراقبتها وتوسيعها، مما يرفع التكاليف التشغيلية. مع Transformers، يمكن للفرق تعريف استعلام SQL يحدد بدقة السجلات المراد تصديرها، مما يقلل من حجم البيانات المنقولة والمخزنة، وبالتالي خفض التكاليف المرتبطة بالتصدير والتخزين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل المحرك الداخلي",
+          "paragraphs": [
+            {
+              "text": "يعمل كل Transformer كاستعلام SQL مخصص لمجموعة بيانات محددة في Logpush. يطبق النظام هذا الاستعلام على كل دفعة من السجلات قبل التصدير؛ حيث تُحذف السجلات التي لا تطابق شرط WHERE، وتُعاد صياغة الحقول المتبقية بناءً على جملة SELECT. يتم تصدير النتائج النهائية بصيغة NDJSON، مما يسمح بتغيير هيكل البيانات ومحتواها، مثل إعادة تسمية الحقول أو دمجها أو حذف الحقول غير الضرورية، لضمان توافق البيانات مع مخططات العرض الداخلي للشركة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اختيار Apache DataFusion للأداء العالي",
+          "paragraphs": [
+            {
+              "text": "واجهت كلاودفلار تحدياً في تصميم هذه الميزة لضمان عدم إبطاء عملية التسليم. بعد تجربة نموذج أولي يعتمد على WebAssembly داخل Cloudflare Workers، تبيّن أن استدعاءات الشبكة الخارجية قد تسبب تأخيرات مؤقتة. لذلك، قررت الشركة تنفيذ المحرك داخل العملية (in-process) لضمان موثوقية التسليم. اختارت كلاودفلار محرك Apache DataFusion، وهو محرك استعلامات مكتوب بلغة Rust ويعتمد على Apache Arrow، نظراً لكفاءته في معالجة البيانات العمودية (Columnar) وسرعته العالية.",
+              "links": [
+                {
+                  "text": "Apache DataFusion",
+                  "url": "https://datafusion.apache.org/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تكامل تقني بين Go و Rust",
+          "paragraphs": [
+            {
+              "text": "تتطلب البنية التقنية ربط خدمة التسليم المكتوبة بلغة Go مع محرك DataFusion المكتوب بلغة Rust. استخدمت كلاودفلار صيغة Apache Arrow IPC لتبادل الدفقات بين اللغتين عبر واجهة C ABI. تضمنت التصميمات إجراءات صارمة لإدارة الذاكرة، حيث تنتقل ملكية البيانات بشكل صريح بين اللغتين لتجنب أخطاء إدارة الذاكرة عبر حدود التشغيل. أظهرت الاختبارات أن معالجة دفعة من 5000 سجل تستغرق حوالي 3 مللي ثانية، مما يعادل معالجة 1.6 مليون سجل في الثانية من خيط برمجة واحد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة التحويلات عبر لوحة التحكم",
+          "paragraphs": [
+            {
+              "text": "يمكن للعملاء إنشاء ومعاينة وإدارة Transformers من خلال لوحة تحكم كلاودفلار باستخدام أداة Transformer Studio، أو برمجياً عبر واجهة API. عند حفظ تحويل جديد، يُنشأ إصدار جديد يمكن مراجعته، مما يتيح تتبع التغييرات بمرور الوقت. بعد الحفظ، يمكن ربط التحويل بمهام Logpush المتوافقة التي تستخدم نفس مجموعة البيانات، مما يضمن تطبيق القواعد الجديدة على التدفقات المستقبلية دون تعطيل العمليات الحالية.",
+              "links": [
+                {
+                  "text": "API",
+                  "url": "https://developers.cloudflare.com/api/resources/logpush/subresources/transformers/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "كلاودفلار",
+        "Logpush",
+        "مراقبة",
+        "SQL",
+        "Apache DataFusion",
+        "أمن المعلومات",
+        "تحليلات"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Logpush",
+        "Apache DataFusion",
+        "Apache Arrow",
+        "Bufstream",
+        "Buftee"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من مدونة كلاودفلار الرسمية، مع التركيز على الجوانب التقنية للأداء والبنية التحتية دون استقراءات خارجية."
+    },
+    "en": {
+      "title": "Cloudflare Adds SQL Transformers to Logpush Pipelines",
+      "description": "Cloudflare introduces Transformers for Logpush, enabling teams to filter, redact, and reshape log streams using SQL before export.",
+      "deck": "Cloudflare has announced general availability for Transformers on Logpush, letting observability teams filter, redact, and reshape log streams using custom SQL queries before data reaches downstream destinations.",
+      "summary_bullets": [
+        "Logpush now supports SQL-based Transformers to filter, redact, and reshape logs prior to export.",
+        "Powered by Apache DataFusion and Apache Arrow, Transformers run in-process for high throughput and predictable resource utilization.",
+        "Observability teams can manage Transformers via the Cloudflare dashboard or programmatically through the API.",
+        "The updates form part of recent expansions making key features available across all self-serve and enterprise plans."
+      ],
+      "sections": [
+        {
+          "heading": "Streamlining Log Export Pipelines",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has introduced support for Transformers within its log delivery workflow, allowing teams to manipulate log streams directly at the source. Observability teams frequently export Cloudflare logs to security information and event management systems, analytics platforms, and object storage. Before those logs reach their final destination, teams often need to filter out health checks, remove sensitive fields, or reshape records to match internal dashboards and investigation schemas.",
+              "links": []
+            },
+            {
+              "text": "Traditionally, achieving this required maintaining a separate processing service to ingest, modify, and scale incoming log data. Furthermore, organizations typically pay to ingest and store records that are immediately discarded upon arrival. By integrating processing directly into the export workflow, teams can reduce downstream data volume and cut unnecessary storage costs.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "SQL-Driven Filtering and Redaction",
+          "paragraphs": [
+            {
+              "text": "With the new capability, customers define a SQL query tailored to a specific dataset to filter records, redact sensitive information, and alter output structures. Logpush applies these queries prior to export, ensuring that every destination receives data formatted precisely to its requirements. Records failing to match the criteria in a WHERE clause are systematically omitted, while SELECT statements dictate the final structure of exported records in NDJSON format.",
+              "links": []
+            },
+            {
+              "text": "Customers can build, preview, and manage these transformations directly inside the dashboard using Transformer Studio or programmatically via the API. Each modification automatically generates a new version, allowing engineering teams to track configuration changes over time.",
+              "links": [
+                {
+                  "text": "API",
+                  "url": "https://blog.cloudflare.com/transformers-on-logpush/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "In-Process Execution with Apache DataFusion",
+          "paragraphs": [
+            {
+              "text": "To achieve low latency and high throughput, Cloudflare evaluated remote compute options before deciding to execute transformations in-process within its delivery service, Bufstream. Initial prototypes involving external compute introduced network dependencies that risked timeout issues and variable delivery latencies. By embedding an execution engine directly into the pipeline, high-volume jobs can process millions of logs per second using existing scheduling and batching infrastructure.",
+              "links": []
+            },
+            {
+              "text": "Cloudflare selected Apache DataFusion, a Rust query engine built on Apache Arrow, to power the underlying execution. In internal benchmarks, processing synthetic batch data demonstrated high throughput capabilities without disrupting standard delivery mechanisms.",
+              "links": [
+                {
+                  "text": "Apache DataFusion",
+                  "url": "https://datafusion.apache.org/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Broad Observability Updates",
+          "paragraphs": [
+            {
+              "text": "The release of Transformers coincides with broader initiatives by Cloudflare to expand observability tooling and democratize access to advanced features. These enhancements include multiple improvements designed to simplify data collection, monitoring, and analysis across infrastructure layers without requiring complex architectural workarounds.",
+              "links": []
+            },
+            {
+              "text": "By making advanced delivery features broadly available, Cloudflare continues to align its infrastructure capabilities with customer demands for streamlined log management, tighter security controls, and predictable operational expenses.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Logpush",
+        "Transformers",
+        "SQL",
+        "Apache DataFusion",
+        "Observability",
+        "Data Engineering"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Apache DataFusion",
+        "Apache Arrow"
+      ],
+      "article_type": "news",
+      "confidence_note": "Based strictly on the provided Cloudflare Blog source text detailing the release of Transformers on Logpush."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 512,
+      "word_count_en": 492
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "56f6306d5eb76809f2c4",
+      "title": "Introducing the Googlebook Linux Terminal Preview: A VM-Backed Environment for AI and Development",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "713dc1089bb69aefce6c",
+      "title": "Filter, reshape, and redact logs before export with Transformers",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 512,
+          "word_count_en": 492
+        }
+      ]
+    }
+  ],
+  "slug": "filter-reshape-and-redact-logs-before-export-with-transformers",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/filter-reshape-and-redact-logs-before-export-with-transformers/hero.webp",
+    "card": "/forum/assets/posts/2026/10/filter-reshape-and-redact-logs-before-export-with-transformers/card.webp",
+    "social": "/forum/assets/posts/2026/10/filter-reshape-and-redact-logs-before-export-with-transformers/social.jpg",
+    "alt": {
+      "ar": "كلاودفلار تتيح معالجة سجلات Logpush عبر SQL قبل التصدير",
+      "en": "Cloudflare Adds SQL Transformers to Logpush Pipelines"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M4HA4PM499GF25H969ZFXCA3.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/filter-reshape-and-redact-logs-before-export-with-transformers/inline-01.webp",
+        "width": 1200,
+        "height": 630,
+        "alt": {
+          "ar": "كلاودفلار تتيح معالجة سجلات Logpush عبر SQL قبل التصدير",
+          "en": "Filter, reshape, and redact logs before export with Transformers"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/transformers-on-logpush/",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M4HA4NCR1ES1EHGE8ZHS7TSA.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/filter-reshape-and-redact-logs-before-export-with-transformers/inline-02.webp",
+        "width": 1400,
+        "height": 555,
+        "alt": {
+          "ar": "كلاودفلار تتيح معالجة سجلات Logpush عبر SQL قبل التصدير",
+          "en": "image2.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/transformers-on-logpush/",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M4R6HNXVE6K94GS21VJRT8TN.01M4R6HQPS9KBMSWQ6ZAJPA457.png&w=1430&h=568&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
