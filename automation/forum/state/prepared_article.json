@@ -1,5 +1,418 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-13T15:47:25+00:00",
-  "last_published_story_id": "b97f8fe456e8ff0edc9b"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-13T15:53:16+00:00",
+  "target_publish_at": "2026-10-13T19:07:25.195074+03:00",
+  "story": {
+    "title": "Rewinding the exponential: How we keep hardware usage down",
+    "url": "https://blog.cloudflare.com/rewinding-the-exponential",
+    "domain": "blog.cloudflare.com",
+    "summary": "Our strategies to optimize our data pipeline throughput without compromising data quality.",
+    "published_at": "2026-10-13T15:51:41+00:00",
+    "discovered_at": "2026-10-13T15:51:57+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "computers",
+    "category_label": "الحواسيب",
+    "score": 61,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "76d3f34e8ae723f9b336",
+    "trend": {
+      "score": 124.0,
+      "age_hours": 0.01,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 5
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/rewinding-the-exponential",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Rewinding the exponential: How we keep hardware usage down",
+      "title": "Rewinding the exponential: How we keep hardware usage down | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "كلاودفلير تكشف استراتيجياتها لتقليل استهلاك العتاد في بنية البيانات",
+      "description": "توضح كلاودفلير كيف حققت توفيراً كبيراً في تكاليف البنية التحتية عبر تحسين ضغط البيانات وإعادة هندسة خطوط الأنابيب، مما مكّنها من التعامل مع نمو حركة المرور الأسي دون توسع هائل في العتاد.",
+      "deck": "اعتمدت كلاودفلير على سلسلة من التحسينات التقنية المتتالية منذ عام 2022 لتقليل حجم البيانات المنقولة وضغطها، مما سمح لها بتأجيل توسعة العتاد لمدة سنتين ونصف.",
+      "summary_bullets": [
+        "تحولت الشركة من مخطط بيانات موحد إلى مخططات مخصصة لكل منتج، مما خفض استهلاك النطاق الترددي الأساسي بنسبة 35-40%.",
+        "استبدلت خوارزمية الضغط LZ4 بخوارزمية zstd، مما أدى إلى تقليل حجم المرور المضغوط بنسبة 40% تقريباً دون زيادة ملحوظة في استهلاك المعالج.",
+        "أعادت تصميم نظام التكرار (Replication) في عام 2026 لتقليل الازدواجية في نقل البيانات عبر المناطق الجغرافية، مما وفر 43 جيجابايت/ثانية من حركة المرور.",
+        "اعتمدت على استراتيجية 'التكرار المتأخر' من خلال طبقة التخزين المؤقت Buftee، مما قلل من الضغط على الشبكة الرئيسية أثناء نقل البيانات بين مراكز البيانات."
+      ],
+      "sections": [
+        {
+          "heading": "التحدي: نمو أسي مقابل موارد خطية",
+          "paragraphs": [
+            {
+              "text": "تدير شبكة كلاودفلير أكثر من 20% من حركة المرور على الويب، مما يعني التعامل مع مليارات الأحداث الثانية. تواجه فرق البيانات في الشركة تحدياً مستمراً يتمثل في النمو الأسي لحركة المرور مقابل النمو الخطي للموارد المادية. للحفاظ على تكاليف الموارد تحت السيطرة، نفذت الشركة تحسينات متتالية على مدى السنوات الخمس الماضية، مما مكّنها من تأجيل توسعة العتاد لمدة تصل إلى سنتين ونصف. ويمكن الرجوع إلى Cloudflare Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/rewinding-the-exponential"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تفكيك مخطط البيانات الموحد",
+          "paragraphs": [
+            {
+              "text": "في عام 2022، قامت كلاودفلير بتفكيك مخطط البيانات الموحد (Monolithic Schema) الذي كان يحتوي على حقول جميع المنتجات في تيار واحد. هذا النهج كان يجبر المستهلكين الداخليين على استهلاك جميع البيانات ثم تصفية غير الضروري منها. بدلاً من ذلك، أنشأت الشركة رسائل أصغر مخصصة لكل منتج، مما أدى إلى تقليل استهلاك النطاق الترددي الأساسي بنسبة تتراوح بين 35% و40%، وهو ما يعادل إلغاء نمو سنة كاملة من حركة المرور المضغوطة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسين خوارزمية الضغط",
+          "paragraphs": [
+            {
+              "text": "مع استمرار نمو الحركة في عام 2024، واجهت الشركة مشاكل في الازدحام الشبكي. استجابةً لذلك، انتقلت من خوارزمية الضغط LZ4 إلى zstd. على الرغم من المخاوف الأولية بشأن زيادة استهلاك وحدة المعالجة المركزية (CPU)، أظهرت الاختبارات الأولية على عدد قليل من الخوادم عدم وجود فرق ملحوظ. عند التعميم على الأسطول بأكمله، تحقق انخفاض بنسبة 40% تقريباً في حجم المرور المضغوط، مما سمح للشركة بدعم 1.5 ضعف حجم الحركة السابقة بنفس البنية التحتية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إعادة هندسة التكرار في 2026",
+          "paragraphs": [
+            {
+              "text": "لتعزيز المرونة ضد الكوارث الإقليمية، كانت كلاودفلير تعتمد سابقاً على 'الكتابة المزدوجة'، حيث كانت ترسل نسختين كاملتين من كل حدث إلى منطقتين مركزيتين. مع توسع نطاق هذا النهج، تضاعف حجم حركة المرور عبر الشبكة الواسعة، مما أصبح غير مستدام. في ربيع 2026، أعادت الشركة تصميم خط أنابيب التكرار لفصل نقل البيانات عن تكرار قاعدة البيانات، مستلهمة النموذج المستخدم في خدمة Logpush.",
+              "links": [
+                {
+                  "text": "Logpush",
+                  "url": "https://developers.cloudflare.com/logs/logpush/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية التكرار المتأخر والتخزين المؤقت",
+          "paragraphs": [
+            {
+              "text": "اعتمدت الاستراتيجية الجديدة على ثلاث ركائز: أولاً، استخدام 'مجمع استهلاك مشترك' حيث يُرسل كل حدث مرة واحدة فقط إلى أقرب مستقبِل متاح. ثانياً، يتم التكرار في مرحلة متأخرة عبر طبقة التخزين المؤقت الموزع Buftee، مما يقلل من العبء على الشبكة الرئيسية. ثالثاً، معالجة الفشل المرنة، حيث إذا تعطلت منطقة معينة، تُعاد توجيه الحركة فوراً إلى المنطقة الناجية دون توقف. هذه التغييرات أزالت حوالي 43 جيجابايت/ثانية من حركة المرور المضغوطة عبر الشبكة الواسعة، مع إضافة 7 جيجابايت/ثانية فقط للتكرار بين مراكز البيانات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النتائج والتأثير على البنية التحتية",
+          "paragraphs": [
+            {
+              "text": "يعزى هذا التوفير الكبير إلى عاملين رئيسيين: أولاً، يتم التكرار بعد تطبيق أخذ العينات (Sampling)، مما يعني نقل بيانات مضغوطة أصلاً. ثانياً، تحسين الضغط من خلال التقسيم المنتظم للبيانات بعد تجميعها مركزياً بدلاً من تشتتها على آلاف الخوادم. هذه التحسينات تتيح لكلاودفلير الحفاظ على جودة البيانات مع تقليل التكاليف التشغيلية بشكل كبير، وهو ما يدعم خدماتها التحليلية ومراقبة الأداء.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "كلاودفلير",
+        "بنية تحتية",
+        "ضغط البيانات",
+        "تحليلات",
+        "كفاءة الموارد",
+        "شبكات الحاسوب"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Logfwdr",
+        "Buftee",
+        "ClickHouse",
+        "zstd",
+        "LZ4"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال يعتمد حصرياً على المدونة الرسمية لكلاودفلير ويوضح التسلسل الزمني للتحسينات التقنية من 2022 إلى 2026 مع الأرقام المذكورة في المصدر."
+    },
+    "en": {
+      "title": "Cloudflare cuts hardware pressure as data volumes grow",
+      "description": "Cloudflare says schema changes, compression and pipeline redesigns have reduced hardware pressure as its data delivery reaches two billion events per second.",
+      "deck": "Cloudflare has detailed a series of data-pipeline changes designed to keep hardware growth below the pace of traffic growth. The company says the work has deferred the equivalent of two and a half years of hardware expansion.",
+      "summary_bullets": [
+        "Cloudflare’s data team handled roughly two billion events per second in May 2026.",
+        "Product-specific schemas reduced backbone bandwidth usage by 35% to 40% in 2022.",
+        "A switch from LZ4 to zstd cut compressed traffic throughput by nearly 40%.",
+        "Pipeline replication changes eliminated about 43 GB/s of compressed transit traffic.",
+        "Cloudflare is adding aggregation to its pipeline as part of its 2026 optimization work."
+      ],
+      "sections": [
+        {
+          "heading": "Keeping hardware growth below traffic growth",
+          "paragraphs": [
+            {
+              "text": "Cloudflare says it has reduced pressure on its infrastructure by repeatedly redesigning the systems that move data from its global network to centralized data centers. The company’s data team was delivering roughly two billion events per second in May 2026, including customer traffic and data generated by internal teams.",
+              "links": []
+            },
+            {
+              "text": "That pipeline supports products and services including Cloudflare Logs, the SQL API, observability and internal analytics. Cloudflare says the central challenge is persistent exponential traffic growth against more linear hardware growth. Over the past five years, changes to the pipeline have produced savings equivalent to deferring two and a half years of hardware expansion, according to the company.",
+              "links": [
+                {
+                  "text": "Cloudflare Logs",
+                  "url": "https://developers.cloudflare.com/changelog/post/2026-09-30-logpush-usage-based-pricing/"
+                },
+                {
+                  "text": "SQL API",
+                  "url": "https://developers.cloudflare.com/analytics/sql-api/"
+                },
+                {
+                  "text": "observability",
+                  "url": "https://blog.cloudflare.com/one-observability-platform/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Replacing the monolithic schema",
+          "paragraphs": [
+            {
+              "text": "The first major change came in 2022, when Cloudflare dismantled a single shared data schema. That earlier design put fields from multiple products into one stream, requiring internal consumers to ingest the full payload and then filter out records or fields they did not need.",
+              "links": []
+            },
+            {
+              "text": "Cloudflare replaced the firehose with product-specific schemas containing the fields required by each service. Although some fields were duplicated across messages, the narrower streams reduced backbone bandwidth usage by 35% to 40%, the company says. The reduction was enough to offset approximately a year of compressed traffic growth at the time.",
+              "links": []
+            },
+            {
+              "text": "The pipeline begins with Logfwdr, an internal service that collects data from highly distributed sources, including Workers and other Cloudflare systems. It sends the data to centralized receivers, which place it into Buftee, the company’s buffering layer. Consumers then fetch the buffered data and deliver it to final destinations such as ClickHouse.",
+              "links": [
+                {
+                  "text": "buffering layer",
+                  "url": "https://blog.cloudflare.com/cloudflare-incident-on-november-14-2024-resulting-in-lost-logs/#buftee"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Trading compression work for network capacity",
+          "paragraphs": [
+            {
+              "text": "As traffic continued to rise, Cloudflare says network congestion became a daily concern by 2024. The company responded by changing its compression algorithm from LZ4 to zstd, despite earlier experiments that had shown higher CPU usage with zstd.",
+              "links": []
+            },
+            {
+              "text": "Cloudflare first deployed the change to a small number of servers and monitored CPU metrics before expanding it across the fleet. The company says the rollout produced little observable CPU impact while reducing compressed traffic throughput by nearly 40%.",
+              "links": []
+            },
+            {
+              "text": "Because the amount of uncompressed data continued to grow at the same rate, the compression improvement did not reduce the underlying workload. It did, however, allow Cloudflare to support more than 1.5 times as much traffic through a pipe of the same size, according to the company. Cloudflare estimates that this improvement represented about 10 months of equivalent growth reduction.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Reducing duplicate transit in 2026",
+          "paragraphs": [
+            {
+              "text": "Cloudflare’s next major target was uncompressed bytes. The company historically sent two complete copies of many non-regional analytics events to separate centralized regions so that ClickHouse clusters could continue serving queries if one region failed. Data governed by Customer Metadata Boundaries remained within its designated region.",
+              "links": [
+                {
+                  "text": "Customer Metadata Boundaries",
+                  "url": "https://developers.cloudflare.com/data-localization/metadata-boundary/"
+                }
+              ]
+            },
+            {
+              "text": "That approach became increasingly expensive as disaster resilience expanded across more analytics streams. Logfwdr traffic effectively doubled across the board because every event traveled over wide-area transit twice. Cloudflare says the model was not sustainable as traffic continued its exponential growth.",
+              "links": []
+            },
+            {
+              "text": "The company adapted an approach already used for Logpush, where centralized data centers operate as a shared receiver pool. Each message is sent to one available region, with automatic failover if a machine or facility cannot be reached. Analytics required an additional design because both regional ClickHouse clusters still need a complete copy of non-regional data for independent query failover.",
+              "links": [
+                {
+                  "text": "Logpush",
+                  "url": "https://developers.cloudflare.com/logs/logpush/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Replication after sampling",
+          "paragraphs": [
+            {
+              "text": "Cloudflare’s redesigned analytics pipeline separates transit from database redundancy. Logfwdr sends each event only once over wide-area transit to whichever centralized receiver is available. The data is then placed in Buftee, while remote inserters create cross-data-center copies farther downstream.",
+              "links": []
+            },
+            {
+              "text": "The timing of replication is central to the change. Sampling takes place before the downstream copy is made, so the second region receives an already-compacted stream rather than a duplicate of every raw event. Cloudflare describes sampling as a way to reduce high-volume traffic while preserving rare events.",
+              "links": [
+                {
+                  "text": "sampling",
+                  "url": "https://developers.cloudflare.com/analytics/sampling/"
+                }
+              ]
+            },
+            {
+              "text": "For the datasets migrated to the new architecture, Cloudflare says the cutover removed approximately 43 GB/s of compressed transit traffic while adding about 7 GB/s of cross-data-center replication. The company attributes the difference to replication after sampling and to more effective compression once data is centralized and partitioned uniformly.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "A continuing pipeline redesign",
+          "paragraphs": [
+            {
+              "text": "Cloudflare’s 2026 work also includes decentralizing sampling during the summer and introducing aggregations into the pipeline in the fall. These efforts are part of the same broader objective: increase the amount of data the existing infrastructure can process without matching every rise in traffic with new hardware.",
+              "links": []
+            },
+            {
+              "text": "The company presents the changes as a sequence rather than a single optimization. Schema design reduced unnecessary fields, compression reduced the size of transmitted data, and replication changes reduced duplicated wide-area traffic. Together, Cloudflare says, those measures have helped its infrastructure absorb rapidly growing data volumes while keeping resource costs under control.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "data pipelines",
+        "compression",
+        "cloud infrastructure",
+        "analytics",
+        "hardware efficiency"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Logfwdr",
+        "Buftee",
+        "ClickHouse",
+        "Cloudflare Logs",
+        "Logpush",
+        "zstd"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence: based solely on the supplied Cloudflare Blog source extract; all quantitative claims are attributed to Cloudflare."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 556,
+      "word_count_en": 902
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "76d3f34e8ae723f9b336",
+      "title": "Rewinding the exponential: How we keep hardware usage down",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 556,
+          "word_count_en": 902
+        }
+      ]
+    }
+  ],
+  "slug": "rewinding-the-exponential-how-we-keep-hardware-usage-down",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/rewinding-the-exponential-how-we-keep-hardware-usage-down/hero.webp",
+    "card": "/forum/assets/posts/2026/10/rewinding-the-exponential-how-we-keep-hardware-usage-down/card.webp",
+    "social": "/forum/assets/posts/2026/10/rewinding-the-exponential-how-we-keep-hardware-usage-down/social.jpg",
+    "alt": {
+      "ar": "كلاودفلير تكشف استراتيجياتها لتقليل استهلاك العتاد في بنية البيانات",
+      "en": "Cloudflare cuts hardware pressure as data volumes grow"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M4RYXQ3HHM0NCXGK8DBW1JR3.01M4RYXQR4R5Q48PG2RZ86HSR5.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/rewinding-the-exponential-how-we-keep-hardware-usage-down/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "كلاودفلير تكشف استراتيجياتها لتقليل استهلاك العتاد في بنية البيانات",
+          "en": "Rewinding the exponential: How we keep hardware usage down"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/rewinding-the-exponential",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M4RYTCQFG9RZ8F8JCR9C9TQQ.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/rewinding-the-exponential-how-we-keep-hardware-usage-down/inline-02.webp",
+        "width": 1400,
+        "height": 966,
+        "alt": {
+          "ar": "كلاودفلير تكشف استراتيجياتها لتقليل استهلاك العتاد في بنية البيانات",
+          "en": "Cloudflare cuts hardware pressure as data volumes grow"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "A simplified version of our architecture, starting with Logfwdr, the service that ingests producer events and forwards them to the centralized receivers. Receivers then queue them onto a buffering system that downstream consumers retrieve from."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/rewinding-the-exponential",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M4RYTFK6W7DPD9DD63TWAK1X.png&w=1430&h=988&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/rewinding-the-exponential-how-we-keep-hardware-usage-down/inline-03.webp",
+        "width": 1400,
+        "height": 887,
+        "alt": {
+          "ar": "كلاودفلير تكشف استراتيجياتها لتقليل استهلاك العتاد في بنية البيانات",
+          "en": "3rdimage"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "The graph shows the compressed bytes per second throughput cliff as the number of compressed bytes dropped following our migration away from the big monolithic schema."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/rewinding-the-exponential",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M4RYTE1BYARRQK4GY4453PZE.png&w=1430&h=906&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/rewinding-the-exponential-how-we-keep-hardware-usage-down/inline-04.webp",
+        "width": 1400,
+        "height": 818,
+        "alt": {
+          "ar": "كلاودفلير تكشف استراتيجياتها لتقليل استهلاك العتاد في بنية البيانات",
+          "en": "5th image.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "The graph shows our effective reduction in compressed number of bytes per second."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/rewinding-the-exponential",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M4RZ0TYF8XZXCCKYYG0MXAG4.01M4RZ0VK7WS0G14T3VVK0V3A8.png&w=1430&h=836&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
