@@ -1,0 +1,316 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "0e6665874199cc3c1c75",
+  "slug": "natural-language-security-queries-at-orca-security-using-amazon-bedrock",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/natural-language-security-queries-at-orca-security-using-amazon-bedrock/",
+    "en": "/forum/en/ai/natural-language-security-queries-at-orca-security-using-amazon-bedrock/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أوركا سيكيوريتي تخفض كلفة الاستعلامات السحابية 90% بالذكاء الاصطناعي",
+      "description": "أطلقت أوركا سيكيوريتي أداة Discovery AI المعتمدة على Amazon Bedrock لتحويل أسئلة اللغة العربية إلى استعلامات Sonar، محققة خفضاً كبيراً في التكلفة والوقت.",
+      "deck": "تسعى أوركا سيكيوريتي إلى تبسيط إدارة البنية التحتية السحابية عبر تحويل الأسئلة الطبيعية إلى استعلامات تقنية دقيقة، مستفيدة من نماذج الذكاء الاصطناعي.",
+      "summaryBullets": [
+        "أداة Discovery AI تحوّل أسئلة المستخدمين إلى استعلامات Sonar دون الحاجة لخبرة تقنية عميقة.",
+        "تقليل كلفة الاستعلامات بنسبة 90% وعدد الرموز المدخلة بنسبة 93% مقارنة بالأساس الأولي.",
+        "خفض زمن الاستجابة بنسبة 75% باستخدام بنية تحتية متعددة المراحل على Amazon Bedrock.",
+        "دمج تقنيات RAG مع بناء الاستعلامات الواعية بالمخطط لضمان دقة النتائج.",
+        "استخدام نماذج متعددة مثل Anthropic Claude Haiku 4.5 وAmazon Nova 2 Lite حسب المرحلة."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي إدارة البنية التحتية السحابية",
+          "paragraphs": [
+            {
+              "text": "واجه محللو الأمن تحدياً كبيراً في الحصول على إجابات سريعة حول بنيتهم التحتية السحابية دون الحاجة إلى إتقان لغات الاستعلام المتخصصة. تغطي أداة أوركا سيكيوريتي أكثر من 900 نموذج سحابي، بما في ذلك موارد Amazon EC2 وAmazon S3، مما يتطلب أسماء دقيقة وتنقلاً معقداً بين العلاقات الهرمية واختياراً من 18 مشغلاً منطقياً. هذا التعقيد جعل عملية الاستعلام صعبة للمستخدمين العاديين.",
+              "links": [
+                {
+                  "text": "أوركا سيكيوريتي",
+                  "url": "https://orca.security/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إطلاق أداة Discovery AI",
+          "paragraphs": [
+            {
+              "text": "لحل هذه المشكلة، تعاونت أوركا سيكيوريتي مع AWS لتطوير Discovery AI، وهي وكيل استعلام بلغة طبيعية يعمل على Amazon Bedrock. تهدف الأداة إلى تحويل أسئلة اللغة الإنجليزية البسيطة إلى استعلامات Sonar صالحة. توفر أوركا سياقاً أمنياً للبيانات السحابية والكود والذكاء الاصطناعي، بينما يمثل Sonar نظام الاستعلام الخاص بها الذي يتيح البحث والتصفية عبر شبكة البيانات الكاملة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "قيود النموذج الأولي",
+          "paragraphs": [
+            {
+              "text": "بدأ فريق أوركا بنموذج تجريبي يحمّل مخطط Sonar الكامل في موجه واحد على أكبر نموذج متاح. على الرغم من جودة المخرجات، ظهرت ثلاث عوائق رئيسية عند التوسع: استهلاك غير فعّال للرموز بلغ حوالي مليوني رمز لكل عملية، مما رفع التكاليف؛ وزمن استجابة عالٍ بلغ 60 ثانية لكل عملية؛ ودقة محدودة في الاستعلامات المعقدة متعددة النماذج. أثبت الفريق جدوى الفكرة، لكن التحدي كان في جعلها سريعة ورخيصة ودقيقة بما يكفي للإنتاج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية متعددة المراحل",
+          "paragraphs": [
+            {
+              "text": "صممت أوركا حلًا هجينًا على Amazon Bedrock يجمع بين توليد المعزز بالاسترجاع (RAG) وبناء الاستعلامات الواعية بالمخطط. تتكون البنية من تسع مراحل، حيث يُخصص لكل مرحلة نموذج أساسي مناسب. اختارت أوركا Amazon Bedrock لتوفير وصول متعدد النماذج عبر واجهة برمجة واحدة، مما يسمح بتوزيع نماذج مختلفة على مراحل خط الأنابيب دون إدارة تكاملات منفصلة. كما يوفر النظام ضوابط حوكمة AWS مثل IAM وVPC endpoints وCloudTrail، مما يلبي متطلبات الأمن الصارمة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل خط الأنابيب",
+          "paragraphs": [
+            {
+              "text": "تبدأ العملية بدمج طلب المستخدم مع السياق التنظيمي والمزودين السحابيين المتصلين. ثم يمر الطلب عبر مطابقة حتمية سريعة للكشف عن أنماط محددة مثل عناوين IP أو CVEs. إذا لم يتم العثور على تطابق، يتم فحص الطلب عبر حواجز حماية (Guardrails) لمنع حقن الموجهات والطلبات غير ذات الصلة. بعد ذلك، يستخدم النظام Amazon Titan Text Embeddings لاسترجاع 20 مثالًا سابقًا ذا صلة، ثم يعيد ترتيبها باستخدام Cohere Rerank 3.5 لاختيار أفضل خمسة أمثلة.",
+              "links": [
+                {
+                  "text": "Amazon Titan",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/titan-models.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "توليد الاستعلام والتحقق",
+          "paragraphs": [
+            {
+              "text": "يقوم نموذج الاختيار بتضييق نطاق أكثر من 900 نموذج Sonar إلى مجموعة صغيرة ذات صلة بالطلب، مما يقلل السياق غير الضروري. يستخدم المولد وكيلًا معززًا بالأدوات لبناء فلتر Discovery النهائي، مع إمكانية التحسين التكراري. أخيرًا، يخضع الفلتر المولد لاختبارات التحقق الثابتة والتحقق عبر واجهة برمجة Sonar لضمان الصحة النحوية والدلالية. عند الفشل، يُعاد الخطأ للمعالجة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النتائج والأداء",
+          "paragraphs": [
+            {
+              "text": "أظهرت النتائج تحسناً كبيراً مقارنة بالأساس الأولي: انخفاض كلفة الاستعلامات بنسبة 90%، وتقليل الرموز المدخلة بنسبة 93%، وخفض زمن الاستجابة بنسبة 75% ليصل إلى 15 ثانية. يتيح هذا النظام معالجة آلاف الاستعلامات يومياً بكفاءة عالية. يعتمد النظام على نماذج مثل Anthropic Claude Haiku 4.5 وAmazon Nova 2 Lite، مع إمكانية استبدال النماذج بأحدث الإصدارات دون إعادة هندسة البنية.",
+              "links": [
+                {
+                  "text": "Anthropic Claude Haiku 4.5",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-haiku-4-5.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمن السحابة",
+        "أوركا سيكيوريتي",
+        "Amazon Bedrock",
+        "RAG",
+        "استعلامات طبيعية",
+        "بنية تحتية سحابية"
+      ],
+      "entities": [
+        "أوركا سيكيوريتي",
+        "AWS",
+        "Amazon Bedrock",
+        "Discovery AI",
+        "Sonar",
+        "Anthropic Claude Haiku 4.5",
+        "Amazon Nova 2 Lite",
+        "Cohere Rerank 3.5",
+        "Amazon Titan"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "13 أكتوبر 2026",
+      "modifiedLabel": "13 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 552
+    },
+    "en": {
+      "title": "Orca Security Builds Discovery AI on Amazon Bedrock",
+      "description": "Orca Security deployed Discovery AI using Amazon Bedrock to convert natural language into Sonar queries, lowering costs and latency.",
+      "deck": "Orca Security has launched Discovery AI, a natural language query agent built on Amazon Bedrock designed to translate plain-English security questions into precise Sonar queries.",
+      "summaryBullets": [
+        "Discovery AI translates plain-English questions into Sonar queries for cloud infrastructure data.",
+        "The multi-stage pipeline is built using Amazon Bedrock to support multi-model access.",
+        "Orca Security achieved a 90% reduction in query cost and a 75% drop in latency compared to initial baselines.",
+        "The hybrid architecture combines Retrieval Augmented Generation with schema-aware query construction."
+      ],
+      "sections": [
+        {
+          "heading": "Bridging Natural Language and Cloud Security",
+          "paragraphs": [
+            {
+              "text": "Security analysts often require rapid insights into their cloud infrastructure without needing deep familiarity with domain-specific query languages. The Sonar query system at Orca Security covers over 900 cloud models, including resource types such as Amazon Elastic Compute Cloud instances and Amazon Simple Storage Service buckets. Querying this data traditionally demanded precise model names, nested relationship navigation, and the selection of specific operators from a set of 18 comparison functions.",
+              "links": [
+                {
+                  "text": "Orca Security",
+                  "url": "https://orca.security/"
+                }
+              ]
+            },
+            {
+              "text": "To address these complexities, the team at Orca Security partnered with AWS to develop a natural language interface that converts plain text into valid queries. Their initial proof of concept loaded the full Sonar schema into a single prompt on a large model, which yielded strong output quality but encountered operational hurdles at production scale.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Overcoming Production-Scale Limitations",
+          "paragraphs": [
+            {
+              "text": "While the initial proof of concept demonstrated that the concept worked, three major drawbacks emerged during testing. Token consumption reached roughly 2 million input tokens per workload, driving up operational expenses. Furthermore, end-to-end response times averaged around 60 seconds per workload, and accuracy on complex, multi-model queries required additional refinement.",
+              "links": []
+            },
+            {
+              "text": "To make the solution cost-effective, fast, and accurate enough for production, the engineering team designed a hybrid solution capable of handling thousands of queries daily with 15-second response times.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The Multi-Stage Pipeline Architecture",
+          "paragraphs": [
+            {
+              "text": "Discovery AI utilizes a hybrid architecture on Amazon Bedrock that integrates Retrieval Augmented Generation with schema-aware query construction. The system processes requests through a multi-stage pipeline, allocating the most appropriate foundation model to each specific stage without requiring separate integrations.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "The pipeline begins with request entry and context setup, followed by a quick deterministic matcher that identifies structured inputs like IP addresses, CVEs, ARNs, and alert IDs using regex and rule-based matching. An LLM guardrail screening component then checks the request for safety, relevance, and prompt injection attempts before semantic candidate recall retrieves relevant validated queries.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Semantic Reranking and Agentic Generation",
+          "paragraphs": [
+            {
+              "text": "Retrieved candidates undergo neural relevance reranking using embedding models to identify the highest-signal examples for the current request. Model selection then narrows down the extensive list of Sonar models to a small set relevant to the user request, utilizing compact schemas to reduce unnecessary context.",
+              "links": []
+            },
+            {
+              "text": "Following model selection, a tool-augmented agentic filter generator constructs the final query. This agent reasons over the selected model schemas, retrieved examples, user context, and available tools, iteratively refining the filter until it accurately represents the user request.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Validation and Performance Results",
+          "paragraphs": [
+            {
+              "text": "Before execution, generated filters pass through static and API-backed validation steps to check for syntactic and semantic correctness against the Sonar API. If validation fails, the error is returned for correction, ensuring that only valid queries are executed against the underlying infrastructure.",
+              "links": []
+            },
+            {
+              "text": "Through this optimized multi-stage architecture on Amazon Bedrock, Orca Security achieved significant performance improvements compared to its initial baseline. The company reported a 90 percent reduction in query costs, a 93 percent decrease in input tokens, and a 75 percent drop in latency.",
+              "links": [
+                {
+                  "text": "Orca Security",
+                  "url": "https://orca.security/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Orca Security",
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "Cloud Security",
+        "Natural Language Processing",
+        "AWS"
+      ],
+      "entities": [
+        "Orca Security",
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Discovery AI"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 13, 2026",
+      "modifiedLabel": "October 13, 2026",
+      "readMinutes": 3,
+      "wordCount": 569
+    }
+  },
+  "datePublished": "2026-10-13T20:27:25.660644+03:00",
+  "dateModified": "2026-10-13T20:27:25.660644+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/natural-language-security-queries-at-orca-security-using-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/10/natural-language-security-queries-at-orca-security-using-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/10/natural-language-security-queries-at-orca-security-using-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "أوركا سيكيوريتي تخفض كلفة الاستعلامات السحابية 90% بالذكاء الاصطناعي",
+      "en": "Orca Security Builds Discovery AI on Amazon Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-21130-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/natural-language-security-queries-at-orca-security-using-amazon-bedrock/inline-01.webp",
+        "width": 1400,
+        "height": 933,
+        "alt": {
+          "ar": "أوركا سيكيوريتي تخفض كلفة الاستعلامات السحابية 90% بالذكاء الاصطناعي",
+          "en": "Nine-stage Discovery AI pipeline on Amazon Bedrock, from natural language input to a validated Discovery filter"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/natural-language-security-queries-at-orca-security-using-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-21130-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/natural-language-security-queries-at-orca-security-using-amazon-bedrock/",
+      "type": "official",
+      "title": "Natural language security queries at Orca Security using Amazon Bedrock"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/natural-language-security-queries-at-orca-security-using-amazon-bedrock",
+  "sourceTitle": "Natural language security queries at Orca Security using Amazon Bedrock",
+  "trendScore": 122.55,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-13T17:27:25+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/natural-language-security-queries-at-orca-security-using-amazon-bedrock.json"
+}
