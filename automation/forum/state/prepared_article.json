@@ -1,5 +1,330 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-13T21:07:51+00:00",
-  "last_published_story_id": "7c068c6a83688898d134"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-13T21:13:05+00:00",
+  "target_publish_at": "2026-10-14T00:27:51.294343+03:00",
+  "story": {
+    "title": "Manage private pricing offers for Amazon Bedrock with managed entitlements",
+    "url": "https://aws.amazon.com/blogs/machine-learning/manage-private-pricing-offers-for-amazon-bedrock-with-managed-entitlements",
+    "domain": "aws.amazon.com",
+    "summary": "Managing AI model access across dozens or hundreds of AWS accounts creates friction when each account must accept AWS Marketplace Private Pricing Offers individually. This post shows two ways to activate MPPO entitlements in AWS License Manager: a lightweight script for a one-time fix, and CDK automation for ongoing event-driven processing.",
+    "published_at": "2026-10-13T17:17:25+00:00",
+    "discovered_at": "2026-10-13T17:21:59+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "c15fbff6c860fb47841e",
+    "trend": {
+      "score": 116.32,
+      "age_hours": 3.92,
+      "corroboration_count": 0,
+      "entity_momentum": 16.84,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/manage-private-pricing-offers-for-amazon-bedrock-with-managed-entitlements/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Manage private pricing offers for Amazon Bedrock with managed entitlements",
+      "title": "Manage private pricing offers for Amazon Bedrock with managed entitlements | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "إدارة عروض التسعير الخاصة لـ Amazon Bedrock عبر الاستحقاقات المدارة",
+      "description": "تعرف على كيفية تبسيط الوصول إلى نماذج الذكاء الاصطناعي عبر حسابات AWS متعددة باستخدام استحقاقات إدارة التراخيص وعروض التسعير الخاصة.",
+      "deck": "أعلنت المدونة التقنية لشركة أمازون وبما يتوافق مع ممارسات الحوسبة السحابية عن حلول لتبسيط إدارة عروض التسعير الخاصة لنماذج الذكاء الاصطناعي على منصة أمازون بيدروك، وذلك عبر استخدام الاستحقاقات المدارة في خدمة إدارة التراخيص.",
+      "summary_bullets": [
+        "تبسيط الوصول متعدد الحسابات لنماذج الذكاء الاصطناعي عبر الاشتراك مرة واحدة مركزياً.",
+        "توفير مسارين للتفعيل: نص برمجي خفيف للاستخدام الفردي أو أتمتة عبر حزم تطوير البرمجيات.",
+        "استخدام قواعد إيفنت بريدج ووظائف لامدا لتفعيل اتفاقيات الشراء الخاصة بشكل تلقائي ومستمر.",
+        "متابعة مسار التدقيق بفعالية وتجنب الأخطاء الناتجة عن المراجعة اليدوية المتكررة عبر وحدة التحكم."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات إدارة الوصول متعدد الحسابات لنماذج الذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات التي تدير الوصول إلى نماذج الذكاء الاصطناعي عبر العشرات أو المئات من حسابات خدمات الويب احتكاكاً تشغيلياً كبيراً. يتطلب هذا الوضع أن يقوم كل حساب عمل بشكل فردي بالاشتراك وقبول عروض التسعير الخاصة من سوق أمازون الرقمي، مما يستهلك وقتاً جهداً بشرياً مكرراً ويؤدي أحياناً إلى تأخير تطبيق الأسعار التفاضلية المتفق عليها قبل عملية تفعيل الاستحقاق. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/manage-private-pricing-offers-for-amazon-bedrock-with-managed-entitlements/"
+                }
+              ]
+            },
+            {
+              "text": "لحل هذه المشكلة التنظيمية، تقدم خدمة أمازون بيدروك مع الاستحقاقات المدارة طريقة مبسطة تتيح للمؤسسات الاشتراك مرة واحدة من حساب مركزي وتوزيع الوصول بسلاسة داخل الهيكل التنظيمي للشركات. تضمن هذه الآلية عدم تأثر الأسعار التفاضلية بالتأخير الناتج عن الفحص اليدوي المستمر للحسابات الفردية عبر وحدات التحكم التقليدية. ويمكن الرجوع إلى Artificial Intelligence للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مسارات التفعيل والخيارات المتاحة للمؤسسات",
+          "paragraphs": [
+            {
+              "text": "تتيح البنية المتاحة للمطورين وفرق العمل اختيار مسارين رئيسيين لتفعيل استحقاقات عروض التسعير الخاصة داخل خدمة إدارة التراخيص التابعة لخدمات الويب. يعتمد المسار الأول على نص برمجي خفيف ومباشر، بينما يعتمد المسار الثاني على أتمتة مستمرة قائمة على الأحداث باستخدام مجموعة أدوات التطوير البرمجي لخدمات الويب.",
+              "links": []
+            },
+            {
+              "text": "يتيح استخدام الأدوات البرمجية المتاحة عبر المستودعات الرقمية المخصصة للمطورين إمكانية مراجعة التراخيص المستلمة واختبارها عبر خطط تشغيل تجريبية تضمن سلامة الحسابات والجهات المصدرة للشراكات قبل تطبيق التغييرات النهائية في بيئات الإنتاج الفعلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المسار الأول: النص البرمجي الخفيف للتفعيل السريع",
+          "paragraphs": [
+            {
+              "text": "يُعد النص البرمجي الخفيف خياراً مثالياً عند الرغبة في إجراء إصلاح سريع لمرة واحدة ودون الحاجة لنشر بنية تحتية معقدة تتطلب أدوات تطوير إضافية. يقوم هذا النص بسرد كافة التراخيص المستلمة في الحساب الإداري وطباعة خططة تشغيلية تجريبية تتيح للفرق مراجعتها بدقة قبل اعتماد التطبيق النهائي.",
+              "links": []
+            },
+            {
+              "text": "ونظراً لخلو هذا النص البرمجي من قائمة سماح مدمجة للبائعين، فإنه يُنصح باستخدامه حصراً في الحالات التي تثق فيها المؤسسة بشكل كامل بكافة التراخيص المستلمة في الحساب الإداري، مع ضرورة التحقق من مسارات الفواتير والتكاليف المرتبطة بالاستخدام لاحقاً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المسار الثاني: الأتمتة المعتمدة على الأحداث باستخدام أدوات التطوير",
+          "paragraphs": [
+            {
+              "text": "بالنسبة للمؤسسات التي تتطلب معالجة مستمرة وتلقائية لاتفاقيات التسعير الخاصة الجديدة، يوفر المسار الثاني حلاً أعمق يعتمد على حزمة أدوات تطوير البرمجيات لنشر أتمتة مستمرة داخل الحساب الإداري للمؤسسة. يستمع هذا النظام المتمثل في المكونات السحابية إلى الأحداث المتعلقة باتفاقيات السوق الرقمي ويتحقق من قوائم السماح الخاصة بالبائعين.",
+              "links": []
+            },
+            {
+              "text": "يتكون الحل المؤتمت من قاعدة مخصصة تلتقط الأحداث ذات الصلة، ووظيفة برمجية تتولى اكتشاف الترخيص وإنشاء المنح الموزعة، بالإضافة إلى سجلات تدقيق مركزية تسجل كافة نتائج عمليات التفعيل أو التأجيل لضمان الموثوقية الكاملة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المزايا والمخرجات التنظيمية للاستحقاقات المدارة",
+          "paragraphs": [
+            {
+              "text": "يحقق الاعتماد على نظام الاستحقاقات المدارة لتعاقدات نماذج الذكاء الاصطناعي فوائد تشغيلية عديدة، أبرزها الوصول الأسرع إلى الأسعار التفاضلية المتفق عليها بمجرد وصول المنحة الموزعة إلى الحالة النشطة أو حالة اكتمال سير العمل، ودون انتظار للمراجعات اليدوية المتكررة عبر وحدة التحكم.",
+              "links": []
+            },
+            {
+              "text": "إلى جانب السرعة التشغيلية، يوفر النظام مسار تدقيق مدمجاً يتم تسجيله بشكل دائم في سجلات المراقبة السحابية، ممامنح المشرفين سجلاً واضحاً يوضح توقيت تفعيل كل منحة أو تأجيلها أو تجاهلها، وهو ما يسهم في توحيد آليات التعامل عبر كافة الحسابات التنظيمية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon Bedrock",
+        "الذكاء الاصطناعي",
+        "الحوسبة السحابية",
+        "إدارة التراخيص",
+        "التسعير"
+      ],
+      "entities": [
+        "Amazon Bedrock",
+        "AWS Marketplace",
+        "AWS License Manager",
+        "AWS Organizations",
+        "AWS Cloud Development Kit"
+      ],
+      "article_type": "news",
+      "confidence_note": "تم صياغة الخبر استناداً حصراً للمصادر الرسمية المتاحة حول إدارة عروض التسعير الخاصة لنماذج أمازون بيدروك باستخدام الاستحقاقات المدارة."
+    },
+    "en": {
+      "title": "Manage Private Pricing Offers for Amazon Bedrock with Managed Entitlements",
+      "description": "Learn how to manage private pricing offers for Amazon Bedrock across multiple accounts using managed entitlements and automated scripts.",
+      "deck": "Managing third-party AI model access across numerous AWS accounts creates operational overhead when individual workloads require separate subscription and acceptance for AWS Marketplace Private Pricing Offers. A newly detailed approach helps organizations streamline this process.",
+      "summary_bullets": [
+        "Amazon Bedrock managed entitlements simplify multi-account access to third-party AI models by allowing a single central subscription.",
+        "Path 1 offers a lightweight standalone script for one-time license activation without deploying infrastructure.",
+        "Path 2 introduces AWS CDK automation for ongoing event-driven processing, seller verification, and distributed grant activation.",
+        "Built-in audit trails and logging via Amazon CloudWatch Logs ensure operators can track activation attempts and skip decisions."
+      ],
+      "sections": [
+        {
+          "heading": "The Challenge of Multi-Account AI Model Access",
+          "paragraphs": [
+            {
+              "text": "Managing AI model access across dozens or hundreds of AWS accounts creates operational friction when each workload account must subscribe and accept AWS Marketplace Private Pricing Offers (MPPOs) individually. According to guidance shared on the Artificial Intelligence blog, Amazon Bedrock with managed entitlements simplifies multi-account access to third-party AI models so organizations can subscribe once from a central account and distribute access.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            },
+            {
+              "text": "When an eligible private offer is accepted, AWS Marketplace creates a license within the AWS License Manager service. While organization-level grants are auto-accepted in AWS Organizations with all features enabled, they remain disabled until explicitly activated. This manual check adds administrative effort and risks delayed negotiated pricing if missed during onboarding or contract renewals.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Path 1: Lightweight Script for One-Time Activation",
+          "paragraphs": [
+            {
+              "text": "For operators seeking a quick, infrastructure-free solution for trusted received licenses, the lightweight script path provides an efficient alternative. The standalone script lists every received license in the management account, producing a dry-run plan for review before changes are applied.",
+              "links": []
+            },
+            {
+              "text": "Teams can review listed licenses to verify that the ISV Partner issuer and account scope match expected private offers. Once confirmed, administrators run the script with specific flags from the management account to distribute and activate organization-wide grants.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Path 2: Event-Driven Automation with AWS CDK",
+          "paragraphs": [
+            {
+              "text": "Organizations looking to handle new private pricing agreements automatically can deploy ongoing automation using the AWS Cloud Development Kit. This event-driven path establishes a reliable architecture that listens for relevant agreement events and processes grants dynamically.",
+              "links": []
+            },
+            {
+              "text": "The automated stack consists of multiple core components. An Amazon EventBridge rule listens for marketplace agreement events on the default event bus in the us-east-1 region, matching specific source patterns and invoking a backend handler. This backend component verifies seller allowlists, discovers licenses, creates distributed grants, and requests activation.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Auditability, Validation, and Implementation Steps",
+          "paragraphs": [
+            {
+              "text": "To maintain visibility over automated operations, every activation attempt or skip decision is recorded to Amazon CloudWatch Logs, delivering a reliable audit trail. Operators can review these logs to confirm when grants transition to active states.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch Logs",
+                  "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html"
+                }
+              ]
+            },
+            {
+              "text": "Following deployment and grant activation, administrators should validate billing pathways to ensure negotiated pricing applies correctly. Because billing data in cost management tools can experience minor data lags, teams can adapt validation utilities from the open-source sample code repository to confirm expected discount paths.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AWS Marketplace",
+        "AWS License Manager",
+        "Cloud Automation",
+        "Artificial Intelligence",
+        "AWS CDK"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "AWS Marketplace",
+        "Amazon Bedrock",
+        "AWS License Manager",
+        "Amazon CloudWatch"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article accurately summarizes technical pathways for managing Amazon Bedrock private pricing offers based strictly on the provided AWS Machine Learning blog source material."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 376,
+      "word_count_en": 491
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 574,
+      "word_count_en": 485
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "c15fbff6c860fb47841e",
+      "title": "Manage private pricing offers for Amazon Bedrock with managed entitlements",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 376,
+          "word_count_en": 491
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 574,
+          "word_count_en": 485
+        }
+      ]
+    }
+  ],
+  "slug": "manage-private-pricing-offers-for-amazon-bedrock-with-managed-entitlements",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/manage-private-pricing-offers-for-amazon-bedrock-with-managed-entitlements/hero.webp",
+    "card": "/forum/assets/posts/2026/10/manage-private-pricing-offers-for-amazon-bedrock-with-managed-entitlements/card.webp",
+    "social": "/forum/assets/posts/2026/10/manage-private-pricing-offers-for-amazon-bedrock-with-managed-entitlements/social.jpg",
+    "alt": {
+      "ar": "إدارة عروض التسعير الخاصة لـ Amazon Bedrock عبر الاستحقاقات المدارة",
+      "en": "Manage Private Pricing Offers for Amazon Bedrock with Managed Entitlements"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/07/ML-21638-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/manage-private-pricing-offers-for-amazon-bedrock-with-managed-entitlements/inline-01.webp",
+        "width": 1400,
+        "height": 682,
+        "alt": {
+          "ar": "إدارة عروض التسعير الخاصة لـ Amazon Bedrock عبر الاستحقاقات المدارة",
+          "en": "Sequence diagram showing AWS Marketplace sending a Purchase Agreement Created - Acceptor event to Amazon EventBridge, which invokes an AWS Lambda function. The function verifies the seller, discovers the received license"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/manage-private-pricing-offers-for-amazon-bedrock-with-managed-entitlements/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/08/21638-1.png"
+      }
+    ]
+  }
 }
