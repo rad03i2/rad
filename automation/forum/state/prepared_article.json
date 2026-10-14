@@ -1,5 +1,418 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-14T14:48:26+00:00",
-  "last_published_story_id": "f5fa4d6131d7db33f0c9"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-14T14:53:21+00:00",
+  "target_publish_at": "2026-10-14T18:08:26.609490+03:00",
+  "story": {
+    "title": "Generate presentations with Amazon Bedrock AgentCore",
+    "url": "https://aws.amazon.com/blogs/machine-learning/generate-presentations-with-amazon-bedrock-agentcore",
+    "domain": "aws.amazon.com",
+    "summary": "This post walks you through building an AI agent system with Amazon Bedrock AgentCore that automates PowerPoint presentation creation from enterprise documents. A supervisor agent, Retrieval Augmented Generation, and Amazon Bedrock Guardrails generate grounded presentations in under 90 seconds.",
+    "published_at": "2026-10-14T13:58:43+00:00",
+    "discovered_at": "2026-10-14T14:02:37+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "60345c944361e4138ad4",
+    "trend": {
+      "score": 112.65,
+      "age_hours": 0.9,
+      "corroboration_count": 0,
+      "entity_momentum": 12.0,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/generate-presentations-with-amazon-bedrock-agentcore/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Generate presentations with Amazon Bedrock AgentCore",
+      "title": "Generate presentations with Amazon Bedrock AgentCore | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تطلق نظام ذكاء اصطناعي لتوليد عروض تقديمية في 90 ثانية",
+      "description": "تتيح أمازون ويب سيرفيسز عبر Amazon Bedrock AgentCore إنشاء عروض PowerPoint احترافية من وثائق الشركات في أقل من 90 ثانية، مع ضمان دقة المحتوى عبر تقنيات RAG والحواجز الأمنية.",
+      "deck": "تستهدف أمازون ويب سيرفيسز تسريع عمليات إنشاء العروض التقديمية للشركات من خلال نظام وكلاء ذكاء اصطناعي يجمع بين توليد النصوص والصور والبحث الدلالي.",
+      "summary_bullets": [
+        "يعتمد النظام على وكيل مشرف (Supervisor Agent) يدير أدوات التوليد والتلخيص عبر إطار Strands Agents.",
+        "يستخدم تقنية RAG مع Amazon OpenSearch Serverless لضمان استناد المحتوى إلى وثائق المصدر وتقليل الهلوسة.",
+        "تضمن Amazon Bedrock Guardrails أمان المحتوى من خلال فلترة المدخلات والمخرجات وحماية المعلومات الشخصية.",
+        "يتم دمج النظام عبر واجهات REST API مبنية على .NET 8 لتسهيل التكامل مع التطبيقات المؤسسية الحالية."
+      ],
+      "sections": [
+        {
+          "heading": "تسريع سير العمل المؤسسي",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق الخدمات المالية تحديات كبيرة في الوقت المخصص لإنشاء العروض التقديمية للعملاء من التقارير الفصلية ووثائق الامتثال. تتطلب هذه العملية عادةً قراءة مئات الصفحات واستخراج البيانات الرئيسية وتبني الشرائح. تقدم أمازون ويب سيرفيسز حلاً أتمتة هذا التدفق باستخدام Amazon Bedrock AgentCore، حيث أكملت الاختبارات الداخلية توليد العروض في أقل من 90 ثانية، مما يقلل الوقت ويضمن استناد المحتوى إلى الوثائق المصدرية.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "بنية وكيل المشرف والأدوات المتخصصة",
+          "paragraphs": [
+            {
+              "text": "يعتمد الحل على وكيل مشرف واحد يعمل على بيئة تشغيل AgentCore، وهو قُدرة ضمن Amazon Bedrock AgentCore. يستخدم هذا الوكيل إطار عمل Strands Agents مفتوح المصدر لتنسيق أدوات توليد المستندات والتلخيص. بدلاً من دمج كل المهام في دالة واحدة ضخمة، يتبع النظام معمارية قائمة على الأدوات، حيث يوجه الوكيل الطلبات إلى أدوات متخصصة مثل generate_pptx لإنشاء ملفات PowerPoint، وgenerate_summary لاستخلاص المعلومات من قاعدة المعرفة.",
+              "links": [
+                {
+                  "text": "Strands Agents",
+                  "url": "https://strandsagents.com/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "توليد المحتوى والصور بالذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "يتولى نموذج Anthropic Claude Sonnet 4.6، المتاح عبر Amazon Bedrock، مهمة إنشاء المحتوى النصي، بينما يستخدم نظام Amazon Titan Text Embeddings v2 لتحويل النصوص إلى متجهات للبحث الدلالي. أما الصور التوضيحية للشرائح فتُنشأ باستخدام نموذج Stability AI Stable Image Inpaint. يضمن هذا التكامل بين النماذج المتخصصة إنتاج عروض متكاملة تجمع بين النص الدقيق والصور المناسبة في وقت قياسي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البحث المعزز بالتوليد (RAG) للمعرفة المؤسسية",
+          "paragraphs": [
+            {
+              "text": "لتجنب الاعتماد الحصري على بيانات التدريب وتقليل الهلوسة، يعتمد النظام على تقنية RAG. يتم رفع وثائق الشركة إلى Amazon Simple Storage Service (Amazon S3)، حيث تُقسّم وتُعالج، مع معالجة خاصة للمحتوى متعدد الوسائط مثل الجداول والرسوم البيانية. تحول Amazon Titan Text Embeddings v2 هذه القطع إلى متجهات عالية الأبعاد، وتخزنها Amazon OpenSearch Serverless في قاعدة بيانات متجهات قابلة للبحث. عند استعلام المستخدم، يبحث النظام عن القطع ذات الصلة ويوفرها كسياق لنموذج اللغة لتوليد إجابات مستندة إلى المصدر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الأمان والامتثال في بيئة سحابية",
+          "paragraphs": [
+            {
+              "text": "تتطلب التطبيقات المؤسسية آليات رقابة على المحتوى للامتثال للمعايير التنظيمية. يوفر Amazon Bedrock Guardrails فلترة مدمجة للمدخلات لمنع حقن الأكواد والمحتوى غير اللائق، ومراقبة المخرجات للتحقق من الامتثال لسياسات المحتوى، بالإضافة إلى كشف المعلومات الشخصية (PII) وتعميمها أو حجبها. يتم تطبيق هذه الحواجز على مستوى استدعاء النموذج لضمان أمان متسق دون الحاجة إلى إعدادات يدوية لكل نشر.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Guardrails",
+                  "url": "https://aws.amazon.com/bedrock/guardrails/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التكامل والبنية التحتية",
+          "paragraphs": [
+            {
+              "text": "يتم توفير الحل عبر واجهة REST API مبنية على .NET 8 minimal APIs، مما يتيح التكامل السهل مع التطبيقات الحالية عبر استدعاءات HTTP قياسية. تستخدم البنية AWS Lambda للحوسبة الخادمية، بما في ذلك الدوال المعبأة في حاويات لتوليد ملفات PowerPoint. يتم تأمين التنفيذ عبر عزل Amazon Virtual Private Cloud (Amazon VPC)، وتشفير AWS Key Management Service (AWS KMS)، وتحكم الوصول بأقل امتيازات ممكنة عبر AWS Identity and Access Management (IAM).",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "Amazon Bedrock",
+        "RAG",
+        "أتمتة",
+        "سحابة",
+        "أمان البيانات"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز",
+        "Amazon Bedrock AgentCore",
+        "Anthropic Claude Sonnet 4.6",
+        "Stability AI",
+        "Amazon OpenSearch Serverless",
+        "Amazon S3"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من مدونة أمازون الرسمية، مع التركيز على البنية التقنية والأداء المعلن."
+    },
+    "en": {
+      "title": "Amazon Bedrock AgentCore Automates PowerPoint Generation",
+      "description": "Learn how the new Amazon Bedrock AgentCore AI agent system automates PowerPoint presentation creation from enterprise documents in under 90 seconds.",
+      "deck": "A new architectural guide published on the AWS Machine Learning Blog demonstrates how organizations can leverage Amazon Bedrock AgentCore to automate the tedious process of building client presentations from complex enterprise reports.",
+      "summary_bullets": [
+        "Amazon Bedrock AgentCore automates PowerPoint creation from enterprise documents in under 90 seconds.",
+        "A supervisor agent built on the Strands Agents framework manages document generation and summarization tools.",
+        "Retrieval-Augmented Generation relies on Amazon Bedrock Knowledge Bases and Amazon OpenSearch Serverless for accurate context.",
+        "Amazon Bedrock Guardrails enforce strict content moderation and personally identifiable information safety protocols."
+      ],
+      "sections": [
+        {
+          "heading": "Automating Presentation Workflows with AI Agents",
+          "paragraphs": [
+            {
+              "text": "Financial services teams and other enterprise divisions often spend significant amounts of time manually transforming quarterly reports, compliance files, and market analyses into client-facing PowerPoint slides. A recently detailed implementation on the AWS Machine Learning Blog showcases an automated approach that handles reading hundreds of pages, extracting data, structuring layouts, and generating visuals in under 90 seconds during internal testing.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/generate-presentations-with-amazon-bedrock-agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "The underlying system relies on the newly highlighted capabilities of Amazon Bedrock AgentCore to orchestrate a supervisor agent. By using the Strands Agents framework, the supervisor intelligently routes user requests between dedicated document generation and content summarization tools.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                },
+                {
+                  "text": "Strands Agents",
+                  "url": "https://strandsagents.com/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Core Architecture and Enterprise Integration",
+          "paragraphs": [
+            {
+              "text": "The entire solution is built around a robust, scalable architecture that can integrate seamlessly with existing corporate infrastructure. A REST API created using .NET 8 minimal APIs allows standard HTTP calls to communicate with the system, while AWS Lambda manages containerized serverless compute functions required for PowerPoint compilation.",
+              "links": []
+            },
+            {
+              "text": "Security remains a paramount consideration for enterprise deployments. The architecture protects sensitive workloads by employing Amazon Virtual Private Cloud (Amazon VPC) isolation, AWS Key Management Service (AWS KMS) encryption, and strict least-privilege access rules handled through AWS Identity and Access Management (IAM).",
+              "links": [
+                {
+                  "text": "Amazon Virtual Private Cloud (Amazon VPC)",
+                  "url": "https://docs.aws.amazon.com/vpc/"
+                },
+                {
+                  "text": "AWS Key Management Service (AWS KMS)",
+                  "url": "https://docs.aws.amazon.com/kms/"
+                },
+                {
+                  "text": "AWS Identity and Access Management (IAM)",
+                  "url": "https://docs.aws.amazon.com/iam/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Retrieval-Augmented Generation for Accurate Content",
+          "paragraphs": [
+            {
+              "text": "To ensure that generated slides reflect up-to-date and factual corporate data rather than relying strictly on the underlying large language model's training parameters, the system implements a powerful Retrieval-Augmented Generation pipeline. Source documents are originally stored in Amazon Simple Storage Service (Amazon S3) before being parsed, chunked, and converted into high-dimensional vectors.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://docs.aws.amazon.com/s3/"
+                }
+              ]
+            },
+            {
+              "text": "These transformations are managed via Amazon Bedrock Knowledge Bases and Amazon Titan Text Embeddings v2, while semantic vector searches are executed through Amazon OpenSearch Serverless. When a user submits a query, the system retrieves relevant document chunks and supplies them as context to Anthropic Claude Sonnet 4.6 running on Amazon Bedrock to formulate grounded responses.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Knowledge Bases",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html"
+                },
+                {
+                  "text": "Amazon OpenSearch Serverless",
+                  "url": "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Content Safety and Governance Guardrails",
+          "paragraphs": [
+            {
+              "text": "Enterprise environments require strict adherence to organizational compliance standards and robust data safety measures. To satisfy these needs, the workflow incorporates native content filtering and safety checks directly into the generation pipeline.",
+              "links": []
+            },
+            {
+              "text": "By implementing Amazon Bedrock Guardrails, the application successfully monitors both incoming user prompts and outgoing model responses. The security layer actively detects, anonymizes, or blocks personally identifiable information and prevents prompt injection risks, maintaining consistent compliance across all automated outputs.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Guardrails",
+                  "url": "https://aws.amazon.com/bedrock/guardrails/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "AgentCore",
+        "Cloud Computing",
+        "Machine Learning",
+        "RAG",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Anthropic",
+        "Stability AI"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based on official AWS Machine Learning Blog technical guidance."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 500,
+      "word_count_en": 476
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "74536d5b2c41fbb02416",
+      "title": "Samsung Expands Language Support Across AI Experiences on Galaxy",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "60345c944361e4138ad4",
+      "title": "Generate presentations with Amazon Bedrock AgentCore",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 500,
+          "word_count_en": 476
+        }
+      ]
+    }
+  ],
+  "slug": "generate-presentations-with-amazon-bedrock-agentcore",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/generate-presentations-with-amazon-bedrock-agentcore/hero.webp",
+    "card": "/forum/assets/posts/2026/10/generate-presentations-with-amazon-bedrock-agentcore/card.webp",
+    "social": "/forum/assets/posts/2026/10/generate-presentations-with-amazon-bedrock-agentcore/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق نظام ذكاء اصطناعي لتوليد عروض تقديمية في 90 ثانية",
+      "en": "Amazon Bedrock AgentCore Automates PowerPoint Generation"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/09/ML-19250-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/generate-presentations-with-amazon-bedrock-agentcore/inline-01.webp",
+        "width": 1400,
+        "height": 921,
+        "alt": {
+          "ar": "أمازون تطلق نظام ذكاء اصطناعي لتوليد عروض تقديمية في 90 ثانية",
+          "en": "Architecture diagram of the Amazon Bedrock AgentCore presentation generation system, showing request flow through Amazon API Gateway and AWS Lambda to the supervisor agent, knowledge bases, and storage within a VPC"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/generate-presentations-with-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/09/ML-19250-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/generate-presentations-with-amazon-bedrock-agentcore/inline-02.webp",
+        "width": 1280,
+        "height": 720,
+        "alt": {
+          "ar": "أمازون تطلق نظام ذكاء اصطناعي لتوليد عروض تقديمية في 90 ثانية",
+          "en": "Generated title slide reading ‘Amazon: From Startup to Empire’"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/generate-presentations-with-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/09/ML-19250-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/generate-presentations-with-amazon-bedrock-agentcore/inline-03.webp",
+        "width": 1280,
+        "height": 720,
+        "alt": {
+          "ar": "أمازون تطلق نظام ذكاء اصطناعي لتوليد عروض تقديمية في 90 ثانية",
+          "en": "Generated bullet-point slide titled ‘1997: The Rocket Ship Launches’ with early growth metrics"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/generate-presentations-with-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/09/ML-19250-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/generate-presentations-with-amazon-bedrock-agentcore/inline-04.webp",
+        "width": 1280,
+        "height": 720,
+        "alt": {
+          "ar": "أمازون تطلق نظام ذكاء اصطناعي لتوليد عروض تقديمية في 90 ثانية",
+          "en": "Generated slide titled ‘2024: A Diversified Revenue Engine’ pairing revenue text with an AI-generated image"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/generate-presentations-with-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/09/ML-19250-4.png"
+      }
+    ]
+  }
 }
