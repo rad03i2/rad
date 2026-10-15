@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "9e838b30e8e25c4fcbda",
+  "slug": "announcing-intel-inference-microservices-tuned-llm-inference-on-intel-processors",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/announcing-intel-inference-microservices-tuned-llm-inference-on-intel-processors/",
+    "en": "/forum/en/ai/announcing-intel-inference-microservices-tuned-llm-inference-on-intel-processors/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إنTEL تكشف عن خدمات استنتاج مصغّرة لتسريع نماذج الذكاء الاصطناعي",
+      "description": "أعلنت إنTEL عن خدمات استنتاج مصغّرة تتيح تشغيل نماذج اللغة الكبيرة بكفاءة عالية على معالجات Xeon الحالية، مما يلغي الحاجة إلى أسابيع من الضبط اليدوي المعقد.",
+      "deck": "أطلقت شركة إنTEL حزمة برمجية جديدة تتيح للمؤسسات تشغيل نماذج اللغة الكبيرة بكفاءة قصوى على البنية التحتية الحالية دون الحاجة إلى شراء أجهزة جديدة أو إجراء تعديلات يدوية معقدة.",
+      "summaryBullets": [
+        "تعمل خدمات الاستنتاج المصغّرة كحاويات برمجية تكتشف المعالج تلقائياً وتطبق أفضل إعدادات أداء مدروسة مسبقاً من قبل إنTEL.",
+        "تدعم الحزمة واجهة برمجة التطبيقات المتوافقة مع OpenAI، مما يتيح التكامل السلس مع أدوات مثل LangChain وLlamaIndex دون تغييرات في الكود.",
+        "تستهدف الإصدار الأول معالجات Intel Xeon من الجيل الرابع إلى السادس، مع خطط للتوسع لتشمل بقية أجهزة إنTEL في المستقبل.",
+        "تقلل الخدمة من وقت نشر النماذج من أسابيع إلى دقائق، وتزيل حاجز الحاجة إلى خبراء متخصصين في تحسين أداء الاستنتاج."
+      ],
+      "sections": [
+        {
+          "heading": "إعلان عن خدمات الاستنتاج المصغّرة",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة إنTEL رسمياً عن إطلاق خدمات الاستنتاج المصغّرة (Intel® Inference Microservices)، وهي حزمة برمجية مصممة لتسهيل الحصول على أداء محسّن لنماذج اللغة الكبيرة (LLM) على المعالجات الحالية. تهدف هذه الخدمة إلى القضاء على الحاجة إلى أيام أو أسابيع من الضبط اليدوي المعقد للعتاد، حيث تتولى الحاوية البرمجية اكتشاف المعالج وتطبيق الإعدادات المثلى تلقائياً عند بدء التشغيل. ويمكن الرجوع إلى Intel Newsroom للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Intel® Inference Microservices",
+                  "url": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-inference-microservices-tuned-llm-processors.html"
+                },
+                {
+                  "text": "Intel Newsroom",
+                  "url": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-inference-microservices-tuned-llm-processors.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل التلقائية",
+          "paragraphs": [
+            {
+              "text": "تعتمد الخدمة على مبدأ أن المستخدم يختار النموذج، بينما تختار الحاوية الإعدادات المناسبة. عند التشغيل، تفحص الحاوية المعالج المضيف، بما في ذلك عدد الأنوية، ترتيب الذاكرة عبر عقد NUMA، والمسرعات المدمجة مثل Intel AMX وAVX-512. بناءً على هذه البيانات، تختار الحاوية ملف إعدادات (Profile) تم قياسه وتحقق منه مسبقاً من قبل فريق إنTEL لضمان أفضل أداء ممكن لهذا النموذج على هذا العتاد المحدد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل السلس مع أدوات الذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "تقدم الخدمة واجهة برمجة تطبيقات متوافقة مع OpenAI، مما يعني أن معظم أطر عمل الذكاء الاصطناعي الحالية، مثل OpenAI SDK وLangChain وLlamaIndex، يمكنها التفاعل معها دون أي تعديلات. لا يحتاج المطورون إلى تثبيت محركات استنتاج منفصلة أو إعداد بيئات Python معقدة، بل يكفي توجيه طلباتهم إلى عنوان URL أساسي واحد، مما يسهل عملية النشر بشكل كبير.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الفوائد التشغيلية والمالية",
+          "paragraphs": [
+            {
+              "text": "تساعد هذه الخدمة المؤسسات على تقليل وقت الوصول إلى الإنتاج بشكل ملحوظ، حيث تستبدل عملية الضبط والمعايرة الطويلة بأمر سحب وتشغيل بسيط. كما أنها تتيح للمشاريع البدء فوراً باستخدام سعة المعالجات الموجودة بالفعل، بدلاً من انتظار دورات الشراء الطويلة للحصول على أجهزة جديدة. هذا يقلل من الحاجة إلى متخصصين في تحسين أداء الاستنتاج، وهو ما يعتبر عنق زجاجة شائعة في برامج الذكاء الاصطناعي المؤسسية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوافق والمرونة المستقبلية",
+          "paragraphs": [
+            {
+              "text": "يستهدف الإصدار الأول من الخدمة معالجات Intel Xeon من الجيل الرابع والخامس والسادس، ويعمل على Docker أو Kubernetes. تؤكد إنTEL أن الواجهة البرمجية هي العقد الأساسي، وليس العتاد نفسه، مما يعني أن توسيع الخدمة لتشمل أجهزة إنTEL الأخرى في المستقبل لن يتطلب إعادة كتابة التطبيقات، بل تغييرات في النشر فقط. كما تتيح الخدمة للمطورين رؤية الإعدادات المطبقة دون الحاجة إلى تشغيل النموذج فعلياً، مما يعزز الشفافية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التزام إنTEL بالمعايير المفتوحة",
+          "paragraphs": [
+            {
+              "text": "أوضح بيل بيرسون، نائب الرئيس في إنTEL، أن التحسينات المقدمة في هذه الإصدارات هي نفسها التي تساهم بها الشركة في الأطر المفتوحة مثل vLLM. تهدف إنTEL إلى تقديم حزمة مضبوطة وموثوقة دون إجبار العملاء على إجراء عمليات الضبط بأنفسهم، مع التزام مستمر بإضافة تحسينات جديدة ودعم المزيد من دقة البيانات والمحركات البرمجية في الإصدارات القادمة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "إنTEL",
+        "معالجات Xeon",
+        "نماذج اللغة الكبيرة",
+        "البنية التحتية",
+        "البرمجة",
+        "Kubernetes",
+        "Docker"
+      ],
+      "entities": [
+        "Intel",
+        "Intel Xeon",
+        "vLLM",
+        "OpenAI",
+        "LangChain",
+        "LlamaIndex",
+        "Kubernetes",
+        "Docker"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "15 أكتوبر 2026",
+      "modifiedLabel": "15 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 503
+    },
+    "en": {
+      "title": "Intel Launches Inference Microservices for LLMs on Xeon",
+      "description": "Intel introduces Inference Microservices to deliver tuned LLM performance on existing Intel Xeon processors without manual hardware optimization.",
+      "deck": "Intel has announced the launch of Intel® Inference Microservices, designed to provide tuned large language model performance on existing Intel® processors while eliminating days of manual hardware optimization.",
+      "summaryBullets": [
+        "Intel® Inference Microservices package single models behind an OpenAI-compatible API.",
+        "Containers automatically inspect and configure themselves for the detected Intel® processor at startup.",
+        "The initial release runs on 4th, 5th, and 6th Generation Intel® Xeon® processors using Docker or Kubernetes.",
+        "Integration requires no custom protocols, SDKs, or complex Python environments, working seamlessly with existing AI frameworks."
+      ],
+      "sections": [
+        {
+          "heading": "Streamlining LLM Deployment on Existing Hardware",
+          "paragraphs": [
+            {
+              "text": "Getting a large language model to respond is easy, but getting it to respond well repeatedly on hardware you already own can take up to a week of complex configuration. Precision, work distribution across cores, memory layout across NUMA nodes, and instruction sets all depend heavily on both the model and the underlying processor. To address these bottlenecks, Intel has announced the rollout of Intel® Inference Microservices to simplify deployments.",
+              "links": [
+                {
+                  "text": "Intel® Inference Microservices",
+                  "url": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-inference-microservices-tuned-llm-processors.html"
+                }
+              ]
+            },
+            {
+              "text": "Each microservice runs as a container serving a single model behind an OpenAI-compatible API. Upon startup, the container inspects the host processor and applies pre-tuned, validated settings specific to that silicon. Users can explore available options by checking the Intel® Software Catalog.",
+              "links": [
+                {
+                  "text": "Intel® Software Catalog",
+                  "url": "https://swcatalog.intel.com/developers"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Technical Architecture and Hardware Integration",
+          "paragraphs": [
+            {
+              "text": "This first release is optimized for 4th, 5th, and 6th Generation Intel® Xeon® processors using Docker or Kubernetes. When the container initializes, it evaluates host parameters such as processor generation, core counts, NUMA nodes, and built-in accelerators. This enables the runtime to properly leverage native hardware features like Intel® Advanced Matrix Extensions (Intel® AMX) for matrix multiplication alongside vector extensions like AVX-512, AVX2, and VNNI.",
+              "links": []
+            },
+            {
+              "text": "By utilizing these dedicated on-chip engines, the system achieves significant inference acceleration without requiring a dedicated capital purchase for new hardware. Developers can browse models and read further documentation via the Intel® Software Catalog to align deployments with their specific capacity.",
+              "links": [
+                {
+                  "text": "Intel® Software Catalog",
+                  "url": "https://swcatalog.intel.com/models?serving=Intel%C2%AE+Inference+Microservices"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Enterprise Integration and Ecosystem Support",
+          "paragraphs": [
+            {
+              "text": "Because the microservices expose an OpenAI-compatible API, most major AI frameworks can connect directly to the base URL without modification. Tools such as the OpenAI SDK, LangChain, LlamaIndex, LiteLLM, and Haystack all work out of the box with full streaming support enabled. Furthermore, fleets of microservices shared across teams with built-in security and routing can be managed via the Intel® AI for Enterprise Inference toolkit.",
+              "links": [
+                {
+                  "text": "Intel® AI for Enterprise Inference",
+                  "url": "https://github.com/intel/enterprise-inference"
+                }
+              ]
+            },
+            {
+              "text": "Bill Pearson, Intel vice president of Data Center Software within the Data Center Group, noted that the underlying optimizations mirror contributions Intel makes upstream in open source frameworks like vLLM. According to Pearson, packaging this work behind a standard API allows enterprise customers to leverage a tuned stack effortlessly while maintaining a consistent interface across hardware platforms.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Future Outlook and Availability",
+          "paragraphs": [
+            {
+              "text": "The initial release targets BF16 precision on Intel® Xeon® processors, with tool calling and structured output supported via vLLM pass-throughs. Future updates are planned to introduce Helm charts, a Kubernetes Operator, additional inference engines, and broader precision support. Users can learn more about Intel® Inference Microservices directly through official developer portals.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Intel",
+        "Artificial Intelligence",
+        "LLM",
+        "Intel Xeon",
+        "Microservices",
+        "vLLM",
+        "Docker",
+        "Kubernetes"
+      ],
+      "entities": [
+        "Intel",
+        "Intel Xeon",
+        "vLLM"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 15, 2026",
+      "modifiedLabel": "October 15, 2026",
+      "readMinutes": 3,
+      "wordCount": 495
+    }
+  },
+  "datePublished": "2026-10-15T03:11:11.122611+03:00",
+  "dateModified": "2026-10-15T03:11:11.122611+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/announcing-intel-inference-microservices-tuned-llm-inference-on-intel-processors/hero.webp",
+    "card": "/forum/assets/posts/2026/10/announcing-intel-inference-microservices-tuned-llm-inference-on-intel-processors/card.webp",
+    "social": "/forum/assets/posts/2026/10/announcing-intel-inference-microservices-tuned-llm-inference-on-intel-processors/social.jpg",
+    "alt": {
+      "ar": "إنTEL تكشف عن خدمات استنتاج مصغّرة لتسريع نماذج الذكاء الاصطناعي",
+      "en": "Intel Launches Inference Microservices for LLMs on Xeon"
+    },
+    "credit": "Intel Newsroom",
+    "sourceUrl": "https://intelcorp.scene7.com/is/image/intelcorp/intel-inference-microservices?qlt=80&wid=1650&ts=1791990190915&dpr=off",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/announcing-intel-inference-microservices-tuned-llm-inference-on-intel-processors/inline-01.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "إنTEL تكشف عن خدمات استنتاج مصغّرة لتسريع نماذج الذكاء الاصطناعي",
+          "en": "App tt open ai"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Intel Newsroom",
+          "en": "Image related to the report from Intel Newsroom"
+        },
+        "credit": "Intel Newsroom",
+        "sourceUrl": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-inference-microservices-tuned-llm-processors.html",
+        "originalUrl": "https://intelcorp.scene7.com/is/image/intelcorp/newsroom-app-tt-open-ai-1?qlt=80&wid=1650&ts=1791912024262&dpr=off"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Intel Newsroom",
+      "url": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-inference-microservices-tuned-llm-processors.html",
+      "type": "official",
+      "title": "Announcing Intel® Inference Microservices: Tuned LLM Inference on Intel® Processors"
+    }
+  ],
+  "sourceUrl": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-inference-microservices-tuned-llm-processors.html",
+  "sourceTitle": "Announcing Intel® Inference Microservices: Tuned LLM Inference on Intel® Processors",
+  "trendScore": 100.68,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-15T00:11:11+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/announcing-intel-inference-microservices-tuned-llm-inference-on-intel-processors.json"
+}
