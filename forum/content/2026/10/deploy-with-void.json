@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "c15eca6dc7401f6b8edb",
+  "slug": "deploy-with-void",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/deploy-with-void/",
+    "en": "/forum/en/apps/deploy-with-void/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إطلاق منصة Void المفتوحة المصدر لتطوير ونشر تطبيقات Vite",
+      "description": "تعرف على منصة Void الجديدة كلياً من Cloudflare المصممة خصيصاً لتطوير ونشر تطبيقات Vite المتكاملة بسلاسة وأمان.",
+      "deck": "أعلنت شركة Cloudflare عن إطلاق ثلاثة منتجات جديدة ومفتوحة المصدر تحت اسم Void، تهدف إلى توحيد مسار عمل تطوير واختبار ونشر تطبيقات الويب المتكاملة المبنية باستخدام بيئة Vite.",
+      "summaryBullets": [
+        "إطلاق منصة Void ومجموعة أدوات متكاملة تشمل SDK و CLI لنشر تطبيقات Vite على شبكة Cloudflare.",
+        "المنصة مفتوحة المصدر بالكامل وتتيح للشركات إنشاء بيئة نشر مشتركة وخاصة بها للتحكم في الصلاحيات والموارد.",
+        "تكامل عميق مع أدوات تطوير الواجهات البرمجية وإدارة قواعد البيانات وربط الموارد السحابية بشكل تلقائي.",
+        "دعم تكامل الأطر الشهيرة وتوفير توافقية عالية مع وكلاء الذكاء الاصطناعي لتسهيل إدارة دورة حياة التطبيقات."
+      ],
+      "sections": [
+        {
+          "heading": "مقدمة شاملة عن منصة Void والهدف من تطويرها",
+          "paragraphs": [
+            {
+              "text": "ساهمت أدوات تطوير الواجهات الأمامية المتقدمة في تسريع وتيرة عمل المطورين، إلا أن بناء التطبيقات المتكاملة ذات الخوادم وقواعد البيانات كان يتطلب دائماً جهوداً إضافية لتوفير بيئات محلية وآليات نشر سريعة. لمعالجة هذه التحديات، كشفت أدوات مثل <a href=\"https://blog.cloudflare.com/voidzero-joins-cloudflare/\">VoidZero joined Cloudflare</a> عن توجه جديد يدمج مسارات الخوادم والوصول للبيانات ضمن بيئة عمل واحدة. ونتيجة لذلك، تم تقديم منتجات Void الثلاثة الجديدة لتلبية الاحتياجات المتزايدة للفرق التقنية.",
+              "links": [
+                {
+                  "text": "VoidZero joined Cloudflare",
+                  "url": "https://blog.cloudflare.com/voidzero-joins-cloudflare/"
+                }
+              ]
+            },
+            {
+              "text": "تتكون منظومة Void الجديدة من منصة مشاركة لإدارة النشر، ومكتبة برمجية مرنة، وأداة سطر قيادي مخصصة لتجهيز الموارد ونشر التطبيقات. وقد تم توفير هذه المنتجات كمجموعة برمجية واحدة تثبت عبر مدير الحزم، مما يتيح للمطورين بناء الواجهات والخوادم معاً، ونقل أنواع البيانات بسلاسة من قاعدة البيانات إلى الواجهة الرسومية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مكونات منظومة Void: المنصة، الحزمة البرمجية، وأداة السطر القيادي",
+          "paragraphs": [
+            {
+              "text": "تعتمد المنصة المفتوحة المصدر على <a href=\"https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/\">Workers for Platforms</a> لتمكين فرق العمل والمؤسسات من استضافة وتطوير مشاريعهم داخل بيئة آمنة تابعة لحساب الشركة السحابي. ومن خلال تثبيت المنصة، يمكن للمديرين ضبط الصلاحيات وتحديد حدود استهلاك الموارد ومراقبة عمليات النشر عبر لوحة تحكم مخصصة.",
+              "links": [
+                {
+                  "text": "Workers for Platforms",
+                  "url": "https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/"
+                }
+              ]
+            },
+            {
+              "text": "إلى جانب المنصة، تأتي حزمة تطوير البرمجيات لتمنح المطورين القدرة على الاستفادة من ميزات التوثيق والكشف التلقائي عن أطر العمل وتوفير الموارد. وتتكامل هذه الحزمة مع أداة السطر القيادي <a href=\"https://github.com/cloudflare/cf\">cf CLI</a> التي تتيح للمستخدمين ووكلاء الذكاء الاصطناعي تشخيص الأخطاء وقراءة سجلات النشر وتحليل الأداء بكفاءة عالية.",
+              "links": [
+                {
+                  "text": "cf CLI",
+                  "url": "https://github.com/cloudflare/cf"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تسريع النماذج الأولية وتمكين الفرق غير التقنية",
+          "paragraphs": [
+            {
+              "text": "تهدف المنصة إلى حل مشكلة تواجه الشركات الكبرى التي ترغب في تشجيع الموظفين على ابتكار تطبيقات داخلية، ولكنها تخشى منح وصول واسع للبنية السحابية لجميع العاملين. وبفضل تصميم المنصة، يستطيع المصممون وفرق العمليات بناء نماذج تفاعلية ونشرها على نفس البيئة المشتركة مع الحفاظ على أعلى معايير الأمان.",
+              "links": []
+            },
+            {
+              "text": "تتيح هذه الآلية للفرق إنشاء النماذج واختبارها وجمع الآراء في دقائق معدودة، بدلاً من استهلاك أيام أو أسابيع في إعداد حسابات سحابية منفصلة أو تهيئة الموارد لكل مشروع على حدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل التقني وربط الموارد السحابية تلقائياً",
+          "paragraphs": [
+            {
+              "text": "تقوم منظومة <a href=\"http://void.cloud/\">Void</a> بتحويل تطبيقات Vite العادية إلى تطبيقات متكاملة تعمل على بيئة الحوسبة السحابية، حيث يمكن كتابة الكود البرمجي لتتولى المنصة استنتاج ارتباطات الموارد وتوفيرها مثل قواعد البيانات أو طوابير الرسائل أثناء عملية النشر.",
+              "links": [
+                {
+                  "text": "Void",
+                  "url": "http://void.cloud/"
+                }
+              ]
+            },
+            {
+              "text": "تدعم الحزمة البرمجية أطر واجهات المستخدم الشهيرة وتوفر توجهاً متقدماً لإنشاء مسارات واجهات برمجة التطبيقات، مع الحفاظ على مطابقة الأنواع عبر مختلف طبقات التطبيق. كما تمنح المطورين مرونة فائقة لاستخدام أطر العمل المفضلة لديهم لمعالجة مسارات التوجيه والعرض بينما تتولى المنصة إدارة الموارد والمصادقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آليات العمل المتقدمة والنشر المباشر",
+          "paragraphs": [
+            {
+              "text": "بالنسبة للمستخدمين الذين لا يحتاجون إلى ميزات الإدارة الجماعية التي توفرها المنصة، تتيح الحزمة البرمجية إمكانية النشر المباشر كما هو موضح في دليل <a href=\"http://void.cloud/guide/deployment#deploy-to-cloudflare\">deploys to Cloudflare directly</a>، مما يسهل عملية إطلاق التطبيقات الفردية.",
+              "links": [
+                {
+                  "text": "deploys to Cloudflare directly",
+                  "url": "http://void.cloud/guide/deployment#deploy-to-cloudflare"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد المنصة على تقنيات الأداء الحديثة وتوفر تكاملاً سلساً مع أطر العمل التفاعلية والجهات المسؤولة عن جلب البيانات والملاحة السريعة، مما يضمن تجربة مستخدم مستقرة وفعالة في شتى الظروف الشبكية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Void",
+        "Vite",
+        "تطوير الويب",
+        "حوسبة سحابية",
+        "برمجيات مفتوحة المصدر"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Void",
+        "Vite",
+        "VoidZero",
+        "Workers for Platforms"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "15 أكتوبر 2026",
+      "modifiedLabel": "15 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 552
+    },
+    "en": {
+      "title": "Cloudflare Introduces Open-Source Void SDK and Platform",
+      "description": "Cloudflare has open-sourced Void, a new SDK, CLI, and self-hosted platform designed to streamline full-stack Vite app development and deployment.",
+      "deck": "Cloudflare has announced the open-source release of Void, a unified platform, SDK, and command-line interface designed to build and deploy full-stack Vite applications.",
+      "summaryBullets": [
+        "Void includes three main open-source products: Void Platform, Void SDK, and Void CLI.",
+        "The platform is built on top of Workers for Platforms, enabling shared team hosting in a Cloudflare account.",
+        "Void automatically infers resource bindings and provisions resources like databases and AI bindings during deployment.",
+        "The SDK offers composable integrations for UI frameworks and application frameworks such as SvelteKit, Nuxt, and Astro."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Void",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has announced the open-source release of Void, a unified suite of developer tools that brings server routing, typed data access, and Cloudflare deployment into a single Vite workflow. While tools bundled in Vite+ have previously accelerated frontend development, full-stack applications have historically required managing server routes, databases, local development environments, and production deployment separately. Void aims to address this by combining an open-source SDK, CLI, and self-hosted platform.",
+              "links": [
+                {
+                  "text": "Void",
+                  "url": "http://void.cloud/"
+                }
+              ]
+            },
+            {
+              "text": "The release follows the integration of VoidZero into Cloudflare, prompting a shift in direction to open-source the platform. According to the announcement, companies are increasingly looking to encourage internal, vibe-coded applications while maintaining security and avoiding the need to grant full cloud access to every employee. The open-source architecture of Void allows organizations to host and manage these development workflows securely.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The Three Core Components",
+          "paragraphs": [
+            {
+              "text": "The Void package is distributed as a single JavaScript package and Vite plugin installable via npm. It consists of three primary components designed to work together across the application lifecycle. The Void Platform serves as a shared deployment environment for teams. The Void SDK provides a composable JavaScript interface for building full-stack apps. Finally, the Void CLI handles resource provisioning and application deployment.",
+              "links": [
+                {
+                  "text": "Void",
+                  "url": "https://void.cloud"
+                }
+              ]
+            },
+            {
+              "text": "When deployed using the Void Platform, teams utilize a shared deployment environment hosted within a Cloudflare account on top of Workers for Platforms. This configuration allows organizations to speed up prototyping and enables non-technical team members—such as designers or operations staff working with coding agents—to build, test, and share functional prototypes securely without provisioning separate Cloudflare accounts for every project.",
+              "links": [
+                {
+                  "text": "Workers for Platforms",
+                  "url": "https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Void SDK and Framework Integration",
+          "paragraphs": [
+            {
+              "text": "The Void SDK acts as the engine behind the platform's features, handling authentication, framework detection, and automated resource provisioning. By transforming Vite applications into full-stack Cloudflare Workers apps, the SDK allows code and coding agents to automatically infer resource bindings. Importing specific modules sets up services like local databases or AI capabilities automatically during development and production deployments.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, the SDK features built-in adapters for popular JavaScript UI frameworks, file-based API routing, pre-rendering, caching, and end-to-end type safety from the database to the user interface. Void's components are fully optional and composable, allowing developers to integrate them into existing application frameworks such as React Router, SvelteKit, Nuxt, TanStack Start, Astro, and Vinext while relying on Void for resource APIs, migrations, deployment, and authentication.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Advanced UI and Routing Architecture",
+          "paragraphs": [
+            {
+              "text": "For advanced user interface requirements, Void's React router is engineered specifically for Async React, leveraging transitions and Suspense to facilitate responsive screen navigation. When combined with modern data frameworks and specialized UI libraries, the architecture coordinates navigation, data fetching, and mutations smoothly across the application.",
+              "links": [
+                {
+                  "text": "Async React",
+                  "url": "https://react.dev/reference/react/useTransition#building-a-suspense-enabled-router"
+                }
+              ]
+            },
+            {
+              "text": "These integrations allow applications to maintain responsiveness during expensive rendering updates, delivering synchronous-feeling experiences on fast networks and graceful fallbacks on slower connections. Developers who choose not to use the Void Platform team management features can also utilize the SDK independently and deploy directly to Cloudflare.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The Void CLI and Ecosystem Workflow",
+          "paragraphs": [
+            {
+              "text": "The Void CLI serves as the primary interface for managing both the platform and individual application deployments. Built on top of the newer cf CLI, the command-line interface integrates cleanly with coding agents. Teams and agents can use the CLI to debug failing requests, read deployment logs, analyze application performance, and handle the entire project lifecycle from initial build to production deployment.",
+              "links": [
+                {
+                  "text": "cf CLI",
+                  "url": "https://github.com/cloudflare/cf"
+                }
+              ]
+            },
+            {
+              "text": "With the open-source release of the Void Platform, SDK, and CLI, developers can now extend their tooling stack to cover full-stack application development. Organizations interested in exploring the documentation, setup guides, and community discussions can access additional resources directly through the official Cloudflare Blog and related project channels.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/deploy-with-void"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Void",
+        "Vite",
+        "SDK",
+        "CLI",
+        "Workers for Platforms",
+        "JavaScript",
+        "Open Source"
+      ],
+      "entities": [
+        "Cloudflare",
+        "VoidZero",
+        "Void",
+        "Vite"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "October 15, 2026",
+      "modifiedLabel": "October 15, 2026",
+      "readMinutes": 4,
+      "wordCount": 686
+    }
+  },
+  "datePublished": "2026-10-15T17:39:14.452854+03:00",
+  "dateModified": "2026-10-15T17:39:14.452854+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/deploy-with-void/hero.webp",
+    "card": "/forum/assets/posts/2026/10/deploy-with-void/card.webp",
+    "social": "/forum/assets/posts/2026/10/deploy-with-void/social.jpg",
+    "alt": {
+      "ar": "إطلاق منصة Void المفتوحة المصدر لتطوير ونشر تطبيقات Vite",
+      "en": "Cloudflare Introduces Open-Source Void SDK and Platform"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M4XW9N9BNAM3T4W2SE62A1B1.01M4XW9NZG3B1PTR3QTA8CK4GR.png&w=4800&h=2700&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/deploy-with-void/inline-01.webp",
+        "width": 1200,
+        "height": 628,
+        "alt": {
+          "ar": "إطلاق منصة Void المفتوحة المصدر لتطوير ونشر تطبيقات Vite",
+          "en": "Deploy with Void"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/deploy-with-void",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M4XWFPM5E7NWJT9ZSFGZVPET.01M4XWFQERABK7GNTKRR8QX4HV.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/deploy-with-void",
+      "type": "official",
+      "title": "Deploy with Void"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/deploy-with-void",
+  "sourceTitle": "Deploy with Void",
+  "trendScore": 102.86,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-15T14:39:14+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/10/deploy-with-void.json"
+}
