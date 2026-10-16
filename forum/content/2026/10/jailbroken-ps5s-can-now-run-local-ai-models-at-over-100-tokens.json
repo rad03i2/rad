@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "ba21c23535132bcb84e7",
+  "slug": "jailbroken-ps5s-can-now-run-local-ai-models-at-over-100-tokens",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/jailbroken-ps5s-can-now-run-local-ai-models-at-over-100-tokens/",
+    "en": "/forum/en/ai/jailbroken-ps5s-can-now-run-local-ai-models-at-over-100-tokens/"
+  },
+  "locales": {
+    "ar": {
+      "title": "PS5 المخترقة تشغّل نماذج الذكاء الاصطناعي بسرعة تتجاوز 100 توكن في الثانية",
+      "description": "تحديث جديد لبرنامج PS5LM يتيح تشغيل نماذج LLM محلياً على وحدة معالجة الرسوميات GPU، مما يرفع الأداء بشكل كبير ويسمح بتشغيل نماذج ضخمة مثل Qwen3.8-27B بكفاءة عالية.",
+      "deck": "نجح مطوّر في تحويل وحدة تحكم بلايستيشن 5 المخترقة إلى خادم ذكاء اصطناعي محلي عالي الأداء، مستغلاً قدرات GPU لتجاوز قيود المعالج المركزي.",
+      "summaryBullets": [
+        "إطلاق نسخة مشتقة من PS5LM تتيح التشغيل الأصلي (Native) بدلاً من الاعتماد على المعالج المركزي فقط.",
+        "الوصول المباشر إلى وحدة معالجة الرسوميات GPU عبر برنامج PS5_Vulkan يفتح الباب أمام استخدام ذاكرة أكبر تصل إلى 11.4 غيغابايت.",
+        "تحقيق سرعة معالجة تصل إلى 124 توكن في الثانية للنماذج الصغيرة، و20 توكن في الثانية للنماذج الضخمة.",
+        "إضافة لوحة تحكم تعرض بيانات الأداء الحية، ودعم واجهة ويب للتفاعل عن بُعد من أجهزة أخرى.",
+        "تجنب أزمة استنزاف الموارد نظراً لأن قدرات PS5 أقل بكثير من وحدات معالجة الرسوميات المخصصة للمراكز البيانات."
+      ],
+      "sections": [
+        {
+          "heading": "تجاوز قيود المعالج المركزي",
+          "paragraphs": [
+            {
+              "text": "شهدت مجتمع الألعاب والبرمجيات غير الرسمية تطوراً ملحوظاً في قدرات وحدة تحكم بلايستيشن 5 المخترقة، حيث أضاف مستخدم موقع ريديت تحت الاسم u/AdIllustrious7246 ميزة جوهرية لبرنامج PS5LM. هذا البرنامج هو نسخة معدلة من مكتبة llama.cpp المخصصة لتشغيل نماذج اللغة الكبيرة (LLMs) محلياً. بدلاً من تشغيل النموذج كحمولة (Payload) على المعالج المركزي CPU، الذي كان يحدّ الوصول إلى الذاكرة بنحو 6.25 غيغابايت، نجح المطوّر في جعل البرنامج يعمل بشكل أصلي (Native) على النظام، مما أزال هذه القيود المفروضة سابقاً. ويمكن الرجوع إلى Tom's Hardware للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "u/AdIllustrious7246",
+                  "url": "https://www.reddit.com/r/LocalLLM/comments/1x4y61f/qwen_27b_at_20_toks_on_a_jailbroken_ps5s_gpu_i/?solution=c3d3908e4d46c3ebc3d3908e4d46c3eb&js_challenge=1&jsc_token=2824be10929bdc604753c70a67a1c3312b5cc064082b51d1e87953636ef0ce31&jsc_orig_r="
+                },
+                {
+                  "text": "Tom's Hardware",
+                  "url": "https://www.tomshardware.com/video-games/playstation/jailbroken-ps5s-can-now-run-local-ai-models-at-over-100-tokens-per-second-fork-of-ps5lm-goes-native-and-accesses-gpu-and-more-ram"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "استغلال قدرات GPU عبر Vulkan",
+          "paragraphs": [
+            {
+              "text": "العائق الرئيسي أمام تشغيل النماذج الكبيرة على بلايستيشن 5 كان إغلاق وحدة معالجة الرسوميات (GPU) أمام البرمجيات الخارجية، على الرغم من كونها مبنية على معمارية AMD. لحل هذه المشكلة، اعتمد المطوّر على مشروع PS5_Vulkan، وهو بورت (نسخة) من برنامج تشغيل الرسوميات RADV الذي يتيح إرسال أوامر مباشرة إلى وحدة معالجة الرسوميات. هذا الإجراء فتح الباب أمام استخدام GPU للمهام الحسابية المكثفة، وهو ما يعتبر أمراً حاسماً لمعالجة نماذج الذكاء الاصطناعي بكفاءة أعلى بكثير مقارنة بالمعالج المركزي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أداء يتجاوز التوقعات",
+          "paragraphs": [
+            {
+              "text": "بفضل الوصول الكامل إلى وحدة معالجة الرسوميات والذاكرة المتاحة، شهدت سرعات المعالجة قفزة نوعية. فقد استطاع النظام تشغيل نموذج Qwen3.8-27B، وهو نموذج ضخم بحجم 6.8 غيغابايت، بسرعة 20 توكن في الثانية. أما النماذج الأصغر حجماً فحققت أرقاماً مذهلة، حيث بلغ الأداء 61 توكن في الثانية لنموذج Gemma 4 E4B، ووصل إلى 124 توكن في الثانية لنموذج Llama 3.2 3B. هذه الأرقام تتجاوز بكثير ما كان ممكن تحقيقه سابقاً عندما كان النظام يعتمد على المعالج المركزي فقط، مما كان يؤدي إلى تجمد النظام أو انهياره عند محاولة تشغيل النماذج الكبيرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توسيع نطاق الوصول إلى الذاكرة",
+          "paragraphs": [
+            {
+              "text": "لم يقتصر التحسن على السرعة فحسب، بل امتد ليشمل حجم الذاكرة القابلة للاستخدام. بينما كانت النسخة السابقة التي تعمل على المعالج المركزي تقتصر على حوالي 6 غيغابايت لتجنب تجميد شاشة البداية، فإن النسخة الأصلية الجديدة تتيح الوصول إلى ما يصل إلى 11.4 غيغابايت من الذاكرة. هذا التوسع في الموارد يسمح بتشغيل نماذج أكثر تعقيداً وحفظ سياق أطول للمحادثات، مما يجعل وحدة التحكم أداة عملية أكثر لتنفيذ مهام الذكاء الاصطناعي المحلية دون الحاجة إلى أجهزة خادم متخصصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "واجهة مستخدم ولوحة تحكم متقدمة",
+          "paragraphs": [
+            {
+              "text": "أضاف المطوّر لمسات عملية تجعل التجربة أكثر سلاسة للمستخدمين التقنيين. فقد صمم لوحة تحكم (Dashboard) تعرض بيانات حية ومفصلة، تشمل معدل توليد التوكنات في الوقت الفعلي، نسبة استخدام وحدة معالجة الرسوميات والمعالج المركزي، استهلاك الطاقة، درجات الحرارة، وتوزيع الذاكرة بين النموذج نفسه وكاش KV (KV cache). كما تم دمج النظام مع واجهة ويب مدمجة في مكتبة llama.cpp، مما يتيح للمستخدمين التفاعل مع نموذج الذكاء الاصطناعي عبر متصفح الويب من أي جهاز محلي آخر متصل بالشبكة، دون الحاجة للجلوس أمام وحدة التحكم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "سياق أوسع وأثر محتمل",
+          "paragraphs": [
+            {
+              "text": "يثير هذا التطور تساؤلات حول إمكانية استخدام وحدات التحكم كأدوات تعدين أو تشغيل ذكاء اصطناعي على نطاق واسع، خاصة في ظل الأزمات الحالية المرتبطة بأسعار وحدات معالجة الرسوميات والذاكرة. ومع ذلك، يرى المحللون أن هذا السيناريو غير مرجح، حيث أن قدرات GPU في بلايستيشن 5 لا تقارن بوحدات المعالجة الرسومية المخصصة للمراكز البيانات الضخمة. كما أن الطلب الحالي على هذه المكونات مدفوع أساساً ببنية تحتية صناعية ضخمة، مما يجعل تحويل ملايين وحدات التحكم المنزلية إلى خوادم ذكاء اصطناعي أمراً غير عملي من الناحية الاقتصادية والتقنية في الوقت الراهن.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "بلايستيشن 5",
+        "ذكاء اصطناعي",
+        "LLM",
+        "llama.cpp",
+        "برمجيات غير رسمية",
+        "GPU",
+        "ألعاب فيديو"
+      ],
+      "entities": [
+        "بلايستيشن 5",
+        "PS5LM",
+        "llama.cpp",
+        "Qwen3.8-27B",
+        "Gemma 4 E4B",
+        "Llama 3.2 3B",
+        "PS5_Vulkan",
+        "RADV",
+        "AMD"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "16 أكتوبر 2026",
+      "modifiedLabel": "16 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 633
+    },
+    "en": {
+      "title": "Jailbroken PS5 Runs Local AI Models Past 100 Tokens",
+      "description": "A new fork of the PS5LM project enables jailbroken PlayStation 5 consoles to run local AI language models natively using both the GPU and expanded RAM.",
+      "deck": "A developer has released a significant fork of the PS5LM project, enabling jailbroken PlayStation 5 consoles to execute local AI large language models natively by leveraging the system's GPU and up to 11.4 GiB of RAM.",
+      "summaryBullets": [
+        "A fork of the PS5LM project by Reddit user u/AdIllustrious7246 allows jailbroken PlayStation 5 consoles to run AI language models natively.",
+        "The new implementation utilizes PS5_Vulkan to access the console's GPU, bypassing previous CPU limitations.",
+        "Smaller models such as Llama 3.2 3B and Gemma 4 E4B achieve speeds of 124 and 61 tokens per second, respectively.",
+        "Larger models like Qwen3.8-27B can now run at 20 tokens per second.",
+        "The native implementation also supports a dashboard and remote browser chatting via llama.cpp's web UI."
+      ],
+      "sections": [
+        {
+          "heading": "Native Execution and GPU Offloading",
+          "paragraphs": [
+            {
+              "text": "The capabilities of jailbroken PlayStation 5 consoles have expanded into local artificial intelligence following a new software development. According to a project shared on <a href=\"https://www.reddit.com/r/LocalLLM/comments/1x4y61f/qwen_27b_at_20_toks_on_a_jailbroken_ps5_gpu_i/?solution=c3d3908e4d46c3ebc3d3908e4d46c3eb&js_challenge=1&jsc_token=2824be10929bdc604753c70a67a1c3312b5cc064082b51d1e87953636ef0ce31&jsc_orig_r=\">u/AdIllustrious7246</a>, a developer has created a fork of PS5LM—a llama.cpp port designed to run AI large language models locally—that executes natively on the console.",
+              "links": []
+            },
+            {
+              "text": "Earlier community efforts, including an <a href=\"https://www.reddit.com/r/ps5homebrew/comments/1wvbjwn/unofficial_llamacpp_port_for_ps5_in_progress_run/?share_id=hDmQKbd2fHFAWZLn8EefG&utm_content=share_button&utm_medium=web3x&utm_name=web3xcss&utm_source=share&utm_term=1\">unofficial port of llama.cpp on Reddit</a> published by GitHub user cobanov, operated primarily as a CPU payload. That initial approach injected the language model instructions directly alongside system services and the home screen, which restricted memory access to roughly 6.25 GiB to prevent the system user interface from freezing.",
+              "links": [
+                {
+                  "text": "unofficial port of llama.cpp on Reddit",
+                  "url": "https://www.reddit.com/r/ps5homebrew/comments/1wvbjwn/unofficial_llamacpp_port_for_ps5_in_progress_run/?share_id=hDmQKbd2fHFAWZLn8EefG&utm_content=share_button&utm_medium=web3x&utm_name=web3xcss&utm_source=share&utm_term=1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Unlocking the AMD GPU via Vulkan",
+          "paragraphs": [
+            {
+              "text": "While the initial CPU payload method succeeded in bringing offline AI chat capabilities to the console, it lacked the ability to fully harness the hardware. The new fork overcomes this barrier by utilizing PS5_Vulkan, a port of the RADV graphics driver that routes instructions directly to the PlayStation 5 graphics processing unit.",
+              "links": []
+            },
+            {
+              "text": "Although the console features custom AMD hardware, its GPU is normally locked down and inaccessible in the manner of a standard desktop personal computer. The PS5_Vulkan project has opened up various homebrew applications by granting deeper access to the graphics hardware, enabling it to process neural networks far more efficiently than the CPU alone.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Performance Benchmarks and Model Sizes",
+          "paragraphs": [
+            {
+              "text": "By running natively and unloading computational demands onto the graphics processor, the updated implementation allows the console to utilize up to 11.4 GiB of system RAM. Previously, large 6.8 GiB language models frequently caused system freezes and crashes due to severe CPU bottlenecks.",
+              "links": []
+            },
+            {
+              "text": "With the hardware bottleneck mitigated, performance has scaled significantly across different model sizes. According to the developer's findings reported by <a href=\"https://www.tomshardware.com/video-games/playstation/jailbroken-ps5s-can-now-run-local-ai-models-at-over-100-tokens-per-second-fork-of-ps5lm-goes-native-and-accesses-gpu-and-more-ram\">Tom's Hardware</a>, smaller models such as Llama 3.2 3B achieve generation speeds of 124 tokens per second, while Gemma 4 E4B reaches 61 tokens per second.",
+              "links": [
+                {
+                  "text": "Tom's Hardware",
+                  "url": "https://www.tomshardware.com/video-games/playstation/jailbroken-ps5s-can-now-run-local-ai-models-at-over-100-tokens-per-second-fork-of-ps5lm-goes-native-and-accesses-gpu-and-more-ram"
+                }
+              ]
+            },
+            {
+              "text": "Furthermore, much larger architectures can now be executed. The system can run the Qwen3.8-27B parameter model at a rate of 20 tokens per second, demonstrating substantial processing capacity for local artificial intelligence workloads.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Dashboard Integration and Remote Access",
+          "paragraphs": [
+            {
+              "text": "In addition to native execution and improved token generation speeds, the updated application incorporates a dedicated dashboard interface. This display provides real-time telemetry, including live token generation rates, central processing unit and graphics processing unit utilization, power draw statistics, internal temperatures, and memory distribution between the model and the KV cache.",
+              "links": []
+            },
+            {
+              "text": "The implementation also features compatibility with llama.cpp's built-in web user interface. This addition allows external devices on the same local network to connect via a web browser and chat remotely with the artificial intelligence models hosted on the console.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Community Response and Context",
+          "paragraphs": [
+            {
+              "text": "The homebrew development has drawn attention from technology enthusiasts, with some drawing comparisons to the widespread graphics card shortages seen during previous cryptocurrency mining booms. However, hardware analysts note that a repeat of a crypto-style crisis is unlikely from this development.",
+              "links": []
+            },
+            {
+              "text": "The market is already experiencing hardware supply pressures driven by large-scale artificial intelligence data centers, and the console hardware does not possess the extreme memory bandwidth or processing specifications of high-end enterprise accelerators. Nonetheless, the achievement highlights the growing community interest in repurposing consumer gaming hardware for local artificial intelligence applications.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "PlayStation 5",
+        "PS5",
+        "AI",
+        "Local LLM",
+        "Hardware",
+        "Homebrew",
+        "llama.cpp"
+      ],
+      "entities": [
+        "Sony",
+        "PlayStation 5",
+        "Tom's Hardware"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 16, 2026",
+      "modifiedLabel": "October 16, 2026",
+      "readMinutes": 3,
+      "wordCount": 659
+    }
+  },
+  "datePublished": "2026-10-16T13:31:20.053458+03:00",
+  "dateModified": "2026-10-16T13:31:20.053458+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/jailbroken-ps5s-can-now-run-local-ai-models-at-over-100-tokens/hero.webp",
+    "card": "/forum/assets/posts/2026/10/jailbroken-ps5s-can-now-run-local-ai-models-at-over-100-tokens/card.webp",
+    "social": "/forum/assets/posts/2026/10/jailbroken-ps5s-can-now-run-local-ai-models-at-over-100-tokens/social.jpg",
+    "alt": {
+      "ar": "PS5 المخترقة تشغّل نماذج الذكاء الاصطناعي بسرعة تتجاوز 100 توكن في الثانية",
+      "en": "Jailbroken PS5 Runs Local AI Models Past 100 Tokens"
+    },
+    "credit": "Tom's Hardware",
+    "sourceUrl": "https://cdn.mos.cms.futurecdn.net/p6RKS3uArE9EvG6rNBgPYb-970-80.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/video-games/playstation/jailbroken-ps5s-can-now-run-local-ai-models-at-over-100-tokens-per-second-fork-of-ps5lm-goes-native-and-accesses-gpu-and-more-ram",
+      "type": "journalism",
+      "title": "Jailbroken PS5s can now run local AI models at over 100+ tokens per second"
+    }
+  ],
+  "sourceUrl": "https://www.tomshardware.com/video-games/playstation/jailbroken-ps5s-can-now-run-local-ai-models-at-over-100-tokens-per-second-fork-of-ps5lm-goes-native-and-accesses-gpu-and-more-ram",
+  "sourceTitle": "Jailbroken PS5s can now run local AI models at over 100+ tokens per second",
+  "trendScore": 99.88,
+  "verification": {
+    "confidence": 0.86,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-16T10:31:20+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/jailbroken-ps5s-can-now-run-local-ai-models-at-over-100-tokens.json"
+}
