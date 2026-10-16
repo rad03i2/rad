@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "4f379e8b58549775d4b2",
+  "slug": "introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/",
+    "en": "/forum/en/ai/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/"
+  },
+  "locales": {
+    "ar": {
+      "title": "AWS تتيح نشر نموذج Reflection Beam مفتوح الأوزان للبرمجة الوكيلية",
+      "description": "تتيح AWS نشر نموذج Reflection Beam مفتوح الأوزان عبر SageMaker JumpStart وHyperPod Inference، مع دعم لأوزان NVFP4 وFP8 للتحكم في البنية التحتية.",
+      "deck": "أطلقت Reflection AI نموذج Beam مفتوح الأوزان للبرمجة الوكيلية، وأتاحت AWS نشره عبر خدمات SageMaker مع خيارات تحكم موزعة.",
+      "summaryBullets": [
+        "نموذج Beam يحتوي على 501 مليار معامل إجمالي و23 مليار معامل نشط، ويدعم سياقاً بطول مليون رمز.",
+        "يتوفر النموذج بأوزان BF16 وFP8 وNVFP4 عبر Hugging Face تحت رخصة Apache 2.0.",
+        "توفر AWS مسارين للنشر: نقطة نهاية JumpStart المُدارة، أو HyperPod Inference للتحكم الأصلي عبر Kubernetes.",
+        "يتطلب النشر عدة وحدات GPU، مع توصيات محددة لأنواع المعالجات مثل H100 وH200 وB200 حسب نوع الأوزان."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق نموذج مفتوح الأوزان للبرمجة الوكيلية",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Reflection AI عن إطلاق نموذج Beam، وهو نموذج مفتوح الأوزان مصمم خصيصاً لمهام البرمجة الوكيلية (Agentic Coding) والمهام طويلة المدى. يهدف النموذج إلى تمكين المطورين والباحثين من التحكم الكامل في بيئة التشغيل والنشر والتخصيص، بدلاً من الاعتماد على واجهات API مغلقة. يأتي هذا الإطلاق في إطار رؤية الشركة لجعل الذكاء الاصطناعي مفتوحاً ومتاحاً للجميع من خلال أوزان النماذج المفتوحة والأبحاث المنشورة والبرمجيات مفتوحة المصدر.",
+              "links": [
+                {
+                  "text": "Reflection AI",
+                  "url": "https://reflection.ai/"
+                }
+              ]
+            },
+            {
+              "text": "يعمل Beam كنموذج خبير مختلط (Mixture-of-Experts) متناثر، حيث يمتلك 501 مليار معامل إجمالي، لكن فقط 23 مليار معامل نشط أثناء كل عملية استدعاء. هذا التصميم يسمح للنموذج بمعالجة مهام معقدة مثل تعديل الكود، واستدعاء الأدوات، والتفاعل مع النتائج الوسيطة، وإكمال سير العمل متعددة الخطوات بكفاءة عالية. كما تشير التقارير إلى أن النموذج يدعم طول سياق فعال يصل إلى مليون رمز، مما يتيح له التعامل مع قواعد كود ضخمة ومشاريع برمجية معقدة دون فقدان السياق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خيارات النشر عبر منصة AWS",
+          "paragraphs": [
+            {
+              "text": "توفر AWS مسارين رئيسيين لنشر نموذج Beam على بنيتها التحتية. المسار الأول يعتمد على Amazon SageMaker JumpStart، الذي يوفر نقطة نهاية زمنية حقيقية (Real-time Endpoint) مُدارة بالكامل. هذا الخيار يناسب المطورين الذين يبحثون عن أبسط طريقة للانتقال من كتالوج النماذج إلى نقطة نهاية HTTPS مُدارة دون الحاجة إلى إدارة Kubernetes أو البنية التحتية الموزعة يدوياً.",
+              "links": []
+            },
+            {
+              "text": "المسار الثاني هو استخدام Amazon SageMaker HyperPod Inference، وهو مصمم للمؤسسات التي تحتاج إلى تحكم أصلي عبر Kubernetes في البنية التحتية الموزعة للوحات GPU. يتيح هذا المسار استخدام حاويات JumpStart المُدارة من AWS، أو استخدام أطر عمل مثل SGLang أو vLLM للحصول على تحكم كامل في صور التشغيل، وحواليات التكميم، وتنفيذ المهام الموزعة. يتوفر النموذج حالياً في منطقتي US East (N. Virginia) وUS East (Ohio) عبر JumpStart.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod Inference",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-model-deployment.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تفاصيل الأوزان والمتطلبات الحسابية",
+          "paragraphs": [
+            {
+              "text": "تُصدر Reflection AI أوزان Beam عبر Hugging Face تحت رخصة Apache 2.0، مما يسهل الوصول إليها وتوزيعها. يتوفر إصدار Beam 1.0 بثلاثة تنسيقات للأوزان: BF16 وFP8 وNVFP4. يوفر كل تنسيق بصمة ذاكرة مختلفة وتوافقاً مع عتاد مختلف، مما يمنح المطورين مرونة في اختيار التوازن بين الدقة والأداء والتكلفة.",
+              "links": []
+            },
+            {
+              "text": "بسبب حجم المعاملات الإجمالي البالغ 501 مليار، يتطلب النشر استخدام عدة وحدات GPU. بالنسبة لتنسيق BF16، الذي يتطلب أكبر قدر من الذاكرة للأوزان، يُنصح بتكوين متعدد العقد مع ذاكرة GPU مجمعة كافية. أما لتنسيق FP8، فتوصي AWS باستخدام أنواع المعالجات مثل ml.p5.48xlarge مع وحدات NVIDIA H100، أو ml.p5e.48xlarge وml.p5en.48xlarge مع وحدات H200. بينما يتطلب تنسيق NVFP4 استخدام نوع المعالج ml.p6-b200.48xlarge مع وحدات NVIDIA B200. يجب على المطورين التأكد من أن نقاط التفتيش (Checkpoints) والإصدار المستهدف يدعمان نوع المعالج المختار.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إعدادات النشر والتحكم في الأداء",
+          "paragraphs": [
+            {
+              "text": "يتطلب النشر عبر مسار HyperPod Inference إعداد وصول kubectl إلى عناقيد HyperPod التي تُدار بواسطة Amazon Elastic Kubernetes Service (EKS). يتيح هذا الإعداد التحكم في توزيع التنفيذ، والتخزين المؤقت، والتوجيه، والتوسع التلقائي. يمكن للمستخدمين تحديد أهداف التزامن (Concurrency) وزمن الاستجابة (Latency) المتوقعة، ثم تكوين النسخ (Replicas) والتخزين المؤقت والتوجيه بناءً على سلوك الحمل الفعلي.",
+              "links": []
+            },
+            {
+              "text": "توفر HyperPod Inference ميزات متقدمة مثل التخزين المؤقت الهرمي المُدار (Managed Tiered KV Caching) والتوجيه الذكي، مما يحسن كفاءة استخدام الذاكرة وسرعة الاستجابة في البيئات الموزعة. كما يمكن للمستخدمين اختيار مصدر النموذج من JumpStart أو Hugging Face Hub أو مرآة اختيارية على Amazon S3، مما يوفر مرونة في إدارة الأصول البرمجية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الخطوات العملية للاختبار والنشر",
+          "paragraphs": [
+            {
+              "text": "لبدء الاختبار عبر مسار JumpStart، يجب على المطورين استنساخ مستودع العينات الخاص بـ AWS وتنفيذ أوامر Python التي تدير دورة حياة النشر والاستدعاء والتنظيف. تدعم الأوامر الاختيار بين تنسيقات الأوزان المختلفة، حيث يكون NVFP4 هو الافتراضي عند عدم تحديد الخيار --variant. توفر هذه الأوامر طريقة سريعة لإنشاء نقطة نهاية، وإرسال طلب تجريبي، وعرض الاستجابة، ثم تنظيف الموارد لتجنب التكاليف غير الضرورية.",
+              "links": []
+            },
+            {
+              "text": "قبل النشر النهائي، يجب على المطورين حساب الذاكرة المطلوبة للأوزان والتخزين المؤقت (KV Cache) والتكاليف التشغيلية لكل نسخة، والتحقق من هذه التقديرات عبر اختبارات الحمل. كما يجب التحقق من حصة الخدمة (Service Quota) والسعة المتاحة لنوع المعالج المختار في المنطقة المحددة. يمكن استخدام سعة الطلب الفوري (On-demand) أو خطط تدريب SageMaker كحجز قصير المدى للأعمال المجدولة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "AWS",
+        "Reflection AI",
+        "Beam",
+        "البرمجة الوكيلية",
+        "نماذج مفتوحة الأوزان",
+        "SageMaker",
+        "GPU"
+      ],
+      "entities": [
+        "Reflection AI",
+        "AWS",
+        "Amazon SageMaker",
+        "Beam",
+        "Hugging Face",
+        "NVIDIA"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "16 أكتوبر 2026",
+      "modifiedLabel": "16 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 716
+    },
+    "en": {
+      "title": "AWS Introduces Support for Reflection AI's Beam",
+      "description": "Amazon Web Services announces support for Reflection AI's new open-weight agentic coding model, Beam, on Amazon SageMaker.",
+      "deck": "Amazon Web Services has introduced deployment pathways for Reflection AI's open-weight model, Beam, designed for agentic coding and long-horizon tasks on Amazon SageMaker.",
+      "summaryBullets": [
+        "Reflection AI's Beam features 501 billion total parameters and 23 billion active parameters.",
+        "The open-weight model is designed for agentic coding, tool usage, and multi-step workflows.",
+        "Developers can deploy Beam using Amazon SageMaker JumpStart real-time endpoints.",
+        "Kubernetes-native distributed GPU deployments are supported via Amazon SageMaker HyperPod Inference."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of Reflection Beam",
+          "paragraphs": [
+            {
+              "text": "Reflection AI has introduced Beam, an open-weight model tailored for agentic coding and long-horizon tasks such as maintaining code, interpreting results, utilizing tools, and completing complex multi-step workflows. According to the [AWS Machine Learning Blog](https://aws.amazon.com/blogs/machine-learning/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/), the release provides developers and researchers with extensive control over the runtime, customization process, and deployment environment.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/"
+                }
+              ]
+            },
+            {
+              "text": "The model functions as a sparse mixture-of-experts system featuring 501 billion total parameters and 23 billion active parameters, alongside an effective context length of 1 million tokens. Reflection AI distributes Beam's weights through Hugging Face under the Apache 2.0 license, offering BF16, FP8, and NVFP4 checkpoint variants to accommodate various memory footprints and hardware compatibilities.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deployment Pathways on AWS",
+          "paragraphs": [
+            {
+              "text": "Developers can deploy Beam on AWS utilizing different pathways depending on their control and scaling needs. For a fully managed path, users can start with an Amazon SageMaker JumpStart real-time endpoint. Alternatively, engineers requiring Kubernetes-native control over distributed GPU infrastructure can utilize [Amazon SageMaker HyperPod Inference](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-model-deployment.html) alongside JumpStart, SGLang, or vLLM.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod Inference",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-model-deployment.html"
+                }
+              ]
+            },
+            {
+              "text": "At launch, Beam is available within Amazon SageMaker JumpStart specifically in the US East (N. Virginia) and US East (Ohio) regions. The managed JumpStart real-time path packages the model, container, and endpoint behind a streamlined managed deployment workflow.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Hardware Requirements",
+          "paragraphs": [
+            {
+              "text": "Beam's large parameter footprint requires multi-GPU deployments. Because BF16 possesses the largest weight-memory requirement, multi-node configurations must account for aggregate GPU memory dedicated to weights and runtime overhead. For FP8 configurations, recommended instances include ml.p5.48xlarge with NVIDIA H100 GPUs or ml.p5e.48xlarge and ml.p5en.48xlarge with H200 GPUs. Meanwhile, NVFP4 variants are designed for ml.p6-b200.48xlarge instances featuring NVIDIA B200 GPUs.",
+              "links": []
+            },
+            {
+              "text": "To ensure successful implementation, users are advised to calculate memory usage for weights, KV cache, and runtime overhead for a single replica before validating the estimates via load testing. Teams can choose between on-demand capacity or utilize short-term reservations via a SageMaker training plan.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Getting Started with JumpStart and HyperPod",
+          "paragraphs": [
+            {
+              "text": "The initial setup process involves cloning the official sample repository, creating a Python virtual environment, and installing required dependencies. For quick evaluations, developers can execute bounded deployment scripts using variant-aware commands that target specific checkpoints like FP8 or NVFP4.",
+              "links": []
+            },
+            {
+              "text": "For advanced production scenarios, the HyperPod Inference option allows technical teams to configure customized runtime arguments, quantization parameters, and distributed execution strategies across an Amazon EKS-orchestrated cluster.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Reflection AI",
+        "Beam",
+        "Amazon SageMaker",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Open Weight Models"
+      ],
+      "entities": [
+        "AWS",
+        "Reflection AI",
+        "Beam",
+        "Amazon SageMaker",
+        "Hugging Face",
+        "NVIDIA"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 16, 2026",
+      "modifiedLabel": "October 16, 2026",
+      "readMinutes": 3,
+      "wordCount": 452
+    }
+  },
+  "datePublished": "2026-10-16T18:57:36.322580+03:00",
+  "dateModified": "2026-10-16T18:57:36.322580+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/hero.webp",
+    "card": "/forum/assets/posts/2026/10/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/card.webp",
+    "social": "/forum/assets/posts/2026/10/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/social.jpg",
+    "alt": {
+      "ar": "AWS تتيح نشر نموذج Reflection Beam مفتوح الأوزان للبرمجة الوكيلية",
+      "en": "AWS Introduces Support for Reflection AI's Beam"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-22133-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/inline-01.webp",
+        "width": 945,
+        "height": 694,
+        "alt": {
+          "ar": "AWS تتيح نشر نموذج Reflection Beam مفتوح الأوزان للبرمجة الوكيلية",
+          "en": "Architecture diagram showing Beam sourced from SageMaker JumpStart, Hugging Face Hub, or an optional Amazon S3 mirror into Amazon SageMaker HyperPod Inference, with the Inference Operator managing local model and image c"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-22133-1-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/inline-02.webp",
+        "width": 945,
+        "height": 694,
+        "alt": {
+          "ar": "AWS تتيح نشر نموذج Reflection Beam مفتوح الأوزان للبرمجة الوكيلية",
+          "en": "Detailed HyperPod flow showing the Inference Gateway, Endpoint Picker, routing signals, Inference Operator, host-local model cache, and JumpStart-managed, SGLang, or vLLM replicas."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-22133-2-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/",
+      "type": "official",
+      "title": "Introducing Reflection Beam: an open-weight model for agentic coding on AWS"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws",
+  "sourceTitle": "Introducing Reflection Beam: an open-weight model for agentic coding on AWS",
+  "trendScore": 124.38,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-16T15:57:36+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws.json"
+}
