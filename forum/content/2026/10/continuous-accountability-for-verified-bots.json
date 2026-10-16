@@ -1,0 +1,411 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "3af11c035bde63da509d",
+  "slug": "continuous-accountability-for-verified-bots",
+  "categorySlug": "robotics",
+  "urls": {
+    "ar": "/forum/ar/robotics/continuous-accountability-for-verified-bots/",
+    "en": "/forum/en/robotics/continuous-accountability-for-verified-bots/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cloudflare تطلق نظاماً للمساءلة المستمرة للروبوتات الموثقة",
+      "description": "تقدم Cloudflare نظاماً جديداً لتقييم سلوك الروبوتات الموثقة باستمرار، لضمان احترامها لتفضيلات المواقع مثل robots.txt واستجابات HTTP 429، مما يعزز الثقة في التفاعلات الآلية.",
+      "deck": "تحديد هوية الروبوت لا يكفي لضمان سلوكه المسؤول. تطلق Cloudflare آلية جديدة لتقييم مدى التزام الروبوتات الموثقة بتفضيلات المواقع بشكل مستمر، مما يحوّل الثقة من مجرد هوية إلى سلوك موثوق.",
+      "summaryBullets": [
+        "تقدم Cloudflare نظاماً لتقييم سلوك الروبوتات الموثقة باستمرار، بدلاً من الاعتماد على التحقق من الهوية فقط.",
+        "يركز النظام على قياس مدى احترام الروبوتات لتفضيلات المواقع، مثل ملفات robots.txt واستجابات HTTP 429.",
+        "يتم تصنيف الروبوتات ضمن نطاقات ثقة قابلة للتفسير بناءً على سلوكها المتكرر، وليس على أحكام دائمة.",
+        "تخطط Cloudflare لجعل هذه التقييمات متاحة للعملاء، مما يتيح لهم تحديد عتبات الثقة للتعامل مع حركة المرور الآلية.",
+        "يأتي هذا النظام ضمن حلقة مساءلة أوسع تشمل Bot Preference Sync و Bot Management لضمان الشفافية."
+      ],
+      "sections": [
+        {
+          "heading": "من الهوية إلى السلوك: ضرورة جديدة في عالم الروبوتات",
+          "paragraphs": [
+            {
+              "text": "تشبه عملية التحقق من هوية الروبوتات امتحان القيادة؛ فهي تثبت أن المشغل معروف وقادر على القيادة، لكنها لا تضمن أنه سيواصل القيادة بمسؤولية في المستقبل. تواجه Cloudflare تحدياً متزايداً مع انتشار الروبوتات التي قد تتجاهل تفضيلات المواقع أو تفرض أحمالاً زائدة على الخوادم، حتى لو كانت هويتها موثقة. لذلك، تركز الشركة على الانتقال من مجرد سؤال \"من أنت؟\" إلى سؤال \"هل يمكننا الوثوق بك؟\"، حيث لا يكفي التحقق من الهوية لضمان السلوك المسؤول، بل يجب مراقبة الأفعال المستمرة.",
+              "links": []
+            },
+            {
+              "text": "تستند هذه المبادرة إلى مبادئ سبق أن وضعتها Cloudflare في مقال سابق حول سلوك الروبوتات، حيث حددت معيارين أساسيين: التحقق من الهوية والموثوقية. يتطلب الحصول على وضع \"روبوت موثق\" لدى Cloudflare استخدام بروتوكول Web Bot Auth لتوقيع الطلبات، مما يسمح لنظام BotBase بتسجيل هذه الهويات في صيغة مفتوحة. ومع معالجة جانب الهوية، ينصب التركيز الآن على القاعدة الذهبية الثانية: عدم التسبب في أي ضرر. الهدف هو ضمان أن الإجابة على سؤال الموثوقية تبقى \"نعم\" عبر الزمن، وليس مجرد لحظة التحقق الأولية.",
+              "links": [
+                {
+                  "text": "Web Bot Auth",
+                  "url": "https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/"
+                },
+                {
+                  "text": "BotBase",
+                  "url": "https://developers.cloudflare.com/bots/botbase/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الفرق بين المخاطر والثقة: معايير التقييم",
+          "paragraphs": [
+            {
+              "text": "يبرز التمييز الدقيق بين مفهوم المخاطر (Risk) ومفهوم الثقة (Trust) في هذا النظام. فالمخاطر تصف احتمالية أن يكون طلب معين أو إجراء لحظي ضاراً، وهي قد تتغير من لحظة لأخرى. أما الثقة، فهي تُبنى عبر الزمن من خلال سلوك متكرر ومتسق. على سبيل المثال، قامت Cloudflare بإزالة روبوت شركة Perplexity من قائمة الروبوتات الموثقة في عام 2025 بعد أن حاول الوصول إلى موارد مواقع اختارت عدم السماح بالزحف، ثم حاول التحايل على الضوابط عندما تم حظر طلباته. هذا الحدث يوضح كيف يمكن لسلوك واحد خاطئ أن يقوض الثقة المكتسبة.",
+              "links": []
+            },
+            {
+              "text": "تقوم Cloudflare بتطوير نظام يقيس مدى التزام الزاحف (Crawler) بتفضيلات الموقع. يتم تحويل هذه الملاحظات إلى \"نطاق ثقة\" (Trust band) قابل للتفسير، يعرض مدى اتساق الروبوت في احترام التفضيلات والأدلة السلوكية التي استندت إليها التقييم، بدلاً من إصدار حكم دائم على الروبوت أو مشغله. هذا النهج يمنح مشغلي الروبوتات المسؤولة وسيلة لإثبات أنهم يحافظون على الثقة عبر الزمن، مع التأكيد على مبدأ \"تحقق، ولكن أعد التحقق باستمرار\".",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "احترام تفضيلات المواقع: robots.txt كخط دفاع أول",
+          "paragraphs": [
+            {
+              "text": "تعتبر ملفات robots.txt الطريقة الأساسية لتواصل أصحاب المواقع مع الروبوتات بشأن تفضيلاتهم. يقيس النظام الجديد ما إذا كانت حركة المرور المرصودة للروبوت متسقة مع هذه التفضيلات المنشورة عبر الزمن. لا يبحث النظام عن المخالفات المعزولة أو الأحداث الفردية التي قد تكون غير مهمة، بل يراقب الأنماط السلوكية المتكررة التي تتجاهل تفضيلات الموقع. التوقع البسيط هو أن الروبوتات المسؤولة تستشير هذه التفضيلات وتحترمها، وفقاً للمعايير الدولية مثل RFC 9309.",
+              "links": [
+                {
+                  "text": "RFC 9309",
+                  "url": "https://www.rfc-editor.org/info/rfc9309/"
+                }
+              ]
+            },
+            {
+              "text": "من المهم التأكيد على أن ملف robots.txt يحدد الحد الأدنى من القواعد لما يجب ألا يفعله الروبوت، لكنه لا يعني أن أي شيء غير مذكور هو مسموح به. على سبيل المثال، لا يحتاج ملف robots.txt إلى ذكر صريح أن الروبوت يجب أن يتوقف عندما يوضح الموقع أن الوصول المستمر غير مرغوب فيه عبر إشارات أخرى. إن تجاهل هذه الإشارات أو تجاوز الحدود المرسومة يقوض الثقة، وهو ما يسعى النظام الجديد لرصده وتقييمه بدقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استجابة إشارات التحذير: دور HTTP 429",
+          "paragraphs": [
+            {
+              "text": "يمكن للروبوتات أن تبقى ضمن المسارات المسموح بها تماماً، ومع ذلك تفرض حملاً كبيراً على المواقع التي تزورها. من أوضح الطرق التي يمكن للموقع من خلالها التعبير عن اعتراضه هو إرسال استجابة HTTP 429 (\"عدد كبير جداً من الطلبات\"). تعتبر هذه الاستجابة توجيهاً للزائر لتقليل معدل إرسال الطلبات، وغالباً ما تتضمن إرشادات حول المدة التي يجب انتظارها قبل المحاولة مرة أخرى.",
+              "links": []
+            },
+            {
+              "text": "ينظر النظام في ما إذا كانت حركة مرور الروبوت تتكيف بعد استلام هذا الإشارة. هل يتباطأ الروبوت؟ هل يتوقف مؤقتاً؟ أم يستمر في إرسال الطلبات بنفس الوتيرة؟ يتم دمج هذا السلوك في نطاق ثقة الروبوت عبر الزمن؛ فالتباطؤ أو التوقف باستمرار يزيد من مستوى الثقة، بينما يتجاهل الإشارة بشكل متكرر يخفضه. هذا يضمن أن الروبوتات التي تحترم إشارات التحذير تُكافأ بثقة أعلى،而那些 التي تتجاهلها تُعامل بحذر أكبر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حلقة المساءلة: تكامل الأدوات والسياسات",
+          "paragraphs": [
+            {
+              "text": "إن مراقبة هذه الإشارات هي مجرد خطوة أولى نحو جعل الأتمتة الموثقة مسؤولة عبر الزمن. من خلال ربط هوية الروبوت بأدلة على سلوكه المستمر، يمكن لمنصات مثل Cloudflare أن تمنح أصحاب المواقع ثقة أكبر في أن الروبوتات التي يختارون السماح لها باحترام تفضيلاتهم. كما يوفر النظام لمشغلي الروبوتات وسيلة لإثبات أنهم يستحقون الثقة، ويوفر سياقاً لأصحاب المواقع حول حركة المرور الآلية التي تصل إليهم.",
+              "links": []
+            },
+            {
+              "text": "يشكل هذا النظام، جنباً إلى جنب مع أدوات Bot Preference Sync و Bot Management، حلقة مساءلة شاملة لحركة المرور الآلية. يساعد Bot Preference Sync أصحاب المواقع على نشر تفضيلاتهم، بينما يكشف رصد تفاعل الروبوتات مع هذه التفضيلات عما إذا كانت الروبوتات الموثقة تحترمها باستمرار. أما Bot Management فيتيح لأصحاب المواقع اتخاذ قرارات حول كيفية التعامل مع هذه الحركة. معاً، تضمن هذه الأدوات أن الثقة تُكسب من خلال سلوك شفاف ومسؤول، وليس من خلال افتراضها بناءً على الهوية وحدها.",
+              "links": [
+                {
+                  "text": "Bot Preference Sync",
+                  "url": "https://blog.cloudflare.com/bot-preference-sync/"
+                },
+                {
+                  "text": "Bot Management",
+                  "url": "https://www.cloudflare.com/products/bot-mitigation/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الطريق نحو الشفافية العامة",
+          "paragraphs": [
+            {
+              "text": "تستخدم Cloudflare هذا النظام داخلياً بالفعل لتقييم مدى اتساق الروبوتات الموثقة في احترام تفضيلات المواقع. وبما أن الثقة تُبنى عبر الزمن، فإن التقييم يركز على الأنماط المستمرة بدلاً من الأحداث المعزولة. في هذه المرحلة الأولية، تعمل الشركة على بناء سجل تاريخي وتحسين كيفية تحويل هذه الملاحظات إلى إرشادات مفيدة. وبناءً على هذا الأساس، تخطط Cloudflare لجعل النظام متاحاً لجميع عملائها، مما سيتيح لهم اختيار عتبات الثقة المستخدمة في تحديد كيفية التعامل مع حركة مرور الروبوتات الموثقة.",
+              "links": []
+            },
+            {
+              "text": "الهدف النهائي واضح ومباشر: الحفاظ على معنى تفضيلات المواقع، وضمان أن الثقة تُكسب من خلال سلوك مستدام. سيتم مشاركة هذه التقييمات علنياً على منصة Radar، مما يوفر رؤية شفافة حول سلوك الروبوتات في الشبكة. كما ستوسع Cloudflare طرق القياس في المستقبل، مما يضمن أن النظام يتطور مع تغير سلوك الروبوتات والتحديات الجديدة في عالم الويب.",
+              "links": [
+                {
+                  "text": "Radar",
+                  "url": "https://radar.cloudflare.com/bots/directory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "روبوتات",
+        "أمن الويب",
+        "تحقق من الهوية",
+        "robots.txt",
+        "HTTP 429",
+        "مساءلة آلية"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Web Bot Auth",
+        "BotBase",
+        "Perplexity",
+        "RFC 9309",
+        "Bot Preference Sync",
+        "Bot Management",
+        "Radar"
+      ],
+      "category": "الروبوتات",
+      "dateLabel": "16 أكتوبر 2026",
+      "modifiedLabel": "16 أكتوبر 2026",
+      "readMinutes": 6,
+      "wordCount": 1005
+    },
+    "en": {
+      "title": "Cloudflare adds continuous checks for Verified bots",
+      "description": "Cloudflare is introducing ongoing checks to measure whether Verified bots follow robots.txt, HTTP 429 responses and other site preferences.",
+      "deck": "Cloudflare is introducing a system that continuously evaluates whether Verified bots respect website instructions after their identities have been established. The company says the approach is intended to make trust depend on sustained behavior rather than verification alone.",
+      "summaryBullets": [
+        "Cloudflare will assess whether Verified bots follow robots.txt preferences over time.",
+        "The system will also examine how bots respond to HTTP 429 “Too Many Requests” signals.",
+        "Repeated disregard for site preferences can lower a bot’s explainable trust band.",
+        "Cloudflare plans to make the system available to customers and publish scores on Radar."
+      ],
+      "sections": [
+        {
+          "heading": "Identity is only the starting point",
+          "paragraphs": [
+            {
+              "text": "Cloudflare says verifying a bot’s operator establishes identity and accountability, but does not prove that the bot will behave responsibly in the future. A known bot may still ignore website preferences, place excessive load on an origin or attempt to evade controls. The company says such behavior is not always malicious and can also result from a configuration mistake or software bug.",
+              "links": []
+            },
+            {
+              "text": "The new system is designed to address the second question in Cloudflare’s framework for automated traffic: not only “Are you who you say you are?” but also “Can we trust you?” Cloudflare previously described those questions in a discussion of good and bad agentic behaviors, and says Verified bots must meet both identity and conduct expectations.",
+              "links": [
+                {
+                  "text": "good and bad agentic behaviors",
+                  "url": "https://blog.cloudflare.com/good-and-bad-agentic-behaviors/#good-behaviors-rooted-in-transparency"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "From verified identity to observed conduct",
+          "paragraphs": [
+            {
+              "text": "Cloudflare’s existing verification model uses Web Bot Auth to sign requests and establish a bot’s identity. BotBase then catalogues that information in an open format. With identification addressed, the company is shifting attention to whether verified automation follows basic rules of responsible access.",
+              "links": [
+                {
+                  "text": "Web Bot Auth",
+                  "url": "https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/"
+                },
+                {
+                  "text": "BotBase",
+                  "url": "https://developers.cloudflare.com/bots/botbase/"
+                }
+              ]
+            },
+            {
+              "text": "Cloudflare distinguishes between risk and trust in this process. Risk describes the possibility that a particular request or action could be harmful at a given moment. Trust, by contrast, is built through repeated and consistent behavior. The proposed assessment therefore focuses on patterns over time instead of treating one isolated event as a permanent judgment about a bot or its operator.",
+              "links": [
+                {
+                  "text": "risk and trust",
+                  "url": "https://blog.cloudflare.com/good-and-bad-agentic-behaviors/#defining-risk-and-trust"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Robots.txt becomes a measured preference",
+          "paragraphs": [
+            {
+              "text": "The first signal in the system is whether a crawler’s observed traffic is consistent with the preferences published in a website’s robots.txt file. That file can instruct all bots, or specific bots, to crawl only particular parts of a site. Cloudflare says the system is intended to identify repeated patterns that disregard those instructions rather than overreact to isolated violations.",
+              "links": []
+            },
+            {
+              "text": "Cloudflare describes robots.txt as the minimum set of rules for what bots should not do, not as a complete statement that everything else is permitted. A site may communicate that continued access is unwelcome through other signals even when a robots.txt file does not explicitly prohibit it. The company says responsible bots should consult and honor the preferences that websites publish.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "HTTP 429 responses provide another test",
+          "paragraphs": [
+            {
+              "text": "The system will also examine how a bot reacts to HTTP 429, or “Too Many Requests,” responses. A 429 response tells a visitor to reduce its request rate and may include guidance about how long to wait before trying again. Cloudflare will assess whether the bot slows down, pauses or continues sending requests at the same pace after receiving that signal.",
+              "links": []
+            },
+            {
+              "text": "A bot that consistently slows down or pauses after a 429 response can strengthen its trust assessment, while repeatedly ignoring the signal can weaken it. Cloudflare presents this as a common-sense courtesy to website operators, whose systems provide the information that automated services seek.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Trust bands and future customer controls",
+          "paragraphs": [
+            {
+              "text": "The observations will be translated into an explainable trust band: a range showing how consistently a bot respects site preferences and which observed behaviors informed the assessment. Cloudflare says the band is not intended to be a permanent verdict. Instead, it gives responsible bot operators a way to demonstrate that trust is being maintained over time and gives site owners more context about the automated traffic reaching them.",
+              "links": []
+            },
+            {
+              "text": "Cloudflare says it is already using the system internally to evaluate Verified bots and is currently building a history of sustained behavior while refining how the observations should guide decisions. The company plans to make the system available to all Cloudflare customers, who will be able to choose the trust threshold used to decide how Verified bot traffic is handled. Cloudflare also plans to share scores publicly on Radar and expand the signals it measures.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "An accountability loop for automated traffic",
+          "paragraphs": [
+            {
+              "text": "The continuous evaluation system is intended to work with Cloudflare’s Bot Preference Sync and Bot Management products. Bot Preference Sync helps website owners publish their preferences, while observing bot interactions with those preferences can show whether Verified bots honor them consistently. Bot Management allows site owners to decide how the resulting automated traffic should be handled.",
+              "links": [
+                {
+                  "text": "Bot Preference Sync",
+                  "url": "https://blog.cloudflare.com/bot-preference-sync/"
+                },
+                {
+                  "text": "Bot Management",
+                  "url": "https://www.cloudflare.com/products/bot-mitigation/"
+                }
+              ]
+            },
+            {
+              "text": "Cloudflare points to its 2025 decision to remove Perplexity’s bot from the Verified bot list as an example of why ongoing accountability matters. The company said the bot sought access to resources on websites that had opted out of scraping and later attempted to circumvent controls after those requests were blocked. Under the new approach, verification is paired with continuing evidence of behavior rather than treated as a one-time guarantee.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Verified bots",
+        "web crawlers",
+        "robots.txt",
+        "Web Bot Auth",
+        "Bot Management",
+        "artificial intelligence"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Verified bots",
+        "Web Bot Auth",
+        "BotBase",
+        "Bot Preference Sync",
+        "Radar",
+        "Perplexity"
+      ],
+      "category": "Robotics",
+      "dateLabel": "October 16, 2026",
+      "modifiedLabel": "October 16, 2026",
+      "readMinutes": 4,
+      "wordCount": 842
+    }
+  },
+  "datePublished": "2026-10-16T16:51:21.103920+03:00",
+  "dateModified": "2026-10-16T16:51:21.103920+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/continuous-accountability-for-verified-bots/hero.webp",
+    "card": "/forum/assets/posts/2026/10/continuous-accountability-for-verified-bots/card.webp",
+    "social": "/forum/assets/posts/2026/10/continuous-accountability-for-verified-bots/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تطلق نظاماً للمساءلة المستمرة للروبوتات الموثقة",
+      "en": "Cloudflare adds continuous checks for Verified bots"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M51ZPERWNWYTD7Z36YMY80A8.01M51ZPFH7VV8EHQTMPJG9FHZ4.png&w=4096&h=2304&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/continuous-accountability-for-verified-bots/inline-01.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "Cloudflare تطلق نظاماً للمساءلة المستمرة للروبوتات الموثقة",
+          "en": "Cloudflare adds continuous checks for Verified bots"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/verified-bots-accountability",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M51ZQ6NCJ2G1DZVHMZRH6SVF.01M51ZQ7A3WZQKT06FDN7XQ84K.png&w=4096&h=2304&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/continuous-accountability-for-verified-bots/inline-02.webp",
+        "width": 1389,
+        "height": 1050,
+        "alt": {
+          "ar": "Cloudflare تطلق نظاماً للمساءلة المستمرة للروبوتات الموثقة",
+          "en": "Cloudflare adds continuous checks for Verified bots"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/verified-bots-accountability",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M510Y9W3KZ7TY6S356NKM69A.png&w=1430&h=1082&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/continuous-accountability-for-verified-bots/inline-03.webp",
+        "width": 1117,
+        "height": 1050,
+        "alt": {
+          "ar": "Cloudflare تطلق نظاماً للمساءلة المستمرة للروبوتات الموثقة",
+          "en": "Cloudflare adds continuous checks for Verified bots"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/verified-bots-accountability",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M510Y8HSC6MWD1CVTR7RPS3G.png&w=1430&h=1344&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/continuous-accountability-for-verified-bots/inline-04.webp",
+        "width": 1400,
+        "height": 765,
+        "alt": {
+          "ar": "Cloudflare تطلق نظاماً للمساءلة المستمرة للروبوتات الموثقة",
+          "en": "Cloudflare adds continuous checks for Verified bots"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/verified-bots-accountability",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M510YB2Z6MB067W19C78FR7J.png&w=1430&h=782&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/verified-bots-accountability",
+      "type": "official",
+      "title": "Continuous accountability for Verified bots"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/verified-bots-accountability",
+  "sourceTitle": "Continuous accountability for Verified bots",
+  "trendScore": 108.75,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-16T13:51:21+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/continuous-accountability-for-verified-bots.json"
+}
