@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "c9a6184923cc1a5837b4",
+  "slug": "welcome-beam-501b-open-model-you-can-own-customize-and-scale",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/welcome-beam-501b-open-model-you-can-own-customize-and-scale/",
+    "en": "/forum/en/ai/welcome-beam-501b-open-model-you-can-own-customize-and-scale/"
+  },
+  "locales": {
+    "ar": {
+      "title": "هاغينغ فيس تطلق Beam بنموذج مفتوح من 501 مليار معلمة",
+      "description": "أطلقت هاغينغ فيس نموذج Beam من Reflection بقدرة 501 مليار معلمة وسياق مليون رمز، مع دعم التخصيص والتشغيل على بنية الفرق الخاصة.",
+      "deck": "أعلنت هاغينغ فيس إتاحة Beam، أول نماذج مختبر Reflection الأميركي، بوصفه نموذجاً مفتوحاً موجهاً للبرمجة والاستخدامات الوكيلة. يجمع النموذج بين سعة 501 مليار معلمة وتشغيل فعلي يعتمد على 23 مليار معلمة لكل رمز.",
+      "summaryBullets": [
+        "Beam نموذج نصي مفتوح من نوع مزيج الخبراء، يضم 501 مليار معلمة ويُفعّل 23 ملياراً منها لكل رمز.",
+        "يدعم نافذة سياق تصل إلى مليون رمز، مع حفظ الاستدلال داخل السياق واستدعاء الأدوات بقواعد مخصصة.",
+        "يتوافر بترخيص Apache 2.0، مع تطبيقات أصلية في Transformers ودعم مبكر لـ vLLM وSGLang.",
+        "تتضمن الإصدارات نقاط تحقق بصيغ BF16 وFP8 وNVFP4، وتختلف متطلبات تشغيلها بحسب نوع وحدات معالجة الرسوميات.",
+        "ترصد Reflection أرصدة Hub بقيمة 10 آلاف دولار لأفضل المشاريع المبنية على Beam والمشاركة عبر المنصة."
+      ],
+      "sections": [
+        {
+          "heading": "نموذج مفتوح للاستخدام على البنية الخاصة",
+          "paragraphs": [
+            {
+              "text": "أصبح Beam متاحاً عبر Hugging Face بوصفه أول نموذج من مختبر Reflection الجديد في الولايات المتحدة. وتقول الشركة إن النموذج صُمم للفرق التي تريد تشغيل نموذج واسع النطاق على أجهزتها أو بنيتها التحتية أو خدماتها السحابية، مع إمكانية تخصيصه لحالات استخدام محددة. ويأتي الإصدار بترخيص Apache 2.0، ما يتيح استخدامه وتعديله وتوسيع تطبيقاته ضمن شروط هذا الترخيص. ويعرض الإعلان التفاصيل الفنية وخيارات التشغيل في Hugging Face Blog.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/reflection-beam"
+                }
+              ]
+            },
+            {
+              "text": "يركز Beam على البرمجة والمهام الوكيلة، وهو نموذج نصي فقط، أي إن المدخلات والمخرجات فيه نصية. وتصفه Reflection بأنه نموذج طويل السياق للاستدلال والعمل الوكيلي، بينما تعتمد بنيته على مزيج الخبراء، بحيث لا تُستخدم الشبكة كاملة لحساب كل رمز. ويتيح ذلك سرعة تشغيل أقرب إلى نموذج أصغر، مع الاحتفاظ بسعة إجمالية أكبر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بنية 501 مليار معلمة وسياق من مليون رمز",
+          "paragraphs": [
+            {
+              "text": "يتكون Beam من 501 مليار معلمة، لكن 23 مليار معلمة فقط تكون نشطة لكل رمز. ويضم مفكك الترميز 52 طبقة و256 خبيراً في كل طبقة من طبقات مزيج الخبراء، مع تشغيل ثمانية خبراء لكل رمز. وتستخدم الطبقات الثلاث الأولى شبكة SwiGLU كثيفة، في حين تستبدل الطبقات الـ49 المتبقية بها كتل مزيج الخبراء. وتمثل الخبراء نحو 98.4% من إجمالي معلمات النموذج، وتبلغ السعة الوسيطة لكل خبير 2560.",
+              "links": []
+            },
+            {
+              "text": "تصل نافذة السياق إلى مليون رمز. وللتعامل مع هذا الامتداد، تستخدم معظم الطبقات انتباهاً بنافذة منزلقة تغطي آخر 512 رمزاً، بينما تنظر كل طبقة سادسة والطبقة الأخيرة إلى السياق الكامل. وينتج عن ذلك 43 طبقة منزلقة و9 طبقات عالمية. ووفق الوصف الفني، يقل نمو ذاكرة التخزين المؤقت لمفاتيح وقيم الانتباه إلى نحو 36 كيلوبايت لكل رمز، بدلاً من 208 كيلوبايت تقريباً لو احتفظت الطبقات الـ52 كلها بالتسلسل الكامل.",
+              "links": []
+            },
+            {
+              "text": "تستخدم طبقات الانتباه آلية grouped-query attention مع 48 رأساً للاستعلام وثمانية رؤوس للمفاتيح والقيم، إلى جانب RMSNorm. كما تتضمن البنية بوابة سيغمويد متعلمة تضبط القنوات قبل الإسقاط النهائي. وفي الطبقات العالمية، لا يُستخدم ترميز موضعي، بل يجري تحجيم للاستعلامات يتدرج ببطء مع عدد الرموز المرئية للمحافظة على دقة softmax مع امتداد السياق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استدلال قابل للحفظ واستدعاء الأدوات",
+          "paragraphs": [
+            {
+              "text": "يدعم Beam إبقاء الاستدلال داخل السياق عبر آلية preserve_thinking، ما يسمح باستمرار مسار الاستدلال عبر الأدوار بدلاً من حصره في استجابة واحدة. كما يتيح استدعاء الأدوات باستخدام قواعد مخصصة. ويقدم النموذج خمسة مستويات للاستدلال هي low وmedium وhigh وxhigh وmax، ويكون medium هو المستوى الافتراضي.",
+              "links": []
+            },
+            {
+              "text": "تتضمن قدراته أيضاً نموذجاً مسوداً لفك الترميز التخميني باستخدام DFlash2، إلى جانب وصفات للاستدلال والضبط الدقيق الخاضع للإشراف والتعلم المعزز. وتذكر هاغينغ فيس أن فرقها عملت مع Reflection لتوفير وصفات SFT وRL، مع إتاحة التعلم المعزز الكامل للمعلمات عبر Miles. كما يتوافر دعم اليوم الأول في Transformers وSGLang وvLLM، ما يهيئ مسارات متعددة لتجربة النموذج أو دمجه في أنظمة خدمة قائمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إصدارات الدقة ومتطلبات العتاد",
+          "paragraphs": [
+            {
+              "text": "تتوفر نقاط تحقق Beam بصيغة BF16، ومنها Beam-1.0-501B-A23B، وبصيغة FP8، إضافة إلى إصدار NVFP4 الموجه أساساً إلى وحدات معالجة الرسوميات من عائلة NVIDIA Blackwell. ويبلغ حجم نقطة تحقق BF16 نحو تيرابايت واحد بصيغة safetensors، بينما يخفض NVFP4 الحجم إلى قرابة 280 جيجابايت عبر تخزين معظم المعلمات بدقة أربعة بتات مع إبقاء بعض الأجزاء بدقة BF16 للحفاظ على الدقة. أما إصدارات FP8 فتستهدف أيضاً شرائح Hopper وAmpere.",
+              "links": [
+                {
+                  "text": "Beam-1.0-501B-A23B",
+                  "url": "https://huggingface.co/reflection/Beam-1.0-501B-A23B"
+                },
+                {
+                  "text": "FP8",
+                  "url": "https://huggingface.co/reflection/Beam-1.0-501B-A23B-FP8"
+                },
+                {
+                  "text": "NVFP4",
+                  "url": "https://huggingface.co/reflection/Beam-1.0-501B-A23B-NVFP4"
+                }
+              ]
+            },
+            {
+              "text": "تقول هاغينغ فيس إن الطريقة العملية الأكثر ملاءمة لخدمة النموذج هي استخدام إصدار NVFP4، الذي يحافظ على معظم جودة إصدار BF16 وفق نتائج قدمها فريق Reflection. وتبلغ ذاكرة HBM3e في وحدة B200 نحو 180 جيجابايت؛ لذلك يمكن لوحدتين استيعاب الأوزان، لكن مع مساحة محدودة للتنشيطات وذاكرة KV. وتوصي المعطيات بالتخطيط لأربع وحدات B200، بسعة إجمالية تبلغ 720 جيجابايت، لإتاحة مجال أكبر للسياقات الطويلة والطلبات المتزامنة. كما تذكر إمكان تشغيله على عقدة تضم ثماني وحدات B200، أو وحدتي B300، أو ثماني وحدات RTX Pro 6000. ولمن لا يملك عتاد Blackwell، تقترح المادة تجربة النموذج عبر مزودي الاستدلال الخادميين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أداة تشغيل وحوافز لمشاريع المجتمع",
+          "paragraphs": [
+            {
+              "text": "يأتي Beam مع أداة تشغيل مفتوحة المصدر مخصصة مبنية على Rust، وتصفها المادة بأنها مصممة لتقديم أفضل أداء للنموذج. وتوفر Reflection كذلك دعماً عبر مكتبات التشغيل الشائعة، مع إمكانية استخدام الوصفات المنشورة لنشر النموذج أو ضبطه أو بناء تجارب تعلم معزز حوله. ويتيح هذا الجمع بين أداة التشغيل الخاصة والمكتبات downstream اختبار النموذج بطرق مختلفة بحسب البنية والهدف.",
+              "links": []
+            },
+            {
+              "text": "وأعلنت Reflection تخصيص أرصدة على Hub بقيمة 10 آلاف دولار لأفضل المشاريع التي تستخدم Beam. وتشمل الأفكار المطروحة بناء عرض تجريبي على Spaces، أو تكميم النموذج لعتاد مفضل، أو إنشاء مجموعة بيانات اصطناعية لمشكلة محددة، أو بناء بيئة تعلم معزز، أو نشر نتائج معيارية. وللدخول في المبادرة، ينبغي مشاركة مستودع النموذج أو مجموعة البيانات أو المساحة على صفحة مستودع النموذج، ثم تجمع الشركة الروابط وتختار المشاريع الفائزة وتضيف الأرصدة إلى حسابات أصحابها.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "النماذج المفتوحة",
+        "Beam",
+        "Reflection",
+        "مزيج الخبراء",
+        "النماذج اللغوية",
+        "الاستدلال",
+        "العتاد"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Reflection",
+        "Beam",
+        "Transformers",
+        "vLLM",
+        "SGLang",
+        "NVIDIA Blackwell",
+        "DFlash2"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "16 أكتوبر 2026",
+      "modifiedLabel": "16 أكتوبر 2026",
+      "readMinutes": 5,
+      "wordCount": 845
+    },
+    "en": {
+      "title": "Reflection launches Beam, a 501B open AI model",
+      "description": "Reflection has released Beam, a 501B-parameter open model for coding and agentic work with a 1M-token context window.",
+      "deck": "Reflection has released Beam, a 501B-parameter mixture-of-experts model designed for coding, long-context reasoning and agentic workloads. The Apache 2.0-licensed model is intended for teams that want to run and customize a frontier-scale system on their own infrastructure.",
+      "summaryBullets": [
+        "Beam has 501B total parameters, with 23B active for each token.",
+        "The text-only model supports a 1M-token context window and persistent reasoning across turns.",
+        "Reflection is providing Transformers, vLLM and SGLang support, alongside inference and post-training recipes.",
+        "The model is available in BF16, FP8 and NVFP4 formats for different hardware generations.",
+        "Reflection is offering $10,000 in Hub credits for projects built with Beam."
+      ],
+      "sections": [
+        {
+          "heading": "Open release targets private deployment",
+          "paragraphs": [
+            {
+              "text": "Beam is the first model from Reflection, a new US-based lab, and is being released as an open model through Hugging Face. The company describes it as a 501B-parameter mixture-of-experts large language model with 23B parameters active per token. It accepts text input, produces text output and has a 1M-token context window. The model is released under the Apache 2.0 license, allowing teams to own, customize and deploy it on their own hardware, infrastructure or cloud.",
+              "links": [
+                {
+                  "text": "Hugging Face",
+                  "url": "https://huggingface.co/blog/reflection-beam"
+                }
+              ]
+            },
+            {
+              "text": "Reflection is positioning Beam for coding and agentic use cases rather than as a general-purpose consumer product. The release emphasizes control over deployment and customization, with the company presenting the model as an option for teams that want frontier-scale capabilities without relying exclusively on a hosted service.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Sparse architecture supports long contexts",
+          "paragraphs": [
+            {
+              "text": "Beam uses a sparse mixture-of-experts architecture in which only a fraction of the network processes each token. Its decoder has 52 layers and 256 experts in most of its mixture-of-experts layers, while eight routed experts are selected for each token. This gives the model the computational profile of a much smaller model while retaining the capacity of a 501B-parameter system. All experts must remain in memory, however, so deployment still requires memory for the full model.",
+              "links": []
+            },
+            {
+              "text": "The architecture combines sliding-window and global attention to limit the cost of long sequences. Forty-three layers attend to a fixed window of the previous 512 tokens, while nine global layers can attend to the full context. Hugging Face says this design makes the key-value cache grow by about 36 KiB per token in BF16 with the Transformers dynamic cache, compared with 208 KiB per token if every layer retained the full sequence.",
+              "links": []
+            },
+            {
+              "text": "The model also uses grouped-query attention, scalable-softmax query scaling in global layers and a residual design intended to keep the stream at a constant scale through the network. The first three layers use dense SwiGLU blocks; the remaining 49 use expert blocks. Beam applies selected computations, including routing, normalization and the final logit softcap, in FP32.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Reasoning and agent features",
+          "paragraphs": [
+            {
+              "text": "Beam supports reasoning that can remain in context across turns through a preserve_thinking capability. Users can select among five reasoning levels—low, medium, high, xhigh and max—with medium set as the default. The model also includes tool calling through a dedicated grammar, features aimed at workflows in which the model must plan, invoke tools and continue work across multiple interactions.",
+              "links": []
+            },
+            {
+              "text": "The release includes a speculative decoding drafter model based on DFlash2. Reflection and Hugging Face have also prepared recipes for inference, supervised fine-tuning and reinforcement learning, including full-parameter reinforcement learning with Miles. These materials are intended to help teams adapt Beam to their own applications rather than only run the base checkpoint.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Hardware formats and serving options",
+          "paragraphs": [
+            {
+              "text": "Beam is available in several precision formats. The BF16 checkpoint is about 1 TB in safetensors format, while the NVFP4 version stores most parameters at 4-bit precision and reduces the model to roughly 280 GB. NVFP4 is intended for NVIDIA Blackwell GPUs, while FP8 checkpoints are positioned for Hopper and Ampere systems. The available checkpoints include [BF16](https://huggingface.co/reflection/Beam-1.0-501B-A23B), FP8 and NVFP4 variants.",
+              "links": [
+                {
+                  "text": "BF16",
+                  "url": "https://huggingface.co/reflection/Beam-1.0-501B-A23B"
+                }
+              ]
+            },
+            {
+              "text": "Hugging Face says two B200 GPUs can hold the NVFP4 weights, although four B200s leave more room for activations, the key-value cache, long contexts and concurrent requests. The model can also be served on an eight-B200 node, two B300 GPUs or eight RTX Pro 6000 GPUs, according to the release. Teams without suitable Blackwell hardware can use serverless Inference Providers to test the model.",
+              "links": []
+            },
+            {
+              "text": "Beam has day-one support in Transformers, SGLang and vLLM. Reflection also supplies a dedicated open-source Rust-based custom harness intended to deliver the model's best performance. The harness is documented separately by Reflection, alongside the deployment recipes for the downstream serving libraries.",
+              "links": [
+                {
+                  "text": "Rust-based custom harness",
+                  "url": "https://developers.reflection.ai/mirror-overview"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Credit program encourages community projects",
+          "paragraphs": [
+            {
+              "text": "Reflection is offering $10,000 in Hub credits to projects that use Beam. Eligible work can include a Spaces demo, a quantized version for specific hardware, a synthetic dataset, an reinforcement-learning environment or a benchmark. Participants must create a model, dataset or Space repository and share it on the Beam model page; Reflection says it will collect the links, select the best projects and send credits to their Hub accounts.",
+              "links": []
+            },
+            {
+              "text": "The program gives developers a direct way to test the model's performance and adapt it to specialized workloads. It also extends the release beyond a checkpoint by encouraging shared tooling, evaluations and applications around Beam's long-context, coding and agentic capabilities.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial intelligence",
+        "Open models",
+        "Reflection",
+        "Hugging Face",
+        "Mixture of experts",
+        "Long-context AI",
+        "Generative AI"
+      ],
+      "entities": [
+        "Reflection",
+        "Beam",
+        "Hugging Face",
+        "Transformers",
+        "vLLM",
+        "SGLang",
+        "NVIDIA Blackwell"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 16, 2026",
+      "modifiedLabel": "October 16, 2026",
+      "readMinutes": 4,
+      "wordCount": 837
+    }
+  },
+  "datePublished": "2026-10-16T17:31:21.323921+03:00",
+  "dateModified": "2026-10-16T17:31:21.323921+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/welcome-beam-501b-open-model-you-can-own-customize-and-scale/hero.webp",
+    "card": "/forum/assets/posts/2026/10/welcome-beam-501b-open-model-you-can-own-customize-and-scale/card.webp",
+    "social": "/forum/assets/posts/2026/10/welcome-beam-501b-open-model-you-can-own-customize-and-scale/social.jpg",
+    "alt": {
+      "ar": "هاغينغ فيس تطلق Beam بنموذج مفتوح من 501 مليار معلمة",
+      "en": "Reflection launches Beam, a 501B open AI model"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/asyncgrpo-lora-hfjobs/thumbnail.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/welcome-beam-501b-open-model-you-can-own-customize-and-scale/inline-01.webp",
+        "width": 1300,
+        "height": 650,
+        "alt": {
+          "ar": "هاغينغ فيس تطلق Beam بنموذج مفتوح من 501 مليار معلمة",
+          "en": "Reflection launches Beam, a 501B open AI model"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/reflection-beam",
+        "originalUrl": "https://huggingface.co/blog/assets/delta-weight-sync/thumbnail.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/reflection-beam",
+      "type": "official",
+      "title": "Welcome Beam: a 501B open model you can own, customize, and scale"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/reflection-beam",
+  "sourceTitle": "Welcome Beam: a 501B open model you can own, customize, and scale",
+  "trendScore": 103.44,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-16T14:31:21+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 3
+  },
+  "contentFile": "forum/content/2026/10/welcome-beam-501b-open-model-you-can-own-customize-and-scale.json"
+}
