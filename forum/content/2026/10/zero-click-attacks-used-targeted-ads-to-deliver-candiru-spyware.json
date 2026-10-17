@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "ede028256a25d1488816",
+  "slug": "zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware",
+  "categorySlug": "security",
+  "urls": {
+    "ar": "/forum/ar/security/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware/",
+    "en": "/forum/en/security/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware/"
+  },
+  "locales": {
+    "ar": {
+      "title": "هجمات صفرية النقر تستخدم إعلانات مستهدفة لتسريب برنامج Candiru التجسسي",
+      "description": "كشفت دراسة تقنية عن استخدام إعلانات إلكترونية مستهدفة لتسريب برنامج Candiru التجسسي على أجهزة شبكة الجزيرة دون أي تفاعل من المستخدم، في عملية وصفها الباحثون بأنها AdFection.",
+      "deck": "وثّق باحثون في Citizen Lab هجمات صفرية النقر استهدفت شبكة الجزيرة، حيث تم تسليم برنامج Candiru التجسسي عبر إعلانات إلكترونية خبيثة تتطلب فقط عرضها على الجهاز دون نقر.",
+      "summaryBullets": [
+        "أطلق الباحثون على هذه التقنية اسم AdFection، وهي أول تأكيد فني عام لتسريب برامج تجسس مرتزقة عبر إعلانات مستهدفة.",
+        "استخدمت شركة Discover-Tech منصة Controlium لاستهداف أجهزة محددة وتوجيهها نحو خوادم Candiru بعد التحقق من أهلية الضحية.",
+        "أظهرت السجلات استهداف ما لا يقل عن 45 جهازاً تابعاً لشبكة الجزيرة بين عامي 2024 و2025، مع استعادة ملفات DLL مرتبطة بالبرنامج.",
+        "أدت التقارير إلى قيام شبكات إعلانية كبرى مثل Google وIAB Europe بحذف الحسابات المخالفة وحجب النطاقات المرتبطة بالهجمات.",
+        "تشير التقديرات إلى أن مئات الآلاف أو ملايين المستخدمين تم توجيههم إلى نطاقات خبيثة عبر إعلانات Discover-Tech خلال فترة محددة."
+      ],
+      "sections": [
+        {
+          "heading": "آلية الهجوم: إعلانات خبيثة دون تفاعل",
+          "paragraphs": [
+            {
+              "text": "كشفت تحقيقات تقنية حديثة عن استخدام هجمات من نوع 'صفر النقر' (Zero-click) لتسليم برنامج Candiru التجسسي إلى أجهزة تابعة لشبكة الجزيرة الإعلامية. تعتمد هذه الآلية على إعلانات إلكترونية مستهدفة، حيث لا يحتاج المهاجم إلى أي تفاعل من الضحية، بل يكفي مجرد عرض الإعلان الخبيث على جهازها لتنفيذ الكود الضار. وصف الباحثون في Citizen Lab هذه التقنية باسم AdFection، مؤكدين أن تقريرهم يمثل أول تأكيد فني علني لتسليم برامج تجسس مرتزقة عبر الإعلانات المستهدفة.",
+              "links": [
+                {
+                  "text": "Citizen Lab",
+                  "url": "https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دور شركة Discover-Tech ومنصة Controlium",
+          "paragraphs": [
+            {
+              "text": "ربطت التحقيقات هذه الهجمات بشركة Discover-Tech الإسرائيلية، التي وصفها Citizen Lab بأنها 'جسر بين شركات برامج التجسس المرتزقة والنظام الإعلاني'. سمحت الشركة لعملائها باستخدام منصة Controlium لاستهداف أجهزة محددة بكود خبيث، أو لجمع البيانات الشخصية وتحديد بصمة المستخدم. تعمل الشركة من خلال شراء مساحات إعلانية عبر شبكات وشركات تبادل إعلانية رئيسية، مع تضمين كود JavaScript في الإعلانات يتصل بخادم خاص يُعرف باسم 'NOAS server' عند عرض الإعلان.",
+              "links": [
+                {
+                  "text": "Citizen Lab",
+                  "url": "https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية الاستهداف والتحقق من الأهلية",
+          "paragraphs": [
+            {
+              "text": "تستخدم خوادم NOAS، أو ما يُعرف أيضاً بخادم getAd، عدة معايير مثل عنوان IP ومعرفات الإعلان لتحديد ما إذا كان الهدف مؤهلاً لاستقبال الكود الخبيث. الأجهزة المختارة تستلم كوداً إضافياً يوجهها نحو خوادم التحقق والتحكم، بينما لا تتلقى الأجهزة الأخرى التي يعرض عليها الإعلان أي شيء، مما يساعد في الحفاظ على سرية الهجوم. هذه الآلية تتيح للمهاجمين التمييز بدقة بين الأهداف المرغوبة والجمهور العام دون إثارة الشكوك.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أدلة استهداف شبكة الجزيرة",
+          "paragraphs": [
+            {
+              "text": "قدمت شبكة الجزيرة لـ Citizen Lab أدلة على هجمات استهدفت ما لا يقل عن 45 جهازاً بين عامي 2024 و2025. أظهرت السجلات التي فحصها الباحثون تسلسلاً واضحاً من بنية Discover-Tech التحتية إلى خوادم التحقق الخاصة بـ Candiru، ثم إلى خوادم الأوامر والتحكم. كما استعاد الباحثون ملف DLL من نظام Windows متضرر، ونسبوه بثقة عالية إلى برنامج Candiru بناءً على التداخلات في البنية التحتية والكود مع عينات سابقة تم التقاطها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خلفية عن برنامج Candiru التجسسي",
+          "paragraphs": [
+            {
+              "text": "يُعد Candiru برنامج تجسس إسرائيلي يبيع أدوات المراقبة رسمياً للحكومات فقط. طور الشركة أيضاً برنامجاً خبيثاً لنظام Windows يُسمى DevilsTongue، والذي يمكنه سرقة الملفات والبيانات والمعلومات الشخصية والرسائل. وفقاً لتقارير سابقة، تم نشر أدواتها عبر ثغرات يوم الصفر في أنظمة Windows وChrome ضد الصحفيين والنشطاء والسياسيين وأهداف أخرى، مما يسلط الضوء على خطورة تسرب هذه التقنيات إلى القطاع الخاص أو المرتزقة.",
+              "links": [
+                {
+                  "text": "DevilsTongue",
+                  "url": "https://www.bleepingcomputer.com/news/security/microsoft-israeli-firm-used-windows-zero-days-to-deploy-spyware/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "حجم العملية والإجراءات التصحيحية",
+          "paragraphs": [
+            {
+              "text": "على الرغم من أن شبكة الجزيرة هي الهدف المؤكد الوحيد حالياً، تشير تقارير Citizen Lab إلى أن العملية الإعلانية قدمت 3.77 مليار عرض فازت بـ 442 مليون مزاداً بين مارس ويونيو 2026. ظهرت إعلانات تحمل وسوم سكربت المهاجمين في 75,373 تطبيقاً لنظامي Android وiOS و120,768 موقعاً إلكترونياً، مع العلم أن هذه الأرقام لا تمثل عدد حالات الإصابة. وقد قامت شركات إعلانية كبرى مثل Google وIAB Europe وBeeswax وEskimi وVungle باتخاذ إجراءات لحذف الحسابات المخالفة وحجب الوصول إلى النطاقات المرتبطة بالهجمات بعد استلام التقارير.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الأمن السيبراني",
+        "برامج التجسس",
+        "Candiru",
+        "هجمات صفرية النقر",
+        "الإعلانات الخبيثة",
+        "Discover-Tech",
+        "شبكة الجزيرة"
+      ],
+      "entities": [
+        "Candiru",
+        "Al Jazeera Media Network",
+        "Citizen Lab",
+        "Discover-Tech",
+        "Controlium",
+        "Google",
+        "IAB Europe",
+        "DevilsTongue"
+      ],
+      "category": "الأمن التقني",
+      "dateLabel": "17 أكتوبر 2026",
+      "modifiedLabel": "17 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 573
+    },
+    "en": {
+      "title": "Targeted Ads Delivered Candiru Spyware in Zero-Click Attacks",
+      "description": "Researchers reveal zero-click attacks targeting Al Jazeera devices by delivering Candiru spyware through targeted online advertisements.",
+      "deck": "A novel zero-click attack technique has utilized targeted online advertisements to deliver Candiru spyware directly to devices at the Al Jazeera Media Network without requiring any user interaction.",
+      "summaryBullets": [
+        "Candiru spyware was delivered to devices via targeted online advertisements in zero-click attacks.",
+        "Researchers at Citizen Lab dubbed the technique AdFection, noting it is the first public technical confirmation of mercenary spyware spread through ads.",
+        "The campaign was linked to the Israeli firm Discover-Tech, which allegedly bridged spyware vendors with the advertising ecosystem.",
+        "Major ad companies, including Google and IAB Europe, took action to remove offending accounts after receiving the reports."
+      ],
+      "sections": [
+        {
+          "heading": "Zero-Click Attacks via Targeted Ads",
+          "paragraphs": [
+            {
+              "text": "Candiru spyware was delivered to devices at Al Jazeera Media Network via targeted online advertisements in a zero-click attack that required only rendering the malicious ads on the victim's device.",
+              "links": [
+                {
+                  "text": "Candiru spyware was delivered to devices at Al Jazeera Media Network via targeted online advertisements in a zero-click attack that required only rendering the malicious ads on the victim's device.",
+                  "url": "https://www.bleepingcomputer.com/news/security/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware/"
+                }
+              ]
+            },
+            {
+              "text": "Researchers investigating the campaign referred to this technique as AdFection, highlighting that their report represents the first public technical confirmation of mercenary spyware being delivered through targeted online advertisements. A similar method was previously documented by Amnesty International involving ads that infected targets with Predator spyware without requiring any clicks.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The Discover-Tech Connection and AdFection Mechanics",
+          "paragraphs": [
+            {
+              "text": "Unlike previous vectors, AdFection was caught in real attacks and linked directly to the Israeli firm Discover-Tech. According to detailed findings published by Citizen Lab, the company acted as a bridge between mercenary spyware vendors and the wider advertising ecosystem.",
+              "links": []
+            },
+            {
+              "text": "Discover-Tech allegedly permitted its customers to use its Controlium platform to profile, deanonimize, and fingerprint user devices, or target specific devices with malicious code. The company purchased ad placements through mainstream advertising networks and exchanges, embedding JavaScript within ads that contacted a NOAS server whenever the ad was rendered on a user device.",
+              "links": []
+            },
+            {
+              "text": "Through parameters such as IP addresses and ad identifiers, the NOAS server determined whether a target was eligible to receive the malicious JavaScript code. Devices that matched target profiles received the code, while other devices rendered the ad normally, helping to maintain the stealth of the operation.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Impact on Al Jazeera and Attribution to Candiru",
+          "paragraphs": [
+            {
+              "text": "Al Jazeera provided researchers with evidence of attacks targeting at least 45 devices between 2024 and 2025. Network logs examined during the investigation showed a clear sequence from Discover-Tech infrastructure to Candiru validation servers and eventually to spyware command-and-control servers.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, researchers recovered a DLL file from a compromised Windows system and attributed it with high confidence to Candiru. This attribution was based on infrastructure and code overlaps with previously captured samples associated with the Israeli spyware vendor, which has a history of developing surveillance tools like DevilsTongue.",
+              "links": [
+                {
+                  "text": "DevilsTongue",
+                  "url": "https://www.bleepingcomputer.com/news/security/microsoft-israeli-firm-used-windows-zero-days-to-deploy-spyware/"
+                }
+              ]
+            },
+            {
+              "text": "Candiru is an Israeli spyware vendor that officially sells its surveillance products exclusively to governments. Its tools have historically been deployed via zero-day exploits against journalists, activists, and other high-profile individuals.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Scope of the Advertising Operation and Industry Response",
+          "paragraphs": [
+            {
+              "text": "While Al Jazeera is one confirmed target of these attacks, research indicates the broader advertising operation placed 3.77 billion bids and won 442 million auctions between March and June 2026. Ads assessed to carry attacker script tags appeared across more than 75,000 Android and iOS applications, as well as over 120,000 websites, though these numbers reflect ad delivery rather than direct infections.",
+              "links": []
+            },
+            {
+              "text": "Following notification by researchers, major advertising organizations and technology companies—including Google, IAB Europe, Beeswax, Eskimi, and Vungle—took swift action to remove offending accounts and block access to the involved domains.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Candiru",
+        "Spyware",
+        "Zero-Click",
+        "Al Jazeera",
+        "Citizen Lab",
+        "Discover-Tech",
+        "AdFection",
+        "Security"
+      ],
+      "entities": [
+        "Candiru",
+        "Al Jazeera Media Network",
+        "Citizen Lab",
+        "Discover-Tech",
+        "Google",
+        "IAB Europe"
+      ],
+      "category": "Cybersecurity",
+      "dateLabel": "October 17, 2026",
+      "modifiedLabel": "October 17, 2026",
+      "readMinutes": 3,
+      "wordCount": 557
+    }
+  },
+  "datePublished": "2026-10-17T05:37:59.647343+03:00",
+  "dateModified": "2026-10-17T05:37:59.647343+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware/hero.webp",
+    "card": "/forum/assets/posts/2026/10/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware/card.webp",
+    "social": "/forum/assets/posts/2026/10/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware/social.jpg",
+    "alt": {
+      "ar": "هجمات صفرية النقر تستخدم إعلانات مستهدفة لتسريب برنامج Candiru التجسسي",
+      "en": "Targeted Ads Delivered Candiru Spyware in Zero-Click Attacks"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/10/16/spywareads.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware/inline-01.webp",
+        "width": 1400,
+        "height": 809,
+        "alt": {
+          "ar": "هجمات صفرية النقر تستخدم إعلانات مستهدفة لتسريب برنامج Candiru التجسسي",
+          "en": "Action sequence for valid targets"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Action sequence for valid targets Source: Citizen Lab"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/u/1220909/2026/October/times.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware/inline-02.webp",
+        "width": 1400,
+        "height": 748,
+        "alt": {
+          "ar": "هجمات صفرية النقر تستخدم إعلانات مستهدفة لتسريب برنامج Candiru التجسسي",
+          "en": "Candiru attack chain"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Candiru attack chain Source: Citizen Lab"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/u/1220909/2026/October/attackchain.jpg"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware/",
+      "type": "journalism",
+      "title": "Zero-click attacks used targeted ads to deliver Candiru spyware"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/security/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware",
+  "sourceTitle": "Zero-click attacks used targeted ads to deliver Candiru spyware",
+  "trendScore": 88.49,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-17T02:37:59+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/zero-click-attacks-used-targeted-ads-to-deliver-candiru-spyware.json"
+}
