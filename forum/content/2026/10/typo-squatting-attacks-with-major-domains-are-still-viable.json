@@ -1,0 +1,288 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "1132d25691a445904041",
+  "slug": "typo-squatting-attacks-with-major-domains-are-still-viable",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/typo-squatting-attacks-with-major-domains-are-still-viable/",
+    "en": "/forum/en/ai/typo-squatting-attacks-with-major-domains-are-still-viable/"
+  },
+  "locales": {
+    "ar": {
+      "title": "هجمات انتحال النطاقات لا تزال فعالة رغم تدابير الحماية المتقدمة",
+      "description": "تقرير جديد يكشف كيف تستغل هجمات انتحال النطاقات ثغرات في الحروف السيريلية لتجاوز أنظمة الحماية في المتصفحات، مما يهدد ملايين المستخدمين.",
+      "deck": "رغم وجود أنظمة حماية متطورة في المتصفحات، لا تزال هجمات انتحال النطاقات (Typosquatting) تمثل خطراً حقيقياً بفضل ثغرات دقيقة في معالجة الأحرف السيريلية.",
+      "summaryBullets": [
+        "تقرير من Have I Been Squatted يوضح كيف يمكن استخدام حروف سيريلية مشابهة للحروف اللاتينية لتجاوز أنظمة الحماية.",
+        "متصفح Chromium يمتلك أفضل قواعد الحماية، لكنه لا يزال عرضة لثغرات معينة في الأحرف غير الشائعة.",
+        "يوصي الباحثون الشركات بتسجيل النطاقات المشابهة وتشجيع استخدام مفاتيح المرور (Passkeys) لحماية المستخدمين.",
+        "تتضمن قواعد الحماية قوائم ضخمة من النطاقات الشائعة، لكن التطور المستمر في الأحرف يخلق تحديات مستمرة."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي الأحرف المتشابهة في النطاقات",
+          "paragraphs": [
+            {
+              "text": "عندما قررت مجموعة IETF السماح باستخدام أحرف يونيكود في أسماء النطاقات، رأى العديد من الخبراء التقنيين هذا القرار خطوة إيجابية، لكنهم حذروا في الوقت نفسه من المخاطر الأمنية الكامنة. فوجود مئات الأحرف الفريدة التي قد تبدو متشابهة أو متطابقة عبر الأبجديات المختلفة يفتح الباب أمام هجمات انتحال النطاقات. في هذه الهجمات، يقوم المهاجمون بإنشاء مواقع ويب تعمل بشكل كامل باستخدام عناوين ويب خاطئة عمداً، لكنها تبدو مطابقة تماماً للعنوان الحقيقي. وبذلك، يتمكنون من استهداف الزوار غير الحذقين الذين يصلون إلى هذه المواقع الخبيثة نتيجة أخطاء في كتابة العناوين أو من خلال نتائج البحث.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قواعد حماية متصفحات Chromium",
+          "paragraphs": [
+            {
+              "text": "يُعد متصفح Chromium، الذي يعتمد عليه كل من Chrome وEdge وBrave، الأكثر تقدماً في قواعد اكتشاف ومنع النطاقات الخبيثة التي تتنكر في ثوب مواقع شرعية. وقد أظهرت دراسة أجريت عام 2020 أن Chromium تمكّن من رصد 64.1% من محاولات انتحال النطاقات، متفوقاً على متصفحات Firefox وSafari. ومع ذلك، كما يوضح تقرير مفصل من Have I Been Squatted، فإن حتى أفضل أنظمة الحماية تحتوي على حالات استثنائية غريبة يمكن استغلالها.",
+              "links": [
+                {
+                  "text": "Have I Been Squatted",
+                  "url": "https://haveibeensquatted.com/blog/turning-idn-edge-cases-into-typosquats"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "استغلال الحروف السيريلية",
+          "paragraphs": [
+            {
+              "text": "يستخدم الباحثون نطاق \"аррӏө.com\" كمثال توضيحي، وهو ليس مطابقاً تماماً للنطاق الحقيقي \"apple.com\". يوضح التقرير كيف يمكن لجمعيات معينة من الأحرف أن تتجاوز عدة طبقات من الحماية بفضل الظروف الخاصة المحيطة باستخدام حروف سيريلية محددة. تتضمن الأبجدية السيريلية أحرفاً مشابهة للعديد من الحروف اللاتينية، مثل: а (تشبه a)، е (تشبه e)، о (تشبه o)، р (تشبه p)، و с (تشبه c). قد يصعب على المستخدم العادي ملاحظة هذه الفروق الدقيقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "كيف تتجاوز الثغرات أنظمة الحماية؟",
+          "paragraphs": [
+            {
+              "text": "عند محاولة إدخال حرف سيريلي واحد متشابه في وسط حروف لاتينية قياسية، تطلق أنظمة حماية Chromium إجراءاتها وتعرض اسم النطاق بصيغة Punycode. على سبيل المثال، استخدام الحرف السيريلي \"а\" مع \"pple.com\" سيظهر للمستخدم على شكل \"xn--pple-43d.com\". وبشكل عام، لا تمر النطاقات التي تحتوي على أحرف غير لاتينية وتنتهي بـ .com الفحص إلا إذا كانت جميع أحرفها من الأبجدية نفسها، باستثناء حالات نادرة.",
+              "links": [
+                {
+                  "text": "Punycode",
+                  "url": "https://www.punycoder.com/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "قوائم الحروف المحظورة",
+          "paragraphs": [
+            {
+              "text": "إذا حاول المهاجم استخدام \"аррӏе.com\" معتمداً على حروف سيريلية متشابهة بالكامل، فإن المحاولة ستفشل أيضاً. يحتفظ Chromium بقائمة تضم 29 حرفاً سيريلياً تتنكر بشكل روتيني في ثوب نظيراتها اللاتينية، ويُمنع تكوين أسماء نطاقات باستخدام أحرف من هذه القائمة فقط. لكن السؤال المطروح هو: كيف يمر نطاق \"аррӏө.com\"؟ الإجابة تكمن في الحرف الأخير \"ө\"، وهو حرف سيريلي على شكل بيضاوي مع خط عابر، وهو ليس مدرجاً في القائمة الخاصة المكونة من 29 حرفاً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحدي المستمر في اكتشاف الانتحال",
+          "paragraphs": [
+            {
+              "text": "على الرغم من أن الإصدارات الأحدث من Chromium قد تضيف هذا الحرف إلى القائمة قريباً، إلا أن هذا يكشف عن صعوبة المشكلة الجوهرية: لا يوجد حل شامل وموحد لاكتشاف هجمات انتحال النطاقات، وبالتالي فإن أفضل مجموعة قواعد ستجد نفسها عاجلاً أم آجلاً في الجانب الخاطئ من حالة استثنائية. يتطلب الأمر عيوناً حريصة كثيرة للعب لعبة \"يونيكود بوكيمون\" والقبض على جميع الأحرف، خاصة وأن مجموعة الأحرف تتطور باستمرار وتحتوي الآن على ما يقرب من 173,000 إدخال، على الرغم من أن جزءاً فقط منها مؤهل للاستخدام كأسماء نطاقات أو نطاقات علوية (TLDs) في الممارسة العملية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوصيات الأمنية للشركات",
+          "paragraphs": [
+            {
+              "text": "بالإضافة إلى العديد من القواعد والتحقق لكل أبجدية، يحتفظ Chromium بقائمة تضم أكثر من 8,000 نطاق شائع معرض لخطر انتحال النطاقات، وينفذ فحوصات أقوى ضد 836 منها. وبالمثل، تبذل سجلات النطاقات جهوداً معقولة لمنع انتحال النطاقات، مثل وضع قواعد صارمة حول الأحرف المسموح بها في كل نطاق علوي، لكن هذا لا يكفي لحل المشكلة بالكامل. في هذا السياق، يوصي فريق Have I Been Squatted الشركات التي تخشى من الانتحال بتسجيل أي نطاقات مشابهة، ومحاولة تشجيع المستخدمين على استخدام مفاتيح المرور (Passkeys). ترتبط مفاتيح المرور دائماً بنطاق محدد، مما يعني أنه لن يتمكن المستخدم من تسجيل الدخول إلى موقع خبيث باستخدامها.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمن سيبراني",
+        "انتحال نطاقات",
+        "يونيكود",
+        "متصفحات ويب",
+        "حماية المستخدمين",
+        "Chromium"
+      ],
+      "entities": [
+        "IETF",
+        "Chromium",
+        "Have I Been Squatted",
+        "Firefox",
+        "Safari",
+        "Chrome",
+        "Edge",
+        "Brave"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "18 أكتوبر 2026",
+      "modifiedLabel": "18 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 673
+    },
+    "en": {
+      "title": "Typo-Squatting and Cyrillic Edge Cases Evade Security",
+      "description": "Research demonstrates that typo-squatting attacks utilizing major domains and specific Cyrillic character corner cases can still evade top browser checks.",
+      "deck": "Security research highlights ongoing challenges with domain typo-squatting as specific Cyrillic character edge cases manage to bypass leading browser safeguards.",
+      "summaryBullets": [
+        "Unicode characters in domain names have created significant opportunities for typosquatting and malicious spoofing.",
+        "Chromium features advanced protection rules, yet certain edge cases continue to bypass its standard detection mechanisms.",
+        "Researchers demonstrated that unique Cyrillic character combinations can successfully evade multiple security layers.",
+        "Security blogs advise companies to proactively register lookalike domains and promote passkeys to counter impersonation risks."
+      ],
+      "sections": [
+        {
+          "heading": "The Persistent Threat of Unicode Typo-Squatting",
+          "paragraphs": [
+            {
+              "text": "When the Internet Engineering Task Force (IETF) decided to permit Unicode characters within domain names, technologists recognized both the innovation and the inherent dangers. Hundreds of distinct characters can appear similar or identical across multiple alphabets, opening the door for typo-squatting attacks. As detailed in a report by <a href=\"https://www.tomshardware.com/tech-industry/cyber-security/typo-squatting-attacks-with-major-domains-are-still-viable-corner-cases-with-crying-characters-still-evade-the-best-checks\">Tom's Hardware</a>, malicious actors construct functioning websites with deliberately misspelled addresses that mimic legitimate URLs. Unsuspecting visitors land on these sites after making typographical errors or through misleading search results. Further details are available from Tom's Hardware in the original source material.",
+              "links": [
+                {
+                  "text": "Tom's Hardware",
+                  "url": "https://www.tomshardware.com/tech-industry/cyber-security/typo-squatting-attacks-with-major-domains-are-still-viable-corner-cases-with-cyrillic-characters-still-evade-the-best-checks"
+                },
+                {
+                  "text": "Tom's Hardware",
+                  "url": "https://www.tomshardware.com/tech-industry/cyber-security/typo-squatting-attacks-with-major-domains-are-still-viable-corner-cases-with-cyrillic-characters-still-evade-the-best-checks"
+                }
+              ]
+            },
+            {
+              "text": "Although modern browsers incorporate robust defenses to spot malicious domains, complex edge cases continue to challenge the best security software. A recent blog post from Have I Been Squatted (HIBS) <a href=\"https://haveibeensquatted.com/blog/turning-idn-edge-cases-into-typosquats\">explains in great detail</a> how specific character combinations manage to slip past sophisticated filters.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Cyrillic Homoglyphs and Browser Safeguards",
+          "paragraphs": [
+            {
+              "text": "The Cyrillic alphabet frequently serves as a source for homoglyphs because it contains lookalikes for numerous Latin letters. For instance, the Cyrillic characters а, е, о, р, and с closely resemble their Latin counterparts a, e, o, p, and c. When a threat actor attempts to embed a single homoglyph within standard Latin characters, it generally triggers browser safeguards.",
+              "links": []
+            },
+            {
+              "text": "Chromium, which underpins popular software such as Chrome, Edge, and Brave, responds to such mixed-alphabet attempts by rendering the domain name in its <a href=\"https://www.punycoder.com/\">Punycode</a> format. With few exceptions, domain names utilizing non-Latin characters and ending in .com will only pass verification checks if all characters originate from the same alphabet.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Bypassing Defenses Through Edge Cases",
+          "paragraphs": [
+            {
+              "text": "Even restricting a domain to all-Cyrillic lookalikes does not guarantee a successful spoofing attempt, as Chromium maintains a designated blocklist of 29 Cyrillic characters that frequently masquerade as Latin letters. Constructing a domain entirely from characters on this restricted list is automatically flagged and blocked.",
+              "links": []
+            },
+            {
+              "text": "However, security researchers demonstrated that domains can still slip through by utilizing clever corner cases. For example, using a character like \"ө\"—which is not currently featured on Chromium's special list of 29 restricted characters—allows the crafted domain to bypass current security rules. While future software releases will likely add such characters, this vulnerability highlights the fundamental difficulty of engineering a one-size-fits-all detection system.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The Evolution of Character Sets and Detection Limitations",
+          "paragraphs": [
+            {
+              "text": "Managing character safety has become increasingly difficult as the Unicode standard continually expands, now encompassing nearly 173,000 entries, though only a subset are legally eligible for use as domain names or top-level domains. Beyond per-alphabet verifications and general rules, Chromium maintains an internal database of over 8,000 popular domains prone to typo-squatting, running rigorous checks against a critical subset of 836 high-target domains.",
+              "links": []
+            },
+            {
+              "text": "Domain registries also enforce various restrictions, such as strict rules governing permissible characters within specific top-level domains. Nevertheless, these collective industry measures remain insufficient to completely eradicate the threat of sophisticated typo-squatting.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Recommended Mitigation Strategies",
+          "paragraphs": [
+            {
+              "text": "To mitigate the ongoing risks posed by domain impersonation, security researchers at HIBS recommend that vulnerable organizations proactively register common lookalike domains. Furthermore, companies are encouraged to implement passkeys for user authentication. Because passkeys are strictly bound to a specific, legitimate domain, users are entirely protected from inadvertently logging into fraudulent or spoofed websites.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cybersecurity",
+        "Typo-squatting",
+        "Chromium",
+        "Cyrillic",
+        "Unicode",
+        "Domain Security"
+      ],
+      "entities": [
+        "Chromium",
+        "Have I Been Squatted",
+        "Tom's Hardware",
+        "IETF"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 18, 2026",
+      "modifiedLabel": "October 18, 2026",
+      "readMinutes": 3,
+      "wordCount": 609
+    }
+  },
+  "datePublished": "2026-10-18T22:38:12.324196+03:00",
+  "dateModified": "2026-10-18T22:38:12.324196+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/typo-squatting-attacks-with-major-domains-are-still-viable/hero.webp",
+    "card": "/forum/assets/posts/2026/10/typo-squatting-attacks-with-major-domains-are-still-viable/card.webp",
+    "social": "/forum/assets/posts/2026/10/typo-squatting-attacks-with-major-domains-are-still-viable/social.jpg",
+    "alt": {
+      "ar": "هجمات انتحال النطاقات لا تزال فعالة رغم تدابير الحماية المتقدمة",
+      "en": "Typo-Squatting and Cyrillic Edge Cases Evade Security"
+    },
+    "credit": "Tom's Hardware",
+    "sourceUrl": "https://cdn.mos.cms.futurecdn.net/SQzRnE4jQMZ8s6EjxkPFB6-2560-80.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/typo-squatting-attacks-with-major-domains-are-still-viable/inline-01.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "هجمات انتحال النطاقات لا تزال فعالة رغم تدابير الحماية المتقدمة",
+          "en": "Russian dictionary"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Tom's Hardware",
+          "en": "(Image credit: Getty Images)"
+        },
+        "credit": "Tom's Hardware",
+        "sourceUrl": "https://www.tomshardware.com/tech-industry/cyber-security/typo-squatting-attacks-with-major-domains-are-still-viable-corner-cases-with-cyrillic-characters-still-evade-the-best-checks",
+        "originalUrl": "https://cdn.mos.cms.futurecdn.net/SQzRnE4jQMZ8s6EjxkPFB6-1920-80.jpg"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/tech-industry/cyber-security/typo-squatting-attacks-with-major-domains-are-still-viable-corner-cases-with-cyrillic-characters-still-evade-the-best-checks",
+      "type": "journalism",
+      "title": "Typo-squatting attacks with major domains are still viable"
+    }
+  ],
+  "sourceUrl": "https://www.tomshardware.com/tech-industry/cyber-security/typo-squatting-attacks-with-major-domains-are-still-viable-corner-cases-with-cyrillic-characters-still-evade-the-best-checks",
+  "sourceTitle": "Typo-squatting attacks with major domains are still viable",
+  "trendScore": 83.17,
+  "verification": {
+    "confidence": 0.86,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-18T19:38:12+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/typo-squatting-attacks-with-major-domains-are-still-viable.json"
+}
