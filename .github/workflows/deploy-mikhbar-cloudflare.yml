@@ -49,7 +49,8 @@ permissions:
 
 concurrency:
   group: mikhbar-cloudflare-deploy
-  cancel-in-progress: true
+  # Finish the active production deploy before accepting the latest queued build.
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
