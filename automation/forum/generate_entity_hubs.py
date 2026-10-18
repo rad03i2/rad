@@ -636,10 +636,14 @@ def patch_internal_discovery(entities: dict[str, dict]) -> None:
             target = FORUM / locale / category / "index.html"
             if not target.exists():
                 continue
-            relevant = [
-                entity for entity in ranked
-                if int(entity["categories"].get(category, 0)) >= 2
-            ][:6]
+            relevant = sorted(
+                (entity for entity in ranked if int(entity["categories"].get(category, 0)) >= 2),
+                key=lambda entity: (
+                    -int(entity["categories"].get(category, 0)),
+                    -entity["storyCount"],
+                    entity["name"].casefold(),
+                ),
+            )[:6]
             text = ENTITY_SECTION_RE.sub("", target.read_text(encoding="utf-8"))
             if relevant:
                 heading = "كيانات بارزة في هذا القسم" if locale == "ar" else "Key entities in this section"
