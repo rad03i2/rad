@@ -64,17 +64,18 @@ async function assetJson(env, request, path) {
   try { return await response.json(); } catch { return null; }
 }
 
+export function articleContextPath(pathname) {
+  if (!ARTICLE_ROUTE.test(pathname) || !pathname.endsWith("/")) return null;
+  return "/_article-context" + pathname + "index.json";
+}
+
 async function resolveRecord(env, request, pathname) {
-  const map = await assetJson(env, request, "/article-map.json");
-  const keys = [pathname, "/forum" + pathname];
-  let entry = null;
-  for (const key of keys) {
-    if (map?.routes?.[key]) { entry = map.routes[key]; break; }
-  }
-  if (!entry?.content) return null;
-  const contentPath = publicPath(entry.content);
-  const record = await assetJson(env, request, contentPath);
-  return record ? { entry, record, contentPath } : null;
+  const contextPath = articleContextPath(pathname);
+  if (!contextPath) return null;
+  const context = await assetJson(env, request, contextPath);
+  if (context?.schemaVersion !== 1 || context.route !== pathname || !context.content?.startsWith("/content/")) return null;
+  const record = await assetJson(env, request, context.content);
+  return record ? { record, discoveryHtml: String(context.discoveryHtml || "") } : null;
 }
 
 function linkedParagraph(paragraph) {
@@ -307,7 +308,7 @@ export async function renderDynamicArticle(request, env, pathname) {
     .on("#image-credit", credit ? new AttrHandler({}, `${locale === "ar" ? "الصورة: " : "Image: "}${credit}`) : new HideHandler())
     .on("#summary-title", new TextHandler(ui.summary))
     .on("#summary-list", new TextHandler(summary, true))
-    .on("#article-body", new TextHandler(bodyHtml(record, view, locale), true))
+    .on("#article-body", new TextHandler(bodyHtml(record, view, locale) + resolved.discoveryHtml, true))
     .on("#article-tags", new TextHandler(tags, true))
     .on("#source-note", new TextHandler(ui.sourceNote))
     .on("#footer-brand", new TextHandler(ui.site))
@@ -326,5 +327,6 @@ export async function renderDynamicArticle(request, env, pathname) {
   const headers = new Headers(transformed.headers);
   headers.set("Content-Type", "text/html; charset=UTF-8");
   headers.set("X-Mikhbar-Article-Mode", "single-template-ssr");
+  headers.set("X-Mikhbar-Discovery", "build-context-v1");
   return new Response(transformed.body, { status: 200, headers });
 }

@@ -73,11 +73,20 @@ def _paragraph_links(paragraph) -> list[dict]:
 
 
 def _word_count(article: dict) -> int:
+    if not isinstance(article, dict):
+        return 0
     parts = [str(article.get("deck", ""))]
-    parts.extend(str(x) for x in article.get("summary_bullets", []))
-    for section in article.get("sections", []):
+    bullets = article.get("summary_bullets")
+    if isinstance(bullets, list):
+        parts.extend(x for x in bullets if isinstance(x, str))
+    sections = article.get("sections")
+    for section in sections if isinstance(sections, list) else []:
+        if not isinstance(section, dict):
+            continue
         parts.append(str(section.get("heading", "")))
-        parts.extend(_paragraph_text(x) for x in section.get("paragraphs", []))
+        paragraphs = section.get("paragraphs")
+        if isinstance(paragraphs, list):
+            parts.extend(_paragraph_text(x) for x in paragraphs if isinstance(x, (str, dict)))
     return len(re.findall(r"\S+", " ".join(parts)))
 
 
@@ -147,6 +156,8 @@ def _ensure_inline_links(article: dict, sources: list[dict], locale: str, minimu
         if not isinstance(paragraphs, list):
             continue
         for index, paragraph in enumerate(paragraphs):
+            if not isinstance(paragraph, (str, dict)):
+                continue  # Leave invalid structures for the quality gate to reject.
             text = _paragraph_text(paragraph)
             cleaned_links = []
             if isinstance(paragraph, dict):
@@ -241,8 +252,22 @@ def _quality_gate_locale(locale: str, article: dict, allowed_urls: set[str] | No
         errors.append(f"{locale}:sections")
     if words < 450:
         errors.append(f"{locale}:article_too_short")
-    if any(not isinstance(section, dict) or not section.get("heading") or not section.get("paragraphs") for section in sections):
+    malformed_sections = not isinstance(sections, list) or any(
+        not isinstance(section, dict)
+        or not isinstance(section.get("heading"), str)
+        or not section["heading"].strip()
+        or not isinstance(section.get("paragraphs"), list)
+        or not section["paragraphs"]
+        or any(
+            not isinstance(paragraph, (str, dict))
+            or (isinstance(paragraph, dict) and not isinstance(paragraph.get("text"), str))
+            for paragraph in section["paragraphs"]
+        )
+        for section in sections
+    )
+    if malformed_sections:
         errors.append(f"{locale}:malformed_sections")
+        return errors
     inline_count = 0
     malformed_inline = False
     allowed_urls = allowed_urls or set()
@@ -278,6 +303,8 @@ def _quality_gate_locale(locale: str, article: dict, allowed_urls: set[str] | No
 
 def _quality_gate(story: dict, sources: list[dict], editions: dict, settings: dict | None = None) -> tuple[bool, list[str]]:
     errors = []
+    if not isinstance(editions, dict):
+        return False, ["ar:missing_edition", "en:missing_edition"]
     settings = settings or {}
     allowed_urls = _allowed_link_urls(sources)
     minimum_inline_links = max(0, int(settings.get("minimumInlineLinks", 0)))

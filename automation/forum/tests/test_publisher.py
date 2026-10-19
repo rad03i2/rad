@@ -172,6 +172,40 @@ class PublisherQualityTests(unittest.TestCase):
         self.assertEqual(len(attempts), 2)
         self.assertTrue(all(a["status"] == "quality_rejected" for a in attempts))
 
+    def test_malformed_model_sections_are_rejected_and_retried(self):
+        for invalid in (None, {}, [["unexpected list"]], [{"heading": "Bad", "paragraphs": None}],
+                        [{"heading": "Bad", "paragraphs": [["nested paragraph"]]}]):
+            with self.subTest(sections=invalid):
+                first = self._editions()
+                first["ar"]["sections"] = invalid
+                feedbacks = []
+
+                def fake_writer(story, sources, settings, feedback):
+                    feedbacks.append(feedback)
+                    return copy.deepcopy(first) if len(feedbacks) == 1 else self._editions()
+
+                result, errors, attempts, status = _generate_qualified_editions(
+                    self._story(), self._sources(),
+                    {"publisherDraftAttempts": 2, "minimumInlineLinks": 2}, fake_writer,
+                )
+                self.assertEqual(status, "passed", errors)
+                self.assertIsNotNone(result)
+                self.assertEqual(attempts[0]["status"], "quality_rejected")
+                self.assertIn("ar:malformed_sections", feedbacks[1])
+
+    def test_all_malformed_drafts_fail_closed_without_crashing(self):
+        def fake_writer(*args):
+            result = self._editions()
+            result["ar"]["sections"] = [["invalid"]]
+            return result
+        result, errors, attempts, status = _generate_qualified_editions(
+            self._story(), self._sources(), {"publisherDraftAttempts": 2}, fake_writer,
+        )
+        self.assertIsNone(result)
+        self.assertEqual(status, "quality_rejected")
+        self.assertIn("ar:malformed_sections", errors)
+        self.assertEqual(len(attempts), 2)
+
     def test_publication_uses_bilingual_structured_record(self):
         story = self._story()
         sources = [{"name": "Example", "url": story["url"], "kind": "official", "feed_title": story["title"]}]

@@ -88,13 +88,6 @@ function esc(value) {
     .replaceAll("'", "&#39;");
 }
 
-async function assetJson(env, request, path) {
-  const url = new URL(path, request.url);
-  const response = await env.ASSETS.fetch(new Request(url, request));
-  if (!response.ok) return null;
-  try { return await response.json(); } catch { return null; }
-}
-
 const GENERIC_SEMANTIC_TERMS = new Set([
   "ai", "artificial intelligence", "technology", "tech", "software", "apps", "app",
   "security", "cybersecurity", "mobile", "web", "computing", "computer", "robotics",
@@ -154,14 +147,23 @@ function intersectionCount(a, b, excluded = new Set()) {
   return count;
 }
 
+function semanticFeatures(post) {
+  return {
+    entities: semanticSet(post.entities), tags: semanticSet(post.tags),
+    title: titleTokens(post.title), category: String(post.categorySlug || ""),
+  };
+}
+
 export function semanticRelatedScore(currentPost, candidatePost) {
   if (!currentPost || !candidatePost) return { score: 0, signals: 0 };
+  return scoreFeatures(semanticFeatures(currentPost), semanticFeatures(candidatePost));
+}
 
-  const currentEntities = semanticSet(currentPost.entities);
-  const candidateEntities = semanticSet(candidatePost.entities);
-  const currentTags = semanticSet(currentPost.tags);
-  const candidateTags = semanticSet(candidatePost.tags);
-
+function scoreFeatures(current, candidate) {
+  const currentEntities = current.entities;
+  const candidateEntities = candidate.entities;
+  const currentTags = current.tags;
+  const candidateTags = candidate.tags;
   const entityMatches = intersectionCount(currentEntities, candidateEntities);
   const entityTagMatches = (
     intersectionCount(currentEntities, candidateTags)
@@ -170,11 +172,11 @@ export function semanticRelatedScore(currentPost, candidatePost) {
   const entityTerms = new Set([...currentEntities, ...candidateEntities]);
   const tagMatches = intersectionCount(currentTags, candidateTags, entityTerms);
 
-  const currentTitle = titleTokens(currentPost.title);
-  const candidateTitle = titleTokens(candidatePost.title);
+  const currentTitle = current.title;
+  const candidateTitle = candidate.title;
   const titleMatches = Math.min(4, intersectionCount(currentTitle, candidateTitle));
 
-  const sameCategory = String(currentPost.categorySlug || "") === String(candidatePost.categorySlug || "");
+  const sameCategory = current.category === candidate.category;
   const signals = entityMatches + entityTagMatches + tagMatches + titleMatches;
   let score = (
     entityMatches * 12
@@ -200,7 +202,7 @@ function newestFirst(a, b) {
   return bTime - aTime;
 }
 
-export function selectRelatedPosts(posts, pathname, limit = 4) {
+export function selectRelatedPosts(posts, pathname, limit = 4, score = semanticRelatedScore) {
   const match = String(pathname || "").match(ARTICLE_PARTS);
   if (!match || !Array.isArray(posts)) return [];
   const [, locale, category] = match;
@@ -226,7 +228,7 @@ export function selectRelatedPosts(posts, pathname, limit = 4) {
 
   const ranked = candidates
     .map((post) => {
-      const semantic = semanticRelatedScore(currentPost, post);
+      const semantic = score(currentPost, post);
       return { post, ...semantic };
     })
     .filter((item) => item.score > 0)
@@ -391,28 +393,23 @@ function relatedHtml(posts, pathname) {
   return stories + topicHubs;
 }
 
-class AppendHtmlHandler {
-  constructor(html) { this.html = html; }
-  element(element) { element.append(this.html, { html: true }); }
+// Used at build time. Runtime requests read only their small route context.
+export function articleDiscoveryHtml(posts, pathname, score = semanticRelatedScore) {
+  const match = String(pathname || "").match(ARTICLE_PARTS);
+  if (!match) return "";
+  const locale = match[1].toLowerCase();
+  const related = selectRelatedPosts(posts, pathname, 4, score);
+  const chronology = selectChronologicalNeighbors(posts, pathname);
+  const currentPost = posts.find(post => publicPath(post?.url || "") === publicPath(pathname));
+  return chronologicalHtml(chronology, currentPost, pathname)
+    + entityHubHtml(currentPost, locale) + relatedHtml(related, pathname);
 }
 
-async function addRelatedStories(response, request, env, pathname) {
-  const match = String(pathname || "").match(ARTICLE_PARTS);
-  if (!match || !response?.ok) return response;
-  const locale = match[1].toLowerCase();
-  const payload = await assetJson(env, request, `/posts-${locale}.json`);
-  const posts = Array.isArray(payload) ? payload : (Array.isArray(payload?.posts) ? payload.posts : []);
-  const related = selectRelatedPosts(posts, pathname, 4);
-  const chronology = selectChronologicalNeighbors(posts, pathname);
-  const current = publicPath(pathname);
-  const currentPost = posts.find((post) => publicPath(post?.url || "") === current);
-  const html = chronologicalHtml(chronology, currentPost, pathname)
-    + entityHubHtml(currentPost, locale)
-    + relatedHtml(related, pathname);
-  if (!html) return response;
-  return new HTMLRewriter()
-    .on("#article-body", new AppendHtmlHandler(html))
-    .transform(response);
+export function prepareArticleDiscovery(posts) {
+  // The build input is an immutable snapshot; normalize each post once.
+  const features = new Map(posts.map(post => [post, semanticFeatures(post)]));
+  const score = (a, b) => scoreFeatures(features.get(a), features.get(b));
+  return pathname => articleDiscoveryHtml(posts, pathname, score);
 }
 
 function renderRadwanTestPage() {
@@ -554,8 +551,7 @@ export default {
     if (isArticlePath(url.pathname)) {
       const article = await renderDynamicArticle(request, env, url.pathname);
       if (article) {
-        const enriched = await addRelatedStories(article, request, env, url.pathname);
-        return withHeaders(enriched, url.pathname);
+        return withHeaders(article, url.pathname);
       }
     }
 

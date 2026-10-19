@@ -432,6 +432,13 @@ def main() -> int:
     pruned = prune_dynamic_article_html()
     oversized = prune_oversized_assets()
     write_platform_files()
+    # Compute discovery once per release, rather than parsing/ranking the entire
+    # bilingual index inside the free-tier Worker on every article request.
+    subprocess.run(
+        ["node", str(Path(__file__).parent / "scripts" / "build-article-context.mjs"), str(OUT)],
+        check=True,
+        cwd=ROOT,
+    )
     validate_output()
     files = sum(1 for path in OUT.rglob("*") if path.is_file())
     print(
