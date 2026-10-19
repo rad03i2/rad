@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "6c2a7f9e70f3b163982b",
+  "slug": "structured-outputs-for-anthropic-claude-models-on-amazon-bedrock",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/structured-outputs-for-anthropic-claude-models-on-amazon-bedrock/",
+    "en": "/forum/en/ai/structured-outputs-for-anthropic-claude-models-on-amazon-bedrock/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون بيدروك تدعم المخرجات المهيكلة لنماذج كلود",
+      "description": "أعلنت أمازون عن دعم المخرجات المهيكلة لنماذج Anthropic Claude على منصة Bedrock، مما يضمن استجابة JSON مطابقة للمخطط دون حاجة إلى معالجة لاحقة أو منطق إعادة محاولة.",
+      "deck": "تتيح أمازون بيدروك الآن لنماذج كلود توليد مخرجات JSON مطابقة للمخطط بدقة، مما يلغي الحاجة إلى برمجيات معالجة معقدة ويضمن موثوقية أعلى للتطبيقات الإنتاجية.",
+      "summaryBullets": [
+        "دعم شامل للمخرجات المهيكلة عبر نقاط النهاية bedrock-runtime و bedrock-mantle.",
+        "استخدام فك الترميز المقيد (Constrained Decoding) لضمان مطابقة المخرجات للمخطط أثناء التوليد.",
+        "تقليل تعقيد معالجة الأخطاء وتكاليف الاستدلال من خلال تقليل عدد الرموز الزائدة.",
+        "توافق مع الاستدلال الدفري (Batch Inference) والاستدلال عبر المناطق (Cross-Region)."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق الميزة على منصة أمازون بيدروك",
+          "paragraphs": [
+            {
+              "text": "أعلنت أمازون ويب سيرفيسز (AWS) عن إضافة دعم رسمي للمخرجات المهيكلة لجميع نماذج Anthropic Claude المتوفرة على منصة Amazon Bedrock. تشمل هذه الميزة كلا من نقاط النهاية bedrock-runtime و bedrock-mantle، مما يتيح للمطورين الحصول على استجابات JSON مطابقة للمخطط (Schema-compliant) دون الحاجة إلى كتابة منطق مخصص لتحليل البيانات أو إعادة المحاولة عند حدوث أخطاء.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/structured-outputs-for-anthropic-claude-models-on-amazon-bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل: من الاحتمالي إلى الحتمي",
+          "paragraphs": [
+            {
+              "text": "تعتمد المخرجات المهيكلة على تقنية فك الترميز المقيد (Constrained Decoding) التي تفرض مخطط JSON الخاص بالمستخدم أثناء عملية توليد الرموز (Tokens)، وليس بعد انتهائها. هذا يعني أن النموذج لا ينتج أي رموز قد تنتهك المخطط المحدد، مما يحوّل تنسيق المخرجات من عملية احتمالية إلى عملية حتمية. نتيجة لذلك، تصبح كل استجابة ملف JSON صالحاً، مما يقضي على أخطاء التحليل الشائعة ويضمن وجود الحقول المطلوبة بأنواعها الصحيحة دائماً.",
+              "links": []
+            },
+            {
+              "text": "يوفر هذا النهج أماناً نوعياً (Type Safety) للمخرجات، حيث يتم فرض أنواع الحقول وضمان وجود الحقول الإلزامية. كما أن تقييد المخرجات على الحقول المعرّفة فقط في المخطط يقلل من عدد رموز المخرجات، مما قد يؤدي إلى خفض تكاليف الاستدلال (Inference Costs) خاصة في الأحمال التشغيلية عالية الحجم. هذه الخصائص تجعل الميزة جاهزة للاستخدام في بيئات الإنتاج دون الحاجة إلى إضافة كود تحقق إضافي من المخطط.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوافق مع خدمات أمازون الأخرى",
+          "paragraphs": [
+            {
+              "text": "تتكامل المخرجات المهيكلة بسلاسة مع خدمات أمازون الأخرى، بما في ذلك الاستدلال الدفري (Batch Inference)، مما يسمح بمعالجة كميات كبيرة من الطلبات بشكل غير متزامن مع الحفاظ على مطابقة المخرجات للمخطط. كما أن الميزة تعمل مع الاستدلال عبر المناطق (Cross-Region Inference) على نقطة نهاية bedrock-runtime، مما يتيح للمطورين استخدام الخدمة عبر مناطق AWS المختلفة دون إعدادات إضافية. وفي الحالات التي تتطلب استجابة فورية، يمكن بث المخرجات المهيكلة ك أحداث مبرمجة (Typed Events).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ما يحدث خلف الكواليس",
+          "paragraphs": [
+            {
+              "text": "عند إرسال طلب يتضمن مخطط JSON، تمر العملية بعدة مراحل داخل Amazon Bedrock. أولاً، يتم التحقق من صحة المخطط مقابل مجموعة فرعية مدعومة من JSON Schema Draft 2020-12. ثانياً، للمخططات الجديدة، يجمع النظام قطعة نحوية (Grammar Artifact)، مما قد يجعل الطلب الأول يستغرق وقتاً أطول قليلاً. ثالثاً، يتم تخزين هذه القطع النحوية المؤلفة في ذاكرة مؤقتة (Cache) لمدة 24 ساعة، مما يجعل الطلبات اللاحقة باستخدام نفس المخطط أسرع بكثير. وأخيراً، يقوم النموذج بتوليد رموز تنتج JSON صالحاً يطابق المخطط.",
+              "links": []
+            },
+            {
+              "text": "تتأثر ذاكرة التخزين المؤقت بتعديلات المخطط؛ فأي تغيير في بنية المخطط يلغي الكاش ويحفز عملية تجميع جديدة، بينما تغيير أسماء الحقول أو أوصافها فقط لا يؤثر على الكاش المخزن. هذا التصميم يهدف إلى تحسين الأداء العام وتقليل زمن الاستجابة في التطبيقات التي تعيد استخدام نفس المخططات بشكل متكرر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استخدامات عملية في التطبيقات الوكيلية",
+          "paragraphs": [
+            {
+              "text": "تقدم Amazon Bedrock Mantle، المصممة للتطبيقات الوكيلية (Agentic Applications)، آلية إضافية تسمى الاستخدام الصارم للأدوات (Strict Tool Use). عند تعيين الخاصية strict: true، يتم ضمان أن معاملات الأدوات تطابق مخطط الإدخال بدقة. على سبيل المثال، إذا حدد المخطط أن حقل الوحدة يجب أن يكون إما مئوية أو فهرنهايت، فإن النموذج لن يتمكن من إضافة حقول خارج المخطط أو استخدام قيم غير صالحة. هذا يضمن أن مدخلات الأدوات تحتوي فقط على ما يحدده المخطط، وهو أمر قيم جداً في سير العمل متعدد الخطوات التي تتضمن أدوات مثل البحث في الويب أو مفسر الكود.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Mantle",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/endpoints.html"
+                }
+              ]
+            },
+            {
+              "text": "تقلل المخرجات المهيكلة من تعقيد معالجة الأخطاء في ثلاثة أنماط شائعة: استخراج البيانات من الفواتير والعقود والبريد الإلكتروني لتحميلها في قواعد البيانات أو أنظمة إدارة علاقات العملاء (CRM)؛ والتحقق من صحة حجة الأدوات أثناء التوليد لضمان سير عمل الوكلاء دون فشل بسبب مدخلات مشوهة؛ والتصنيف على نطاق واسع للتذاكر أو المحتوى حسب النية والأولوية والمشاعر لأغراض التوجيه والاعتدال.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إرشادات الاستخدام الأمثل",
+          "paragraphs": [
+            {
+              "text": "لتحقيق أفضل النتائج مع المخرجات المهيكلة على Amazon Bedrock، توصي أمازون بعدة ممارسات. أولاً، يجب تعيين additionalProperties: false على جميع الكائنات، حيث أن هذا شرط إلزامي لقبول المخطط. ثانياً، استخدام أسماء حقول وأوصاف وصفية تساعد النموذج على فهم البيانات المطلوبة، فاسم مثل customer_email أفضل من field1. ثالثاً، استخدام enum لتقييد القيم عند وجود مجموعة محدودة من القيم الصالحة. رابعاً، البدء بمخططات بسيطة وإضافة التعقيد تدريجياً، لأن المخططات الأساسية تُجمَّع أسرع وأسهل في التصحيح.",
+              "links": []
+            },
+            {
+              "text": "كما ينصح بإعادة استخدام المخططات للاستفادة من ذاكرة التخزين المؤقت لمدة 24 ساعة، وفحص سبب التوقف (Stop Reason) في كل استجابة للتعامل مع حالات الرفض الأمني أو بلوغ حد الرموز. وأخيراً، اختبار المخططات ببيانات واقعية قبل النشر لضمان توافقها مع المدخلات الإنتاجية. توفر هذه الميزة للمطورين أساساً قوياً لبناء تطبيقات ذكاء اصطناعي موثوقة ودقيقة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "Anthropic Claude",
+        "Structured Outputs",
+        "JSON Schema",
+        "AI Engineering",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Web Services (AWS)",
+        "Anthropic",
+        "Amazon Bedrock",
+        "Claude Models",
+        "JSON Schema"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "20 أكتوبر 2026",
+      "modifiedLabel": "20 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 759
+    },
+    "en": {
+      "title": "Amazon Bedrock Adds Structured Outputs for Anthropic Claude",
+      "description": "Amazon Bedrock now provides schema-compliant JSON responses for all Anthropic Claude models using constrained decoding and strict tool use.",
+      "deck": "Amazon Bedrock has introduced native support for structured outputs across all Anthropic Claude models, enabling developers to receive reliable, schema-compliant JSON responses without relying on custom parsing or retry logic.",
+      "summaryBullets": [
+        "Amazon Bedrock now supports structured outputs for all Anthropic Claude models on bedrock-runtime and bedrock-mantle endpoints.",
+        "Constrained decoding enforces JSON schemas during token generation rather than through post-processing.",
+        "Features include support for batch inference, cross-Region inference, and strict tool use on Amazon Bedrock Mantle.",
+        "Compiled grammar artifacts are cached for 24 hours to optimize performance on subsequent requests using the same schema."
+      ],
+      "sections": [
+        {
+          "heading": "Native Structured Outputs for Claude on AWS",
+          "paragraphs": [
+            {
+              "text": "Amazon Bedrock has rolled out native support for structured outputs across all Anthropic Claude models where they are available. Developers can now utilize this capability on both the bedrock-runtime and bedrock-mantle endpoints to receive schema-compliant JSON responses. According to the AWS Machine Learning Blog, this integration eliminates the need for custom parsing, post-processing, or application-level retry logic.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/structured-outputs-for-anthropic-claude-models-on-amazon-bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "Whether interacting with Claude through Boto3 and the bedrock-runtime APIs or via the Messages API and the bedrock-mantle endpoint, the system guarantees that responses align directly with a defined data structure. Detailed implementation guidelines are available in the official Amazon Bedrock documentation.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock documentation",
+                  "url": "https://docs.aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "How Constrained Generation Works",
+          "paragraphs": [
+            {
+              "text": "The underlying architecture uses constrained decoding to enforce JSON schemas dynamically during token generation rather than validating them after the fact. Because the model is restricted from generating tokens that violate the specified schema, output formatting shifts from probabilistic to deterministic. Comprehensive information regarding these mechanics can be found in the guide on Structured outputs.",
+              "links": [
+                {
+                  "text": "Structured outputs",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/structured-output.html"
+                }
+              ]
+            },
+            {
+              "text": "When a request is submitted with a JSON schema, Amazon Bedrock validates it against a supported subset of JSON Schema Draft 2020-12. For new schemas, the platform compiles a grammar artifact, which may cause a slight delay on the initial request. Subsequent queries benefit from caching, as compiled grammars are stored for up to 24 hours to ensure minimal performance overhead.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Strict Tool Use and Agentic Workflows",
+          "paragraphs": [
+            {
+              "text": "The update also introduces strict tool use on the bedrock-mantle endpoint, which is engineered specifically for agentic applications requiring server-side tools, stateful conversations, and background inference. By setting strict schema enforcement, developers can guarantee that tool parameters match input schemas precisely.",
+              "links": []
+            },
+            {
+              "text": "This functionality is particularly beneficial for complex multi-step workflows where models orchestrate tasks like code interpreters or web searches. Restricting the tool input ensures that the model cannot add extraneous fields outside the pre-defined schema.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Scale and Production Deployment",
+          "paragraphs": [
+            {
+              "text": "Structured outputs are built to support high-volume workloads and asynchronous operations. The feature integrates seamlessly with batch inference, allowing organizations to process large quantities of requests asynchronously while maintaining strict schema compliance.",
+              "links": [
+                {
+                  "text": "batch inference",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference.html"
+                }
+              ]
+            },
+            {
+              "text": "Additionally, the bedrock-runtime endpoint supports cross-Region inference for structured outputs, enabling deployment across multiple AWS Regions without extra configuration overhead. Developers requiring real-time answers can also stream structured responses as typed events.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Developer Implementation Guidelines",
+          "paragraphs": [
+            {
+              "text": "To ensure optimal performance and schema acceptance, AWS outlines several best practices for developers building applications with the new capabilities. Developers must set additionalProperties to false on all objects, utilize descriptive naming conventions, and leverage enumeration types for constrained values.",
+              "links": []
+            },
+            {
+              "text": "AWS also recommends starting with basic schemas before scaling up complexity, as simpler schemas compile faster and keep request payloads efficient. Furthermore, monitoring the stop reason in every response is essential to handle edge cases such as content safety refusals or token limits.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "Anthropic Claude",
+        "Structured Outputs",
+        "AWS",
+        "Generative AI",
+        "JSON Schema",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "Amazon Bedrock",
+        "Anthropic",
+        "AWS"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 20, 2026",
+      "modifiedLabel": "October 20, 2026",
+      "readMinutes": 3,
+      "wordCount": 554
+    }
+  },
+  "datePublished": "2026-10-20T02:57:42.310432+03:00",
+  "dateModified": "2026-10-20T02:57:42.310432+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/structured-outputs-for-anthropic-claude-models-on-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/10/structured-outputs-for-anthropic-claude-models-on-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/10/structured-outputs-for-anthropic-claude-models-on-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "أمازون بيدروك تدعم المخرجات المهيكلة لنماذج كلود",
+      "en": "Amazon Bedrock Adds Structured Outputs for Anthropic Claude"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22211-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/structured-outputs-for-anthropic-claude-models-on-amazon-bedrock/",
+      "type": "official",
+      "title": "Structured outputs for Anthropic Claude models on Amazon Bedrock"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/structured-outputs-for-anthropic-claude-models-on-amazon-bedrock",
+  "sourceTitle": "Structured outputs for Anthropic Claude models on Amazon Bedrock",
+  "trendScore": 122.87,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-19T23:57:42+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/structured-outputs-for-anthropic-claude-models-on-amazon-bedrock.json"
+}
