@@ -1,0 +1,373 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "c6300898f978f64e66ae",
+  "slug": "cutting-our-inference-bill-by-68-by-being-obsessive-about-optimization",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/cutting-our-inference-bill-by-68-by-being-obsessive-about-optimization/",
+    "en": "/forum/en/ai/cutting-our-inference-bill-by-68-by-being-obsessive-about-optimization/"
+  },
+  "locales": {
+    "ar": {
+      "title": "كيف خفضت كلاودفلير تكلفة استدلال الذكاء الاصطناعي بنسبة 68%؟",
+      "description": "استراتيجية تقنية متقدمة اتبعتها منصة كلاودفلير لخفض تكاليف مراجعة الكود البرمجي بالذكاء الاصطناعي عبر التخزين المؤقت الموجه وتوجيه النماذج بذكاء.",
+      "deck": "نجحت منصة كلاودفلير في خفض تكاليف تشغيل أداة مراجعة الكود البرمجي المعتمدة على الذكاء الاصطناعي بنسبة ملحوظة بلغت 68%، وذلك من خلال مراجعة دقيقة لاستهلاك الرموز وتحسين هندسة البرمجيات.",
+      "summaryBullets": [
+        "خفض تكلفة مراجعة الكود البرمجي الواحدة من 2.43 دولار إلى 0.77 دولار فقط.",
+        "تقليص الوقت المستغرق في متوسط المراجعة من أكثر من 4 دقائق إلى دقيقة و32 ثانية.",
+        "الاعتماد على تحسين التخزين المؤقت الموجه (Prompt Caching) وتوجيه النماذج الذكية.",
+        "الانتقال إلى الإصدار الجديد من أداة المراجعة OpenCode v2 لتحسين الأداء والسرعة."
+      ],
+      "sections": [
+        {
+          "heading": "بداية الأزمة وتضاعف التكاليف",
+          "paragraphs": [
+            {
+              "text": "عندما نشرت الشركة تدوينة حول أداة مراجعة الكود البرمجي بالذكاء الاصطناعي في أبريل الماضي، كان متوسط تكلفة المراجعة الواحدة يبلغ 1.19 دولاراً. ولكن بحلول نهاية شهر أغسطس، قفز هذا الرقم ليصل إلى حوالي 2.46 دولاراً للمراجعة الواحدة، وذلك دون وجود أي تغييرات هندسية جوهرية في هيكل النظام المعماري، حيث كان المنسق لا يزال يوزع المهام على نفس مجموعة المراجعين المتخصصين وفقاً لذات مستويات المخاطر.",
+              "links": [
+                {
+                  "text": "تدوينة حول أداة مراجعة الكود البرمجي بالذكاء الاصطناعي في أبريل الماضي",
+                  "url": "https://blog.cloudflare.com/ai-code-review/"
+                }
+              ]
+            },
+            {
+              "text": "أشارت البيانات إلى أن التكلفة بدأت ترتفع بشكل تدريجي ومستمر من 1.22 دولار في مارس، مروراً بـ 1.44 دولار في يونيو، وصولاً إلى 1.74 دولار في يوليو، ثم بلغت ذروتها في أغسطس. ويعود جزء من هذه الزيادة إلى أن المزيد من التغييرات البرمجية صُنفت ضمن فئة المراجعة الشاملة والأكثر تكلفة، نظراً لأن المطورين أصبحوا ينتجون تغييرات أكبر وأكثر تعقيداً مع تحسن قدرات النماذج ذاتها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تغيير نماذج الذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "في أوائل شهر أغسطس، انتقلت المنصة بكل مراجعيها لاستخدام نماذج أنثروبيك، مما أدى بطبيعة الحال إلى ارتفاع تكلفة المهمة الواحدة من 1.38 دولار إلى 2.03 دولار. جاء هذا القرار بعد أن أثبتت التقييمات الداخلية تفوق نماذج أنثروبيك وأدائها بشكل أفضل في هذا النوع المحدد من مهام العمل مقارنة بالبدائل الأخرى المتاحة.",
+              "links": []
+            },
+            {
+              "text": "على سبيل المثال، انتهى المطاف بمراجع المعايير الداخلي، المعروف باسم Codex، بالاعتماد على نموذج Claude Opus 4.7 نتيجة التوازن المحقق بين الأداء والموثوقية العالية. وقد تسبب هذا التحول في ارتفاع تكلفته من نحو 0.25 دولار إلى 0.88 دولار لكل مراجعة خلال شهر أغسطس، مما جعله أكثر تكلفة حتى من وكيل التنسيق نفسه.",
+              "links": [
+                {
+                  "text": "Codex",
+                  "url": "https://blog.cloudflare.com/engineering-standards-enforcement"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحليل استهلاك الرموز والتخزين المؤقت",
+          "paragraphs": [
+            {
+              "text": "عند التدقيق في تفاصيل الجلسات، تبين أن مراجع جودة الكود كان يجري في المتوسط نحو 16.6 استدعاءً لنموذج اللغات الكبير لكل مراجعة، وخلال هذه الاستدعاءات كان يكتب 72 ألف رمز إلى الذاكرة المؤقتة ويقرأ 1.08 مليون رمز، نظراً لأن كل استدعاء يرسل المحادثة بأكملها كسياق. ومع تزايد عدد الاستدعاءات وحجم السياق بمرور الوقت، ارتفعت التكلفة بشكل طردي.",
+              "links": []
+            },
+            {
+              "text": "لتحسين هذا الوضع، استعانت الفرق التقنية بمزايا التخزين المؤقت للرسائل الموجهة المتاحة في تقنيات أنثروبيك، والتي تتيح تخزين أجزاء البداية المتكررة من المحادثة مؤقتاً لتقليل استهلاك الموارد المتكررة في الاستدعاءات اللاحقة.",
+              "links": [
+                {
+                  "text": "أنثروبيك",
+                  "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مشاركة السياق المخزن بين المستودعات",
+          "paragraphs": [
+            {
+              "text": "أظهرت البيانات في منتصف سبتمبر أن الطلب الأول في الجلسة الواحدة كان يعثر على بادئة مخزنة مؤقتاً بنسبة تتراوح بين 14% و26% فقط. وبما أن كل جلسة تبدأ بنفس تعريفات الأدوات ومطالبات الوكلاء، فإن هذا يعني أن معظم الطلبات كان يجب أن تحقق معدل إصابة أعلى بكثير للذاكرة المؤقتة لولا وجود تفاصيل خاصة بكل مستودع تعيق ذلك.",
+              "links": []
+            },
+            {
+              "text": "لمعالجة هذه المشكلة، قامت المنصة بفصل الأجزاء المشتركة في بداية موجه النظام لضمان تخزينها بشكل مستقل، مما سمح للمراجعات في أي مستودع بإعادة استخدام الأجزاء المخزنة مسبقاً بغض النظر عن اختلاف المستودعات، وهو ما أدى بدوره إلى هبوط ملحوظ وفوري في التكاليف التشغيلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الانتقال إلى الإصدار الثاني من الأداة",
+          "paragraphs": [
+            {
+              "text": "من أبرز التغييرات الهندسية التي تمت خلال هذه الفترة هو تشغيل أداة المراجعة على الإصدار الثاني من منصة OpenCode v2، وهو إعادة كتابة شاملة بالكامل من الصفر للإصدار السابق. وقبل التعميم، خضعت الأداة لاختبارات مقارنة دقيقة، وبعد تطابق قرارات الموافقة بنسبة 98%، جرى اعتماد الإصدار الجديد كلياً والتخلص من الأكواد القديمة.",
+              "links": [
+                {
+                  "text": "OpenCode",
+                  "url": "https://opencode.ai/"
+                },
+                {
+                  "text": "إعادة كتابة شاملة بالكامل من الصفر",
+                  "url": "https://anoma.ly/notes/opencode-2-0/"
+                }
+              ]
+            },
+            {
+              "text": "أسفرت مجمل هذه التحسينات الهندسية، إلى جانب ضبط نماذج الذكاء الاصطناعي وتخفيض الجهد المبذول، عن خفض متوسط تكلفة المراجعة البرمجية إلى 0.77 دولار فقط، مسجلة تراجعاً بنسبة 68% مقارنة بأعلى فترة تكلفة، مع تقليص زمن التنفيذ بشكل كبير.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "كلاودفلير",
+        "تحسين التكاليف",
+        "استدلال النماذج",
+        "الحوسبة السحابية",
+        "هندسة البرمجيات"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Anthropic",
+        "OpenCode",
+        "Codex"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "19 أكتوبر 2026",
+      "modifiedLabel": "19 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 612
+    },
+    "en": {
+      "title": "Cloudflare Cuts AI Code Review Inference Costs by 68%",
+      "description": "Cloudflare slashed its AI code review inference bill by 68% and sped up review times through aggressive prompt caching and model optimization.",
+      "deck": "After noticing a sharp rise in per-run costs for its internal AI code reviewer, Cloudflare deployed aggressive optimization strategies involving prompt caching, model routing, and code rewrites.",
+      "summaryBullets": [
+        "Average AI code review costs dropped from a peak of $2.43 down to $0.77.",
+        "Median review times decreased significantly from 4 minutes and 9 seconds to 1 minute and 32 seconds.",
+        "Prompt caching optimizations successfully addressed cache misses caused by repository-specific environment data.",
+        "The transition to OpenCode v2 helped streamline execution, with full-tier reviews finishing about 13% faster."
+      ],
+      "sections": [
+        {
+          "heading": "Investigating Rising AI Code Review Costs",
+          "paragraphs": [
+            {
+              "text": "Cloudflare recently investigated a significant increase in the operational expenses of its automated development workflows. When the company previously blogged about our AI code reviewer in April, an average run cost a modest $1.19. By the end of August, however, that figure had climbed to approximately $2.46. Despite maintaining the same architectural foundation and risk-tier structure, token usage and financial overhead had more than doubled.",
+              "links": [
+                {
+                  "text": "blogged about our AI code reviewer in April",
+                  "url": "https://blog.cloudflare.com/ai-code-review/"
+                }
+              ]
+            },
+            {
+              "text": "Midway through September, engineering teams were tasked with finding where those tokens were being consumed and cutting them aggressively. By balancing prompt engineering, model selection, and effort adjustments, the average review cost was successfully reduced to just $0.77. This marked a 68% decrease from the peak two-week average before optimization efforts began. Additionally, efficiency gains reduced the median review duration from 4 minutes and 9 seconds down to 1 minute and 32 seconds.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Model Transitions and Token Growth",
+          "paragraphs": [
+            {
+              "text": "A notable factor behind the cost escalation over the summer was the strategic shift toward more capable frontier models. At the start of August, Cloudflare moved every reviewer onto Anthropic models because evaluation metrics showed better performance on the specific workload. However, this transition raised the average cost per job from $1.38 to $2.03.",
+              "links": []
+            },
+            {
+              "text": "For instance, the internal standards reviewer, Codex, was transitioned to Claude Opus 4.7 due to enhanced performance and reliability considerations. That specific adjustment pushed its review cost from about $0.25 up to $0.88 in August, temporarily making it more expensive than the coordinator agent itself. Meanwhile, cache hit rates rose from 85.7% in April to 97% in September, but the overall volume of tokens per review more than tripled from 0.91 million to 2.99 million.",
+              "links": [
+                {
+                  "text": "standards reviewer, Codex",
+                  "url": "https://blog.cloudflare.com/engineering-standards-enforcement"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Unlocking Efficiency Through Prompt Caching",
+          "paragraphs": [
+            {
+              "text": "Before optimization, session expenses were heavily skewed toward context preservation. Output tokens accounted for roughly 23% of spend, cache writes took 43%, and cache reads made up 34%. Examining individual sessions revealed that the code quality reviewer made an average of 16.6 large language model calls per review, writing 72,000 tokens to the cache and reading back 1.08 million tokens because each sequential call sent the entire conversation history.",
+              "links": []
+            },
+            {
+              "text": "Understanding how Anthropic's prompt cache functions proved critical to resolving the overhead. The caching mechanism leverages prefixes to store and reuse conversation segments computed by the large language model. Because harness tools, system prompts, and opening messages rarely changed across reviews, they presented ideal opportunities for prefix caching, provided cache breakpoints were configured correctly.",
+              "links": [
+                {
+                  "text": "Anthropic's prompt cache",
+                  "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Fixing Cross-Repository Cache Misses",
+          "paragraphs": [
+            {
+              "text": "Data gathered beginning September 14 revealed that initial requests in a session found a cached prefix only 14% to 26% of the time, despite sharing identical tool definitions and agent prompts across repositories. The root cause lay in OpenCode v1, which built a single system prompt block combining the agent prompt with environment details like the working directory and date, placing a cache breakpoint only at the very end. Consequently, cached instructions from one repository could never be reused by another.",
+              "links": []
+            },
+            {
+              "text": "To fix this, engineers added a marker to the agent prompt and implemented a plugin hook to split the block in two on September 16. By isolating shared bytes into their own breakpoint and removing repository-specific variables from the beginning of the prompt, cross-repository cache reuse became possible. Simultaneously, moving Codex's reference index directly into its prompt reduced its LLM calls per run from 15.9 to 9.6, dropping its per-run cost from $1.12 to $0.72.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Migrating to OpenCode v2",
+          "paragraphs": [
+            {
+              "text": "Another major architectural update involved transitioning the reviewer workload to OpenCode v2, which represents a complete ground-up rewrite from the previous version. Before deploying the upgrade globally, the team ran shadow testing across canary repositories to validate consistency. Because both versions matched on approval decisions in 98% of tested merge requests, Cloudflare migrated all reviews to v2 in early October.",
+              "links": [
+                {
+                  "text": "OpenCode",
+                  "url": "https://opencode.ai/"
+                }
+              ]
+            },
+            {
+              "text": "Comparative analysis showed that full-tier reviews executed on v2 finished about 13% faster than on v1 under identical model conditions. Furthermore, the engineering group continues experimenting with alternative execution models, including running internal reviewers solely on Durable Objects using pi-durable to explore further performance enhancements.",
+              "links": [
+                {
+                  "text": "Durable Objects",
+                  "url": "https://blog.cloudflare.com/tag/durable-objects/"
+                },
+                {
+                  "text": "pi-durable",
+                  "url": "https://earendil.com/posts/pi-durable/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "AI",
+        "Inference Optimization",
+        "Prompt Caching",
+        "OpenCode",
+        "Anthropic",
+        "Code Review"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Anthropic",
+        "OpenCode",
+        "Codex"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 19, 2026",
+      "modifiedLabel": "October 19, 2026",
+      "readMinutes": 4,
+      "wordCount": 760
+    }
+  },
+  "datePublished": "2026-10-19T22:37:38.667707+03:00",
+  "dateModified": "2026-10-19T22:37:38.667707+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/cutting-our-inference-bill-by-68-by-being-obsessive-about-optimization/hero.webp",
+    "card": "/forum/assets/posts/2026/10/cutting-our-inference-bill-by-68-by-being-obsessive-about-optimization/card.webp",
+    "social": "/forum/assets/posts/2026/10/cutting-our-inference-bill-by-68-by-being-obsessive-about-optimization/social.jpg",
+    "alt": {
+      "ar": "كيف خفضت كلاودفلير تكلفة استدلال الذكاء الاصطناعي بنسبة 68%؟",
+      "en": "Cloudflare Cuts AI Code Review Inference Costs by 68%"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M58N5J1Y9HY8N3R115KEY6NE.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/cutting-our-inference-bill-by-68-by-being-obsessive-about-optimization/inline-01.webp",
+        "width": 1200,
+        "height": 630,
+        "alt": {
+          "ar": "كيف خفضت كلاودفلير تكلفة استدلال الذكاء الاصطناعي بنسبة 68%؟",
+          "en": "Cutting our inference bill by 68% by being obsessive about optimization"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/obsessive-inference-optimization",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M58NMFG35J21WVMK7QGMANJT.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/cutting-our-inference-bill-by-68-by-being-obsessive-about-optimization/inline-02.webp",
+        "width": 1400,
+        "height": 813,
+        "alt": {
+          "ar": "كيف خفضت كلاودفلير تكلفة استدلال الذكاء الاصطناعي بنسبة 68%؟",
+          "en": "Cloudflare Cuts AI Code Review Inference Costs by 68%"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/obsessive-inference-optimization",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M58N5F4WEW2H5RW2C3C02F71.png&w=1430&h=830&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/cutting-our-inference-bill-by-68-by-being-obsessive-about-optimization/inline-03.webp",
+        "width": 1400,
+        "height": 807,
+        "alt": {
+          "ar": "كيف خفضت كلاودفلير تكلفة استدلال الذكاء الاصطناعي بنسبة 68%؟",
+          "en": "Chart showing the share of reviewers' first requests that read from the cache rising from 14â26% to 91â99.5% after September 16."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/obsessive-inference-optimization",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M58N564RN0MJ26ZA8QAB45WZ.png&w=1430&h=824&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/cutting-our-inference-bill-by-68-by-being-obsessive-about-optimization/inline-04.webp",
+        "width": 1400,
+        "height": 693,
+        "alt": {
+          "ar": "كيف خفضت كلاودفلير تكلفة استدلال الذكاء الاصطناعي بنسبة 68%؟",
+          "en": "Diagram showing three sub-reviewers sharing one cached first request: the first writes it and the other two read it, so only each reviewer's own instructions differ. The tools and shared rules at the start are shared acr"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/obsessive-inference-optimization",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M58N59HBFE6SVG2WZQE58AS5.png&w=1430&h=708&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/obsessive-inference-optimization",
+      "type": "official",
+      "title": "Cutting our inference bill by 68% by being obsessive about optimization"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/obsessive-inference-optimization",
+  "sourceTitle": "Cutting our inference bill by 68% by being obsessive about optimization",
+  "trendScore": 111.45,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-19T19:37:38+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/10/cutting-our-inference-bill-by-68-by-being-obsessive-about-optimization.json"
+}
