@@ -1,5 +1,413 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-19T20:37:39+00:00",
-  "last_published_story_id": "2f163485d6dfe9d114de"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-19T20:42:09+00:00",
+  "target_publish_at": "2026-10-19T23:57:38.993718+03:00",
+  "story": {
+    "title": "Improve TTFT for multi-turn agentic workloads with bi-directional KV transfer in vLLM",
+    "url": "https://aws.amazon.com/blogs/machine-learning/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm",
+    "domain": "aws.amazon.com",
+    "summary": "Multi-turn agentic workloads reprocess growing conversation context each turn, driving up latency. See how bi-directional KV cache transfer lets prefill and decode nodes reuse previously computed context across turns, cutting time to first token by up to 1.6x for Qwen3-32B and 3.3x for GLM-5-FP8 on Amazon EC2 P5en instances with EFA.",
+    "published_at": "2026-10-19T16:03:23+00:00",
+    "discovered_at": "2026-10-19T16:37:16+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "b1493241111afdbc5195",
+    "trend": {
+      "score": 104.19,
+      "age_hours": 4.64,
+      "corroboration_count": 0,
+      "entity_momentum": 0,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Improve TTFT for multi-turn agentic workloads with bi-directional KV transfer in vLLM",
+      "title": "Improve TTFT for multi-turn agentic workloads with bi-directional KV transfer in vLLM | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "نظام vLLM يتبنى النقل الثنائي لـ KV لخفض وقت الرمز الأول",
+      "description": "استكشف كيف يسهم النقل الثنائي لـ KV في vLLM بخفض زمن الوصول للرمز الأول بأكثر من ثلاثة أضعاف في مهام الوكلاء متعددة الأدوار.",
+      "deck": "أعلنت مدونة تعلم الآلة في أمازون عن تحسينات بارزة في إطار vLLM تعتمد على نقل ذاكرة التخزين المؤقت للـ KV في الاتجاهين، مما يعزز أداء مهام الوكلاء الذكية ذات الدورات المتعددة.",
+      "summary_bullets": [
+        "تخفيض زمن الوصول للرمز الأول (TTFT) بشكل ملحوظ عبر نقل ذاكرة التخزين المؤقت ثنائي الاتجاه.",
+        "دعم الأداء الفائق على مثيلات أمازون إي سي تو المرتبطة بشبكات إي إف إيه عالية السرعة.",
+        "تطوير موصلات NIXL لتسهيل تبادل كتل الذاكرة بين عقد التوليد والتعبئة المسبقة.",
+        "الاستفادة من موجه واعٍ بذاكرة التخزين المؤقت لإدارة بيانات الجلسات عبر دورات المحادثة."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات مهام الوكلاء متعددة الدورات",
+          "paragraphs": [
+            {
+              "text": "تواجه تطبيقات الذكاء الاصطناعي ووكلاء المحادثة تحديات تقنية تتمثل في إعادة معالجة سياق المحادثة المتنامي مع كل دورة جديدة، مما يؤدي إلى زيادة ملحوظة في زمن الوصول واستهلاك قدرات المعالجة. وفقاً لما نشرته AWS Machine Learning Blog فإن هذا التكرار المستمر في معالجة التعليمات والنتائج السابقة يستهلك الموارد ويؤثر على كفاءة الاستجابة.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد الهندسة التقليدية لفصل عمليات التعبئة المسبقة عن التوليد على تدفق أحادي الاتجاه لنقاط الذاكرة المؤقتة للـ KV، وهو ما ينتج عنه فقدان للبيانات المخزنة عند الانتقال بين العقد، مما يضطر النظام لإعادة حساب الرموز السابقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل الثنائية لنقل ذاكرة KV",
+          "paragraphs": [
+            {
+              "text": "تعتمد الميزة الجديدة على السماح لعقد التوليد بإعادة كتل الذاكرة المؤقتة المحوسبة مسبقاً إلى عقد التعبئة المسبقة، وذلك لتقليل الحسابات المتكررة في الدورات اللاحقة. تشير تفاصيل التقنية المتاحة في مستندات Prefill-decode (P-D) disaggregation إلى تحسين كفاءة استخدام الموارد وتسريع الاستجابة.",
+              "links": [
+                {
+                  "text": "Prefill-decode (P-D) disaggregation",
+                  "url": "https://docs.vllm.ai/en/latest/features/disagg_prefill/"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد البنية على تنسيق متطور يربط بين العقد المختلفة عبر شبكات فائقة السرعة، مما يضمن استمرارية السياق دون الحاجة لإعادة إنشاء التمثيلات من الصفر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج الأداء على البنية التحتية السحابية",
+          "paragraphs": [
+            {
+              "text": "أظهرت الاختبارات القياسية التي أجريت باستخدام مثيلات أمازون إس تو على مجموعات مخصصة تفوقاً واضحاً في خفض زمن الرمز الأول. وقد استخدمت الاختبارات شبكات AWS EFA التي تتيح نقل البيانات مباشرة بين ذواكر المعגלات بفضل تقنيات الوصول المباشر للذاكرة البعيدة.",
+              "links": [
+                {
+                  "text": "AWS EFA",
+                  "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html"
+                }
+              ]
+            },
+            {
+              "text": "سجلت التقنية انخفاضاً في زمن الوصول وصل إلى أضعاف مضاعفة لبعض النماذج الكبيرة مثل نماذج المعالجة المتقدمة، مما يؤكد جدوى هذا التوجه الهندسي في البيئات الإنتاجية الضخمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تطوير موصلات NIXL ودور الموجه الواعي",
+          "paragraphs": [
+            {
+              "text": "تم توسيع نطاق عمل موصلات KV connector لتدعم الاستهلاك المتبادل للكتل بين العقد المختلفة، على الرغم من اختلاف الأدوار المعمارية بين عقد التعبئة وعقد التوليد. يتطلب هذا التكامل الدقيق إدارة برمجية متطورة تضمن توافق نقل البيانات عبر الشبكة.",
+              "links": [
+                {
+                  "text": "KV connector",
+                  "url": "https://docs.vllm.ai/en/latest/features/nixl_connector_usage/"
+                }
+              ]
+            },
+            {
+              "text": "إلى جانب الموصلات، يلعب الموجه الواعي بذاكرة التخزين المؤقت دور العقل المدبر في تتبع معرفات المحادثات وتوجيه البيانات بكفاءة بين مكونات النظام المختلفة دون الحاجة لاستعلامات معقدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آفاق الاستخدام وإعادة إنتاج النتائج",
+          "paragraphs": [
+            {
+              "text": "تتيح هذه التحديثات للمطورين بناء مساعدين محادثة أكثر كفاءة واستجابة للطلبات المتعددة المعقدة، مع إمكانية الاطلاع على تفاصيل التطبيق عبر example proxy المتاح لمجتمع المطورين للاستفادة منه في البيئات المخصصة.",
+              "links": [
+                {
+                  "text": "example proxy",
+                  "url": "https://github.com/vllm-project/vllm/blob/main/examples/disaggregated/disaggregated_serving/disagg_proxy_multiturn.py"
+                }
+              ]
+            },
+            {
+              "text": "يمكن للمهندسين الراغبين في التحقق من النتائج الرجوع إلى Reproducing our results guide المتاح عبر منصات التطوير المفتوحة لمتابعة خطوات الضبط والاختبار بالتفصيل.",
+              "links": [
+                {
+                  "text": "Reproducing our results guide",
+                  "url": "https://github.com/vllm-project/vllm-project.github.io/blob/main/_posts/2026-10-12-bidirectional-kvxfer-multiturn-agentic-workload.md#appendix-reproducing-our-results"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "vLLM",
+        "الذكاء الاصطناعي",
+        "أمازون",
+        "تعلم الآلة",
+        "الحوسبة السحابية",
+        "تحسين الأداء"
+      ],
+      "entities": [
+        "AWS Machine Learning Blog",
+        "vLLM",
+        "Amazon EC2",
+        "AWS EFA",
+        "NIXL"
+      ],
+      "article_type": "news",
+      "confidence_note": "الخبر مستمد حصراً من مدونة تعلم الآلة لأمازون ومستندات vLLM الرسمية دون إضافة معلومات خارجية."
+    },
+    "en": {
+      "title": "vLLM Bi-Directional KV Transfer Cuts Multi-Turn TTFT",
+      "description": "Learn how bi-directional KV cache transfer in vLLM cuts time to first token for multi-turn agentic workloads on Amazon EC2 instances.",
+      "deck": "A new bi-directional key-value cache transfer mechanism in vLLM helps reduce time to first token latency for multi-turn agentic workloads by allowing prefill and decode nodes to reuse previously computed conversation context across turns.",
+      "summary_bullets": [
+        "Bi-directional KV cache transfer lets prefill and decode nodes reuse computed context across conversational turns.",
+        "Benchmarks on Amazon EC2 P5en instances cut time to first token by up to 1.6x for Qwen3-32B and 3.3x for GLM-5-FP8.",
+        "The feature extends the NVIDIA Inference Xfer Library KV connector and requires a KV-cache-aware router to coordinate block metadata.",
+        "Originally built on AWS Trainium clusters, the accelerator-agnostic capability has been contributed directly to vLLM."
+      ],
+      "sections": [
+        {
+          "heading": "The Challenge of Multi-Turn Agentic Workloads",
+          "paragraphs": [
+            {
+              "text": "Multi-turn agentic applications continually build on accumulated conversation history as an agent reasons, calls tools, and incorporates prior results. During each new turn, the client resends the full conversation history, which causes the growing context to be processed repeatedly and drives up latency. Standard Prefill-decode (P-D) disaggregation splits each request across specialized infrastructure where prefill nodes process prompts to build their key-value cache before decode nodes retrieve those blocks to generate responses.",
+              "links": [
+                {
+                  "text": "Prefill-decode (P-D) disaggregation",
+                  "url": "https://docs.vllm.ai/en/latest/features/disagg_prefill/"
+                }
+              ]
+            },
+            {
+              "text": "Conventional disaggregated serving only moves cache entries in one direction from prefill to decode nodes. This one-way data flow creates inefficiencies because decode nodes hold cache entries for both prompts and newly generated tokens after a response is finished. When the next turn arrives, prefill nodes cannot retrieve those entries, forcing them to recompute projections for previous response tokens and consume accelerator capacity as conversations grow.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture of Bi-Directional KV Transfer",
+          "paragraphs": [
+            {
+              "text": "To address these operational inefficiencies, bi-directional key-value cache transfer enables decode nodes to return previously computed cache blocks back to prefill nodes on subsequent conversation turns. This capability prevents the recomputation of shared context on prefill nodes based on a configurable recompute threshold. Coordination relies on a KV-cache-aware router that maintains an in-memory mapping from conversation IDs to decode transfer parameters.",
+              "links": []
+            },
+            {
+              "text": "Developers can explore the available reference materials and framework code to understand how control flows through the proxy. An example proxy is provided in the official repository to assist teams looking to implement similar disaggregated serving patterns in their own production environments.",
+              "links": [
+                {
+                  "text": "example proxy",
+                  "url": "https://github.com/vllm-project/vllm/blob/main/examples/disaggregated/disaggregated_serving/disagg_proxy_multiturn.py"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Enhancements to the NIXL KV Connector",
+          "paragraphs": [
+            {
+              "text": "Engineers extended the NVIDIA Inference Xfer Library KV connector so that prefill nodes can consume remote cache blocks similarly to how decode nodes consume prefill-provided blocks. Because prefill and decode nodes carry architectural differences—with prefill nodes generating complete prompt representations and decode nodes serving previously cached blocks—each node retains its distinct role for computing remote and local metadata while utilizing a common read mechanism.",
+              "links": []
+            },
+            {
+              "text": "Under this bi-directional mode, decode instances retain blocks for a specified time-to-live duration rather than freeing them immediately after generation finishes. If a subsequent turn arrives before the expiration window, the prefill node reuses the cached information, whereas late requests fall back to normal prefill operations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Performance and Benchmark Results",
+          "paragraphs": [
+            {
+              "text": "In multi-turn benchmarks conducted on a single-prefill, single-decode deployment utilizing Amazon Elastic Compute Cloud instances, bi-directional transfer significantly reduced the time to first token. The evaluation demonstrated a reduction of up to 1.6x for Qwen3-32B and up to 3.3x for zai-org/GLM-5-FP8 workloads.",
+              "links": []
+            },
+            {
+              "text": "These hardware deployments leverage low-latency remote direct memory access networks. On supported instance types, the infrastructure moves cache blocks directly between device memory across nodes to optimize communication efficiency.",
+              "links": [
+                {
+                  "text": "supported instance types",
+                  "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html#efa-instance-types"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Network Integration and Reproduction",
+          "paragraphs": [
+            {
+              "text": "The underlying architecture connects servers using AWS Elastic Fabric Adapter, which supports advanced remote direct memory access protocols like GPUDirect RDMA and Neuron Direct RDMA for fast block transfers across graphics processing units and custom accelerators.",
+              "links": [
+                {
+                  "text": "AWS Elastic Fabric Adapter",
+                  "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html"
+                }
+              ]
+            },
+            {
+              "text": "The feature was initially developed and validated on AWS Trainium instance clusters before being contributed to vLLM as an accelerator-agnostic capability. Teams interested in validating these metrics independently can consult the detailed GitHub reproduction guide provided in the project documentation.",
+              "links": [
+                {
+                  "text": "AWS Trainium",
+                  "url": "https://aws.amazon.com/ai/machine-learning/trainium/"
+                },
+                {
+                  "text": "GitHub reproduction guide",
+                  "url": "https://github.com/vllm-project/vllm-project.github.io/blob/main/_posts/2026-10-12-bidirectional-kvxfer-multiturn-agentic-workload.md#appendix-reproducing-our-results"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "vLLM",
+        "Amazon EC2",
+        "AWS Trainium",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "KV Cache",
+        "Disaggregated Serving"
+      ],
+      "entities": [
+        "vLLM",
+        "AWS",
+        "Amazon EC2",
+        "AWS Trainium",
+        "NVIDIA"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based directly on the provided official AWS Machine Learning Blog post regarding vLLM bi-directional KV transfer."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 452,
+      "word_count_en": 627
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "b1493241111afdbc5195",
+      "title": "Improve TTFT for multi-turn agentic workloads with bi-directional KV transfer in vLLM",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 452,
+          "word_count_en": 627
+        }
+      ]
+    }
+  ],
+  "slug": "improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/hero.webp",
+    "card": "/forum/assets/posts/2026/10/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/card.webp",
+    "social": "/forum/assets/posts/2026/10/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/social.jpg",
+    "alt": {
+      "ar": "نظام vLLM يتبنى النقل الثنائي لـ KV لخفض وقت الرمز الأول",
+      "en": "vLLM Bi-Directional KV Transfer Cuts Multi-Turn TTFT"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21811-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/inline-01.webp",
+        "width": 1400,
+        "height": 887,
+        "alt": {
+          "ar": "نظام vLLM يتبنى النقل الثنائي لـ KV لخفض وقت الرمز الأول",
+          "en": "Flow diagram contrasting the standard prefill-to-decode KV path (blue) with the bi-directional additions numbered one through six (red)"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21811-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/inline-02.webp",
+        "width": 1149,
+        "height": 1050,
+        "alt": {
+          "ar": "نظام vLLM يتبنى النقل الثنائي لـ KV لخفض وقت الرمز الأول",
+          "en": "Two stacked sequence diagrams focused on the KV-cache-aware router. On turn one, the router records a cache miss, sends the request to Prefill, receives Prefill metadata, sends Decode the request and Prefill metadata, sa"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21811-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/inline-03.webp",
+        "width": 1147,
+        "height": 883,
+        "alt": {
+          "ar": "نظام vLLM يتبنى النقل الثنائي لـ KV لخفض وقت الرمز الأول",
+          "en": "Line chart of Qwen3-32B time to first token versus prompt length with bi-directional KV transfer on and off"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21811-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/inline-04.webp",
+        "width": 1371,
+        "height": 913,
+        "alt": {
+          "ar": "نظام vLLM يتبنى النقل الثنائي لـ KV لخفض وقت الرمز الأول",
+          "en": "Bar chart breaking Qwen3-32B prefill duration into recompute and KV-transfer components"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21811-4.png"
+      }
+    ]
+  }
 }
