@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "71cf1fc71504fea52775",
+  "slug": "push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in/",
+    "en": "/forum/en/ai/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إطلاق ميزة النقل القائم على الدفع في vLLM لتحسين الأداء",
+      "description": "أعلن AWS Machine Learning Blog عن ميزة النقل القائم على الدفع لتحسين زمن الوصول وسرعة معالجة النصوص للنماذج الكبيرة.",
+      "deck": "تقدم منظومة [vLLM](https://github.com/vllm-project/vllm) تحسينات ملحوظة في أداء الاستدلال للنماذج اللغوية الكبيرة عبر تقنيات النقل المتقدمة.",
+      "summaryBullets": [
+        "تحسين زمن الوصول الأول بنجاح يصل إلى ثلاثة أضعاف.",
+        "زيادة سرعة معالجة الرموز الناتجة بنسبة تصل إلى ثلاثين بالمائة.",
+        "نقل عملية التنسيق والتنظيم خارج المسار الحرج للاستدلال.",
+        "الاعتماد على تقنيات الاتصال فائق السرعة لدعم الكفاءة."
+      ],
+      "sections": [
+        {
+          "heading": "مفهوم الفصل في الاستدلال وتحديات نقل الذاكرة",
+          "paragraphs": [
+            {
+              "text": "تعتمد [vLLM](https://github.com/vllm-project/vllm) كمنظومة مفتوحة المصدر لتشغيل وخدمة الننماذج اللغوية الكبيرة على فصل مراحل الاستدلال إلى مرحلتين أساسيتين هما مرحلة إعداد النصوص ومرحلة توليد الرموز، وهو ما يُعرف باسم [Prefill-decode (P-D) disaggregation](https://docs.vllm.ai/en/latest/features/disagg_prefill/)، مما يتيح توسيع نطاق كل مرحلة بشكل مستقل لتحسين كفاءة استخدام الموارد وسعة التحمل العامة.",
+              "links": [
+                {
+                  "text": "vLLM",
+                  "url": "https://github.com/vllm-project/vllm"
+                },
+                {
+                  "text": "Prefill-decode (P-D) disaggregation",
+                  "url": "https://docs.vllm.ai/en/latest/features/disagg_prefill/"
+                }
+              ]
+            },
+            {
+              "text": "رغم المزايا العديدة لفصل مراحل التشغيل، فإن هذا النهج يفرض تحدياً تقنياً يتمثل في ضرورة نقل ذاكرة التخزين المؤقت للمفاتيح والقيم بين خوادم الإعداد وخوادم التوليد قبل الشروع في توليد الرموز الفعلية، وهو ما يجعل كفاءة عملية النقل عاملاً حاسماً في تحديد زمن استجابة النظام وتأخير الاستعلام الأول.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل التقليدية وأثرها على مسار الاستجابة",
+          "paragraphs": [
+            {
+              "text": "تعتمد الآلية الافتراضية للربط عبر [connector](https://docs.vllm.ai/en/latest/features/nixl_connector_usage/) على الأسلوب القائم على السحب، حيث يتولى الموجه نقل بيانات التعريف المصدرية إلى مثيل التوليد بعد انتهاء مرحلة الإعداد، ليقوم مثيل التوليد بعد ذلك بتهيئة عملية النقل وجلب الكتل المطلوبة بشكل متسلسل.",
+              "links": [
+                {
+                  "text": "connector",
+                  "url": "https://docs.vllm.ai/en/latest/features/nixl_connector_usage/"
+                }
+              ]
+            },
+            {
+              "text": "تتسبب هذه الخطوات التنسيقية المتعاقبة التي تتم بعد إتمام مرحلة الإعداد وقبل البدء في التوليد في إطالة المسار الحرج لزمن الاستجابة، مما يؤدي إلى زيادة ملحوظة في الوقت المستغرق للحصول على الرمز الأول خصوصاً عند التعامل مع معدلات طلبات مرتفعة في بيئات التشغيل المكثفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تقديم هندسة النقل القائم على الدفع لتحسين الكفاءة",
+          "paragraphs": [
+            {
+              "text": "كشف تقرير نشرته مدونة [AWS Machine Learning Blog](https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/) عن تطوير موصل جديد يعتمد على الدفع لنقل بيانات التخزين المؤقت خارج المسار الحرج، مما يساهم في إزالة التأخيرات الناتجة عن خطوات التنسيق المتسلسلة بين خوادم المعالجة المختلفة.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/"
+                }
+              ]
+            },
+            {
+              "text": "تعمل هذه التقنية الجديدة على التداخل بين أعمال المُنتِج والمُستهلِك، حيث يقوم مثيل التوليد بتسجيل كتل الذاكرة المستهدفة مسبقاً بينما يواصل الطرف الآخر حساب ذاكرة التخزين المؤقت، مما يتيح بدء عملية النقل فور جاهزية الكتل دون انتظار دورة اكتشاف المعرفات من طرف المستهلك.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية التقنية وتنسيق العمليات الخلفية",
+          "paragraphs": [
+            {
+              "text": "تعتمد هندسة النقل القائم على الدفع على تنسيق متكامل بين عدة أطراف تشمل مثيل التوليد الذي يسجل الكتل المخصصة مسبقاً، ومثيل الإعداد الذي يطابق الطلبات ويصدر أمر النقل، وخيط معالجة خلفي مخصص ينفذ عملية كتابة البيانات بعيداً عن حلقة التنفيذ الأمامي لمحرك المعالجة.",
+              "links": []
+            },
+            {
+              "text": "يتم تمرير التسجيلات ونقاط التلاقي بكفاءة عالية عبر استخدام مكتبات النقل المباشر للذاكرة البعيدة، والاستفادة من شبكات التوصيل فائقة السرعة مثل [AWS EFA](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html) المتوفرة عبر أنواع الخوادم المدعومة في البنية التحتية للحوسبة السحابية.",
+              "links": [
+                {
+                  "text": "AWS EFA",
+                  "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "النتائج المعيارية ومستويات الأداء المحققة",
+          "paragraphs": [
+            {
+              "text": "أظهرت اختبارات الأداء التي أجريت على عناقيد حوسبية متقدمة مزودة بشبكات الاتصال السريع المذكورة تحسناً كبيراً في مؤشرات الأداء الرئيسية، حيث ساهم النمط الجديد في تحقيق سرعة استجابة أفضل تصل إلى ثلاثة أضعاف لزمن الحصول على الرمز الأول مع نموذج كوين، إلى جانب تحسن بنسبة ثلاثين بالمائة في معدل زمن الرمز الناتج.",
+              "links": []
+            },
+            {
+              "text": "تؤكد هذه النتائج قدرة الحلول البرمجية الجديدة على تعزيز استجابة التطبيقات الذكية والعميلة، مع إمكانية إعادة إنتاج هذه النتائج عبر الأدوات البرمجية المتاحة في مستودعات المشروع الرسمية للاستفادة من المكاسب المتحققة على معالجات الرسوميات ووحدات [AWS Trainium](https://aws.amazon.com/ai/machine-learning/trainium/}.",
+              "links": [
+                {
+                  "text": "AWS Trainium",
+                  "url": "https://aws.amazon.com/ai/machine-learning/trainium/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "vLLM",
+        "الذكاء الاصطناعي",
+        "الحوسبة السحابية",
+        "نماذج اللغات الكبيرة",
+        "تحسين الأداء"
+      ],
+      "entities": [
+        "vLLM",
+        "AWS Machine Learning Blog",
+        "AWS EFA",
+        "AWS Trainium"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "19 أكتوبر 2026",
+      "modifiedLabel": "19 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 502
+    },
+    "en": {
+      "title": "vLLM Push-Based KV Transfer Boosts TTFT and TPOT",
+      "description": "Discover how the new push-based NIXL connector for vLLM disaggregated inference improves TTFT and TPOT performance using AWS infrastructure.",
+      "deck": "A new push-based NIXL connector architecture for disaggregated large language model inference in vLLM shifts coordination and setup off the critical path, yielding dramatic latency and throughput improvements.",
+      "summaryBullets": [
+        "vLLM's prefill-decode disaggregation splits workloads across distinct engine instances requiring efficient key-value cache transfers.",
+        "The new push-based NIXL connector moves transfer coordination and setup off the critical path to improve application responsiveness.",
+        "Benchmarks on Amazon EC2 P5en instances using AWS EFA show up to 3x better time-to-first-token and 30% better time-per-output-token.",
+        "The feature was built and validated on AWS Trainium clusters before being contributed as an accelerator-agnostic feature."
+      ],
+      "sections": [
+        {
+          "heading": "Understanding Prefill-Decode Disaggregation in vLLM",
+          "paragraphs": [
+            {
+              "text": "vLLM is an open-source inference and serving engine for large language models. LLM inference splits work into two distinct phases: prefill, which processes the input prompt and builds the key-value cache, and decode, which uses that cache to generate output tokens sequentially. These phases feature fundamentally different compute, memory, and scaling characteristics. Utilizing Prefill-decode (P-D) disaggregation runs these workloads on separate engine instances, allowing each phase to scale and be optimized independently.",
+              "links": [
+                {
+                  "text": "vLLM",
+                  "url": "https://github.com/vllm-project/vllm"
+                },
+                {
+                  "text": "Prefill-decode (P-D) disaggregation",
+                  "url": "https://docs.vllm.ai/en/latest/features/disagg_prefill/"
+                }
+              ]
+            },
+            {
+              "text": "While disaggregation can improve resource utilization, throughput, and latency under load, it introduces a new bottleneck. The system must transfer the key-value cache from the prefill instance to the decode instance before token generation can begin, making efficient transfer mechanisms critical to reducing the time-to-first-token latency metric.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The Limitation of Pull-Based Transfer",
+          "paragraphs": [
+            {
+              "text": "One of the traditional ways vLLM performs this transfer is through the NVIDIA Inference Xfer Library connector, which moves key-value blocks over interconnects supporting Remote Direct Memory Access, such as AWS Elastic Fabric Adapter. On supported instance types, AWS EFA supports GPUDirect RDMA and Neuron Direct RDMA, allowing transfers directly between device memories without staging through host memory.",
+              "links": [
+                {
+                  "text": "connector",
+                  "url": "https://docs.vllm.ai/en/latest/features/nixl_connector_usage/"
+                },
+                {
+                  "text": "AWS EFA",
+                  "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html"
+                },
+                {
+                  "text": "supported instance types",
+                  "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html#efa-instance-types"
+                }
+              ]
+            },
+            {
+              "text": "However, the default mode for this connector has historically been pull-based. After the prefill instance finishes computing the prompt cache, a router relays source metadata to the decode instance. The decode instance then allocates destination blocks, prepares the transfer, and initiates a read operation to pull the blocks from the prefill instance. Because these coordination and setup steps occur sequentially after prefill and before decoding starts, they significantly extend the critical path for the first token.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Introducing the Push-Based NIXL Connector",
+          "paragraphs": [
+            {
+              "text": "To solve serialization issues and reduce latency, developers introduced a push-based NIXL connector that shifts post-prefill transfer coordination and setup completely off the critical path. If engineers run disaggregated prefill and decode inference using vLLM, this push mode enhances application responsiveness by cutting down time-to-first-token and time-per-output-token metrics, especially under high request rates.",
+              "links": []
+            },
+            {
+              "text": "The push design improves performance by overlapping producer and consumer work. The decode instance registers its target blocks in advance while the producer is still computing the key-value cache. The data transfer starts immediately once the producer blocks are ready, eliminating consumer-side ID-discovery round trips from the path to the first token.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Three-Actor Coordination",
+          "paragraphs": [
+            {
+              "text": "The push connector successfully coordinates three key actors within the cluster framework. First, the decode instance registers its target blocks up front. Second, the prefill instance matches each request and issues the transfer. Third, a dedicated background thread carries out the key-value write operation entirely off the engine's main forward-pass loop.",
+              "links": []
+            },
+            {
+              "text": "During registration, the decode main loop allocates destination blocks and notifies the prefill instance. During the rendezvous phase on the prefill side, the system matches requests by ID, accommodating retried or preempted requests. Finally, the transfer phase issues a direct write that copies the key-value blocks straight into the decoder's registered memory, complete with delivery notifications.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Benchmark Results on Amazon EC2 and AWS Trainium",
+          "paragraphs": [
+            {
+              "text": "In official benchmarks conducted on a 1P1D deployment using Amazon EC2 P5en instances connected via EFA, the push mode delivered up to 3x better time-to-first-token and up to 30 percent better time-per-output-token compared to standard pull mode when running the Qwen3-32B model, though exact results depend on specific workloads and configurations.",
+              "links": []
+            },
+            {
+              "text": "The engineering teams initially built and validated this capability on clusters featuring AWS Trainium before contributing it back to the open-source community as an accelerator-agnostic feature. Performance data confirms that these massive efficiency gains translate seamlessly over to GPU clusters equipped with fast networking fabrics.",
+              "links": [
+                {
+                  "text": "AWS Trainium",
+                  "url": "https://aws.amazon.com/ai/machine-learning/trainium/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "vLLM",
+        "AI Inference",
+        "Large Language Models",
+        "AWS EFA",
+        "NIXL",
+        "Machine Learning",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "vLLM",
+        "AWS",
+        "NVIDIA",
+        "Amazon EC2",
+        "AWS Trainium"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 19, 2026",
+      "modifiedLabel": "October 19, 2026",
+      "readMinutes": 4,
+      "wordCount": 684
+    }
+  },
+  "datePublished": "2026-10-19T20:17:37.171888+03:00",
+  "dateModified": "2026-10-19T20:17:37.171888+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in/hero.webp",
+    "card": "/forum/assets/posts/2026/10/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in/card.webp",
+    "social": "/forum/assets/posts/2026/10/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in/social.jpg",
+    "alt": {
+      "ar": "إطلاق ميزة النقل القائم على الدفع في vLLM لتحسين الأداء",
+      "en": "vLLM Push-Based KV Transfer Boosts TTFT and TPOT"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21812-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in/inline-01.webp",
+        "width": 1400,
+        "height": 809,
+        "alt": {
+          "ar": "إطلاق ميزة النقل القائم على الدفع في vLLM لتحسين الأداء",
+          "en": "Pull-mode timeline: router relay, decode-side allocation, and NIXL READ run serially on the path to first token."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21812-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in/inline-02.webp",
+        "width": 1400,
+        "height": 795,
+        "alt": {
+          "ar": "إطلاق ميزة النقل القائم على الدفع في vLLM لتحسين الأداء",
+          "en": "Push-based KV transfer architecture overview"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21812-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in/inline-03.webp",
+        "width": 1400,
+        "height": 793,
+        "alt": {
+          "ar": "إطلاق ميزة النقل القائم على الدفع في vLLM لتحسين الأداء",
+          "en": "Threading model showing the decode and prefill main loops handing KV blocks to a background thread that performs the NIXL transfer off the forward-pass loop"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21812-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in/inline-04.webp",
+        "width": 1400,
+        "height": 791,
+        "alt": {
+          "ar": "إطلاق ميزة النقل القائم على الدفع في vLLM لتحسين الأداء",
+          "en": "Side-by-side timeline comparing pull and push KV transfer, showing push overlapping decode-side setup with prefill to shorten the path to the first token"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21812-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/",
+      "type": "official",
+      "title": "Push-based KV transfer to improve TTFT and TPOT for disaggregated inference in vLLM"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm",
+  "sourceTitle": "Push-based KV transfer to improve TTFT and TPOT for disaggregated inference in vLLM",
+  "trendScore": 109.56,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-19T17:17:37+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in.json"
+}
