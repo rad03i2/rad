@@ -1,5 +1,398 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-19T20:17:39+00:00",
-  "last_published_story_id": "5c52b7d34becd1ccf770"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-19T20:22:38+00:00",
+  "target_publish_at": "2026-10-19T23:37:38.869185+03:00",
+  "story": {
+    "title": "Grab Reduces ANRs by 32% and improves startup time by 35% with R8 and Profile guided optimization",
+    "url": "https://developer.android.com/blog/posts/grab-r8-profile-guided-optimization-anr-startup-time",
+    "domain": "developer.android.com",
+    "summary": "Grab is Southeast Asia's leading superapp, offering deliveries, mobility, and financial services to millions of users across eight countries through a single app.",
+    "published_at": "2026-10-19T00:00:00+00:00",
+    "discovered_at": "2026-10-19T19:02:08+00:00",
+    "source": {
+      "name": "Android Developers",
+      "feed": "https://android-developers.googleblog.com/feeds/posts/default",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 28,
+      "defaultCategory": "mobile"
+    },
+    "category": "robotics",
+    "category_label": "الروبوتات",
+    "score": 58,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "2f163485d6dfe9d114de",
+    "trend": {
+      "score": 112.08,
+      "age_hours": 20.37,
+      "corroboration_count": 0,
+      "entity_momentum": 12.0,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://developer.android.com/blog/posts/grab-r8-profile-guided-optimization-anr-startup-time",
+      "name": "Android Developers",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Grab Reduces ANRs by 32% and improves startup time by 35% with R8 and Profile guided optimization",
+      "title": "Grab Reduces ANRs by 32% and improves startup time by 35% with R8 and Profile guided optimization | Android Developers' Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "Grab تخفض زمن بدء التشغيل 35% وتقلل الأخطاء عبر تحسينات R8",
+      "description": "كشفت شركة Grab عن نجاحها في خفض معدل استجابة التطبيق 32% وتحسين زمن الإقلاع 35% باستخدام أدوات R8 وBaseline Profiles، مما يعزز تجربة ملايين المستخدمين في جنوب شرق آسيا.",
+      "deck": "اعتمدت منصة Grab على تحسينات عميقة في بنية التطبيق لتجاوز تحديات حجم الكود الضخم، محققة مكاسب ملموسة في الأداء والاستقرار.",
+      "summary_bullets": [
+        "خفضت Grab معدل أخطاء ANR بنسبة 32% وحجم التحميل بنسبة 30% تقريباً.",
+        "تحسن زمن بدء التشغيل البارد بنسبة 35% بفضل ملفات Baseline Profiles.",
+        "انتقلت الشركة من وضع التوافق إلى وضع R8 Full Mode لزيادة كفاءة التحسين.",
+        "دمجت أدوات تحليل الإعدادات لضمان استمرارية الأداء في التحديثات المستقبلية."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات تطبيق ضخم في جنوب شرق آسيا",
+          "paragraphs": [
+            {
+              "text": "تواجه شركة Grab، التي تعد التطبيق الخارق الرائد في جنوب شرق آسيا، تحديات هندسية معقدة نظراً لحجم كودها الذي يتجاوز 10 ملايين سطر ويضم مئات المكتبات الخارجية. كانت هذه البنية الهجينة تعتمد على نظامي Bazel وGradle، مما أدى إلى ارتفاع معدلات أخطاء عدم الاستجابة (ANR) وزيادة تدريجية في حجم التطبيق وزمن بدء التشغيل عاماً بعد عام.",
+              "links": []
+            },
+            {
+              "text": "لم تكن هذه المشاكل تقنية فحسب، بل أثرت مباشرة على تجربة ملايين المستخدمين في ثمانية دول. سعت فرق التطوير إلى إيجاد حلول جذرية لتقليل التأخير في الإقلاع البارد (Cold Start) والحد من القفزات المفاجئة في معدل الأخطاء بعد كل تحديث أسبوعي، وهو ما كان سببه الرئيسي تكلفة قراءة ملفات DEX العديدة أثناء تهيئة التطبيق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور ملفات Baseline Profiles في معالجة الأخطاء",
+          "paragraphs": [
+            {
+              "text": "رغم توفر ملفات السحابة من Google Play لتحسين المسارات القياسية، إلا أنها لم تغطي جميع مسارات التهيئة الحرجة الخاصة بمسارات المستخدمين في Grab، مثل تهيئة رسوميات الاعتماديات Dagger عند بدء التشغيل. كان الاعتماد على الترجمة الفورية (JIT) في الأيام التالية للتركيب غير كافٍ لضمان الأداء الفوري.",
+              "links": []
+            },
+            {
+              "text": "حلّت Grab هذه المشكلة من خلال تنفيذ ملف Baseline Profile مخصص، مما سمح بتضمين هذه المسارات الحرجة مباشرة في ملفات السحابة. هذا الإجراء وسّع نطاق التحسين بحيث تم تجميع المسارات الرئيسية إلى كود آلة فور التثبيت، بدلاً من انتظار التحسين في الخلفية، مما أسهم بشكل مباشر في القضاء على ذروات الأخطاء بعد الإصدار.",
+              "links": [
+                {
+                  "text": "Baseline Profile",
+                  "url": "https://developer.android.com/topic/performance/baselineprofiles/overview"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "المرحلة الأولى: تفعيل تحسينات R8",
+          "paragraphs": [
+            {
+              "text": "بدأت رحلة التحسين في عام 2025 بالانتقال من ملفات Proguard التقليدية إلى إعدادات proguard-android-optimize.txt التي تفعّل محسن R8. نظراً لعمر قاعدة الكود الذي يتجاوز عقداً، تطلب هذا التحول معالجة إعدادات قديمة واستخدامات الانعكاس (Reflection) بشكل دقيق لتجنب كسر الوظائف الحالية.",
+              "links": []
+            },
+            {
+              "text": "أثمرت هذه المرحلة الأولى، عند دمجها مع ملفات Baseline وStartup Profiles، عن نتائج فورية ملموسة. شهدت الشركة انخفاضاً بنسبة 25% في معدل أخطاء ANR التي يدركها المستخدم، وتقليصاً لحجم التحميل بنسبة 16%، وتحسناً بنسبة 27% في زمن بدء التشغيل البارد، مما وضع أساساً متيناً للمراحل اللاحقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المرحلة الثانية: الانتقال إلى وضع R8 الكامل",
+          "paragraphs": [
+            {
+              "text": "بعد تسعة أشهر من الإطلاق الأولي، انتقلت Grab في عام 2026 إلى وضع R8 Full Mode، وهو وضع يفتح آفاقاً أوسع للتحسينات المتقدمة. بينما عملت المكتبات القياسية مثل Retrofit وFirebase بسلاسة مع القواعد المدمجة، تطلب بقية قاعدة الكود الضخمة معالجة مسارات تعتمد بشكل كبير على الانعكاس.",
+              "links": [
+                {
+                  "text": "R8 Full Mode",
+                  "url": "https://developer.android.com/topic/performance/app-optimization/full-mode"
+                }
+              ]
+            },
+            {
+              "text": "واجه الفريق تحدياً خاصاً مع الوكلاء الديناميكيين في Java، حيث لا يمكن لـ R8 اكتشاف استخدامات وقت التشغيل، مما يؤدي إلى حذف الفئات اللازمة وتسبب في انهيار التطبيق. بدلاً من تطبيق استثناءات واسعة تزيد من حجم التطبيق، عززت الفرق قواعد الاحتفاظ (Keep Rules) المستهدفة بدقة للحفاظ على الاستقرار دون التضحية بالكفاءة.",
+              "links": []
+            },
+            {
+              "text": "أسفر هذا الانتقال عن مكاسب تراكمية كبيرة، شملت انخفاضاً إضافياً بنسبة 14% في حجم التحميل، وتحسناً بنسبة 10% في زمن البدء، وانخفاضاً بنسبة 10% أخرى في أخطاء ANR. كما ساعدت قواعد الاحتفاظ من إصدار Gson الأخير في ضمان تحليل JSON سلس دون تعقيدات إضافية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الحوكمة المستمرة وتحليل الإعدادات",
+          "paragraphs": [
+            {
+              "text": "تركز المرحلة الأخيرة من استراتيجية Grab على ضمان صحة قاعدة الكود على المدى الطويل من خلال المراقبة المستمرة للأداء. دمج الفريق أداة R8 Configuration Analyzer في سير عمل التقييم لقياس مدى فعالية قواعد الاحتفاظ في السماح لـ R8 بالتحسين والتقليص والتعمية.",
+              "links": [
+                {
+                  "text": "R8 Configuration Analyzer",
+                  "url": "https://developer.android.com/topic/performance/app-optimization/r8-configuration-analyzer#understand-report"
+                }
+              ]
+            },
+            {
+              "text": "أظهرت النتائج تحسناً في درجات التحسين من 72% إلى 78.2%، ودرجات التقليص من 73% إلى 79.1%، ودرجات التعمية من 79.6% إلى 81.7%. هذا التحليل الدقيق مكن الفريق من بناء حواجز حماية في أنظمة التكامل المستمر (CI) لضمان التزام الكود الجديد بمعايير الأداء الصارمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تجاوز العقبات التقنية في الاختبار والبناء",
+          "paragraphs": [
+            {
+              "text": "لم تكن عملية التحول خالية من الصعوبات، خاصة مع وجود حالات حدية ناتجة عن سنوات من تراكم استخدامات الانعكاس. نظراً لاستحالة اختبار شامل لملايين الأسطر، اتبع الفريق نهجاً تدريجياً يركز على اختبار الكود المغطى بقواعد الاحتفاظ التي تم تضييقها، مع تحسين تلك القواعد لتستهدف الفئات المطلوبة فقط.",
+              "links": []
+            },
+            {
+              "text": "كما تطلبت البنية الهجينة للبناء (Bazel للتصحيح وGradle للإصدارات) معالجة فجوة في زمن التغذية الراجعة، حيث استغرقت التغييرات التجريبية حتى ساعتين في أنظمة CI عن بُعد. لسد هذه الفجوة، محاكت Grab سلوك R8 الإنتاجي في بناءات QA اليومية وأتمتت جمع الملفات الأساسية مثل mapping.txt لتسهيل التحقيق السريع في أي مشاكل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Android",
+        "R8",
+        "Performance",
+        "Grab",
+        "Mobile Optimization",
+        "Baseline Profiles",
+        "App Development"
+      ],
+      "entities": [
+        "Grab",
+        "Google",
+        "R8",
+        "Baseline Profiles",
+        "Android",
+        "Bazel",
+        "Gradle",
+        "Gson"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستخرجة بدقة من المصدر الرسمي لمطوري Android، مع التركيز على الأرقام والإجراءات التقنية المذكورة في النص الأصلي دون استنتاجات خارجية."
+    },
+    "en": {
+      "title": "Grab Cuts ANRs by 32% with R8 and Profiles",
+      "description": "Southeast Asia's superapp Grab cuts user-perceived ANR rates by 32% and improves startup times using R8 optimization and Baseline Profiles.",
+      "deck": "Grab successfully tackled performance hurdles in its decade-old superapp codebase by implementing advanced R8 optimization strategies, Baseline Profiles, and Startup Profiles.",
+      "summary_bullets": [
+        "Grab reduced its user-perceived ANR rate by 32% across its multi-service superapp.",
+        "Overall startup time improved by 35% through a combination of R8 optimization and profile guided optimization.",
+        "App download size decreased by approximately 30% across multiple strategic rollout phases.",
+        "The engineering team utilized the R8 Configuration Analyzer to monitor and improve optimization, shrinking, and obfuscation scores."
+      ],
+      "sections": [
+        {
+          "heading": "Tackling Legacy Codebase Challenges at Scale",
+          "paragraphs": [
+            {
+              "text": "As Southeast Asia's leading superapp, Grab delivers mobility, financial services, and deliveries to millions of users across eight countries through a single unified platform. Maintaining this expansive ecosystem involves managing a 10-year-old codebase containing over 10 million lines of code built on a hybrid Bazel and Gradle setup. Over time, the engineering team faced mounting performance challenges, including high Application Not Responding (ANR) rates, an expanding app download size, and a startup time that steadily increased year over year.",
+              "links": []
+            },
+            {
+              "text": "Prior to upgrading its optimization pipeline, Grab experienced frequent cold start delays and post-release ANR spikes immediately following weekly app updates. These issues were largely driven by the high overhead of reading numerous DEX files during initial app launch. While standard deployment processes relied on Google Play's Cloud Profiles, those configurations did not fully cover complex initialization pathways like Dagger dependency graphs required during critical user journeys.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Implementing Baseline and Startup Profiles",
+          "paragraphs": [
+            {
+              "text": "To address initialization bottlenecks, Grab integrated custom Baseline Profiles to ensure essential user paths were compiled directly into machine code at installation. This approach expanded optimization coverage beyond default distributions. For further insights into how these performance mechanisms operate, developers can reference official documentation on JIT compilation.",
+              "links": [
+                {
+                  "text": "JIT compilation",
+                  "url": "https://developer.android.com/about/versions/nougat/android-7.0#jit_aot"
+                }
+              ]
+            },
+            {
+              "text": "The combination of profile guided optimization and runtime compilation tools proved transformative. Nguyen Van Minh, Lead Software Engineer on Grab's Passenger App Core team, noted that the application consistently experienced ANR spikes with every weekly release before these changes were deployed. Implementing the custom configurations successfully eliminated post-release spikes and accelerated overall app startup times.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Phase 1: Transitioning to R8 Compat Mode",
+          "paragraphs": [
+            {
+              "text": "Grab executed its overarching performance overhaul across multiple strategic phases. In the first phase shipped in 2025, the team moved away from the legacy default Proguard file and adopted proguard-android-optimize.txt to enable the R8 optimizer. Because the application relied on extensive reflection across its massive codebase, preparing the environment required addressing various legacy configurations.",
+              "links": []
+            },
+            {
+              "text": "By pairing this initial optimization push with tailored Baseline Profiles and Startup Profiles, Grab achieved an immediate 25% reduction in user-perceived ANR rates, a 16% drop in app download size, and a 27% improvement in cold start performance.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Phase 2: Unlocking R8 Full Mode",
+          "paragraphs": [
+            {
+              "text": "Nine months after the initial rollout, Grab advanced to R8 Full Mode to extract deeper optimizations from the compiler. While libraries like Retrofit, Firebase, and Jetpack Compose integrated smoothly, migrating the wider codebase required careful management of reflection-heavy paths, such as Java dynamic proxies which dynamically generate interface implementations at runtime.",
+              "links": []
+            },
+            {
+              "text": "To prevent compilation crashes caused by stripped or renamed classes during aggressive code shrinking, the engineering team avoided broad exemptions that would inflate app size. Instead, they adopted consumer keep rules from the latest Gson release and implemented highly targeted keep rules for specific reflection-reliant classes. For further details on refining rules and library configurations, developers can consult guidelines on consumer keep rules from the latest Gson.",
+              "links": [
+                {
+                  "text": "consumer keep rules from the latest Gson",
+                  "url": "https://developer.android.com/topic/performance/app-optimization/library-optimization"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Long-Term Codebase Health and Governance",
+          "paragraphs": [
+            {
+              "text": "In the final stage of its optimization lifecycle, Grab focused on establishing long-term codebase health, continuous performance monitoring, and strict compilation governance. To systematically measure rule hygiene and prevent configuration regressions, the engineering group integrated the R8 Configuration Analyzer into their evaluation workflow. This tool provided deep visibility into optimization performance, tracking key metrics such as shrinking, obfuscation, and R8 Optimization scores.",
+              "links": []
+            },
+            {
+              "text": "Through ongoing refinement of keep rules, Grab boosted its optimization score from 72% to 78.2%, raised its shrinking score from 73% to 79.1%, and improved its obfuscation score from 79.6% to 81.7%. These diagnostic improvements delivered an additional ~3.6% reduction in app download size while providing objective data to enforce automated pre-merge CI guardrails protecting future releases.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Grab",
+        "Android",
+        "R8",
+        "Baseline Profiles",
+        "App Optimization",
+        "Performance",
+        "Mobile Development"
+      ],
+      "entities": [
+        "Grab",
+        "Google Play",
+        "Android Developers"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly utilizes facts, metrics, quotes, and technical details provided in the source text without introducing outside information."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 719,
+      "word_count_en": 684
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "2f163485d6dfe9d114de",
+      "title": "Grab Reduces ANRs by 32% and improves startup time by 35% with R8 and Profile guided optimization",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 719,
+          "word_count_en": 684
+        }
+      ]
+    }
+  ],
+  "slug": "grab-reduces-anrs-by-32-and-improves-startup-time-by-35-with",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/grab-reduces-anrs-by-32-and-improves-startup-time-by-35-with/hero.webp",
+    "card": "/forum/assets/posts/2026/10/grab-reduces-anrs-by-32-and-improves-startup-time-by-35-with/card.webp",
+    "social": "/forum/assets/posts/2026/10/grab-reduces-anrs-by-32-and-improves-startup-time-by-35-with/social.jpg",
+    "alt": {
+      "ar": "Grab تخفض زمن بدء التشغيل 35% وتقلل الأخطاء عبر تحسينات R8",
+      "en": "Grab Cuts ANRs by 32% with R8 and Profiles"
+    },
+    "credit": "Android Developers",
+    "sourceUrl": "https://developer.android.com/static/blog/assets/ANDDM_Grab_Inline_Quote_ALT_c3acc32799_Z1obrOp.webp",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/grab-reduces-anrs-by-32-and-improves-startup-time-by-35-with/inline-01.webp",
+        "width": 1400,
+        "height": 652,
+        "alt": {
+          "ar": "Grab تخفض زمن بدء التشغيل 35% وتقلل الأخطاء عبر تحسينات R8",
+          "en": "R8-rules-score (1).png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/grab-r8-profile-guided-optimization-anr-startup-time",
+        "originalUrl": "https://developer.android.com/static/blog/assets/R8_rules_score_1_e7079d63a0_Hm8c2.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/grab-reduces-anrs-by-32-and-improves-startup-time-by-35-with/inline-02.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "Grab تخفض زمن بدء التشغيل 35% وتقلل الأخطاء عبر تحسينات R8",
+          "en": "ANDDM_Grab_Inline_Metric.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/grab-r8-profile-guided-optimization-anr-startup-time",
+        "originalUrl": "https://developer.android.com/static/blog/assets/ANDDM_Grab_Inline_Metric_62758be722_2nf419.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/grab-reduces-anrs-by-32-and-improves-startup-time-by-35-with/inline-03.webp",
+        "width": 788,
+        "height": 1050,
+        "alt": {
+          "ar": "Grab تخفض زمن بدء التشغيل 35% وتقلل الأخطاء عبر تحسينات R8",
+          "en": "View Nguyen Van Minh's profile"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/grab-r8-profile-guided-optimization-anr-startup-time",
+        "originalUrl": "https://developer.android.com/static/blog/assets/IMG_3245_8f08f1277f_ZMBB6P.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/grab-reduces-anrs-by-32-and-improves-startup-time-by-35-with/inline-04.webp",
+        "width": 1200,
+        "height": 600,
+        "alt": {
+          "ar": "Grab تخفض زمن بدء التشغيل 35% وتقلل الأخطاء عبر تحسينات R8",
+          "en": "Grab Reduces ANRs by 32% and improves startup time by 35% with R8 and Profile guided optimization"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/grab-r8-profile-guided-optimization-anr-startup-time",
+        "originalUrl": "https://developer.android.com/static/blog/assets/ANDDM_Grab_Strapi_2000x1000_STATIC_1_dbb884ce74_SODRQ.webp"
+      }
+    ]
+  }
 }
