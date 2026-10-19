@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "5c52b7d34becd1ccf770",
+  "slug": "torchneuron-running-hf-models-on-aws-trainium-is-easier-than-ever",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/torchneuron-running-hf-models-on-aws-trainium-is-easier-than-ever/",
+    "en": "/forum/en/ai/torchneuron-running-hf-models-on-aws-trainium-is-easier-than-ever/"
+  },
+  "locales": {
+    "ar": {
+      "title": "TorchNeuron يسهّل تشغيل نماذج Hugging Face على AWS Trainium",
+      "description": "أطلقت Hugging Face وAWS تقنية TorchNeuron لتوفير واجهة برمجية أصلية لنماذج الذكاء الاصطناعي على معالجات Trainium، مما يرفع نسبة دعم البنى المعمارية ويحسّن كفاءة التدريب والاستدلال.",
+      "deck": "تتيح أداة TorchNeuron الجديدة دمج معالجات AWS Trainium بشكل أصلي مع مكتبات PyTorch، مما يلغي الحاجة إلى طبقات وسيطة معقدة ويوفر تجربة تطوير موحدة.",
+      "summaryBullets": [
+        "توفر TorchNeuron واجهة برمجية أصلية (Native Backend) لمعالجات Trainium ضمن بيئة PyTorch.",
+        "ترتفع نسبة دعم بنى نماذج توليد النص من 46% إلى 89% مقارنةً بالإصدار السابق Optimum Neuron.",
+        "تدعم الأداة التنفيذ الفوري (Eager Mode) والتوزيع الأصلي عبر تقنيات FSDP وTensor Parallelism.",
+        "تصبح مكتبات Transformers وDiffusers وPEFT متوافقة مباشرة مع أجهزة Neuron دون الحاجة لتعديلات كود إضافية."
+      ],
+      "sections": [
+        {
+          "heading": "نقلة نوعية في التكامل مع AWS Trainium",
+          "paragraphs": [
+            {
+              "text": "أعلنت Hugging Face عن إطلاق TorchNeuron، وهي إضافة برمجية (Plugin) جديدة لمنصة PyTorch توفر واجهة برمجية أصلية لمعالجات AWS Trainium. تهدف هذه الخطوة إلى تبسيط عملية تشغيل نماذج الذكاء الاصطناعي على هذه المعالجات المتخصصة، والتي صُممت خصيصاً للتدريب والاستدلال بكفاءة عالية وتكلفة منخفضة. تتيح الأداة الجديدة للمطورين التعامل مع أجهزة Neuron كأي جهاز تسريع آخر، مما يقلل من التعقيد التقني المرتبط سابقاً ببيئة التطوير.",
+              "links": [
+                {
+                  "text": "TorchNeuron",
+                  "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/frameworks/torch/index.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الانتقال من Optimum Neuron إلى التنفيذ الأصلي",
+          "paragraphs": [
+            {
+              "text": "حتى الآن، اعتمدت تجربة Hugging Face على معالجات Trainium وInferentia على مكتبة Optimum Neuron، والتي كانت تعتمد بدورها على حزمة torch-neuronx المبنية على PyTorch XLA. على الرغم من كونها خياراً منطقياً في وقتها، إلا أنها فرضت على المطورين التفكير بأسلوب المبرمج (Compiler)، مما تطلب استخدام تينسورات كسولة (Lazy Tensors) بدلاً من التنفيذ الفوري، والالتزام بأشكال ثابتة فقط، وإعادة تجميع الكود عند كل انقطاع في المخطط. كانت Optimum Neuron موجودة لإخفاء هذا التعقيد، لكنها كانت تتطلب صيانة أكواد مخصصة مثل فئات النموذج والمدربين. ويمكن الرجوع إلى blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "blog",
+                  "url": "https://pytorch.org/blog/introducing-torchneuron-native-pytorch-backend-for-aws-trainium/"
+                }
+              ]
+            },
+            {
+              "text": "تغير TorchNeuron هذا المشهد جذرياً من خلال التكامل المباشر مع PyTorch، حيث تعرض neuron كجهاز أصلي يدعم التنفيذ الفوري، وأدوات التوزيع الأصلية الخاصة بـ PyTorch مثل DTensor وFSDP2، بالإضافة إلى دعم torch.compile. هذا التحول يجعل من Trainium جهازاً عادياً من منظور مكتبات Hugging Face، مما يسمح بتشغيل مكتبات Transformers وDiffusers وAccelerate وPEFT وTRL مباشرةً باستخدام نفس الفئات والسكربتات المستخدمة على أي معالج تسريع آخر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسن كبير في دعم بنى النماذج",
+          "paragraphs": [
+            {
+              "text": "أصبح توليد النص مدعوماً بشكل أصلي في مكتبة Transformers لمجموعة واسعة من النماذج. بفضل TorchNeuron، يتم دعم 89% من أكثر 100 بنية معمارية لنماذج توليد النص استخداماً بشكل جاهز، مقارنةً بنسبة 46% فقط في إصدار Optimum Neuron v0.4.5. يتطلب تفعيل هذا الدعم مجرد تمرير معامل device_map=neuron في الكود، مما يؤدي تلقائياً إلى نقل النموذج إلى أجهزة Neuron دون الحاجة إلى إعدادات إضافية معقدة.",
+              "links": []
+            },
+            {
+              "text": "توفر الأداة أيضاً دعماً للتوازي الشبكي (Tensor Parallelism)، مما يتيح الاستفادة الكاملة من قدرات أجهزة Neuron. يوصى بشدة باستخدام ذاكرة مؤقتة ثابتة (Static Cache) للتوليد لمنع إعادة التجميع المتكررة، وهو ما يعزز كفاءة الأداء على هذه الأجهزة المتخصصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تدريب موحّد عبر مكتبات Hugging Face",
+          "paragraphs": [
+            {
+              "text": "بما أن Neuron أصبح جهازاً أصلياً في PyTorch، أصبح التدريب على Trainium يستخدم نفس مكتبات Hugging Face المستخدمة على أي معالج تسريع آخر، مثل Transformers وAccelerate وPEFT وTRL. لم يعد هناك حاجة إلى مدرب مخصص أو نسخة معدلة من كود النموذج الخاصة بـ Neuron. يمكن الآن تشغيل سكربتات الضبط الدقيق (Fine-tuning) القياسية المبنية على TRL SFTTrainer على أجهزة Trainium مع إجراء بعض الإعدادات المحددة فقط.",
+              "links": []
+            },
+            {
+              "text": "يتم التعامل مع التوازي بشكل أصلي من خلال مكتبة Transformers. يضع المطور إعدادات التوازي الشبكي (TP) وحجم FSDP في model_init_kwargs، ثم يمررها SFTTrainer إلى دالة from_pretrained، مما يؤدي إلى تقسيم النموذج أثناء تحميل أوزانه. يرى المدرب (Trainer) أن النموذج موزع بالفعل ولا يعيد تغليفه، مما يلغي الحاجة إلى أعلام مثل --fsdp أو إعدادات FSDP في Accelerate.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إعدادات تقنية للتشغيل الأمثل",
+          "paragraphs": [
+            {
+              "text": "على الرغم من أن الكود لا يرتبط حصرياً بـ Trainium، إلا أن هناك اعتبارات تقنية مهمة عند تشغيله على هذه الأجهزة. أولاً، الأشكال الثابتة: يعطل السكربت الأشكال الديناميكية التلقائية في torch.compile ويستخدم التغليف الملتف (Wrapped Packing) لإنتاج تسلسلات تصل إلى 2048 توكن. مع إصدارات TRL 1.16 وما بعدها، يتم ملء الدفعات (Batches) على Neuron إلى مضاعفات 128 توكن، مما يحد من عدد أشكال المدخلات ويعيد استخدام المخططات المبرمجة للخطوات اللاحقة ذات الأشكال المتطابقة.",
+              "links": []
+            },
+            {
+              "text": "ثانياً، تفعيل torch.compile: يكفي تمرير --torch_compile true، حيث يكتشف torch.compile الجهاز تلقائياً على أجهزة Trainium ويختار خلفية Neuron دون الحاجة إلى تكوين إضافي. ثالثاً، تعطيل التحميل غير المتزامن للأوزان: نظراً لعدم دعم التحميل غير المتزامن المدمج في Transformers على Neuron حالياً، يتم تعطيله باستخدام المتغير البيئي HF_DEACTIVATE_ASYNC_LOAD=1.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دعم مكتبة Diffusers والنوى المخصصة",
+          "paragraphs": [
+            {
+              "text": "تتوافق العديد من خطوط الأنابيب (Pipelines) في مكتبة Diffusers مع TorchNeuron في وضعي التنفيذ الفوري والمبرمج. تشمل النماذج المتوافقة مع التوازي الشبكي (Tensor Parallelism) نماذج FLUX.1-dev وFLUX.2 وQwen-Image وQwen-Image-2.1 وH3، مما يسمح بالاستفادة القصوى من أجهزة Neuron. يمكن للمطورين إضافة الدعم لخطوط الأنابيب الأخرى من خلال اتباع الدليل الرسمي، مع توقع زيادة عدد الخطوط المتوافقة مستقبلاً.",
+              "links": []
+            },
+            {
+              "text": "تشجع Hugging Face المستخدمين على استكشاف النوى (Kernels) التي طورتها فريق Neuron، حيث ستصبح المزيد من النوى متاحة على Hugging Face Hub لتسريع النماذج. يمكن كتابة نوى Neuron باستخدام واجهة Neuron Kernel Interface (NKI)، مما يمنح تحكماً أدق في تحسين العمليات. على سبيل المثال، يمكن استخدام نوى مخصصة لتسريع محولات الرؤية (Vision Transformers) بمعدل يصل إلى 2.4 مرة على Trainium، مما يتيح للمستخدمين تشغيل عمليات مخصصة ومشاركتها على المنصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الإتاحة العامة والتعاون مع AWS",
+          "paragraphs": [
+            {
+              "text": "ستصبح TorchNeuron متاحة كإصدار تجريبي عام (Public Beta) اعتباراً من 20 أكتوبر 2026. سيتمكن الباحثون والمطورون من تثبيتها بسهولة باستخدام أمر pip install torch-neuronx. وتقدم Hugging Face شكرها الخاص لفريق AWS على عملهم في تطوير TorchNeuron، وعلى استجابتهم السريعة للملاحظات لضمان أفضل تكامل ممكن مع مكتبات Hugging Face، مما يعزز التزام الطرفين بتقدم الذكاء الاصطناعي وتعميمه عبر المصادر المفتوحة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "TorchNeuron",
+        "AWS Trainium",
+        "Hugging Face",
+        "PyTorch",
+        "الذكاء الاصطناعي",
+        "تدريب النماذج",
+        "Neuron"
+      ],
+      "entities": [
+        "Hugging Face",
+        "AWS",
+        "TorchNeuron",
+        "PyTorch",
+        "Trainium",
+        "Optimum Neuron",
+        "Transformers",
+        "Diffusers"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "19 أكتوبر 2026",
+      "modifiedLabel": "19 أكتوبر 2026",
+      "readMinutes": 5,
+      "wordCount": 865
+    },
+    "en": {
+      "title": "TorchNeuron Brings Native PyTorch Support to AWS Trainium",
+      "description": "TorchNeuron arrives as a public beta, introducing a native PyTorch backend for AWS Trainium with eager execution and torch.compile support.",
+      "deck": "A new PyTorch plugin and backend allows developers to run Hugging Face models on AWS Trainium using standard libraries and native interfaces.",
+      "summaryBullets": [
+        "TorchNeuron introduces a native backend for PyTorch on AWS Trainium supporting eager mode, torch.compile, and native distributed APIs.",
+        "The public beta becomes available starting October 20, 2026, installable via pip install torch-neuronx.",
+        "Hugging Face recommends using Transformers, Diffusers, Accelerate, PEFT, and TRL directly instead of relying on Optimum Neuron.",
+        "Text generation natively supports 89% of the top 100 most-used architectures out of the box using the device_map=neuron argument."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to TorchNeuron",
+          "paragraphs": [
+            {
+              "text": "TorchNeuron provides a new native backend for PyTorch on AWS Trainium, designed to make running machine learning models on Trainium hardware and sharing them on the Hugging Face hub easier than ever. Detailed announcements and updates can be found directly on the Hugging Face Blog.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/hf-torchneuron"
+                },
+                {
+                  "text": "TorchNeuron",
+                  "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/frameworks/torch/index.html"
+                }
+              ]
+            },
+            {
+              "text": "The PyTorch plugin brings a new backend for Trainium that enables full support for eager execution mode, torch.compile, and native distributed APIs such as FSDP and tensor parallelism. Researchers and developers can install the package starting October 20, 2026, by using pip install torch-neuronx.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Transitioning Away From Optimum Neuron",
+          "paragraphs": [
+            {
+              "text": "Historically, running Hugging Face tools on AWS Trainium and Inferentia relied on the optimum-neuron library, which was built on PyTorch XLA. While effective, that approach treated computations like a compiler by enforcing lazy tensors, static shapes, and full recompilations on graph breaks. Optimum Neuron was necessary to mask that operational complexity through custom modeling classes and trainers.",
+              "links": []
+            },
+            {
+              "text": "TorchNeuron shifts this paradigm by integrating directly into PyTorch to expose neuron as a native device. This architecture supports eager execution, PyTorch native distributed primitives like DTensor and FSDP2, and torch.compile. Consequently, Hugging Face libraries now treat Trainium like any other hardware accelerator. Core libraries including Transformers, Diffusers, Accelerate, PEFT, and TRL run natively using standard scripts, leading Hugging Face to recommend that Neuron users transition directly to these libraries.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Expanded Text Generation Support",
+          "paragraphs": [
+            {
+              "text": "Text generation now features native support across a wide range of model architectures within Transformers. TorchNeuron supports 89% of the top 100 most-used text-generation model architectures out of the box, a substantial increase compared to the 46% coverage seen in Optimum Neuron v0.4.5.",
+              "links": []
+            },
+            {
+              "text": "To utilize the hardware, developers simply pass the device_map=neuron argument within their code to transfer models directly to Neuron devices. The integration heavily recommends utilizing a static cache during generation to prevent frequent graph recompilations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Streamlined Training and Fine-Tuning",
+          "paragraphs": [
+            {
+              "text": "Training workloads on Trainium now utilize the exact same Hugging Face ecosystem libraries used for other accelerators, eliminating the need for dedicated trainers or hardware-specific model code forks. Standard fine-tuning scripts utilizing tools like TRL's SFTTrainer execute smoothly on Trainium instances with minimal configuration adjustments.",
+              "links": []
+            },
+            {
+              "text": "Parallelism is managed natively by Transformers through a DistributedConfig passing tensor-parallel and FSDP sizes in model_init_kwargs. This setup allows the SFTTrainer to delegate sharding during weight loading without requiring manual flags or complex Accelerate configurations. Optimization steps include disabling automatic dynamic shapes in torch.compile, implementing wrapped packing for sequence lengths up to 2048 tokens, and managing batch padding in multiples of 128 tokens.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Diffuser Pipelines and Custom Kernels",
+          "paragraphs": [
+            {
+              "text": "Beyond text generation and training, multiple pipelines from the Diffusers library achieve full compatibility with TorchNeuron in both eager and compiled modes. Prominent models such as FLUX.1-dev, FLUX.2, Qwen-Image, Qwen-Image-2.1, and H3 also incorporate tensor parallelism compatibility to maximize hardware utilization.",
+              "links": []
+            },
+            {
+              "text": "Additionally, developers can leverage specialized kernels from the Neuron team to accelerate vision transformers and other operations. Written via the Neuron Kernel Interface, these low-control custom operations can be shared on the hub to deliver significant speed improvements.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "TorchNeuron",
+        "AWS Trainium",
+        "PyTorch",
+        "Hugging Face",
+        "Machine Learning",
+        "AI Hardware",
+        "torch.compile"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "AWS",
+        "Hugging Face",
+        "PyTorch"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 19, 2026",
+      "modifiedLabel": "October 19, 2026",
+      "readMinutes": 3,
+      "wordCount": 592
+    }
+  },
+  "datePublished": "2026-10-19T23:17:38.869185+03:00",
+  "dateModified": "2026-10-19T23:17:38.869185+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/torchneuron-running-hf-models-on-aws-trainium-is-easier-than-ever/hero.webp",
+    "card": "/forum/assets/posts/2026/10/torchneuron-running-hf-models-on-aws-trainium-is-easier-than-ever/card.webp",
+    "social": "/forum/assets/posts/2026/10/torchneuron-running-hf-models-on-aws-trainium-is-easier-than-ever/social.jpg",
+    "alt": {
+      "ar": "TorchNeuron يسهّل تشغيل نماذج Hugging Face على AWS Trainium",
+      "en": "TorchNeuron Brings Native PyTorch Support to AWS Trainium"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/hf-torchneuron/thumbnail.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/torchneuron-running-hf-models-on-aws-trainium-is-easier-than-ever/inline-01.webp",
+        "width": 1400,
+        "height": 537,
+        "alt": {
+          "ar": "TorchNeuron يسهّل تشغيل نماذج Hugging Face على AWS Trainium",
+          "en": "TorchNeuron Brings Native PyTorch Support to AWS Trainium"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/hf-torchneuron",
+        "originalUrl": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/hf-torchneuron/kernel.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/torchneuron-running-hf-models-on-aws-trainium-is-easier-than-ever/inline-02.webp",
+        "width": 1280,
+        "height": 640,
+        "alt": {
+          "ar": "TorchNeuron يسهّل تشغيل نماذج Hugging Face على AWS Trainium",
+          "en": "TorchNeuron Brings Native PyTorch Support to AWS Trainium"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/hf-torchneuron",
+        "originalUrl": "https://huggingface.co/blog/assets/torch-mlp-fusion/thumbnail.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/hf-torchneuron",
+      "type": "official",
+      "title": "TorchNeuron: running HF models on AWS Trainium is easier than ever"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/hf-torchneuron",
+  "sourceTitle": "TorchNeuron: running HF models on AWS Trainium is easier than ever",
+  "trendScore": 112.21,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-19T20:17:38+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/torchneuron-running-hf-models-on-aws-trainium-is-easier-than-ever.json"
+}
