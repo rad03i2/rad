@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "3369221ba274f1a5ea8d",
+  "slug": "codeql-changes-for-macos-27-xcode-27-and-swift",
+  "categorySlug": "computers",
+  "urls": {
+    "ar": "/forum/ar/computers/codeql-changes-for-macos-27-xcode-27-and-swift/",
+    "en": "/forum/en/computers/codeql-changes-for-macos-27-xcode-27-and-swift/"
+  },
+  "locales": {
+    "ar": {
+      "title": "CodeQL يوقف دعم Swift 6.4 وmacOS 27 بسبب إزالة معالجات Intel",
+      "description": "أعلنت GitHub عن قيود جديدة على أداة CodeQL تمنع تحليل Swift 6.4 وفشل المسح التتبعي على macOS 27 وXcode 27، مع تحذير من إيقاف دعم أجهزة Mac ذات معالجات Intel منتصف 2026.",
+      "deck": "تسببت إزالة Apple لدعم معالجات Intel (x86_64) من بعض مكتبات النظام في تعطيل قدرات التحليل التتبعي لأداة CodeQL على أحدث إصدارات macOS وXcode.",
+      "summaryBullets": [
+        "توقف CodeQL عن دعم Swift 6.4 على جميع المنصات بسبب تغييرات في بنية النظام.",
+        "أصبح الاستخراج التتبعي (Traced Extraction) غير متاح للغات C/C++، C#، Go، Java، Kotlin، وSwift عند استخدام Xcode 27.",
+        "تتوقع GitHub إيقاف دعم أجهزة Mac المبنية على معالجات Intel في منتصف ديسمبر 2026.",
+        "يُنصح المطورون بتثبيت إصدارات macOS 26 أو Xcode 26 لضمان استمرار عمل عمليات المسح التتبعي.",
+        "توفر GitHub خيار وضع البناء 'none' كبديل للغات C/C++، C#، وJava لتجاوز الحاجة إلى التتبع."
+      ],
+      "sections": [
+        {
+          "heading": "تغييرات جوهرية في بنية نظام macOS 27",
+          "paragraphs": [
+            {
+              "text": "أصدرت GitHub بياناً رسمياً عبر مدونتها التقنية (GitHub Changelog) يوضح التغييرات الجوهرية التي طرأت على أداة CodeQL للأمن السيبراني. تشير البيانات إلى أن شركة Apple قررت بدءاً من إصدار macOS 27 وXcode 27، التوقف عن تضمين كود معالجات Intel (x86_64) في بعض الثنائيات والمكتبات النظامية التي تعتمد عليها CodeQL لتتبع عمليات البناء. هذا التغيير التقني أدى مباشرة إلى عجز الأداة عن تنفيذ عمليات المسح التتبعي (Traced Scans) على هذه الإصدارات الحديثة، فضلاً عن عدم قدرتها على تحليل لغة البرمجة Swift في إصدارها 6.4.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-19-codeql-changes-for-macos-27-xcode-27-and-swift-6-4/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تأثير Xcode 27 على الاستخراج التتبعي",
+          "paragraphs": [
+            {
+              "text": "يوضح البيان التقني أن تثبيت Xcode 27 على أجهزة التطوير يؤدي إلى تعطيل ميزة الاستخراج التتبعي (Traced Extraction) بشكل كامل لسix لغات برمجة رئيسية. وتشمل هذه اللغات C وC++، وC#، وGo، وJava، وKotlin، بالإضافة إلى Swift. ويعود السبب إلى أن آلية التتبع التي تستخدمها CodeQL تعتمد على مكتبات نظامية لم تعد تدعم معمارية Intel، مما يجعل عملية تحليل تدفق البيانات أثناء البناء مستحيلة في بيئة Xcode 27.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قيود macOS 27 ودعم Swift 6.4",
+          "paragraphs": [
+            {
+              "text": "على مستوى نظام التشغيل، قد لا تكون الاستخراجات التتبعية متاحة للغات المذكورة أعلاه عند استخدام macOS 27، حتى في حال عدم استخدام Xcode 27 حصرياً، نظراً لتداخل المكتبات النظامية. أما بخصوص لغة Swift، فأعلنت GitHub أن CodeQL لا تدعم Swift 6.4 على أي منصة تشغيل، وليس فقط على macOS. هذا يعني أن المطورين الذين ينتقلون إلى أحدث إصدار من Swift سيفقدون إمكانية استخدام تحليلات CodeQL التلقائية حتى يتم إصدار تحديثات مستقبلية تدعم هذه النسخة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إيقاف دعم أجهزة Mac ذات معالجات Intel",
+          "paragraphs": [
+            {
+              "text": "أشارت GitHub إلى أن دعم أجهزة Mac المبنية على معالجات Intel (Intel-based Macs) سيصبح غير مدعوم (Deprecated) في منتصف ديسمبر 2026. هذا القرار يتماشى مع استراتيجية Apple طويلة الأمد للتخلي عن معالجات Intel والانتقال الكامل إلى معالجات Apple Silicon (M-series). على المطورين الذين لا يزالون يعتمدون على أجهزة Intel التخطيط للانتقال إلى أجهزة أحدث أو اعتماد حلول بديلة قبل انتهاء فترة الدعم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توصيات فنية للمطورين",
+          "paragraphs": [
+            {
+              "text": "لتجنب انقطاع خدمات الأمان، تنصح GitHub المطورين الذين يستخدمون Swift أو يعتمدون على عمليات بناء تتبعية (Traced Builds) للغات الأخرى، بتثبيت إصدارات macOS 26 أو ما قبلها، وXcode 26 أو ما قبلها. وفي حال استخدام GitHub Actions، يُوصى بتثبيت صورة المشغل (Runner Image) وسلسلة الأدوات (Toolchain) في سير العمل بدلاً من الاعتماد على أحدث الإصدارات التلقائية التي قد تتضمن التغييرات غير المدعومة. كما يمكن للمستخدمين المشاركة في نقاش تقني حول هذا الموضوع عبر مجتمع GitHub (GitHub Community) لتبادل الخبرات والحلول.",
+              "links": [
+                {
+                  "text": "GitHub Community",
+                  "url": "https://github.com/orgs/community/discussions/210464"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "خيار وضع البناء 'None' كبديل",
+          "paragraphs": [
+            {
+              "text": "بالنسبة للغات C/C++، C#، وJava، توفر GitHub حلاً بديلاً يتمثل في التبديل إلى وضع البناء 'none' (build mode none). هذا الوضع لا يتطلب تتبع عملية البناء (Tracing a Build)، مما يسمح لـ CodeQL بتحليل الكود الثابت دون الحاجة إلى المكتبات النظامية التي تم تعديلها في macOS 27. يوفر هذا الخيار مرونة أكبر للمطورين الذين لا يمكنهم تثبيت إصدارات أقدم من نظام التشغيل، مع الحفاظ على قدرات الكشف عن الثغرات الأمنية الأساسية.",
+              "links": [
+                {
+                  "text": "build mode none",
+                  "url": "https://docs.github.com/code-security/how-tos/find-and-fix-code-vulnerabilities/manage-your-configuration/codeql-for-compiled-languages#use-none-build-mode-for-codeql"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "CodeQL",
+        "GitHub",
+        "macOS 27",
+        "Xcode 27",
+        "Swift 6.4",
+        "أمن البرمجيات",
+        "Apple Silicon"
+      ],
+      "entities": [
+        "GitHub",
+        "Apple",
+        "CodeQL",
+        "macOS 27",
+        "Xcode 27",
+        "Swift 6.4"
+      ],
+      "category": "الحواسيب",
+      "dateLabel": "19 أكتوبر 2026",
+      "modifiedLabel": "19 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 570
+    },
+    "en": {
+      "title": "CodeQL Changes for macOS 27, Xcode 27, and Swift 6.4",
+      "description": "Read the latest GitHub Changelog regarding CodeQL updates for macOS 27, Xcode 27, and Swift 6.4, including impacts on traced builds and Intel Macs.",
+      "deck": "A new [GitHub Changelog](https://github.blog/changelog/2026-10-19-codeql-changes-for-macos-27-xcode-27-and-swift-6-4/) entry outlines critical updates and limitations for CodeQL usage alongside macOS 27, Xcode 27, and Swift 6.4.",
+      "summaryBullets": [
+        "Apple has dropped Intel code from certain system binaries and libraries starting with macOS 27 and Xcode 27.",
+        "Traced extraction is unavailable for multiple languages when Xcode 27 or macOS 27 is utilized.",
+        "CodeQL does not support Swift 6.4 on any platform.",
+        "Support for Intel-based Macs is scheduled for deprecation in mid-December 2026."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of CodeQL Changes",
+          "paragraphs": [
+            {
+              "text": "Recent updates detailed in the [GitHub Changelog](https://github.blog/changelog/2026-10-19-codeql-changes-for-macos-27-xcode-27-and-swift-6-4/) highlight major compatibility adjustments for developers utilizing CodeQL. Starting with macOS 27 and Xcode 27, Apple has chosen to exclude Intel (x86_64) code from several system binaries and libraries that CodeQL traditionally relies on to trace builds.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-19-codeql-changes-for-macos-27-xcode-27-and-swift-6-4/"
+                }
+              ]
+            },
+            {
+              "text": "Because of this architectural change, CodeQL can no longer fully support traced scans on these modern software versions, nor can it analyze code written in Swift 6.4. Developers who rely on automated scanning workflows must adjust their configurations to maintain proper security analysis and code quality checks across their repositories. Further details are available from Back to changelog in the original source material.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Specific Impact on Xcode 27 and macOS 27",
+          "paragraphs": [
+            {
+              "text": "The removal of Intel code impacts multiple development environments. When Xcode 27 is installed on a system, traced extraction becomes completely unavailable for C, C++, C#, Go, Java, Kotlin, and Swift languages.",
+              "links": []
+            },
+            {
+              "text": "Similarly, when operating on macOS 27, traced extraction may also be unavailable for these same programming languages. Furthermore, CodeQL does not support Swift 6.4 on any platform regardless of the underlying operating system configuration.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Intel-Based Mac Deprecation Timeline",
+          "paragraphs": [
+            {
+              "text": "In addition to software version incompatibilities, hardware support is also shifting. Official CodeQL support for Intel-based Macs is scheduled to be deprecated in mid-December 2026.",
+              "links": []
+            },
+            {
+              "text": "Developers and organizations still running development environments on Intel-based Mac hardware will need to plan their migration paths ahead of this upcoming cutoff date to ensure uninterrupted continuous integration and code scanning pipelines.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Recommended Mitigation Steps for Developers",
+          "paragraphs": [
+            {
+              "text": "To manage these breaking changes effectively, developers who scan Swift or use traced builds for other languages are advised to pin their workflows to macOS 26 or earlier, along with Xcode 26 or earlier.",
+              "links": []
+            },
+            {
+              "text": "For teams using GitHub Actions, it is recommended to explicitly pin the runner image and toolchain inside the workflow configuration rather than relying automatically on the latest available runner versions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Alternative Build Modes and Community Discussion",
+          "paragraphs": [
+            {
+              "text": "For projects utilizing C, C++, C#, and Java, developers have the option to switch to [build mode none](https://docs.github.com/code-security/how-tos/find-and-fix-code-vulnerabilities/manage-your-configuration/codeql-for-compiled-languages#use-none-build-mode-for-codeql), which completely bypasses the requirement for tracing a build during the analysis process.",
+              "links": []
+            },
+            {
+              "text": "Developers looking for peer assistance, additional context, or troubleshooting advice regarding these platform modifications are encouraged to join the ongoing conversation within the [GitHub Community](https://github.org/orgs/community/discussions/210464).",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "CodeQL",
+        "macOS 27",
+        "Xcode 27",
+        "Swift 6.4",
+        "GitHub",
+        "Intel Macs"
+      ],
+      "entities": [
+        "GitHub",
+        "Apple",
+        "CodeQL",
+        "macOS",
+        "Xcode",
+        "Swift"
+      ],
+      "category": "Computing",
+      "dateLabel": "October 19, 2026",
+      "modifiedLabel": "October 19, 2026",
+      "readMinutes": 3,
+      "wordCount": 452
+    }
+  },
+  "datePublished": "2026-10-19T14:38:17.407494+03:00",
+  "dateModified": "2026-10-19T14:38:17.407494+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/codeql-changes-for-macos-27-xcode-27-and-swift/hero.webp",
+    "card": "/forum/assets/posts/2026/10/codeql-changes-for-macos-27-xcode-27-and-swift/card.webp",
+    "social": "/forum/assets/posts/2026/10/codeql-changes-for-macos-27-xcode-27-and-swift/social.jpg",
+    "alt": {
+      "ar": "CodeQL يوقف دعم Swift 6.4 وmacOS 27 بسبب إزالة معالجات Intel",
+      "en": "CodeQL Changes for macOS 27, Xcode 27, and Swift 6.4"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/themes/github-2021-child/dist/img/social-v3-deprecations.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-10-19-codeql-changes-for-macos-27-xcode-27-and-swift-6-4/",
+      "type": "official",
+      "title": "CodeQL changes for macOS 27, Xcode 27, and Swift 6.4"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-10-19-codeql-changes-for-macos-27-xcode-27-and-swift-6-4",
+  "sourceTitle": "CodeQL changes for macOS 27, Xcode 27, and Swift 6.4",
+  "trendScore": 100.66,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-19T11:38:17+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/codeql-changes-for-macos-27-xcode-27-and-swift.json"
+}
