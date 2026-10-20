@@ -1,0 +1,294 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "536f23cd94f139849c62",
+  "slug": "altk-evolve-how-learned-memory-tops-the-bench-leaderboard-on-customer-service-tasks",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/altk-evolve-how-learned-memory-tops-the-bench-leaderboard-on-customer-service-tasks/",
+    "en": "/forum/en/ai/altk-evolve-how-learned-memory-tops-the-bench-leaderboard-on-customer-service-tasks/"
+  },
+  "locales": {
+    "ar": {
+      "title": "نظام ALTK-Evolve يتصدر مهام خدمة العملاء",
+      "description": "يتصدر نظام ALTK-Evolve من أبحاث آي بي إم مؤشرات تقييم وكلاء خدمة العملاء على τ²-bench باستخدام الذاكرة المُتعلّمة ودون تحديث الأوزان.",
+      "deck": "حققت تقنية الذاكرة المُتعلّمة نتائج متقدمة على معيار τ²-bench لخدمة العملاء باستخدام نموذج GPT-4.1 ودون الحاجة لتعديل أوزان النموذج.",
+      "summaryBullets": [
+        "نظام ALTK-Evolve يعتمد على استخراج القواعد السلوكية وتطبيقها مباشرة في الذاكرة لتوجيه وكلاء خدمة العملاء.",
+        "تفوق على جميع مدخلات قطاع التجزئة في معيار τ²-bench مسجلاً 67.5% في مقياس Pass^4 الموثوق.",
+        "تعتمد التقنية على نموذج GPT-4.1 من خلال استخلاص النجاحات والإخفاقات وتحويلها إلى قواعد توجيهية واضحة.",
+        "أظهرت الاختبارات أن تحسين الأداء يأتي بفضل جودة الإرشادات ودون إطالة مدة المحادثات أو الحوارات."
+      ],
+      "sections": [
+        {
+          "heading": "آلية عمل نظام الذاكرة المُتعلّمة وتجاوز النماذج الرائدة",
+          "paragraphs": [
+            {
+              "text": "نشرت <a href=\"https://huggingface.co/blog/ibm-research/altk-evolve-bc\">Hugging Face Blog</a> تفاصيل تقنية جديدة حول ابتكار بحثي يعتمد على الذاكرة المُتعلّمة لتمكين الوكلاء من تصدر قوائم التقييم في مهام دعم العملاء المعقدة.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/ibm-research/altk-evolve-bc"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد التقنية الجديدة التي طورتها <a href=\"https://huggingface.co/ibm-research\">ibm-research</a> على استخدام نموذج GPT-4.1 وهو نموذج أساسي أقدم ولا يعتمد على آليات التفكير المعقدة المعتادة، لتحقيق نتائج تنافسية للغاية في بيئات خدمة العملاء.",
+              "links": [
+                {
+                  "text": "ibm-research",
+                  "url": "https://huggingface.co/ibm-research"
+                }
+              ]
+            },
+            {
+              "text": "يتم تشغيل الوكيل الافتراضي عبر إطار عمل ReAct القياسي مع إلحاق إرشادات سلوكية مستخلصة خصيصاً بنص التوجيه النظامي للنموذج، مما يتيح للوكيل التعامل مع السيناريوهات المختلفة بكفاءة عالية وبدون أي تعديلات على الأوزان البرمجية الأساسية للنموذج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التقييم عبر معيار τ²-bench لقطاعي التجزئة والطيران",
+          "paragraphs": [
+            {
+              "text": "يُعد معيار τ²-bench أداة دقيقة ومتقدمة لقياس مدى قدرة وكلاء الذكاء الاصطناعي على إدارة محادثات خدمة العملاء في ظل قيود واقعية وصارمة، مثل التحقق من العملاء وتأكيد المعاملات وإلغاء أو إعادة حجز الرحلات.",
+              "links": []
+            },
+            {
+              "text": "يتفاعل الوكيل في هذا المعيار مع عميل افتراضي يحرك النموذج بمحاكاة دقيقة، حيث يتطلب النجاح الوصول إلى تطابق تام بين حالة قاعدة البيانات النهائية والمخرجات المتوقعة ضمن بيئتي قطاع التجزئة وقطاع الطيران.",
+              "links": []
+            },
+            {
+              "text": "سجل الوكيل المدعوم بنظام الذاكرة المُتعلّمة معدل نجاح بلغ 67.5% في مقياس Pass^4 ضمن قطاع التجزئة، وهو مقياس صارم يتطلب نجاح الوكيل في كافة المحاولات الأربع المستقلة لكل مهمة، متجاوزاً بذلك جميع المشاركات التقليدية المدرجة في التحديث الأخير للوحة القيادة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استخراج الإرشادات وتحليل الأداء عبر التجارب",
+          "paragraphs": [
+            {
+              "text": "تعتمد منهجية ALTK-Evolve على استخلاص القواعد من مسارات عمل الوكيل أثناء مهام التدريب، حيث يقوم نموذج GPT-4.1 بتحليل حالات النجاح والإخفاق وتحويلها إلى قواعد سلوكية موجزة ومباشرة، مثل آليات مصادقة العملاء أو التعامل مع المرتجعات.",
+              "links": []
+            },
+            {
+              "text": "يتم بعد ذلك إلحاق هذه القواعد كنص برمجي واضح بنظام التوجيه الخاص بالوكيل لاستخدامها مباشرة في المحادثات اللاحقة والمستقلة، دون الحاجة لتدخل بشرى أو إعادة تدريب شاملة.",
+              "links": []
+            },
+            {
+              "text": "تُظهر مقارنة الإعدادات المختلفة أن حجم الإرشادات يلعب دوراً محورياً في تحديد مستوى الموثوقية والدقة، حيث يختلف تأثير عدد القواعد المعتمدة باختلاف القطاع المستهدف وسيناريوهات العمل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تأثير الإرشادات على دقة الأداء وموثوقية النظام",
+          "paragraphs": [
+            {
+              "text": "أثبتت النتائج العملية أن إضافة الذاكرة المُتعلّمة تساهم في رفع مؤشرات القدرة والموثوقية بشكل ملحوظ، حيث ارتفع متوسط الدقة في قطاع التجزئة من 78.1% إلى 82.5%، بينما صعد في قطاع الطيران من 57.5% إلى 65.0%.",
+              "links": []
+            },
+            {
+              "text": "على صعيد الموثوقية الصارمة، قفز مقياس Pass^4 بمقدار 10 نقاط كاملة في كلا القطاعين، مما يؤكد أن الوكيل أصبح أكثر اعتمادية وقدرة على حل مشكلات العملاء من المحاولة الأولى وحتى الرابعة دون إخفاق متكرر.",
+              "links": []
+            },
+            {
+              "text": "تختلف متطلبات الدعم باختلاف المجال؛ ففي قطاع التجزئة يسهم الاعتماد على مجموعة القواعد الكاملة في تحقيق أفضل قفزة ممكنة، بينما يفضل في قطاع الطيران الاعتماد على مجموعة مصغرة وعالية الثقة لتعزيز الموثوقية العامة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكلفة الزمنية وحجم التوكنز في المحادثات الفعلية",
+          "paragraphs": [
+            {
+              "text": "أظهرت التحليلات المتعلقة بتكلفة التشغيل وزمن الاستجابة أن إدخال القواعد والذاكرة المُتعلّمة لا يؤدي إلى إطالة المحادثات أو زيادة عدد تبادلات الحوار، بل على العكس من ذلك، تساهم الإرشادات في تقليل عدد دورات المحادثة بشكل طفيف لتصل إلى نحو 0.3 إلى 0.4 تبادل أقل.",
+              "links": []
+            },
+            {
+              "text": "يتركز الأثر المالي الوحيد في زيادة طفيفة ضمن إدخال التوكنز في بداية التوجيه، وهي تكلفة يمكن تقليصها بشكل كبير في بيئات الإنتاج الفعلية عبر تقنيات التخزين المؤقت للتوجيهات نظراً لثبات الكتلة الإرشادية عبر الاستدعاءات المختلفة.",
+              "links": []
+            },
+            {
+              "text": "يتيح هذا النهج تحقيق معادلة متوازنة تجمع بين ارتفاع الدقة، وزيادة الموثوقية، وخفض زمن إتمام الخدمة للعميل، متجاوزاً المقايضات التقليدية التي عادة ما تربط بين تحسين الجودة وزيادة التأخير الزمني في الأنظمة الذكية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "خدمة العملاء",
+        "التعلم الآلي",
+        "معالجة اللغات الطبيعية",
+        "نماذج اللغة",
+        "أبحاث التقنية"
+      ],
+      "entities": [
+        "ALTK-Evolve",
+        "τ²-bench",
+        "Hugging Face",
+        "GPT-4.1",
+        "IBM Research"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "20 أكتوبر 2026",
+      "modifiedLabel": "20 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 613
+    },
+    "en": {
+      "title": "ALTK-Evolve Tops τ²-Bench Customer Service Tasks",
+      "description": "Discover how IBM Research's ALTK-Evolve uses learned memory and GPT-4.1 to top the τ²-bench customer service leaderboard without frontier models.",
+      "deck": "A new approach by IBM Research utilizes learned memory to elevate a basic ReAct agent powered by GPT-4.1 to the top of the τ²-bench retail leaderboard without updating model weights or requiring human annotation.",
+      "summaryBullets": [
+        "ALTK-Evolve builds a behavioral playbook by analyzing training-task attempts to distill successes and failures into short rules.",
+        "Using GPT-4.1, a basic customer-service agent reaches 67.5% Pass^4 on τ²-bench retail, outperforming all retail entries in the October 12, 2026 leaderboard snapshot.",
+        "The method increases both mean accuracy and strict reliability without requiring model weight updates or human intervention.",
+        "Performance gains come with increased prompt input tokens rather than longer conversation turns, keeping latency low."
+      ],
+      "sections": [
+        {
+          "heading": "Reaching the Top Without a Frontier Model",
+          "paragraphs": [
+            {
+              "text": "A new research initiative details how learned memory can empower a basic ReAct agent using GPT-4.1 to reach the top of customer service benchmarks. According to the <Hugging Face Blog: https://huggingface.co/blog/ibm-research/altk-evolve-bc>, ALTK-Evolve analyzes training-task attempts to distill successes and failures into concise behavioral rules without updating model weights or utilizing human annotation.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/ibm-research/altk-evolve-bc"
+                },
+                {
+                  "text": "ibm-research",
+                  "url": "https://huggingface.co/ibm-research"
+                }
+              ]
+            },
+            {
+              "text": "Using this approach, an agent running on stock scaffolding with learned guidelines appended to its system prompt achieves 67.5% Pass^4 on the τ²-bench retail category. This score places it above every retail entry featured in the October 12, 2026 leaderboard snapshot.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Understanding the Playbook Mechanism",
+          "paragraphs": [
+            {
+              "text": "The ALTK-Evolve framework builds its operational playbook by closely examining previous agent trajectories on training tasks. The exact same model powers both the guideline extraction process and the active customer service agent, ensuring a streamlined workflow.",
+              "links": []
+            },
+            {
+              "text": "Once extracted, guidelines covering crucial tasks like authenticating customers, confirming transactions, or managing returns are added as a plain markdown list following the domain policy. These rules are then applied unchanged on held-out test sets.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Evaluating Benchmark Performance",
+          "paragraphs": [
+            {
+              "text": "The τ²-bench benchmark, developed by Sierra, rigorously measures how well an agent navigates real customer service constraints. Each evaluation pairs the agent with an LLM-simulated customer, specific domain tools, and strict written policies. A task is considered successfully solved only when the final database state matches the expected binary reward outcome.",
+              "links": []
+            },
+            {
+              "text": "Evaluations track both Mean Accuracy and the strict Pass^4 reliability metric across four independent trials per task. Results demonstrate significant improvements in capability and reliability across both retail and airline domains.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Guidance Configurations and Domain Differences",
+          "paragraphs": [
+            {
+              "text": "The research highlights that the optimal amount of guidance varies significantly depending on the target domain. While retail tasks benefit from the full lossless guideline set, airline tasks show greater reliability when using a smaller, high-confidence core of rules with higher support counts.",
+              "links": []
+            },
+            {
+              "text": "Mean accuracy climbs notably in both domains, rising by 4.4 points in retail and 7.5 points in airline. Meanwhile, the stricter Pass^4 metric jumps by 10 points in both testing categories.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Token Costs and Conversation Length",
+          "paragraphs": [
+            {
+              "text": "Analyzing the operational footprint reveals that improved performance does not result in longer, meandering conversations. In fact, guidelines slightly shorten the average assistant turns per conversation, helping lower end-to-end latency and time-to-completion for customers.",
+              "links": []
+            },
+            {
+              "text": "The primary trade-off is an increase in prompt input tokens due to the larger system prompt riding on every LLM call. However, production environments can largely reclaim this overhead using prompt caching, as the guideline block remains identical across calls.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AI",
+        "Customer Service",
+        "Machine Learning",
+        "ReAct Agent",
+        "Benchmarking",
+        "GPT-4.1"
+      ],
+      "entities": [
+        "IBM Research",
+        "Sierra",
+        "Hugging Face",
+        "ALTK-Evolve"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 20, 2026",
+      "modifiedLabel": "October 20, 2026",
+      "readMinutes": 3,
+      "wordCount": 525
+    }
+  },
+  "datePublished": "2026-10-20T18:37:49.079893+03:00",
+  "dateModified": "2026-10-20T18:37:49.079893+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/altk-evolve-how-learned-memory-tops-the-bench-leaderboard-on-customer-service-tasks/hero.webp",
+    "card": "/forum/assets/posts/2026/10/altk-evolve-how-learned-memory-tops-the-bench-leaderboard-on-customer-service-tasks/card.webp",
+    "social": "/forum/assets/posts/2026/10/altk-evolve-how-learned-memory-tops-the-bench-leaderboard-on-customer-service-tasks/social.jpg",
+    "alt": {
+      "ar": "نظام ALTK-Evolve يتصدر مهام خدمة العملاء",
+      "en": "ALTK-Evolve Tops τ²-Bench Customer Service Tasks"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/6435a1131860001f144239ea/rzXYJh7e7UdoYgCLwOZjH.jpeg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/ibm-research/altk-evolve-bc",
+      "type": "official",
+      "title": "ALTK-Evolve: How learned memory tops the τ²-bench leaderboard on customer service tasks without a frontier model"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/ibm-research/altk-evolve-bc",
+  "sourceTitle": "ALTK-Evolve: How learned memory tops the τ²-bench leaderboard on customer service tasks without a frontier model",
+  "trendScore": 124.99,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-20T15:37:49+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/10/altk-evolve-how-learned-memory-tops-the-bench-leaderboard-on-customer-service-tasks.json"
+}
