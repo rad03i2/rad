@@ -1,5 +1,342 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-20T16:37:49+00:00",
-  "last_published_story_id": "52a1c561d0ba0bdd0cd6"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-20T16:42:46+00:00",
+  "target_publish_at": "2026-10-20T19:57:49.433543+03:00",
+  "story": {
+    "title": "Securing AI agent identity with X.509 PKI on AWS",
+    "url": "https://aws.amazon.com/blogs/machine-learning/securing-ai-agent-identity-with-x-509-pki-on-aws",
+    "domain": "aws.amazon.com",
+    "summary": "Learn how to secure multi-agent AI systems with cryptographic identity using Keyfactor EJBCA and AWS services. This reference architecture combines signed request envelopes, user-signed delegation assertions, RFC 8693 audience-scoped tokens, and real-time OCSP revocation to prove agent identity and prevent request forgery across agent-to-agent and MCP tool calls.",
+    "published_at": "2026-10-20T16:03:48+00:00",
+    "discovered_at": "2026-10-20T16:12:02+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "2bad10c616ec7c1e7a90",
+    "trend": {
+      "score": 118.68,
+      "age_hours": 0.64,
+      "corroboration_count": 0,
+      "entity_momentum": 13.93,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/securing-ai-agent-identity-with-x-509-pki-on-aws/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Securing AI agent identity with X.509 PKI on AWS",
+      "title": "Securing AI agent identity with X.509 PKI on AWS | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "AWS وKeyfactor تؤمّنان هوية وكلاء الذكاء الاصطناعي عبر بنية X.509",
+      "description": "تقدّم AWS وKeyfactor معمارية مرجعية لتأمين هوية وكلاء الذكاء الاصطناعي باستخدام بنية X.509، مما يمنع انتحال الشخصية ويحسّن الأمان في الأنظمة متعددة الوكلاء.",
+      "deck": "تواجه أنظمة الذكاء الاصطناعي متعددة الوكلاء تحديات أمنية كبيرة في إثبات هوية الوكلاء ومنع انتحال الشخصية. تحل هذه المعمارية المشكلة عبر دمج بنية المفاتيح العامة X.509 مع خدمات AWS.",
+      "summary_bullets": [
+        "تستخدم المعمارية منصة Keyfactor EJBCA لإصدار الشهادات وإدارة دورة حياة الهوية المشفرة للوكلاء.",
+        "تعتمد على أربع آليات أمنية: أظرفة طلبات موقعة، وادعاءات تفويض موقعة من المستخدم، ورموز نطاق جمهور محددة، وفحص إلغاء فوري عبر OCSP.",
+        "تعمل البنية مع Amazon Bedrock وAWS Strands Agents SDK لضمان أمان استدعاءات الأدوات عبر بروتوكول MCP.",
+        "تفصل المعمارية بين هوية المستخدم وهوية الوكيل، مما يمنع تسريب بيانات الاعتماد الأصلية عبر سلسلة الوكلاء."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي هوية وكلاء الذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "مع تزايد وصول وكلاء الذكاء الاصطناعي إلى قواعد البيانات وواجهات برمجة التطبيقات (APIs) والعمليات التجارية الحساسة، أصبح إثبات الهوية المشفرة عبر بنية المفاتيح العامة X.509 (PKI) متطلباً حيوياً. تكمن المشكلة الأساسية في إثبات أي وكيل هو الذي أرسل الطلب، ومنع انتحال الشخصية بين الوكلاء، والتأكد من أن كل وكيل يعمل نيابة عن مستخدم مصرح به فقط. الطرق التقليدية مثل مشاركة مفاتيح API بين المكونات أو تمرير رموز OAuth عبر سلاسل الوكلاء لا تلبي متطلبات الثقة الصفرية التي تتطلبها عمليات النشر المؤسسية.",
+              "links": []
+            },
+            {
+              "text": "تعتمد أطر عمل الذكاء الاصطناعي متعددة الوكلاء بشكل متزايد على بروتوكول سياق النموذج (MCP) لربط الوكلاء بالأدوات ومصادر البيانات الخارجية. يحدد MCP كيف يستدعي وكيل مدعوم بنموذج لغة كبير (LLM) أدوات مثل استعلامات قاعدة البيانات أو عمليات البريد الإلكتروني. ومع ذلك، لا يحتوي MCP على معيار مصادقة مدمج، وهو مصمم ليكون محايداً للنقل. هذا يخلق فجوة حرجة: بدون آليات هوية مناسبة، يمكن لأي مكون انتحال وكيل، أو إعادة تشغيل بيانات اعتماد محجوزة، أو استدعاء أدوات دون تفويض.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حل معماري مرجعي مشترك",
+          "paragraphs": [
+            {
+              "text": "تعرض AWS في مدونتها الرسمية كيفية معالجة هذه الفجوة باستخدام منصة Keyfactor EJBCA مع خدمات AWS. EJBCA هي منصة PKI تدعم النشر عالي التوفر، وأتمتة واجهات برمجة التطبيقات (REST API)، والتحقق من بروتوكول حالة الشهادة عبر الإنترنت (OCSP). تستخدم المعمارية المرجعية أربع آليات أمنية مكملة: أولاً، توفر أظرفة الطلبات الموقعة دليلاً مشفرياً على الحيازة في كل استدعاء للوكيل. ثانياً، تمنح ادعاءات التفويض الموقعة من المستخدم الوكلاء صلاحية العمل دون مشاركة بيانات الاعتماد. ثالثاً، تحد رموز RFC 8693 ذات النطاق المحدد للجمهور من نطاق التعرض في حالة تسريب أي رمز. رابعاً، يضمن فحص إلغاء OCSP الفوري انتشار تغييرات بيانات الاعتماد فوراً عبر جميع الوكلاء.",
+              "links": []
+            },
+            {
+              "text": "تستخدم الحل Amazon Bedrock للاستدلال على نماذج اللغة الكبيرة من خلال AWS Strands Agents SDK. بينما تستخدم هذه المعمارية المرجعية قاعدة بيانات كمورد محمي، فإن نمط المصادقة نفسه ينطبق على أي خادم أداة متوافق مع MCP. تتوفر أكواد المصدر الكاملة لجميع الأمثلة في مستودع GitHub المرافق. توفر Keyfactor منصة إدارة هوية الآلات المعتمدة على نطاق واسع، وتستخدمها أكثر من 1500 عميل مؤسسي حول العالم، وتغطي قطاعات الخدمات المالية والرعاية الصحية والتصنيع والحكومة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "AWS Strands Agents SDK",
+                  "url": "https://github.com/strands-agents/sdk-python"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دور منصة Keyfactor EJBCA",
+          "paragraphs": [
+            {
+              "text": "EJBCA Enterprise هي منصة سلطة الشهادات (CA) وPKI من Keyfactor، مصممة للنشر عالي التوفر وأتمتة REST API. تتوفر كمنتج مؤسسي، وتوفر EJBCA إصدار شهادات X.509، والتحقق من OCSP، وتوزيع قوائم إلغاء الشهادات (CRL)، وإدارة دورة حياة الشهادات الكاملة عبر كل من وحدة تحكم الويب وواجهة REST API. تدعم EJBCA النشر في الموقع، أو في الحاويات، أو على Amazon Elastic Compute Cloud (Amazon EC2).",
+              "links": []
+            },
+            {
+              "text": "تجمع الشراكة بين AWS وKeyfactor بين خدمات AWS المُدارة (مثل Amazon Bedrock، وAWS Secrets Manager، وAmazon RDS) مع بنية تحتية لـ PKI تدعم إدارة دورة حياة الشهادات، والتسجيل الآلي، والإلغاء الفوري. يعالج هذا المزيج فجوة في منظومة وكلاء الذكاء الاصطناعي؛ فبينما توفر AWS طبقات الحوسبة والتخزين والاستدلال بالذكاء الاصطناعي، توفر Keyfactor طبقة الهوية المشفرة التي تربط الوكلاء ببيانات اعتماد قابلة للتحقق وقابلة للإلغاء وقصيرة العمر. توضح هذه المعمارية المرجعية المشتركة، التي طورها مهندسو AWS وKeyfactor تعاونياً، كيفية دمج هذه التقنيات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "طبقات المصادقة الثلاثية",
+          "paragraphs": [
+            {
+              "text": "تنفذ المعمارية ثلاث طبقات مصادقة، حيث تعالج كل طبقة حد ثقة مختلفاً في سلسلة اتصال الوكلاء. تستخدم هذه الطبقات الأربع الآليات الأمنية المذكورة سابقاً: أظرفة موقعة لإثبات الحيازة، وادعاءات تفويض للتفويض بدون بيانات اعتماد، ورموز نطاق جمهور لتقليل التعرض، وOCSP للإلغاء الفوري. تتكامل هذه الآليات عبر الطبقات لضمان سلسلة ثقة غير منقطعة. يوضح الشكل الأول في التقرير طبقات المصادقة الثلاثية وكيفية تدفق بيانات الاعتماد بين المستخدم والوكلاء وخادم الأدوات MCP، مع إبراز الفصل بين بيانات اعتماد المستخدم (التي تبقى في تدفق تسجيل الدخول) وبيانات اعتماد الوكيل (المحددة لكل وكيل) وسلسلة التفويض التي تربط بينهما.",
+              "links": []
+            },
+            {
+              "text": "يوضح الشكل الثاني تدفق الحركة التفصيلي خلال جلسة مستخدم نموذجية، معروضةً تسلسل خطوات المصادقة من تسجيل الدخول عبر إصدار الشهادات، وتفويض الوكيل، واستدعاء الأداة، وتنظيف الجلسة. هذا التدفق يضمن أن كل خطوة تعتمد على سابقتها، مما يبني سلسلة ثقة تربط المستخدم البشري بتنفيذ الأداة النهائي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تدفق تسجيل الدخول وإصدار الشهادات",
+          "paragraphs": [
+            {
+              "text": "تبدأ العملية بخطوة تسجيل الدخول، حيث يثبت المستخدم هويته عبر ثلاث آليات ثم يفوض الصلاحيات لوكلاء الذكاء الاصطناعي دون مشاركة بيانات اعتماد المستخدم. هذا الفصل حاسم: يتلقى الوكلاء دليلاً على التفويض دون أن يحملوا أبداً المفتاح الخاص للمستخدم أو رمز OAuth الكامل للجلسة. أولاً، يصادق التطبيق المستخدم مقابل Keycloak باستخدام منح كلمة مرور OAuth 2.0، ليحصل على رمز وصول كامل للجلسة ورمز تحديث. فورياً بعد ذلك، يقوم التطبيق بتبادل رمز RFC 8693 للحصول على رمز ذي نطاق مصغر. يكون جمهور هذا الرمز مقيداً بخادم MCP فقط، ويُسلَّم هذا الرمز المحدود للوكلاء. إذا تم تسريبه عن غير قصد، فلا يمكنه الوصول إلى أي خدمة أخرى في المؤسسة.",
+              "links": []
+            },
+            {
+              "text": "ثانياً، يولّد التطبيق زوج مفاتيح RSA بحجم 2048 بت أو أكثر محلياً، ويقدم طلب توقيع شهادة (CSR) إلى EJBCA عبر نقطة نهاية REST API الخاصة بـ pkcs10enroll. توقّع EJBCA الطلب وتعيد الشهادة. يجمع التطبيق الشهادة والمفتاح الخاص في حاوية PKCS12 ويخزنها في AWS Secrets Manager. لا يغادر المفتاح الخاص حدود التطبيق أبداً؛ فهو لا يُرسل إلى EJBCA، ولا يُشارك مع الوكلاء، مما يعزز الأمان بشكل كبير.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمن المعلومات",
+        "PKI",
+        "X.509",
+        "AWS",
+        "Keyfactor",
+        "وكلاء الذكاء الاصطناعي",
+        "MCP"
+      ],
+      "entities": [
+        "AWS",
+        "Keyfactor",
+        "Keyfactor EJBCA",
+        "Amazon Bedrock",
+        "AWS Strands Agents SDK",
+        "Model Context Protocol (MCP)",
+        "Keycloak"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال يعتمد حصرياً على مدونة AWS الرسمية المرفقة، مع التركيز على المعمارية التقنية وآليات الأمان المذكورة دون إضافة تفاصيل غير مذكورة في المصدر."
+    },
+    "en": {
+      "title": "AWS and Keyfactor Detail X.509 PKI AI Agent Security",
+      "description": "Discover how a reference architecture from AWS and Keyfactor uses X.509 PKI and EJBCA to secure multi-agent AI identity and prevent request forgery.",
+      "deck": "A new reference architecture combines Keyfactor EJBCA and AWS services to secure multi-agent AI systems with cryptographic identity, addressing critical zero-trust gaps in enterprise deployments.",
+      "summary_bullets": [
+        "New reference architecture establishes cryptographic identity for multi-agent AI frameworks using X.509 PKI.",
+        "Combines Keyfactor EJBCA Enterprise and AWS services to prove agent identity and prevent request forgery.",
+        "Addresses gaps in Model Context Protocol (MCP) implementations, which lack built-in transport authentication.",
+        "Implements signed request envelopes, user-signed delegation assertions, RFC 8693 tokens, and real-time OCSP validation."
+      ],
+      "sections": [
+        {
+          "heading": "Addressing Zero-Trust Gaps in Multi-Agent AI Systems",
+          "paragraphs": [
+            {
+              "text": "As enterprise deployments increasingly rely on multi-agent architectures to access databases, APIs, and sensitive business operations, establishing robust cryptographic identity via X.509 public key infrastructure (PKI) has become a primary requirement. Traditional methods—such as sharing API keys across components or passing standard OAuth tokens down agent chains—fail to satisfy modern zero-trust standards. These older patterns leave systems vulnerable to credential interception, request forgery, and unauthorized tool invocations.",
+              "links": []
+            },
+            {
+              "text": "To help organizations solve these challenges, an official publication on the AWS Machine Learning Blog details a comprehensive reference architecture designed to secure agent-to-agent and tool interactions. Developers looking for more technical background can explore the broader ecosystem context via the Artificial Intelligence portal, while complete source code and implementation examples are maintained in an accompanying GitHub repository.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/securing-ai-agent-identity-with-x-509-pki-on-aws/"
+                },
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                },
+                {
+                  "text": "accompanying GitHub repository",
+                  "url": "https://github.com/aws-samples/sample-Securing-AI-agent-identity-with-X-509-PKI-on-AWS"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Securing the Model Context Protocol",
+          "paragraphs": [
+            {
+              "text": "Multi-agent frameworks frequently utilize the Model Context Protocol to connect large language model agents to external resources and tools like database queries or email handlers. However, the Model Context Protocol specification is transport-agnostic by design and currently lacks built-in authentication standards. Without proper identity mechanisms, intermediate components could easily impersonate an agent, replay captured credentials, or execute privileged operations without explicit user authorization.",
+              "links": [
+                {
+                  "text": "Model Context Protocol",
+                  "url": "https://modelcontextprotocol.io/"
+                }
+              ]
+            },
+            {
+              "text": "To close this security gap, the reference architecture relies on Keyfactor EJBCA Enterprise combined with managed infrastructure on Amazon Bedrock. Keyfactor provides machine identity governance and certificate lifecycle management across more than 1,500 enterprise customers globally, spanning sectors such as financial services, healthcare, manufacturing, and government.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "Keyfactor EJBCA Enterprise",
+                  "url": "https://www.keyfactor.com/products/ejbca-enterprise/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Four Complementary Security Mechanisms",
+          "paragraphs": [
+            {
+              "text": "The joint solution developed by engineering teams from AWS and Keyfactor incorporates four core security layers to protect the agent communication chain. First, signed request envelopes supply cryptographic proof-of-possession on every individual agent call. Second, user-signed delegation assertions authorize downstream agents without requiring the direct sharing of user credentials. Third, RFC 8693 audience-scoped tokens limit the potential blast radius if a single token is ever compromised. Fourth, real-time Online Certificate Status Protocol (OCSP) revocation checking ensures that credential modifications propagate instantly across all participating agents.",
+              "links": []
+            },
+            {
+              "text": "For orchestrating agent logic and LLM inference, the architecture integrates the AWS Strands Agents SDK alongside foundational services like Amazon Bedrock. Additional guidance on configuring these frameworks can be found within the Amazon Bedrock User Guide and through dedicated community write-ups regarding open-source agent tooling.",
+              "links": [
+                {
+                  "text": "AWS Strands Agents SDK",
+                  "url": "https://github.com/strands-agents/sdk-python"
+                },
+                {
+                  "text": "Amazon Bedrock User Guide",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Infrastructure Integration and Token Management",
+          "paragraphs": [
+            {
+              "text": "Keyfactor EJBCA Enterprise serves as the foundational Certificate Authority, supporting high-availability deployments, REST API automation, and OCSP validation. It can run on-premises, inside containers, or on Amazon Elastic Compute Cloud instances. By binding AWS compute and inference layers with Keyfactor's cryptographic identity management, enterprises gain verifiable, revocable, and short-lived credentials tailored for multi-agent workflows.",
+              "links": []
+            },
+            {
+              "text": "The operational workflow begins with user authentication against an identity provider using an OAuth 2.0 password grant. Subsequently, an RFC 8693 token exchange generates a downscoped token strictly bounded to the Model Context Protocol server audience. Concurrently, a local RSA key pair generates a Certificate Signing Request handled via EJBCA REST APIs, resulting in an X.509 certificate securely stored within AWS Secrets Manager while private keys remain isolated from agent runtimes.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Keyfactor",
+        "Artificial Intelligence",
+        "Security",
+        "PKI",
+        "Model Context Protocol",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "AWS",
+        "Keyfactor",
+        "Amazon Bedrock",
+        "Keyfactor EJBCA Enterprise",
+        "Model Context Protocol"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly reflects the provided source material regarding the AWS Machine Learning Blog post on X.509 PKI for AI agent identity, utilizing exact terminology, services, and permitted inline links."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 904,
+      "word_count_en": 590
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "2bad10c616ec7c1e7a90",
+      "title": "Securing AI agent identity with X.509 PKI on AWS",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 904,
+          "word_count_en": 590
+        }
+      ]
+    }
+  ],
+  "slug": "securing-ai-agent-identity-with-509-pki-on-aws",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/securing-ai-agent-identity-with-509-pki-on-aws/hero.webp",
+    "card": "/forum/assets/posts/2026/10/securing-ai-agent-identity-with-509-pki-on-aws/card.webp",
+    "social": "/forum/assets/posts/2026/10/securing-ai-agent-identity-with-509-pki-on-aws/social.jpg",
+    "alt": {
+      "ar": "AWS وKeyfactor تؤمّنان هوية وكلاء الذكاء الاصطناعي عبر بنية X.509",
+      "en": "AWS and Keyfactor Detail X.509 PKI AI Agent Security"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/16/ML-21717-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/securing-ai-agent-identity-with-509-pki-on-aws/inline-01.webp",
+        "width": 1400,
+        "height": 773,
+        "alt": {
+          "ar": "AWS وKeyfactor تؤمّنان هوية وكلاء الذكاء الاصطناعي عبر بنية X.509",
+          "en": "Three-layer PKI authentication architecture showing credential flow between the user, agents, and the MCP tool server"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/securing-ai-agent-identity-with-x-509-pki-on-aws/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/16/ML-21717-1.png"
+      }
+    ]
+  }
 }
