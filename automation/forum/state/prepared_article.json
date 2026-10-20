@@ -1,5 +1,355 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-20T20:57:51+00:00",
-  "last_published_story_id": "1cfb6291fa158d05a5ba"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-20T21:02:29+00:00",
+  "target_publish_at": "2026-10-21T00:17:51.122699+03:00",
+  "story": {
+    "title": "Discover tools at runtime with AWS Agent Registry",
+    "url": "https://aws.amazon.com/blogs/machine-learning/discover-tools-at-runtime-with-aws-agent-registry",
+    "domain": "aws.amazon.com",
+    "summary": "Hardcoded tool wiring breaks down as an agent's catalog grows from a handful of tools to hundreds. This post walks through a runtime Discover, Instantiate, Execute loop built on AWS Agent Registry, where an orchestrator discovers MCP servers and A2A agents through semantic search at runtime instead of compiling every tool at build time.",
+    "published_at": "2026-10-20T16:22:24+00:00",
+    "discovered_at": "2026-10-20T16:27:14+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "e600abfbbfd2fa21366c",
+    "trend": {
+      "score": 108.7,
+      "age_hours": 4.66,
+      "corroboration_count": 0,
+      "entity_momentum": 9.51,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/discover-tools-at-runtime-with-aws-agent-registry/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Discover tools at runtime with AWS Agent Registry",
+      "title": "Discover tools at runtime with AWS Agent Registry | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تطلق AWS Agent Registry لاكتشاف أدوات الذكاء الاصطناعي ديناميكياً",
+      "description": "تقدم أمازون ويب سيرفيسز حلاً جديداً يزيل الحاجة للتكامل الثابت للأدوات، مما يتيح للوكلاء اكتشاف الخوادم والوكلاء الفرعيين عبر البحث الدلالي في الوقت الفعلي، مما يعزز مرونة الأنظمة المؤسسية.",
+      "deck": "مع تزايد عدد الأدوات التي يحتاجها وكلاء الذكاء الاصطناعي، تصبح الأساليب التقليدية للتكامل الثابت غير عملية. يقدم AWS Agent Registry نهجاً جديداً يعتمد على الاكتشاف الديناميكي في الوقت الفعلي.",
+      "summary_bullets": [
+        "يتيح AWS Agent Registry للوكلاء اكتشاف أدوات MCP والوكلاء A2A عبر البحث الدلالي بدلاً من الترميز المسبق.",
+        "يعمل النظام على مبدأ 'اكتشف، أنشئ، نفّذ'، مما يسمح بإدارة مئات الأدوات دون تعقيد الكود.",
+        "يفصل النظام بين بيانات الوصف والتحقق من الهوية، حيث يجب على التطبيق الحصول على الصلاحيات عبر مسارات آمنة منفصلة.",
+        "توفر أمازون أمثلة برمجية توضح كيفية دمج هذا النظام مع Amazon Bedrock AgentCore لإدارة الطلبات والأسعار والدعم."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي التكامل الثابت في الأنظمة المؤسسية",
+          "paragraphs": [
+            {
+              "text": "تواجه أنظمة الذكاء الاصطناعي تحدياً متزايداً مع توسع نطاق الأدوات المتاحة للوكلاء. فعندما ينمو عدد الأدوات من بضعة إلى مئات، تفقد الأساليب التقليدية التي تعتمد على الترميز الثابت (Hardcoded) فعاليتها. في البيئات المؤسسية التي تعرض مئات واجهات برمجة التطبيقات الداخلية لإدارة الأسعار والطلبات والمخزون، قد يستهلك النموذج اللغوي كميات كبيرة من الرموز (Tokens) فقط للتمييز بين أسماء الأدوات، مما يقلل من قدرته على معالجة طلبات المستخدم الفعلية. كما أن إضافة كل ميزة جديدة تتطلب تغييرات في الكود وإعادة نشر النظام، مما يبطئ وتيرة العمل بين الفرق المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حلول AWS Agent Registry والاكتشاف الديناميكي",
+          "paragraphs": [
+            {
+              "text": "لمعالجة هذه المشكلة، تقدم أمازون ويب سيرفيسز خدمة AWS Agent Registry، وهي خدمة مُدارة لتصنيف واكتشاف خوادم بروتوكول سياق النموذج (MCP) والوكلاء ومهاراتهم. تتيح هذه الخدمة للمنشرين تسجيل وصفات محددة للبروتوكول ووصفات قابلة للبحث. في الوقت الفعلي، يمكن للمنسق (Orchestrator) البحث في السجلات المعتمدة واكتساب الوصول إلى نقاط النهاية (Endpoints) وبيانات الوصف لبناء عميل (Client) مناسب. من المهم التوضيح أن نتائج البحث في السجل لا تتضمن بيانات الاعتماد أو مخطط المصادقة، بل توفر فقط البيانات الوصفية اللازمة للاتصال، مما يفرض على التطبيق الحصول على الصلاحيات عبر مسار إعدادات موثوق ومنفصل.",
+              "links": [
+                {
+                  "text": "AWS Agent Registry",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل حلقة الاكتشاف والتنفيذ",
+          "paragraphs": [
+            {
+              "text": "يعتمد الحل المقدم على حلقة عمل ثلاثية: الاكتشاف، الإنشاء، والتنفيذ. يرسل المنسق استعلاماً بلغة طبيعية إلى مستوى البيانات في AWS Agent Registry. تتضمن الاستجابة هوية السجل، الاسم، الوصف، نوع السجل، الحالة، الإصدار، ووصفات البروتوكول مثل بيانات MCP أو بطاقة وكيل A2A. بناءً على نوع الوصف، يبني المنسق العميل المناسب. على سبيل المثال، إذا كان السجل يمثل خادم MCP، يشير الوصف إلى نقطة نهاية Amazon Bedrock AgentCore Gateway، حيث يقوم التطبيق بجلب رمز وصول OAuth من Cognito لإنشاء العميل. أما في حالة وكلاء A2A، فيحتوي الوصف على بطاقة وكيل تحدد نقطة نهاية AgentCore runtime، ويتم استدعاؤها عبر عميل boto3 الذي يوقّع الطلب باستخدام صلاحيات AWS الخاصة بالمستخدم.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "بنية تحتية آمنة ومفصولة",
+          "paragraphs": [
+            {
+              "text": "تضمن البنية المعمارية المرجعية فصل البيانات الوصفية عن بيانات المصادقة. يوفر AWS Agent Registry كتالوجاً قابلاً للبحث ومُداراً، حيث تكون فقط السجلات التي أكملت سير عمل الاعتماد متاحة للاستخدام. يعرض Amazon Bedrock AgentCore Gateway أدوات Lambda الخاصة بإدارة الطلبات كخادم MCP، مع تهيئة المصادقة باستخدام رموز JWT من Cognito. يستضيف Amazon Bedrock AgentCore runtime المنسق والوكلاء الفرعيين، حيث تستخدم الاستدعاءات صلاحيات IAM. يوفر Amazon Bedrock النموذج اللغوي الأساسي، حيث يوضح المثال استخدام نموذج Anthropic Claude Sonnet عبر معرف نموذج بين المناطق.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore runtime",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "سيناريوهات تجريبية وإدارة الموارد",
+          "paragraphs": [
+            {
+              "text": "تختبر الأمثلة البرمجية المقدمة ثلاث سيناريوهات رئيسية: استدعاء MCP فقط (حالة الطلب)، تسلسل MCP مع A2A (الأسعار والخصومات)، ومطابقة دلالية بحتة لنية المستخدم الغامضة (الإرجاع والاسترداد). تتضمن حزمة الأمثلة سكربت نشر، والمنسق، ووحدات مساعدة، وسكربت تنظيف. يستخدم النظام عميل مستوى التحكم لإدارة دورة حياة السجلات، وعميل مستوى البيانات لاكتشافها في الوقت الفعلي. يجب أن تحتوي وصفات السجلات على لغة واضحة تميز الميزة عن غيرها، مع تقييم جودة البحث باستخدام استعلامات تمثيلية، دون افتراض أن نمو الكتالوج يحسن الترتيب تلقائياً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أهمية الفصل بين الوصف والصلاحيات",
+          "paragraphs": [
+            {
+              "text": "يؤكد هذا النهج على مبدأ الأمان من خلال عدم تضمين بيانات الاعتماد في نتائج البحث. يجب على المطورين استخدام مسارات موثوقة للحصول على الصلاحيات، مثل Cognito OAuth أو IAM. يضمن هذا الفصل أن الاكتشاف الدلالي لا يكشف عن معلومات حساسة، مما يسمح للمنسق ببناء وكيل داخلي مؤقت (Ephemeral Inner Agent) يحتوي فقط على الأدوات المكتشفة ديناميكياً. بعد انتهاء الجولة، يتم تفكيك الوكيل الداخلي وعملائه، ويحصل الطلب التالي على بحث جديد ومجموعة أدوات جديدة، مما يحافظ على كفاءة النظام وأمانه مع توسع نطاق الأدوات.",
+              "links": [
+                {
+                  "text": "Cognito OAuth",
+                  "url": "https://docs.aws.amazon.com/cognito/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "الذكاء الاصطناعي",
+        "وكلاء AI",
+        "MCP",
+        "A2A",
+        "Amazon Bedrock",
+        "بنية تحتية سحابية"
+      ],
+      "entities": [
+        "AWS",
+        "AWS Agent Registry",
+        "Amazon Bedrock AgentCore",
+        "Amazon Cognito",
+        "Model Context Protocol (MCP)",
+        "Agent-to-Agent (A2A)"
+      ],
+      "article_type": "news",
+      "confidence_note": "المحتوى مستند حصرياً إلى المدونة الرسمية لأمازون ويب سيرفيسز، مع التركيز على الآلية التقنية وفصل الصلاحيات عن الاكتشاف."
+    },
+    "en": {
+      "title": "Discover Tools at Runtime with AWS Agent Registry",
+      "description": "Learn how AWS Agent Registry addresses hardcoded tool scaling bottlenecks by allowing enterprise orchestrators to discover capabilities dynamically.",
+      "deck": "Scaling artificial intelligence agent catalogs beyond a handful of hardcoded tools often creates architectural bottlenecks. A new approach uses AWS Agent Registry to enable runtime capability discovery through semantic search.",
+      "summary_bullets": [
+        "Hardcoded tool wiring breaks down as enterprise agent catalogs grow to hundreds of internal APIs.",
+        "AWS Agent Registry serves as a managed catalog for discovering Model Context Protocol servers, agents, and skills.",
+        "Orchestrator agents execute a Discover, Instantiate, and Execute loop at runtime instead of relying on build-time compilation.",
+        "Reference architectures deploy solutions combining Agent Registry, Gateway, and runtime capabilities."
+      ],
+      "sections": [
+        {
+          "heading": "The Scaling Challenge of Hardcoded Tools",
+          "paragraphs": [
+            {
+              "text": "Enterprise systems frequently expose hundreds of internal APIs spanning pricing, support, orders, inventory, and customer data. In these environments, hardcoded tool wiring works adequately for a handful of capabilities, but begins to degrade at a few dozen and becomes entirely unmanageable beyond that scale. When every new capability requires code changes in the orchestrator, redeployments, and coordinated releases across multiple teams, build-time compilation turns into a severe operational bottleneck. To address this friction, developers can utilize tools like the AWS Agent Registry to switch from static compilation to dynamic runtime discovery.",
+              "links": [
+                {
+                  "text": "AWS Agent Registry",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "The Discover, Instantiate, and Execute Architecture",
+          "paragraphs": [
+            {
+              "text": "To bypass the limitations of traditional build-time wiring, systems can adopt a continuous loop where an orchestrator discovers, instantiates, and executes tools on demand. Rather than compiling every tool directly into the agent, the orchestrator queries a managed catalog to find relevant services using semantic search at runtime. This model separates the discovery phase from invocation credentials, ensuring that registry search results return endpoint identities and descriptor contents without exposing sensitive authentication material.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Integrating Gateway and Runtime Components",
+          "paragraphs": [
+            {
+              "text": "A comprehensive reference implementation relies on several integrated cloud services to manage traffic securely. For example, developers can deploy order-management Model Context Protocol servers through the Amazon Bedrock AgentCore Gateway, which exposes internal tools effectively. Simultaneously, agent-to-agent architectures can leverage the AgentCore runtime to host specialized workers, while the broader orchestrator logic coordinates interactions across the system.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                },
+                {
+                  "text": "AgentCore runtime",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Managing Authentication and Secure Execution",
+          "paragraphs": [
+            {
+              "text": "Security is a core design consideration when retrieving endpoints dynamically. While the AWS Agent Registry supplies essential connection metadata and protocol descriptors, it intentionally excludes invocation credentials and authorization tokens. Applications must independently acquire and apply appropriate credentials, such as tokens from Cognito OAuth or authorization structures handled by boto3, through trusted configuration pathways before executing requests against discovered targets.",
+              "links": [
+                {
+                  "text": "Cognito OAuth",
+                  "url": "https://docs.aws.amazon.com/cognito/"
+                },
+                {
+                  "text": "boto3",
+                  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/agent-registry.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Practical Implementation and Sample Scenarios",
+          "paragraphs": [
+            {
+              "text": "Developers wishing to test this architectural pattern can explore a dedicated sample directory containing complete deployment scripts, orchestrator implementations, and cleanup utilities. The provided code runs multiple demo scenarios, ranging from single Model Context Protocol calls for order status to complex chains involving pricing rules and semantic matching against ambiguous user intents.",
+              "links": [
+                {
+                  "text": "sample directory",
+                  "url": "https://github.com/ach1ntya/agentcore-samples/tree/main/01-features/07-centralize-and-govern-your-ai-infrastructure/03-registry/03-advanced/discovery-and-invocation-at-runtime"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Agent Registry",
+        "Model Context Protocol",
+        "Artificial Intelligence",
+        "Cloud Computing",
+        "API Management"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "AWS Agent Registry",
+        "Amazon Bedrock AgentCore Gateway",
+        "Model Context Protocol"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based directly on the official AWS Machine Learning Blog post detailing runtime tool discovery with AWS Agent Registry."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 653,
+      "word_count_en": 450
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "e600abfbbfd2fa21366c",
+      "title": "Discover tools at runtime with AWS Agent Registry",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 653,
+          "word_count_en": 450
+        }
+      ]
+    }
+  ],
+  "slug": "discover-tools-at-runtime-with-aws-agent-registry",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/discover-tools-at-runtime-with-aws-agent-registry/hero.webp",
+    "card": "/forum/assets/posts/2026/10/discover-tools-at-runtime-with-aws-agent-registry/card.webp",
+    "social": "/forum/assets/posts/2026/10/discover-tools-at-runtime-with-aws-agent-registry/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق AWS Agent Registry لاكتشاف أدوات الذكاء الاصطناعي ديناميكياً",
+      "en": "Discover Tools at Runtime with AWS Agent Registry"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21108-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/discover-tools-at-runtime-with-aws-agent-registry/inline-01.webp",
+        "width": 1400,
+        "height": 955,
+        "alt": {
+          "ar": "أمازون تطلق AWS Agent Registry لاكتشاف أدوات الذكاء الاصطناعي ديناميكياً",
+          "en": "Comparison of hardcoded tool endpoints versus runtime discovery with AWS Agent Registry"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/discover-tools-at-runtime-with-aws-agent-registry/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21108-1-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/discover-tools-at-runtime-with-aws-agent-registry/inline-02.webp",
+        "width": 1063,
+        "height": 507,
+        "alt": {
+          "ar": "أمازون تطلق AWS Agent Registry لاكتشاف أدوات الذكاء الاصطناعي ديناميكياً",
+          "en": "End-to-end architecture: the orchestrator queries AWS Agent Registry, then invokes MCP servers through AgentCore Gateway and A2A agents on AgentCore runtime"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/discover-tools-at-runtime-with-aws-agent-registry/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21108-2-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/discover-tools-at-runtime-with-aws-agent-registry/inline-03.webp",
+        "width": 1400,
+        "height": 604,
+        "alt": {
+          "ar": "أمازون تطلق AWS Agent Registry لاكتشاف أدوات الذكاء الاصطناعي ديناميكياً",
+          "en": "The orchestrator’s per-request flow, where an outer agent searches the Registry and assembles a request-scoped inner agent from the results"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/discover-tools-at-runtime-with-aws-agent-registry/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21108-3-1.png"
+      }
+    ]
+  }
 }
