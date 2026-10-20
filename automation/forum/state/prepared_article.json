@@ -1,5 +1,380 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-20T20:17:51+00:00",
-  "last_published_story_id": "8c33973d779438c40003"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-20T20:22:51+00:00",
+  "target_publish_at": "2026-10-20T23:37:50.838996+03:00",
+  "story": {
+    "title": "Remote Compose Gaming Widgets",
+    "url": "https://developer.android.com/blog/posts/remote-compose-gaming-widgets",
+    "domain": "developer.android.com",
+    "summary": "Did you know you can build an interactive Android gaming widget? This blog post series will show you how with a new alpha library called Remote Compose.",
+    "published_at": "2026-10-20T00:00:00+00:00",
+    "discovered_at": "2026-10-20T18:01:57+00:00",
+    "source": {
+      "name": "Android Developers",
+      "feed": "https://android-developers.googleblog.com/feeds/posts/default",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 28,
+      "defaultCategory": "mobile"
+    },
+    "category": "mobile",
+    "category_label": "الهواتف",
+    "score": 58,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "01d26f3803c383012487",
+    "trend": {
+      "score": 109.01,
+      "age_hours": 20.37,
+      "corroboration_count": 0,
+      "entity_momentum": 13.93,
+      "category_boost": 5
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://developer.android.com/blog/posts/remote-compose-gaming-widgets",
+      "name": "Android Developers",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Remote Compose Gaming Widgets",
+      "title": "Remote Compose Gaming Widgets | Android Developers' Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أندرويد تطلق Remote Compose لبناء ودجات ألعاب تفاعلية",
+      "description": "تتيح مكتبة Remote Compose الجديدة المطوّرة من جوجل تطوير ودجات تفاعلية متحركة على الشاشة الرئيسية، مما يفتح آفاقاً جديدة لتجارب الألعاب على أجهزة أندرويد.",
+      "deck": "أعلنت جوجل عن إطلاق مكتبة Remote Compose في نسختها التجريبية، لتمكين المطورين من بناء ودجات تفاعلية متقدمة تدعم الرسوم المتحركة والحالة الديناميكية دون الحاجة لتفعيل التطبيق باستمرار.",
+      "summary_bullets": [
+        "تفصل Remote Compose بين تعريف الواجهة وتنفيذها، مما يقلل استهلاك البطارية والوقت المستغرق للتحديثات.",
+        "تستهدف المكتبة سد الفجوة التي كانت تمنع Jetpack Glance من دعم الرسوم المتحركة المعقدة في الودجات.",
+        "تتيح إدارة الحالة محلياً على جهاز المستخدم أو من خلال التطبيق، مما يوفر مرونة في تصميم الألعاب والوظائف التفاعلية.",
+        "تعمل التقنية عبر إرسال مستندات مدمجة (Remote Documents) إلى الشاشة الرئيسية، حيث يتم تنفيذ التفاعلات محلياً."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق مكتبة Remote Compose التجريبية",
+          "paragraphs": [
+            {
+              "text": "أعلنت جوجل رسمياً عن إطلاق سلسلة مقالات تقنية جديدة توضح كيفية بناء ودجات ألعاب تفاعلية على نظام أندرويد باستخدام مكتبة جديدة تحمل اسم Remote Compose. تأتي هذه المبادرة ضمن جهود المنصة لتوسيع قدرات واجهات المستخدم على الشاشة الرئيسية، حيث تتيح للمطورين تجاوز القيود التقليدية التي كانت تفرضها الأنظمة السابقة على تصميم الودجات. وتُعد هذه المكتبة حالياً في مرحلة ألفا (تجريبية)، مما يعني أن الكود المصاحب قد يتطلب تعديلات مستقبلية مع تطور الإصدارات، لكنها تفتح الباب أمام تجارب مستخدم أكثر غنى وتفاعلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تجاوز قيود Jetpack Glance وRemoteViews",
+          "paragraphs": [
+            {
+              "text": "لطالما كانت مكتبة Jetpack Glance هي الخيار المفضل لبناء الودجات على أندرويد بفضل توافقها العكسي وأدوات التطوير المبسطة. ومع ذلك، واجه المطورون تحديات كبيرة عند محاولة إضافة رسوم متحركة معقدة، نظراً لأن Jetpack Glance يعتمد على نظام RemoteViews القديم. هذا النظام لا يدعم التعابير الرياضية اللازمة لتدوير الكائنات أو تحريكها باستمرار، كما أن التحكم فيه من قبل نظام أندرويد يحد من حجم التحديثات وتكرارها. وعلى الرغم من وجود طرق غير مدعومة (Hacks) لإنشاء حركات بسيطة، إلا أن Remote Compose توفر الآن حلاً مرنًا وقابلاً للتوسع لإنشاء رسوم متحركة سلسة دون الحاجة إلى حلول مؤقتة.",
+              "links": [
+                {
+                  "text": "Jetpack Glance",
+                  "url": "https://developer.android.com/develop/ui/compose/glance"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل المستندات البعيدة",
+          "paragraphs": [
+            {
+              "text": "تعتمد Remote Compose على مبدأ فصل تعريف الواجهة عن تنفيذها. يقوم تطبيق المطور بتشغيل كود @RemoteComposable لتحويل تخطيطات الواجهة وتعابير الرسوم المتحركة إلى مستند مدمج يسمى Remote Document، وهو عبارة عن مصفوفة بايتات (ByteArray) صغيرة الحجم. يُرسل هذا المستند إلى عملية مضيف، مثل تطبيق الشاشة الرئيسية (Launcher). في هذه العملية، يتولى مشغل Remote Compose إدارة التفاعلات، وتغييرات الحالة، والرسوم المتحركة محلياً. تشبه هذه الآلية عمل متصفح الويب الذي يعرض مستند HTML، حيث يتم التنفيذ في بيئة مستقلة عن التطبيق الأصلي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "كفاءة الطاقة وتقليل استهلاك البطارية",
+          "paragraphs": [
+            {
+              "text": "من أبرز مزايا هذه التقنية هو كفاءتها في استهلاك الطاقة. بما أن المشغل (Player) يدير التحديثات بشكل مستقل داخل عملية المضيف، فلا يحتاج تطبيق المستخدم إلى البقاء نشطاً أو مستيقظاً. مقارنة بـ RemoteViews، حيث يقوم التطبيق بدفع تحديثات الواجهة بشكل دوري، تقلل Remote Compose من الحاجة إلى عمليات الاتصال بين العمليات (IPC)، مما يقلل من الكمون واستهلاك البطارية. بمجرد استلام الشاشة الرئيسية للمستند، يمكن للتطبيق أن يعلق (Suspend) بينما تبقى الودجة تفاعلية بالكامل. بالإضافة إلى ذلك، تكون المستندات البعيدة صغيرة الحجم، وغالباً لا تتجاوز بضعة عشرات من الكيلوبايتات، مما يسهل إرسالها عند الحاجة لتحديث المعلومات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الحالة: محلية أو عبر التطبيق",
+          "paragraphs": [
+            {
+              "text": "توفر Remote Compose طريقتين لإدارة حالة الودجة. أولاً، يمكن أن تعيش الحالة محلياً داخل المستند البعيد على المضيف، وهو ما يناسب الحالات المؤقتة مثل عداد النقاط في لعبة Flappy Droid، والتي يمكن إعادة تعيينها عند إرسال مستند جديد أو إعادة تشغيل الشاشة الرئيسية. ثانياً، يمكن حفظ الحالة في تخزين التطبيق لمشاركتها مع التطبيق الرئيسي، وهو ما يناسب الحالات التي يجب أن تبقى ثابتة عبر تحديثات المستند، مثل العملات الذهبية التي يجمعها المستخدم في لعبة Android Pet ويستخدمها لشراء إكسسوارات داخل التطبيق. وتجدر الإشارة إلى أن أندرويد لا يخطر التطبيق عند إعادة تشغيل الشاشة الرئيسية في الخلفية، بل يعيد تشغيل آخر مستند مخزن مؤقتاً، مما يجعل الحفظ على جانب التطبيق ضرورياً للحالات الحساسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية التقنية والمكتبات المستخدمة",
+          "paragraphs": [
+            {
+              "text": "تتكون بنية Remote Compose من ثلاثة مستويات رئيسية: بناء المستندات، ونقلها، وتشغيلها على المضيف البعيد. للودجات المحمولة، تلتقط RemoteComposeWidget عملية نقل المستندات إلى مضيفي الشاشة الرئيسية، بينما تستخدم GlanceWearWidgetService للنقل إلى مضيف الساعة الذكية. هذا الفصل بين آليات النقل يسمح بمكتبات موحدة أكثر لبناء وتشغيل المستندات عبر الأجهزة المختلفة. وتتضمن المكتبات الأساسية في هذه المرحلة التجريبية مكتبتين: creation-compose و creation. كما توفر المكتبة مكونات Composables مخصصة مثل RemoteBox و RemoteColumn و RemoteRow و RemoteText، مما يتيح للمطورين بناء واجهات معقدة بسهولة أكبر.",
+              "links": [
+                {
+                  "text": "Remote Compose",
+                  "url": "https://developer.android.com/jetpack/androidx/releases/compose-remote"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التطبيقات العملية: ألعاب Android Pet وFlappy Droid",
+          "paragraphs": [
+            {
+              "text": "لإظهار التطبيقات العملية لهذه التقنية، طورت جوجل داخلياً ودجتين للعب: Android Pet و Flappy Droid. يمثل Android Pet كائناً افتراضياً قابلاً للتخصيص يتطور بعد العناية به، ويعتمد على مشاركة الحالة مع التطبيق الرئيسي. أما Flappy Droid فهو لعبة جانبية حيث يطير المستخدم بين الأعمدة لتجنبها، ويعتمد كلياً على الحالة المخزنة في المستند البعيد لعرض النقاط. وتوضح هذه الأمثلة كيف يمكن لـ Remote Compose التعامل مع التفاعلات المعقدة، مثل زيادة العداد عند النقر، من خلال استخدام رسوم بيانية تعبيرية (Expression Graphs) ومرجعيات ديناميكية. يقوم المشغل بتقييم هذه التعابير وتحديث المرجعيات مباشرة، مما يسمح لواجهة الودجة بالتحديث بينما ينام عملية التطبيق.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أندرويد",
+        "Remote Compose",
+        "ودجات",
+        "ألعاب",
+        "تطوير الجوال",
+        "جوجل",
+        "Jetpack"
+      ],
+      "entities": [
+        "جوجل",
+        "أندرويد",
+        "Remote Compose",
+        "Jetpack Glance",
+        "Android Pet",
+        "Flappy Droid"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من مدونة Android Developers الرسمية، مع التركيز على الجوانب التقنية والفوائد المعلنة للمكتبة التجريبية."
+    },
+    "en": {
+      "title": "Android Developers Introduce Remote Compose Alpha for Widgets",
+      "description": "Android Developers have introduced a new alpha library called Remote Compose, enabling interactive gaming widgets with advanced animations and local state management.",
+      "deck": "Android Developers have introduced Remote Compose, a new alpha library designed to help developers build interactive gaming widgets with advanced animations and efficient local state handling.",
+      "summary_bullets": [
+        "Remote Compose is a new alpha library that enables interactive Android gaming widgets with support for animations.",
+        "The library separates UI definitions from execution by serializing layouts into compact Remote Documents.",
+        "A local Remote Compose player handles interactions, resizing, and state changes on the host process like the home screen launcher.",
+        "Developers can manage state either locally inside the Remote Document or persistently on the app side."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Remote Compose",
+          "paragraphs": [
+            {
+              "text": "Android Developers have launched a blog post series exploring how to build interactive Android gaming widgets utilizing a new alpha library named <a href=\"https://developer.android.com/blog/posts/remote-compose-gaming-widgets\">Remote Compose</a>. While Jetpack Glance remains the recommended choice for most widgets due to its backwards compatibility and simplified tooling, certain use cases involving animations require alternative solutions.",
+              "links": [
+                {
+                  "text": "Remote Compose",
+                  "url": "https://developer.android.com/blog/posts/remote-compose-gaming-widgets"
+                }
+              ]
+            },
+            {
+              "text": "For standard implementations, developers typically rely on <a href=\"https://developer.android.com/develop/ui/compose/glance\">Jetpack Glance</a>. However, the legacy RemoteViews system it depends on lacks support for mathematical expressions and is restricted by Android system limits on widget update frequency and size.",
+              "links": [
+                {
+                  "text": "Jetpack Glance",
+                  "url": "https://developer.android.com/develop/ui/compose/glance"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Internal Gaming Widgets and Architecture",
+          "paragraphs": [
+            {
+              "text": "To demonstrate practical applications of the new library, the blog series showcases two internal gaming widgets: Android Pet, a customizable virtual pet that evolves, and Flappy Droid, a side-scrolling game where users navigate columns. The architecture separates UI definitions from execution by running declarative code to serialize layouts into compact Remote Documents.",
+              "links": []
+            },
+            {
+              "text": "These documents are sent to a host process, such as the home screen launcher, where a Remote Compose player manages local interactions, resizing, state changes, and animations. This mechanism operates similarly to a web browser rendering an HTML document.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Efficiency and Process Independence",
+          "paragraphs": [
+            {
+              "text": "Because the player manages updates independently within its own process, the main application process does not need to stay awake. This approach reduces Inter-Process Communication round-trips, thereby lowering latency and minimizing battery drain compared to traditional RemoteViews-based widgets.",
+              "links": []
+            },
+            {
+              "text": "Remote Documents typically measure only a few dozen kilobytes. Once the launcher receives the document, the host application is free to suspend while the widget remains fully interactive for the user.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Building Basic Widgets and Dependencies",
+          "paragraphs": [
+            {
+              "text": "Creating a basic Remote Compose widget follows steps similar to configuring a standard <a href=\"https://developer.android.com/develop/ui/views/appwidgets\">AppWidget</a>, but incorporates Remote Composables for the user interface. Developers must add the required <a href=\"https://developer.android.com/jetpack/androidx/releases/compose-remote\">Remote Compose dependencies</a> to their version catalog and build configuration.",
+              "links": [
+                {
+                  "text": "AppWidget",
+                  "url": "https://developer.android.com/develop/ui/views/appwidgets"
+                },
+                {
+                  "text": "Remote Compose dependencies",
+                  "url": "https://developer.android.com/jetpack/androidx/releases/compose-remote"
+                }
+              ]
+            },
+            {
+              "text": "Additionally, developers register their receiver in the Android manifest and include the appropriate intent filter. The widget class inherits from RemoteComposeWidget, compiling layout and drawing commands into a serialized binary document sent via updateRemoteView.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "State Management Options",
+          "paragraphs": [
+            {
+              "text": "When building these widgets, developers can handle state using two distinct approaches. Host-local state suits ephemeral session data—such as a game score in Flappy Droid—that can reset if the launcher restarts or a new document is emitted.",
+              "links": []
+            },
+            {
+              "text": "Conversely, app-side persistence is required when state must survive across document updates, as demonstrated by Android Pet, where users collect gold coins in the widget to spend within the main application store.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Android",
+        "Remote Compose",
+        "Jetpack Glance",
+        "Mobile Development",
+        "Widgets",
+        "Kotlin"
+      ],
+      "entities": [
+        "Android Developers",
+        "Jetpack Glance",
+        "Remote Compose"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based directly on the provided Android Developers blog post."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 771,
+      "word_count_en": 503
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "01d26f3803c383012487",
+      "title": "Remote Compose Gaming Widgets",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 771,
+          "word_count_en": 503
+        }
+      ]
+    }
+  ],
+  "slug": "remote-compose-gaming-widgets",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/remote-compose-gaming-widgets/hero.webp",
+    "card": "/forum/assets/posts/2026/10/remote-compose-gaming-widgets/card.webp",
+    "social": "/forum/assets/posts/2026/10/remote-compose-gaming-widgets/social.jpg",
+    "alt": {
+      "ar": "أندرويد تطلق Remote Compose لبناء ودجات ألعاب تفاعلية",
+      "en": "Android Developers Introduce Remote Compose Alpha for Widgets"
+    },
+    "credit": "Android Developers",
+    "sourceUrl": "https://developer.android.com/static/blog/assets/AFD_ABL_101_Media3_1_11_is_out_Strapi_bebd1c9efc_Zpob7z.webp",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/remote-compose-gaming-widgets/inline-01.webp",
+        "width": 1400,
+        "height": 700,
+        "alt": {
+          "ar": "أندرويد تطلق Remote Compose لبناء ودجات ألعاب تفاعلية",
+          "en": "Android Developers Introduce Remote Compose Alpha for Widgets"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/remote-compose-gaming-widgets",
+        "originalUrl": "https://developer.android.com/static/blog/assets/0625_Building_Jet_Packer_with_Intelligent_On_Device_features_Strapi_v02_3f5a8b17b0_1hYFMP.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/remote-compose-gaming-widgets/inline-02.webp",
+        "width": 473,
+        "height": 1050,
+        "alt": {
+          "ar": "أندرويد تطلق Remote Compose لبناء ودجات ألعاب تفاعلية",
+          "en": "simpleWidget.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "A simple Remote Compose widget, ready to animate."
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/remote-compose-gaming-widgets",
+        "originalUrl": "https://developer.android.com/static/blog/assets/simple_Widget_859e1a215d_pEyLd.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/remote-compose-gaming-widgets/inline-03.webp",
+        "width": 1400,
+        "height": 994,
+        "alt": {
+          "ar": "أندرويد تطلق Remote Compose لبناء ودجات ألعاب تفاعلية",
+          "en": "Android Developers Introduce Remote Compose Alpha for Widgets"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/remote-compose-gaming-widgets",
+        "originalUrl": "https://developer.android.com/static/blog/assets/sample_readme_bazel_9348d9f325_Z1WTT09.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/remote-compose-gaming-widgets/inline-04.webp",
+        "width": 1200,
+        "height": 600,
+        "alt": {
+          "ar": "أندرويد تطلق Remote Compose لبناء ودجات ألعاب تفاعلية",
+          "en": "Remote Compose Gaming Widgets"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/remote-compose-gaming-widgets",
+        "originalUrl": "https://developer.android.com/static/blog/assets/header_068afa9a28_Z2Se4i.webp"
+      }
+    ]
+  }
 }
