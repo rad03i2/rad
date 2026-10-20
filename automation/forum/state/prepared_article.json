@@ -1,5 +1,413 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-20T13:17:47+00:00",
-  "last_published_story_id": "41fb25a47d12d204a957"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-20T13:23:23+00:00",
+  "target_publish_at": "2026-10-20T16:37:46.996041+03:00",
+  "story": {
+    "title": "Introducing tsrs: a Port of TypeScript to Rust",
+    "url": "https://blog.cloudflare.com/typescript-rust-port",
+    "domain": "blog.cloudflare.com",
+    "summary": "Cloudflare is collaborating on tsrs, a Rust port of TypeScript that is up to 8x faster and uses 70% less memory.",
+    "published_at": "2026-10-20T13:00:00+00:00",
+    "discovered_at": "2026-10-20T13:06:49+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "automation",
+    "category_label": "الأتمتة",
+    "score": 61,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "f4b3d479520df5a35eec",
+    "trend": {
+      "score": 118.36,
+      "age_hours": 0.37,
+      "corroboration_count": 0,
+      "entity_momentum": 9.51,
+      "category_boost": 8
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/typescript-rust-port",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Introducing tsrs: a Port of TypeScript to Rust",
+      "title": "Introducing tsrs: a Port of TypeScript to Rust | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "إطلاق مشروع tsrs لنقل محول تايبسكريبت إلى لغة رست",
+      "description": "تعاون تقني يجمع كلودفلير وفويدزيرو ومطورين آخرين لإطلاق مشروع tsrs لنقل محول تايبسكريبت إلى لغة رست بكفاءة عالية وسرعة مضاعفة.",
+      "deck": "أعلنت شركة كلودفلير عن تعاونها في مشروع tsrs الجديد، وهو نسخة مطورة بلغة رست من محول تايبسكريبت تهدف إلى تسريع عمليات فحص الأنواع وتقليل استهلاك الذاكرة بشكل ملحوظ.",
+      "summary_bullets": [
+        "مشروع tsrs يمثل نسخة بلغة رست من محول تايبسكريبت بالتعاون مع فريق تايبسكريبت.",
+        "النتائج الأولية تشير إلى سرعة تفوق الإصدارات السابقة واستهلاك أقل للذاكرة.",
+        "التركيز على الحفاظ على توافق تام مع التصميم الأصلي دون تعديل اتجاه اللغة.",
+        "إمكانية تشغيل أدوات التطوير داخل المتصفح وبيئات العمل المعزولة عبر WebAssembly."
+      ],
+      "sections": [
+        {
+          "heading": "تعاون تقني واسع النطاق لتطوير الأداء",
+          "paragraphs": [
+            {
+              "text": "كشفت شركة Cloudflare Blog عن تعاون جديد يجمعها مع شركاء آخرين لتطوير مشروع tsrs، وهو مبادرة تهدف إلى إعادة كتابة محول البرمجيات الشهير تايبسكريبت باستخدام لغة رست. يأتي هذا العمل ضمن جهود مشتركة ومستمرة بالتنسيق الوثيق مع الفريق الأساسي لتطوير اللغة، حيث يتم احتضان هذا المشروع الجديد كجزء أساسي من بيئة أدوات التحويل البرمجي Oxc JavaScript compiler toolchain.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/typescript-rust-port"
+                },
+                {
+                  "text": "Oxc JavaScript compiler toolchain",
+                  "url": "https://github.com/oxc-project"
+                }
+              ]
+            },
+            {
+              "text": "ويهدف المطورون من وراء هذه الخطوة إلى مساعدة المبرمجين على تقليص الأوقات التي يستهلكها النظام في فحص الشفرات البرمجية، مما يتيح لهم التركيز بشكل أكبر على عمليات البناء والابتكار. كما أن تحسين السرعة وكفاءة الذاكرة يسهم في توفير بيئات تطوير متكاملة ومحمولة يمكن تشغيلها في أماكن جديدة ومختلفة، بما في ذلك التشغيل المباشر داخل متصفحات الويب للمستخدمين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الحفاظ على استقلالية تصميم اللغة وعدم إنشاء انشقاقات",
+          "paragraphs": [
+            {
+              "text": "أكد القائمون على المبادرة بوضوح أن هذا الجهد لا يهدف بأي حال من الأحوال إلى إجراء عملية شوكة أو انشقاق عن مسار اللغة الرسمي، إذ يؤمن الفريق بأن الفريق الأساسي لتايبسكريبت يجب أن يظل صاحب السلطة المطلقة والتحكم الكامل في تصميم اللغة واتجاهها المستقبلي. لقد نجح الفريق الأصلي في الحفاظ على رؤية طويلة المدى وجهدت في توجيه تبني اللغة داخل مجتمع تطوير جافاسكريبت، وهي ممارسات لا يسعى أحد لتغييرها.",
+              "links": []
+            },
+            {
+              "text": "وفي حين أن فريق تايبسكريبت يتحرك بسرعة في مجالات عديدة، إلا أن بعض الميزات قد تتطلب أحياناً سنوات من البحث التجريبي واستكشاف الخيارات قبل اعتماد التنفيذ الأمثل. ونتيجة لذلك، فإن أي نسخة مكتوبة بلغة رست يجب أن تتبع تلك القرارات بدقة متناهية، وإلا فإنها ستفقد توافقها وتتداعى بمرور الوقت. ومن هذا المنطلق، يلتزم المطورون بالحفاظ على لغة تايبسكريبت مستندة حصراً إلى تنفيذها الأصلي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أداء واعد ونتائج أولية مبهرة في القياسات",
+          "paragraphs": [
+            {
+              "text": "أظهرت القياسات والاختبارات المبكرة لهذه النسخة المصنوعة بلغة رست نتائج إيجابية للغاية ومبشرة بالمستقبل. فعلى سبيل المثال، يظهر أداء tsrs سرعة تفوق الإصدارات التقليدية مع انخفاض هائل في استهلاك الذاكرة عند استخدام نفس عدد عمليات فحص الأنواع، وفقاً لما توضحه القياسات التقنية الرسمية التي تم إجراؤها بالتنسيق مع فريق اللغة لضمان تطابق الإعدادات.",
+              "links": []
+            },
+            {
+              "text": "وتجدر الإشارة إلى أن الإصدارات الجديدة من تايبسكريبت تتضمن بدورها تحسينات كبيرة في الأداء مقارنة بالإصدارات السابقة، حيث ساهمت بعض التحسينات المنقولة أصلاً من هذا المشروع في رفع كفاءة النسخ التجريبية الرسمية، ويتطلع المطورون إلى دمج المزيد من التحسينات المستقبلية التي تعود بالنفع على مجتمع المطورين ككل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مزايا تقنية فريدة بفضل لغة رست وتكاملها مع الويب",
+          "paragraphs": [
+            {
+              "text": "على الرغم من النجاحات الكبيرة التي حققها الإصدار السابق المكتوب بلغة جو والذي رفع من سرعة الأداء وكفاءة الذاكرة مقارنة بالإصدارات الأولى، إلا أن الانتقال إلى لغة رست يحمل فوائد فريدة لا تُضاهى، أبرزها القدرة الفائقة على التشغيل في بيئات WebAssembly بفضل نموذج إدارة الذاكرة المميز في رست.",
+              "links": []
+            },
+            {
+              "text": "فعندما يتم تجميع برامج مكتوبة بلغة جو للعمل على تقنية الويب، يضطر المطورون إلى تضمين جامع القمامة الخاص بلغة جو معها، بينما يتيح نموذج الذاكرة في رست تفاعلات مباشرة وسلسة بين بيئة المضيف والبرنامج المستضاف. هذا التوافق يجعل رست خياراً مثالياً لتحقيق أقصى كفاءة ممكنة في استهلاك الذاكرة عبر تقنيات الويب المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تكامل أعمق مع بنية كلودفلير وتقنيات العمال",
+          "paragraphs": [
+            {
+              "text": "لطالما دعمت بنية Cloudflare Workers تقنيات الويب لسنوات طويلة، ومؤخراً تم الإعلان رسمياً عن دعم اللغة بشكل أصلي ضمن بيئة العمل عبر الهدف الجديد المخصص، مما يتيح تشغيل أنظمة البناء والنشر المعقدة بكفاءة تسريع غير مسبوقة تساهم في تقليص استهلاك الموارد بشكل جذري.",
+              "links": []
+            },
+            {
+              "text": "يتيح هذا التكامل المتقدم إمكانيات فريدة تتيح للمطورين تشغيل بيئات تطوير كاملة ومعزولة داخل منصة الحوسبة السحابية، بالإضافة إلى إمكانية تنفيذ العمليات بشكل آمن من جهة العميل داخل المتصفحات الشخصية أو حتى على الأجهزة المدمجة وتطبيقات إنترنت الأشياء بكل سهولة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خطوات مستقبلية نحو توحيد الحزم والمشاريع المفتوحة",
+          "paragraphs": [
+            {
+              "text": "يسعى المطورون حالياً للتعاون مع شخصيات بارزة في المجتمع التقني مثل دمج حزم إضافية لتكوين حزمة موحدة تدعم كافة ميزات اللغة بما في ذلك بروتوكول خادم اللغة، وذلك بناءً على النجاحات التي حققتها مشاريع أخرى مثل Vinext في الحفاظ على توافق مستمر مع الأطر الشهيرة كما تم توضيحه في تدوينة سابقة.",
+              "links": [
+                {
+                  "text": "Vinext",
+                  "url": "https://github.com/cloudflare/vinext"
+                }
+              ]
+            },
+            {
+              "text": "تخطط الشركة لمواصلة دعم هذا المشروع كبرنامج مجتمعي مفتوح المصدر صحي ومستدام، مع الاستمرار في تحسين الأداء وتقليل استهلاك الذاكرة لضمان تقديم أفضل تجربة ممكنة للمطورين الذين يعتمدون على أدوات البرمجة السريعة في مشاريعهم اليومية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "TypeScript",
+        "Rust",
+        "Cloudflare",
+        "WebAssembly",
+        "Oxc",
+        "تطوير البرمجيات",
+        "أدوات المطورين"
+      ],
+      "entities": [
+        "Cloudflare",
+        "VoidZero",
+        "Max Schwenk",
+        "Owner.com",
+        "Oxc",
+        "TypeScript"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر بناءً على تدوينة كلودفلير الرسمية بدقة، مع الالتزام التام بالروابط المسموحة وعدم اختراع أي معلومات إضافية."
+    },
+    "en": {
+      "title": "Cloudflare Collaborates on tsrs, a Rust Port of TypeScript",
+      "description": "Cloudflare, VoidZero, and Max Schwenk are collaborating on tsrs, a high-performance Rust port of the TypeScript compiler designed for speed.",
+      "deck": "Cloudflare and collaborators have introduced tsrs, an ambitious open-source Rust port of TypeScript designed to deliver dramatic performance gains while maintaining complete language compatibility.",
+      "summary_bullets": [
+        "Cloudflare is collaborating with VoidZero and Max Schwenk on the tsrs project.",
+        "Early benchmarks indicate tsrs is up to 8x faster and uses about 70% less memory than TypeScript 7.0.",
+        "The project is being incubated as part of the Oxc JavaScript compiler toolchain in close collaboration with the TypeScript team.",
+        "Rust's memory management model enables efficient execution in WebAssembly, browser environments, and Cloudflare Workers."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to tsrs",
+          "paragraphs": [
+            {
+              "text": "Cloudflare and VoidZero are working alongside Max Schwenk of Owner.com on tsrs, an initiative to build a Rust port of the TypeScript compiler. The project is being developed in close collaboration with the official TypeScript team and is currently being incubated as part of the Oxc JavaScript compiler toolchain. According to the announcement on the Cloudflare Blog, the primary goal of the collaboration is to help developers spend less time waiting for code type-checking and more time building applications.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/typescript-rust-port"
+                },
+                {
+                  "text": "tsrs",
+                  "url": "https://github.com/oxc-project/tsrs"
+                },
+                {
+                  "text": "Oxc JavaScript compiler toolchain",
+                  "url": "https://github.com/oxc-project"
+                }
+              ]
+            },
+            {
+              "text": "The creators emphasize that they are not forking TypeScript. They believe that the official TypeScript team should maintain full control over the language's design, direction, and long-term vision. Because the Rust port must closely mirror upstream decisions to remain compatible, the TypeScript team remains solely responsible for determining how the language evolves.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Performance Benchmarks and Configuration",
+          "paragraphs": [
+            {
+              "text": "Early performance metrics for the new port are promising. When utilizing an equivalent number of type check workers, tsrs delivers execution speeds up to 8x faster while consuming approximately 70% less memory compared to TypeScript 7.0. Organizers worked directly with the TypeScript team to ensure that the above benchmarks accurately compare identical configurations without inflating machine types or altering default parameters.",
+              "links": [
+                {
+                  "text": "the above benchmarks",
+                  "url": "https://github.com/oxc-project/tsrs/tree/main/bench"
+                }
+              ]
+            },
+            {
+              "text": "While the next version of TypeScript already brings significant internal speed enhancements—such as TypeScript 7.1 beta being up to 2.5x faster than version 7.0—several of those optimizations were upstreamed directly from the tsrs development process. By default, the package ships with an adaptive configuration that scales with the host machine type to maximize speed.",
+              "links": []
+            },
+            {
+              "text": "Developers interested in experimenting with the software can install an experimental release directly via npm. Those tracking the project can also review ongoing updates through the package registry.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Advantages of Rust and WebAssembly",
+          "paragraphs": [
+            {
+              "text": "Although previous efforts successfully ported TypeScript from JavaScript to Go, the Rust language offers distinct technical advantages, particularly regarding WebAssembly integration. Unlike Go programs—which require bundling a garbage collector into the final WebAssembly output—Rust features a memory management model that allows straightforward memory interaction between WebAssembly guests and hosts.",
+              "links": []
+            },
+            {
+              "text": "This architectural efficiency makes Rust a natural fit for running workloads inside WebAssembly. Cloudflare Workers have supported WebAssembly for an extended period, and recent platform updates include supporting native Rust in Workers via the Emscripten target for wasm-bindgen. These capabilities allow entire build and deployment systems to execute efficiently in tight loops.",
+              "links": []
+            },
+            {
+              "text": "By shrinking the memory footprint and improving execution speed, developers can now run fully encapsulated development toolchains in environments previously unsuited for such workloads. This includes running safe client-side environments directly within web browsers, embedded devices, or IoT applications.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Roadmap and Ecosystem Integration",
+          "paragraphs": [
+            {
+              "text": "To consolidate community efforts, the project maintainers are collaborating with Theo Browne to merge tsc-rs and tsrs into a single, unified package. This combined tool aims to support all core TypeScript features, including the Language Server Protocol and content mappers.",
+              "links": [
+                {
+                  "text": "tsc-rs",
+                  "url": "https://github.com/pingdotgg/ts-rust"
+                }
+              ]
+            },
+            {
+              "text": "Maintainers intend to follow a synchronization strategy similar to Vinext, ensuring the tool stays closely aligned with upstream updates without introducing diverging behaviors. The methodology behind maintaining project alignment with upstream releases has been detailed previously in connection with Next.js integration.",
+              "links": [
+                {
+                  "text": "Vinext",
+                  "url": "https://github.com/cloudflare/vinext"
+                }
+              ]
+            },
+            {
+              "text": "Cloudflare currently hosts various open-source Rust utilities that support the broader JavaScript ecosystem, including Vite, Rolldown, Oxlint, and Oxfmt. The team plans to experiment with deeper tool integration, such as powering type-aware lint rules inside Oxlint using the new compiler port.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "TypeScript",
+        "Rust",
+        "Cloudflare",
+        "WebAssembly",
+        "Compiler",
+        "Developer Tools",
+        "Oxc"
+      ],
+      "entities": [
+        "Cloudflare",
+        "VoidZero",
+        "Max Schwenk",
+        "TypeScript",
+        "Oxc",
+        "Owner.com"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based entirely on the official Cloudflare Blog source text regarding the announcement of tsrs."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 300,
+      "word_count_en": 468
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 736,
+      "word_count_en": 640
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "f4b3d479520df5a35eec",
+      "title": "Introducing tsrs: a Port of TypeScript to Rust",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 300,
+          "word_count_en": 468
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 736,
+          "word_count_en": 640
+        }
+      ]
+    }
+  ],
+  "slug": "introducing-tsrs-port-of-typescript-to-rust",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/introducing-tsrs-port-of-typescript-to-rust/hero.webp",
+    "card": "/forum/assets/posts/2026/10/introducing-tsrs-port-of-typescript-to-rust/card.webp",
+    "social": "/forum/assets/posts/2026/10/introducing-tsrs-port-of-typescript-to-rust/social.jpg",
+    "alt": {
+      "ar": "إطلاق مشروع tsrs لنقل محول تايبسكريبت إلى لغة رست",
+      "en": "Cloudflare Collaborates on tsrs, a Rust Port of TypeScript"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M5C82VPWPDDZ7P6P0G4H7KB3.png&w=3998&h=2254&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-tsrs-port-of-typescript-to-rust/inline-01.webp",
+        "width": 1200,
+        "height": 630,
+        "alt": {
+          "ar": "إطلاق مشروع tsrs لنقل محول تايبسكريبت إلى لغة رست",
+          "en": "Introducing tsrs: a Port of TypeScript to Rust"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/typescript-rust-port",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M5C82XAYSWX571T82A8AZRKS.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-tsrs-port-of-typescript-to-rust/inline-02.webp",
+        "width": 1400,
+        "height": 764,
+        "alt": {
+          "ar": "إطلاق مشروع tsrs لنقل محول تايبسكريبت إلى لغة رست",
+          "en": "Cloudflare Collaborates on tsrs, a Rust Port of TypeScript"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/typescript-rust-port",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M5C82YQFJQ7JY8JZPCKSP6EG.png&w=1430&h=780&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-tsrs-port-of-typescript-to-rust/inline-03.webp",
+        "width": 1400,
+        "height": 764,
+        "alt": {
+          "ar": "إطلاق مشروع tsrs لنقل محول تايبسكريبت إلى لغة رست",
+          "en": "Cloudflare Collaborates on tsrs, a Rust Port of TypeScript"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/typescript-rust-port",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M5C8302F3MQTH2SKC6MMGDTV.png&w=1430&h=780&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
