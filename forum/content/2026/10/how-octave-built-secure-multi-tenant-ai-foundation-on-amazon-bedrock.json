@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "57363b60fec23f24d819",
+  "slug": "how-octave-built-secure-multi-tenant-ai-foundation-on-amazon-bedrock",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/how-octave-built-secure-multi-tenant-ai-foundation-on-amazon-bedrock/",
+    "en": "/forum/en/ai/how-octave-built-secure-multi-tenant-ai-foundation-on-amazon-bedrock/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أكتاف تبني أساساً ذكياً متعدد المستأجرين على أمازون بيدروك",
+      "description": "تتجاوز شركة أكتاف تحديات العزل الأمني عبر بناء منصة ذكاء اصطناعي على أمازون بيدروك، تتيح تحليل مليارات المستندات التنظيمية دون اختراق حدود المستأجرين.",
+      "deck": "اعتمدت أكتاف استراتيجية بناء البنية التحتية أولاً قبل الميزات، لضمان أمان البيانات في صناعات خاضعة للتنظيم.",
+      "summaryBullets": [
+        "استخدمت أكتاف نموذج Cohere Embed v4 لتضمين 2 مليار مستند بدقة عبر لغات وأنماط متعددة.",
+        "اعتمدت على Amazon Bedrock AgentCore لعزل تنفيذ الوكلاء ومنع تسريب البيانات بين المستأجرين.",
+        "خفّضت المنصة الجديدة وقت نشر كل حالة استخدام بنسبة 50% عبر توحيد البنية التحتية.",
+        "طبّقت حواجز حماية المحتوى مرتين (مدخلات ومخرجات) للامتثال لمعايير الأمان الصارمة."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي العزل في الصناعات الخاضعة للتنظيم",
+          "paragraphs": [
+            {
+              "text": "في إدارة الجودة للصناعات الخاضعة للتنظيم، تكمن المشكلة غالباً في الذاكرة المؤسسية المدفونة في تاريخ العميل. تشمل هذه المعرفة عيوباً مشابهة تم التحقيق فيها سابقاً، أو إجراءات تصحيحية وقائية (CAPA) عالجت الأسباب الجذرية، أو ملاحظات تدقيق كشفت عن الثغرات ذاتها. هذه المعلومات موزعة على مليارات المستندات التي لا يمكن لأي شخص البحث فيها عبر التشابه الدلالي عبر اللغات والتنسيقات المختلفة، مما يجعل كل تحقيق يبدأ من الصفر. ساعدت منصة Reliance التابعة لشركة أكتاف المؤسسات على جمع المستندات عبر أنظمة متعددة لتسهيل البحث وتتبع كل ما تمتلكه. رأى فريق Reliance في فتح هذا التاريخ الفرصة الأكبر لمساعدة العملاء على العمل بشكل أسرع والبقاء ضمن الأطر التنظيمية.",
+              "links": [
+                {
+                  "text": "Reliance",
+                  "url": "https://www.octave.com/products/asset-performance-management/reliance"
+                }
+              ]
+            },
+            {
+              "text": "كانت العقبة واضحة تماماً: سجلات الشكاوى، وملاحظات التدقيق، والإجراءات التصحيحية تحمل أصرم متطلبات العزل في المنصة، وهي بالضبط السجلات التي يحتاج الذكاء الاصطناعي لقراءتها. في منصة تخدم أكثر من 14,000 عميل في الأجهزة الطبية، والأدوية، وتصنيع الأغذية، قد تحمل أي إفصاح غير مقصود من عميل إلى آخر عواقب تنظيمية تفوق أي فائدة من الذكاء الاصطناعي. تعمل أكتاف في 180 دولة، وتخدم أكثر من 60% من الشركات المدرجة في قائمة فورتشن 500 العالمية. نظام إدارة الجودة السحابي Reliance يدعم أكثر من 650 عميلاً مؤسسياً مع أكثر من 40 تطبيقاً، من إدارة الشكاوى وتتبع CAPA إلى إدارة التدقيق وجودة الموردين. كل عميل هو مستأجر منفصل، ولا يمكن لبياناته أن تعبر حدود المستأجر الآخر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استراتيجية بناء الأساس قبل الميزات",
+          "paragraphs": [
+            {
+              "text": "أمام هذا التحدي، اتخذ فريق Reliance قراراً غير مألوف: بدلاً من إطلاق ميزة ذكاء اصطناعي واحدة، أمضى دورته الأولى في بناء أساس ستعتمد عليه كل الميزات المستقبلية. منذ ذلك الحين، قلّص هذا الأساس وقت النشر لكل حالة استخدام بنسبة 50%. إذا كنت تجلب الذكاء الاصطناعي إلى منصة برمجيات كخدمة (SaaS) حيث البيانات قيّمة لكن العزل غير قابل للتفاوض، فإن المنطق يتجاوز إدارة الجودة. في هذا السياق، نعرض التوترات الأربعة التي شكلت التصميم، والأساس ثلاثي الطبقات الذي بناه أكتاف باستخدام Cohere Embed v4 على Amazon Bedrock. ثم نتتبع خط الأنابيب الذي ضمّن 2 مليار مستند، ومساعد فرز الشكاوى الذي أثبت جدواه في الإنتاج.",
+              "links": []
+            },
+            {
+              "text": "كشفت ورش العمل التخيّلية مع AWS عن أربع حالات استخدام عالية التأثير: تلخيص وفرز الشكاوى، ومراقبة جاهزية التدقيق، وتوليد سرديات الحوادث، وتقييم مخاطر الجودة التنبؤي. كما كشفت عن رؤية شكلت كل ما تلاها: عشرات التطبيقات، لكل منها أنواع مستندات وتدفقات عمل مختلفة. بناء الذكاء الاصطناعي لتطبيق واحد في عزلة يعني إعادة بناء البنية التحتية للتطبيق التالي. لذا، قلب الفريق الخطة: بناء المنصة الأفقية أولاً، ثم قطع شرائح الميزات العمودية فيها. جاء تلخيص وفرز الشكاوى أولاً لإثبات البنية المعمارية قبل أن يتبعه الباقي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوترات الأربعة التي حددت التصميم",
+          "paragraphs": [
+            {
+              "text": "قبل اختيار أي نموذج، أمضى الفريق وقته في معالجة أربعة مشكلات تسحب في اتجاهات مختلفة، ولا يمكن التنازل عن أي منها. أولاً، جعل البيانات متاحة دون مخاطر الإفصاح غير المقصود. سجلات الشكاوى، وCAPA، وإجراءات التشغيل القياسية (SOPs)، وملاحظات التدقيق تنتمي لمستأجر واحد ولا يجب أن تكون قابلة للوصول من قبل آخر. حتى استعلام ذكاء اصطناعي خاطئ لا يمكن أن يعبر الحدود. كان لا بد من تحديد نطاق مخزن المتجهات، ومنطق الاسترجاع، وسياق التوليد لمستأجر واحد فقط.",
+              "links": []
+            },
+            {
+              "text": "ثانياً، تنفيذ الوكلاء في عزلة. كانت الصلاحيات التي تحكم أدوات الوكيل، ومخازن البيانات، ونقاط نهاية النماذج يجب أن تكون محددة نطاقاً للمستخدم الطالب بدلاً من دور خدمة مشترك، ومتاحة فقط أثناء التنفيذ، ومحترمة لصلاحيات وصول ذلك المستخدم. فشلت مجموعة وكلاء مشتركة مع بيانات اعتماد ثابتة في تحقيق هذه الشروط الثلاثة. ثالثاً، قراءة محتوى لا يمكن الوثوق به. تستهلك الوكلاء هنا شكاوى، ومرفقات بريد إلكتروني، وملفات PDF ممسوحة ضوئياً، وصوراً من خارج المنظمة. يذكر OWASP Top 10 لتطبيقات نماذج اللغة الكبيرة (LLM) (2025) التهديدات المطبقة مباشرة: حقن الأوامر عبر المحتوى المستهلك (LLM01)، إفصاح معلومات حساسة (LLM02)، معالجة مخرجات غير مناسبة (LLM05)، والصلاحيات الزائدة (LLM06). الأوامر المخفية في ملف PDF مرفق ليست افتراضية عند هذا الحجم.",
+              "links": []
+            },
+            {
+              "text": "رابعاً، تضمين 2 مليار مستند دون انتظار ربع سنوي. تستضيف Reliance أكثر من 2 مليار مستند، حيث يخزن المستأجرون الأفراد ملايين ملفات Word، وPDF، والنماذج الممسوحة ضوئياً، وجداول البيانات، والصور، والبريد الإلكتروني. التزم الفريق بإدراج أكبر مستأجر خلال يوم عمل واحد. لأن هذه المستندات تinform قرارات تنظيمية، لم يمكن التنازل عن الجودة لصالح معدل الإنتاج. الشكوى الفائتة تآكل الثقة في النظام بأكمله. الاحتفاظ بأربعة توترات في وقت واحد ضيّق الخيارات بشكل كبير. عالج Amazon Bedrock هذه المشكلات كمنصة واحدة: وصول متعدد النماذج عبر واجهة برمجة تطبيقات واحدة، وإقامة AWS Region وحكم AWS Identity and Access Management (IAM) الذي يفرضه حساب AWS بالفعل، وحواجز الحماية (Guardrails) كتحكمات محتوى إنتاجية بدلاً من شيء يجب بناؤه.",
+              "links": [
+                {
+                  "text": "AWS Identity and Access Management (IAM)",
+                  "url": "https://aws.amazon.com/iam/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "البنية ثلاثية الطبقات لحماية البيانات",
+          "paragraphs": [
+            {
+              "text": "يتحلل الأساس إلى ثلاث طبقات، كما هو موضح في الشكل 1. تستعد طبقة البيانات المستندات عالية الجودة باستخدام Cohere Embed v4 على Amazon Bedrock وتكتبها في مخزن متجهات لكل مستأجر على Amazon OpenSearch Service. تمر طبقة التنفيذ الآمن بطلب المستخدم عبر AgentCore Gateway، وهو ميزة من Amazon Bedrock AgentCore، والذي يطبق المصادقة والسياسة قبل تسليمه إلى جلسة microVM معزولة تستدعي نموذج Anthropic Claude على Amazon Bedrock. وتغليف كلاهما، تطبق طبقة حماية المحتوى حواجز Amazon Bedrock مرتين: تصفية المدخلات عند الدخول، وتصفية المخرجات قبل وصول أي شيء إلى المعالج. تبقى الاسترجاع، والتنفيذ، والفحص في مراحل منفصلة، بحيث يمكن فرض كل منها وإثباته بشكل مستقل.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "لم يعمل أي شيء آخر حتى أصبحت المستندات قابلة للاسترجاع. وهذا يعني بدقة، عبر اللغات والتنسيقات، وليس عبر حدود المستأجر. قيّم الفريق نماذج التضمين مقابل مجموعته الخاصة بدلاً من لوحات الصدارة العامة. كانت الأسئلة الحاسمة محددة لهذه البيانات: ما علاقة صورة غلاف مكسور بالفقرة التي تصفه، وشكوى ألمانية بإجراء تصحيحي وقائي (CAPA) بالإنجليزية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دقة التضمين متعدد اللغات والأنماط",
+          "paragraphs": [
+            {
+              "text": "فاز Cohere Embed v4 على Amazon Bedrock بخمس نقاط، ولم تكن هذه النقاط مستقلة عن بعضها البعض. كان ما تم تحديده أولاً هو مقدار ما أصبح غير ضروري في خط الأنابيب. تحمل سجلات الجودة صوراً للمنتجات المعيبة، ونماذج فحص ممسوحة ضوئياً، ومخططات مرقمة إلى جانب النص. يضع Embed v4 كلا النمطين في فضاء متجهي واحد. يمكن استرجاع صورة غلاف مكسور والفقرة التي تصف هذا العيب من استعلام واحد، دون خط أنابيب منفصل لكل نمط. يؤدي الدعم متعدد اللغات الأصلي العمل نفسه على المحور الآخر: تصل المستندات بلغات متعددة، وغالباً داخل مجموعة مستندات مستأجر واحد، ولا تحتاج إلى معالجة مسبقة للترجمة. خطا أنابيب لم يضطر الفريق أبداً لبنائهما، وخطا ف...",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "ذكاء اصطناعي",
+        "أمازون بيدروك",
+        "أكتاف",
+        "أمن البيانات",
+        "إدارة الجودة",
+        "تعدد المستأجرين",
+        "Cohere Embed v4"
+      ],
+      "entities": [
+        "Octave",
+        "Amazon Bedrock",
+        "Cohere Embed v4",
+        "Amazon OpenSearch Service",
+        "Reliance",
+        "AWS"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "20 أكتوبر 2026",
+      "modifiedLabel": "20 أكتوبر 2026",
+      "readMinutes": 6,
+      "wordCount": 1063
+    },
+    "en": {
+      "title": "Octave Builds Secure AI Foundation on Amazon Bedrock",
+      "description": "Octave built a multi-tenant AI foundation on Amazon Bedrock to search 2 billion regulated documents while keeping customer data isolated.",
+      "deck": "Octave has built a secure, multi-tenant AI foundation on Amazon Bedrock for its Reliance quality management platform. The architecture is designed to help a Complaint Triage Assistant search billions of regulated documents without crossing customer boundaries.",
+      "summaryBullets": [
+        "The foundation supports AI features across Octave’s Reliance quality management applications.",
+        "Cohere Embed v4 handles multilingual text, images and other quality records in one vector space.",
+        "Amazon Bedrock AgentCore provides isolated agent execution with user-scoped access controls.",
+        "The platform separates retrieval, agent execution and content screening to strengthen tenant isolation.",
+        "Octave says the foundation has reduced deployment time per use case by 50%."
+      ],
+      "sections": [
+        {
+          "heading": "A platform-wide AI foundation",
+          "paragraphs": [
+            {
+              "text": "Octave has chosen to build a horizontal AI foundation before adding a larger set of specialized features to Reliance, its cloud-native quality management system for regulated industries. The company describes the approach in an AWS Machine Learning Blog post, which says the foundation is intended to support complaint summarization and triage, audit readiness monitoring, incident narrative generation and predictive quality risk scoring.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-octave-built-a-secure-multi-tenant-ai-foundation-on-amazon-bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "The decision followed workshops with AWS that identified multiple high-impact use cases across dozens of applications, each with different document types and workflows. Rather than rebuilding infrastructure for every feature, the Reliance team started with complaint summarization and triage as the first vertical slice through the shared platform. Octave says the foundation has since cut deployment time per use case by 50%.",
+              "links": []
+            },
+            {
+              "text": "The architecture is designed for a platform in which every customer is a separate tenant and data cannot cross tenant boundaries. Octave operates in 180 countries and says it serves more than 60% of the Global Fortune 500. Reliance supports more than 650 enterprise customers with over 40 applications, including complaint management, CAPA tracking, audit management and supplier quality.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Isolation is the central requirement",
+          "paragraphs": [
+            {
+              "text": "Reliance stores complaint records, audit findings, corrective actions and standard operating procedures that may contain sensitive information about regulated products and processes. Octave says its platform serves more than 14,000 customers across medical devices, pharmaceuticals and food manufacturing, making inadvertent disclosure between customers a significant regulatory risk.",
+              "links": []
+            },
+            {
+              "text": "That requirement shaped the foundation before the team selected a model. The vector store, retrieval logic and generation context must all be scoped to one tenant, so an AI query cannot retrieve material belonging to another customer. The design also avoids a shared agent pool with static credentials: permissions for tools, data stores and model endpoints are scoped to the requesting user, available during execution and constrained by that user’s existing access rights.",
+              "links": []
+            },
+            {
+              "text": "Octave also treats ingested content as untrusted. Complaints, email attachments, scanned PDFs and images may contain hidden instructions or other content that could manipulate an agent. The company identifies prompt injection, sensitive information disclosure, improper output handling and excessive agency as relevant risks from the OWASP Top 10 for LLM Applications 2025.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Three layers on Amazon Bedrock",
+          "paragraphs": [
+            {
+              "text": "Octave’s foundation is organized into three layers: data preparation, secure execution and content protection. In the preparation layer, quality documents are embedded with Cohere Embed v4 on Amazon Bedrock and written to a per-tenant vector store on Amazon OpenSearch Service. Retrieval is therefore separated by customer before documents become context for an AI response.",
+              "links": [
+                {
+                  "text": "Cohere Embed v4 on Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/cohere/"
+                },
+                {
+                  "text": "Amazon OpenSearch Service",
+                  "url": "https://aws.amazon.com/opensearch-service/"
+                }
+              ]
+            },
+            {
+              "text": "For execution, a user request passes through AgentCore Gateway, which applies authentication and policy before sending the request to an isolated microVM session. That session can call an Anthropic Claude model on Amazon Bedrock. Octave says the separation allows retrieval, execution and screening to be enforced and evidenced as distinct stages.",
+              "links": [
+                {
+                  "text": "AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                }
+              ]
+            },
+            {
+              "text": "The third layer applies Amazon Bedrock Guardrails twice: once to filter incoming content and again to screen output before it reaches the handler. Octave presents the arrangement as a way to place content controls around the agent rather than relying on a single screening step.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Embedding billions of mixed-format records",
+          "paragraphs": [
+            {
+              "text": "The foundation depends on making Reliance’s document history searchable across languages and formats. Octave says the platform hosts more than 2 billion documents, while individual tenants may store millions of Word files, PDFs, scanned forms, spreadsheets, images and email. The team committed to onboarding even the largest tenant within a single working day without sacrificing retrieval quality.",
+              "links": []
+            },
+            {
+              "text": "The team evaluated embedding models against its own corpus instead of relying on public leaderboards. It tested questions specific to quality records, including whether an image of a cracked housing could be associated with the paragraph describing the defect and whether a German complaint could be connected to an English CAPA.",
+              "links": []
+            },
+            {
+              "text": "Octave selected Cohere Embed v4 because it supports text and images in one vector space and provides multilingual capability. The company says that means a photo, scanned form or annotated diagram can be handled alongside text without separate modality pipelines, while multilingual records can be processed without translation preprocessing.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Complaint triage as the first proof point",
+          "paragraphs": [
+            {
+              "text": "The Complaint Triage Assistant is the first production use case described for the foundation. It is intended to search an organization’s historical complaints, CAPAs and audit findings for relevant precedents, allowing investigators to draw on institutional memory that would otherwise remain distributed across billions of records.",
+              "links": []
+            },
+            {
+              "text": "The use case reflects the practical reason Octave built the foundation before expanding its AI roadmap: quality teams already generate regulated data across many applications, but the value of that information depends on retrieving the right evidence without exposing another tenant’s records. The AWS account’s regional residency and IAM controls, combined with Bedrock’s multi-model access and Guardrails, form the platform controls Octave says address those requirements.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial intelligence",
+        "Amazon Bedrock",
+        "Octave",
+        "Reliance",
+        "Multi-tenant SaaS",
+        "Enterprise security",
+        "Retrieval-augmented generation"
+      ],
+      "entities": [
+        "Octave",
+        "Reliance",
+        "Amazon Bedrock",
+        "Amazon Bedrock AgentCore",
+        "Cohere Embed v4",
+        "Amazon OpenSearch Service",
+        "Anthropic Claude"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 20, 2026",
+      "modifiedLabel": "October 20, 2026",
+      "readMinutes": 5,
+      "wordCount": 899
+    }
+  },
+  "datePublished": "2026-10-20T20:57:49.867282+03:00",
+  "dateModified": "2026-10-20T20:57:49.867282+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/how-octave-built-secure-multi-tenant-ai-foundation-on-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/10/how-octave-built-secure-multi-tenant-ai-foundation-on-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/10/how-octave-built-secure-multi-tenant-ai-foundation-on-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "أكتاف تبني أساساً ذكياً متعدد المستأجرين على أمازون بيدروك",
+      "en": "Octave Builds Secure AI Foundation on Amazon Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21094-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/how-octave-built-secure-multi-tenant-ai-foundation-on-amazon-bedrock/inline-01.webp",
+        "width": 1260,
+        "height": 1050,
+        "alt": {
+          "ar": "أكتاف تبني أساساً ذكياً متعدد المستأجرين على أمازون بيدروك",
+          "en": "High-level architecture of Octave’s AI foundation"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-octave-built-a-secure-multi-tenant-ai-foundation-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21094-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/how-octave-built-secure-multi-tenant-ai-foundation-on-amazon-bedrock/inline-02.webp",
+        "width": 1400,
+        "height": 746,
+        "alt": {
+          "ar": "أكتاف تبني أساساً ذكياً متعدد المستأجرين على أمازون بيدروك",
+          "en": "AgentCore session separation across two tenants, each microVM stopped and its memory sanitized after use"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-octave-built-a-secure-multi-tenant-ai-foundation-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21094-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/how-octave-built-secure-multi-tenant-ai-foundation-on-amazon-bedrock/inline-03.webp",
+        "width": 1400,
+        "height": 734,
+        "alt": {
+          "ar": "أكتاف تبني أساساً ذكياً متعدد المستأجرين على أمازون بيدروك",
+          "en": "Ingestion pipeline: document events flow through Step Functions orchestration to the per-tenant OpenSearch index"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-octave-built-a-secure-multi-tenant-ai-foundation-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21094-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/how-octave-built-secure-multi-tenant-ai-foundation-on-amazon-bedrock/inline-04.webp",
+        "width": 1400,
+        "height": 687,
+        "alt": {
+          "ar": "أكتاف تبني أساساً ذكياً متعدد المستأجرين على أمازون بيدروك",
+          "en": "AgentCore summarizing engine handling document extraction, retrieval, reasoning, and synthesis inside a private API boundary"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-octave-built-a-secure-multi-tenant-ai-foundation-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21094-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-octave-built-a-secure-multi-tenant-ai-foundation-on-amazon-bedrock/",
+      "type": "official",
+      "title": "How Octave built a secure multi-tenant AI foundation on Amazon Bedrock"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-octave-built-a-secure-multi-tenant-ai-foundation-on-amazon-bedrock",
+  "sourceTitle": "How Octave built a secure multi-tenant AI foundation on Amazon Bedrock",
+  "trendScore": 116.79,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-20T17:57:49+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/how-octave-built-secure-multi-tenant-ai-foundation-on-amazon-bedrock.json"
+}
