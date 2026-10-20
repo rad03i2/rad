@@ -1,5 +1,369 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-20T19:17:51+00:00",
-  "last_published_story_id": "27a9dd31448e30ea2bdc"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-20T19:23:26+00:00",
+  "target_publish_at": "2026-10-20T22:37:50.419853+03:00",
+  "story": {
+    "title": "Fine-tuning GPT-OSS-20B for multilingual reasoning on Amazon SageMaker HyperPod",
+    "url": "https://aws.amazon.com/blogs/machine-learning/fine-tuning-gpt-oss-20b-for-multilingual-reasoning-on-amazon-sagemaker-hyperpod",
+    "domain": "aws.amazon.com",
+    "summary": "Learn how we fine-tuned GPT-OSS-20B for multilingual reasoning on Amazon SageMaker HyperPod, and how to decide between supervised fine-tuning (SFT) and reinforcement learning with GRPO. SFT took reasoning-language accuracy from 22% to 100%, and GRPO added measurable gains where headroom existed.",
+    "published_at": "2026-10-20T17:48:27+00:00",
+    "discovered_at": "2026-10-20T17:52:06+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "ff755ea8b40f5ff77cc7",
+    "trend": {
+      "score": 112.9,
+      "age_hours": 1.57,
+      "corroboration_count": 0,
+      "entity_momentum": 15.51,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/fine-tuning-gpt-oss-20b-for-multilingual-reasoning-on-amazon-sagemaker-hyperpod/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Fine-tuning GPT-OSS-20B for multilingual reasoning on Amazon SageMaker HyperPod",
+      "title": "Fine-tuning GPT-OSS-20B for multilingual reasoning on Amazon SageMaker HyperPod | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "ضبط نموذج GPT-OSS-20B للاستدلال متعدد اللغات على SageMaker",
+      "description": "تعرف على كيفية ضبط نموذج GPT-OSS-20B للاستدلال متعدد اللغات باستخدام Amazon SageMaker HyperPod وتحقيق دقة كاملة بلغة الاستدلال.",
+      "deck": "استعرضت مدونة تعلم الآلة من أمازون آليات تحسين نماذج الذكاء الاصطناعي مفتوحة الأوزان لتعزيز الاستدلال بلغات متعددة عبر منصة Amazon SageMaker HyperPod المتقدمة.",
+      "summary_bullets": [
+        "نموذج GPT-OSS-20B الأساسي يميل افتراضياً للتفكير باللغة الإنجليزية بغض النظر عن لغة التوجيه.",
+        "الضبط بالإشراف (SFT) نجح في رفع دقة الاستدلال باللغة المطلوبة من 22 بالمئة إلى 100 بالمئة.",
+        "التعلم التعزيزي عبر خوارزمية GRPO يساهم في تحسين الأداء عند توفر أساس أولي قابل للتطوير.",
+        "استخدام بنية تحتية تعتمد على أمازون إي كيه إس وأجهزة متطورة لتسريع عمليات التدريب."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الاستدلال متعدد اللغات في النماذج المفتوحة",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق التطوير الهندسية تحديات ملحوظة عند نشر نماذج الاستدلال المفتوحة لخدمة المستخدمين غير الناطقين بالإنجليزية. فعلى سبيل المثال، يميل نموذج GPT-OSS-20B المفتوح الأوزان إلى إنتاج سلاسل التفكير باللغة الإنجليزية حصراً حتى عند تلقي تعليمات بلغات أخرى مثل الفرنسية أو الألمانية أو الإسبانية أو الإيطالية.",
+              "links": []
+            },
+            {
+              "text": "أظهرت اختبارات الأداء المكونة من خمسين مثالاً متعدد اللغات أن النموذج الأساسي يستدل باللغة الصحيحة بنسبة لا تتجاوز 22 بالمئة فقط، وهي نسبة تركزت بالكامل في الأمثلة الإنجليزية، مما يخلق الفجوة التي تستدعي تدخلات هندسية دقيقة عبر تقنيات التخصيص والضبط المتاحة على منصة [Amazon SageMaker HyperPod](https://aws.amazon.com/sagemaker/hyperpod/).",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod",
+                  "url": "https://aws.amazon.com/sagemaker/hyperpod/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مقارنة تقنيات الضبط والتعلم التعزيزي",
+          "paragraphs": [
+            {
+              "text": "تتمحور عملية جسر الفجوة اللغوية حول مفاضلة أساسية بين الضبط الخاضع للإشراف، المعروف اختصاراً بـ SFT، وتقنيات التعلم التعزيزي القائمة على تحسين السياسة النسبية للمجموعات وتعرف بـ GRPO. يعتمد الاختيار الفعال على طبيعة الفجوة القائمة في قدرات النموذج قبل البدء بعمليات التعديل والتدريب.",
+              "links": []
+            },
+            {
+              "text": "أشارت التفاصيل التقنية الواردة في [AWS Machine Learning Blog](https://aws.amazon.com/blogs/machine-learning/) إلى أن الضبط الخاضع للإشراف يمنح النموذج سلوكاً جديداً لم يكن يمتلكه من قبل، بينما يعمل التعلم التعزيزي على صقل وتحسين سلوكيات يمتلكها النموذج أصلاً وقادراً على إنتاجها بنسب معينة.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "منهجية التدريب واستخدام مجموعة البيانات",
+          "paragraphs": [
+            {
+              "text": "اعتمدت تجارب التحسين على مجموعة بيانات متخصصة في سلاسل التفكير متعددة اللغات، والتي تضم حالات تدريب وتحقق تغطي الإنجليزية والفرنسية والإسبانية والألمانية والإيطالية. يتلقى النموذج توجيهات النظام للعمل بلغة محددة، ويُطالب بإنتاج التفكير والإجابة معاً باللغة المستهدفة لتجاوز تحيزه القوي نحو الإنجليزية.",
+              "links": []
+            },
+            {
+              "text": "تم تنفيذ العمليات البرمجية والتجارب على البيئة الموزعة بالاستعانة بمستودعات الأكواد والملفات الإرشادية المتاحة عبر مشروع [awsome-distributed-ai](https://github.com/aws-samples/awsome-distributed-ai) على منصة جيت هاب، والتي تسهل عملية إعداد الحاويات ومسارات التشغيل للفرق التقنية.",
+              "links": [
+                {
+                  "text": "awsome-distributed-ai",
+                  "url": "https://github.com/aws-samples/awsome-distributed-ai"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "البنية التحتية والمواصفات التقنية للتنفيذ",
+          "paragraphs": [
+            {
+              "text": "استندت البنية التحتية لعمليات التدريب الموزع إلى بيئة متكاملة تديرها خدمة [Amazon SageMaker HyperPod documentation](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod.html) معتمدة على تنسيق حاويات الكبريتس عبر خدمة إي كيه إس، ومستخدمة أنظمة تخزين عالية الأداء لملفات النماذج ونقاط الحفظ المؤقتة.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod documentation",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod.html"
+                }
+              ]
+            },
+            {
+              "text": "تضمنت العمليات استخدام محولات الرتب المنخفضة المعروفة بـ LoRA لضمان الكفاءة في استهلاك المعاملات الحسابية، وتوزيع أحمال العمل بين عقد الحوسبة المدعومة بوحدات معالجة الرسوميات عبر شبكات عالية السرعة لضمان استقرار تدفق البيانات وسرعة توليد النتائج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النتائج النهائية وتقييم الأداء اللغوي",
+          "paragraphs": [
+            {
+              "text": "أسفرت عمليات الضبط الخاضع للإشراف عن قفزة هائلة في كفاءة النموذج، حيث ارتفعت نسبة دقة الاستدلال باللغة المطلوبة من 22 بالمئة للموديل الأساسي إلى 100 بالمئة بعد إتمام التدريب عبر جميع اللغات الخمس المشمولة في الاختبارات المعيارية.",
+              "links": []
+            },
+            {
+              "text": "أكدت النتائج أن الضبط الموجه ينجز الجزء الأكبر من المهمة المطلوبة لردم الفجوات اللغوية الكبيرة، بينما تساهم تقنيات التعلم التعزيزي اللاحقة في تقديم تحسينات إضافية قابلة للقياس عندما تتوافر مساحة كافية لتطوير الأداء القائم.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Amazon SageMaker",
+        "تعلّم الآلة",
+        "معالجة اللغات الطبيعية",
+        "AWS",
+        "نماذج اللغات الكبيرة"
+      ],
+      "entities": [
+        "Amazon SageMaker HyperPod",
+        "AWS",
+        "GPT-OSS-20B",
+        "HuggingFace",
+        "PyTorch"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر استناداً حصراً إلى مدونة أمازون لتعلم الآلة والبيانات التقنية المرفقة دون إضافة أي معلومات خارجية."
+    },
+    "en": {
+      "title": "Fine-Tuning GPT-OSS-20B for Multilingual Reasoning",
+      "description": "Learn how developers fine-tuned GPT-OSS-20B for multilingual reasoning on Amazon SageMaker HyperPod using SFT and GRPO techniques.",
+      "deck": "Open-weight reasoning models often default to English during chain-of-thought tasks, creating distinct hurdles for non-English users. Recent engineering guidance details how to overcome this capability gap.",
+      "summary_bullets": [
+        "Base GPT-OSS-20B models primarily reason in English, achieving only 22 percent accuracy in non-English test scenarios.",
+        "Supervised fine-tuning (SFT) elevated reasoning-language accuracy from 22 percent to 100 percent across tested languages.",
+        "Reinforcement learning with Group Relative Policy Optimization (GRPO) added further refinements where model headroom existed.",
+        "Training stacks relied on Amazon SageMaker HyperPod infrastructure integrated with Amazon EKS and Amazon FSx for Lustre storage."
+      ],
+      "sections": [
+        {
+          "heading": "Addressing the Multilingual Reasoning Gap",
+          "paragraphs": [
+            {
+              "text": "GPT-OSS-20B functions as an open-weight reasoning model that natively thinks in English. When prompted to reason in languages such as French, German, Spanish, or Italian, the base model acknowledges the given instruction but routinely produces its chain-of-thought output in English instead. On a 50-example multilingual reasoning test, the base model successfully reasoned in the correct target language only 22 percent of the time. This performance consisted almost entirely of English examples, while French, Spanish, and Italian scored zero percent, and German scored just 10 percent.",
+              "links": []
+            },
+            {
+              "text": "For development teams deploying sophisticated reasoning models to global or non-English user bases, this language restriction represents a critical gap. End users submitting queries in French naturally expect the receiving model to maintain its chain-of-thought and final answer in French, rather than switching back to English mid-thought. Resolving this constraint requires targeted customization, prompting engineering teams to weigh supervised fine-tuning (SFT) against reinforcement learning approaches like Group Relative Policy Optimization (GRPO).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Supervised Fine-Tuning and GRPO Mechanics",
+          "paragraphs": [
+            {
+              "text": "Engineering teams can explore these optimization techniques by reviewing comprehensive resources on the AWS Machine Learning Blog, which outlines effective strategies for open-weight customization. The underlying methodology demonstrates that supervised fine-tuning essentially teaches the model a brand-new behavior that it previously lacked. In contrast, reinforcement learning with GRPO acts as a refinement mechanism that optimizes behaviors the model can already occasionally generate.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/fine-tuning-gpt-oss-20b-for-multilingual-reasoning-on-amazon-sagemaker-hyperpod/"
+                }
+              ]
+            },
+            {
+              "text": "GRPO functions by sampling a distinct group of responses per input prompt, subsequently pushing the policy toward higher-performing outputs. If a desired capability holds zero probability within the initial base distribution, reinforcement learning leaves very little baseline data for the system to reinforce. Consequently, SFT typically performs the bulk of foundational adaptation, while GRPO refines outcomes where performance headroom remains available.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Infrastructure and Distributed Training Stack",
+          "paragraphs": [
+            {
+              "text": "Executing these demanding machine learning workflows requires robust cloud orchestration and high-performance file systems. Developers running these experiments utilized Amazon SageMaker HyperPod configured with Amazon Elastic Kubernetes Service (Amazon EKS) for cluster orchestration. For initial SFT and GRPO operations involving GPT-OSS-20B, teams incorporated the PyTorch TRL library.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod",
+                  "url": "https://aws.amazon.com/sagemaker/hyperpod/"
+                }
+              ]
+            },
+            {
+              "text": "To support fast rollout generation and distributed orchestration, experiments leveraged vLLM alongside Ray and KubeRay. Model checkpoints and training datasets resided securely on Amazon FSx for Lustre, while inter-node communication utilized Elastic Fabric Adapter (EFA) technology. Additional reference code, scripts, and deployment manifests are publicly maintained within the awsome-distributed-ai repository for developer reference.",
+              "links": [
+                {
+                  "text": "awsome-distributed-ai",
+                  "url": "https://github.com/aws-samples/awsome-distributed-ai"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Executing End-to-End Training Workflows",
+          "paragraphs": [
+            {
+              "text": "The training architecture establishes an end-to-end data pathway where user submissions arrive via the Amazon EKS control plane of an established Amazon SageMaker HyperPod cluster. The control plane schedules dedicated GPU nodes, launching Ray head pods and worker pods running the training and rollout frameworks. Shared storage via Amazon FSx for Lustre supplies base model weights, training datasets, and active checkpoints throughout the pipeline.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod",
+                  "url": "https://aws.amazon.com/sagemaker/hyperpod/"
+                }
+              ]
+            },
+            {
+              "text": "Administrators aiming to scale similar workloads can review the official Amazon SageMaker HyperPod documentation for deeper configuration guidance and best practices. Production environments typically require persistent storage claims, EFA-enabled instance networking, and specific container registries to house custom training images built from reference codebases.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod documentation",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Evaluation Outcomes and Performance Gains",
+          "paragraphs": [
+            {
+              "text": "Initial evaluations of the base GPT-OSS-20B model across a 50-case assessment revealed a modest 22 percent success rate for reasoning-language alignment. Following supervised fine-tuning utilizing Low-Rank Adaptation (LoRA), the model achieved a 100 percent success rate across all five target languages. SFT successfully forced the model to override its native English prior, ensuring that both chain-of-thought generation and final answers align with the requested language.",
+              "links": []
+            },
+            {
+              "text": "Further experimental insights regarding specialized instance types, such as ml.g6e.12xlarge nodes equipped with L40S accelerators, demonstrate the feasibility of scaling large open-weight models efficiently. By matching appropriate fine-tuning techniques to specific capability gaps, engineering organizations can dramatically expand the multilingual utility of frontier reasoning architectures.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker HyperPod",
+        "GPT-OSS-20B",
+        "Supervised Fine-Tuning",
+        "GRPO",
+        "Multilingual Reasoning",
+        "AWS",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "AWS",
+        "OpenAI",
+        "Hugging Face",
+        "PyTorch"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly reflects the provided source material and AWS blog documentation regarding GPT-OSS-20B fine-tuning on Amazon SageMaker HyperPod."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "en:article_too_short"
+      ],
+      "word_count_ar": 463,
+      "word_count_en": 386
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 495,
+      "word_count_en": 711
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "ff755ea8b40f5ff77cc7",
+      "title": "Fine-tuning GPT-OSS-20B for multilingual reasoning on Amazon SageMaker HyperPod",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "en:article_too_short"
+          ],
+          "word_count_ar": 463,
+          "word_count_en": 386
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 495,
+          "word_count_en": 711
+        }
+      ]
+    }
+  ],
+  "slug": "fine-tuning-gpt-oss-20b-for-multilingual-reasoning-on-amazon-sagemaker-hyperpod",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/fine-tuning-gpt-oss-20b-for-multilingual-reasoning-on-amazon-sagemaker-hyperpod/hero.webp",
+    "card": "/forum/assets/posts/2026/10/fine-tuning-gpt-oss-20b-for-multilingual-reasoning-on-amazon-sagemaker-hyperpod/card.webp",
+    "social": "/forum/assets/posts/2026/10/fine-tuning-gpt-oss-20b-for-multilingual-reasoning-on-amazon-sagemaker-hyperpod/social.jpg",
+    "alt": {
+      "ar": "ضبط نموذج GPT-OSS-20B للاستدلال متعدد اللغات على SageMaker",
+      "en": "Fine-Tuning GPT-OSS-20B for Multilingual Reasoning"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21403-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/fine-tuning-gpt-oss-20b-for-multilingual-reasoning-on-amazon-sagemaker-hyperpod/inline-01.webp",
+        "width": 687,
+        "height": 1050,
+        "alt": {
+          "ar": "ضبط نموذج GPT-OSS-20B للاستدلال متعدد اللغات على SageMaker",
+          "en": "End-to-end fine-tuning architecture on Amazon SageMaker HyperPod"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/fine-tuning-gpt-oss-20b-for-multilingual-reasoning-on-amazon-sagemaker-hyperpod/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21403-1.png"
+      }
+    ]
+  }
 }
