@@ -1,5 +1,313 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-20T17:17:50+00:00",
-  "last_published_story_id": "b7839fa2149bfc643893"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-20T17:22:56+00:00",
+  "target_publish_at": "2026-10-20T20:37:49.608484+03:00",
+  "story": {
+    "title": "GitHub package firewall in public preview",
+    "url": "https://github.blog/changelog/2026-10-20-github-package-firewall-in-public-preview",
+    "domain": "github.blog",
+    "summary": "An increasing number of malware attacks exploit systems at package installation time, harvesting credentials on CI/CD hosts or developer workstations without even running the package&#8217;s code. To stem this tide&#8230; The post GitHub package firewall in public preview appeared first on The GitHub Blog .",
+    "published_at": "2026-10-20T16:11:53+00:00",
+    "discovered_at": "2026-10-20T16:31:43+00:00",
+    "source": {
+      "name": "GitHub Changelog",
+      "feed": "https://github.blog/changelog/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "web"
+    },
+    "category": "web",
+    "category_label": "الويب",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "d2f4c2d99fe6839a3169",
+    "trend": {
+      "score": 112.54,
+      "age_hours": 1.18,
+      "corroboration_count": 0,
+      "entity_momentum": 0,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://github.blog/changelog/2026-10-20-github-package-firewall-in-public-preview/",
+      "name": "GitHub Changelog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "GitHub package firewall in public preview",
+      "title": "GitHub package firewall in public preview - GitHub Changelog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "GitHub يطلق جدار حماية للحزم في معاينة عامة",
+      "description": "أعلنت GitHub عن ميزة جدار حماية للحزم في معاينة عامة، تهدف لحماية أنظمة CI/CD من برمجيات خبيثة تستغل لحظة تثبيت الحزم لسرقة البيانات.",
+      "deck": "تستهدف GitHub سد الثغرات الأمنية التي تستغل لحظة تثبيت الحزم البرمجية لسرقة البيانات، عبر إطلاق جدار حماية جديد يعمل كطبقة وسيطة بين نقاط النهاية ومستودعات الحزم.",
+      "summary_bullets": [
+        "أطلقت GitHub ميزة جدار حماية للحزم (Package Firewall) في معاينة عامة لجميع عملاء GitHub Enterprise Cloud.",
+        "يعمل الجدار كطبقة وسيطة تفحص طلبات البيانات الوصفية وتنزيلات الحزم بحثاً عن أنشطة خبيثة قبل وصولها إلى الأنظمة.",
+        "تتضمن أدوات التحكم الحالية فترة تبريد قابلة للضبط، وفحص قاعدة بيانات GitHub Advisory Database، وفحوصات سلسلة التوريد.",
+        "الميزة مجانية حالياً خلال فترة المعاينة، وستعتمد لاحقاً على نموذج فوترة استهلاك مقاس (Metered Usage) مشابه لفوترة Actions.",
+        "يدعم الجدار حالياً حزم npm فقط، ويتطلب إعادة توجيه طلبات نقاط النهاية (مثل CI/CD) عبره بدلاً من الاتصال المباشر بالمستودعات."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق جدار حماية للحزم في معاينة عامة",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة GitHub رسمياً عن إطلاق ميزة جديدة تُعرف باسم \"جدار حماية الحزم\" (Package Firewall) في وضع المعاينة العامة (Public Preview). تأتي هذه الخطوة استجابةً لزيادة ملحوظة في هجمات البرمجيات الخبيثة التي تستغل لحظة تثبيت الحزم البرمجية (Package Installation Time) لسرقة بيانات الاعتماد (Credentials) من مضيفات CI/CD أو محطات عمل المطورين، وذلك دون الحاجة لتشغيل كود الحزمة الخبيثة فعلياً. وتهدف الميزة إلى سد هذه الثغرة الأمنية المتنامية في سلسلة التوريد البرمجية. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-20-github-package-firewall-in-public-preview/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل: طبقة وسيطة للتفتيش",
+          "paragraphs": [
+            {
+              "text": "يعمل جدار حماية الحزم كطبقة وسيطة بين نقاط النهاية (Endpoints) مثل مشغلات Actions (Actions Runners) أو وكلاء البرمجة (Coding Agents) ومستودعات الحزم العلوية (Upstream Package Repositories). يقوم هذا الجدار بفحص جميع طلبات البيانات الوصفية (Metadata Requests) وعمليات تنزيل الحزم الفعلية بحثاً عن أي مؤشرات على نشاط خبيث. وبهذا التصميم، يتم اعتراض الطلبات وتقييمها قبل وصولها إلى الأنظمة المحلية، مما يوفر طبقة حماية إضافية تتجاوز الفحوصات التقليدية التي تتم بعد التحميل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أدوات التحكم وسياسات الأمان",
+          "paragraphs": [
+            {
+              "text": "يبدأ تفعيل الميزة بإعداد سياسات التحكم من قبل مسؤولي المؤسسة (Administrators). تشمل الأدوات المتاحة حالياً فترة تبريد (Cooldown Period) قابلة للضبط، مما يسمح بإيقاف مؤقت للتحديثات عند اكتشاف تهديد محتمل. كما يتضمن النظام فحصاً تلقائياً لقاعدة بيانات GitHub Advisory Database للتحقق من وجود تنبيهات متعلقة بالبرمجيات الخبيثة أو الثغرات الأمنية المعروفة. بالإضافة إلى ذلك، يوفر الجدار فحوصات لسلسلة التوريد (Supply-chain checks) تشمل مراقبة تراجعات الشهادات (Attestation downgrades)، مما يعزز الثقة في مصدر الحزم وسلامتها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إعداد نقاط النهاية وإدارة الاستثناءات",
+          "paragraphs": [
+            {
+              "text": "لتفعيل الحماية، يجب إعادة تكوين نقاط النهاية مثل وكلاء البرمجة ومضيفات CI/CD لتوجيه طلباتها عبر جدار الحماية بدلاً من الاتصال المباشر بسجلات الحزم العلوية. بمجرد التوجيه، تمر جميع طلبات قوائم الحزم وتنزيلاتها عبر الجدار الذي يقيّمها مقابل السياسة المحددة. وفي حال تم حظر حزمة بشكل خاطئ (False Positive)، يمكن للمستخدمين طلب استثناء (Exception) من خلال سير عمل مشابه لتلك المستخدمة في ميزات GitHub Advanced Security الأخرى، مما يضمن مرونة العمليات دون التضحية بالأمان.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات الحالية ونطاق الدعم",
+          "paragraphs": [
+            {
+              "text": "تتوفر الميزة حالياً لجميع عملاء GitHub Enterprise Cloud، بما في ذلك العملاء الذين يستخدمون حلول الإقامة البيانات (Data-Resident GitHub Enterprise Cloud). ومع ذلك، تشير GitHub إلى أن جدار الحماية يدعم حالياً حزم npm فقط، مما يعني أن الحزم الأخرى مثل PyPI أو Maven لا تخضع لهذا الفحص التلقائي في المرحلة الحالية. وتؤكد الشركة أنها ستوسع نطاق الدعم بناءً على طلبات العملاء وتوسع البنية التحتية التي تدعم الخدمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نموذج التسعير والتوفر المستقبلي",
+          "paragraphs": [
+            {
+              "text": "توفر GitHub خدمة جدار حماية الحزم مجاناً خلال فترة المعاينة العامة. ومع ذلك، أعلنت الشركة أنه عند وصول الميزة إلى التوفر العام (General Availability)، سيتم تطبيق رسوم بناءً على استهلاك مقاس (Metered Usage)، وهو نموذج فوترة مشابه لما هو معمول به في خدمات GitHub Actions. ويهدف هذا النموذج إلى تغطية تكاليف البنية التحتية المتزايدة اللازمة لدعم الفحص في الوقت الفعلي لحجم كبير من الطلبات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المشاركة المجتمعية والتطوير المستمر",
+          "paragraphs": [
+            {
+              "text": "تدعو GitHub المطورين والمستخدمين إلى الانضمام إلى المناقشات حول الميزة الجديدة في مجتمع GitHub (GitHub Community) للمساهمة في تطويرها وتحديد أولويات الميزات المستقبلية. كما توفر الشركة نشرة إخبارية ثنائية الأسبوعية تقدم نصائح وأدلة تقنية وأفضل الممارسات للمطورين، مما يعكس التزامها المستمر بتعزيز أمان سلسلة التوريد البرمجية لمجتمعها.",
+              "links": [
+                {
+                  "text": "GitHub Community",
+                  "url": "https://github.com/orgs/community/discussions/210809"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "أمن المعلومات",
+        "سلسلة التوريد",
+        "CI/CD",
+        "npm",
+        "جدار حماية",
+        "معاينة عامة"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Enterprise Cloud",
+        "Package Firewall",
+        "npm",
+        "CI/CD",
+        "GitHub Advisory Database"
+      ],
+      "article_type": "news",
+      "confidence_note": "الخبر مستند حصرياً إلى مدونة GitHub الرسمية، مع التأكيد على أن الدعم الحالي يقتصر على npm وأن الميزة مجانية حالياً."
+    },
+    "en": {
+      "title": "GitHub Package Firewall Enters Public Preview for Enterprise",
+      "description": "GitHub introduces a new package firewall in public preview to protect CI/CD hosts and developer workstations against installation-time malware attacks.",
+      "deck": "GitHub has announced the public preview of a new package firewall designed to combat the rising tide of malware attacks that exploit systems during package installation.",
+      "summary_bullets": [
+        "The package firewall inspects metadata requests and package downloads for malicious activity before they reach endpoints.",
+        "Currently, the firewall supports npm packages and is available free of charge for GitHub Enterprise Cloud customers during the preview period.",
+        "Administrators can configure policies including a cooldown period, GitHub Advisory Database checks, and supply-chain verifications.",
+        "Users can request exceptions for erroneously blocked packages through a workflow similar to other Advanced Security features."
+      ],
+      "sections": [
+        {
+          "heading": "Addressing Installation-Time Malware Risks",
+          "paragraphs": [
+            {
+              "text": "An increasing number of malware attacks target development environments by exploiting systems directly at package installation time. These malicious payloads can harvest credentials on developer workstations or continuous integration and continuous deployment (CI/CD) hosts without even needing to execute the package's actual code. To stem this tide of supply chain threats, GitHub is introducing a dedicated package firewall capability.",
+              "links": []
+            },
+            {
+              "text": "The new security feature is detailed further in the official [GitHub Changelog](https://github.blog/changelog/2026-10-20-github-package-firewall-in-public-preview/), outlining how the service aims to safeguard modern software development pipelines against sophisticated tampering and unauthorized data harvesting.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-20-github-package-firewall-in-public-preview/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "How the Package Firewall Operates",
+          "paragraphs": [
+            {
+              "text": "The package firewall sits strategically between endpoints—such as Actions runners or coding agents—and upstream package repositories. Instead of pointing directly at upstream package registries, endpoints must be configured to route their requests through the firewall.",
+              "links": []
+            },
+            {
+              "text": "Once configured, both metadata requests for package lists and actual package downloads flow through the firewall, which evaluates them against enterprise-defined policies. If a legitimate package happens to be blocked erroneously, users can request an exception using a workflow similar to other GitHub Advanced Security features.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Enterprise Policy Controls and Configuration",
+          "paragraphs": [
+            {
+              "text": "Before deploying the firewall across endpoints, administrators establish policy controls for their enterprise. The available controls include setting a configurable cooldown period, checking the GitHub Advisory Database for active malware or vulnerability alerts, and performing critical supply-chain checks such as monitoring for attestation downgrades.",
+              "links": []
+            },
+            {
+              "text": "Organizations looking to implement these safeguards can follow detailed guidance and step-by-step instructions available in the documentation for [Protecting endpoints with package firewall](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/protecting-endpoints-with-package-firewall).",
+              "links": [
+                {
+                  "text": "Protecting endpoints with package firewall",
+                  "url": "https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/protecting-endpoints-with-package-firewall"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Availability, Scope, and Pricing",
+          "paragraphs": [
+            {
+              "text": "The package firewall is available today in public preview for all GitHub Enterprise Cloud customers, including those utilizing data-resident GitHub Enterprise Cloud. At this current stage, support is limited exclusively to npm packages while the platform scales up its underlying infrastructure.",
+              "links": []
+            },
+            {
+              "text": "During the public preview period, the service is provided completely free of charge. However, once the capability transitions to general availability, usage will be billed on a metered basis similar to existing Actions billing structures.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Community Engagement and Future Development",
+          "paragraphs": [
+            {
+              "text": "As GitHub continues to scale the infrastructure and develop additional features based on direct customer demand, developers and enterprise administrators are encouraged to share feedback and participate in ongoing conversations.",
+              "links": []
+            },
+            {
+              "text": "Interested users can join the broader conversation, report feedback, and connect with peers by visiting the [GitHub Community](https://github.com/orgs/community/discussions/210809) discussion board dedicated to the package firewall rollout.",
+              "links": [
+                {
+                  "text": "GitHub Community",
+                  "url": "https://github.com/orgs/community/discussions/210809"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "Package Firewall",
+        "Supply Chain Security",
+        "CI/CD",
+        "Enterprise Cloud",
+        "npm",
+        "Cybersecurity"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Enterprise Cloud",
+        "GitHub Advanced Security"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based directly on the official GitHub Changelog source text."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 624,
+      "word_count_en": 487
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "d2f4c2d99fe6839a3169",
+      "title": "GitHub package firewall in public preview",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 624,
+          "word_count_en": 487
+        }
+      ]
+    }
+  ],
+  "slug": "github-package-firewall-in-public-preview",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/github-package-firewall-in-public-preview/hero.webp",
+    "card": "/forum/assets/posts/2026/10/github-package-firewall-in-public-preview/card.webp",
+    "social": "/forum/assets/posts/2026/10/github-package-firewall-in-public-preview/social.jpg",
+    "alt": {
+      "ar": "GitHub يطلق جدار حماية للحزم في معاينة عامة",
+      "en": "GitHub Package Firewall Enters Public Preview for Enterprise"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/10/Changelog_NewRelease_Unfurl_Centered_GitHubPackageFirewall.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
