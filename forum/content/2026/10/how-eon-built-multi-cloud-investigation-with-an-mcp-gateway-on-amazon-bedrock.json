@@ -1,0 +1,317 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "a39c1232b84b205c763c",
+  "slug": "how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock/",
+    "en": "/forum/en/ai/how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إيون توحّد تحقيقات السحابة عبر بوابة MCP على AWS",
+      "description": "إيون تعتمد بوابة MCP مركزية على Amazon Bedrock AgentCore لتوحيد وصول المطورين والوكلاء إلى أدوات التحقيق عبر AWS وGCP وAzure.",
+      "deck": "اعتمدت شركة إيون بنية مركزية للتحقيق في أعطال الإنتاج عبر السحابات المتعددة، مستبدلةً بيانات اعتماد الأدوات وخوادم MCP المحلية ببوابة موحّدة.",
+      "summaryBullets": [
+        "البنية الجديدة تجمع أدوات التحقيق عبر AWS وGCP وAzure خلف بوابة MCP واحدة.",
+        "أكثر من 100 مطور ووكلاء مستقلون يحصلون على وصول موحّد وفق هويات وصلاحيات مختلفة.",
+        "تقلص زمن تجهيز المهندس الجديد من نحو يومين إلى دقيقتين.",
+        "تستخدم سياسات Cedar للتحكم في استدعاء الأدوات وفصل صلاحيات القراءة والكتابة."
+      ],
+      "sections": [
+        {
+          "heading": "مشكلة التحقيق عبر ثلاث سحابات",
+          "paragraphs": [
+            {
+              "text": "نشرت AWS تفاصيل تجربة إيون في مقال على AWS Machine Learning Blog، موضحةً كيف أعادت الشركة تنظيم وصول المطورين والوكلاء المستقلين إلى أدوات التشغيل والتحقيق. تعمل إيون على بناء منصة تكتشف موارد السحابة وتصنفها عبر AWS وAzure وGCP، وتوفر نسخاً احتياطية مستمرة ومزالة التكرار، إلى جانب رصد أضرار برمجيات الفدية أو الوكلاء غير المصرح لهم.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock-agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "كان فريقها الهندسي يحقق في حوادث الإنتاج عبر عشرات الأنظمة التشغيلية الممتدة على أكثر من سحابة. فعند تعطل وحدة Kubernetes، قد يحتاج المهندس في الجلسة نفسها إلى مراجعة سجلات الحاوية، ومقاييس Grafana، وطلب السحب البرمجية المرتبط بالنشر على GitHub، إضافةً إلى حالة خدمات مزود السحابة. هذا النوع من العمل جعل توحيد الوصول والصلاحيات تحدياً عملياً متزايداً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "من الاعتمادات المحلية إلى بوابة واحدة",
+          "paragraphs": [
+            {
+              "text": "أضاف كل نظام جديد عبئاً خاصاً من بيانات الاعتماد وإجراءات الإعداد والتأمين والتدوير. كما كان كل مطور يشغل عدة خوادم MCP محلياً، ما صعّب توحيد الإصدارات والحفاظ على جاهزيتها. وفي الوقت نفسه، احتاج المهندسون إلى صلاحيات مرتبطة بأدوارهم، بينما احتاج وكيل SRE المستقل لدى إيون، الذي يشغل Claude على Amazon Bedrock، إلى الوصول إلى الأدوات نفسها لكن بهوية وصلاحيات مختلفة.",
+              "links": []
+            },
+            {
+              "text": "واجهت الشركة أيضاً كلفة تشغيلية عند استضافة خوادم MCP في حسابات AWS متعددة، إذ كان الربط بين الحسابات يتطلب ترتيبات مثل ربط شبكات VPC أو استخدام AWS PrivateLink لكل حساب. ونتيجة لذلك، كان المهندس الجديد يستغرق قرابة يومين لإعداد بيانات الاعتماد والخوادم المحلية قبل أن يبدأ التحقيق في أول حادثة.",
+              "links": []
+            },
+            {
+              "text": "قيّمت إيون خيارين رئيسيين. الأول كان استخدام إعدادات وكيلة منفصلة لكل بيئة، أو بناء وكيل عكسي يجمع الأدوات مع طبقة مصادقة مخصصة. ورغم أن هذا المسار يعالج تجميع الاعتمادات، فإنه كان يتطلب تطوير إدارة البروتوكول والجلسات ومنطق التفويض وصيانتها داخلياً. أما الخيار الثاني فكان Amazon Bedrock AgentCore Gateway، الذي يوفر بوابة مُدارة مع اتحاد هويات، وسياسات تفويض مبنية على Cedar، واستضافة تحول خوادم MCP المحلية إلى نقاط وصول HTTP بعيدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معمارية مركزية للوصول",
+          "paragraphs": [
+            {
+              "text": "اختارت إيون الخيار المُدار ونشرت مكونات Amazon Bedrock AgentCore Gateway والسياسات وAgentCore Runtime وAgentCore Identity. وتعمل البوابة باعتبارها المدخل الموحد لطلبات الأدوات؛ إذ تمر الطلبات عبر طبقة المصادقة، ثم تُوجَّه الاستدعاءات المسموح بها إلى أهداف مستضافة على بيئات Runtime موزعة بين حسابات AWS متعددة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                }
+              ]
+            },
+            {
+              "text": "يتصل المطورون الذين يستخدمون Claude Code أو Cursor أو OpenAI Codex بعنوان MCP واحد، بينما يتصل وكيل SRE المستقل بالبوابة نفسها باستخدام هوية مختلفة. ويمر تسجيل الدخول الموحد للشركة عبر Amazon Cognito، الذي يصدر رمز JWT ويسلمه إلى البوابة، في حين تستخدم الوكلاء منح client_credentials للمصادقة مباشرةً.",
+              "links": []
+            },
+            {
+              "text": "تستضيف عشرات خوادم MCP المستهدفة مئات الأدوات خلف البوابة، وتعمل هذه الخوادم عبر AgentCore Runtimes موزعة على حسابات مختلفة. ويحوّل كل Runtime خادم MCP محلياً يعتمد على stdio إلى نقطة وصول Streamable HTTP يمكن للبوابة الوصول إليها. وبذلك يكتفي المطور بضبط عنوان MCP واحد بدلاً من إعداد كل خادم وأداة على جهازه.",
+              "links": []
+            },
+            {
+              "text": "عند اتصال العميل، تجمع البوابة الأدوات المتاحة في استجابة tools/list واحدة. ووفق وصف إيون، يتيح ذلك الوصول إلى أدوات التحقيق من دون إعداد محلي أو رموز منفصلة لكل أداة، مع إبقاء الاتصال بالأنظمة التشغيلية خلف نقطة دخول مركزية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "سياسات Cedar تفصل الصلاحيات",
+          "paragraphs": [
+            {
+              "text": "كان القرار الأمني المحوري هو فرض حدود القراءة والكتابة على مستوى البوابة. تقبل المنظومة رموز JWT للمستخدمين الذين يدخلون عبر تسجيل الدخول الموحد وCognito، كما تقبل رموز client_credentials للوكلاء. بعد ذلك تحدد سياسات Cedar ما يمكن لكل هوية فعله، بدلاً من ترك التفويض موزعاً بين أدوات وخوادم مستقلة.",
+              "links": []
+            },
+            {
+              "text": "تمنح السياسات مجموعات معتمدة من المهندسين صلاحيات القراءة، ولا يحصل كل مستخدم موثق تلقائياً على جميع الأدوات. أما عمليات الكتابة فتحتاج إلى سماح صريح، وتقتصر على إجراءات تعاون منخفضة التأثير مثل إضافة تعليق على طلب سحب برمجي أو تذكرة. وتظل أدوات الإنتاج للقراءة فقط، بينما يمكن منح هويات وكلاء محددة صلاحيات كتابة عند الحاجة.",
+              "links": []
+            },
+            {
+              "text": "تُدار سياسات Cedar بصفتها شيفرة من خلال طلبات السحب على GitHub، مع مراجعات وتعليقات تحفظ مسار التدقيق لكل تغيير في الصلاحيات. كما تربط السياسات الوصول بمجموعات تسجيل الدخول الموحد، وتربط المجموعات بالأدوار الوظيفية، بما يسمح بتحديد نطاق الأدوات وفق هوية المستخدم أو الوكيل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج التشغيل والتوسّع",
+          "paragraphs": [
+            {
+              "text": "تقول إيون إن البوابة المركزية وفّرت مدخلاً موحداً لأكثر من 100 مطور ووكلاء مستقلين إلى أدوات التحقيق عبر AWS وGCP وAzure. وأصبح المهندس الجديد قادراً على الوصول إلى الأدوات خلال نحو دقيقتين، بدلاً من قضاء قرابة يومين في إعداد بيانات الاعتماد وخوادم MCP المحلية.",
+              "links": []
+            },
+            {
+              "text": "تمنح هذه البنية البشر والوكلاء مجموعة الأدوات نفسها من خلال نقطة وصول واحدة، مع الحفاظ على اختلاف الهويات والصلاحيات. كما تنقل إدارة الاتصال بين الحسابات، وتحويل الخوادم المحلية، وتقييم السياسات إلى مكونات مُدارة ضمن AgentCore، بدلاً من بناء طبقة مخصصة لكل أداة أو سحابة.",
+              "links": []
+            },
+            {
+              "text": "بحسب العرض المنشور، يمثل هذا النهج استجابة لتوسع فريق إيون وتزايد عدد أدوات الذكاء الاصطناعي وخوادم MCP التي تحتاج إلى صيانة. وتوفر وثائق AgentCore Runtime شرحاً لاستضافة الأدوات والخدمات التي تعتمد عليها هذه البنية، بينما يوضح Amazon Bedrock AgentCore Gateway آلية تقديم الأدوات خلف بوابة موحدة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Amazon Bedrock",
+        "MCP",
+        "الحوسبة السحابية",
+        "AWS",
+        "الأمن السحابي",
+        "الوكلاء المستقلون"
+      ],
+      "entities": [
+        "Eon",
+        "Amazon Bedrock AgentCore",
+        "Amazon Bedrock AgentCore Gateway",
+        "Amazon Bedrock AgentCore Runtime",
+        "AWS",
+        "GCP",
+        "Azure",
+        "Cedar"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "20 أكتوبر 2026",
+      "modifiedLabel": "20 أكتوبر 2026",
+      "readMinutes": 5,
+      "wordCount": 841
+    },
+    "en": {
+      "title": "Eon Cuts Engineer Onboarding to Minutes with Amazon Bedrock AgentCore Gateway",
+      "description": "Eon replaces per-tool credentials across AWS, GCP, and Azure with a single authenticated gateway, giving 100-plus developers and autonomous agents unified investigation access.",
+      "deck": "Eon has deployed Amazon Bedrock AgentCore Gateway to consolidate multi-cloud investigation tooling, reducing new-engineer onboarding from two days to two minutes while enforcing Cedar-based authorization for both human and autonomous agents.",
+      "summaryBullets": [
+        "Single MCP gateway replaces per-tool credentials and local MCP servers across three cloud providers",
+        "More than 100 developers and autonomous SRE agents now access hundreds of tools through one endpoint",
+        "Cedar policies enforce read-only access to production tools and limit write actions to low-impact collaboration",
+        "Corporate SSO via Amazon Cognito authenticates humans; agents use client_credentials grants directly",
+        "Onboarding time for new engineers drops from roughly two days to about two minutes"
+      ],
+      "sections": [
+        {
+          "heading": "Centralizing Multi-Cloud Investigation Access",
+          "paragraphs": [
+            {
+              "text": "Independent software vendor Eon has replaced a fragmented landscape of per-tool credentials and locally run Model Context Protocol servers with a single authenticated Amazon Bedrock AgentCore Gateway, giving more than 100 developers and autonomous agents unified access to investigation tooling spanning AWS, Google Cloud Platform, and Microsoft Azure. The company says the change cut new-engineer onboarding from roughly two days to about two minutes.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Why Eon Needed a Unified Gateway",
+          "paragraphs": [
+            {
+              "text": "Eon provides an Autonomous Data Foundation that discovers and classifies cloud resources across the three major clouds, offers continuous deduplicated backup, detects ransomware, and supplies live grounded context for AI agents — all from a single read-only AWS IAM role. Its internal engineering team routinely investigates production incidents that require correlating Kubernetes pod logs, Grafana metrics, GitHub pull requests, and cloud-provider health status in a single session. As the toolset grew, each new integration added another credential to configure, secure, and rotate, while developers ran multiple local MCP servers that were difficult to standardize and keep current.",
+              "links": []
+            },
+            {
+              "text": "The company evaluated two options: building a custom reverse proxy with its own authentication, session management, and protocol translation layer, or adopting Amazon Bedrock AgentCore Gateway, a managed gateway with built-in identity federation, Cedar-based authorization policies, and Runtime hosting that converts local stdio-based MCP servers into Streamable HTTP endpoints. Eon chose the managed gateway because it delivered identity separation, cross-account connectivity, and policy enforcement as managed capabilities rather than custom code to maintain.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Architecture: One Gateway, Distributed Runtimes",
+          "paragraphs": [
+            {
+              "text": "Eon deployed the full Amazon Bedrock AgentCore stack — AgentCore Gateway, Policy, Runtime, and Identity. A single MCP Gateway serves as the company-wide front door. Corporate single sign-on federates through Amazon Cognito, which mints JSON Web Tokens for human users; Amazon API Gateway sits in front as the OAuth entry point, proxying the MCP session. Autonomous agents, including an SRE agent running Claude on Amazon Bedrock, authenticate with Cognito client_credentials grants directly against the gateway.",
+              "links": []
+            },
+            {
+              "text": "Dozens of target MCP servers exposing hundreds of tools are hosted on AgentCore Runtimes distributed across multiple AWS accounts. Each Runtime converts local stdio-based MCP servers into Streamable HTTP endpoints accessible through the gateway. Developers using Claude Code, Cursor, or OpenAI Codex configure one MCP URL, authenticate through corporate SSO, and receive a single aggregated tools/list response — no local setup and no per-tool tokens.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Cedar Policies Enforce Read-Write Boundaries",
+          "paragraphs": [
+            {
+              "text": "The core security decision was enforcing read and write boundaries through Cedar policy at the gateway level. Cedar policies in ENFORCE mode control which principals can invoke which tools. Read operations are available to selected groups mapped to job roles; write operations are limited to low-impact collaboration actions such as commenting on a pull request or ticket, while production tools remain read-only. The gateway evaluates every tools/call request against Cedar before forwarding to the target.",
+              "links": []
+            },
+            {
+              "text": "Cedar policies are managed as code through GitHub pull requests with review comments, providing version control and an audit trail on every permission change. Humans in approved groups get read access; write operations require explicit Cedar permits granted only to specific agent identities. The gateway accepts both JWT tokens for humans and client_credentials tokens for agents, with Cedar determining what each principal can do.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Measurable Impact on Onboarding and Operations",
+          "paragraphs": [
+            {
+              "text": "Before the gateway, new engineers spent roughly two days configuring credentials and local MCP servers before they could investigate their first incident. Now they open their IDE, configure one MCP URL, authenticate through corporate SSO, and immediately gain access to hundreds of tools across all three clouds. Eon says the centralized approach also eliminates the operational overhead of VPC peering or AWS PrivateLink per account that was previously required to host MCP servers across multiple AWS accounts.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Eon",
+        "Amazon Bedrock AgentCore",
+        "MCP Gateway",
+        "Model Context Protocol",
+        "Cedar policy",
+        "multi-cloud",
+        "developer onboarding",
+        "autonomous agents"
+      ],
+      "entities": [
+        "Eon",
+        "Amazon Bedrock AgentCore",
+        "Amazon Cognito",
+        "Amazon API Gateway",
+        "Cedar"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 20, 2026",
+      "modifiedLabel": "October 20, 2026",
+      "readMinutes": 4,
+      "wordCount": 718
+    }
+  },
+  "datePublished": "2026-10-20T19:17:49.318407+03:00",
+  "dateModified": "2026-10-20T19:17:49.318407+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/10/how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/10/how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "إيون توحّد تحقيقات السحابة عبر بوابة MCP على AWS",
+      "en": "Eon Cuts Engineer Onboarding to Minutes with Amazon Bedrock AgentCore Gateway"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/21741.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock/inline-01.webp",
+        "width": 1400,
+        "height": 849,
+        "alt": {
+          "ar": "إيون توحّد تحقيقات السحابة عبر بوابة MCP على AWS",
+          "en": "Eon’s centralized gateway architecture: clients and an SRE agent reach one AgentCore gateway that routes tool calls to Runtimes across multiple AWS accounts"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21741-1-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock-agentcore/",
+      "type": "official",
+      "title": "How Eon built multi-cloud investigation with an MCP Gateway on Amazon Bedrock AgentCore"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock-agentcore",
+  "sourceTitle": "How Eon built multi-cloud investigation with an MCP Gateway on Amazon Bedrock AgentCore",
+  "trendScore": 123.97,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-20T16:17:49+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock.json"
+}
