@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "22b090900222010d1427",
+  "slug": "github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens/",
+    "en": "/forum/en/apps/github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إطلاق المعاينة العامة لرموز OAuth المؤقتة في GitHub CLI",
+      "description": "أعلنت منصة جيت هب عن توفر رموز مصادقة OAuth مؤقتة وقابلة للتجديد تلقائياً في واجهة سطر الأوامر GitHub CLI ضمن معاينة عامة جديدة.",
+      "deck": "تتيح الميزة الجديدة للمستخدمين الاعتماد على رموز وصول قصيرة الأجل يتم تحديثها تلقائياً، مما يعزز الأمان ويقلل من المخاطر المرتبطة بتسريب الرموز الدائمة.",
+      "summaryBullets": [
+        "إطلاق رموز OAuth المؤقتة والقابلة للتجديد تلقائياً في معاينة عامة لـ GitHub CLI.",
+        "إمكانية تفعيل الميزة عبر تمرير الوسم الجديد عند تسجيل الدخول أو ضبط الإعدادات العامة.",
+        "التحول التدريجي نحو جعل الرموز المؤقتة هي الخيار الافتراضي لعمليات تسجيل الدخول المستقبلية.",
+        "توصيات بضبط الإعدادات لعمليات Git عبر بروتوكول HTTPS وتجنب تخزين الرموز مؤقتاً في النصوص البرمجية."
+      ],
+      "sections": [
+        {
+          "heading": "معاينة عامة للرموز المؤقتة والتجديد التلقائي",
+          "paragraphs": [
+            {
+              "text": "أعلنت منصة جيت هب رسمياً عن إطلاق ميزة جديدة تتيح للمطورين استخدام بيانات اعتماد مصادقة OAuth مؤقتة وقابلة للتجديد تلقائياً في أداة سطر الأوامر الخاصة بها، وذلك في إطار معاينة عامة تهدف إلى رفع مستوى الأمان. وعند اختيار تفعيل هذه الميزة عبر المدونة الرسمية المتاحة في [GitHub Changelog](https://github.blog/changelog/2026-10-21-github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens/)، تقوم أداة gh بتخزين رمز وصول مؤقت بجانب رمز تحديث دوري يتولى تجديد الاعتماد كلما دعت الحاجة دون الحاجة لإعادة تسجيل الدخول يدوياً.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-21-github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens/"
+                }
+              ]
+            },
+            {
+              "text": "ويضمن هذا النظام الجديد أن تصبح الرموز المسربة غير صالحة للاستخدام خلال ساعات معدودة، بدلاً من بقائها نشطة إلى ما لا نهاية. وتعمل هذه الآلية بطريقة تضمن استمرار المصادقة بسلاسة ودون إزعاج يومي للمطورين أثناء تأدية مهامهم البرمجية المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "طريقة التفعيل وبدء الاستخدام في أداة سطر الأوامر",
+          "paragraphs": [
+            {
+              "text": "يمكن للمطورين البدء في استخدام هذه الميزة ابتداءً من الإصدار المتاح عبر الرابط [GitHub CLI v2.103.0](https://github.com/cli/cli/releases/tag/v2.103.0)، حيث يتطلب الأمر تمرير الوسم المخصص عند تسجيل الدخول باستخدام الأمر gh auth login مع إضافة الوسم المناسب. كما يمكن تفعيل هذه الخاصية لجميع عمليات تسجيل الدخول المستقبلية بشكل دائم من خلال ضبط إعدادات التكوين الخاصة بالأداة.",
+              "links": [
+                {
+                  "text": "GitHub CLI v2.103.0",
+                  "url": "https://github.com/cli/cli/releases/tag/v2.103.0"
+                }
+              ]
+            },
+            {
+              "text": "ولمتابعة حالة بيانات الاعتماد المؤقتة ومعرفة موعد انتهاء صلاحية رمز الوصول الحالي بدقة، توفر الأداة أمراً خاصاً يتيح للمستخدمين التحقق من حالة المصادقة بسهولة. وفي حال عدم تفعيل هذه الميزة، ستستمر الإصدارات والرموز التقليدية في العمل بالطريقة المعتادة ودون أي تغيير.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توافق الإصدارات وتوصيات الاستخدام مع بروتوكول HTTPS",
+          "paragraphs": [
+            {
+              "text": "توصي المنصة بشدة بتهيئة الأداة لتكون مساعد بيانات اعتماد لبرمجيات Git عند المصادقة عبر بروتوكول HTTPS، وذلك لضمان التعامل السليم مع الرموز المؤقتة وتحديثها بالخلفية. كما يُنصح بالتحديث إلى إصدارات أحدث من برمجيات Git لتمكين الأداة من الوسم الصحيح لبيانات الاعتماد وتجنب التخزين المؤقت لها بعد انتهاء صلاحيتها.",
+              "links": []
+            },
+            {
+              "text": "وتتوفر هذه الرموز المؤقتة حالياً للمستخدمين على النطاقات الرسمية للمنصة، بالإضافة إلى دعمها في خيارات البيئات المؤسسية ابتداءً من الإصدارات المحددة للمؤسسات. وفي حال توفر تفاصيل إضافية أو الرغبة في التثبيت، يمكن للمطورين مراجعة تعليمات [Install or upgrade](https://github.com/cli/cli?tab=readme-ov-file#installation) للحصول على أحدث التوجيهات.",
+              "links": [
+                {
+                  "text": "Install or upgrade",
+                  "url": "https://github.com/cli/cli?tab=readme-ov-file#installation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "اعتبارات تقنية للنصوص البرمجية والتطبيقات المرتبطة",
+          "paragraphs": [
+            {
+              "text": "نظرًا لأن رموز الوصول المؤقتة تتميز بفترة صلاحية قصيرة جدًا، فإن أي سكريبت أو أداة خارجية تقوم بالتقاط الرمز مرة واحدة وإعادة استخدامه لاحقًا قد تتوقف عن العمل بشكل صحيح. لذا، يُنصح بقراءة الرمز في كل مرة يتم احتياجه فيها مباشرة باستخدام الأوامر المخصصة بدلاً من الاحتفاظ بنسخة مخزنة قد تنتهي صلاحيتها أثناء تنفيذ سير العمل.",
+              "links": []
+            },
+            {
+              "text": "وتخطط المنصة لجعل هذه الرموز المؤقتة هي الخيار الافتراضي لجميع عمليات تسجيل الدخول الجديدة في إصدار لاحق. وللاطلاع على كافة تفاصيل المصادقة المتقدمة وخيارات الأمان، يمكن للمطورين زيارة توثيق [Authenticating with GitHub CLI](https://docs.github.com/github-cli/github-cli/authenticating-with-github-cli#using-expiring-refreshable-tokens) الرسمي.",
+              "links": [
+                {
+                  "text": "Authenticating with GitHub CLI",
+                  "url": "https://docs.github.com/github-cli/github-cli/authenticating-with-github-cli#using-expiring-refreshable-tokens"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "GitHub CLI",
+        "OAuth",
+        "أمن المعلومات",
+        "تطوير البرمجيات",
+        "أدوات المطورين"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub CLI",
+        "OAuth",
+        "Git"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "21 أكتوبر 2026",
+      "modifiedLabel": "21 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 489
+    },
+    "en": {
+      "title": "GitHub CLI Adds Expiring, Auto-Refreshing OAuth Tokens",
+      "description": "GitHub introduces a public preview for expiring, automatically refreshing OAuth credentials in GitHub CLI to improve security and token management.",
+      "deck": "GitHub has launched a public preview allowing users to utilize expiring, automatically refreshing OAuth credentials in the GitHub CLI, enhancing security by limiting the lifespan of leaked tokens.",
+      "summaryBullets": [
+        "Public preview introduces expiring and automatically refreshing OAuth credentials for the GitHub CLI.",
+        "Leaked access tokens become unusable within hours instead of lasting indefinitely.",
+        "Available starting with GitHub CLI v2.103.0 using the --expiring flag or configuration settings.",
+        "Includes support for git operations over HTTPS when configured as a credential helper."
+      ],
+      "sections": [
+        {
+          "heading": "Public Preview of Expiring OAuth Tokens",
+          "paragraphs": [
+            {
+              "text": "GitHub has announced a public preview enabling developers to use expiring and automatically refreshing OAuth credentials within the GitHub CLI. When opting into this feature, the tool stores an expiring access token alongside a rotating refresh token, automatically handling updates whenever necessary. This allows users to stay authenticated without undergoing manual re-authentication, ensuring that any leaked access token becomes unusable within hours rather than persisting indefinitely.",
+              "links": []
+            },
+            {
+              "text": "The feature is introduced as part of GitHub CLI v2.103.0. To start using the new functionality, developers can download or update their environment using the official instructions provided via Install or upgrade. Users can also consult the documentation on Authenticating with GitHub CLI for comprehensive guides on managing these refreshable tokens.",
+              "links": [
+                {
+                  "text": "Install or upgrade",
+                  "url": "https://github.com/cli/cli?tab=readme-ov-file#installation"
+                },
+                {
+                  "text": "Authenticating with GitHub CLI",
+                  "url": "https://docs.github.com/github-cli/github-cli/authenticating-with-github-cli#using-expiring-refreshable-tokens"
+                },
+                {
+                  "text": "GitHub CLI v2.103.0",
+                  "url": "https://github.com/cli/cli/releases/tag/v2.103.0"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "How to Enable and Configure Expiring Credentials",
+          "paragraphs": [
+            {
+              "text": "Beginning with version 2.103.0, users can pass the new --expiring flag during login by executing the command gh auth login --expiring. For those who prefer to enable the behavior permanently without typing the flag every time, configuration can be updated by running gh config set expiring_credentials enabled. Once configured, the CLI manages credential refreshes automatically in the background during daily usage.",
+              "links": []
+            },
+            {
+              "text": "To verify the current state of an expiring credential, including the exact expiration time of the active access token, users can execute the gh auth status command. The implementation is fully backward compatible and strictly opt-in; if developers choose not to use the flag or configuration setting, existing sign-ins and manually supplied tokens will continue to function exactly as before.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Git Integration and Version Recommendations",
+          "paragraphs": [
+            {
+              "text": "For developers who authenticate to git over HTTPS and wish to utilize expiring tokens, GitHub strongly recommends configuring the CLI as a git credential helper by running gh auth setup-git. This configuration allows the tool to properly serve and refresh credentials for git operations. Furthermore, users are advised to upgrade to git version 2.46 or newer, which enables the CLI to correctly mark expiring credentials so they are not cached past their lifetime. On older versions of git, the tool remains operational but issues a one-time recommendation to upgrade.",
+              "links": []
+            },
+            {
+              "text": "The system relies on what the server issues. The --expiring flag explicitly requests refreshable credentials, but if a server does not support them, the CLI will cleanly fall back to traditional nonexpiring tokens. GitHub plans to make expiring credentials the default option for new sign-ins in a future release.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Considerations for Scripts and Workflows",
+          "paragraphs": [
+            {
+              "text": "Because expiring access tokens are short-lived, automated processes, scripts, and extensions that capture a token once and reuse it later may experience disruptions. Scripts that run gh auth token and store the result, or copy tokens into external tools, will eventually hold an expired credential. Developers consuming tokens outside of the CLI are advised to read tokens fresh each time using gh auth token rather than caching values.",
+              "links": []
+            },
+            {
+              "text": "Workflows that heavily depend on long-lived static tokens should hold off on opting into the feature until adjustments can be made. However, when configured properly as a git credential helper, background refreshes ensure that standard HTTPS git operations continue uninterrupted.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Platform Support and Feedback",
+          "paragraphs": [
+            {
+              "text": "Expiring tokens are currently supported on github.com and ghe.com. For users running GitHub Enterprise Server, the feature is supported starting with GHES 3.23, while earlier versions will gracefully fall back to standard nonexpiring behavior. Additional details can be found directly on the official GitHub Changelog.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-21-github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens/"
+                }
+              ]
+            },
+            {
+              "text": "Developers encountering issues or wishing to share feedback regarding the new authentication public preview are encouraged to participate by opening an issue in the cli/cli repository.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub CLI",
+        "OAuth",
+        "Authentication",
+        "Security",
+        "Developer Tools",
+        "Git"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub CLI",
+        "Git"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "October 21, 2026",
+      "modifiedLabel": "October 21, 2026",
+      "readMinutes": 3,
+      "wordCount": 660
+    }
+  },
+  "datePublished": "2026-10-21T20:39:07.106230+03:00",
+  "dateModified": "2026-10-21T20:39:07.106230+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens/hero.webp",
+    "card": "/forum/assets/posts/2026/10/github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens/card.webp",
+    "social": "/forum/assets/posts/2026/10/github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens/social.jpg",
+    "alt": {
+      "ar": "إطلاق المعاينة العامة لرموز OAuth المؤقتة في GitHub CLI",
+      "en": "GitHub CLI Adds Expiring, Auto-Refreshing OAuth Tokens"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/10/674026597-85251c65-72af-49cb-9eaf-fa18f73c77b3.jpeg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-10-21-github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens/",
+      "type": "official",
+      "title": "GitHub CLI: Opt in to expiring, auto-refreshing OAuth tokens"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-10-21-github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens",
+  "sourceTitle": "GitHub CLI: Opt in to expiring, auto-refreshing OAuth tokens",
+  "trendScore": 110.74,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-21T17:39:07+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/10/github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens.json"
+}
