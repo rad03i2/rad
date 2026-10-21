@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "0a8a1e3f4f528a68f5ca",
+  "slug": "mozilla-google-apple-block-compromised-emudhra-ca-certificates",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/mozilla-google-apple-block-compromised-emudhra-ca-certificates/",
+    "en": "/forum/en/web/mozilla-google-apple-block-compromised-emudhra-ca-certificates/"
+  },
+  "locales": {
+    "ar": {
+      "title": "موزيلا وجوجل وآبل تحجب شهادات eMudhra المتضررة من ثغرة أمنية",
+      "description": "أعلنت موزيلا وجوجل وآبل عن حجب ثمانية شهادات وسيطة متضررة تابعة لسلطة الشهادات eMudhra، بعد اكتشاف أن مفاتيحها الخاصة ضعيفة جداً مما يسمح لأي شخص باستعادتها وتزوير شهادات مواقع موثوقة.",
+      "deck": "اكتشف باحثون أمنيون ضعفاً حرجاً في مفاتيح شهادات وسيطة صادرة عن eMudhra، مما دفع المتصفحات الكبرى إلى اتخاذ إجراءات فورية لحجبها لحماية المستخدمين من هجمات انتحال الهوية.",
+      "summaryBullets": [
+        "اكتشف الباحث الأمني المعروف باسم Wayne أن مفاتيح P-384 الخاصة بثماني شهادات وسيطة كانت قيمها أقل من 256، مما جعل استعادتها فورية وسهلة.",
+        "عزت eMudhra الخطأ إلى خلل في سكربت توليد الشهادات في أبريل 2025، مؤكدة عدم وجود دليل على استغلالها حتى الآن.",
+        "حجبت موزيلا الشهادات عبر نظام OneCRL في 17 أكتوبر، بينما أصدرت جوجل وآبل تحديثات أمنية متزامنة لحماية مستخدميها.",
+        "أصدر فريق تطوير لغة Go إصدارات 1.27.3 و 1.26.10 لمعالجة الثغرة المسجلة تحت رقم CVE-2026-111943.",
+        "حذر مهندس التشفير في موزيلا من أن بعض الأدوات مثل curl على نظام macOS قد تستمر في الثقة بالشهادات المتضررة بسبب عدم فحصها لبيانات الإلغاء."
+      ],
+      "sections": [
+        {
+          "heading": "اكتشاف ضعف حرج في مفاتيح الشهادات",
+          "paragraphs": [
+            {
+              "text": "أثارت سلطة الشهادات eMudhra قلقاً أمنياً واسعاً بعد أن اكتشف باحثون أن مفاتيحها الخاصة لثمانية شهادات وسيطة كانت ضعيفة بشكل غير طبيعي. وفقاً لتقرير الحادث الذي نشرته موزيلا، جميع الشهادات الثمانية استخدمت مفاتيح خاصة من نوع P-384 تم توليدها في أبريل 2025، وكانت قيمها الرقمية أقل من 256. هذا الخلل جعل من الممكن لأي شخص استعادة المفتاح الخاص خلال ثوانٍ معدودة بمجرد اختبار 256 رقماً محتملاً فقط، مما يفتح الباب أمام تزوير شهادات موثوقة لمواقع إلكترونية مشروعة. ويمكن الرجوع إلى BleepingComputer للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/mozilla-google-apple-block-compromised-emudhra-ca-certificates/"
+                }
+              ]
+            },
+            {
+              "text": "بدأت القصة عندما رصد الباحث الأمني المعروف باسم Wayne هذا الضعف في 17 أكتوبر أثناء مسح بيانات الشهادات المتاحة علناً. ولإثبات خطورة الوضع، قام الباحث الأمني Flüpke بنشر أحد المفاتيح الخاصة المتضررة على منصة GitHub، موضحاً أن المفتاح الخاص بشهادة eMudhra المعروفة باسم \"EM OV TLS CA - G3C\" كان له قيمة رقمية لا تتجاوز 4. وقد تحقق موقع BleepingComputer بشكل مستقل من أن المفتاح المنشور يطابق فعلاً أحد الشهادات التي تم إلغاؤها لاحقاً.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/mozilla-google-apple-block-compromised-emudhra-ca-certificates/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تفسير eMudhra لخطأ توليد الشهادات",
+          "paragraphs": [
+            {
+              "text": "في رد رسمي على موزيلا، عزت eMudhra سبب المشكلة إلى خطأ برمجي في السكربت المستخدم لتوليد الشهادات في أبريل 2025. وأوضحت الشركة أن هذا الخطأ أدى إلى توليد مجموعة ثانية من المفاتيح الأضعف، والتي تم اختيارها عن طريق الخطأ لتوقيع الشهادات بسبب تشابه تسمياتها مع المفاتيح المولدة بشكل صحيح. كما أشارت الشركة إلى أن بعض الشهادات الناتجة عن هذا الخطأ تم تقديمها أيضاً لشركة Sectigo للتوقيع المتبادل (Cross-signing).",
+              "links": []
+            },
+            {
+              "text": "أكدت eMudhra أن معظم الشهادات الوسيطة المتأثرة لم تُستخدم قط في بيئات الإنتاج الفعلية، ولم تجد الشركة أي دليل على استخدامها لإصدار شهادات للمستخدمين النهائيين. ومع ذلك، حذرت من أن المهاجمين كانوا قادرين نظرياً على استعادة المفاتيح الضعيفة واستغلالها منذ توليدها في أبريل 2025، على الرغم من عدم وجود أدلة ملموسة على حدوث مثل هذا الاستغلال حتى الآن.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إجراءات الحجب الفوري من المتصفحات الكبرى",
+          "paragraphs": [
+            {
+              "text": "بعد الكشف عن الثغرة، سارعت الشركات المصنعة للمتصفحات إلى اتخاذ إجراءات وقائية. أعلنت موزيلا أنها حجبت الشهادات المتضررة عبر نظام OneCRL الخاص بمتصفح Firefox في 17 أكتوبر، مما وفر حماية فورية للمستخدمين دون الحاجة إلى تحديث المتصفح أو إعادة تشغيله. وفي نفس اليوم، قام متصفح Google Chrome بحجب الشهادات الوسيطة الستة المتضررة التي كانت مخولة لإصدار شهادات TLS.",
+              "links": []
+            },
+            {
+              "text": "انضمت شركة آبل إلى هذه الجهود بإضافة حمايات مماثلة في 19 أكتوبر. كما أصدرت موزيلا لاحقاً في 20 أكتوبر تحديثاً جديداً لمتصفح Firefox بإصدار 158.0.1 وتحديثات لإصدارات ESR، وذلك لحماية المستخدمين الذين قد تكون إعدادات متصفحاتهم تمنعهم من استلام تحديثات الإلغاء السابقة تلقائياً. وتهدف هذه الخطوات إلى ضمان أن جميع المستخدمين محميون من مخاطر انتحال الهوية المحتملة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحديثات برمجية وأدوات تطوير",
+          "paragraphs": [
+            {
+              "text": "لم تقتصر الإجراءات على المتصفحات فقط، بل امتدت إلى أدوات التطوير والبرمجيات التي تعتمد على مخازن الشهادات الخاصة بها. أصدر فريق تطوير لغة Go إصدارات 1.27.3 و 1.26.10 لمعالجة هذه المشكلة، والتي تم توثيقها تحت رقم الثغرة CVE-2026-111943. وتشير التقارير إلى أن البرمجيات التي لا تفحص إلغاء الشهادات أو تستخدم مخازن شهادات مستقلة قد تستمر في الثقة بالشهادات الوسيطة المتضررة حتى يتم تحديثها يدوياً.",
+              "links": []
+            },
+            {
+              "text": "من جانبه، نشر دينيس جاكسون، مهندس التشفير في موزيلا، موقعاً إلكترونياً لتتبع الحادث يوضح البرمجيات المتأثرة والتحديثات الأمنية المتاحة. ويحذر جاكسون بشكل خاص من أن أداة curl المدمجة في نظام macOS قد تستمر في الثقة بالشهادات المتضررة، لأن حزمة الشهادات الخاصة بها لا تفحص معلومات الإلغاء. وينصح المسؤولون باستخدام نقاط الاختبار والتعليمات المقدمة في النشرة الاستشارية لتحديد ما إذا كانت أنظمتهم لا تزال متأثرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوصيات الأمنية للمستخدمين والإداريين",
+          "paragraphs": [
+            {
+              "text": "توصي الجهات الأمنية المستخدمين وإداريي الأنظمة بتثبيت جميع التحديثات البرمجية المتاحة لضمان عدم استمرار الثقة في الشهادات المتضررة. وتعتبر هذه الخطوة حاسمة لحماية الاتصالات المشفرة ومنع المهاجمين من انتحال هوية المواقع المشروعة. كما يجب على المؤسسات مراجعة بيئاتها التقنية للتأكد من تحديث جميع المكونات التي تعتمد على التحقق من الشهادات الرقمية.",
+              "links": []
+            },
+            {
+              "text": "يؤكد الخبراء أن سرعة الاستجابة من قبل موزيلا وجوجل وآبل ساهمت في تقليل النطاق المحتمل للاستغلال. ومع ذلك، تظل أهمية التحديثات الدورية للأنظمة البرمجية أمراً أساسياً في مواجهة مثل هذه الثغرات التي قد تؤثر على البنية التحتية للأمان الرقمي على نطاق واسع. وتبقى مراقبة بيانات الشهادات العامة جزءاً مهماً من استراتيجيات الاكتشاف المبكر للمخاطر الأمنية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمن سيبراني",
+        "شهادات رقمية",
+        "eMudhra",
+        "موزيلا",
+        "جوجل",
+        "آبل",
+        "ثغرة أمنية",
+        "تشفير"
+      ],
+      "entities": [
+        "eMudhra",
+        "Mozilla",
+        "Google",
+        "Apple",
+        "Go Team",
+        "Sectigo",
+        "Wayne",
+        "Flüpke",
+        "Dennis Jackson"
+      ],
+      "category": "الويب",
+      "dateLabel": "21 أكتوبر 2026",
+      "modifiedLabel": "21 أكتوبر 2026",
+      "readMinutes": 5,
+      "wordCount": 788
+    },
+    "en": {
+      "title": "Mozilla, Google, and Apple Block Weak eMudhra Certificates",
+      "description": "Major tech vendors including Mozilla, Google, and Apple have blocked eight compromised eMudhra intermediate certificates featuring critically weak private keys.",
+      "deck": "Major browser and operating system vendors have moved quickly to block eight compromised intermediate certificates issued by certificate authority eMudhra after researchers discovered dangerously weak private keys.",
+      "summaryBullets": [
+        "eMudhra revoked eight intermediate certificates because their P-384 private keys were generated with values smaller than 256.",
+        "Security researchers identified that the weak keys could be recovered almost instantly, allowing potential impersonation of legitimate websites.",
+        "Mozilla, Google, and Apple implemented blocks and updates across their platforms starting on October 17, 2026.",
+        "Affected software and specific security updates are being tracked on an incident tracking website set up by Mozilla cryptography engineer Dennis Jackson."
+      ],
+      "sections": [
+        {
+          "heading": "Compromised Certificates and Weak Keys",
+          "paragraphs": [
+            {
+              "text": "Certificate authority eMudhra recently revoked eight compromised intermediate certificates after researchers found their private keys were remarkably weak, enabling anyone to recover them almost instantly and potentially forge trusted certificates for legitimate websites. According to a detailed account found in Mozilla's incident report, all eight affected certificates used P-384 private keys generated back in April 2025. These keys had values smaller than 256, meaning an attacker could easily recover them by testing just 256 possible numbers.",
+              "links": [
+                {
+                  "text": "Mozilla's incident report",
+                  "url": "https://bugzilla.mozilla.org/show_bug.cgi?id=2083449"
+                }
+              ]
+            },
+            {
+              "text": "To demonstrate the severity of the flaw, security researcher Flüpke published one of the compromised private keys on GitHub, confirming that the private key for eMudhra's \"EM OV TLS CA - G3C\" certificate possessed a value of only 4. BleepingComputer independently verified that this published key directly matched one of the revoked certificates.",
+              "links": [
+                {
+                  "text": "GitHub",
+                  "url": "http://gist.github.com/Fluepke/9a103c7f990c3cc2fb5002f7476f2f48"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Root Cause and eMudhra's Response",
+          "paragraphs": [
+            {
+              "text": "When addressing the incident in a formal response to Mozilla, eMudhra attributed the vulnerability to an unexpected error in a script used during the certificate generation process in April 2025. The company explained that the script mistakenly generated a second set of weaker keys which were then accidentally selected for certificate signing because they shared labels similar to the properly generated keys. Additionally, some of the resulting certificates were submitted to Sectigo for cross-signing.",
+              "links": [
+                {
+                  "text": "response to Mozilla",
+                  "url": "https://bugzilla.mozilla.org/show_bug.cgi?id=2083449#c11"
+                }
+              ]
+            },
+            {
+              "text": "eMudhra stated that most of the impacted intermediate certificates were never actively utilized in production environments and that the company had uncovered no evidence indicating they were ever used to issue certificates to end users. Nevertheless, because these weak keys existed since their creation in April 2025, attackers theoretically could have recovered and abused them, though there remains no evidence that such exploitation occurred in the wild. Following the discovery, eMudhra promptly revoked the eight compromised certificates and halted the issuance of any new certificates under its G3 root.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Browser Vendors and Software Updates",
+          "paragraphs": [
+            {
+              "text": "Major software vendors reacted swiftly to mitigate the threat. Mozilla announced it successfully blocked the compromised certificates through Firefox's OneCRL system, safeguarding users immediately without requiring a manual browser update or restart. Further details regarding these protections were outlined by the organization.",
+              "links": []
+            },
+            {
+              "text": "Google Chrome similarly blocked the six compromised intermediates authorized to issue TLS certificates on October 17, while Apple introduced system protections shortly after on October 19. To ensure comprehensive coverage for users whose configurations might have blocked earlier revocation updates, Mozilla also released Firefox version 158.0.1 alongside corresponding updates for its ESR releases.",
+              "links": []
+            },
+            {
+              "text": "Other major ecosystems also took direct action. The Go development team released versions 1.27.3 and 1.26.10 specifically to address the issue, which has been officially tracked under the identifier CVE-2026-111943.",
+              "links": [
+                {
+                  "text": "released versions 1.27.3 and 1.26.10",
+                  "url": "https://groups.google.com/g/golang-announce/c/66pojueaQek?pli=1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Remaining Risks and Mitigation Guidance",
+          "paragraphs": [
+            {
+              "text": "Despite rapid deployment of vendor patches, security experts warn that certain software utilizing custom certificate stores or lacking revocation checking capabilities may continue trusting the compromised intermediates until an update is applied. For instance, Dennis Jackson, a cryptography engineer at Mozilla, published a dedicated incident tracking website designed to list affected software along with available security updates.",
+              "links": [
+                {
+                  "text": "incident tracking website",
+                  "url": "https://emudhra.we-have-a-problem.com/"
+                }
+              ]
+            },
+            {
+              "text": "Jackson specifically highlighted that macOS's built-in /usr/bin/curl utility might still trust the compromised certificates due to its default certificate bundle ignoring revocation status checks. System administrators and users are strongly advised to utilize the provided test endpoints and mitigation instructions to verify whether their systems remain vulnerable.",
+              "links": [
+                {
+                  "text": "test endpoints and mitigation instructions",
+                  "url": "https://emudhra.we-have-a-problem.com/"
+                }
+              ]
+            },
+            {
+              "text": "Installing all available software updates remains the primary recommendation for administrators and general users alike, ensuring that compromised eMudhra intermediate certificates are completely untrusted across all connected environments.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "eMudhra",
+        "Mozilla",
+        "Google",
+        "Apple",
+        "Certificate Authority",
+        "Cybersecurity",
+        "TLS",
+        "Go"
+      ],
+      "entities": [
+        "Mozilla",
+        "Google",
+        "Apple",
+        "eMudhra",
+        "Sectigo",
+        "BleepingComputer"
+      ],
+      "category": "Web",
+      "dateLabel": "October 21, 2026",
+      "modifiedLabel": "October 21, 2026",
+      "readMinutes": 4,
+      "wordCount": 669
+    }
+  },
+  "datePublished": "2026-10-21T04:19:00.563351+03:00",
+  "dateModified": "2026-10-21T04:19:00.563351+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/mozilla-google-apple-block-compromised-emudhra-ca-certificates/hero.webp",
+    "card": "/forum/assets/posts/2026/10/mozilla-google-apple-block-compromised-emudhra-ca-certificates/card.webp",
+    "social": "/forum/assets/posts/2026/10/mozilla-google-apple-block-compromised-emudhra-ca-certificates/social.jpg",
+    "alt": {
+      "ar": "موزيلا وجوجل وآبل تحجب شهادات eMudhra المتضررة من ثغرة أمنية",
+      "en": "Mozilla, Google, and Apple Block Weak eMudhra Certificates"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/10/20/certificate.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/mozilla-google-apple-block-compromised-emudhra-ca-certificates/",
+      "type": "journalism",
+      "title": "Mozilla, Google, Apple block compromised eMudhra CA certificates"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/security/mozilla-google-apple-block-compromised-emudhra-ca-certificates",
+  "sourceTitle": "Mozilla, Google, Apple block compromised eMudhra CA certificates",
+  "trendScore": 101.91,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-21T01:19:00+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/mozilla-google-apple-block-compromised-emudhra-ca-certificates.json"
+}
