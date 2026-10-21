@@ -1,0 +1,343 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "39e60f901a735303e0c0",
+  "slug": "hugging-face-torchtpu-tpus-natively",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/hugging-face-torchtpu-tpus-natively/",
+    "en": "/forum/en/ai/hugging-face-torchtpu-tpus-natively/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Hugging Face تطلق TorchTPU لتشغيل نماذج الذكاء الاصطناعي على TPU",
+      "description": "أعلنت Hugging Face عن دعم TorchTPU، مما يتيح تشغيل نماذج Transformers وDiffusers على وحدات معالجة TPU من Google بشكل أصلي وسريع.",
+      "deck": "تتيح Hugging Face الآن للمستخدمين تشغيل نماذج الذكاء الاصطناعي على وحدات معالجة TPU من Google بشكل أصلي عبر TorchTPU، مما يزيل الحاجة إلى أدوات وسيطة.",
+      "summaryBullets": [
+        "TorchTPU يضيف TPU كخلفية أصلية في PyTorch، مما يسهل عملية التدريب والاستدلال.",
+        "نماذج Transformers وDiffusers أصبحت تعمل مباشرة على TPU دون الحاجة إلى Optimum TPU.",
+        "توفر مكتبة Kernels نواة Pallas مُحسّنة لتحسين أداء النماذج على TPU بشكل كبير.",
+        "تعمل Hugging Face على تحسين دعم TPU من خلال اختبارات CI ليلية لضمان الاستقرار."
+      ],
+      "sections": [
+        {
+          "heading": "تسهيل الوصول إلى TPU في PyTorch",
+          "paragraphs": [
+            {
+              "text": "لطالما واجه مطورو PyTorch صعوبات في تشغيل نماذجهم على وحدات معالجة TPU، حيث كان عليهم إما نقل أكوادهم إلى torch_xla أو تعلم إطار عمل JAX. ومع إطلاق TorchTPU، أصبحت TPU مجرد جهاز آخر يمكن التعامل معه بسهولة داخل بيئة PyTorch. ويمكن الرجوع إلى Hugging Face Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "TorchTPU",
+                  "url": "https://github.com/google-pytorch/torch_tpu"
+                },
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/hf-torchtpu"
+                }
+              ]
+            },
+            {
+              "text": "وحدات معالجة TPU هي معالجات ذكاء اصطناعي من تصميم Google، مخصصة لتنفيذ العمليات الحسابية المصفوفية التي تستهلك معظم وقت الشبكات العصبية. وقد صممت Google هذه الرقائق على مدى العقد الماضي لتدريب وتقديم نماذجها الخاصة، بما في ذلك Gemini.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إزالة الحاجة إلى Optimum TPU",
+          "paragraphs": [
+            {
+              "text": "كانت المشكلة الرئيسية دائماً في البرمجيات، حيث نمت بنية TPU حول TensorFlow وJAX، مما جعل الأمر أكثر صعوبة على مستخدمي PyTorch. كانت الطريقة السابقة تعتمد على PyTorch/XLA، والتي كانت تعاني من مشاكل مثل الكسل في المعالجة وإعادة تجميع الرسوم البيانية.",
+              "links": []
+            },
+            {
+              "text": "لجعل الأمور أسهل، طورت Hugging Face أداة Optimum TPU لدعم الاستدلال والتدريب على TPU. ومع دعم TorchTPU الأصلي، لم تعد أداة Optimum TPU مطلوبة لتشغيل نماذج Hugging Face باستخدام Transformers وDiffusers.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحميل النماذج على TPU",
+          "paragraphs": [
+            {
+              "text": "تم بناء Transformers v5 حول فكرة أن تكون مصدر الحقيقة لتعريفات النماذج، مما يتيح تشغيلها في أي مكان. الآن يشمل \"أي مكان\" وحدات TPU. لتحميل نموذج على TPU، يكفي تمرير device_map=\"tpu\".",
+              "links": []
+            },
+            {
+              "text": "يعمل النموذج في وضع eager افتراضياً، ولكن يمكن استخدام torch.compile للحصول على أداء أفضل، أو تشغيله في إعداد موزع. هذا يجعل العملية بسيطة ومباشرة للمستخدمين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دعم Diffusers على TPU",
+          "paragraphs": [
+            {
+              "text": "أصبح TPU جهازاً من الدرجة الأولى في Diffusers. للنماذج الأولية أو تصحيح الأخطاء، يكفي وضع eager مع pipe.to(\"tpu\"). للنشر، يضيف وضع compiled استدعاء compile واحد. تبقى خطوط الأنابيب والأكواد كما هي، دون الحاجة إلى فرع TPU منفصل.",
+              "links": []
+            },
+            {
+              "text": "عندما يكون النموذج كبيراً جداً ليلائم رقاقة واحدة، يمكن تمرير TensorParallelConfig إلى from_pretrained، مما يقسم التحويل عبر الرقائق أثناء التحميل، فلا يحتاج النموذج الكامل إلى أن يتسع في مكان واحد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسين الأداء عبر Kernels",
+          "paragraphs": [
+            {
+              "text": "توفر مكتبة Kernels نواة TPU جاهزة للاستخدام. يمكن تحميل نواة واحدة باستخدام مكتبة Kernels ومنح النموذج دفعة في السرعة. تُكتب نواة TPU بلغة Pallas، مما يمنح تحكماً منخفض المستوى في العتاد.",
+              "links": []
+            },
+            {
+              "text": "كلما زاد حجم الدفعة، زاد الفوز. عند حجم دفعة 64، يكون فك الترميز أسرع بـ 21.5 مرة على Qwen3-30B-A3B وأسرع بـ 12.8 مرة على Gemma 4 26B-A4B.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اختبارات CI وتحسين مستمر",
+          "paragraphs": [
+            {
+              "text": "تعمل Hugging Face باستمرار على تحسين دعم TPU في transformers من خلال تشغيل مجموعة اختبارات المكتبة. يتم العمل على إضافة CI ليلية على TPU وجعل النتائج متاحة في لوحة معلومات transformers.",
+              "links": []
+            },
+            {
+              "text": "من الاختبارات التي تعمل على TPU، تمر 96.5%. كل فشل يتم اكتشافه يصبح سكريبت إعادة إنتاج صغيراً وقضية في مستودع TorchTPU. حتى الآن، تم الإبلاغ عن 34 قضية، وتم إصلاح 19 منها بالفعل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Hugging Face",
+        "TorchTPU",
+        "TPU",
+        "PyTorch",
+        "ذكاء اصطناعي",
+        "Google Cloud"
+      ],
+      "entities": [
+        "Hugging Face",
+        "TorchTPU",
+        "TPU",
+        "PyTorch",
+        "Google",
+        "Transformers",
+        "Diffusers",
+        "Kernels"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "21 أكتوبر 2026",
+      "modifiedLabel": "21 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 509
+    },
+    "en": {
+      "title": "Hugging Face Brings Native TPU Support to PyTorch Ecosystem",
+      "description": "Hugging Face announces native TPU support for PyTorch via TorchTPU, allowing Transformers and Diffusers to run directly on Google TPUs.",
+      "deck": "Hugging Face has introduced native Tensor Processing Unit support within the PyTorch ecosystem, eliminating the need for traditional workarounds like PyTorch/XLA or JAX.",
+      "summaryBullets": [
+        "TorchTPU integrates as a native PyTorch backend, letting developers send models directly to a TPU device.",
+        "Transformers v5 and Diffusers now feature first-class TPU support for both training and inference workflows.",
+        "Optimum TPU is no longer required to run Hugging Face models on Google Cloud TPU infrastructure.",
+        "Integration efforts have achieved a 96.5% test pass rate on TPUs alongside custom kernel optimizations."
+      ],
+      "sections": [
+        {
+          "heading": "Native TPU Support Lands in PyTorch",
+          "paragraphs": [
+            {
+              "text": "Running PyTorch workloads on Google's Tensor Processing Units traditionally required porting code through PyTorch/XLA or adopting the JAX framework. According to the [Hugging Face Blog](https://huggingface.co/blog/hf-torchtpu), the introduction of a native PyTorch backend changes this dynamic by treating TPUs simply as another available hardware device.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/hf-torchtpu"
+                }
+              ]
+            },
+            {
+              "text": "Tensor Processing Units are specialized custom chips designed by Google specifically for heavy matrix mathematics utilized by neural networks. While these accelerators are widely deployed across Google Cloud infrastructure for training and serving large-scale models like Gemini, software integration challenges historically required extra effort from PyTorch developers.",
+              "links": [
+                {
+                  "text": "Tensor Processing Unit",
+                  "url": "https://cloud.google.com/tpu"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Simplifying Development Without Optimum TPU",
+          "paragraphs": [
+            {
+              "text": "Previously, utilizing TPUs with Hugging Face architectures meant navigating the lazy evaluation behaviors and graph recompilation quirks inherent to PyTorch/XLA. To bridge this gap, Optimum TPU was previously developed to provide inference and training support for Hugging Face models.",
+              "links": []
+            },
+            {
+              "text": "With the arrival of native support via [TorchTPU](https://github.com/google-pytorch/torch_tpu), Optimum TPU is no longer necessary to execute Transformers and Diffusers models. Developers can write standard PyTorch code, leverage Pallas kernels tuned specifically for TPU hardware, utilize distributed training setups, and incorporate torch.compile for enhanced performance speed.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Transformers and Diffusers Integration",
+          "paragraphs": [
+            {
+              "text": "Transformers v5 has been structured to act as a foundational source of truth for model definitions across diverse hardware environments. Loading a model onto a TPU environment now only requires specifying a device map configuration directly within the loading parameters.",
+              "links": []
+            },
+            {
+              "text": "Similarly, the Diffusers library now treats the hardware accelerator as a first-class device. For prototyping workflows, eager mode functions seamlessly with standard pipeline assignments, while compiled execution modes add optimization layers. For models exceeding the capacity of a single chip, developers can distribute transformer layers across multiple chips during the loading process using tensor parallel configurations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Kernel Optimizations and Ecosystem Testing",
+          "paragraphs": [
+            {
+              "text": "The integration also introduces ready-to-use TPU kernels via the Kernels library, providing low-level hardware control through Pallas and external integrations like the Tokamax library. Benchmarking tests on hardware configurations such as Cloud TPU v6e-8 show significant throughput acceleration during decoding tasks for large mixture-of-experts architectures.",
+              "links": []
+            },
+            {
+              "text": "To ensure long-term stability, continuous integration testing is expanding to monitor TPU compatibility closely. Out of the active test suite evaluated on TPU infrastructure, 96.5% of tests currently pass successfully, with upstream fixes already applied to address early anomalies discovered during validation.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Hugging Face",
+        "PyTorch",
+        "TPU",
+        "Google Cloud",
+        "Transformers",
+        "Diffusers",
+        "AI Hardware"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Google",
+        "PyTorch",
+        "Tensor Processing Unit"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 21, 2026",
+      "modifiedLabel": "October 21, 2026",
+      "readMinutes": 3,
+      "wordCount": 463
+    }
+  },
+  "datePublished": "2026-10-21T08:59:02.331122+03:00",
+  "dateModified": "2026-10-21T08:59:02.331122+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/hugging-face-torchtpu-tpus-natively/hero.webp",
+    "card": "/forum/assets/posts/2026/10/hugging-face-torchtpu-tpus-natively/card.webp",
+    "social": "/forum/assets/posts/2026/10/hugging-face-torchtpu-tpus-natively/social.jpg",
+    "alt": {
+      "ar": "Hugging Face تطلق TorchTPU لتشغيل نماذج الذكاء الاصطناعي على TPU",
+      "en": "Hugging Face Brings Native TPU Support to PyTorch Ecosystem"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/hf-torchtpu/thumbnail.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/hugging-face-torchtpu-tpus-natively/inline-01.webp",
+        "width": 1248,
+        "height": 624,
+        "alt": {
+          "ar": "Hugging Face تطلق TorchTPU لتشغيل نماذج الذكاء الاصطناعي على TPU",
+          "en": "The Hugging Face mascot and a smiling PyTorch logo cheering over a glowing chip, on a manga-style background."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/hf-torchtpu",
+        "originalUrl": "https://huggingface.co/buckets/huggingface/hf-torchtpu-blog-assets/resolve/images/banner.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/hugging-face-torchtpu-tpus-natively/inline-02.webp",
+        "width": 1024,
+        "height": 1024,
+        "alt": {
+          "ar": "Hugging Face تطلق TorchTPU لتشغيل نماذج الذكاء الاصطناعي على TPU",
+          "en": "A capybara wearing a wizard hat, reading a book by candlelight, oil painting"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/hf-torchtpu",
+        "originalUrl": "https://huggingface.co/buckets/huggingface/hf-torchtpu-blog-assets/resolve/images/qwen-image-21-capybara-1024.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/hugging-face-torchtpu-tpus-natively/inline-03.webp",
+        "width": 1050,
+        "height": 1050,
+        "alt": {
+          "ar": "Hugging Face تطلق TorchTPU لتشغيل نماذج الذكاء الاصطناعي على TPU",
+          "en": "Neon shop sign reading QWEN IMAGE 2.1"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/hf-torchtpu",
+        "originalUrl": "https://huggingface.co/buckets/huggingface/hf-torchtpu-blog-assets/resolve/images/qwen-image-21-neon-2048.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/hugging-face-torchtpu-tpus-natively/inline-04.webp",
+        "width": 1400,
+        "height": 723,
+        "alt": {
+          "ar": "Hugging Face تطلق TorchTPU لتشغيل نماذج الذكاء الاصطناعي على TPU",
+          "en": "Decode throughput with the Hub ragged-dot kernel versus the default grouped_mm, for Qwen3-30B-A3B and Gemma 4 26B-A4B"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/hf-torchtpu",
+        "originalUrl": "https://huggingface.co/buckets/huggingface/hf-torchtpu-blog-assets/resolve/images/kernel-ragged-dot-speedup.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/hf-torchtpu",
+      "type": "official",
+      "title": "Hugging Face ❤️ TorchTPU: TPUs, Natively"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/hf-torchtpu",
+  "sourceTitle": "Hugging Face ❤️ TorchTPU: TPUs, Natively",
+  "trendScore": 95.38,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-21T05:59:02+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/hugging-face-torchtpu-tpus-natively.json"
+}
