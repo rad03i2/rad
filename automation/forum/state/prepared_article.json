@@ -1,5 +1,394 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-21T19:39:08+00:00",
-  "last_published_story_id": "9c25b784b73611021a10"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-21T19:43:20+00:00",
+  "target_publish_at": "2026-10-21T22:59:07.913134+03:00",
+  "story": {
+    "title": "A more reliable way to add and edit contacts on Android",
+    "url": "https://developer.android.com/blog/posts/reliable-way-to-add-and-edit-contacts-android",
+    "domain": "developer.android.com",
+    "summary": "Apps that target the upcoming Android release will no longer be able to directly write to contacts with the WRITE_CONTACTS permission.",
+    "published_at": "2026-10-21T00:00:00+00:00",
+    "discovered_at": "2026-10-21T19:07:09+00:00",
+    "source": {
+      "name": "Android Developers",
+      "feed": "https://android-developers.googleblog.com/feeds/posts/default",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 28,
+      "defaultCategory": "mobile"
+    },
+    "category": "apps",
+    "category_label": "التطبيقات والبرامج",
+    "score": 64,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "00e55c99b31a2f0fffa4",
+    "trend": {
+      "score": 112.33,
+      "age_hours": 19.71,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://developer.android.com/blog/posts/reliable-way-to-add-and-edit-contacts-android",
+      "name": "Android Developers",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "A more reliable way to add and edit contacts on Android",
+      "title": "A more reliable way to add and edit contacts on Android | Android Developers' Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أندرويد 17 يُلغي صلاحية الكتابة المباشرة على جهات الاتصال",
+      "description": "تعلن جوجل عن تغيير جذري في نظام أندرويد القادم يمنع التطبيقات من تعديل جهات الاتصال مباشرة، ويستبدلها بواجهات موحدة وآمنة دون الحاجة لصلاحية WRITE_CONTACTS.",
+      "deck": "تستعد جوجل لإدخال تغييرات أمنية كبيرة على طريقة تعامل التطبيقات مع جهات الاتصال في الإصدار القادم من أندرويد، مما يتطلب من المطورين تحديث أكوادهم لضمان التوافق.",
+      "summary_bullets": [
+        "لن تتمكن التطبيقات المستهدفة للإصدار الجديد من الكتابة المباشرة على جهات الاتصال باستخدام صلاحية WRITE_CONTACTS.",
+        "سيتم اعتماد نوايا النظام القياسية (Intents) مثل ACTION_INSERT و ACTION_EDIT لإدارة جهات الاتصال دون طلب صلاحيات إضافية.",
+        "يصل إذن خاص جديد باسم MANAGE_CONTACTS في الربع الرابع من 2026 للتطبيقات التي تتطلب وصولاً شاملاً لإدارة جهات الاتصال.",
+        "تهدف هذه التغييرات إلى توحيد تجربة المستخدم ومنع التطبيقات من إجراء تغييرات واسعة في الخلفية دون تفاعل المستخدم."
+      ],
+      "sections": [
+        {
+          "heading": "نهاية حقبة الكتابة المباشرة على جهات الاتصال",
+          "paragraphs": [
+            {
+              "text": "أعلنت جوجل رسمياً عن تغييرات جوهرية في طريقة تعامل التطبيقات مع بيانات جهات الاتصال في الإصدار القادم من نظام أندرويد. وفقاً لما نشرته على مدونة المطورين، لن تتمكن التطبيقات التي تستهدف هذا الإصدار الجديد من الكتابة المباشرة على جهات الاتصال باستخدام صلاحية WRITE_CONTACTS. إذا حاولت أي من هذه التطبيقات تنفيذ عملية كتابة مباشرة، فإن النظام سيرفض العملية وسيؤدي إلى حدوث استثناء أمني (SecurityException) أو رفض الصلاحية. هذا التغيير يهدف إلى تقليل الصلاحيات الواسعة التي كانت تمنحها التطبيقات لنفسها دون حاجة فعلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اعتماد نوايا النظام القياسية كبديل آمن",
+          "paragraphs": [
+            {
+              "text": "بديل الكتابة المباشرة هو استخدام نوايا النظام القياسية المعتمدة منذ فترة، وهي ACTION_INSERT لإضافة جهة اتصال جديدة، و ACTION_EDIT لتحرير جهة اتصال موجودة، و ACTION_INSERT_OR_EDIT للدمج بين العمليتين. في الإصدار القادم من أندرويد، ستعمل هذه النوايا بشكل متسق عبر جميع الأجهزة دون الحاجة إلى أي صلاحية خاصة. سيتولى النظام عرض محرر جهات اتصال موحّد ونظيف، حيث يظهر نموذج نصف صفحة سريع للإدخالات الجديدة، أو يتيح للمستخدم البحث عن جهة اتصال موجودة وإضافة معلومات إليها. يمكن للمستخدمين توسيع هذا المحرر ليعمل كصفحة كاملة لإدخال تفاصيل إضافية، كل ذلك دون أن يحتاج تطبيقك إلى صلاحيات كتابة مباشرة.",
+              "links": [
+                {
+                  "text": "ACTION_INSERT",
+                  "url": "https://developer.android.com/reference/android/content/Intent#ACTION_INSERT"
+                },
+                {
+                  "text": "ACTION_EDIT",
+                  "url": "https://developer.android.com/reference/android/content/Intent#ACTION_EDIT"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "معالجة مشاكل التباين بين الأجهزة",
+          "paragraphs": [
+            {
+              "text": "أشارت جوجل إلى أن المطورين كانوا يلجأون إلى طلب صلاحية WRITE_CONTACTS بسبب عدم موثوقية النوايا القياسية في الإصدارات السابقة. كانت تجربة استخدام النوايا تختلف من جهاز لآخر؛ فبعض المحررات كانت تتجاهل البيانات المرسلة مثل صور جهات الاتصال، بينما في أجهزة أخرى كانت زر الرجوع يحفظ جهة الاتصال دون قصد المستخدم، أو كان خيار إنشاء جهة اتصال جديدة يصعب العثور عليه. من خلال الإصدار الجديد، ستفرض جوجل معايير موحدة على جميع الأجهزة، مما يجعل استخدام النوايا خياراً عقلانياً وموثوقاً. كما سيتم توحيد دعم البيانات الاختيارية (Extras)، مثل EXTRA_ACCOUNT لتحديد الحساب الذي تُحفظ فيه جهة الاتصال، و EXTRA_PHOTO_URI لتمرير صورة جاهزة، مما كان يختلف دعمه سابقاً حسب الشركة المصنّعة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إذن MANAGE_CONTACTS للتطبيقات المتخصصة",
+          "paragraphs": [
+            {
+              "text": "بالنسبة للتطبيقات القليلة التي تتطلب وصولاً واسعاً لإنشاء وتعديل جهات الاتصال كجزء أساسي من وظيفتها، ستقدم جوجل إذناً خاصاً جديداً باسم MANAGE_CONTACTS. سيصل هذا الإذن في تحديث Android 17 QPR2 المتوقع في الربع الرابع من عام 2026. يختلف هذا الإذن عن الصلاحيات التقليدية لأنه لا يظهر كنافذة منبثقة وقت التشغيل، بل يجب على المستخدم تفعيله يدوياً من إعدادات النظام تحت قسم 'الوصول الخاص بالتطبيقات'. يغطي هذا الإذن القراءة والإضافة والتحرير والحذف لجهات الاتصال والحسابات وبيانات دليل الأشخاص. لن تحتاج التطبيقات التي تستخدم هذا الإذن إلى طلب صلاحية READ_CONTACTS بشكل منفصل. للحصول على هذا الإذن على متجر Google Play، يجب على المطورين تقديم بيان يوضح لماذا لا تكفي النوايا القياسية لتلبية احتياجات التطبيق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دليل الأشخاص الجديد وإجراءات الاتصال",
+          "paragraphs": [
+            {
+              "text": "تقدم جوجل أيضاً ميزة جديدة تسمى 'دليل الأشخاص' (People Directory) في نفس التحديث. هذه الميزة موجهة للتطبيقات التي تضيف إجراءات مثل 'اتصال عبر...' أو 'مراسلة عبر...' لجهات الاتصال، مما يتيح للمستخدم بدء مكالمة أو محادثة من تطبيق الهاتف أو جهات الاتصال. بدلاً من كتابة إدخالات إضافية في جهات اتصال المستخدم، سيتيح دليل الأشخاص للتطبيق نشر كيفية تواصل الأشخاص مع بعضهم البعض داخل التطبيق دون تعديل بيانات المستخدم. هذا يحمي خصوصية المستخدم ويمنع التلوث غير المرغوب فيه في قائمة جهات الاتصال الخاصة به.",
+              "links": [
+                {
+                  "text": "People Directory",
+                  "url": "https://developer.android.com/reference/android/provider/PeopleContract#implementing-a-people-directory"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "خطوات الانتقال للمطورين",
+          "paragraphs": [
+            {
+              "text": "توصي جوجل المطورين ببدء البحث في أكوادهم عن استخدامات صلاحية WRITE_CONTACTS وواجهات برمجة التطبيقات المرتبطة بها مثل ContactsContract.RawContacts.CONTENT_URI. يجب استبدال كل عملية كتابة يقودها المستخدم بنوايا النظام المناسبة: ACTION_INSERT للمنتجات الجديدة، و ACTION_EDIT أو ACTION_INSERT_OR_EDIT للتحديثات. كما يجب التأكد من استخدام أنواع البيانات القياسية فقط، وتجنب أنواع البيانات المخصصة التي يتجاهلها المحرر الجديد بصمت. إذا كان تطبيقك يحتاج فقط إلى قراءة جهات اتصال يختارها المستخدم، فيمكنك استخدام 'منتقي جهات الاتصال' (Contact Picker) المتاح منذ أندرويد 17 دون أي صلاحية. يجب إزالة صلاحية WRITE_CONTACTS من ملف清单 (Manifest) التطبيق بمجرد عدم وجود أي مسار كود يحتاج إليها.",
+              "links": [
+                {
+                  "text": "Contact Picker",
+                  "url": "https://developer.android.com/about/versions/17/features/contact-picker"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أندرويد",
+        "جوجل",
+        "جهات الاتصال",
+        "أمان التطبيقات",
+        "تطوير التطبيقات",
+        "أندرويد 17"
+      ],
+      "entities": [
+        "جوجل",
+        "أندرويد",
+        "WRITE_CONTACTS",
+        "MANAGE_CONTACTS",
+        "ACTION_INSERT",
+        "ACTION_EDIT",
+        "People Directory"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من مدونة المطورين الرسمية لأندرويد، مع التركيز على التغييرات التقنية والإجرائية للمطورين."
+    },
+    "en": {
+      "title": "Android Updates Contact Permissions for Upcoming Release",
+      "description": "Android introduces standardized contact editing intents and new MANAGE_CONTACTS permission requirements in an upcoming software release.",
+      "deck": "Google outlines major updates to contact management on Android, removing direct write access for apps targeting upcoming releases in favor of standardized intents.",
+      "summary_bullets": [
+        "Apps targeting the upcoming Android release will no longer be able to write directly to contacts using the WRITE_CONTACTS permission.",
+        "Standardized contact intents like ACTION_INSERT, ACTION_EDIT, and ACTION_INSERT_OR_EDIT will handle contact modifications consistently across devices.",
+        "A new special app access permission, MANAGE_CONTACTS, is arriving in Android 17 QPR2 for apps requiring broad contact access.",
+        "Optional data payloads like EXTRA_ACCOUNT and EXTRA_PHOTO_URI will provide standardized support across the ecosystem."
+      ],
+      "sections": [
+        {
+          "heading": "Changes to Contact Write Permissions",
+          "paragraphs": [
+            {
+              "text": "According to the Android Developers' Blog, applications targeting the upcoming Android release will no longer have the ability to directly write to contacts using the traditional WRITE_CONTACTS permission. Instead, developers are being guided to shift their approach and utilize standard contact intents for managing user information.",
+              "links": [
+                {
+                  "text": "Android Developers' Blog",
+                  "url": "https://developer.android.com/"
+                }
+              ]
+            },
+            {
+              "text": "If an app targets the upcoming release or later and attempts to write to contacts directly, those write requests will be rejected. This action results in a SecurityException or a permission denial. Historically, requesting WRITE_CONTACTS granted broad access, permitting applications to make widespread changes to device contacts in the background without user interaction. Most applications do not require this level of broad access.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Standardized Contact Intents and Editor Experience",
+          "paragraphs": [
+            {
+              "text": "To replace direct writes, developers can implement standard contact intents including ACTION_INSERT, ACTION_EDIT, and ACTION_INSERT_OR_EDIT. For comprehensive guidance, a developer guide is available on how to modify contacts using intents to ensure proper implementation.",
+              "links": [
+                {
+                  "text": "ACTION_INSERT",
+                  "url": "https://developer.android.com/reference/android/content/Intent#ACTION_INSERT"
+                },
+                {
+                  "text": "modify contacts using intents",
+                  "url": "https://developer.android.com/identity/providers/contacts-provider/modify-data"
+                }
+              ]
+            },
+            {
+              "text": "Previously, contact intents behaved inconsistently across different devices from various manufacturers. Some editors dropped passed data such as contact photos, while other devices triggered accidental saves via the back button. The upcoming Android version addresses these issues by requiring devices running the OS to follow unified standards, ensuring consistent behavior across the entire ecosystem without requiring any special permissions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "System-Handled Editor and Optional Extras",
+          "paragraphs": [
+            {
+              "text": "When utilizing intents such as ACTION_EDIT or ACTION_INSERT_OR_EDIT, the operating system handles the workload by presenting a standardized contact editor experience. The interface opens a quick half-sheet form for new entries or allows users to search and add information to existing contacts seamlessly, all without requiring direct write permissions from the host application.",
+              "links": [
+                {
+                  "text": "ACTION_EDIT",
+                  "url": "https://developer.android.com/reference/android/content/Intent#ACTION_EDIT"
+                }
+              ]
+            },
+            {
+              "text": "Developers can further optimize the contact creation process by passing optional data payloads known as Extras alongside the intent. The EXTRA_ACCOUNT extra suggests the target account for saving, while the EXTRA_PHOTO_URI extra passes a photo to pre-fill the contact picture, with the system editor managing the URI read permission automatically.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Introduction of MANAGE_CONTACTS Permission",
+          "paragraphs": [
+            {
+              "text": "For a small subset of applications requiring broad access to create, modify, or delete contacts, a special app access permission called MANAGE_CONTACTS arrives in Android 17 QPR2, scheduled for the fourth quarter of 2026. Google Play is publishing updated guidelines regarding contact access and this new permission.",
+              "links": []
+            },
+            {
+              "text": "MANAGE_CONTACTS is designed as a special app access permission rather than a runtime dialog, requiring users to manually enable it under device settings. Applications utilizing this permission must submit a declaration in the Google Play Console explaining why standard intents are insufficient for their core functionality.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Alternative Solutions for Specialized Actions",
+          "paragraphs": [
+            {
+              "text": "For apps that only need to read contacts chosen directly by the user, the Contact Picker offers an alternative that has been available since Android 17 and requires no permissions at all.",
+              "links": [
+                {
+                  "text": "Contact Picker",
+                  "url": "https://developer.android.com/about/versions/17/features/contact-picker"
+                }
+              ]
+            },
+            {
+              "text": "Similarly, applications that currently add calling or messaging shortcuts to device contacts by writing extra entries can transition to the People Directory. Scheduled to arrive in Android QPR2 in late 2026, this new system directory allows apps to publish communication options without editing the user's personal contacts.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Developer Migration Steps",
+          "paragraphs": [
+            {
+              "text": "Developers preparing for the upcoming changes should audit their codebases to find existing contact writes by searching for WRITE_CONTACTS and related content URIs. Code paths should be updated to replace user-driven writes with standard intents, utilize standard data types, and remove the WRITE_CONTACTS manifest entry once code paths no longer require it.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Android",
+        "Google",
+        "App Development",
+        "Permissions",
+        "Mobile",
+        "Operating Systems"
+      ],
+      "entities": [
+        "Android",
+        "Google",
+        "Google Play"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based entirely on official Android Developers blog post outlining upcoming permission changes and intent standards."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 697,
+      "word_count_en": 648
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "00e55c99b31a2f0fffa4",
+      "title": "A more reliable way to add and edit contacts on Android",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 697,
+          "word_count_en": 648
+        }
+      ]
+    }
+  ],
+  "slug": "more-reliable-way-to-add-and-edit-contacts-on-android",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/more-reliable-way-to-add-and-edit-contacts-on-android/hero.webp",
+    "card": "/forum/assets/posts/2026/10/more-reliable-way-to-add-and-edit-contacts-on-android/card.webp",
+    "social": "/forum/assets/posts/2026/10/more-reliable-way-to-add-and-edit-contacts-on-android/social.jpg",
+    "alt": {
+      "ar": "أندرويد 17 يُلغي صلاحية الكتابة المباشرة على جهات الاتصال",
+      "en": "Android Updates Contact Permissions for Upcoming Release"
+    },
+    "credit": "Android Developers",
+    "sourceUrl": "https://developer.android.com/static/blog/assets/Blog_hero_Strapi_2x_0147a8b012_Zj9dt4.webp",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/more-reliable-way-to-add-and-edit-contacts-on-android/inline-01.webp",
+        "width": 1400,
+        "height": 704,
+        "alt": {
+          "ar": "أندرويد 17 يُلغي صلاحية الكتابة المباشرة على جهات الاتصال",
+          "en": "Android Updates Contact Permissions for Upcoming Release"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/reliable-way-to-add-and-edit-contacts-android",
+        "originalUrl": "https://developer.android.com/static/blog/assets/Tas_Developers_cut_Strapi_3636223c9c_DKPLL.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/more-reliable-way-to-add-and-edit-contacts-on-android/inline-02.webp",
+        "width": 471,
+        "height": 1050,
+        "alt": {
+          "ar": "أندرويد 17 يُلغي صلاحية الكتابة المباشرة على جهات الاتصال",
+          "en": "Figure01_01_Quick_Insert_Half_Sheet_Prefilled.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/reliable-way-to-add-and-edit-contacts-android",
+        "originalUrl": "https://developer.android.com/static/blog/assets/Figure01_01_Quick_Insert_Half_Sheet_Prefilled_47cedd26cb_Dw4kb.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/more-reliable-way-to-add-and-edit-contacts-on-android/inline-03.webp",
+        "width": 471,
+        "height": 1050,
+        "alt": {
+          "ar": "أندرويد 17 يُلغي صلاحية الكتابة المباشرة على جهات الاتصال",
+          "en": "Screenshot 2 - Title: Full-Sheet Mock of Create a New Contact: Screenshot of a tentative Android user interface showing a full-screen contact editor with an avatar selector, name, phone, and email fields. The design is l"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/reliable-way-to-add-and-edit-contacts-android",
+        "originalUrl": "https://developer.android.com/static/blog/assets/Figure01_02_Full_Page_Editor_Default_Top_35707ebba8_4OBIj.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/more-reliable-way-to-add-and-edit-contacts-on-android/inline-04.webp",
+        "width": 471,
+        "height": 1050,
+        "alt": {
+          "ar": "أندرويد 17 يُلغي صلاحية الكتابة المباشرة على جهات الاتصال",
+          "en": "Figure02_01_Add_To_Existing_0_Search_State_Half_Sheet.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/reliable-way-to-add-and-edit-contacts-android",
+        "originalUrl": "https://developer.android.com/static/blog/assets/Figure02_01_Add_To_Existing_0_Search_State_Half_Sheet_7543788ec9_Z1HMcPH.webp"
+      }
+    ]
+  }
 }
