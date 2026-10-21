@@ -1,5 +1,377 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-21T19:59:08+00:00",
-  "last_published_story_id": "00e55c99b31a2f0fffa4"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-21T20:06:31+00:00",
+  "target_publish_at": "2026-10-21T23:19:08.049689+03:00",
+  "story": {
+    "title": "NVIDIA Kumo Forecast Combines Pretrained Time-Series Representations with Historical Pattern Retrieval and Interpretability",
+    "url": "https://huggingface.co/blog/nvidia/kumo-forecast",
+    "domain": "huggingface.co",
+    "summary": "",
+    "published_at": "2026-10-21T12:51:24+00:00",
+    "discovered_at": "2026-10-21T12:52:04+00:00",
+    "source": {
+      "name": "Hugging Face Blog",
+      "feed": "https://huggingface.co/blog/feed.xml",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 26,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 62,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "5c32755a71da49edb4fe",
+    "trend": {
+      "score": 107.72,
+      "age_hours": 7.18,
+      "corroboration_count": 0,
+      "entity_momentum": 9.51,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://huggingface.co/blog/nvidia/kumo-forecast",
+      "name": "Hugging Face Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "NVIDIA Kumo Forecast Combines Pretrained Time-Series Representations with Historical Pattern Retrieval and Interpretability",
+      "title": "NVIDIA Kumo Forecast Combines Pretrained Time-Series Representations with Historical Pattern Retrieval and Interpretability",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "NVIDIA Kumo Forecast يدمج الأنماط التاريخية مع السلاسل الزمنية",
+      "description": "يجمع NVIDIA Kumo Forecast بين نماذج السلاسل الزمنية المدربة مسبقاً واسترجاع الأنماط التاريخية، مما يوفر تنبؤات دقيقة وقابلة للتفسير لمختلف التطبيقات.",
+      "deck": "يقدم نموذج NVIDIA Kumo Forecast نهجاً مبتكراً للتنبؤ متعدد المتغيرات، يدمج بين الترميز الزمني المدرب مسبقاً واسترجاع الأنماط من البيانات التاريخية، مع الحفاظ على قابلية التفسير.",
+      "summary_bullets": [
+        "نموذج متعدد المتغيرات يدمج بين Backbone Transformer المدرب مسبقاً وآلية استرجاع الأنماط التاريخية (DARR).",
+        "يستخدم بنية MOMENT-1-large مع مشفر أساسي يبلغ حوالي 340 مليون معلمة ورأس تنبؤ قابل للتدريب.",
+        "يوفر واجهة برمجة تطبيقات تركز على DataFrame، وآفاق تنبؤ قابلة للتكوين، وإطار عمل قابل للتفسير ينتج تفسيرات خاصة بكل أفق.",
+        "متاح بموجب رخصة Apache 2.0؛ يمكن للمطورين ضبط التنبؤات المباشرة ومسارات الاسترجاع عبر خيارات التكوين.",
+        "تم دمجه في مصنع FOX للتشغيل المبكر للصيانة التنبؤية، مما يعزز اكتشاف الشذوذ في الوقت الفعلي."
+      ],
+      "sections": [
+        {
+          "heading": "نظرة عامة على NVIDIA Kumo Forecast",
+          "paragraphs": [
+            {
+              "text": "تقدم NVIDIA Kumo Forecast (المعروفة سابقاً باسم NV-Tesseract Forecasting) نموذجاً للتنبؤ متعدد المتغيرات بالسلاسل الزمنية يجمع بين Backbone Transformer المدرب مسبقاً وآلية تمثيل واسترجاع واعية بالنطاق (DARR). ويتيح هذا الدمج للنموذج ليس فقط التنبؤ بالقيم المستقبلية مباشرة، ولكن أيضاً استرجاع الأنماط ذات الصلة من البيانات التاريخية، مما يحسن الدقة ويوفر تفسيرات شفافة. ويمكن الوصول إلى النموذج عبر مستودع Hugging Face تحت اسم NVIDIA/Kumo-TS، مع توفر الأوزان تحت nvidia/Kumo-Forecast. ويمكن للمطورين استكشاف الوثائق الكاملة على Hugging Face Blog.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/nvidia/kumo-forecast"
+                }
+              ]
+            },
+            {
+              "text": "يستند Kumo Forecast إلى بنية MOMENT-1-large، وهي مشفر زمني قوي مدرب مسبقاً على مجموعات بيانات كبيرة ومتنوعة من السلاسل الزمنية. ويحتفظ المشفر الأساسي بأوزان ثابتة أثناء تدريب رأس التنبؤ، مما يفصل بين نموذج التمثيل المدرب مسبقاً وطبقة التنبؤ الخاصة بالمهمة. ويضيف رأس التنبؤ القابل للتدريب طبقة تنبؤ متخصصة تتعلم من البيانات المحددة للنطاق. ويبلغ إجمالي عدد المعلمات في المشفر الأساسي حوالي 340 مليون معلمة، مما يوفر أساساً قوياً للتعلم الدقيق. ويمكن الرجوع إلى Back to Articles للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Back to Articles",
+                  "url": "https://huggingface.co/blog"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "كيف يعمل التنبؤ المعزز بالسياق",
+          "paragraphs": [
+            {
+              "text": "يمكن لنظام التنبؤ الاعتماد على مصدرين للمعلومات: التمثيلات التي تم تعلمها أثناء التدريب المسبق والملاحظات التاريخية المتاحة للتطبيق الحالي. ويجمع Kumo-Forecast بين هذين المصدرين من خلال نموذج تنبؤ مدرب مسبقاً ومسار استرجاع اختياري فوق السياق التاريخي. وفي مسار التنبؤ المباشر، يستخدم Kumo-Forecast محول MOMENT-مدعوم ورأس تنبؤ مدرب للتنبؤ بالقيم المستقبلية. وفي وضع DARR، يقوم أيضاً باسترجاع الأنماط ذات الصلة من البيانات التاريخية باستخدام نهج أقرب جار ودمج تلك المعلومات مع التنبؤ المباشر. ويخلق هذا تمييزاً بين نافذة إدخال النموذج وسياق الاسترجاع الخاص به. وتوفر نافذة الإدخال ملاحظات حديثة للتنبؤ؛ ويمكن أن يوفر DataFrame تاريخي منفصل سياقاً إضافياً لاسترجاع الأنماط. ويمكن للمطورين ضبط مدى اعتماد التنبؤ النهائي على كل مسار من خلال خيارات تكوين المكتبة. ويمكن العثور على مزيد من المعلومات حول وضع DARR في الورقة البحثية المنشورة، Memory-Augmented Forecasting: Scalability and Generalization Across Temporal Domains.",
+              "links": []
+            },
+            {
+              "text": "تدمج أربعة مكونات رئيسية: مشفر زمني مدرب مسبقاً، ورأس تنبؤ قابل للتدريب، وآلية استرجاع الأنماط التاريخية، وإطار عمل قابل للتفسير. ويستخدم المشفر الزمني المدرب مسبقاً بنية MOMENT-1-large Transformer كعمود فقري له. ويحتفظ المشفر والموزع بأوزان ثابتة أثناء تدريب رأس التنبؤ، مما يفصل بين نموذج التمثيل المدرب مسبقاً وطبقة التنبؤ الخاصة بالمهمة. ويقوم رأس التنبؤ المباشر بربط تمثيلات النموذج بالقيم المستقبلية لأفق الطلب. وبالنسبة للآفاق التي تتجاوز القدرة الأصلية للنموذج، هناك دعم للامتداد التلقائي. وهذا يميز التنبؤ المولد مباشرة عن التنبؤ الأطول الذي يمدد التنبؤات بشكل متكرر. ويقوم التمثيل والاسترجاع الواعي بالنطاق (DARR) بتعزيز التنبؤ المباشر مع الاسترجاع k-nearest-neighbor من بيانات السياق التاريخي. ويجمع هذا العملية بين التنبؤات المباشرة واسترجاع الأنماط التاريخية، بينما يقبل SDK السياق التاريخي من خلال وسيطة context_df منفصلة. ويشمل Kumo-Forecasting أيضاً إطار عمل قابل للتفسير غير خاص بالنموذج. وعندما يكون مفعّلاً، فإنه ينتج حزمة تفسيرات تحتوي على نسب المساهمة في التأخير والميزات لكل أفق تنبؤ، وتشخيصات تدفق دلالي، وتشخيصات استقرار المسار، ومتكاملات التدرج المدمجة الاختيارية. وترافق هذه المخرجات التنبؤ بدلاً من طلب بنية تنبؤ مختلفة. ويمكن العثور على مزيد من التفاصيل حول قابلية التفسير في هذه الورقة، NVExplain: Explaining Time Series Forecasting with Latent Trajectory Analysis and Structure-Preserving Surrogates.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكوين وقابلية التفسير",
+          "paragraphs": [
+            {
+              "text": "يوفر Kumo-Forecast واجهة برمجة تطبيقات تركز على DataFrame، مما يسمح للمطورين بتحديد آفاق التنبؤ، وتوفير سياق تاريخي اختياري للاسترجاع، وتعديل مدى اعتماد التنبؤ النهائي على المسارات المباشرة مقابل مسارات الاسترجاع. ويوفر إطار العمل القابل للتفسير تفسيرات خاصة بكل أفق دون الحاجة إلى تعديل نظام التنبؤ الأساسي. ويمكن للمطورين تفعيل هذه الميزة عبر وسيطة بسيطة، مما ينتج حزمة تفسيرات يمكن دمجها مباشرة في خطوط أنابيب الإنتاج. ويمكن العثور على مزيد من التفاصيل حول قابلية التفسير في هذه الورقة، NVExplain: Explaining Time Series Forecasting with Latent Trajectory Analysis and Structure-Preserving Surrogates.",
+              "links": []
+            },
+            {
+              "text": "يمكن للمطورين أيضاً ضبط كيفية اعتماد التنبؤ النهائي على كل مسار من خلال خيارات تكوين المكتبة. وتوفر المكتبة آفاق تنبؤ قابلة للتكوين، وسياق تاريخي اختياري للاسترجاع، وإطار عمل قابل للتفسير ينتج تفسيرات خاصة بكل أفق دون تعديل نظام التنبؤ الأساسي. ويمكن العثور على مزيد من المعلومات حول وضع DARR في الورقة البحثية المنشورة، Memory-Augmented Forecasting: Scalability and Generalization Across Temporal Domains.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حالات الاستخدام والتقييم",
+          "paragraphs": [
+            {
+              "text": "يوفر NVIDIA Factory Operations (FOX) Blueprint وصولاً مبكراً إلى وحدة الصيانة التنبؤية التي تستفيد من Kumo Anomaly وKumo Forecast. ويقوم بتحليل البيانات في الوقت الفعلي للتنبؤ بالشذوذ المستقبلي. ويمكن للمطورين استكشاف النموذج أكثر على Hugging Face Blog، حيث تتوفر الوثائق الكاملة وأمثلة الكود. ويمكن العثور على مزيد من التفاصيل حول قابلية التفسير في هذه الورقة، NVExplain: Explaining Time Series Forecasting with Latent Trajectory Analysis and Structure-Preserving Surrogates.",
+              "links": []
+            },
+            {
+              "text": "لإجراء تقييم خاص بالتطبيق، قارن التكوينات المباشرة والمعززة بالاسترجاع على نفس نوافذ التنبؤ المحتجزة. وتحقق من جودة التنبؤ عبر الآفاق والظروف التشغيلية المقصودة، بما يتوافق مع متطلبات NVIDIA للاختبار الخاص بحالة الاستخدام. ويمكن للمطورين أيضاً ضبط كيفية اعتماد التنبؤ النهائي على كل مسار من خلال خيارات تكوين المكتبة. ويوفر Kumo-Forecast واجهة برمجة تطبيقات تركز على DataFrame، مما يسمح للمطورين بتحديد آفاق التنبؤ، وتوفير سياق تاريخي اختياري للاسترجاع، وتعديل مدى اعتماد التنبؤ النهائي على المسارات المباشرة مقابل مسارات الاسترجاع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوافر والتكامل",
+          "paragraphs": [
+            {
+              "text": "Kumo-Forecast متاح بموجب رخصة Apache 2.0، مما يسمح بالاستخدام التجاري والتعديل. ويمكن للمطورين الوصول إلى الكود على مستودع NVIDIA/Kumo-TS، وتنزيل الأوزان من nvidia/Kumo-Forecast، واستكشاف الوثائق الكاملة على Hugging Face Blog. ويمكن العثور على مزيد من المعلومات حول وضع DARR في الورقة البحثية المنشورة، Memory-Augmented Forecasting: Scalability and Generalization Across Temporal Domains.",
+              "links": []
+            },
+            {
+              "text": "يوفر مستودع Kumo-TS أيضاً مثالاً على ضبط Kumo-Forecast بدقة على ملف CSV الذي يوفره المستخدم، مما يوفر للمطورين كلاً من سير عمل الاستدلال المدرب مسبقاً ونقطة بداية موثقة لتكييف النموذج مع بياناتهم الخاصة. ويمكن للمطورين أيضاً استكشاف النموذج أكثر على Hugging Face Blog، حيث تتوفر الوثائق الكاملة وأمثلة الكود.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "NVIDIA Kumo Forecast",
+        "السلاسل الزمنية",
+        "الذكاء الاصطناعي",
+        "التنبؤ",
+        "DARR",
+        "قابلية التفسير",
+        "Apache 2.0"
+      ],
+      "entities": [
+        "NVIDIA",
+        "Kumo Forecast",
+        "MOMENT-1-large",
+        "Hugging Face",
+        "Apache 2.0"
+      ],
+      "article_type": "news",
+      "confidence_note": "مستمد من مدونة Hugging Face الرسمية"
+    },
+    "en": {
+      "title": "NVIDIA Kumo Forecast Adds Retrieval to Time-Series AI",
+      "description": "NVIDIA’s Kumo Forecast combines a pretrained Transformer, historical-pattern retrieval and horizon-specific explanations for time-series forecasting.",
+      "deck": "NVIDIA has introduced Kumo Forecast, a multivariate time-series model that combines pretrained representations with optional retrieval from historical data. The system also provides explanations for individual forecast horizons.",
+      "summary_bullets": [
+        "Kumo Forecast uses the MOMENT-1-large Transformer as its pretrained backbone.",
+        "Its DARR mode retrieves related patterns from historical context and combines them with direct predictions.",
+        "The model provides lag and feature attributions, semantic-flow diagnostics and trajectory-stability diagnostics.",
+        "The library offers a DataFrame-first API, configurable horizons and support for fine-tuning on user-supplied CSV data."
+      ],
+      "sections": [
+        {
+          "heading": "A hybrid approach to forecasting",
+          "paragraphs": [
+            {
+              "text": "NVIDIA says Kumo Forecast, formerly known as NV-Tesseract Forecasting, is a multivariate time-series forecasting model designed to combine two sources of information: representations learned during pretraining and historical observations available for a particular application. The model can produce a direct forecast from recent observations or add a retrieval pathway that searches historical data for related patterns. Further details are available from Hugging Face Blog in the original source material.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/nvidia/kumo-forecast"
+                }
+              ]
+            },
+            {
+              "text": "The retrieval-enhanced approach is called Domain-Aware Representation and Retrieval, or DARR. In this mode, Kumo Forecast uses a nearest-neighbor process to find relevant patterns in historical context and combines those patterns with the output of its direct forecasting path. Developers can configure how strongly the final prediction depends on each pathway. Further details are available from Back to Articles in the original source material.",
+              "links": [
+                {
+                  "text": "Back to Articles",
+                  "url": "https://huggingface.co/blog"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Pretrained backbone and forecasting head",
+          "paragraphs": [
+            {
+              "text": "Kumo Forecast is built on the MOMENT-1-large Transformer backbone. The base encoder contains approximately 340 million parameters, while a trainable forecasting head maps the encoder’s representations to future values for the requested forecast horizon. NVIDIA describes the architecture as separating the pretrained representation model from the task-specific prediction layer, with encoder and embedder weights kept frozen while the forecasting head is trained.",
+              "links": []
+            },
+            {
+              "text": "The model supports direct forecasts for the horizon handled by its forecasting head and can use autoregressive extension for longer horizons. That distinction separates values generated directly by the forecasting head from forecasts extended recursively through later prediction steps.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Historical context remains separate",
+          "paragraphs": [
+            {
+              "text": "The system distinguishes between the input window and the retrieval context. The input window contains recent observations used to generate a forecast, while a separate historical DataFrame can provide additional examples for pattern retrieval. In the software development kit, this historical input is supplied through a context_df argument, allowing the retrieval data to be managed separately from the observations being forecast.",
+              "links": []
+            },
+            {
+              "text": "Kumo Forecast accepts numeric temporal data with a timestamp column and one or more numeric value columns. Inputs can be represented as a pandas DataFrame or provided through CSV or JSON. Supported input sequence lengths are 256, 512, 1024 and 2048 observations. When DARR is used, the dimensions of the context should be similar to those of the input context.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Interpretability accompanies predictions",
+          "paragraphs": [
+            {
+              "text": "Interpretability is included as a model-agnostic framework rather than requiring a separate forecasting architecture. When enabled, it produces an explanation bundle with lag and feature attributions for each forecast horizon, along with semantic-flow diagnostics and trajectory-stability diagnostics. Optional embedding Integrated Gradients are also available.",
+              "links": []
+            },
+            {
+              "text": "These outputs are intended to accompany the forecast and help describe how the model arrived at horizon-specific results. NVIDIA points to its NVExplain work for further details on latent trajectory analysis and structure-preserving surrogate methods for time-series forecasting.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Library and adaptation options",
+          "paragraphs": [
+            {
+              "text": "The Kumo-Forecast library provides a DataFrame-first API, configurable forecast horizons and optional historical context for retrieval. NVIDIA also says the Kumo-TS repository includes an example showing how to fine-tune Kumo Forecast on a user-supplied CSV. The project therefore supports both a pretrained inference workflow and a documented starting point for adapting the model to a user’s own numerical time-series data.",
+              "links": []
+            },
+            {
+              "text": "The model code and weights are identified in the source as NVIDIA/Kumo-TS and nvidia/Kumo-Forecast, respectively. Kumo-Forecast is available under the Apache 2.0 license, according to NVIDIA’s publication.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Use-case testing and predictive maintenance",
+          "paragraphs": [
+            {
+              "text": "NVIDIA recommends comparing direct and retrieval-enhanced configurations on the same held-out forecasting windows when evaluating an application. The company says forecast quality should be checked across the intended horizons and operating conditions, reflecting its requirement for use-case-specific testing rather than relying on a single general result.",
+              "links": []
+            },
+            {
+              "text": "The Factory Operations, or FOX, Blueprint includes Early Access to a Predictive Maintenance module that uses Kumo Anomaly and Kumo Forecast. According to NVIDIA, the module analyzes real-time data to predict future anomalies. The source also references a session from GTC San Jose 2026 connected to the blueprint.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "NVIDIA",
+        "Kumo Forecast",
+        "time-series forecasting",
+        "artificial intelligence",
+        "Transformer models",
+        "predictive maintenance"
+      ],
+      "entities": [
+        "NVIDIA",
+        "Kumo Forecast",
+        "Kumo-TS",
+        "MOMENT-1-large",
+        "Domain-Aware Representation and Retrieval",
+        "NVExplain"
+      ],
+      "article_type": "news",
+      "confidence_note": "Based solely on NVIDIA’s official Hugging Face Blog post; product capabilities and evaluation guidance are company-reported."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "en:article_too_short"
+      ],
+      "word_count_ar": 616,
+      "word_count_en": 438
+    },
+    {
+      "attempt": 2,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 446,
+      "word_count_en": 819
+    },
+    {
+      "attempt": 3,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 1005,
+      "word_count_en": 725
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "5c32755a71da49edb4fe",
+      "title": "NVIDIA Kumo Forecast Combines Pretrained Time-Series Representations with Historical Pattern Retrieval and Interpretability",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "en:article_too_short"
+          ],
+          "word_count_ar": 616,
+          "word_count_en": 438
+        },
+        {
+          "attempt": 2,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 446,
+          "word_count_en": 819
+        },
+        {
+          "attempt": 3,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 1005,
+          "word_count_en": 725
+        }
+      ]
+    }
+  ],
+  "slug": "nvidia-kumo-forecast-combines-pretrained-time-series-representations-with-historical-pattern",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/nvidia-kumo-forecast-combines-pretrained-time-series-representations-with-historical-pattern/hero.webp",
+    "card": "/forum/assets/posts/2026/10/nvidia-kumo-forecast-combines-pretrained-time-series-representations-with-historical-pattern/card.webp",
+    "social": "/forum/assets/posts/2026/10/nvidia-kumo-forecast-combines-pretrained-time-series-representations-with-historical-pattern/social.jpg",
+    "alt": {
+      "ar": "NVIDIA Kumo Forecast يدمج الأنماط التاريخية مع السلاسل الزمنية",
+      "en": "NVIDIA Kumo Forecast Adds Retrieval to Time-Series AI"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/660f5683b710b57b115a5483/pFl0vhvFrc-oZjk5qE8_0.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/nvidia-kumo-forecast-combines-pretrained-time-series-representations-with-historical-pattern/inline-01.webp",
+        "width": 1400,
+        "height": 746,
+        "alt": {
+          "ar": "NVIDIA Kumo Forecast يدمج الأنماط التاريخية مع السلاسل الزمنية",
+          "en": "alt text"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/nvidia/kumo-forecast",
+        "originalUrl": "https://huggingface.co/nvidia/Kumo-Forecast/resolve/main/images/image-gtc-2026.png"
+      }
+    ]
+  }
 }
