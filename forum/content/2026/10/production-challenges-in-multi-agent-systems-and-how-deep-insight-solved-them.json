@@ -1,0 +1,344 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "f4cbbc5a6a498cf536c7",
+  "slug": "production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/",
+    "en": "/forum/en/ai/production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/"
+  },
+  "locales": {
+    "ar": {
+      "title": "تجاوز عقبات الأنظمة متعددة الوكلاء مع نظام Deep Insight",
+      "description": "تعرف على كيفية حل نظام Deep Insight المفتوح المصدر لخمسة تحديات رئيسية تواجه نشر الأنظمة متعددة الوكلاء للذكاء الاصطناعي في بيئات الإنتاج الفعلية.",
+      "deck": "يواجه مطورو أنظمة الذكاء الاصطناعي عقبات حقيقية عند الانتقال من النماذج الأولية إلى بيئات الإنتاج، وهو ما يسعى نظام Deep Insight لمعالجته عبر تقنيات هندسة السياق.",
+      "summaryBullets": [
+        "بناء النماذج الأولية للذكاء الاصطناعي سهل، لكن الانتقال إلى بيئة الإنتاج يفرض تحديات تشغيلية معقدة.",
+        "نظام Deep Insight يحل خمسة تحديات رئيسية تشمل التنسيق، واختيار النماذج، والتشغيل الموثوق، والأمان، والمراقبة.",
+        "يعتمد النظام على هيكلية متعددة الوكلاء تتعاون بذكاء لتحليل البيانات وإنتاج تقارير احترافية بصيغة وورد.",
+        "يتوفر النظام بثلاث خيارات تشغيلية تشمل النسخة ذاتية الاستضافة، والنسخة الويب، والنسخة المُدارة عبر خدمات أمازون.",
+        "تتكامل مكونات البنية التحتية مثل أدوات تطوير الوكلاء وخدمات الحوسبة لضمان بيئة تشغيل آمنة ومعزولة."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الإنتاج في الأنظمة متعددة الوكلاء",
+          "paragraphs": [
+            {
+              "text": "يشير فريق هندسة الحلول في شركة أمازون ويب سيرفيسز إلى أن بناء نموذج ذكاء اصطناعي متعدد الوكلاء أصبح أمراً يسيراً يمكن إنجازه في غضون أيام معدودة عبر الأطر مفتوحة المصدر والخدمات السحابية. ومع ذلك، فإن العقبة الحقيقية تظهر بوضوح عندما تحاول فرق العمل الانتقال بهذه النماذج من مرحلة الاختبار والتجارب الأولية إلى تطبيقات الأعمال الحقيقية والواسعة النطاق في بيئات الإنتاج. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/5-production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/"
+                }
+              ]
+            },
+            {
+              "text": "وعندما تحاول هذه الفرق تشغيل الوكلاء ضمن سيناريوهات حقيقية، تبرز مشكلات متكررة مثل عدم التزام الوكيل بمنطق الأعمال المحدد، أو تخطي خطوات التحقق اللازمة، أو الفشل في التعامل مع الحالات الاستثنائية. لا تكفي الأوامر التوجيهية وحدها للتعامل مع هذه التحديات، نظراً لأن الوكلاء يتخذون قراراتهم بناءً على السياق المتغير بدلاً من اتباع تسلسل برمجي صارم وثابت.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الكشف عن نظام Deep Insight ومعماريته",
+          "paragraphs": [
+            {
+              "text": "لمواجهة هذه العقبات الهيكلية والتشغيلية، قام فريق هندسة الحلول بتطوير نظام Deep Insight كحل متكامل وعالي الأداء وموجه لبيئات الإنتاج. يعتمد النظام على تقسيم العمل بين ثمانية وكلاء متخصصين يتعاونون بسلاسة لإنتاج تحليل بيانات دقيق وشامل، حيث يتولى كل وكيل مهام محددة بدقة ضمن سياق مستقل تماماً لضمان كفاءة عالية وتجنب تداخل المهام المعقدة.",
+              "links": [
+                {
+                  "text": "Deep Insight",
+                  "url": "https://github.com/aws-samples/sample-deep-insight"
+                }
+              ]
+            },
+            {
+              "text": "تتضمن شبكة الوكلاء منسقاً للطلبات، ومخططاً للمهام، ومراجعاً للخطط، ومشرفاً لتوجيه الوكلاء المتخصصين مثل مبرمج تحليل البيانات، ومدقق الحسابات، ومُنشئ التقارير، ومتتبع التقدم. تعمل هذه المنظومة المتكاملة معاً لتحميل البيانات، وتشغيل التحليلات المتقدمة، وإنشاء الرسوم البيانية، والتحقق من صحة العمليات الحسابية بدقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خيارات النشر والبنية التقنية للوكلاء",
+          "paragraphs": [
+            {
+              "text": "يوفر النظام مرونة عالية في النشر من خلال ثلاثة خيارات أساسية تناسب مراحل التطوير المختلفة وصولاً إلى التشغيل التجاري الواسع. تشمل هذه الخيارات النسخة المحلية ذاتية الاستضافة والمصممة لتسريع عملية التطوير والاختبار عبر واجهة سطر الأوامر، والنسخة المعتمدة على الويب التي تتيح للمستخدمين غير التقنيين رفع البيانات ومراجعة خطط التحليل بسهولة.",
+              "links": []
+            },
+            {
+              "text": "أما الخيار الثالث فهو النسخة المُدارة والمصممة خصيصاً لبيئات الإنتاج القوية، والتي تعتمد على منصة متطورة لبناء الوكلاء وتوصيلهم وتحسينهم بمستوى عالٍ من الأمان داخل شبكة افتراضية خاصة معزولة. يتم تشغيل هذه النسخة بالتعاون مع بيئات تشغيل سحابية مرنة وأدوات مخصصة لتنفيذ التعليمات البرمجية بأمان تام لكل مستخدم على حدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حلول تكنولوجية متكاملة للعمليات السحابية",
+          "paragraphs": [
+            {
+              "text": "تعتمد البنية التحتية للنظام على تكامل تقنيات متقدمة لتنظيم تدفق العمل ومعالجة البيانات بأعلى مستويات الموثوقية والأمان. تساعد أطر عمل تطوير الوكلاء المتخصصة في بناء الهيكلية الموزعة وضمان تفاعل سلس ومنظم بين مختلف الوكلاء الآليين داخل النظام البيئي السحابي.",
+              "links": []
+            },
+            {
+              "text": "كما تستفيد البنية التحتية من منصات الذكاء الاصطناعي المتقدمة لتشغيل نماذج الأساس وتحقيق أقصى استفادة من قدرات التحليل الآلي، مدعومة بخدمات أساسية لتوزيع أحمال العمل السحابية وإدارة الحوسبة المرنة بكفاءة تشغيلية عالية تضمن استقرار النظام في أوقات الذروة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المراقبة المستمرة وتجارب الاستخدام الحية",
+          "paragraphs": [
+            {
+              "text": "إلى جانب المعمارية البرمجية، يركز نظام Deep Insight على معالجة تحديات التشغيل والمراقبة المستمرة لضمان صحة النظام وأدائه المستقر. ومن خلال الاستفادة من خدمات موازنة الأحمال المتقدمة وبيئات الحوسبة القابلة للتوسع السريع، يتمكن المطورون من تتبع أداء الوكلاء ورصد أي اختلالات محتملة في الوقت الفعلي أثناء تنفيذ مهام تحليل البيانات المعقدة.",
+              "links": []
+            },
+            {
+              "text": "تتيح هذه المقاربة الشاملة للمؤسسات تجاوز القيود التقنية المعتادة في أنظمة الذكاء الاصطناعي التوليدي، وتقدم نموذجاً عملياً موثوقاً لنشر الأنظمة متعددة الوكلاء في بيئات الإنتاج الحية مع الحفاظ على معايير الأمان وجودة المخرجات.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أنظمة متعددة الوكلاء",
+        "سحابة أمازون",
+        "تعلم मशीन",
+        "هندسة السياق",
+        "تطوير البرمجيات"
+      ],
+      "entities": [
+        "Deep Insight",
+        "AWS",
+        "Amazon Bedrock",
+        "Strands Agents SDK"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "22 أكتوبر 2026",
+      "modifiedLabel": "22 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 615
+    },
+    "en": {
+      "title": "Deep Insight Solves Five Multi-Agent Production Challenges",
+      "description": "Discover how the open-source Deep Insight system on AWS tackles key multi-agent production hurdles including orchestration, security, and monitoring.",
+      "deck": "The AWS Solutions Architecture team has introduced Deep Insight, an open-source multi-agent system designed to help engineering teams move beyond basic AI prototypes and overcome five major production challenges.",
+      "summaryBullets": [
+        "Deep Insight addresses five critical production hurdles: orchestration, per-agent model selection, reliable operation, secure code execution, and monitoring.",
+        "The system uses a hierarchical multi-agent structure featuring specialized roles such as Coordinator, Planner, Supervisor, Coder, Validator, Reporter, and Tracker.",
+        "Three flexible deployment options are available, ranging from a local Self-Hosted version to a managed production deployment powered by Amazon Bedrock AgentCore.",
+        "The architecture leverages advanced components including Application Load Balancer and AWS Fargate to ensure secure code execution and session isolation."
+      ],
+      "sections": [
+        {
+          "heading": "Moving AI Prototypes Beyond the Pilot Stage",
+          "paragraphs": [
+            {
+              "text": "While building a multi-agent AI prototype can take only days using modern open-source frameworks and cloud services, moving those systems into production frequently creates unexpected roadblocks. Teams often discover that agents fail to follow strict business logic, skip crucial validation steps, or miss important edge cases because agents make judgments based on context rather than following fixed instruction sequences. To tackle these hurdles, the AWS Solutions Architecture team built Deep Insight, an open-source multi-agent system designed for robust production environments, as detailed on the AWS Machine Learning Blog.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/5-production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "The Five Core Production Challenges",
+          "paragraphs": [
+            {
+              "text": "According to technical breakdowns, production environments demand solutions for five distinct system challenges: complex orchestration, per-agent model selection, reliable operation, secure code execution, and comprehensive monitoring. Because prompt engineering alone proves insufficient for managing complex agent behaviors, Deep Insight addresses these roadblocks by establishing a complete cognitive architecture and execution flow. This framework utilizes tools such as the Strands Agents SDK to govern collaboration and reason through specialized business tasks without relying purely on basic instructions.",
+              "links": [
+                {
+                  "text": "Strands Agents SDK",
+                  "url": "https://strandsagents.com/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Hierarchical Multi-Agent Architecture",
+          "paragraphs": [
+            {
+              "text": "Deep Insight employs a structured hierarchy where specialized agents collaborate to transform complex data analysis into automated insights. Given a CSV file and a natural-language prompt, a team of roles—including a Coordinator, Planner, Supervisor, Coder, Validator, Reporter, and Tracker—works together to load data, run analysis, generate charts, verify calculations, and produce a professional report complete with citations. The underlying orchestration relies on Amazon Bedrock to support advanced reasoning and flexible model selection across the entire agent workflow.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Flexible Deployment and Infrastructure Options",
+          "paragraphs": [
+            {
+              "text": "To accommodate different stages of the development lifecycle, the project is made available on GitHub and offers three deployment pathways. Developers can utilize the Self-Hosted version for local command-line iteration or take advantage of the Managed AgentCore version for scalable cloud operations. Powered by Amazon Bedrock AgentCore, the managed setup runs inside a private virtual private cloud with isolated user environments.",
+              "links": [
+                {
+                  "text": "GitHub",
+                  "url": "https://github.com/aws-samples/sample-deep-insight"
+                },
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Secure Code Execution and Operational Scaling",
+          "paragraphs": [
+            {
+              "text": "Production deployments require strict security, particularly when agents write and execute data analysis code. Deep Insight handles this securely by isolating user sessions and hosting a custom code interpreter on AWS Fargate. Incoming traffic and web requests are efficiently routed through an Application Load Balancer, ensuring reliable performance and robust operational health monitoring as multi-agent systems scale from simple pilots into mission-critical business applications.",
+              "links": [
+                {
+                  "text": "AWS Fargate",
+                  "url": "https://aws.amazon.com/fargate/"
+                },
+                {
+                  "text": "Application Load Balancer",
+                  "url": "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-application-load-balancer.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Multi-Agent Systems",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Cloud Computing",
+        "Software Architecture"
+      ],
+      "entities": [
+        "AWS Solutions Architecture",
+        "Amazon Bedrock",
+        "Deep Insight",
+        "Strands Agents SDK",
+        "AWS Fargate"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 22, 2026",
+      "modifiedLabel": "October 22, 2026",
+      "readMinutes": 3,
+      "wordCount": 501
+    }
+  },
+  "datePublished": "2026-10-22T02:59:09.386705+03:00",
+  "dateModified": "2026-10-22T02:59:09.386705+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/hero.webp",
+    "card": "/forum/assets/posts/2026/10/production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/card.webp",
+    "social": "/forum/assets/posts/2026/10/production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/social.jpg",
+    "alt": {
+      "ar": "تجاوز عقبات الأنظمة متعددة الوكلاء مع نظام Deep Insight",
+      "en": "Deep Insight Solves Five Multi-Agent Production Challenges"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21081-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/inline-01.webp",
+        "width": 1400,
+        "height": 951,
+        "alt": {
+          "ar": "تجاوز عقبات الأنظمة متعددة الوكلاء مع نظام Deep Insight",
+          "en": "Deep Insight architecture: the Strands Agents multi-agent layer on Amazon Bedrock AgentCore, with an Application Load Balancer routing code execution to AWS Fargate containers in a private VPC"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/5-production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21081-1-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/inline-02.webp",
+        "width": 1400,
+        "height": 581,
+        "alt": {
+          "ar": "تجاوز عقبات الأنظمة متعددة الوكلاء مع نظام Deep Insight",
+          "en": "Hierarchical multi-agent structure where the Coordinator and Planner feed the Supervisor, which orchestrates the Coder, Validator, Reporter, and Tracker agents"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/5-production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21081-2-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/inline-03.webp",
+        "width": 762,
+        "height": 1050,
+        "alt": {
+          "ar": "تجاوز عقبات الأنظمة متعددة الوكلاء مع نظام Deep Insight",
+          "en": "Deep Insight web UI showing the Plan Reviewer modal where the user approves or revises the generated analysis plan"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/5-production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21081-3-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/inline-04.webp",
+        "width": 758,
+        "height": 1050,
+        "alt": {
+          "ar": "تجاوز عقبات الأنظمة متعددة الوكلاء مع نظام Deep Insight",
+          "en": "Deep Insight web interface for uploading data, entering a prompt, and downloading the generated report"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/5-production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21081-4-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/5-production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them/",
+      "type": "official",
+      "title": "5 production challenges in multi-agent systems and how Deep Insight solved them"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/5-production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them",
+  "sourceTitle": "5 production challenges in multi-agent systems and how Deep Insight solved them",
+  "trendScore": 121.96,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-21T23:59:09+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/production-challenges-in-multi-agent-systems-and-how-deep-insight-solved-them.json"
+}
