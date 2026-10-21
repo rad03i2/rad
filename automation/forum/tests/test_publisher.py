@@ -3,6 +3,7 @@ import sys
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -59,6 +60,38 @@ class PublisherQualityTests(unittest.TestCase):
 
     def _sources(self):
         return [{"ok": True, "text": "source text", "url": "https://example.com", "kind": "official"}]
+
+    def test_duplicate_title_is_retried_with_feedback(self):
+        original = self._editions()
+        feedbacks = []
+        def writer(story, sources, settings, feedback):
+            feedbacks.append(feedback)
+            draft = copy.deepcopy(original)
+            if len(feedbacks) > 1:
+                draft["en"]["title"] = "Technology company explains the architecture of its new AI platform"
+            return draft
+        existing = {"en": [{"title": "  " + original["en"]["title"].upper().replace(" ", "  ") + "  "}]}
+        with patch("publisher._load_posts", return_value=existing):
+            editions, errors, attempts, status = _generate_qualified_editions(
+                self._story(), self._sources(), {}, writer,
+            )
+        self.assertEqual(status, "passed")
+        self.assertEqual(errors, [])
+        self.assertIsNotNone(editions)
+        self.assertEqual(attempts[0]["status"], "quality_rejected")
+        self.assertTrue(any("en:duplicate_title:" in error for error in feedbacks[1]))
+
+    def test_repeated_duplicate_drafts_are_rejected(self):
+        draft = self._editions()
+        existing = {"ar": [{"title": draft["ar"]["title"]}]}
+        with patch("publisher._load_posts", return_value=existing):
+            editions, errors, attempts, status = _generate_qualified_editions(
+                self._story(), self._sources(), {}, lambda *args: copy.deepcopy(draft),
+            )
+        self.assertIsNone(editions)
+        self.assertEqual(status, "quality_rejected")
+        self.assertEqual(len(attempts), 2)
+        self.assertTrue(any("ar:duplicate_title:" in error for error in errors))
 
     def test_complete_bilingual_article_passes(self):
         ok, errors = _quality_gate(self._story(), self._sources(), self._editions())

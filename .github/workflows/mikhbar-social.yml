@@ -15,7 +15,7 @@ on:
         default: ''
         type: string
   workflow_run:
-    workflows: ['Mikhbar 20-Minute Publisher']
+    workflows: ['Mikhbar Cloudflare Deploy']
     types: [completed]
   push:
     branches: [main]
@@ -126,6 +126,52 @@ jobs:
                   return SITE + parsed.path
               return SITE + ('/' if not value.startswith('/') else '') + value
 
+          def canonical_article_url(article, item):
+              article_path = (
+                  article.get('urls', {}).get('ar')
+                  or item.get('published_urls', {}).get('ar')
+                  or item.get('published_url')
+              )
+              parsed = urlsplit(str(article_path))
+              if parsed.netloc and parsed.hostname not in {
+                  'mikhbar.website',
+                  'www.mikhbar.website',
+                  'rdwan.dev',
+                  'www.rdwan.dev',
+              }:
+                  raise RuntimeError('Article URL is outside the Mikhbar website.')
+              path = parsed.path
+              if path.startswith('/forum/'):
+                  path = path[len('/forum'):]
+              if not path.startswith('/ar/'):
+                  raise RuntimeError('Missing canonical Arabic article URL.')
+
+              return SITE + path
+
+          def verify_production_media(article, item):
+              page_url = canonical_article_url(article, item)
+              headers = {'User-Agent': 'Mikhbar-Social-Preflight/1.0'}
+              with urlopen(Request(page_url, headers=headers), timeout=25) as response:
+                  content_type = response.headers.get('Content-Type', '').lower()
+                  html = response.read(512 * 1024).decode('utf-8', errors='replace')
+              if ('text/html' not in content_type or 'data-ssr-rendered="true"' not in html
+                      or f'href="{page_url}"' not in html):
+                  raise RuntimeError('Production article is not rendered at its canonical URL.')
+              image_url = absolute_site_url(article.get('images', {}).get('social'))
+              if not image_url:
+                  return
+              limit = 8 * 1024 * 1024
+              with urlopen(Request(image_url, headers=headers), timeout=25) as response:
+                  content_type = response.headers.get('Content-Type', '').lower()
+                  data = response.read(limit + 1)
+              signature_ok = (
+                  data.startswith(b'\xff\xd8\xff') or data.startswith(b'\x89PNG\r\n\x1a\n')
+                  or data.startswith((b'GIF87a', b'GIF89a'))
+                  or (data.startswith(b'RIFF') and data[8:12] == b'WEBP')
+              )
+              if not content_type.startswith('image/') or not signature_ok or len(data) > limit:
+                  raise RuntimeError('Production social image is unavailable or invalid.')
+
           def clean_excerpt(value, limit=240):
               text = ' '.join(str(value or '').split()).strip()
               if len(text) <= limit:
@@ -203,6 +249,22 @@ jobs:
 
           targets = pending_targets
 
+          # Publisher commits can precede deployment. Check the public assets before
+          # any Graph API call, including when a newer commit races this deploy.
+          for item in targets:
+              article = json.loads((root / item['content_file']).read_text(encoding='utf-8'))
+              try:
+                  verify_production_media(article, item)
+              except (OSError, RuntimeError) as exc:
+                  if event_name == 'workflow_run':
+                      print(json.dumps({
+                          'status': 'deferred_site_not_ready',
+                          'story_id': str(item.get('story_id')),
+                          'reason': type(exc).__name__,
+                      }))
+                      raise SystemExit(0)
+                  raise
+
           page_id = os.environ.get('FACEBOOK_PAGE_ID', '').strip()
           supplied_token = os.environ.get('FACEBOOK_PAGE_ACCESS_TOKEN', '').strip()
           if not page_id:
@@ -271,26 +333,7 @@ jobs:
               title = clean_excerpt(ar.get('title') or item.get('title') or 'خبر جديد', 180)
               description = choose_description(ar)
 
-              article_path = (
-                  article.get('urls', {}).get('ar')
-                  or item.get('published_urls', {}).get('ar')
-                  or item.get('published_url')
-              )
-              parsed = urlsplit(str(article_path))
-              if parsed.netloc and parsed.hostname not in {
-                  'mikhbar.website',
-                  'www.mikhbar.website',
-                  'rdwan.dev',
-                  'www.rdwan.dev',
-              }:
-                  raise RuntimeError('Article URL is outside the Mikhbar website.')
-              path = parsed.path
-              if path.startswith('/forum/'):
-                  path = path[len('/forum'):]
-              if not path.startswith('/ar/'):
-                  raise RuntimeError('Missing canonical Arabic article URL.')
-
-              link = SITE + path
+              link = canonical_article_url(article, item)
               link += ('&' if '?' in link else '?') + (
                   'utm_source=facebook&utm_medium=social&utm_campaign=mikhbar_social'
               )

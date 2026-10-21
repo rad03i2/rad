@@ -116,6 +116,9 @@ def _prepared_is_valid(prepared: dict, queue_doc: dict, history: dict, settings:
     if story.get("id") not in queue_ids:
         return False
 
+    if publisher._duplicate_title_errors(editions, publisher._load_posts()):
+        return False
+
     prepared_at = publisher._parse_dt(prepared.get("prepared_at"))
     max_age_minutes = int(settings.get("preparedDraftMaxAgeMinutes", 60))
     if prepared_at and _elapsed_seconds(prepared_at, now) > max_age_minutes * 60:
@@ -264,6 +267,9 @@ def _publish_prepared(prepared: dict, ignore_cooldown: bool = False) -> int:
 
     def prepared_editions(candidate, candidate_sources, settings, writer_fn=publisher.write_article):
         if candidate.get("id") == story.get("id"):
+            errors = publisher._duplicate_title_errors(editions, publisher._load_posts())
+            if errors:
+                return None, errors, attempts, "quality_rejected"
             return editions, [], attempts, "passed"
         return original_generate(candidate, candidate_sources, settings, writer_fn)
 

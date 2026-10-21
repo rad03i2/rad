@@ -333,6 +333,20 @@ def _bounded_int(settings: dict, key: str, default: int, minimum: int, maximum: 
     return max(minimum, min(maximum, value))
 
 
+def _duplicate_title_errors(editions: dict, posts_by_locale: dict) -> list[str]:
+    """Match the search audit's normalization before accepting a new draft."""
+    errors = []
+    for locale in ("ar", "en"):
+        title = " ".join(str(editions.get(locale, {}).get("title") or "").casefold().split())
+        existing = {
+            " ".join(str(post.get("title") or "").casefold().split())
+            for post in posts_by_locale.get(locale, [])
+        }
+        if title and title in existing:
+            errors.append(f"{locale}:duplicate_title:{title}")
+    return errors
+
+
 def _generate_qualified_editions(
     story: dict,
     source_pack: list[dict],
@@ -349,6 +363,7 @@ def _generate_qualified_editions(
     feedback: list[str] | None = None
     attempts: list[dict] = []
     last_errors: list[str] = []
+    existing_posts = _load_posts()
 
     for attempt_number in range(1, max_attempts + 1):
         try:
@@ -370,6 +385,9 @@ def _generate_qualified_editions(
             continue
 
         ok, errors = _quality_gate(story, source_pack, editions, settings)
+        if ok:
+            errors.extend(_duplicate_title_errors(editions, existing_posts))
+            ok = not errors
         attempts.append({
             "attempt": attempt_number,
             "status": "passed" if ok else "quality_rejected",

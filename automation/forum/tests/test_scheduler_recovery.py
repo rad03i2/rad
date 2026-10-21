@@ -51,6 +51,19 @@ class WakeupRecoveryTests(unittest.TestCase):
 
 
 class PreparationBoundaryTests(unittest.TestCase):
+    def test_cached_draft_with_existing_headline_is_invalid(self):
+        now = datetime.now(timezone.utc)
+        prepared = {
+            "status": "ready", "content_format_version": 3,
+            "story": {"id": "new", "url": "https://example.com/new"},
+            "editions": {"ar": {"title": "عنوان جديد"}, "en": {"title": "Existing headline"}},
+            "source_pack": [], "images": {}, "prepared_at": now.isoformat(),
+        }
+        with patch.object(scheduler.publisher, "_load_posts", return_value={"en": [{"title": "existing HEADLINE"}]}):
+            self.assertFalse(scheduler._prepared_is_valid(
+                prepared, {"items": [{"id": "new", "status": "queued"}]}, {}, {}, now,
+            ))
+
     def test_overdue_empty_slot_reports_blocked_publication(self):
         last = datetime.now(timezone.utc) - timedelta(hours=3)
         def load(path, default):
