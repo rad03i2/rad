@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "a2fd77ec6a51ee20d9cd",
+  "slug": "introducing-full-transaction-detection-for-cloudflare-waf",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/introducing-full-transaction-detection-for-cloudflare-waf/",
+    "en": "/forum/en/apps/introducing-full-transaction-detection-for-cloudflare-waf/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cloudflare تطلق كشف المعاملات الكاملة في جدار حماية WAF",
+      "description": "أعلنت Cloudflare عن إضافة ميزة كشف المعاملات الكاملة لجدار حماية WAF، مما يتيح ربط الطلبات بالاستجابات لكشف الثغرات الناجحة وتقليل الإنذارات الكاذبة.",
+      "deck": "توسّع Cloudflare قدرات جدار حماية تطبيقات الويب (WAF) من خلال ربط الطلبات بالاستجابات، مما يتيح اكتشاف الثغرات الناجحة وتقليل الإنذارات الكاذبة.",
+      "summaryBullets": [
+        "إضافة ميزة كشف المعاملات الكاملة التي تربط الطلبات بالاستجابات لكشف الثغرات الناجحة.",
+        "تقليل الإنذارات الكاذبة من خلال تحليل الاستجابة بدلاً من الاعتماد على الطلب فقط.",
+        "توفير الحماية لجميع العملاء، بما في ذلك الخطط المجانية.",
+        "إضافة قواعد الاستجابة التي تمنع وصول الاستجابات الخطرة إلى المهاجمين."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق ميزة كشف المعاملات الكاملة",
+          "paragraphs": [
+            {
+              "text": "أعلنت Cloudflare عن توسيع قدرات جدار حماية تطبيقات الويب (WAF) من خلال إضافة ميزتين جديدتين: كشف المعاملات الكاملة وقواعد الاستجابة. تتيح ميزة كشف المعاملات الكاملة تقييم كل طلب HTTP مع استجابته لتحديد أدلة الاستغلال، مما يساعد في الإجابة على أسئلة حول ما إذا كان الطلب يبدو خبيثاً وما الذي حدث عند معالجة التطبيق له.",
+              "links": [
+                {
+                  "text": "WAF",
+                  "url": "https://blog.cloudflare.com/tag/waf/"
+                }
+              ]
+            },
+            {
+              "text": "تُعد هذه الميزات حماية قيمة في ظل قدرة نماذج الذكاء الاصطناعي الحديثة على اكتشاف ثغرات مدفونة في البرمجيات الشائعة، مما يمنح المدافعين وضوحاً حول ما يجب إصلاحه ويمنح المهاجمين مسارات جديدة للاستغلال. ويمكن الرجوع إلى Cloudflare Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/full-transaction-waf"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحدي الإنذارات الكاذبة",
+          "paragraphs": [
+            {
+              "text": "تظل فحص الطلبات الواردة أمراً أساسياً لإيقاف الهجمات المعروفة قبل وصولها إلى التطبيق. ومع ذلك، تصبح بعض التهديدات واضحة فقط عند النظر في الطلب مع ما يعيده الأصل.",
+              "links": []
+            },
+            {
+              "text": "إن اعتبار كل طلب مريب استغلالاً مؤكداً يخلق خياراً صعباً. فالتوقيعات الواسعة للطلبات يمكن أن تلتقط المزيد من الهجمات المحتملة، لكنها قد تظهر أيضاً \"إنذارات كاذبة\"، مما يؤدي إلى كسر التطبيقات. توفر الاستجابة الدليل المفقود، حيث يمكن لـ Cloudflare الآن ربطها بالطلب الذي أنتجها، مما يتيح للكشف أن يأخذ في الاعتبار نتيجة المعاملة HTTP بأكملها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مثال توضيحي: كشف تسريب البيانات",
+          "paragraphs": [
+            {
+              "text": "لنفترض تطبيقاً يتيح للمستخدمين تنزيل الملفات. يمكن لمهاجم التلاعب بمعامل الملف لطلب ملف إعدادات خاص خارج المسموح به. يمكن لفحص الطلب التعرف على محاولة تجاوز المسار وحظرها قبل وصولها إلى التطبيق.",
+              "links": []
+            },
+            {
+              "text": "ومع ذلك، لا يمكن للطلب وحده تحديد ما إذا كان التطبيق سيكشف الملف. إذا وصل الطلب إلى الأصل، فإن استجابة تحتوي على نص مشابه للإعدادات توفر دليلاً إضافياً. يجمع كشف المعاملات الكاملة بين محاولة الوصول إلى الملف ومحتوى الاستجابة المميز لملف الإعدادات الخاص، مما يوفر دليلاً أقوى على تسريب البيانات الحساسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "فصل الكشف عن التخفيف",
+          "paragraphs": [
+            {
+              "text": "يمتد كشف المعاملات الكاملة إطار الكشف الدائم الذي قدمته Cloudflare في وقت سابق من هذا العام. تحلل الكشوفات حركة المرور وتضيف بيانات وصفية إلى الطلب والاستجابة، بينما تقرر القواعد ما يجب فعله بهذه النتائج.",
+              "links": []
+            },
+            {
+              "text": "يمنح فصل هذه المهام العملاء رؤية قبل تصميم السياسة. يمكن لفريق الأمان فحص الكشوفات في حركة المرور الخاصة بهم، وفهم نقاط النهاية والتوقيعات المعنية، واختيار الاستجابة المناسبة لتطبيقهم. يتم تخزين نتائج الكشف في حقول يمكن الوصول إليها في قواعد الاستجابة المخصصة أو استخدامها في الكشوفات المدارة لحظر حركة المرور.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توفر الميزة لجميع العملاء",
+          "paragraphs": [
+            {
+              "text": "أطلقت Cloudflare كل من القواعد المدارة والمخصصة لجميع الخطط، بما في ذلك الخطط المجانية. مع مرور الوقت، ستتبع نفس النهج المستخدم للكشوفات القائمة على الطلب، حيث تركز الكشوفات المدارة للخطط المجانية على الثغرات عالية الملف، بينما يحصل العملاء المدفوعون على كتالوج أغنى من الكشوفات.",
+              "links": []
+            },
+            {
+              "text": "يحصل جميع العملاء على حماية مصفوفة الكشف الكاملة للمعاملات من خلال مجموعة قواعد Cloudflare Managed Response Firewall Default، المصممة لنشر بنقرة واحدة وإعداد مبسط. عندما يتطابق توقيع، تحل الاستجابة المخصصة مكان استجابة الأصل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "WAF",
+        "الأمن السيبراني",
+        "كشف الثغرات",
+        "الذكاء الاصطناعي",
+        "حماية الويب",
+        "الإنذارات الكاذبة"
+      ],
+      "entities": [
+        "Cloudflare",
+        "WAF",
+        "php2shell"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "21 أكتوبر 2026",
+      "modifiedLabel": "21 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 507
+    },
+    "en": {
+      "title": "Cloudflare Introduces Full Transaction Detection for WAF",
+      "description": "Cloudflare expands its web application firewall with full transaction detections and response rules to correlate HTTP requests with responses.",
+      "deck": "Cloudflare has expanded its web application firewall by adding full transaction detections and response rules to evaluate HTTP requests alongside their corresponding responses.",
+      "summaryBullets": [
+        "Full transaction detection evaluates HTTP requests and responses together to find successful exploits.",
+        "New response rules can block origin responses before they reach the requester.",
+        "The capabilities are generally available to all customers, including Free plans.",
+        "Initial managed protections target the php2shell vulnerability."
+      ],
+      "sections": [
+        {
+          "heading": "Expanding Web Application Firewall Capabilities",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has announced an expansion to its web application firewall, introducing full transaction detections and response rules. According to the company, these additions allow the system to evaluate each HTTP request alongside its response to identify evidence of exploitation, answering both whether a request looks malicious and what happened when the application handled it. Further details are available from Cloudflare Blog in the original source material.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/full-transaction-waf"
+                }
+              ]
+            },
+            {
+              "text": "The platform update helps security teams address modern vulnerabilities uncovered by frontier models and persistent AI agents. These automated tools can adapt payloads and chain vulnerabilities, making application responses critical for determining whether an attack attempt succeeded.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Correlating Requests and Responses",
+          "paragraphs": [
+            {
+              "text": "While inspecting incoming requests remains essential for stopping recognizable attacks, some threats only become clear when evaluated alongside what the origin returns. A suspicious input followed by a response exposing sensitive data tells a different story than the same input followed by a rejection or error.",
+              "links": []
+            },
+            {
+              "text": "Full transaction detection correlates attempted access with response content, providing stronger evidence of sensitive data exposure than either signal alone. For example, in a path traversal attempt, request inspection can recognize the attempt, but the response provides the missing evidence needed to confirm if a private file was exposed.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Detection and Mitigation Separation",
+          "paragraphs": [
+            {
+              "text": "The new capabilities extend Cloudflare's always-on application security framework, with detection results made available in Security Analytics to support investigations. By design, detection and mitigation are kept separate so that security teams can inspect traffic behavior and understand which endpoints and signatures are involved before applying a blocking policy.",
+              "links": []
+            },
+            {
+              "text": "The platform introduces new fields for confidence values and categories associated with matching signatures, mirroring existing request detection fields. Security teams can use these fields within custom rules or managed protections.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Response Phase Controls and Availability",
+          "paragraphs": [
+            {
+              "text": "Response custom rules allow teams to turn full transaction detections into inline protection by blocking a matching origin response before it reaches the requester. When a rule matches, Cloudflare replaces the origin response with a WAF block page and an HTTP 403 status or a custom response.",
+              "links": []
+            },
+            {
+              "text": "Cloudflare is making these new capabilities generally available across all service tiers, including Free plans. The initial managed protections built using this framework focus on the recently disclosed php2shell vulnerability, with coverage expected to expand over time to include data exposure and exfiltration signals.",
+              "links": [
+                {
+                  "text": "php2shell",
+                  "url": "http://blog.cloudflare.com/php-vulnerabilities-waf-protection/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "WAF",
+        "Security",
+        "Web Application Firewall",
+        "Cybersecurity",
+        "php2shell"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Cloudflare WAF"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "October 21, 2026",
+      "modifiedLabel": "October 21, 2026",
+      "readMinutes": 3,
+      "wordCount": 453
+    }
+  },
+  "datePublished": "2026-10-21T19:19:06.623684+03:00",
+  "dateModified": "2026-10-21T19:19:06.623684+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/introducing-full-transaction-detection-for-cloudflare-waf/hero.webp",
+    "card": "/forum/assets/posts/2026/10/introducing-full-transaction-detection-for-cloudflare-waf/card.webp",
+    "social": "/forum/assets/posts/2026/10/introducing-full-transaction-detection-for-cloudflare-waf/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تطلق كشف المعاملات الكاملة في جدار حماية WAF",
+      "en": "Cloudflare Introduces Full Transaction Detection for WAF"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M5E1HKVR7WJX7KGB4B8MSK75.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-full-transaction-detection-for-cloudflare-waf/inline-01.webp",
+        "width": 1200,
+        "height": 630,
+        "alt": {
+          "ar": "Cloudflare تطلق كشف المعاملات الكاملة في جدار حماية WAF",
+          "en": "Introducing full transaction detection for Cloudflare WAF"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/full-transaction-waf",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M5E1HV25GV2PKJHWP2MM8HGH.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-full-transaction-detection-for-cloudflare-waf/inline-02.webp",
+        "width": 1400,
+        "height": 787,
+        "alt": {
+          "ar": "Cloudflare تطلق كشف المعاملات الكاملة في جدار حماية WAF",
+          "en": "Cloudflare Introduces Full Transaction Detection for WAF"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "The structure of request and response in Cloudflareâs web application firewall (WAF)."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/full-transaction-waf",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M5E1HSQ4EYHAJEWBHRQJD6KX.png&w=1430&h=804&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-full-transaction-detection-for-cloudflare-waf/inline-03.webp",
+        "width": 1400,
+        "height": 767,
+        "alt": {
+          "ar": "Cloudflare تطلق كشف المعاملات الكاملة في جدار حماية WAF",
+          "en": "Cloudflare Introduces Full Transaction Detection for WAF"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Cloudflare Managed Response Firewall Default runs on every request by default. To reduce the risk of false positives, customers can restrict the scope of the mitigation to a portion of their application."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/full-transaction-waf",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M5E1HQ0T2T2QN8P47Q92VQ0W.png&w=1430&h=784&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-full-transaction-detection-for-cloudflare-waf/inline-04.webp",
+        "width": 1400,
+        "height": 740,
+        "alt": {
+          "ar": "Cloudflare تطلق كشف المعاملات الكاملة في جدار حماية WAF",
+          "en": "Cloudflare Introduces Full Transaction Detection for WAF"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "All customers can create response rules by combining both request and response fields."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/full-transaction-waf",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M5E1HR792GDJYY7FSHPR72DR.png&w=1430&h=756&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/full-transaction-waf",
+      "type": "official",
+      "title": "Introducing full transaction detection for Cloudflare WAF"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/full-transaction-waf",
+  "sourceTitle": "Introducing full transaction detection for Cloudflare WAF",
+  "trendScore": 108.27,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-21T16:19:06+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/introducing-full-transaction-detection-for-cloudflare-waf.json"
+}
