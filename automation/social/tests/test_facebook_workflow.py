@@ -62,7 +62,8 @@ class FacebookWorkflowTests(unittest.TestCase):
                 os.chdir(root)
                 with patch.dict(os.environ, {
                     "FACEBOOK_PAGE_ID": "123", "FACEBOOK_PAGE_ACCESS_TOKEN": "test-token",
-                    "GITHUB_EVENT_NAME": "workflow_run" if automatic else "workflow_dispatch",
+                    "GITHUB_EVENT_NAME": "workflow_dispatch",
+                    "DEPLOYMENT_RUN_ID": "456" if automatic else "",
                     "MANUAL_STORY_IDS": "",
                 }), patch("urllib.request.urlopen", side_effect=urlopen_stub), redirect_stdout(io.StringIO()):
                     try:
@@ -121,8 +122,15 @@ class FacebookWorkflowTests(unittest.TestCase):
 
     def test_automatic_trigger_waits_for_site_deployment(self):
         workflow = (ROOT / ".github/workflows/mikhbar-social.yml").read_text()
-        self.assertIn("workflows: ['Mikhbar Cloudflare Deploy']", workflow)
-        self.assertNotIn("workflows: ['Mikhbar 20-Minute Publisher']", workflow)
+        self.assertNotIn("  workflow_run:", workflow)
+        deploy = (ROOT / ".github/workflows/deploy-mikhbar-cloudflare.yml").read_text()
+        self.assertIn("actions: write", deploy)
+        self.assertIn("gh workflow run mikhbar-social.yml --ref main -f mode=live", deploy)
+        self.assertGreater(
+            deploy.index("- name: Dispatch social publication"),
+            deploy.index("- name: Verify newest Arabic and English publication"),
+        )
+        self.assertIn("story_ids=$STORY_ID", deploy)
 
     def test_external_article_url_is_rejected(self):
         with self.assertRaisesRegex(RuntimeError, "outside the Mikhbar"):

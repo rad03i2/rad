@@ -46,6 +46,7 @@ on:
 
 permissions:
   contents: read
+  actions: write
 
 concurrency:
   group: mikhbar-cloudflare-deploy
@@ -365,3 +366,11 @@ jobs:
       - name: Verify newest Arabic and English publication
         if: steps.target.outputs.value == 'production'
         run: python automation/forum/publication_deployment.py verify
+
+      - name: Dispatch social publication after verified production deployment
+        if: steps.target.outputs.value == 'production' && env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          STORY_ID=$(python -c 'import json; p=json.load(open("forum/posts-ar.json")); posts=p if isinstance(p,list) else p["posts"]; print(max(posts,key=lambda post: post.get("date", ""))["id"])')
+          gh workflow run mikhbar-social.yml --ref main -f mode=live -f "story_ids=$STORY_ID" -f "deployment_run_id=$GITHUB_RUN_ID"

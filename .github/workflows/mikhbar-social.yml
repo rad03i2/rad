@@ -14,9 +14,11 @@ on:
         required: false
         default: ''
         type: string
-  workflow_run:
-    workflows: ['Mikhbar Cloudflare Deploy']
-    types: [completed]
+      deployment_run_id:
+        description: Verified production deployment run (set by the deploy workflow)
+        required: false
+        default: ''
+        type: string
   push:
     branches: [main]
     paths:
@@ -31,13 +33,13 @@ concurrency:
 
 jobs:
   social:
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
       FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
       FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
       MANUAL_STORY_IDS: ${{ inputs.story_ids }}
+      DEPLOYMENT_RUN_ID: ${{ inputs.deployment_run_id }}
     steps:
       - name: Checkout latest website state
         uses: actions/checkout@v4
@@ -54,7 +56,7 @@ jobs:
         run: python -m unittest discover -s automation/social/tests -v
 
       - name: Publish Mikhbar stories to Facebook
-        if: github.event_name == 'workflow_run' || github.event_name == 'push' || inputs.mode == 'live'
+        if: github.event_name == 'push' || inputs.mode == 'live'
         shell: bash
         run: |
           python - <<'PY'
@@ -256,7 +258,7 @@ jobs:
               try:
                   verify_production_media(article, item)
               except (OSError, RuntimeError) as exc:
-                  if event_name == 'workflow_run':
+                  if os.environ.get('DEPLOYMENT_RUN_ID', '').isdigit():
                       print(json.dumps({
                           'status': 'deferred_site_not_ready',
                           'story_id': str(item.get('story_id')),
@@ -400,7 +402,7 @@ jobs:
           PY
 
       - name: Commit social state only
-        if: always() && (github.event_name == 'workflow_run' || github.event_name == 'push' || inputs.mode == 'live')
+        if: always() && (github.event_name == 'push' || inputs.mode == 'live')
         shell: bash
         run: |
           git config user.name 'Mikhbar Social Automation'
