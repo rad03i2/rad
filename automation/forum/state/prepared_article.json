@@ -1,5 +1,368 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-22T16:29:07+00:00",
-  "last_published_story_id": "67297d2df9a3d7f196c3"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-22T16:32:44+00:00",
+  "target_publish_at": "2026-10-22T19:49:06.955452+03:00",
+  "story": {
+    "title": "Stop guessing auto scaling targets for TTS on Amazon SageMaker AI",
+    "url": "https://aws.amazon.com/blogs/machine-learning/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai",
+    "domain": "aws.amazon.com",
+    "summary": "Teams deploying custom text-to-speech models on Amazon SageMaker AI often guess at autoscaling thresholds, and a wrong guess either wastes GPU spend or breaches a latency SLO. This post deploys Kokoro-82M as a custom container and derives a measured autoscaling policy from two live-endpoint measurements, Q_max and T_total, instead of guesswork.",
+    "published_at": "2026-10-22T16:30:06+00:00",
+    "discovered_at": "2026-10-22T16:31:38+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 69,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "986e2ea6ee80b8b5fafe",
+    "trend": {
+      "score": 125.99,
+      "age_hours": 0.03,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Stop guessing auto scaling targets for TTS on Amazon SageMaker AI",
+      "title": "Stop guessing auto scaling targets for TTS on Amazon SageMaker AI | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون: قياسات دقيقة لسياسات التوسع التلقائي في نماذج النطق",
+      "description": "تقدم أمازون ويب سيرفيسز نهجاً جديداً لتجنب التخمين في سياسات التوسع التلقائي لنماذج تحويل النص إلى كلام، عبر قياسات حية تضمن كفاءة الأداء وتقليل التكاليف.",
+      "deck": "تستبدل أمازون التخمين في سياسات التوسع التلقائي لخدمات الذكاء الاصطناعي بقياسات دقيقة تعتمد على الأداء الفعلي للنماذج.",
+      "summary_bullets": [
+        "نشر أمازون ويب سيرفيسز مقالاً تقنياً يوضح كيفية استبدال التخمين في سياسات التوسع التلقائي لخدمات تحويل النص إلى كلام بقياسات دقيقة.",
+        "يعتمد النهج الجديد على قياسين رئيسيين: أقصى حد للتزامن (Q_max) والوقت الكلي للتوسع (T_total) لضمان عدم تجاوز أهداف مستوى الخدمة.",
+        "يتم نشر نموذج Kokoro-82M كحاوية مخصصة على Amazon SageMaker AI مع استخدام أدوات AWS CDK لإدارة البنية التحتية.",
+        "يستخدم النظام مقياس ConcurrentRequestsPerModel الأصلي من أمازون لضمان دقة القياسات وتجنب أخطاء الإعدادات المخصصة."
+      ],
+      "sections": [
+        {
+          "heading": "تجاوز أخطاء التخمين في التوسع التلقائي",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق التطوير التي تنشر نماذج تحويل النص إلى كلام مخصصة على Amazon SageMaker AI تحدياً حقيقياً عند ضبط عتبات التوسع التلقائي. غالباً ما يعتمد المهندسون على التخمين لتحديد هذه العتبات، مما يؤدي إما إلى إهدار نفقات وحدات معالجة الرسوميات (GPU) أو إلى تجاوز أهداف مستوى الخدمة (SLO) المتعلقة بالزمن المستجيب. في هذا السياق، تقدم أمازون ويب سيرفيسز نهجاً جديداً يعتمد على القياسات الفعلية بدلاً من التخمين، حيث يتم نشر نموذج Kokoro-82M كحاوية مخصصة على نقطة نهاية مباشرة، ثم اشتقاق سياسة توسع تلقائي دقيقة بناءً على قياسين حيين: أقصى حد للتزامن (Q_max) والوقت الكلي للتوسع (T_total).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "لماذا لا تعمل المقاييس الافتراضية مع النطق",
+          "paragraphs": [
+            {
+              "text": "تختلف متطلبات نماذج تحويل النص إلى كلام عن نماذج اللغة الكبيرة التقليدية، حيث لا تعتمد على توليد الرموز (tokens) واحدة تلو الأخرى، بل تنتج العبارة الكاملة في مسار واحد متزامن. نموذج Kokoro-82M، وهو مشتق من StyleTTS2، يعمل بشكل غير تكراري (non-autoregressive) ولا يحتوي على حلقة توليد يمكن ربطها بمقاييس الأداء التقليدية. لذلك، يعتمد الحل المقترح على مقياس ConcurrentRequestsPerModel الذي توفره Amazon SageMaker AI تلقائياً، مما يزيل الحاجة إلى إعدادات مخصصة قد تفشل في النشر الفعلي. يتم قياس هذا المقياس على نافذة زمنية من 10 ثوانٍ، مع مراعاة الفرق بين متوسط عدد الطلبات المتزامنة والقيمة القصوى، لضمان دقة التحويل إلى وحدات CloudWatch.",
+              "links": [
+                {
+                  "text": "Kokoro-82M",
+                  "url": "https://huggingface.co/hexgrad/Kokoro-82M"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "البنية التحتية والنشر عبر AWS CDK",
+          "paragraphs": [
+            {
+              "text": "يعتمد النشر على ثلاث طبقات من أكواد AWS Cloud Development Kit (AWS CDK) لضمان دقة الإعدادات ومنع وصول أي تكوين غير مقاس إلى بيئة الإنتاج. الطبقة الأولى تنشئ أدوار IAM وخزانات Amazon S3 لتخزين أوزان النموذج، بينما تزامن الطبقة الثانية أوزان النموذج من Hugging Face إلى الخزان. أما الطبقة الثالثة فتبني صورة الحاوية المخصصة وتقوم بنشرها إلى Amazon ECR، مع إنشاء نموذج Amazon SageMaker AI ونقطة النهاية. تتضمن هذه الطبقة بوابة منطقية تمنع تفعيل موارد التوسع التلقائي إلا بعد وجود خطة قياسات فعلية، مما يضمن أن كل رقم في السياسة مشتق من أداء حقيقي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات التنفيذ والقياسات الحية",
+          "paragraphs": [
+            {
+              "text": "يتطلب تنفيذ هذا الحل حساباً في AWS بصلاحية إنشاء الموارد الأساسية، بالإضافة إلى أدوات مثل Python 3.11 وuv وDocker لبناء صورة الحاوية. كما يتطلب توفر حصة خدمة من نوع ml.g5.xlarge مع سعة إضافية كافية لإجراء قياسات التوسع. يتم قياس Q_max كأعلى حد للتزامن يمكن لمعالج واحد تحمله دون تجاوز أهداف مستوى الخدمة، بينما يقيس T_total المدة الزمنية الكاملة لعملية التوسع من البداية إلى النهاية. تعتمد هذه القياسات على أداة مخصصة تقيس كلاً من المقياس الأصلي من CloudWatch والقياس المباشر من العميل، ثم تحسب النسبة بينهما لتحويل العتبات إلى وحدات قابلة للنشر. في حالة نموذج Kokoro-82M، جاءت النسبة 1.0، مما يعني تطابق القياسين مباشرة.",
+              "links": [
+                {
+                  "text": "uv",
+                  "url": "https://docs.astral.sh/uv/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "النتائج والتوصيات الأمنية",
+          "paragraphs": [
+            {
+              "text": "يوفر هذا النهج سياسة توسع تلقائي دقيقة ومبنية على بيانات فعلية، مما يقلل من مخاطر إهدار الموارد أو تدهور الأداء أثناء ذروات الطلب. ومع ذلك، تحذر أمازون من أن الحاوية النموذجية تستخدم إصداراً قديماً من PyTorch يحتوي على ثغرة أمنية معروفة (PYSEC-2026-2286)، والتي تم إصلاحها في الإصدار 2.10.0. لذلك، يُنصح بمراجعة وترقية هذا الإصدار قبل أي استخدام خارج نطاق إثبات المفهوم. يمكن للمطورين الوصول إلى الكود المصدري الكامل والأدوات المستخدمة في المستودع الرسمي على GitHub، مما يتيح لهم تكرار التجربة وتكييفها مع احتياجاتهم الخاصة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker AI",
+        "Text-to-Speech",
+        "Auto Scaling",
+        "AWS CDK",
+        "Kokoro-82M",
+        "Machine Learning",
+        "Cloud Infrastructure"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker AI",
+        "Kokoro-82M",
+        "AWS Cloud Development Kit",
+        "Hugging Face",
+        "Amazon CloudWatch"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال يعتمد حصرياً على المعلومات المقدمة في المصدر الرسمي لأمازون ويب سيرفيسز، مع التركيز على الجوانب التقنية للقياس والنشر دون إضافة آراء شخصية."
+    },
+    "en": {
+      "title": "Stop Guessing Auto Scaling Targets for TTS on Amazon SageMaker AI",
+      "description": "Learn how to derive precise auto scaling targets for text-to-speech models on Amazon SageMaker AI using live endpoint measurements instead of guesswork.",
+      "deck": "Deploying custom text-to-speech models on Amazon SageMaker AI often relies on guessed autoscaling thresholds, which can waste GPU spend or breach service level objectives.",
+      "summary_bullets": [
+        "Replaces guesswork with live endpoint measurements: Q_max and T_total.",
+        "Deploys Kokoro-82M as a custom container using AWS CDK stacks.",
+        "Utilizes the native ConcurrentRequestsPerModel metric published by Amazon SageMaker AI.",
+        "Supports response streaming and bidirectional streaming wire transports."
+      ],
+      "sections": [
+        {
+          "heading": "The Hidden Costs of Guessed Auto Scaling",
+          "paragraphs": [
+            {
+              "text": "Teams deploying custom text-to-speech models often face difficulties when traffic spikes hit their self-hosted endpoints. When requests start queueing and latency climbs past service level objectives right when callers are listening, the underlying auto scaling policy is often found to rely on guessed thresholds. Guesses like these tend to fail silently until real traffic proves them wrong.",
+              "links": []
+            },
+            {
+              "text": "Getting scaling numbers wrong results in two primary issues. A conservative guess forces fleets to run GPU instances that remain mostly idle, accumulating unnecessary costs. Conversely, an aggressive guess carries hidden risks, causing instances to hold more concurrent requests than they can safely serve within latency promises.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deploying Kokoro-82M as a Custom Container",
+          "paragraphs": [
+            {
+              "text": "To address these scaling challenges, engineering teams can deploy Kokoro-82M, an 82-million-parameter text-to-speech model, as a custom container on an Amazon SageMaker AI real-time endpoint. The deployment process is managed using AWS CDK stacks, replacing guesswork with two precise measurements taken against the live endpoint: Q_max, representing the highest concurrency one instance sustains before breaching the SLO, and T_total, measuring how long a scale-out takes end to end.",
+              "links": [
+                {
+                  "text": "Kokoro-82M",
+                  "url": "https://huggingface.co/hexgrad/Kokoro-82M"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Why Default Metrics Fall Short for TTS",
+          "paragraphs": [
+            {
+              "text": "Most public guidance regarding Amazon SageMaker AI auto scaling focuses on short synchronous request and response calls or large language model serving, where token generation speed serves as the primary metric. Text-to-speech synthesis fits neither pattern, as a single request keeps a connection open for several seconds without a token-generation loop.",
+              "links": []
+            },
+            {
+              "text": "Because non-autoregressive models like Kokoro-82M produce full utterances from a single pass, they lack a generation loop to instrument with per-token metrics. Instead, instance overload is determined by how many requests are actively queued and executing at any given time.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Leveraging Native CloudWatch Metrics",
+          "paragraphs": [
+            {
+              "text": "The deployed auto scaling policy scales based on ConcurrentRequestsPerModel, a native metric published directly by Amazon SageMaker AI rather than requiring custom container code emission. This approach eliminates common failure points where custom metric configurations appear correct on paper but fail to publish actual data.",
+              "links": []
+            },
+            {
+              "text": "Developers can find detailed guidance on configuring these parameters within the official Amazon SageMaker AI auto scaling documentation, ensuring production environments maintain robust operational standards.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI auto scaling documentation",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/endpoint-auto-scaling.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and Implementation Stacks",
+          "paragraphs": [
+            {
+              "text": "Implementing this measured auto scaling approach requires an AWS account with permissions for IAM roles, Amazon S3 buckets, Amazon ECR repositories, and Amazon SageMaker AI resources. Additionally, practitioners need AWS CDK v2, Python 3.11 or later, uv, and Docker to properly build and deploy the container images.",
+              "links": [
+                {
+                  "text": "AWS CDK v2",
+                  "url": "https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html"
+                },
+                {
+                  "text": "uv",
+                  "url": "https://docs.astral.sh/uv/"
+                }
+              ]
+            },
+            {
+              "text": "The complete deployment code, including infrastructure stacks and sample configurations, is available in the dedicated GitHub repository. Developers can review the sample repository to access all required scripts and automation workflows for production testing.",
+              "links": [
+                {
+                  "text": "GitHub repository",
+                  "url": "https://github.com/aws-samples/sample-kokoro-tts-for-ai-agents"
+                },
+                {
+                  "text": "sample repository",
+                  "url": "https://github.com/aws-samples/sample-kokoro-tts-for-ai-agents"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker AI",
+        "Kokoro-82M",
+        "AWS CDK",
+        "Text-to-Speech",
+        "Auto Scaling",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "AWS",
+        "SageMaker AI",
+        "Kokoro-82M"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based strictly on official AWS Machine Learning Blog source material regarding text-to-speech auto scaling on Amazon SageMaker AI."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 594,
+      "word_count_en": 503
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "986e2ea6ee80b8b5fafe",
+      "title": "Stop guessing auto scaling targets for TTS on Amazon SageMaker AI",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 594,
+          "word_count_en": 503
+        }
+      ]
+    }
+  ],
+  "slug": "stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/hero.webp",
+    "card": "/forum/assets/posts/2026/10/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/card.webp",
+    "social": "/forum/assets/posts/2026/10/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/social.jpg",
+    "alt": {
+      "ar": "أمازون: قياسات دقيقة لسياسات التوسع التلقائي في نماذج النطق",
+      "en": "Stop Guessing Auto Scaling Targets for TTS on Amazon SageMaker AI"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21705-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/inline-01.webp",
+        "width": 1400,
+        "height": 392,
+        "alt": {
+          "ar": "أمازون: قياسات دقيقة لسياسات التوسع التلقائي في نماذج النطق",
+          "en": "Diagram showing a client connecting to an Amazon SageMaker AI real-time endpoint, which contains a custom GPU container exposing two routes, POST /invocations for response streaming and WS /invocations-bidirectional-stre"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21705-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/inline-02.webp",
+        "width": 1191,
+        "height": 1050,
+        "alt": {
+          "ar": "أمازون: قياسات دقيقة لسياسات التوسع التلقائي في نماذج النطق",
+          "en": "Diagram showing three AWS CDK stacks in sequence, SpeechFoundationStack, SpeechModelCacheStack, and SpeechEndpointStack, feeding into a decision gate labeled scaling_enabled AND a feasible measured plan artifact exists,"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21705-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/inline-03.webp",
+        "width": 1400,
+        "height": 900,
+        "alt": {
+          "ar": "أمازون: قياسات دقيقة لسياسات التوسع التلقائي في نماذج النطق",
+          "en": "Line chart showing p95 time to first audio byte in milliseconds rising with concurrency from 65.4 ms at concurrency 1 to 3374.8 ms at concurrency 60, crossing a dashed SLO line at 3000 milliseconds between concurrency 50"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21705-4.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/inline-04.webp",
+        "width": 1400,
+        "height": 427,
+        "alt": {
+          "ar": "أمازون: قياسات دقيقة لسياسات التوسع التلقائي في نماذج النطق",
+          "en": "Stacked horizontal bar chart showing eight stages of a scale-out timeline for Kokoro-82M on ml.g5.xlarge, a 30 second capacity request stage, a 181 second dominant provisioning stage, several small stages for container s"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21705-5.png"
+      }
+    ]
+  }
 }
