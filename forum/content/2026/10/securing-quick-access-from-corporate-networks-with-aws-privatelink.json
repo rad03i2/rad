@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "9591b1cd4f512684d53a",
+  "slug": "securing-quick-access-from-corporate-networks-with-aws-privatelink",
+  "categorySlug": "computers",
+  "urls": {
+    "ar": "/forum/ar/computers/securing-quick-access-from-corporate-networks-with-aws-privatelink/",
+    "en": "/forum/en/computers/securing-quick-access-from-corporate-networks-with-aws-privatelink/"
+  },
+  "locales": {
+    "ar": {
+      "title": "AWS تقدم حلاً آمناً للوصول إلى بيانات الشركات عبر Amazon Quick",
+      "description": "تشرح AWS كيفية تأمين اتصال خاص بين الشبكات الداخلية وخدمة Amazon Quick باستخدام AWS PrivateLink، مما يمنع مرور بيانات التحليلات عبر الإنترنت العام ويحافظ على سرية المعلومات الحساسة.",
+      "deck": "توفر AWS آلية جديدة لربط مصادر البيانات المحلية بأدوات الذكاء الاصطناعي في Amazon Quick دون المرور عبر الإنترنت العام.",
+      "summaryBullets": [
+        "تستخدم البنية التحتية AWS PrivateLink لنقل حركة المرور الخاصة بالمستخدمين والبيانات عبر العمود الفقري الخاص بـ AWS.",
+        "تتطلب الخدمة اشتراكاً في نسخة Enterprise من Amazon Quick وتوفر اتصالاً خاصاً مثل AWS Direct Connect أو VPN.",
+        "تفصل البنية بين حركة مرور المستخدمين (عبر VPC Endpoints) وحركة جلب البيانات (عبر VPC Connections).",
+        "تساعد هذه التقنية الشركات على الالتزام بمعايير الامتثال مثل HIPAA وFedRAMP بتقليل سطح الهجوم."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي حماية البيانات المؤسسية",
+          "paragraphs": [
+            {
+              "text": "تواجه الشركات تحدياً كبيراً عندما تكون بياناتها الحساسة مخزنة خلف جدران نارية أو في مراكز بيانات محلية، حيث لا يوجد مسار شبكة مباشر من AWS للوصول إليها. وعلى الرغم من أن وكلاء الذكاء الاصطناعي ولوحات المعلومات في Amazon Quick يمكنها استعلام أي مصدر بيانات، إلا أن المسؤولين عن تقنية المعلومات يجب أن يضمنوا عدم تعرض هذه البيانات للإنترنت العام. تشير AWS إلى أن توجيه المرور عبر الإنترنت العام يحمل مخاطر غير مقبولة للعديد من المؤسسات، خاصة تلك الخاضعة لإطارات تنظيمية صارمة مثل HIPAA وFedRAMP وPCI-DSS، والتي تشترط بقاء البيانات ضمن حدود الشبكة المراقبة. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/securing-quick-access-from-corporate-networks-with-aws-privatelink/"
+                }
+              ]
+            },
+            {
+              "text": "حتى في غياب متطلبات الامتثال الصارمة، فإن كشف مسارات البيانات الداخلية يزيد من سطح الهجوم ويعقد عمليات التدقيق، كما قد يؤدي إلى تأخير متغير يؤثر على تجربة المستخدم. لذلك، تقدم AWS شرحاً تفصيلياً لكيفية ربط مصادر البيانات المحلية بـ Amazon Quick بشكل خاص، بحيث لا يمر أي جزء من حركة المرور عبر الإنترنت العام، مما يوفر اتصالاً منخفض التأخير ومسار تدقيق واضحاً للامتثال. ويمكن الرجوع إلى Artificial Intelligence للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل Amazon Quick والاتصال الخاص",
+          "paragraphs": [
+            {
+              "text": "يُعد Amazon Quick مساحة عمل مدعومة بالذكاء الاصطناعي تجمع بين البحث والتحليلات والأتمتة في تجربة حوارية واحدة. لفهم البنية المعمارية، يجب التمييز بين مساري وصول البيانات. أولاً، حركة المرور الموجهة للمستخدمين، والتي تشمل فتح وحدة تحكم Quick، التفاعل مع لوحات المعلومات، أو استدعاء واجهات برمجة التطبيقات (API). تمر هذه الحركة عبر نقاط نهاية VPC (VPC endpoints) لضمان بقاء جلسات المستخدمين بعيداً عن الإنترنت العام.",
+              "links": []
+            },
+            {
+              "text": "ثانياً، حركة جلب البيانات، حيث تصل الخدمة نفسها إلى شبكة الشركة لسحب البيانات. يتم التعامل مع هذا المسار عبر اتصالات VPC (VPC connections)، وهو المكان الذي تتخذ فيه القرارات المعمارية الحاسمة. تشمل الميزات التي تطلق اتصالات جلب البيانات استعلامات Amazon Quick Sight على قواعد البيانات المحلية، وميزات الأتمتة مثل Amazon Quick Flows وAutomate، وكلاء Quick الذين يستدعون خوادم MCP الخاصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات البنية التحتية الأساسية",
+          "paragraphs": [
+            {
+              "text": "قبل إعداد الاتصال الخاص، تؤكد AWS على ضرورة توفر عدة متطلبات مسبقة. يجب أن يكون لدى المستخدم حساب AWS نشط مع اشتراك في Amazon Quick Enterprise، حيث تتطلب اتصالات VPC هذه النسخة تحديداً. كما يجب وجود شبكة خاصة افتراضية (VPC) في منطقة AWS التي يتم فيها نشر Quick، مع ملاحظة أن نقاط نهاية الموقع غير متاحة في مناطق AWS China أو AWS GovCloud (US).",
+              "links": []
+            },
+            {
+              "text": "يشترط أيضاً وجود اتصال AWS Direct Connect أو VPN بين شبكة المؤسسة المحلية وVPC، وهو المسار الخاص الذي ينقل حركة المرور من مركز البيانات إلى AWS. بالإضافة إلى ذلك، يحتاج المسؤولون إلى أذونات IAM محددة لإنشاء وإدارة نقاط النهاية ومجموعات الأمان، بما في ذلك أذونات مثل quicksight:CreateVPCConnection وec2:DescribeSubnets. كما يلزم الوصول إلى إدارة DNS الخاصة بالشركة لتوجيه الاستعلامات الخاصة عبر نقاط النهاية بدلاً من العناوين العامة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نقاط نهاية VPC للمستخدمين وAPI",
+          "paragraphs": [
+            {
+              "text": "تعتمد نقاط نهاية VPC المدعومة بتقنية PrivateLink على معالجة جميع حركة المرور الموجهة للمستخدمين نحو Amazon Quick، بما في ذلك الموقع الإلكتروني واستدعاءات API والمحتوى المدمج. تمنع هذه التقنية المستخدمين من الحاجة إلى المرور عبر الإنترنت العام للوصول إلى وحدة تحكم Amazon Quick. في السيناريو الموضح، يرسل العميل طلباً من الشبكة المؤسسية، ثم يسافر هذا الطلب عبر AWS Direct Connect وبوابة Direct Connect إلى VPC الخاص بالشركة.",
+              "links": []
+            },
+            {
+              "text": "بعد وصول الطلب إلى VPC، تقوم نقطة نهاية Quick بتقييم سياسة النقطة النهائية (Endpoint Policy) والسماح بالوصول إذا كانت الأذونات مطابقة. هذا الآلية تضمن أن تبقى جلسات المستخدمين الإدارية والتقنية ضمن حدود الشبكة الآمنة، مما يقلل من مخاطر الاعتراض أو التنصت على البيانات أثناء النقل عبر شبكات غير موثوقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اتصالات VPC لمصادر البيانات",
+          "paragraphs": [
+            {
+              "text": "تُعد اتصالات VPC هي الآلية التي تصل بها Amazon Quick إلى موارد الشبكة الخاصة للشركة لجلب البيانات. يتم تكوين هذه الاتصالات داخل وحدة تحكم Quick، وتسمح للخدمة بالوصول إلى قواعد البيانات المحلية مثل PostgreSQL وMySQL وSQL Server وOracle. كما تدعم هذه الاتصالات مصادر معرفية مثل Amazon Redshift لبناء طبقة بحث موحدة. وتوضح AWS أن بعض المصادر مثل Confluence وSharePoint لا تدعم حالياً اتصالات VPC المباشرة، لكن يمكن تقييد وصولها عبر سياسات buckets الخاصة بـ Amazon S3.",
+              "links": []
+            },
+            {
+              "text": "تستخدم ميزات مثل Amazon Quick Research هذه الاتصالات للوصول إلى مصادر المؤسسة خلف الجدار الناري، مما يتيح لها دمج البيانات الخاصة مع بيانات الإنترنت العام لإنشاء تقارير مدعومة بالاستشهادات. كما تستفيد التطبيقات التفاعلية المبنية داخل Quick من نفس اتصال VPC، مما يضمن اتساق الأمان عبر جميع مكونات النظام دون الحاجة إلى إعدادات منفصلة لكل ميزة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تعزيز الأمان والامتثال",
+          "paragraphs": [
+            {
+              "text": "لتعزيز طبقات الأمان، تدمج البنية المعمارية مجموعات الأمان (Security Groups) وسياسات نقاط نهاية VPC. تسمح مجموعات الأمان بتحكم دقيق في قواعد الدخول والخروج، بينما تفرض سياسات النقاط النهائية قيوداً إضافية على الخدمات والأدوار المسموح لها بالوصول. هذا النهج متعدد الطبقات (Defense in Depth) يقلل بشكل كبير من سطح الهجوم ويوفر سجلاً تدقيقياً واضحاً يسهل على فرق الامتثال التحقق من حركة البيانات.",
+              "links": []
+            },
+            {
+              "text": "تؤكد AWS أن هذه البنية تتيح للشركات الحفاظ على بياناتها الحساسة ضمن حدود الشبكة المراقبة، مما يلبي متطلبات الأطر التنظيمية الصارمة. من خلال منع مرور حركة المرور عبر الإنترنت العام، توفر هذه الحلول اتصالاً ثابتاً ومنخفض التأخير، مما يحسن من أداء تطبيقات التحليلات المدعومة بالذكاء الاصطناعي ويضمن تجربة مستخدم سلسة وآمنة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon Quick",
+        "PrivateLink",
+        "الأمن السيبراني",
+        "الذكاء الاصطناعي",
+        "البنية التحتية السحابية",
+        "الامتثال"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Quick",
+        "AWS PrivateLink",
+        "VPC",
+        "HIPAA",
+        "FedRAMP",
+        "PCI-DSS"
+      ],
+      "category": "الحواسيب",
+      "dateLabel": "22 أكتوبر 2026",
+      "modifiedLabel": "22 أكتوبر 2026",
+      "readMinutes": 5,
+      "wordCount": 900
+    },
+    "en": {
+      "title": "Securing Quick Access from Corporate Networks With AWS PrivateLink",
+      "description": "Learn how to connect on-premises data sources to Amazon Quick privately using AWS PrivateLink, keeping enterprise analytics traffic off the public internet.",
+      "deck": "Enterprise administrators can now leverage AWS PrivateLink to connect corporate networks and on-premises data sources to Amazon Quick privately, eliminating public internet exposure for sensitive analytics traffic.",
+      "summaryBullets": [
+        "Connect on-premises data sources to Amazon Quick privately without routing analytics traffic over the public internet.",
+        "Utilize AWS Direct Connect or an AWS Site-to-Site VPN as the foundation linking on-premises environments to a virtual private cloud (VPC).",
+        "Configure VPC endpoints powered by AWS PrivateLink for user-facing and API access.",
+        "Implement VPC connections to allow Amazon Quick to securely fetch data from private databases and internal APIs."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of Private Network Connectivity",
+          "paragraphs": [
+            {
+              "text": "When enterprise data resides behind a corporate firewall or inside a private on-premises data center, direct network paths from AWS are absent, despite the ability of AI agents and dashboards in Amazon Quick to query virtually any data source. Organizations must ensure that sensitive enterprise data remains unexposed to the public internet while staying accessible for AI-driven insights and actions.",
+              "links": []
+            },
+            {
+              "text": "Routing traffic over the public internet introduces high risks for many enterprises. Regulatory frameworks such as HIPAA, FedRAMP, and PCI-DSS often mandate that sensitive data stays within controlled network boundaries. Even without strict compliance requirements, exposed internal data paths expand the attack surface, complicate audit trails, and introduce variable latency that can degrade user experiences.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Traffic Paths",
+          "paragraphs": [
+            {
+              "text": "An official walkthrough published on the AWS Machine Learning Blog details how to connect on-premises data sources to Amazon Quick privately without letting traffic traverse the public internet. The architecture assumes an existing AWS Direct Connect or AWS Site-to-Site VPN link between the on-premises environment and a virtual private cloud (VPC).",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/securing-quick-access-from-corporate-networks-with-aws-privatelink/"
+                }
+              ]
+            },
+            {
+              "text": "Data access in Amazon Quick is divided into two distinct traffic paths. User-facing traffic includes opening the Quick console, interacting with dashboards, executing API calls, or using Quick Desktop. These sessions route securely through VPC endpoints, keeping user interactions off the public internet.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Data-Fetching and VPC Connections",
+          "paragraphs": [
+            {
+              "text": "Data-fetching traffic occurs when Amazon Quick actively reaches into corporate networks to retrieve data. This process relies heavily on VPC connections, which serve as the primary architectural focal point for administrators managing private database queries and internal APIs.",
+              "links": []
+            },
+            {
+              "text": "Administrators can review detailed specifications regarding Supported VPC data sources to understand how Amazon Quick Sight queries on-premises databases like PostgreSQL, MySQL, SQL Server, and Oracle directly through elastic network interfaces placed inside a designated VPC.",
+              "links": [
+                {
+                  "text": "Supported VPC data sources",
+                  "url": "https://docs.aws.amazon.com/quick/latest/userguide/vpc-connection-supported-data-sources.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Automation and AI Agent Integration",
+          "paragraphs": [
+            {
+              "text": "Automation features like Amazon Quick Flows and Amazon Quick Automate handle repeatable tasks and complex, multi-system orchestrations with human-in-the-loop capabilities. Both features invoke action connectors, including Model Context Protocol (MCP) servers hosted privately within a VPC.",
+              "links": []
+            },
+            {
+              "text": "Additionally, Quick Agents underpin conversational interactions and can invoke action connectors directly. When a custom agent reaches out to a privately hosted MCP server or an internal API, the traffic flows smoothly through the established VPC connection.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and Compliance Setup",
+          "paragraphs": [
+            {
+              "text": "Before configuring private connectivity, enterprises need an active AWS account with an Amazon Quick Enterprise subscription, an existing VPC in the deployment region, and appropriate IAM permissions. Administrators can consult the Getting started with IAM Identity Center documentation to properly manage identity federation and access management considerations.",
+              "links": [
+                {
+                  "text": "Getting started with IAM Identity Center",
+                  "url": "https://docs.aws.amazon.com/singlesignon/latest/userguide/getting-started.html"
+                }
+              ]
+            },
+            {
+              "text": "By deploying these mechanisms, organizations establish a fortified network architecture that maintains consistent, low-latency connectivity, minimizes the overall attack surface, and fulfills rigorous regulatory compliance mandates.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon Quick",
+        "AWS PrivateLink",
+        "Cloud Security",
+        "Enterprise AI",
+        "Virtual Private Cloud",
+        "Networking"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "AWS",
+        "Amazon Quick",
+        "AWS PrivateLink"
+      ],
+      "category": "Computing",
+      "dateLabel": "October 22, 2026",
+      "modifiedLabel": "October 22, 2026",
+      "readMinutes": 3,
+      "wordCount": 544
+    }
+  },
+  "datePublished": "2026-10-22T03:19:09.520907+03:00",
+  "dateModified": "2026-10-22T03:19:09.520907+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/securing-quick-access-from-corporate-networks-with-aws-privatelink/hero.webp",
+    "card": "/forum/assets/posts/2026/10/securing-quick-access-from-corporate-networks-with-aws-privatelink/card.webp",
+    "social": "/forum/assets/posts/2026/10/securing-quick-access-from-corporate-networks-with-aws-privatelink/social.jpg",
+    "alt": {
+      "ar": "AWS تقدم حلاً آمناً للوصول إلى بيانات الشركات عبر Amazon Quick",
+      "en": "Securing Quick Access from Corporate Networks With AWS PrivateLink"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20213-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/securing-quick-access-from-corporate-networks-with-aws-privatelink/inline-01.webp",
+        "width": 949,
+        "height": 1025,
+        "alt": {
+          "ar": "AWS تقدم حلاً آمناً للوصول إلى بيانات الشركات عبر Amazon Quick",
+          "en": "Architecture diagram of private access to Amazon Quick from a corporate data center through a VPC endpoint over AWS Direct Connect"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/securing-quick-access-from-corporate-networks-with-aws-privatelink/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20213-1-1.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/securing-quick-access-from-corporate-networks-with-aws-privatelink/inline-02.webp",
+        "width": 1382,
+        "height": 1050,
+        "alt": {
+          "ar": "AWS تقدم حلاً آمناً للوصول إلى بيانات الشركات عبر Amazon Quick",
+          "en": "Amazon VPC console creating an endpoint with a name tag and the Quick website endpoint service selected"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/securing-quick-access-from-corporate-networks-with-aws-privatelink/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20213-2-1.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/securing-quick-access-from-corporate-networks-with-aws-privatelink/inline-03.webp",
+        "width": 1374,
+        "height": 1050,
+        "alt": {
+          "ar": "AWS تقدم حلاً آمناً للوصول إلى بيانات الشركات عبر Amazon Quick",
+          "en": "Amazon VPC console endpoint network settings with VPC, private DNS, subnets, and security group selected"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/securing-quick-access-from-corporate-networks-with-aws-privatelink/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20213-3-1.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/securing-quick-access-from-corporate-networks-with-aws-privatelink/inline-04.webp",
+        "width": 1380,
+        "height": 1050,
+        "alt": {
+          "ar": "AWS تقدم حلاً آمناً للوصول إلى بيانات الشركات عبر Amazon Quick",
+          "en": "Amazon VPC console showing the endpoint policy selection before creating the endpoint"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/securing-quick-access-from-corporate-networks-with-aws-privatelink/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20213-4-1.jpg"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/securing-quick-access-from-corporate-networks-with-aws-privatelink/",
+      "type": "official",
+      "title": "Securing Quick access from corporate networks with AWS PrivateLink"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/securing-quick-access-from-corporate-networks-with-aws-privatelink",
+  "sourceTitle": "Securing Quick access from corporate networks with AWS PrivateLink",
+  "trendScore": 117.35,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-22T00:19:09+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/securing-quick-access-from-corporate-networks-with-aws-privatelink.json"
+}
