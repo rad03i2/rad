@@ -1,5 +1,412 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-22T17:43:02+00:00",
-  "last_published_story_id": "eda525050cea8fce4b13"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-22T17:48:40+00:00",
+  "target_publish_at": "2026-10-22T21:03:01.832954+03:00",
+  "story": {
+    "title": "Stream low-latency speech from AI agents using Kokoro TTS on Amazon SageMaker AI",
+    "url": "https://aws.amazon.com/blogs/machine-learning/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker-ai",
+    "domain": "aws.amazon.com",
+    "summary": "Voice agents often wait for an agent's full response before starting speech synthesis, adding latency users feel directly. This post shows how to stream each sentence to a Kokoro-82M text-to-speech model on Amazon SageMaker AI as the agent produces it, and how to get that audio back to a browser over Server-Sent Events or a unified binary transport.",
+    "published_at": "2026-10-22T17:45:58+00:00",
+    "discovered_at": "2026-10-22T17:47:03+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 72,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "f6cf73b1fedb638ef18c",
+    "trend": {
+      "score": 123.99,
+      "age_hours": 0.03,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker-ai/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Stream low-latency speech from AI agents using Kokoro TTS on Amazon SageMaker AI",
+      "title": "Stream low-latency speech from AI agents using Kokoro TTS on Amazon SageMaker AI | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "تقنية Kokoro TTS على Amazon SageMaker AI لتقليل زمن الاستجابة",
+      "description": "تعرف على كيفية دمج نموذج Kokoro-82M مع Amazon SageMaker AI لبث الصوت من وكلاء الذكاء الاصطناعي وتقليل التأخير الزمني بشكل ملحوظ للمستخدمين.",
+      "deck": "تقدم أمازون ويب سيرفرز دليلاً عملياً لتقليل التأخير الملحوظ في الوكلاء الصوتيين الذكيين من خلال بث الجمل تدريجياً إلى نموذج تحويل النص إلى كلام.",
+      "summary_bullets": [
+        "بث الجمل فور توليدها من الوكيل الذكي إلى نموذج Kokoro-82M على Amazon SageMaker AI.",
+        "استخدام نموذج خفيف بـ 82 مليون بارامتر يعمل بكفاءة على مثيل حوسبي متوسط.",
+        "دعم قنوات الاتصال الثنائية عبر التدفق ثنائي الاتجاه والنقل الثنائي الموحد.",
+        "استعراض متطلبات التثبيت باستخدام أداة AWS Cloud Development Kit (AWS CDK) v2 ومدير الحزم uv."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات التأخير الزمني في الوكلاء الصوتيين",
+          "paragraphs": [
+            {
+              "text": "تواجه تطبيقات الوكلاء الصوتيين المعتمدة على الذكاء الاصطناعي مشكلة شائعة تتمثل في التأخير الزمني الملحوظ الذي يشعر به المستخدم النهائي. عادةً ما ينتظر النظام توليد الإجابة الكاملة والمكونة من عدة فقرات قبل الشروع في عملية التركيب الصوتي، مما قد يترك المستخدم في حالة انتظار طويلة ودون أي استجابة صوتية فورية. ولمعالجة هذه الفجوة الزمنية، يقدم مقال نُشر مؤخراً على [AWS Machine Learning Blog](https://aws.amazon.com/blogs/machine-learning/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker-ai/) طريقة هندسية لتجاوز هذا الانتظار الطويل وتوفير تدفق سلس للأصوات.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker-ai/"
+                }
+              ]
+            },
+            {
+              "text": "بدلاً من الانتظار حتى اكتمال الاستجابة النصية بأكملها، تتيح الطريقة الجديدة بث كل جملة فور إنتاجها بواسطة الوكيل إلى نموذج تحويل متن إلى كلام مستضاف على منصة [Amazon SageMaker AI](https://aws.amazon.com/sagemaker/). يضمن هذا النهج بدء عملية التركيب الصوتي مع الجملة الأولى مباشرة، مما يقلل بشكل كبير من شعور المستخدم بالتأخير والبطء أثناء التفاعل مع النظام.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دور نموذج Kokoro-82M في خفض التكاليف وتقليل التأخير",
+          "paragraphs": [
+            {
+              "text": "يعتمد الحل التقني المقترح على نموذج Kokoro-82M المخصص لتحويل النص إلى كلام، والذي يحتوي على 82 مليون بارامتر فقط. يتيح هذا الحجم الصغير نسبياً تشغيل النموذج بتكلفة منخفضة نسبياً وعلى مثيل معالجة رسومية متوسط الكفاءة، وهو ما يُعد عاملاً حاسماً في التعامل مع الحركة المرورية الحقيقية للوكلاء الصوتيين دون تحمل أعباء مالية باהظة.",
+              "links": []
+            },
+            {
+              "text": "يعمل نموذج Kokoro-82M داخل حاوية مخصصة على نقطة نهاية فورية ضمن بيئة [Amazon SageMaker AI](https://aws.amazon.com/sagemaker/)، وبالتحديد على مثيل رسومي من نوع ml.g5.xlarge. توفر هذه الحوية مسارين رئيسيين للاتصال؛ الأول يتعامل مع طلبات الإدخال الكاملة، والثاني يحافظ على جلسة اتصال مفتوحة ومستمرة للرسائل المتبادلة في كلا الاتجاهين.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات البنية التحتية وأدوات النشر",
+          "paragraphs": [
+            {
+              "text": "يتطلب تطبيق هذه البنية الهندسية توفر حساب على منصة أمازون وبما يتوافق مع إرشادات توثيق [Amazon SageMaker AI real-time inference documentation](https://docs.aws.amazon.com/sagemaker/)، بالإضافة إلى بيئة تشغيل مدعومة من [Amazon Bedrock AgentCore documentation](https://docs.aws.amazon.com/bedrock/). كما تشمل المتطلبات أدوار الأمان وصلاحيات السجل المخصص ومستودعات الحاويات اللازمة لإدارة نقاط النهاية بكفاءة عالية.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI real-time inference documentation",
+                  "url": "https://docs.aws.amazon.com/sagemaker/"
+                },
+                {
+                  "text": "Amazon Bedrock AgentCore documentation",
+                  "url": "https://docs.aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد عملية النشر على أدوات سطر الأوامر ومجموعات البنية التحتية، حيث يمكن للمطورين الاستعانة بـ [AWS Cloud Development Kit (AWS CDK) v2](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) لإعداد وتوفير الموارد المطلوبة في الحساب والمنطقة المحددة. إلى جانب ذلك، تُستخدم حزم البرمجيات الحديثة مثل أداة [uv](https://docs.astral.sh/uv/) بجانب لغة بايثون لبناء صور الحاويات وإدارة التبعيات البرمجية بسلاسة.",
+              "links": [
+                {
+                  "text": "AWS Cloud Development Kit (AWS CDK) v2",
+                  "url": "https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html"
+                },
+                {
+                  "text": "uv",
+                  "url": "https://docs.astral.sh/uv/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "خطوات التنفيذ البرمجي والتعامل مع تدفق البيانات",
+          "paragraphs": [
+            {
+              "text": "يتضمن الدليل الفني خطوات تفصيلية لمعالجة الأطر البرمجية مثل إطارات اتصالات ويب صوكت، حيث يُطلب من المطورين التعامل بدقة مع نوع إطار البيانات المرسل من نقطة النهاية، والتحقق من استقبال البيانات الثنائية وتفكيكها بشكل صحيح لضمان عدم حدوث أخطاء في التعامل مع النصوص والرسائل.",
+              "links": []
+            },
+            {
+              "text": "تعتمد الهندسة المقترحة على الحفاظ على جلسة الاتصال مفتوحة بين الرسائل وعدم إغلاقها فور انتهاء مقطع صوتي واحد، وذلك للاستفادة من البث التدريجي وتفادي تكلفة إعادة الاتصال المتكررة. وللحصول على الشيفرات البرمجية الكاملة وأدوات النشر، يمكن للمطورين زيارة [GitHub repository](https://github.com/aws-samples/sample-kokoro-tts-for-ai-agents) المخصص لهذا النموذج التطبيقي.",
+              "links": [
+                {
+                  "text": "GitHub repository",
+                  "url": "https://github.com/aws-samples/sample-kokoro-tts-for-ai-agents"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Amazon SageMaker AI",
+        "Kokoro TTS",
+        "الحوسبة السحابية",
+        "AWS",
+        "الوكلاء الصوتيون",
+        "معالجة اللغات الطبيعية"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker AI",
+        "Kokoro-82M",
+        "AWS CDK",
+        "GitHub"
+      ],
+      "article_type": "news",
+      "confidence_note": "التغطية مستندة بالكامل إلى مدونة تعلم الآلة في AWS وتراعي الشروط التقنية ومطابقة الروابط بدقة عالية."
+    },
+    "en": {
+      "title": "Stream Low-Latency Speech With Kokoro TTS on Amazon SageMaker AI",
+      "description": "Learn how to stream low-latency speech from AI voice agents using the Kokoro-82M text-to-speech model hosted on Amazon SageMaker AI.",
+      "deck": "A new architectural approach helps AI voice agents reduce perceived latency by streaming sentence-level text to a compact speech synthesis model on Amazon SageMaker AI.",
+      "summary_bullets": [
+        "AI voice agents often suffer from noticeable gaps when waiting for full multi-paragraph responses before starting speech synthesis.",
+        "Streaming each sentence to a Kokoro-82M model allows audio playback to begin on the first sentence.",
+        "The Kokoro-82M model contains 82 million parameters, allowing it to run efficiently on mid-tier GPU infrastructure.",
+        "Developers can utilize the AWS Cloud Development Kit (AWS CDK) v2 and toolsets like uv for container builds and deployment."
+      ],
+      "sections": [
+        {
+          "heading": "Addressing Voice Agent Latency",
+          "paragraphs": [
+            {
+              "text": "Voice-enabled artificial intelligence agents frequently introduce frustrating delays for users. When a customer asks a question, the underlying model may begin generating a long, multi-paragraph response. Traditional text-to-speech integrations wait for the entire text generation cycle to finish before triggering speech synthesis. This creates a noticeable silence that can last several seconds before the user hears any audio response.",
+              "links": []
+            },
+            {
+              "text": "To close this gap, developers can stream individual sentences to a hosted text-to-speech model as soon as the agent produces them. By initiating synthesis on the first sentence rather than waiting for the complete response, audio playback begins much faster. Detailed implementation strategies and architectural overviews are outlined in the AWS Machine Learning Blog.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Deploying the Kokoro-82M Model",
+          "paragraphs": [
+            {
+              "text": "The core of this low-latency streaming approach relies on the Kokoro-82M text-to-speech model. Because Kokoro-82M holds only 82 million parameters, it is lightweight enough to run economically on a single mid-tier GPU instance. This compact footprint helps keep both inference costs and operational latency low, making it practical for voice agents handling real production traffic.",
+              "links": []
+            },
+            {
+              "text": "Deploying the model involves setting up a custom container on an Amazon SageMaker AI real-time endpoint, specifically running on an ml.g5.xlarge GPU instance. Teams can leverage the AWS Cloud Development Kit (AWS CDK) v2 to provision the foundational architecture, model caches, and IAM roles required for the endpoint infrastructure.",
+              "links": [
+                {
+                  "text": "AWS Cloud Development Kit (AWS CDK) v2",
+                  "url": "https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Container Routes and Bidirectional Streaming",
+          "paragraphs": [
+            {
+              "text": "The custom container exposes two primary routes to handle incoming requests and audio streams. The first route, POST /invocations, streams a response for one complete input string. The second route, WS /invocations-bidirectional-stream, maintains an open connection across multiple messages moving in both directions simultaneously.",
+              "links": []
+            },
+            {
+              "text": "Using Amazon SageMaker AI real-time inference documentation, developers can properly configure bidirectional streaming capabilities. The architecture relies on recognizing binary WebSocket frames correctly and keeping persistent sessions open between messages to avoid the overhead of constant reconnections.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI real-time inference documentation",
+                  "url": "https://docs.aws.amazon.com/sagemaker/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and Tooling Setup",
+          "paragraphs": [
+            {
+              "text": "Building and deploying the necessary container images requires a specific development environment. Developers need Python 3.12 or later, Docker, and uv to manage package installations and build the container image efficiently.",
+              "links": [
+                {
+                  "text": "uv",
+                  "url": "https://docs.astral.sh/uv/"
+                }
+              ]
+            },
+            {
+              "text": "Additionally, the setup integrates with Amazon Bedrock AgentCore capabilities to manage the underlying agent runtime. Further architectural guidance can be found by consulting the Amazon Bedrock AgentCore documentation alongside resources available on the official GitHub repository.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore documentation",
+                  "url": "https://docs.aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "GitHub repository",
+                  "url": "https://github.com/aws-samples/sample-kokoro-tts-for-ai-agents"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker AI",
+        "Kokoro TTS",
+        "AI Voice Agents",
+        "Speech Synthesis",
+        "AWS CDK",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker AI",
+        "Kokoro-82M",
+        "Amazon Bedrock AgentCore"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based strictly on the provided AWS Machine Learning Blog source material."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 392,
+      "word_count_en": 503
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 514,
+      "word_count_en": 477
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "f6cf73b1fedb638ef18c",
+      "title": "Stream low-latency speech from AI agents using Kokoro TTS on Amazon SageMaker AI",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 392,
+          "word_count_en": 503
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 514,
+          "word_count_en": 477
+        }
+      ]
+    }
+  ],
+  "slug": "stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker/hero.webp",
+    "card": "/forum/assets/posts/2026/10/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker/card.webp",
+    "social": "/forum/assets/posts/2026/10/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker/social.jpg",
+    "alt": {
+      "ar": "تقنية Kokoro TTS على Amazon SageMaker AI لتقليل زمن الاستجابة",
+      "en": "Stream Low-Latency Speech With Kokoro TTS on Amazon SageMaker AI"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21706-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker/inline-01.webp",
+        "width": 1400,
+        "height": 587,
+        "alt": {
+          "ar": "تقنية Kokoro TTS على Amazon SageMaker AI لتقليل زمن الاستجابة",
+          "en": "Client connects to an Amazon SageMaker AI real-time endpoint on ml.g5.xlarge over InvokeEndpointWithBidirectionalStream. A Starlette ASGI app exposing GET /ping, POST /invocations, and WS /invocations-bidirectional-strea"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21706-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker/inline-02.webp",
+        "width": 559,
+        "height": 1050,
+        "alt": {
+          "ar": "تقنية Kokoro TTS على Amazon SageMaker AI لتقليل زمن الاستجابة",
+          "en": "One bidirectional session sending two sentences, each followed by synthesis_start, PCM audio, and synthesis_complete frames, ending with an explicit close message."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ml-21706-edit-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker/inline-03.webp",
+        "width": 1400,
+        "height": 759,
+        "alt": {
+          "ar": "تقنية Kokoro TTS على Amazon SageMaker AI لتقليل زمن الاستجابة",
+          "en": "Caller sends a request to an agent container built with BedrockAgentCoreApp over leg 1, POST /invocations, SSE-shaped with base64 audio. The container calls Amazon Bedrock over leg 2, a streaming converse call for text d"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21706-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker/inline-04.webp",
+        "width": 1281,
+        "height": 777,
+        "alt": {
+          "ar": "تقنية Kokoro TTS على Amazon SageMaker AI لتقليل زمن الاستجابة",
+          "en": "Bar chart comparing relative time to first audio for batch and bidi modes, locally and on a deployed Amazon Bedrock AgentCore runtime. Batch is normalized to 1.0x. Local bidi measures 0.42x (2.4 times faster). Deployed b"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21706-4.png"
+      }
+    ]
+  }
 }
