@@ -1,5 +1,368 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-23T17:13:13+00:00",
-  "last_published_story_id": "09a52776f0528d1ace29"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-23T17:17:46+00:00",
+  "target_publish_at": "2026-10-23T20:33:12.476324+03:00",
+  "story": {
+    "title": "How Bayer Crop Science built an agentic decision engine on Amazon Bedrock AgentCore with AWS Unified Operations",
+    "url": "https://aws.amazon.com/blogs/machine-learning/how-bayer-crop-science-built-an-agentic-decision-engine-on-amazon-bedrock-agentcore-with-aws-unified-operations",
+    "domain": "aws.amazon.com",
+    "summary": "Bayer Crop Science built the Agentic Decision Engine (ADE), a multi-agent platform on Amazon Bedrock AgentCore that lets breeders, analysts, and researchers ask natural language questions about their analytics platform. This post covers the ADE architecture, five design decisions, and how the team prepared it for production with AWS Unified Operations.",
+    "published_at": "2026-10-23T16:21:36+00:00",
+    "discovered_at": "2026-10-23T16:26:27+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "59b285913cc2d8dc1ba7",
+    "trend": {
+      "score": 120.64,
+      "age_hours": 0.93,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-bayer-crop-science-built-an-agentic-decision-engine-on-amazon-bedrock-agentcore-with-aws-unified-operations/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How Bayer Crop Science built an agentic decision engine on Amazon Bedrock AgentCore with AWS Unified Operations",
+      "title": "How Bayer Crop Science built an agentic decision engine on Amazon Bedrock AgentCore with AWS Unified Operations | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "باير تطلق محركاً ذكياً متعدد الوكلاء لتحليل بيانات الزراعة",
+      "description": "اعتمدت باير كروب ساينس على منصة Amazon Bedrock AgentCore لبناء محرك قرار ذكي يفسر نتائج نماذج التعلم الآلي بلغة طبيعية، مما يختصر وقت التشخيص من ساعة إلى دقائق.",
+      "deck": "تجاوزت شركة باير كروب ساينس مرحلة تشغيل نماذج التعلم الآلي إلى مرحلة فهمها، عبر بناء واجهة ذكاء اصطناعي تتيح للمهندسين والباحثين استفسار النظام مباشرة دون الحاجة لفهم البنية التحتية التقنية المعقدة.",
+      "summary_bullets": [
+        "بنية تحتية مبنية على Amazon Bedrock AgentCore تتيح عزل جلسات المستخدمين وإدارة الوصول بأمان.",
+        "استخدام إطار LangGraph لتنسيق عمل 22 وكيلاً متخصصاً في مجالات مختلفة مثل التشخيص والبيانات.",
+        "خفض وقت حل المشكلات التشغيلية من أكثر من ساعة إلى أقل من 10 دقائق بفضل وكيل الاستكشاف.",
+        "تكامل مع AWS Unified Operations لضمان جاهزية النظام للإنتاجية ومراقبة الأداء المستمر."
+      ],
+      "sections": [
+        {
+          "heading": "من تشغيل النماذج إلى فهم النتائج",
+          "paragraphs": [
+            {
+              "text": "تعتمد قرارات تربية المحاصيل في شركة باير كروب ساينس على بيانات ضخمة تشمل الجينوم، تجارب الحقول، الصور، والظروف البيئية. كانت الشركة تشغل مئات تكوينات نماذج التعلم الآلي عبر مناطق وفرق مختلفة، مما تطلب نظاماً يضمن قابلية التكرار والحوكمة. لهذا الغرض، طورت باير محرك القرار المتصل (CDE) لإدارة وتنسيق ومراقبة سير عمل التعلم الآلي. ومع توسع نطاق الاستخدام، تحولت العقبة الرئيسية من مجرد تشغيل هذه العمليات إلى فهم نتائجها، حيث كان على المستخدمين التنقل بين واجهات برمجية، مستندات، وسجلات مختلفة لفهم سبب فشل عملية معينة أو مصدر نتيجة محددة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معمارية محرك القرار الوكيل (ADE)",
+          "paragraphs": [
+            {
+              "text": "لسد هذه الفجوة، طورت باير محرك القرار الوكيل (ADE)، وهو منصة متعددة الوكلاء تعمل كواجهة بلغة طبيعية فوق نظام CDE. يعتمد النظام على خدمة Amazon Bedrock AgentCore من أمازون ويب سيرفيسز، والتي سمحت للفريق بالتركيز على سلوك الوكلاء بدلاً من بناء طبقات استضافة وعزل جلسات خاصة بهم. تتميز هذه المنصة ببيئة تشغيل معزولة لكل مستخدم، وإدارة وصول للأدوات عبر بوابة موحدة، وتصميم غير مرتبط بإطار عمل معين، مما أتاح للفريق استخدام إطار LangGraph الخاص بهم لتنسيق العمليات.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "توزيع المهام على 22 وكيلاً متخصصاً",
+          "paragraphs": [
+            {
+              "text": "يتكون النظام من أربع طبقات: تجربة المستخدم، تنسيق الوكلاء، الوكلاء المتخصصين، ومصادر البيانات والأدوات. يصل المستخدمون عبر واجهة ويب مبنية بـ React، وتُعالج الطلبات عبر وكيل رئيسي يصنف النية ويوجهها إلى وكيل متخصص مناسب. يعمل حالياً 22 وكيلاً متخصصاً في الإنتاج، لكل منها أدوات ومصادر بيانات خاصة. على سبيل المثال، يجيب وكيل الخبراء عن الأسئلة المفاهيمية باستخدام تقنية RAG، بينما يجلب وكيل العمليات حالة سير العمل الحية، ويحلل وكيل الاستكشاف الشكاوى التشغيلية. هذا التقسيم يسمح بإجابة دقيقة وسريعة دون الحاجة من المستخدم لفهم البنية الداخلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تسريع التشخيص التشغيلي",
+          "paragraphs": [
+            {
+              "text": "توضح حالة عملية كيف يعمل النظام: عندما يسأل مربي محاصيل عن سبب فشل عملية تصنيف ظاهري، يصنف الوكيل الرئيسي الطلب ويوجهه إلى وكيل الاستكشاف. يقوم هذا الوكيل بقراءة بيانات الأداء من Amazon CloudWatch وحالة العملية من واجهة CDE، لتحديد نقطة الفشل وإرجاع التشخيص. بدلاً من قضاء أكثر من ساعة في البحث اليدوي في السجلات وانتظار دعم المهندسين، أصبحت هذه العملية تستغرق أقل من 10 دقائق. في المرحلة الأولى، يحل النظام حوالي 80 في المئة من استفسارات المستخدمين دون الحاجة لتدخل مهندس بشري.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch",
+                  "url": "https://aws.amazon.com/cloudwatch/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "قرارات تصميمية لضمان الإنتاجية",
+          "paragraphs": [
+            {
+              "text": "اتخذ فريق باير خمسة قرارات تصميمية رئيسية بالتعاون مع خبراء من AWS Unified Operations. القرار الأول كان فصل حالة التنسيق عن بيئة التشغيل؛ فبينما توفر بيئة التشغيل جلسات معزولة، يتم حفظ نقاط التفتيش الخاصة بإطار LangGraph في Amazon DynamoDB لضمان استئناف العمل بعد إعادة التشغيل أو التوسع. القرار الثاني كان فصل الهوية المؤسسية عن وصول البوابة والصلاحيات الداخلية، مما يضمن أن تبقى المصادقة والتفويض خارج كود الوكلاء نفسه، مما يعزز الأمان ويقلل التعقيد البرمجي.",
+              "links": [
+                {
+                  "text": "Amazon DynamoDB",
+                  "url": "https://aws.amazon.com/dynamodb/"
+                },
+                {
+                  "text": "AWS Unified Operations",
+                  "url": "https://aws.amazon.com/premiumsupport/plans/unified-operations/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الشراكة مع AWS في مرحلة ما قبل الإطلاق",
+          "paragraphs": [
+            {
+              "text": "لم تكن مشاركة AWS مجرد دعم تقني بعد الإطلاق، بل امتدت لتشمل مرحلة التصميم والإعداد للإنتاجية. عمل مدير الحساب التقني (TAM) ومهندس متخصص في الذكاء الاصطناعي التوليدي (DSE) كجزء من فريق ADE، حيث شاركوا في اجتماعات أسبوعية لمراجعة القرارات التصميمية. ساعد هذا النهج فريق باير على اختبار كل قرار تصميمي ضد سلوك خدمات AWS الفعلية قبل الالتزام به، مع الحفاظ على الملكية الكاملة للمعمارية. كما ساهم هذا التعاون في بناء معرفة عملية بكيفية عمل الحملات التشغيلية، مما جعل الإرشادات التقنية تتناسب مع سياق عمل باير المحدد.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "التعلم الآلي",
+        "أمازون ويب سيرفيسز",
+        "باير كروب ساينس",
+        "وكلاء الذكاء الاصطناعي",
+        "الزراعة التقنية",
+        "بنية تحتية سحابية"
+      ],
+      "entities": [
+        "Bayer Crop Science",
+        "Amazon Web Services (AWS)",
+        "Amazon Bedrock AgentCore",
+        "AWS Unified Operations",
+        "LangGraph",
+        "Amazon DynamoDB",
+        "Amazon CloudWatch"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من مدونة AWS الرسمية المذكورة في المصادر، مع التركيز على التفاصيل التقنية المذكورة صراحةً دون استنتاجات إضافية."
+    },
+    "en": {
+      "title": "Bayer Builds Agentic Decision Engine on Amazon Bedrock AgentCore",
+      "description": "Bayer Crop Science has developed the Agentic Decision Engine using Amazon Bedrock AgentCore and AWS Unified Operations to streamline plant breeding analytics.",
+      "deck": "Bayer Crop Science has introduced a multi-agent platform designed to help researchers, breeders, and analysts query complex analytics workflows using natural language.",
+      "summary_bullets": [
+        "Bayer Crop Science deployed the Agentic Decision Engine (ADE) to address bottlenecks in understanding machine learning workflows.",
+        "The platform runs on Amazon Bedrock AgentCore, utilizing a framework-agnostic design with LangGraph orchestration.",
+        "ADE successfully resolves approximately 80 percent of user questions without requiring engineer intervention in its first phase.",
+        "Bayer collaborated with AWS Unified Operations, leveraging a designated Technical Account Manager and a generative AI Domain Specialist Engineer."
+      ],
+      "sections": [
+        {
+          "heading": "Solving the Analytics Bottleneck in Plant Breeding",
+          "paragraphs": [
+            {
+              "text": "Plant breeding decisions rely heavily on vast amounts of data spanning genomics, field trials, imagery, environmental conditions, and complex model outputs. To manage these operations, Bayer Crop Science previously built the Connected Decision Engine (CDE) to deploy, orchestrate, monitor, and reuse machine learning workflows consistently. However, as adoption grew within the organization, the primary operational bottleneck shifted from running these workflows to understanding their outcomes and troubleshooting failures.",
+              "links": []
+            },
+            {
+              "text": "Explaining a specific workflow result traditionally required piecing together context across disparate APIs, documentation, metadata stores, dashboards, and system logs. To bridge this operational gap, the team created the Agentic Decision Engine (ADE), a multi-agent interface that allows users to ask natural language questions. According to project metrics, ADE successfully resolves roughly 80 percent of initial user inquiries without requiring direct engineering support.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Core Technologies of ADE",
+          "paragraphs": [
+            {
+              "text": "The Agentic Decision Engine operates on Amazon Bedrock AgentCore, an AWS service built to facilitate the creation, connection, and optimization of scalable agents utilizing any chosen framework or model. By adopting this managed service, the engineering team avoided the overhead of operating custom agent hosting environments, session isolation layers, and tool access mechanisms.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "The platform structure is organized into four distinct layers encompassing the user experience, agent orchestration, specialist agents, and backend tools or data sources. Requests flow from a React web interface through an identity proxy for Microsoft Entra ID before reaching the agent infrastructure. Container images are built via GitHub Actions and pushed directly to Amazon Elastic Container Registry (Amazon ECR) for deployment.",
+              "links": [
+                {
+                  "text": "Amazon Elastic Container Registry (Amazon ECR)",
+                  "url": "https://aws.amazon.com/ecr/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Specialized Agents and Distributed Data Infrastructure",
+          "paragraphs": [
+            {
+              "text": "The production environment for ADE deploys 22 specialist agents, each tailored to a specific operational domain with dedicated tools and data sources. For instance, the Domain Expert Agent answers conceptual questions using retrieval-augmented generation, while the Operational Agent pulls live workflow metrics from CDE. Furthermore, the Troubleshooting Agent rapidly parses operational telemetry to diagnose errors.",
+              "links": []
+            },
+            {
+              "text": "The data plane is partitioned by functional responsibility across several cloud services. System state and checkpoints are managed using Amazon DynamoDB, while session records, user feedback, and analytics metrics reside in Amazon Aurora. Additionally, agent responses are cached via Amazon ElastiCache, and domain content stored in Amazon Simple Storage Service (Amazon S3) is indexed in Amazon OpenSearch for retrieval-augmented generation tasks.",
+              "links": [
+                {
+                  "text": "Amazon DynamoDB",
+                  "url": "https://aws.amazon.com/dynamodb/"
+                },
+                {
+                  "text": "Amazon Aurora",
+                  "url": "https://aws.amazon.com/rds/aurora/"
+                },
+                {
+                  "text": "Amazon ElastiCache",
+                  "url": "https://aws.amazon.com/elasticache/"
+                },
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                },
+                {
+                  "text": "Amazon OpenSearch",
+                  "url": "https://aws.amazon.com/opensearch-service/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Operational Telemetry and Performance Impact",
+          "paragraphs": [
+            {
+              "text": "Application telemetry and runtime metrics are captured continuously through Amazon CloudWatch. When a breeder investigates a failed phenotyping workflow, a supervisor agent classifies the user intent and routes the task to the Troubleshooting Agent. This specialist queries workflow telemetry and status logs to identify failure points instantly, reducing diagnosis times from over an hour of manual log searching to under ten minutes.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch",
+                  "url": "https://aws.amazon.com/cloudwatch/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Collaboration with AWS Unified Operations",
+          "paragraphs": [
+            {
+              "text": "To prepare the architecture for production workloads and manage ongoing operations, Bayer collaborated closely with AWS Unified Operations. This engagement integrated a designated Technical Account Manager and a generative AI Domain Specialist Engineer directly into the Bayer project team throughout the design and rollout phases.",
+              "links": [
+                {
+                  "text": "AWS Unified Operations",
+                  "url": "https://aws.amazon.com/premiumsupport/plans/unified-operations/"
+                }
+              ]
+            },
+            {
+              "text": "The assigned specialists participated in weekly technical standups to evaluate critical architectural decisions against native AWS service behaviors. This collaborative approach enabled the development team to establish robust design patterns—such as externalizing orchestration state and securing gateway access—while retaining full ownership of the final platform implementation.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Bayer Crop Science",
+        "Amazon Bedrock AgentCore",
+        "Artificial Intelligence",
+        "AWS Unified Operations",
+        "Machine Learning",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "Bayer Crop Science",
+        "Amazon Web Services",
+        "Amazon Bedrock AgentCore",
+        "LangGraph"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based entirely on the official AWS Machine Learning Blog source text."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 612,
+      "word_count_en": 633
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "59b285913cc2d8dc1ba7",
+      "title": "How Bayer Crop Science built an agentic decision engine on Amazon Bedrock AgentCore with AWS Unified Operations",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 612,
+          "word_count_en": 633
+        }
+      ]
+    }
+  ],
+  "slug": "how-bayer-crop-science-built-an-agentic-decision-engine-on-amazon-bedrock",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/how-bayer-crop-science-built-an-agentic-decision-engine-on-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/10/how-bayer-crop-science-built-an-agentic-decision-engine-on-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/10/how-bayer-crop-science-built-an-agentic-decision-engine-on-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "باير تطلق محركاً ذكياً متعدد الوكلاء لتحليل بيانات الزراعة",
+      "en": "Bayer Builds Agentic Decision Engine on Amazon Bedrock AgentCore"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/How-Bayer-Crop-Science-built-an-agentic-decision-engine-on-Amazon-Bedrock-AgentCore-with-AWS-Unified-Operations.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/how-bayer-crop-science-built-an-agentic-decision-engine-on-amazon-bedrock/inline-01.webp",
+        "width": 880,
+        "height": 564,
+        "alt": {
+          "ar": "باير تطلق محركاً ذكياً متعدد الوكلاء لتحليل بيانات الزراعة",
+          "en": "Agentic Decision Engine architecture: user experience, orchestration, specialist agents, and tools and data source layers"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-bayer-crop-science-built-an-agentic-decision-engine-on-amazon-bedrock-agentcore-with-aws-unified-operations/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21834-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/how-bayer-crop-science-built-an-agentic-decision-engine-on-amazon-bedrock/inline-02.webp",
+        "width": 1175,
+        "height": 738,
+        "alt": {
+          "ar": "باير تطلق محركاً ذكياً متعدد الوكلاء لتحليل بيانات الزراعة",
+          "en": "Request flow diagram for the Agentic Decision Engine. A user question enters the Supervisor Agent, which classifies the intent, checks the Amazon ElastiCache response cache, and routes the request to the appropriate spec"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-bayer-crop-science-built-an-agentic-decision-engine-on-amazon-bedrock-agentcore-with-aws-unified-operations/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21834-2.png"
+      }
+    ]
+  }
 }
