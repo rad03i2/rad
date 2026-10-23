@@ -1,5 +1,363 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-23T13:27:58+00:00",
-  "last_published_story_id": "f3b3493c086061746e17"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-23T13:33:43+00:00",
+  "target_publish_at": "2026-10-23T16:47:57.863031+03:00",
+  "story": {
+    "title": "Does Your Model Run on AWS Trainium? Look It Up",
+    "url": "https://huggingface.co/blog/torch-neuronx-model-support",
+    "domain": "huggingface.co",
+    "summary": "",
+    "published_at": "2026-10-23T00:00:00+00:00",
+    "discovered_at": "2026-10-23T13:18:18+00:00",
+    "source": {
+      "name": "Hugging Face Blog",
+      "feed": "https://huggingface.co/blog/feed.xml",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 26,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 59,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "2b3f616d26d343fed778",
+    "trend": {
+      "score": 116.73,
+      "age_hours": 13.54,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://huggingface.co/blog/torch-neuronx-model-support",
+      "name": "Hugging Face Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Does Your Model Run on AWS Trainium? Look It Up",
+      "title": "Does Your Model Run on AWS Trainium? Look It Up",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أداة جديدة لمعرفة توافق نماذج الذكاء الاصطناعي مع شرائح AWS Trainium",
+      "description": "تتيح مساحة تفاعلية جديدة على منصة Hugging Face للباحثين والمطورين التحقق بسهولة من توافق نماذج الذكاء الاصطناعي مع شرائح AWS Trainium.",
+      "deck": "أطلقت منصة Hugging Face مساحة جديدة ومخصصة تتيح للمستخدمين معرفة ما إذا كانت نماذج الذكاء الاصطناعي تعمل بشكل مباشر على شرائح أمازون للتدريب المخصصة.",
+      "summary_bullets": [
+        "إطلاق مساحة تفاعلية جديدة عبر Hugging Face للتحقق من توافق النماذج مع شرائح Trainium.",
+        "عرض تفاصيل الاختبارات، مثل عدد النوى المستخدمة ووقت التنفيذ واستهلاك الذاكرة.",
+        "اعتماد الاختبارات الحالية على نماذج توليد النصوص والنصوص المرئية ضمن مكتبة Transformers.",
+        "توفير نصوص برمجية جاهزة لتشغيل النماذج واختبارها مباشرة على بيئات التطوير."
+      ],
+      "sections": [
+        {
+          "heading": "مساحة تفاعلية لمعرفة توافق النماذج مع العتاد",
+          "paragraphs": [
+            {
+              "text": "في ظل التوسع المستمر في مجال الذكاء الاصطناعي وتنوع الأجهزة المخصصة لتسريع الأحمال والتدريب، أعلنت المدونة الرسمية لـ [Hugging Face Blog](https://huggingface.co/blog/torch-neuronx-model-support) عن إطلاق مساحة مخصصة تساعد المطورين على الإجابة عن سؤال محوري: هل يعمل نموذجك المفضل على شرائح أمازون المخصصة؟ تأتي هذه الخطوة استكمالاً للجهود السابقة في دمج تقنيات التعلم العميق مع البنية التحتية للحوسبة السحابية.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/torch-neuronx-model-support"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد هذه المساحة بشكل أساسي على أداة [TorchNeuron announcement](https://huggingface.co/blog/hf-torchneuron) التي تم تقديمها مسبقاً باعتبارها الواجهة الخلفية الأصلية لإطار العمل PyTorch والمتوافقة مع معمارية شرائح التدريب، مما يتيح لنماذج مكتبة المعالجة الشهيرة العمل بسلاسة وبدون تعديلات معقدة.",
+              "links": [
+                {
+                  "text": "TorchNeuron announcement",
+                  "url": "https://huggingface.co/blog/hf-torchneuron"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل الأداة وتصنيف النماذج",
+          "paragraphs": [
+            {
+              "text": "تتيح المساحة الجديدة للمستخدمين تصفح قائمة مختارة بعناية من أبرز النماذج المتاحة على المنصة، والتي تم اختيارها بناءً على عدد مرات التنزيل ومؤشرات الرواج والاتجاهات العامة. تعرض كل صفحة نتائج واضحة تتضمن حالة التوافق، وعدد نوى المعالجة المستخدمة لتوزيع أوزان النموذج، والزمن الإجمالي للتنفيذ بما في ذلك عمليات التجميع والتحويل البرمجي، إلى جانب ذروة استهلاك ذاكرة الجهاز.",
+              "links": []
+            },
+            {
+              "text": "يمكن للباحثين البحث عن أي نموذج محدد باستخدام أدوات التصفية المتاحة وفقاً لمهام معينة، كما توضح المساحة الأسباب وراء استبعاد بعض النماذج، سواء لعدم إعطائها الأولوية في مرحلة الاختبارات الحالية أو لوجود تعارض تقني يحول دون تشغيلها بالطريقة المطلوبة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نطاق الاختبارات الحالية وتطلعات التوسع",
+          "paragraphs": [
+            {
+              "text": "في مرحلة الإطلاق الحالية، تركز الاختبارات حصرياً على النماذج التابعة لمكتبة المعالجة الشهيرة، وتحديداً تلك المخصصة لمهام توليد النصوص والتعامل مع المدخلات المرئية والنصية المشتركة. ومع ذلك، تخطط الفرق المسؤولة عن المشروع لتوسيع نطاق الدعم ليشمل نماذج الانتشار ومحولات الجمل والعديد من المهام الأخرى المتقدمة في المستقبل القريب.",
+              "links": []
+            },
+            {
+              "text": "تخضع النماذج للاختبار عبر تشغيلها على بيئات سحابية متقدمة، حيث تُحمل الأوزان على أقل عدد ممكن من نوى المعالجة القادرة على استيعابها، مع التحقق من صحة المخرجات وجودتها مقارنة بالتشغيل التقليدي على وحدات المعالجة المركزية أو الاعتماد على نماذج تقييم مساعدة في حالة النماذج الموزعة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توفير النصوص البرمجية ومصادر البيانات المفتوحة",
+          "paragraphs": [
+            {
+              "text": "لا تقتصر المساحة على تقديم نتائج التوافق فحسب، بل توفر للمطورين النصوص البرمجية الدقيقة وتفاصيل الحزم البرمجية المطلوبة لتشغيل النماذج بأنفسهم. ويمكن الاستعانة بالوثائق التقنية المتاحة ضمن [AWS Neuron Deep Learning Container](https://github.com/aws-neuron/deep-learning-containers#torch-neuronx) لتهيئة البيئة المناسبة وتثبيت المكونات اللازمة لتنفيذ التجارب بكفاءة عالية.",
+              "links": [
+                {
+                  "text": "AWS Neuron Deep Learning Container",
+                  "url": "https://github.com/aws-neuron/deep-learning-containers#torch-neuronx"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد كافة البيانات المعروضة في هذه المساحة على سجلات عامة ومفتوحة يتم تحديثها بشكل دوري، مما يتيح للمطورين المهتمين بدراسة الأداء أو مراجعة أخطاء الترجمة البرمجية الاستفادة من مجموعة البيانات المرتبطة بمختلف إصدارات الحزم والمحولات البرمجية المتاحة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "AWS Trainium",
+        "Hugging Face",
+        "PyTorch",
+        "الحوسبة السحابية",
+        "التعلم العميق"
+      ],
+      "entities": [
+        "Hugging Face",
+        "AWS Trainium",
+        "PyTorch",
+        "AWS Neuron"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر استناداً حصراً إلى مدونة Hugging Face والتفاصيل التقنية المذكورة في المصدر."
+    },
+    "en": {
+      "title": "Hugging Face Launches Space to Check AWS Trainium Support",
+      "description": "Discover which Hugging Face models run on AWS Trainium using the new torch-neuronx model support space, checking compatibility, scripts, and more.",
+      "deck": "Hugging Face has introduced a dedicated tool to help developers verify model compatibility with AWS Trainium using the native PyTorch backend.",
+      "summary_bullets": [
+        "The new torch-neuronx model support Space allows users to check if popular models run unmodified on AWS Trainium.",
+        "Developers can view performance metrics including compilation wall time, peak device memory, and Trainium core sharding counts.",
+        "The platform provides direct run scripts, Neuron stack details, and instructions for utilizing precompiled graphs via a public NEFF cache.",
+        "Testing currently focuses on text-generation and image-text-to-text Transformers models on Trainium2 (trn2) instances."
+      ],
+      "sections": [
+        {
+          "heading": "Checking Model Compatibility on AWS Trainium",
+          "paragraphs": [
+            {
+              "text": "Following the introduction of TorchNeuron, the native PyTorch backend for AWS Trainium via the torch-neuronx package, developers often wonder which models from the Hub can run on the hardware. To address this, Hugging Face introduced the torch-neuronx model support tool to determine model compatibility. You can explore the tool directly via the [torch-neuronx model support](https://huggingface.co/spaces/aws-neuron/torch-neuronx-model-support) space.",
+              "links": [
+                {
+                  "text": "torch-neuronx model support",
+                  "url": "https://huggingface.co/spaces/aws-neuron/torch-neuronx-model-support"
+                }
+              ]
+            },
+            {
+              "text": "The interactive platform features multiple views to help users look up specific models. The default view opens on a curated selection of top models determined by download counts and trending scores. Each listed entry displays execution results, the number of Trainium cores utilized for sharding, wall time including compilation, and peak device memory consumption.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Navigating Hub Rankings and Compiler Versions",
+          "paragraphs": [
+            {
+              "text": "Users looking up a specific model can switch to the Trending or Downloads views, which follow standard Hugging Face Hub rankings task by task. If a model was deliberately excluded from testing, the Space provides an explanation, noting whether it was simply deprioritized or genuinely incompatible with the architecture. Developers can also filter results by selecting specific versions of the Neuron compiler and the Transformers library.",
+              "links": []
+            },
+            {
+              "text": "At the current stage, testing is limited to Transformers models within text-generation and image-text-to-text categories. However, future expansion plans aim to incorporate diffusers, sentence transformers, and additional task types.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Execution Scripts and Precompiled NEFF Caches",
+          "paragraphs": [
+            {
+              "text": "Selecting any tested model within the Space reveals a comprehensive setup guide detailing the exact Neuron stack versions, required supplementary packages, and the functional run script. The script follows the foundational method established in the initial [TorchNeuron announcement](https://huggingface.co/blog/hf-torchneuron), loading models via from_pretrained, handling necessary sharding, and executing generation tasks using a static cache alongside PyTorch compilation configurations.",
+              "links": [
+                {
+                  "text": "TorchNeuron announcement",
+                  "url": "https://huggingface.co/blog/hf-torchneuron"
+                }
+              ]
+            },
+            {
+              "text": "When running on a Trainium2 instance—such as within the official [AWS Neuron Deep Learning Container](https://github.com/aws-neuron/deep-learning-containers#torch-neuronx)—the execution process manages distributed ranks independently without requiring separate launcher utilities like torchrun.",
+              "links": [
+                {
+                  "text": "AWS Neuron Deep Learning Container",
+                  "url": "https://github.com/aws-neuron/deep-learning-containers#torch-neuronx"
+                }
+              ]
+            },
+            {
+              "text": "Because initial model runs require graph compilation, developers can bypass this compilation phase by copying prebuilt graphs directly from the public [NEFF cache](https://huggingface.co/buckets/aws-neuron/torch-neuronx-neff-cache) bucket using commands provided directly within the Space interface.",
+              "links": [
+                {
+                  "text": "NEFF cache",
+                  "url": "https://huggingface.co/buckets/aws-neuron/torch-neuronx-neff-cache"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Test Methodology and Hardware Constraints",
+          "paragraphs": [
+            {
+              "text": "Every evaluation test loads a targeted checkpoint onto a Trainium2 instance, applying the minimum number of Trainium cores required to accommodate its weights. While standard models utilize tensor parallelism, mixture-of-experts models rely exclusively on expert parallelism when tensor-parallel plans are unavailable. Tests verify generation accuracy by producing 32 tokens, comparing single-core outputs against CPU checkpoints, and utilizing a lightweight judge model to confirm language fluency when models are sharded.",
+              "links": []
+            },
+            {
+              "text": "Current testing parameters cap evaluation at models fitting within four Trainium2 devices, representing a maximum of 16 cores. Successful test passes validate functional correctness rather than absolute throughput or long-generation stability.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Accessing the Underlying Dataset",
+          "paragraphs": [
+            {
+              "text": "All metrics and validation results displayed in the interactive tool originate from the open [aws-neuron/torch-neuronx-model-support](https://huggingface.co/datasets/aws-neuron/torch-neuronx-model-support) dataset. This repository structures data into individual Parquet files corresponding to specific combinations of compiler and library versions, enabling developers to query compatibility metrics programmatically.",
+              "links": [
+                {
+                  "text": "aws-neuron/torch-neuronx-model-support",
+                  "url": "https://huggingface.co/datasets/aws-neuron/torch-neuronx-model-support"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS Trainium",
+        "Hugging Face",
+        "PyTorch",
+        "TorchNeuron",
+        "Transformers",
+        "Machine Learning",
+        "Hardware Acceleration"
+      ],
+      "entities": [
+        "AWS",
+        "Trainium",
+        "Hugging Face",
+        "PyTorch"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based exclusively on the provided Hugging Face blog post and allowed link targets."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 455,
+      "word_count_en": 578
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "2b3f616d26d343fed778",
+      "title": "Does Your Model Run on AWS Trainium? Look It Up",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 455,
+          "word_count_en": 578
+        }
+      ]
+    }
+  ],
+  "slug": "does-your-model-run-on-aws-trainium-look-it-up",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/does-your-model-run-on-aws-trainium-look-it-up/hero.webp",
+    "card": "/forum/assets/posts/2026/10/does-your-model-run-on-aws-trainium-look-it-up/card.webp",
+    "social": "/forum/assets/posts/2026/10/does-your-model-run-on-aws-trainium-look-it-up/social.jpg",
+    "alt": {
+      "ar": "أداة جديدة لمعرفة توافق نماذج الذكاء الاصطناعي مع شرائح AWS Trainium",
+      "en": "Hugging Face Launches Space to Check AWS Trainium Support"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/torch-neuronx-model-support/thumbnail.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/does-your-model-run-on-aws-trainium-look-it-up/inline-01.webp",
+        "width": 1200,
+        "height": 630,
+        "alt": {
+          "ar": "أداة جديدة لمعرفة توافق نماذج الذكاء الاصطناعي مع شرائح AWS Trainium",
+          "en": "torch-neuronx model support"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/torch-neuronx-model-support",
+        "originalUrl": "https://huggingface.co/spaces/aws-neuron/torch-neuronx-model-support/resolve/main/thumbnail.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/does-your-model-run-on-aws-trainium-look-it-up/inline-02.webp",
+        "width": 1280,
+        "height": 640,
+        "alt": {
+          "ar": "أداة جديدة لمعرفة توافق نماذج الذكاء الاصطناعي مع شرائح AWS Trainium",
+          "en": "Hugging Face Launches Space to Check AWS Trainium Support"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/torch-neuronx-model-support",
+        "originalUrl": "https://huggingface.co/blog/assets/hf-torchneuron/thumbnail.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/does-your-model-run-on-aws-trainium-look-it-up/inline-03.webp",
+        "width": 1400,
+        "height": 700,
+        "alt": {
+          "ar": "أداة جديدة لمعرفة توافق نماذج الذكاء الاصطناعي مع شرائح AWS Trainium",
+          "en": "Hugging Face Launches Space to Check AWS Trainium Support"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/torch-neuronx-model-support",
+        "originalUrl": "https://huggingface.co/blog/assets/hf-torchtpu/thumbnail.png"
+      }
+    ]
+  }
 }
