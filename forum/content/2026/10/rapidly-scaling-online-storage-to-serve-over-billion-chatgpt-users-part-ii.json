@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "ee4c22366ef7e7abd786",
+  "slug": "rapidly-scaling-online-storage-to-serve-over-billion-chatgpt-users-part-ii",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/rapidly-scaling-online-storage-to-serve-over-billion-chatgpt-users-part-ii/",
+    "en": "/forum/en/ai/rapidly-scaling-online-storage-to-serve-over-billion-chatgpt-users-part-ii/"
+  },
+  "locales": {
+    "ar": {
+      "title": "OpenAI توسّع نظام Habitat لتخزين بيانات مليار مستخدم ChatGPT",
+      "description": "تفصيل تقني لكيفية تطوير OpenAI لمنصة Habitat باستخدام Azure Cosmos DB، مع تحسين الأداء عبر تعدد المستأجرين والتخزين المؤقت العالمي.",
+      "deck": "تواجه OpenAI تحدياً هندسياً ضخماً في إدارة بيانات أكثر من مليار مستخدم عبر 40 منطقة جغرافية، مما دفعها لإعادة تصميم بنيتها التحتية للتخزين.",
+      "summaryBullets": [
+        "اعتمدت OpenAI على Azure Cosmos DB كطبقة تخزين أساسية ضمن منصة Habitat لدعم النمو الهائل.",
+        "واجهت الشركة تحديات تتعلق بتوزيع الموارد وتداخل الأحمال بين المستخدمين المختلفين (Noisy Neighbors).",
+        "تم الانتقال من نموذج مستأجر واحد إلى نموذج متعدد المستأجرين مع حاويات مشتركة لإدارة الموارد بكفاءة.",
+        "أثمرت الشراكة مع فريق Azure عن تحسينات أدت إلى تسريع عمليات القراءة بنسبة 12 ضعفًا."
+      ],
+      "sections": [
+        {
+          "heading": "التحدي الهندسي: استجابة فورية لمليار مستخدم",
+          "paragraphs": [
+            {
+              "text": "تتطلب جميع منتجات OpenAI وصولاً سريعاً وموثوقاً للبيانات، وهو ما توفره منصة التخزين الداخلية المعروفة باسم Habitat. يجب أن تستجيب هذه المنصة خلال أجزاء من الثانية لأكثر من مليار مستخدم موزعين على 40 منطقة جغرافية حول العالم. واجهت فرق البنية التحتية تحدياً استثنائياً يتمثل في دعم النمو المتسارع وظهور حالات استخدام جديدة، مع الحفاظ في الوقت نفسه على الموثوقية والأداء وسرعة تطوير المنتجات. لحل هذه المعادلة، اضطرت الشركة إلى إعادة التفكير في تصميم وتشغيل منصة التخزين السحابي الخاصة بها، مع تقييم مستمر للمقايضات التقنية بين الموثوقية والسرعة وإدارة الحجم الضخم.",
+              "links": [
+                {
+                  "text": "OpenAI",
+                  "url": "https://openai.com/index/scaling-storage-one-billion-users-part-two/"
+                }
+              ]
+            },
+            {
+              "text": "يأتي هذا التطور كجزء من سلسلة مقالات تقنية من قسم الهندسة في OpenAI. في الجزء الأول من هذه السلسلة، تم التركيز على تطور Habitat من مجرد مكتبة عميل بسيطة إلى خدمة متكاملة، وكيف تم دفع حدود ما كان يُعتبر عملياً لخدمة مبنية على لغة Python. أما في هذا الجزء الثاني، فيتم التعمق في كيفية توسيع نطاق مكوّن التخزين الأساسي، وهو قاعدة بيانات Azure Cosmos DB، من خلال شراكة عمل وثيقة مع فريق Azure للوصول إلى نهج متعدد المستأجرين قابل للتطبيق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "من العزلة إلى تعدد المستأجرين",
+          "paragraphs": [
+            {
+              "text": "مع نمو الشركات، تتطور فرق البنية التحتية غالباً من تشغيل أنظمة مخصصة لمستأجر واحد (Single-tenant) إلى أنظمة متعددة المستأجرين (Multi-tenant). في نموذج المستأجر الواحد، يحتفظ كل فريق منتج بنظامه الخاص، مما يقلل من نطاق الأخطاء ويوفر حدود ملكية واضحة وعزلاً تاماً للأحمال. ومع ذلك، يصبح هذا النموذج مكلفاً للغاية عند توسع الفرق وزيادة أسطح المنتجات، حيث يتحمل كل فريق مسؤولية تخطيط السعة، مما يؤدي غالباً إلى تخصيص موارد زائدة عن الحاجة بشكل كبير.",
+              "links": []
+            },
+            {
+              "text": "في المقابل، يمنح نموذج تعدد المستأجرين السيطرة لفريق مركزي لقواعد البيانات، يتمتع بخبرة أكبر في تخصيص الموارد. لكن هذا النموذج يخلق تحدياته الخاصة، أبرزها مشكلة الجار الصاخب (Noisy-neighbor)، حيث يستهلك مستأجر واحد حصة غير متناسبة من الموارد على حساب المستأجرين الآخرين. في منصة Habitat، اضطر فريق OpenAI إلى الموازنة بين هذه المقايضات لتصميم نظام تخزين موثوق وفعال. اليوم، تعمل Habitat كطبقة قاعدة بيانات متعددة المستأجرين لمنتجات OpenAI المختلفة، لكن الرحلة لم تكن خطية؛ فقد بدأت بحاوية واحدة متعددة المستأجرين، ثم انتقلت إلى حاويات مخصصة لكل مستأجر، قبل أن تعود في النهاية إلى اعتماد حاويات متعددة المستأجرين كخيار افتراضي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل حاويات Azure Cosmos DB",
+          "paragraphs": [
+            {
+              "text": "لفهم رحلة OpenAI التقنية، من الضروري فهم أساسيات عمل حاويات Azure Cosmos DB. تحدد كل حساب في Azure Cosmos DB مجموعة من الحاويات وسياسة التكرار (Replication Policy). يتم تخصيص كل حاوية لمعدل تدفق معين يُقاس بوحدات الطلبات في الثانية (RU/s). تُخزن البيانات داخل كل حاوية باستخدام تقسيم (Sharding) بناءً على مفتاح تقسيم منطقي محدد، مع وجود حدود موثقة لتخزين البيانات ومعدل التدفق لكل مفتاح منطقي.",
+              "links": []
+            },
+            {
+              "text": "تقوم Azure Cosmos DB بإدارة تقسيم المفاتيح المنطقية عبر عدد أقل من التقسيمات الفيزيائية الأساسية. تقوم الخدمة بتقسيم هذه المفاتيح إلى تقسيمات فيزيائية متعددة عندما تتجاوز البيانات حداً معيناً من التخزين، أو عندما تحتاج الحاوية إلى المزيد من التقسيمات الفيزيائية للحفاظ على معدل التدفق المخصص. هذا الهيكل يسمح بالمرونة في إدارة الأحمال، لكنه يتطلب فهماً دقيقاً لكيفية توزيع الموارد على المستوى الفيزيائي لضمان الأداء الأمثل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المرحلة الأولى: الاعتماد على الأدوات الأساسية",
+          "paragraphs": [
+            {
+              "text": "في البداية، سمحت OpenAI لأي حمل عميل بالمرور، معتمدين على حد 10,000 RU/s المعلن لكل مفتاح تقسيم منطقي لتوفير ضغط رجعي (Back pressure). كما استخدموا حاوية Azure Cosmos DB واحدة افتراضية في كل حساب. على الرغم من أن هذا الحل كان كافياً في البداية، إلا أنه أثبت وجود عدة مشاكل جوهرية. أولاً، بسبب اختيارات واجهة برمجة التطبيقات (API) المبكرة، تم كشف اختيار مفتاح التقسيم المنطقي مباشرة للعملاء، مما أدى إلى تصادمات متكررة على مفاتيح شائعة الاستخدام مثل معرّف المستخدم (user_id) أو معرّف مساحة العمل (workspace_id) عبر حالات استخدام مختلفة.",
+              "links": []
+            },
+            {
+              "text": "ثانياً، واجهت الشركة مشكلة قديمة كانت تعاني منها عند توسيع نطاق قواعد بيانات Postgres قبل الانتقال إلى Habitat، وهي قدرة الطلبات الكثيفة من منظمة ساخنة أو مفتاح واحد على إغراق قاعدة البيانات بأكملها. تم بذل جهد جماعي كبير لتخزين هذه المفاتيح مؤقتاً (Caching) وبناء إيجارات (Leases) عند فشل التخزين المؤقت، لضمان عدم انهيار قاعدة البيانات الأساسية تحت وطأة الطلبات المتكررة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحديات التقسيم الفيزيائي والأداء",
+          "paragraphs": [
+            {
+              "text": "ثالثاً، على الرغم من أن حدود حجم البيانات ومعدل التدفق الموثقة تنطبق على المفاتيح المنطقية، إلا أن الحدود الفعلية تُفرض على مستوى التقسيم الفيزيائي. عملياً، هذا يعني أن التقسيمات المنطقية لا تستطيع الوصول إلى 10,000 RU/s، بل تتشارك حدود التقسيم الفيزيائي مع كل المفاتيح المنطقية الأخرى الموجودة على نفس التقسيم الفيزيائي. سمح هذا الوضع لـ\"الجيران الصاخبين\" بالتأثير على العديد من المفاتيح المنطقية غير ذات الصلة، حيث كانت الأحمال العاملة على بيانات ميزات منتج متخصصة تعطل تدفقات تسجيل الدخول وإنشاء الحساب الأساسية.",
+              "links": []
+            },
+            {
+              "text": "أخيراً، حد معدل التدفق لتقسيم فيزيائي معين متغير ويعتمد على إجمالي معدل التدفق المخصص للحاوية. يتم توزيع معدل التدفق المخصص للحاوية بشكل متساوٍ تقريباً عبر التقسيمات الفيزيائية. مع نمو حجم البيانات، تنقسم التقسيمات الفيزيائية، مما يزيد من إجمالي عدد التقسيمات بينما يبقى معدل التدفق المخصص ثابتاً. النتيجة هي أن حد معدل التدفق الفعال لكل تقسيم يتقلص كلما زاد حجم البيانات. لحالات الاستخدام الأكثر كثافة في التخزين، مثل الملفات الثنائية (Blobs)، يخلق هذا نمط فشل حيث يؤدي نمو التخزين وحده إلى تقليل سعة معدل التدفق للأحمال النشطة، حتى لو بقيت معدلات الطلب والاستخدام مستقرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المرحلة الثانية: العزل والتخصيص",
+          "paragraphs": [
+            {
+              "text": "لمعالجة هذه المشاكل، انتقلت OpenAI في المرحلة الثانية إلى تجربة عزل الأحمال ونموذج المستأجر الواحد. ساعدت الحاويات المنفصلة في حل بعض هذه المشاكل جزئياً، حيث سمحت بعزل الأحمال الثقيلة عن الأحمال الحرجة. ومع ذلك، كان هذا الحل مكلفاً من حيث التكلفة والتعقيد التشغيلي، مما دفع الفريق إلى البحث عن حل وسط يجمع بين كفاءة تعدد المستأجرين وموثوقية العزل.",
+              "links": []
+            },
+            {
+              "text": "من خلال الشراكة الوثيقة مع فريق Azure، توصلت OpenAI إلى نهج متعدد المستأجرين قابل للتطبيق يعتمد على حاويات مشتركة الإدارة (Co-managed containers). هذا النهج سمح بتحقيق أداء قراءة ممتاز على نطاق عالمي ضخم، مع الحفاظ على الموثوقية المطلوبة لمنتجات الحساسة. وقد أثمر هذا التعاون عن تحسينات جوهرية أدت إلى تسريع عمليات القراءة بنسبة 12 ضعفًا، مما عزز تجربة المستخدم النهائي لـ ChatGPT.",
+              "links": [
+                {
+                  "text": "ChatGPT",
+                  "url": "https://openai.com/news/?tags=chatgpt"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "OpenAI",
+        "Azure Cosmos DB",
+        "بنية تحتية",
+        "تعدد المستأجرين",
+        "أداء",
+        "تخزين سحابي",
+        "هندسة برمجية"
+      ],
+      "entities": [
+        "OpenAI",
+        "Habitat",
+        "Azure Cosmos DB",
+        "ChatGPT",
+        "Jon Lee",
+        "Hrachya Hakobyan",
+        "Chaomin Yu"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "23 أكتوبر 2026",
+      "modifiedLabel": "23 أكتوبر 2026",
+      "readMinutes": 6,
+      "wordCount": 1027
+    },
+    "en": {
+      "title": "OpenAI Details Scaling Strategy for ChatGPT Online Storage",
+      "description": "OpenAI details how its application storage platform, Habitat, scaled Azure Cosmos DB to support over 1 billion ChatGPT users globally.",
+      "deck": "OpenAI has outlined the architectural journey behind Habitat, its application storage platform designed to manage unprecedented growth and deliver fast data access for over 1 billion ChatGPT users.",
+      "summaryBullets": [
+        "OpenAI's storage platform Habitat responds in milliseconds to users across 40 geographic regions.",
+        "Part II of the scaling series focuses on the underlying storage component, Azure Cosmos DB.",
+        "The engineering team evaluated multiple trade-offs between single-tenant and multi-tenant database systems.",
+        "Azure Cosmos DB primitives and a co-managed container approach helped achieve massive global scale."
+      ],
+      "sections": [
+        {
+          "heading": "Scaling Habitat for Global Users",
+          "paragraphs": [
+            {
+              "text": "OpenAI products require fast and reliable access to data, a requirement fulfilled by the company's application storage platform known as Habitat. Operating at an extraordinary scale, the platform must respond in milliseconds to over 1 billion users across 40 geographic regions. This explosive growth presented significant technical challenges regarding reliability, performance, and product developer velocity.",
+              "links": []
+            },
+            {
+              "text": "To manage these demands, the engineering team adopted a systematic approach: first establishing reliability for mission-critical traffic, then optimizing speed for a global user base, and finally maintaining efficient operations at scale. Further details on this technical path can be found in the official updates provided by OpenAI News.",
+              "links": [
+                {
+                  "text": "OpenAI News",
+                  "url": "https://openai.com/index/scaling-storage-one-billion-users-part-two/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Evolution of the Storage Platform",
+          "paragraphs": [
+            {
+              "text": "The comprehensive two-part technical series outlines how Habitat evolved from a basic client library and database into a globally distributed storage platform managing over 500 petabytes of data. While the initial installment examined the transition from a Python client to a service, the second installment addresses the underlying storage mechanics.",
+              "links": []
+            },
+            {
+              "text": "Through a close partnership with the Azure team, the technical staff worked to arrive at a viable multi-tenancy approach utilizing co-managed containers. This architecture delivers robust read performance across massive, global deployments.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Navigating the Multi-Tenancy Tradeoffs",
+          "paragraphs": [
+            {
+              "text": "As infrastructure teams scale, they frequently transition between single-tenant and multi-tenant architectures. Single-tenant designs offer clear ownership boundaries and limit blast radii, but they can quickly become expensive. Individual product teams are forced to handle their own capacity planning, often leading to significant over-provisioning.",
+              "links": []
+            },
+            {
+              "text": "Conversely, centralized multi-tenant databases offer better resource provisioning knowledge but introduce challenges such as noisy-neighbor issues. In these scenarios, a single tenant consuming an unusually large share of resources can negatively impact other tenants sharing the same infrastructure.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Azure Cosmos DB and Partition Dynamics",
+          "paragraphs": [
+            {
+              "text": "Habitat's initial architecture relied heavily on Azure Cosmos DB primitives, utilizing default containers within each account and depending on documented logical partition limits to manage load. However, exposing logical partition keys directly to clients led to frequent collisions across different product surfaces on common keys like user_id or workspace_id.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, physical partitions presented unique scaling hurdles. Because physical partition limits are shared among all colocated logical keys, noisy neighbors occasionally disrupted unrelated workflows. Additionally, as data volumes expanded and partitions split, the effective throughput limit per partition shrank, creating distinct scaling challenges for storage-heavy use cases.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Career Opportunities and Ongoing Engineering",
+          "paragraphs": [
+            {
+              "text": "OpenAI continues to expand its engineering efforts around online data infrastructure. Professionals interested in contributing to the architecture behind Habitat and similar foundational systems can explore open roles listed on the company's careers page.",
+              "links": []
+            },
+            {
+              "text": "The ongoing work highlights the complex engineering required to maintain high-performance AI infrastructure capable of supporting massive global user adoption throughout 2026 and beyond.",
+              "links": [
+                {
+                  "text": "2026",
+                  "url": "https://openai.com/news/?tags=2026"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "OpenAI",
+        "Azure Cosmos DB",
+        "ChatGPT",
+        "Database Architecture",
+        "Cloud Computing",
+        "Infrastructure",
+        "Data Storage"
+      ],
+      "entities": [
+        "OpenAI",
+        "Microsoft Azure",
+        "ChatGPT",
+        "Habitat"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 23, 2026",
+      "modifiedLabel": "October 23, 2026",
+      "readMinutes": 3,
+      "wordCount": 529
+    }
+  },
+  "datePublished": "2026-10-23T19:33:12.222455+03:00",
+  "dateModified": "2026-10-23T19:33:12.222455+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/rapidly-scaling-online-storage-to-serve-over-billion-chatgpt-users-part-ii/hero.webp",
+    "card": "/forum/assets/posts/2026/10/rapidly-scaling-online-storage-to-serve-over-billion-chatgpt-users-part-ii/card.webp",
+    "social": "/forum/assets/posts/2026/10/rapidly-scaling-online-storage-to-serve-over-billion-chatgpt-users-part-ii/social.jpg",
+    "alt": {
+      "ar": "OpenAI توسّع نظام Habitat لتخزين بيانات مليار مستخدم ChatGPT",
+      "en": "OpenAI Details Scaling Strategy for ChatGPT Online Storage"
+    },
+    "credit": "OpenAI News",
+    "sourceUrl": "https://images.ctfassets.net/kftzwdyauwt9/1p8WL4wct7MU8nnw6609WL/6ae794fe4cc93d37cc095d4d45730669/scaling-storage-one-billion-users-part-two-social.png?w=1600&h=900&fit=fill",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/rapidly-scaling-online-storage-to-serve-over-billion-chatgpt-users-part-ii/inline-01.webp",
+        "width": 1050,
+        "height": 1050,
+        "alt": {
+          "ar": "OpenAI توسّع نظام Habitat لتخزين بيانات مليار مستخدم ChatGPT",
+          "en": "Rethinking the ad stack around a new user journey — Art card"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من OpenAI News",
+          "en": "Image related to the report from OpenAI News"
+        },
+        "credit": "OpenAI News",
+        "sourceUrl": "https://openai.com/index/scaling-storage-one-billion-users-part-two/",
+        "originalUrl": "https://images.ctfassets.net/kftzwdyauwt9/3aewhPPb5NQ5IqOKEkrtzA/7209065f6e6ccf3a0476b43feb8336e1/rethinking-ads-card.png?w=3840&q=90&fm=webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/rapidly-scaling-online-storage-to-serve-over-billion-chatgpt-users-part-ii/inline-02.webp",
+        "width": 1050,
+        "height": 1050,
+        "alt": {
+          "ar": "OpenAI توسّع نظام Habitat لتخزين بيانات مليار مستخدم ChatGPT",
+          "en": "Scaling Storage for 1 Billion ChatGPT Users (Part I) card image"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من OpenAI News",
+          "en": "Image related to the report from OpenAI News"
+        },
+        "credit": "OpenAI News",
+        "sourceUrl": "https://openai.com/index/scaling-storage-one-billion-users-part-two/",
+        "originalUrl": "https://images.ctfassets.net/kftzwdyauwt9/2X23NOb0P4V1KDzUBkeNpl/888204b45a1c84ddfa24c9ed31111a9c/OAI_HabitatPT1_Art_Card_1x1.png?w=3840&q=90&fm=webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/rapidly-scaling-online-storage-to-serve-over-billion-chatgpt-users-part-ii/inline-03.webp",
+        "width": 1050,
+        "height": 1050,
+        "alt": {
+          "ar": "OpenAI توسّع نظام Habitat لتخزين بيانات مليار مستخدم ChatGPT",
+          "en": "Jalapeño inference — Art Card"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من OpenAI News",
+          "en": "Image related to the report from OpenAI News"
+        },
+        "credit": "OpenAI News",
+        "sourceUrl": "https://openai.com/index/scaling-storage-one-billion-users-part-two/",
+        "originalUrl": "https://images.ctfassets.net/kftzwdyauwt9/26K8mLbrpbaDvoFY0NrE04/8e4ad0b3f28042c22d6d5130bd4f4019/jalapeno-art-card.png?w=3840&q=90&fm=webp"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "OpenAI News",
+      "url": "https://openai.com/index/scaling-storage-one-billion-users-part-two/",
+      "type": "official",
+      "title": "Rapidly scaling online storage to serve over 1 billion ChatGPT users (Part II)"
+    }
+  ],
+  "sourceUrl": "https://openai.com/index/scaling-storage-one-billion-users-part-two",
+  "sourceTitle": "Rapidly scaling online storage to serve over 1 billion ChatGPT users (Part II)",
+  "trendScore": 130.0,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-23T16:33:12+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/rapidly-scaling-online-storage-to-serve-over-billion-chatgpt-users-part-ii.json"
+}
