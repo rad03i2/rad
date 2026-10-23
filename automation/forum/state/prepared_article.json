@@ -1,5 +1,351 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-23T16:53:12+00:00",
-  "last_published_story_id": "75d4a9cbafb13c9a87e9"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-23T16:58:32+00:00",
+  "target_publish_at": "2026-10-23T20:13:12.333477+03:00",
+  "story": {
+    "title": "Visualize points and routes with GeoJSON in Amazon Quick Sight layer maps",
+    "url": "https://aws.amazon.com/blogs/machine-learning/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps",
+    "domain": "aws.amazon.com",
+    "summary": "Amazon Quick Sight layer maps now support Point and LineString geometry from the same GeoJSON workflow, so you can plot store locations and the routes between them. This post covers the dataset and GeoJSON structure layer maps require, when to choose points or lines, and techniques for viewport control, layering geometries, and dynamic GeoJSON updates.",
+    "published_at": "2026-10-23T16:24:55+00:00",
+    "discovered_at": "2026-10-23T16:26:27+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "automation",
+    "category_label": "الأتمتة",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "09a52776f0528d1ace29",
+    "trend": {
+      "score": 128.79,
+      "age_hours": 0.54,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 8
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Visualize points and routes with GeoJSON in Amazon Quick Sight layer maps",
+      "title": "Visualize points and routes with GeoJSON in Amazon Quick Sight layer maps | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "خرائط الطبقات في أمازون كويك سايت تدعم النقاط والمسارات",
+      "description": "أعلنت أمازون كويك سايت عن تحديث جديد يتيح لخرائط الطبقات دعم هندسة النقاط والخطوط عبر ملفات جيو جيه إس أو إن لتصور المواقع والمسارات.",
+      "deck": "تحديث جديد لخدمة أمازون كويك سايت يوسع إمكانيات خرائط الطبقات لتشمل النقاط والخطوط، مما يسهل تتبع المواقع والمسارات الجغرافية بدقة.",
+      "summary_bullets": [
+        "خرائط الطبقات في أمازون كويك سايت تدعم الآن نوعي هندسة النقاط والخطوط.",
+        "استخدام ملفات جيو جيه إس أو إن لتحديد مواقع المتاجر ومسارات حركة الطيران بدقة.",
+        "ربط عناصر الخريطة ببيانات المجموعات عبر مفتاح ربط مشترك.",
+        "إمكانية التحكم المتقدم في نطاق الرؤية وتخصيص الخصائص البصرية."
+      ],
+      "sections": [
+        {
+          "heading": "توسيع قدرات خرائط الطبقات الجغرافية",
+          "paragraphs": [
+            {
+              "text": "أعلنت منصة الأعمال التابعة لشركة أمازون عن تحسينات بارزة في خرائط الطبقات، حيث أصبحت تدعم هندسة النقاط والخطوط من خلال نفس سير العمل المعتمد على ملفات جيو جيه إس أو إن. تتيح هذه الإضافة للمؤسسات والشركات رسم مواقع المتاجر الفردية والمسارات التي تربط بينها، مثل خطوط الطيران أو مسارات التوصيل، مما يساعد المحللين على اكتشاف الأنماط المرتبطة بالمواقع الجغرافية بفضل قدرات [Amazon Quick Sight].",
+              "links": [
+                {
+                  "text": "Amazon Quick Sight",
+                  "url": "https://aws.amazon.com/quick/quicksight/"
+                }
+              ]
+            },
+            {
+              "text": "عندما أطلقت خرائط الطبقات لأول مرة، كان بإمكان المستخدمين رفع ملف جيو جيه إس أو إن لرسم طبقات أشكال مخصصة مثل مناطق المبيعات والمقاطعات وربطها بمجموعات البيانات. ورغم كفاءة تلك الميزة في تغطية الحدود الإقليمية، إلا أنها لم تكن تدعم المواقع الفردية داخل تلك المناطق أو المسارات الرابطة بينها، وهو ما يعالجه التحديث الجديد بشكل جذري وفقاً لما ورد في مدونة [AWS Machine Learning Blog].",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "أنواع الهندسة الجديدة وآلية عملها",
+          "paragraphs": [
+            {
+              "text": "يدعم التحديث نوعين هندسيين أساسيين هما النقطة والخط. تحدد النقاط مواقع محددة بدقة مثل مواقع المتاجر والمرافق المختلفة، بينما ترسم الخطوط المسارات بين المواقع مثل مسارات التوصيل أو الرحلات الجوية بين المطارات. تتطلب هذه العملية ملف جيو جيه إس أو إن بحجم أقصى يبلغ مئة ميغابايت ومجموعة بيانات تحتوي على مفتاح ربط مشترك بين الطرفين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تصور المسارات باستخدام خطوط الربط",
+          "paragraphs": [
+            {
+              "text": "يتيح دعم هندسة الخطوط توصيل قائمة مرتبة من الإحداثيات الجغرافية لتشكيل مسار متصل واحد على الخريطة. تستخدم هذه الخطوط عندما ترغب الشركات في إبراز العلاقات بين المواقع المختلفة، مثل تتبع مسارات الطيران أو خطوط الشحن البحري أو حتى أجزاء خطوط الأنابيب، حيث يرسم النظام كل مسار استناداً إلى الإحداثيات الموجودة في الملف بدلاً من توليدها عند التحميل.",
+              "links": []
+            },
+            {
+              "text": "يمكن للمحللين تخصيص خصائص الخطوط بصرياً عبر التحكم في اللون والعرض ومستوى الشفافية لتوضيح البيانات بشكل أفضل. على سبيل المثال، يمكن لفرق تشغيل المطارات رسم الرحلات المغادرة من مطار نيويورك إلى وجهات متعددة، حيث يربط المعرف المشترك بين بيانات المسار في الملف والصف المقابل في مجموعة البيانات لإظهار التفاصيل عند تمرير المؤشر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة النقاط والتحكم في نطاق الرؤية",
+          "paragraphs": [
+            {
+              "text": "بينما توفر المنصة أنواع خرائط نقاط أصلية تقوم بترميز المواقع جغرافياً تلقائياً وتدعم التحديث الديناميكي، فإن طبقات النقائط الجديدة تقدم خياراً إضافياً بميزات فريدة. تعتمد نقاط خرائط الطبقات على حجم علامات موحد وتتطلب إحداثيات صريحة داخل الملف لعدم توفر ميزة الترميز الجغرافي التلقائي فيها.",
+              "links": []
+            },
+            {
+              "text": "في المقابل، يمنح هذا النوع الجديد المستخدمين قدرة فائقة على التحكم الدقيق في نطاق الرؤية، مما يتيح قفل الخريطة على منطقة جغرافية محددة بدقة وتعطيل ميزتي التحريك والتكبير، وهو ما يثبت نفعاً كبيراً عندما تكون المواقع ثابتة والمطلوبة هي إبقاء التركيز على منطقة معينة دون تغيير.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون كويك سايت",
+        "خرائط جغرافية",
+        "جيو جيه إس أو إن",
+        "تحليل البيانات",
+        "ذكاء الأعمال",
+        "الأتمتة"
+      ],
+      "entities": [
+        "Amazon Quick Sight",
+        "AWS Machine Learning Blog",
+        "Amazon"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر استناداً حصرياً إلى تفاصيل مدونة تعلم मशीन في أمازون ويب سيرفيسز وتحديث خرائط طبقات كويك سايت."
+    },
+    "en": {
+      "title": "Amazon QuickSight Layer Maps Gain Point and Line Support",
+      "description": "Amazon QuickSight layer maps now support Point and LineString geometry via GeoJSON workflows, enabling users to plot specific locations and routes.",
+      "deck": "Amazon QuickSight layer maps have been updated to support Point and LineString geometry from the same GeoJSON workflow, allowing businesses to plot individual locations and the pathways connecting them.",
+      "summary_bullets": [
+        "Layer maps now support Point and LineString geometry alongside polygons via GeoJSON workflows.",
+        "Users can plot specific locations, such as store sites, and routes like delivery paths or flight trajectories.",
+        "Layer maps require a Quick Sight dataset, a shared join key, and a GeoJSON file up to 100 MB in size.",
+        "New capabilities allow for advanced techniques including viewport control, layering geometries, and dynamic GeoJSON updates."
+      ],
+      "sections": [
+        {
+          "heading": "Expanded Geometry Support in Layer Maps",
+          "paragraphs": [
+            {
+              "text": "According to the AWS Machine Learning Blog, Amazon QuickSight layer maps now support Point and LineString geometry within the same GeoJSON workflow. When layer maps first launched, users could upload a GeoJSON file to draw custom shape layers like sales territories or districts and join those shapes to a dataset, but the capability did not cover individual locations or routes.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/"
+                },
+                {
+                  "text": "layer maps first launched",
+                  "url": "https://aws.amazon.com/blogs/business-intelligence/create-custom-shape-maps-in-amazon-quicksight/"
+                }
+              ]
+            },
+            {
+              "text": "The updated feature allows businesses to visualize patterns tied to location, such as store locations across a city or flights leaving an airport. Quick Sight provides multiple map types to support these geospatial analyses, including point maps, filled maps, and layer maps.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Understanding Points and LineStrings",
+          "paragraphs": [
+            {
+              "text": "The newly supported geometry types serve distinct purposes in spatial analysis. Points mark specific locations such as individual store or facility sites, while a LineString traces a route between locations, like a delivery path or a flight trajectory between airports.",
+              "links": []
+            },
+            {
+              "text": "LineString geometry connects an ordered list of coordinates into a single path. Each route operates as one feature where coordinates are connected in sequence. Organizations can use lines when the relationship between locations is the primary focus, such as shipping lanes, flight paths, or pipeline segments.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and GeoJSON Structure",
+          "paragraphs": [
+            {
+              "text": "Configuring a layer map requires a Quick Sight dataset holding metrics and dimensions, a shared join key between the dataset and the GeoJSON file, and a valid .geojson file format with a maximum supported file size of 100 MB. GeoJSON is a JSON-based format utilized for describing geographic features.",
+              "links": []
+            },
+            {
+              "text": "A FeatureCollection represents the entire file containing a features array, whereas a Feature represents a single map element carrying geometry and a properties object that holds the join key. Geometry objects specify a type such as Point, LineString, or Polygon along with coordinates.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Dataset Integration and Visualization Settings",
+          "paragraphs": [
+            {
+              "text": "When configuring a layer in a layer map visual within Amazon QuickSight, administrators evaluate two primary settings. The first setting determines the Geometry type to visualize, setting whether Points, Lines, or Polygons render on the map. The second setting matches the shape file key field to the dataset key field, successfully linking each GeoJSON feature to a specific row in the dataset.",
+              "links": []
+            },
+            {
+              "text": "For line layers, fields from the joined dataset can dictate line color encoding to group routes accordingly. Additionally, users can customize lines with width and opacity controls to refine visual prominence and clarity.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Comparing Point Visualizations in Quick Sight",
+          "paragraphs": [
+            {
+              "text": "Amazon Quick Sight offers a native point map visual type that automatically geocodes location names and refreshes with scheduled data. However, the newly added support for GeoJSON point layers in layer map visuals offers a distinct alternative.",
+              "links": []
+            },
+            {
+              "text": "Layer map visual points utilize a uniform marker size and do not support automated geocoding, requiring explicit coordinates within the GeoJSON file instead. In exchange, users gain precise viewport control, allowing them to lock the map to exact geographic regions and disable panning and zooming when fixed locations are required.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon QuickSight",
+        "GeoJSON",
+        "Geospatial Analytics",
+        "Business Intelligence",
+        "AWS",
+        "Data Visualization"
+      ],
+      "entities": [
+        "Amazon QuickSight",
+        "AWS",
+        "Amazon"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based exclusively on the provided official AWS Machine Learning Blog post details."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 468,
+      "word_count_en": 582
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "09a52776f0528d1ace29",
+      "title": "Visualize points and routes with GeoJSON in Amazon Quick Sight layer maps",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 468,
+          "word_count_en": 582
+        }
+      ]
+    }
+  ],
+  "slug": "visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/hero.webp",
+    "card": "/forum/assets/posts/2026/10/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/card.webp",
+    "social": "/forum/assets/posts/2026/10/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/social.jpg",
+    "alt": {
+      "ar": "خرائط الطبقات في أمازون كويك سايت تدعم النقاط والمسارات",
+      "en": "Amazon QuickSight Layer Maps Gain Point and Line Support"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ML-21612-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/inline-01.webp",
+        "width": 1400,
+        "height": 640,
+        "alt": {
+          "ar": "خرائط الطبقات في أمازون كويك سايت تدعم النقاط والمسارات",
+          "en": "Layer map rendering the JFK to Los Angeles flight path as a line"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ML-21612-2.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/inline-02.webp",
+        "width": 1400,
+        "height": 666,
+        "alt": {
+          "ar": "خرائط الطبقات في أمازون كويك سايت تدعم النقاط والمسارات",
+          "en": "Layer map rendering a retail store location as a point"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ML-21612-4.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/inline-03.webp",
+        "width": 1400,
+        "height": 919,
+        "alt": {
+          "ar": "خرائط الطبقات في أمازون كويك سايت تدعم النقاط والمسارات",
+          "en": "Layer map showing multiple flight paths radiating from JFK to destination cities"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ML-21612-5.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/inline-04.webp",
+        "width": 1400,
+        "height": 931,
+        "alt": {
+          "ar": "خرائط الطبقات في أمازون كويك سايت تدعم النقاط والمسارات",
+          "en": "Layer map of retail store points across a metro area with a locked viewport"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/visualize-points-and-routes-with-geojson-in-amazon-quick-sight-layer-maps/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ML-21612-6.png"
+      }
+    ]
+  }
 }
