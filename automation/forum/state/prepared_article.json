@@ -1,5 +1,361 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-23T02:23:20+00:00",
-  "last_published_story_id": "90e35913e5ba3eb8b4a9"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-23T02:29:12+00:00",
+  "target_publish_at": "2026-10-23T05:43:19.442556+03:00",
+  "story": {
+    "title": "Switch 2 security takes a hit as hackers unlock homebrew access",
+    "url": "https://arstechnica.com/gaming/2026/10/switch-2-jailbreak-gives-hackers-new-ways-to-run-homebrew-and-mod-games",
+    "domain": "arstechnica.com",
+    "summary": "\"Userland\" exploit relies on integer overflow found in \"SmileBasic\" interpreter.",
+    "published_at": "2026-10-22T22:25:33+00:00",
+    "discovered_at": "2026-10-23T00:22:02+00:00",
+    "source": {
+      "name": "Ars Technica",
+      "feed": "https://feeds.arstechnica.com/arstechnica/index",
+      "type": "journalism",
+      "trust": 0.88,
+      "priority": 21,
+      "defaultCategory": "computers"
+    },
+    "category": "security",
+    "category_label": "الأمن التقني",
+    "score": 45,
+    "verification": {
+      "confidence": 0.88,
+      "reason": "trusted_journalism_single_source",
+      "official": false,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "fe6ffcf62f0de84e13bd",
+    "trend": {
+      "score": 99.43,
+      "age_hours": 4.04,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 6
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://arstechnica.com/gaming/2026/10/switch-2-jailbreak-gives-hackers-new-ways-to-run-homebrew-and-mod-games/",
+      "name": "Ars Technica",
+      "domain": null,
+      "kind": "journalism",
+      "type": "journalism",
+      "feed_title": "Switch 2 security takes a hit as hackers unlock homebrew access",
+      "title": "Switch 2 security takes a hit as hackers unlock homebrew access - Ars Technica",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "باحثون يكشفون ثغرة أمنية جديدة تتيح تشغيل برامج مخصصة على سويتش 2",
+      "description": "كشفت ثغرة برمجية في مفسر لغة SmileBasic عن إمكانية الوصول إلى نظام سويتش 2، مما يتيح للمطورين تشغيل برامج مخصصة وتعديل الألعاب دون الحاجة إلى تعديلات عتادية.",
+      "deck": "نجح باحث أمني في استغلال ثغرة في برنامج SmileBasic 4 للوصول إلى بيئة المستخدم على سويتش 2، مما يفتح الباب أمام تطوير أدوات مخصصة وتعديل الألعاب.",
+      "summary_bullets": [
+        "اعتمد الباحث سامي حاجميد على ثغرة في مفسر لغة البرمجة SmileBasic 4 للوصول إلى النظام.",
+        "يتطلب الاستغلال وجود جهاز كمبيوتر يعمل بنظام macOS أو Linux متصل بالشبكة نفسها.",
+        "أظهر الباحث نجاحه من خلال تعديل شخصيات في لعبة Mario Kart World.",
+        "أزال نينتندو البرنامج من متجرها الرقمي، لكن الثغرة قد تصلح في تحديثات قادمة."
+      ],
+      "sections": [
+        {
+          "heading": "اختراق برمجي يفتح الباب أمام التعديلات",
+          "paragraphs": [
+            {
+              "text": "أعلن الباحث الأمني سامي حاجميد، المعروف باسم Pepsipu، عن تحقيقه نجاحاً في تنفيذ ما يُعرف بـ \"الجيلبريك\" الجزئي على جهاز سويتش 2. يعتمد هذا الاختراق على ثغرة برمجية في مفسر لغة البرمجة SmileBasic 4، وهو جزء من سلسلة طويلة من بيئات البرمجة التي تعمل على أجهزة نينتندو. يسمح هذا الوصول إلى بيئة المستخدم (Userland) بتشغيل برامج مخصصة، وعكس هندسة الألعاب، وتعديلها، بالإضافة إلى نسخ ملفات الحفظ والوصول إلى معظم المحيطات عبر الذاكرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية استغلال الثغرة البرمجية",
+          "paragraphs": [
+            {
+              "text": "يعتمد الاختراق على وجود ثغرة في مفسر لغة البرمجة SmileBasic 4، حيث اكتشف الباحث خطأً في حساب الأعداد الصحيحة (Integer Overflow) يحدث عند إزالة عناصر من مصفوفة البيانات. يؤدي هذا الخطأ إلى منح الوصول إلى مؤشر المصفوفة، مما يتيح قراءة وكتابة أجزاء من ذاكرة النظام. لم يقتصر الأمر عند هذا الحد، بل قام الباحث بالبحث عن وحدات النظام الداخلية للوصول إلى صلاحيات أعلى، حيث وجد ثغرة أخرى في وحدة خدمات النظام الملفات (FileSystem) مكنته من تنفيذ أوامر نظام ملفات مميزة والحصول على تنفيذ لأكواد أصلية.",
+              "links": [
+                {
+                  "text": "SmileBasic 4",
+                  "url": "https://www.petc4.smilebasic.com/about?lang=en"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التحديات التقنية وشروط التنفيذ",
+          "paragraphs": [
+            {
+              "text": "يُصنف هذا الاختراق على أنه \"مرتبط\" (Tethered)، مما يعني أنه يتطلب وجود جهاز كمبيوتر يعمل بنظام macOS أو Linux متصل بالشبكة المحلية نفسها. يتم استخدام حزمة برمجية (Node.js) على الكمبيوتر للمساعدة في تمكين الوصول المميز إلى النظام. استخدم حاجميد أداة ذكاء اصطناعي من OpenAI’s Codex لاستكشاف مفسر اللغة، مع بناء إطار عمل مخصص لإرسال أوامر USB وعرض النتائج عبر HDMI، مما استغرق حوالي أسبوعين من العمل المكثف.",
+              "links": [
+                {
+                  "text": "OpenAI’s Codex",
+                  "url": "https://chatgpt.com/codex/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إثبات المفهوم وتفاعل المجتمع التقني",
+          "paragraphs": [
+            {
+              "text": "كإثبات لمفهوم الاختراق، عرض حاجميد مجموعة من الشخصيات المعدلة في لعبة Mario Kart World. كما بدأ أعضاء آخرون في مجتمع هاوئي سويتش 2 بعرض عروض بسيطة وأدوات تطوير قيد الإنجاز تعمل على الأجهزة المخترقة. على سبيل المثال، تم نشر فيديو يوضح عمل GPU كامل عبر Vulkan في بيئة المستخدم، مما يدل على التقدم السريع في قدرات المطورين بعد اكتشاف هذه الثغرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استجابة نينتندو وحدود الاختراق",
+          "paragraphs": [
+            {
+              "text": "على الرغم من نجاح الاختراق، فإن الوصول الحالي يقتصر على بيئة المستخدم، مما يعني أن المطورين ما زالوا محاصرين في \"صندوق رملي\" محدود، ولا يملكون وصولاً كاملاً إلى مستوى النواة (Kernel) الذي يوفر تحكماً كاملاً في العتاد. استجابةً لذلك، أزالت نينتندو برنامج SmileBasic 4 من متجرها الرقمي عالمياً، وهو إجراء مشابه لما فعلته سابقاً مع نسخة 3DS بعد اكتشاف ثغرة smilehax في عام 2016. ومع ذلك، لا يزال بإمكان المستخدمين الذين قاموا بتحميل البرنامج مسبقاً الوصول إليه.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آفاق مستقبلية وتحديثات النظام",
+          "paragraphs": [
+            {
+              "text": "يعمل الاختراق الحالي على أحدث إصدار من نظام سويتش 2 (الإصدار 23.0.1)، لكن من المرجح أن تصلح نينتندو هذه الثغرة في تحديثات قادمة. يتطلب الوصول المستمر إلى خدمات نينتندو والألعاب الجديدة تثبيت هذه التحديثات، مما قد يحد من انتشار الاختراق. ومع ذلك، يشير وجود ثغرات مماثلة في ألعاب أخرى إلى أن سباق التسلح بين هاوئي الاختراق وشركة نينتندو سيستمر، خاصة مع اقتراب الذكرى السنوية الأولى لإطلاق الجهاز.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "سويتش 2",
+        "أمن تقني",
+        "جيلبريك",
+        "نينتندو",
+        "SmileBasic",
+        "برامج مخصصة"
+      ],
+      "entities": [
+        "سامي حاجميد",
+        "نينتندو",
+        "سويتش 2",
+        "SmileBasic 4",
+        "OpenAI"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من تقرير Ars Technica، مع التركيز على التفاصيل التقنية المذكورة في النص الأصلي دون إضافة تقديرات شخصية."
+    },
+    "en": {
+      "title": "Switch 2 security hit as hackers unlock homebrew",
+      "description": "Switch 2 security takes a hit as a software-only partial jailbreak allows hackers to run homebrew, mod games, and access peripherals.",
+      "deck": "A security researcher has demonstrated a software-only partial jailbreak of the Switch 2, granting userland access to run homebrew and mod games.",
+      "summary_bullets": [
+        "A software-only partial jailbreak has been demonstrated for the Switch 2, providing userland access.",
+        "The exploit leverages an integer overflow found in the original Switch version of SmileBasic 4.",
+        "Researcher Sammy Hajhamid utilized OpenAI’s Codex to discover the vulnerability over roughly two weeks.",
+        "The current userland exploit keeps developers in a sandbox and falls short of full kernel-level access.",
+        "SmileBasic 4 has already been delisted from the Switch eShop worldwide following the discovery."
+      ],
+      "sections": [
+        {
+          "heading": "Switch 2 Security Compromised by Userland Exploit",
+          "paragraphs": [
+            {
+              "text": "A security researcher has demonstrated a software-only partial jailbreak of the Switch 2, gaining userland access that enables running homebrew, reverse engineering and modding Switch 2 games, backing up save files, and accessing most peripherals through MMIO. Detailed information regarding the method is available through Ars Technica.",
+              "links": [
+                {
+                  "text": "Ars Technica",
+                  "url": "https://arstechnica.com/gaming/2026/10/switch-2-jailbreak-gives-hackers-new-ways-to-run-homebrew-and-mod-games/"
+                }
+              ]
+            },
+            {
+              "text": "The hack relies on the original Switch version of SmileBasic 4, a long-running series of programming environments and interpreters that run on Nintendo hardware. Technical specifics of the tool can be reviewed via The hack.",
+              "links": [
+                {
+                  "text": "The hack",
+                  "url": "https://gitlab.com/pepsipu/ns2jb"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Discovery Process and Technical Mechanism",
+          "paragraphs": [
+            {
+              "text": "Researcher Sammy Hajhamid writes that he used OpenAI’s Codex to examine SmileBasic’s language interpreter with a custom harness capable of sending USB commands and viewing results via HDMI. Additional details on the process are documented where he writes about the vulnerability.",
+              "links": [
+                {
+                  "text": "writes",
+                  "url": "https://pepsipu.com/blog/2026-10-switch2-jailbreak-ns2jb/"
+                }
+              ]
+            },
+            {
+              "text": "After roughly two weeks of effort, the harness discovered a 32-bit integer overflow occurring when items are removed from an array in SmileBasic. This error provides an array pointer that grants read and write access to portions of system memory. Further details about the underlying software can be found through SmileBasic 4.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Privileged Access and Proof of Concept",
+          "paragraphs": [
+            {
+              "text": "Following the initial memory access, Hajhamid investigated internal sysmodules to locate functions providing more privileged access to core console operations. He eventually identified a buffer overflow in the console's FileSystem services module, exposing a cached data pointer and granting arbitrary read and write privileges.",
+              "links": []
+            },
+            {
+              "text": "This allowed execution of privileged filesystem actions and native code execution via a faked filesystem process. Hajhamid, known online as Pepsipu, showed off a host of new modded characters in Mario Kart World as a proof of concept.",
+              "links": [
+                {
+                  "text": "showed off a host of new modded characters in Mario Kart World",
+                  "url": "https://x.com/pepsipu/status/2113117920373137622"
+                }
+              ]
+            },
+            {
+              "text": "Other members of the community have demonstrated similar activities, highlighting simple demos and in-progress developer tools operating on exploited hardware.",
+              "links": [
+                {
+                  "text": "simple demos",
+                  "url": "https://www.reddit.com/r/switch2hacks/comments/1xcrvhb/full_vulkan_gpu_working_in_userland/"
+                },
+                {
+                  "text": "in-progress developer tools",
+                  "url": "https://www.reddit.com/r/switch2hacks/comments/1xchm69/other_people_already_working_on_stuff/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Current Limitations and Community Response",
+          "paragraphs": [
+            {
+              "text": "Despite achieving userland access, the current exploit confines homebrew developers to a relatively restricted sandbox, falling short of kernel-level control over the hardware. Demonstrations showing the scope of the current access include a Full Vulkan GPU working in userland.",
+              "links": [
+                {
+                  "text": "Full Vulkan GPU working in userland",
+                  "url": "https://www.reddit.com/r/switch2hacks/comments/1xcrvhb/full_vulkan_gpu_working_in_userland/"
+                }
+              ]
+            },
+            {
+              "text": "Additional community members have shared independent findings similarly highlighting early development progress on the console.",
+              "links": [
+                {
+                  "text": "similarly",
+                  "url": "https://x.com/byizmysh/status/2113330728368791818"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Nintendo Countermeasures and Outlook",
+          "paragraphs": [
+            {
+              "text": "Nintendo has already delisted SmileBasic 4 from the Switch eShop worldwide, though a Japanese demo version remains accessible. While this aims to slow the spread of the exploit, other hackers are already teasing alternative exploits utilizing other games.",
+              "links": []
+            },
+            {
+              "text": "While the current exploit operates on firmware version 23.0.1, future firmware updates are expected to patch the vulnerability. For readers seeking further updates on subscription platforms, information can be found via Learn more.",
+              "links": [
+                {
+                  "text": "Learn more",
+                  "url": "https://arstechnica.com/store/product/subscriptions/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Nintendo",
+        "Switch 2",
+        "Jailbreak",
+        "Homebrew",
+        "Security",
+        "SmileBasic 4"
+      ],
+      "entities": [
+        "Nintendo",
+        "OpenAI",
+        "Sammy Hajhamid",
+        "SmileBasic 4"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based directly on Ars Technica reporting and provided source text."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 535,
+      "word_count_en": 524
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "3ef57b0556c218ed521b",
+      "title": "Inside JBL Playback Gallery: 80 Years of Sound Innovation",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "fe6ffcf62f0de84e13bd",
+      "title": "Switch 2 security takes a hit as hackers unlock homebrew access",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 535,
+          "word_count_en": 524
+        }
+      ]
+    }
+  ],
+  "slug": "switch-security-takes-hit-as-hackers-unlock-homebrew-access",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/switch-security-takes-hit-as-hackers-unlock-homebrew-access/hero.webp",
+    "card": "/forum/assets/posts/2026/10/switch-security-takes-hit-as-hackers-unlock-homebrew-access/card.webp",
+    "social": "/forum/assets/posts/2026/10/switch-security-takes-hit-as-hackers-unlock-homebrew-access/social.jpg",
+    "alt": {
+      "ar": "باحثون يكشفون ثغرة أمنية جديدة تتيح تشغيل برامج مخصصة على سويتش 2",
+      "en": "Switch 2 security hit as hackers unlock homebrew"
+    },
+    "credit": "Ars Technica",
+    "sourceUrl": "https://cdn.arstechnica.net/wp-content/uploads/2026/10/switch2hack-1152x648-1792704912.png",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
