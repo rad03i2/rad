@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "8a41e1e41cbecfde0ac2",
+  "slug": "multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-hands-on-guide",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-hands-on-guide/",
+    "en": "/forum/en/ai/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-hands-on-guide/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تتيح تدريب نماذج الذكاء الاصطناعي متعددة الأدوار عبر SageMaker",
+      "description": "تقدم أمازون ويب سيرفس دليلاً عملياً لتدريب نماذج الذكاء الاصطناعي على مهام متعددة الخطوات باستخدام التعلم المعزز، مع التركيز على تحسين الأداء وتقليل التكاليف عبر منصات AWS.",
+      "deck": "تتيح تقنية MTRL تدريب نماذج الذكاء الاصطناعي على نتائج المهام الكاملة بدلاً من الخطوات الفردية، مما يحسن أداء الوكلاء في سيناريوهات العمل المعقدة.",
+      "summaryBullets": [
+        "تدريب النماذج على النتائج النهائية للمهام بدلاً من الخطوات الفردية.",
+        "استخدام لعبة Wordle كنموذج تعليمي لتوضيح آلية عمل التعلم المعزز متعدد الأدوار.",
+        "تحسين أداء النموذج من 61% إلى 84% في حل الكلمات مع تقليل التكاليف.",
+        "تكامل مباشر مع Amazon Bedrock AgentCore لاستضافة الوكلاء ودوال المكافأة."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي التدريب التقليدي في المهام الوكيلة",
+          "paragraphs": [
+            {
+              "text": "يعاني التدريب الإشرافي التقليدي من عدم قدرته على التعامل مع المهام الوكيلة المعقدة التي تتطلب تسلسلاً من الإجراءات المترابطة. في هذه السيناريوهات، يعتمد كل قرار على الخطوات السابقة، ولا يوجد مسار واحد صحيح يمكن تقليده، مما يجعل التقييم النهائي هو المقياس الوحيد الموثوق لنجاح المهمة. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands-on-guide/"
+                }
+              ]
+            },
+            {
+              "text": "تعالج تقنية التعلم المعزز متعدد الأدوار (MTRL) هذا التحدي من خلال تدريب النماذج على الإشارة النهائية لنتيجة المهمة بأكملها. يتيح هذا النهج للنماذج فهم السياق الكامل للمهمة بدلاً من التركيز على خطوات معزولة، مما يحسن من قدرتها على اتخاذ القرارات في بيئات العمل الديناميكية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل MTRL على منصة SageMaker AI",
+          "paragraphs": [
+            {
+              "text": "يعمل النظام من خلال إرسال أوامر إلى وكيل يستضيفه Amazon Bedrock AgentCore أو على بنية تحتية خاصة مثل Amazon EKS أو Amazon EC2. يتواصل الوكيل مع نموذج السياسة عبر نقطة نهاية متوافقة مع OpenAI، ويتخذ الإجراءات اللازمة في البيئة حتى انتهاء المهمة، ثم يعيد مكافأة واحدة تعكس النتيجة النهائية.",
+              "links": []
+            },
+            {
+              "text": "تستخدم الخوارزمية تحسين السياسة النسبية للمجموعات (GRPO) لتحديث محول LoRA على نموذج السياسة بناءً على توزيع المكافآت عبر عدة محاولات لنفس الكلمة. هذا يسمح للنموذج بتعلم الاستراتيجيات الأكثر فعالية من خلال مقارنة النتائج المختلفة لنفس المدخلات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النموذج التعليمي: لعبة Wordle",
+          "paragraphs": [
+            {
+              "text": "تستخدم أمازون لعبة Wordle كمثال توضيحي لتطبيق MTRL، حيث يجب على اللاعب تخمين كلمة من خمسة أحرف خلال ست محاولات. توفر اللعبة قواعد بسيطة وموضوعية، مما يجعلها مثالية لتوضيح كيفية عمل التعلم المعزز متعدد الأدوار في بيئات ذات تغذية راجعة فورية.",
+              "links": [
+                {
+                  "text": "Wordle",
+                  "url": "https://en.wikipedia.org/wiki/Wordle"
+                }
+              ]
+            },
+            {
+              "text": "على الرغم من أن النماذج المتقدمة تلعب هذه اللعبة بفاعلية، إلا أن الهدف من استخدام MTRL هو تمكين النماذج الأصغر والأقل تكلفة من إتقان مهام متعددة الخطوات محددة لكل شركة، مثل سير العمل الداخلي الذي لم يتم تدريب النماذج العامة عليه.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج الأداء والتكاليف",
+          "paragraphs": [
+            {
+              "text": "أظهرت التجارب أن تقنية MTRL رفعت معدل حل الكلمات للنموذج gpt-oss-20b من 61% إلى 84% عند استخدام جهد الاستدلال الافتراضي، ومن 15% إلى 69% عند الجهد المنخفض. بلغت تكلفة التدريب حوالي 339 دولاراً أمريكياً، مع استهلاك 491.6 مليون توكن للمعالجة المسبقة و159.7 مليون توكن للعينة.",
+              "links": []
+            },
+            {
+              "text": "تتضمن التكاليف أيضاً رسوم التشغيل على Amazon Bedrock AgentCore، والتي بلغت حوالي 79 دولاراً أمريكياً في هذه التجربة. تعتمد التكلفة النهائية على طول المسار وجهد الاستدلال، مما يتيح للمستخدمين التحكم في الميزانية من خلال ضبط هذه المعاملات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات التنفيذ والأدوار",
+          "paragraphs": [
+            {
+              "text": "يتطلب تنفيذ هذا الدليل وجود بيئة تطوير تحتوي على Python 3.10 أو أحدث، وuv، وNode 20 أو أحدث، بالإضافة إلى واجهة AgentCore. كما يتطلب الأمر إنشاء دورين IAM منفصلين: واحد لتشغيل الوكيل وواحد لوظيفة التدريب، مع ضمان أن كلاهما يثق بالكيانات الصحيحة في AWS.",
+              "links": []
+            },
+            {
+              "text": "يجب أن يكون مستودع Amazon S3 في نفس المنطقة الجغرافية للوكيل، لأن عملية إنشاء الوظيفة ترفض المعرفات عبر المناطق. توفر المستودعات الرسمية أدوات جاهزة لتسهيل هذا الإعداد، مع التأكد من أن البيانات والنماذج المدربة تبقى ضمن حساب AWS الخاص بالمستخدم.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "التعلم المعزز",
+        "أمازون ويب سيرفس",
+        "SageMaker AI",
+        "نماذج اللغة",
+        "الوكلاء الذكيون"
+      ],
+      "entities": [
+        "Amazon SageMaker AI",
+        "Amazon Bedrock AgentCore",
+        "MTRL",
+        "GRPO",
+        "LoRA",
+        "Wordle"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "23 أكتوبر 2026",
+      "modifiedLabel": "23 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 525
+    },
+    "en": {
+      "title": "Training AI Agents with Multi-Turn Reinforcement Learning",
+      "description": "Explore Multi-Turn Reinforcement Learning on Amazon SageMaker AI using a Wordle hands-on guide to train models on multi-step task outcomes.",
+      "deck": "A new hands-on guide demonstrates how Multi-Turn Reinforcement Learning on Amazon SageMaker AI optimizes models based on the outcomes of complete multi-step tasks rather than isolated, labeled steps.",
+      "summaryBullets": [
+        "Multi-Turn Reinforcement Learning (MTRL) on Amazon SageMaker AI trains models on the final outcome of multi-step agentic workflows.",
+        "A hands-on guide uses the game Wordle to walk through dataset preparation, deployment, and evaluation.",
+        "The demonstration utilized a GPT-OSS-20B model, improving solve rates while illustrating token-based pricing dimensions.",
+        "All code, configurations, and reference implementations are available in an open aws-samples repository."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Multi-Turn Reinforcement Learning",
+          "paragraphs": [
+            {
+              "text": "Traditional fine-tuning typically teaches an artificial intelligence model to generate a better answer for a single prompt. However, agentic tasks—such as filing expense reports or triaging support tickets—require a sequence of interdependent actions where success can only be judged by the final outcome. Single-turn reinforcement learning and standard supervised fine-tuning often fail to credit decisions made multiple steps prior to a task's conclusion. To address this, Multi-Turn Reinforcement Learning (MTRL) on Amazon SageMaker AI trains models on the definitive signal of a complete multi-step process.",
+              "links": []
+            },
+            {
+              "text": "Developers can explore the complete workflow by reviewing the official AWS Machine Learning Blog, which provides deep technical insights into deploying and evaluating these agentic pipelines.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands-on-guide/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "The Wordle Demonstration Architecture",
+          "paragraphs": [
+            {
+              "text": "To illustrate the capabilities of MTRL, the guide utilizes Wordle as an objective benchmark environment. In the game, a player attempts to guess a hidden five-letter word within six tries, receiving direct positional feedback after every single guess. Because each guess strictly depends on the previous step's feedback, the game serves as an ideal testbed for multi-step agent behaviors.",
+              "links": [
+                {
+                  "text": "Wordle",
+                  "url": "https://en.wikipedia.org/wiki/Wordle"
+                }
+              ]
+            },
+            {
+              "text": "While frontier models already play the game effortlessly, developers can apply these exact techniques to train smaller, cost-effective models tailored to proprietary internal business workflows. The foundational architecture splits responsibilities cleanly between Amazon SageMaker AI, which manages the training job and policy model, and Amazon Bedrock AgentCore, which hosts the agent environment, tools, and scoring functions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Training Pipeline and Optimization Techniques",
+          "paragraphs": [
+            {
+              "text": "During training rollouts, the MTRL service invokes the Amazon Bedrock AgentCore runtime with training data containing secret words. An integrated agent calls the policy model through an OpenAI-compatible endpoint, making up to six sequential guesses. Once a game concludes, the agent computes an outcome-dominant reward. Group Relative Policy Optimization (GRPO) then leverages the reward distribution across multiple rollouts to update a Low-Rank Adaptation (LoRA) adapter on the underlying policy model.",
+              "links": [
+                {
+                  "text": "Group Relative Policy Optimization (GRPO)",
+                  "url": "https://arxiv.org/abs/2402.03300"
+                },
+                {
+                  "text": "LoRA",
+                  "url": "https://arxiv.org/abs/2106.09685"
+                }
+              ]
+            },
+            {
+              "text": "Word lists integrated into the agent environment are derived from open-source SCOWL resources strictly for objective scoring purposes. Furthermore, user datasets, custom agents, and trained weights remain strictly within the developer's AWS account and are not used to train the base models.",
+              "links": [
+                {
+                  "text": "SCOWL",
+                  "url": "http://wordlist.aspell.net/"
+                },
+                {
+                  "text": "are not used to train the base models",
+                  "url": "https://aws.amazon.com/sagemaker/ai/jumpstart/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Serverless Infrastructure and Pricing Dimensions",
+          "paragraphs": [
+            {
+              "text": "MTRL operates in a serverless manner where developers select a supported base model and let the service automatically provision the required training and sampling infrastructure. Billing is calculated across three distinct token dimensions: prefill tokens processed by the model, sample tokens generated during reasoning and execution, and train tokens processed during backward passes to update the LoRA adapter.",
+              "links": []
+            },
+            {
+              "text": "Because training costs scale directly with trajectory lengths and reasoning verbosity, optimizing game length helps manage expenditures. Detailed cost breakdowns, current billing rates, and complete pricing tiers can be reviewed directly through Amazon SageMaker AI pricing documentation.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI pricing",
+                  "url": "https://aws.amazon.com/sagemaker/ai/pricing/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and Implementation Resources",
+          "paragraphs": [
+            {
+              "text": "Deploying a multi-turn reinforcement learning pipeline requires specific toolsets, including Python 3.10 or later, Node 20 or later, the AgentCore CLI, and botocore version 1.43.37 or newer. Administrators must also configure appropriate IAM roles—such as the agent runtime role and the training job role—alongside an Amazon S3 bucket situated in the exact same AWS Region as the agent.",
+              "links": []
+            },
+            {
+              "text": "Developers looking to test the complete end-to-end pipeline can access all implementation scripts, configuration templates, and deployment guides via the dedicated aws-samples repository.",
+              "links": [
+                {
+                  "text": "aws-samples repository",
+                  "url": "https://github.com/aws-samples/sample-multi-turn-rl-wordle"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker AI",
+        "Reinforcement Learning",
+        "Artificial Intelligence",
+        "AWS",
+        "Machine Learning",
+        "LoRA",
+        "Wordle"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker AI",
+        "Amazon Bedrock AgentCore"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 23, 2026",
+      "modifiedLabel": "October 23, 2026",
+      "readMinutes": 3,
+      "wordCount": 625
+    }
+  },
+  "datePublished": "2026-10-23T21:13:12.891915+03:00",
+  "dateModified": "2026-10-23T21:13:12.891915+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-hands-on-guide/hero.webp",
+    "card": "/forum/assets/posts/2026/10/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-hands-on-guide/card.webp",
+    "social": "/forum/assets/posts/2026/10/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-hands-on-guide/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح تدريب نماذج الذكاء الاصطناعي متعددة الأدوار عبر SageMaker",
+      "en": "Training AI Agents with Multi-Turn Reinforcement Learning"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22014-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-hands-on-guide/inline-01.webp",
+        "width": 1400,
+        "height": 797,
+        "alt": {
+          "ar": "أمازون تتيح تدريب نماذج الذكاء الاصطناعي متعددة الأدوار عبر SageMaker",
+          "en": "SageMaker AI training job connected to the AgentCore-hosted agent, Wordle environment, and reward function"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands-on-guide/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22014-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-hands-on-guide/inline-02.webp",
+        "width": 1400,
+        "height": 252,
+        "alt": {
+          "ar": "أمازون تتيح تدريب نماذج الذكاء الاصطناعي متعددة الأدوار عبر SageMaker",
+          "en": "Amazon Bedrock AgentCore console showing the Wordle agent runtime with status Ready"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands-on-guide/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22014-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-hands-on-guide/inline-03.webp",
+        "width": 1400,
+        "height": 507,
+        "alt": {
+          "ar": "أمازون تتيح تدريب نماذج الذكاء الاصطناعي متعددة الأدوار عبر SageMaker",
+          "en": "Two line charts tracking mean reward per game and validation solve rate over 100 training steps"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands-on-guide/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22014-4.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-hands-on-guide/inline-04.webp",
+        "width": 1400,
+        "height": 270,
+        "alt": {
+          "ar": "أمازون تتيح تدريب نماذج الذكاء الاصطناعي متعددة الأدوار عبر SageMaker",
+          "en": "SageMaker AI Studio Jobs page showing the completed multi-turn RL training job"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands-on-guide/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22014-5.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands-on-guide/",
+      "type": "official",
+      "title": "Multi-Turn Reinforcement Learning on Amazon SageMaker AI: A hands-on guide"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands-on-guide",
+  "sourceTitle": "Multi-Turn Reinforcement Learning on Amazon SageMaker AI: A hands-on guide",
+  "trendScore": 128.94,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-23T18:13:13+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-hands-on-guide.json"
+}
