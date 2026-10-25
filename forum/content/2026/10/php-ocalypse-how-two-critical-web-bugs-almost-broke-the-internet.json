@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "4fa8aa9d887f52d8889c",
+  "slug": "php-ocalypse-how-two-critical-web-bugs-almost-broke-the-internet",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/php-ocalypse-how-two-critical-web-bugs-almost-broke-the-internet/",
+    "en": "/forum/en/apps/php-ocalypse-how-two-critical-web-bugs-almost-broke-the-internet/"
+  },
+  "locales": {
+    "ar": {
+      "title": "ثغرتان حرجتان في PHP كادتا تُسقطان الإنترنت العالمي",
+      "description": "اكتشفت ثغرتان حرجتان في لغة PHP التي تشغّل 70% من الويب، مهددتين بتعطّل واسع. أصدرت المؤسسة تصحيحات عاجلة بعد تنسيق صناعي دقيق لتفادي كارثة رقمية.",
+      "deck": "كشفت أبحاث أمنية عن ثغرتين خطيرتين في PHP سمحتا بتنفيذ أكواد عن بُعد دون مصادقة، مما دفع ملايين المواقع لاتخاذ إجراءات طارئة.",
+      "summaryBullets": [
+        "ثغرتا PHP2Shell (CVE-2026-109618 و CVE-2026-109619) مكّنتا المهاجمين من اختراق الأنظمة دون كلمات مرور.",
+        "أصدرت مؤسسة PHP تصحيحات عاجلة بعد تنسيق سري مع الشركات الكبرى لتفادي استغلال واسع النطاق.",
+        "رصدت أمازون محاولات استغلال مبكرة قبل الإعلان الرسمي، مما أثار تساؤلات حول تسرب المعلومات.",
+        "حذّر خبراء الأمن من أن الذكاء الاصطناعي قد يسرّع اكتشاف ثغرات مشابهة في المستقبل."
+      ],
+      "sections": [
+        {
+          "heading": "صدمة تقنية تهدد بنية الويب",
+          "paragraphs": [
+            {
+              "text": "في حدث غير مسبوق، كادت تقنية PHP، وهي لغة برمجة مفتوحة المصدر عمرها عقود، أن تُسقط جزءاً كبيراً من الإنترنت. اكتشف باحثون أمنيون ثغرتين حرجتين كانتا كامنتان لسنوات، حتى تمكّنوا مؤخراً من إيجاد طريقة لاستغلالهما. هذه الثغرات، التي أُطلق عليها اسم PHP2Shell، سمحت لأي شخص يملك معرفة تقنية كافية باختراق الأنظمة التي تعمل بهذه اللغة دون الحاجة إلى كلمات مرور أو صلاحيات دخول.",
+              "links": [
+                {
+                  "text": "PHP2Shell",
+                  "url": "https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching"
+                }
+              ]
+            },
+            {
+              "text": "أثارت هذه الاكتشافات حالة من الذعر في الأوساط التقنية، حيث اضطر ملايين المستخدمين والشركات حول العالم إلى التسارع في تطبيق التصحيحات قبل أن يستغلها القراصنة. أصدرت مؤسسة PHP، المسؤولة عن صيانة هذه التقنية، تصحيحات عامة يوم الأربعاء، مما منع هجمات محتملة على الخوادم المرتبطة بالإنترنت. وقد حصلت بعض أكبر شركات الإنترنت ومضيفي المواقع على هذه التصحيحات مبكراً ضمن إطار تنسيق سري. ويمكن الرجوع إلى CVE-2026-109618 and CVE-2026-109619 للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "CVE-2026-109618 and CVE-2026-109619",
+                  "url": "https://www.php.net/archive/2026.php#2026-10-21-5"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية الاستغلال الخطيرة",
+          "paragraphs": [
+            {
+              "text": "تتمثل خطورة هذه الثغرات في إمكانية استغلالها عن بُعد عبر الإنترنت دون أي تفاعل من المستخدم، مثل النقر على رابط أو فتح ملف. يُعرف هذا النوع من الهجمات بتنفيذ الأكواد عن بُعد، وهو من أخطر أنواع الثغرات لأنه يمنح المهاجم تحكماً كاملاً تقريباً في النظام المصاب إذا لم يتم تصحيحه. بالإضافة إلى ذلك، تتيح هذه الثغرات الوصول غير المصادق إليه، أي اختراق أي نظام غير مصحح دون الحاجة إلى أي بيانات اعتماد.",
+              "links": []
+            },
+            {
+              "text": "بمجرد السيطرة على النظام، يمكن للمهاجم زرع برمجيات خبيثة لسرقة البيانات أو إنشاء نقطة وصول دائمة للعودة إليها لاحقاً. ونظراً لانتشار PHP الواسع، فإن التأثير المحتمل كان سيكون كارثياً، حيث تعتمد حوالي 70% من المواقع المرتبطة بالإنترنت على هذه اللغة، رغم أن استخدامها في تراجع تدريجي لصالح لغات أحدث وأكثر أماناً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تنسيق صناعي لتفادي الكارثة",
+          "paragraphs": [
+            {
+              "text": "بفضل أسابيع من التنسيق السري عبر مختلف قطاعات الصناعة، نجح العالم في تجنب استغلال واسع النطاق للإنترنت حتى الآن. بدأت الحكومات في حث المواطنين والشركات على اتخاذ إجراءات للتخفيف من المخاطر، بينما أغلقت صناعات متنوعة مواقعها الإلكترونية وسحبت خدماتها من الإنترنت مؤقتاً لتطبيق التصحيحات. وشملت هذه الإجراءات البنوك، والمتاجر، ومواقع الألعاب، والمستشفيات، وبعض الوكالات الحكومية.",
+              "links": []
+            },
+            {
+              "text": "مع ذلك، يحذر خبراء الأمن من أن الوضع لم ينته بعد، حيث لا تزال أعداد كبيرة من الأنظمة حول العالم غير مصححة وعرضة للاختراق وسرقة البيانات. كما يُتوقع أن يكون هذا الحدث ليس الأخير، مع توقعات بأن يؤدي ظهور الذكاء الاصطناعي إلى اكتشاف ثغرات غير مكتشفة بسرعة أكبر، مما يزيد من حدة المخاطر المستقبلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور الذكاء الاصطناعي في الاكتشاف",
+          "paragraphs": [
+            {
+              "text": "اكتشف باحثو شركة Calif الثغرتين خلال تدقيق أمني شامل لكود PHP، وهي لغة تُستخدم لبناء المواقع والتطبيقات على الإنترنت وفي الشبكات الداخلية للشركات. تم اكتشاف الثغرات لأول مرة في عام 2024، لكن لم تُعتبر قابلة للاستغلال آنذاك، ولم يتم تصحيحها. ومع ذلك، وجد الباحثون مؤخراً طريقة لاستغلالها، مما دفعهم إلى إخطار مطوري البرنامج.",
+              "links": []
+            },
+            {
+              "text": "شاركت Calif في مبادرة Hack the Planet التي أطلقتها شركة OpenAI و Wiz، حيث تم التحقق من نماذج الاستغلال التي طورها الباحثون. أوضح الباحثون في تقريرهم أن الذكاء الاصطناعي ساعد في عملية الاستغلال، لكن الجزء الأكبر من العمل اعتمد على معرفتهم العميقة بكود PHP وتاريخ استغلاله. وأكدوا أن النماذج الحالية غير قادرة على اكتشاف جميع الثغرات عبر أوامر بسيطة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أسئلة حول التسريب المبكر",
+          "paragraphs": [
+            {
+              "text": "رغم الجهود المبذولة للحفاظ على سرية تفاصيل الثغرات حتى يوم الأربعاء، يبدو أن هناك استغلالاً مبكراً لثغرتي PHP2Shell قبل إصدار التصحيحات. أعلنت شركة أمازون، التي تمتلك رؤية واسعة للتهديدات الإلكترونية، أنها رصدت محاولات استغلال قبل أسبوع من توفر التصحيحات، مما يشير إلى أن أحداً كان يعرف كيفية استغلال الثغرات قبل توفر التفاصيل علنياً.",
+              "links": []
+            },
+            {
+              "text": "توجد عدة نظريات حول ما حدث؛ فبمجرد تصحيح الثغرة، قد تصبح تفاصيل التصحيح واضحة، خاصة في حالة الكود المفتوح المصدر مثل PHP. وقد يكون هناك تسريب أو خلل في التواصل خلال فترة الحظر الإعلامي. كما لا يستبعد الخبراء أن يكون القراصنة قد اكتشفوا الثغرات بشكل مستقل أو عبر التجسس. ولوّحت مؤسسة PHP بإلقاء اللوم على شركة واحدة دفعت التصحيحات قبل انتهاء فترة الحظر، مما قد يكون أعطى بعض الأطراف ميزة زمنية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "PHP",
+        "أمن سيبراني",
+        "ثغرات أمنية",
+        "PHP2Shell",
+        "برمجة ويب",
+        "OpenAI",
+        "Calif"
+      ],
+      "entities": [
+        "PHP Foundation",
+        "Calif",
+        "OpenAI",
+        "Wiz",
+        "Amazon",
+        "CVE-2026-109618",
+        "CVE-2026-109619"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "25 أكتوبر 2026",
+      "modifiedLabel": "25 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 702
+    },
+    "en": {
+      "title": "PHP Critical Bugs Threaten Internet Stability",
+      "description": "Critical vulnerabilities in the widely used PHP programming language threaten global web infrastructure as security researchers race to patch systems.",
+      "deck": "Two critical vulnerabilities in the decades-old PHP programming language threatened to upend global web infrastructure before patches were released.",
+      "summaryBullets": [
+        "Two critical bugs dubbed PHP2Shell were discovered in the open-source PHP programming language.",
+        "The vulnerabilities allow for unauthenticated remote code execution without user interaction.",
+        "The PHP Foundation released official patches following a coordinated disclosure process.",
+        "Amazon threat intelligence identified exploitation attempts prior to public disclosure.",
+        "Security experts warn that many systems around the world remain unpatched and vulnerable."
+      ],
+      "sections": [
+        {
+          "heading": "The Threat of PHP2Shell",
+          "paragraphs": [
+            {
+              "text": "A decades-old open-source web technology almost broke the internet due to two critical vulnerabilities that sat dormant for years until researchers figured out a way to exploit them. The flaws, designated as CVE-2026-109618 and CVE-2026-109619 and collectively dubbed PHP2Shell, allow bad actors to break into online systems running PHP without requiring a password to access or modify data.",
+              "links": [
+                {
+                  "text": "CVE-2026-109618 and CVE-2026-109619",
+                  "url": "https://www.php.net/archive/2026.php#2026-10-21-5"
+                }
+              ]
+            },
+            {
+              "text": "The situation forced millions of individuals and organizations around the world to scramble and patch their systems before malicious hackers could exploit the flaws. The PHP Foundation publicly released official security patches to address the issue, providing early heads-ups to major internet companies and web hosts.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Discovery and Background",
+          "paragraphs": [
+            {
+              "text": "Security researchers at Calif initially found the two bugs in PHP, a programming language widely utilized globally for building websites and web applications. PHP is open-source and free, making it one of the most popular web programming languages on the internet today. Around 70% of the web-facing internet relies on PHP, although its usage has been slowly declining over the years.",
+              "links": [
+                {
+                  "text": "slowly declining over the years",
+                  "url": "https://w3techs.com/technologies/details/pl-php"
+                }
+              ]
+            },
+            {
+              "text": "The two bugs were first discovered in 2024 during a security audit but were not considered exploitable at the time and went unpatched. Researchers later found a way to exploit them and alerted the software maintainers to initiate fixes.",
+              "links": [
+                {
+                  "text": "first discovered in 2024",
+                  "url": "https://ostif.org/php-audit-complete/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Severity of Remote Code Execution",
+          "paragraphs": [
+            {
+              "text": "PHP2Shell is considered exceptionally serious because it can be abused remotely over the internet without requiring the victim to click a link or open a file. This capability, known as remote code execution, grants attackers full control over affected and unpatched systems.",
+              "links": [
+                {
+                  "text": "remote code execution",
+                  "url": "https://techcrunch.com/2025/04/25/techcrunch-reference-guide-to-security-terminology/#remote-code-execution"
+                }
+              ]
+            },
+            {
+              "text": "Furthermore, these specific bugs enable unauthenticated access, allowing attackers to break into any unpatched system without credentials. This vulnerability permits malicious actors to plant malware, steal data, or establish a long-term foothold on compromised servers.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Industry Response and Exploitation Prior to Disclosure",
+          "paragraphs": [
+            {
+              "text": "Ahead of the public disclosure, Amazon threat intelligence identified exploitation of PHP2Shell about a week before official patches became available. Amazon noted that defenders should look for evidence of exploitation activity as early as October 17.",
+              "links": []
+            },
+            {
+              "text": "The PHP Foundation subsequently blamed one company for pushing patches live prematurely before the embargo period officially ended. This premature release may have alerted bad actors to targeting details and exploitation methods.",
+              "links": [
+                {
+                  "text": "blamed one company",
+                  "url": "https://thephp.foundation/blog/2026/10/21/todays-php-security-release-and-how-were-strengthening-php-security/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Mitigation and Future Risks",
+          "paragraphs": [
+            {
+              "text": "Governments and industry leaders urged organizations worldwide to take immediate action and apply patches. Numerous institutions, including banks, retailers, gaming platforms, hospitals, and government agencies, temporarily took services offline to secure their environments.",
+              "links": []
+            },
+            {
+              "text": "Despite coordinated disclosure efforts, security researchers warn that many systems across the globe remain unpatched. Experts also caution that this incident is unlikely to be the final major software scare involving foundational internet technologies.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "PHP",
+        "Cybersecurity",
+        "Vulnerabilities",
+        "PHP2Shell",
+        "Software Patches",
+        "Open Source",
+        "TechCrunch"
+      ],
+      "entities": [
+        "PHP Foundation",
+        "Calif",
+        "Amazon",
+        "OpenAI",
+        "Wiz"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "October 25, 2026",
+      "modifiedLabel": "October 25, 2026",
+      "readMinutes": 3,
+      "wordCount": 516
+    }
+  },
+  "datePublished": "2026-10-25T11:13:27.144982+03:00",
+  "dateModified": "2026-10-25T11:13:27.144982+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/php-ocalypse-how-two-critical-web-bugs-almost-broke-the-internet/hero.webp",
+    "card": "/forum/assets/posts/2026/10/php-ocalypse-how-two-critical-web-bugs-almost-broke-the-internet/card.webp",
+    "social": "/forum/assets/posts/2026/10/php-ocalypse-how-two-critical-web-bugs-almost-broke-the-internet/social.jpg",
+    "alt": {
+      "ar": "ثغرتان حرجتان في PHP كادتا تُسقطان الإنترنت العالمي",
+      "en": "PHP Critical Bugs Threaten Internet Stability"
+    },
+    "credit": "TechCrunch",
+    "sourceUrl": "https://techcrunch.com/wp-content/uploads/2026/10/php-web-bug-padlock-2300746159.jpg?resize=1200,800",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/24/php-ocalypse-how-two-critical-web-bugs-almost-broke-the-internet/",
+      "type": "journalism",
+      "title": "PHP-ocalypse: How two critical web bugs almost broke the internet"
+    }
+  ],
+  "sourceUrl": "https://techcrunch.com/2026/10/24/php-ocalypse-how-two-critical-web-bugs-almost-broke-the-internet",
+  "sourceTitle": "PHP-ocalypse: How two critical web bugs almost broke the internet",
+  "trendScore": 75.54,
+  "verification": {
+    "confidence": 0.86,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-25T08:13:27+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/php-ocalypse-how-two-critical-web-bugs-almost-broke-the-internet.json"
+}
