@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "7c109bf5e7c5155862b1",
+  "slug": "fleet-wide-computer-vision-lifecycle-at-the-edge-with-sagemaker-sdk-v3",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/fleet-wide-computer-vision-lifecycle-at-the-edge-with-sagemaker-sdk-v3/",
+    "en": "/forum/en/ai/fleet-wide-computer-vision-lifecycle-at-the-edge-with-sagemaker-sdk-v3/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تطلق معمارية SageMaker SDK v3 لإدارة نماذج الرؤية الحاسوبية",
+      "description": "تقدم أمازون ويب سيرفيسز معمارية مرجعية جديدة تتيح تدريب وإدارة آلاف النماذج المخصصة لكل كاميرا في خطوط الإنتاج، مع ضمان الأداء على الحافة باستخدام SageMaker Neo.",
+      "deck": "تستهدف هذه البنية التحتية التحدي المتمثل في إدارة دورة حياة نماذج الرؤية الحاسوبية على نطاق أسطول كامل، بدلاً من الاعتماد على نموذج واحد موحّد.",
+      "summaryBullets": [
+        "تدريب وتقييم نموذجين لكل كاميرا: كاشف شذوذ ومصنّف عيوب، مع بوابات جودة صارمة.",
+        "استخدام SageMaker Neo لتجميع النماذج وتحويلها إلى مكتبات مخصصة للأجهزة الطرفية.",
+        "تنسيق عمليات إعادة التدريب عبر AWS Step Functions لضمان عدم تجاوز حصص الحساب.",
+        "توفر البنية كوداً مفتوح المصدر على GitHub مع تكلفة تشغيل منخفضة جداً."
+      ],
+      "sections": [
+        {
+          "heading": "من النموذج الواحد إلى الأسطول الكامل",
+          "paragraphs": [
+            {
+              "text": "تواجه شركات التصنيع تحدياً حقيقياً عندما تنتقل من نموذج تجريبي لكاميرا واحدة إلى تطبيق النظام على عشرات الخطوط الإنتاجية. في هذه البيئة، تختلف زاوية الرؤية والإضاءة والانعكاسات من كاميرا لأخرى، مما يجعل النموذج الموحّد غير كافٍ. لذلك، تحتاج كل كاميرا إلى نموذج مخصص ومضبوط بدقة. المشكلة الحقيقية ليست تدريب نموذج واحد جيداً، بل إدارة تدريب وتقييم وإصدار آلاف النماذج دون تدخل بشري لكل منها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معمارية SageMaker SDK v3 الجديدة",
+          "paragraphs": [
+            {
+              "text": "أطلقت أمازون ويب سيرفيسز تحديثاً لمعمارية مرجعية تعتمد على Amazon SageMaker Python SDK v3. تستبدل هذه البنية أداة Edge Manager القديمة بـ SageMaker Neo لتحسين أداء النماذج على الحافة. تتضمن المعمارية خط أنابيب مزدوج الفروع يدرّب كاشف شذوذ ومصنّف عيوب لكل كاميرا، مع بوابات جودة تمنع نشر النماذج الضعيفة. كما تضمن خطوة التجميع داخل خط الأنابيب أن كل نموذج مسجل يأتي مع ملف محسّن للأجهزة.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker",
+                  "url": "https://aws.amazon.com/sagemaker/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "خطوات التدريب والتقييم الدقيق",
+          "paragraphs": [
+            {
+              "text": "يعمل خط الأنابيب على 13 خطوة لكل تنفيذ، تبدأ بثلاث خطوات متوازية: المعالجة المسبقة، وجلب أحدث نموذج شذوذ، وجلب أحدث نموذج مصنّف. يتم تدريب كوديكودر تلافيفي صغير لتعلم شكل المنتج الطبيعي، ومصنف ResNet18 لتأكيد العيوب. يتم تصدير كل نموذج إلى صيغة ONNX وتقييمه على بيانات غير مرئية، ثم يمر عبر بوابة جودة. بعد النجاح، يتم تجميع النموذج باستخدام SageMaker Neo للتوافق مع الجهاز المستهدف، ثم يُسجل في سجل النماذج.",
+              "links": [
+                {
+                  "text": "SageMaker Neo",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تنسيق عمليات إعادة التدريب",
+          "paragraphs": [
+            {
+              "text": "تتولى طبقة التنسيق إدارة إيقاع عمليات إعادة التدريب على مستوى الأسطول. تصل طلبات إعادة التدريب إلى طابور Amazon SQS، حيث تبدأ دالة AWS Lambda تنفيذ Step Functions لكل طلب. تستخدم هذه التنفيذات إشارة دينامو (DynamoDB) لاقتناء خانة عمل، مما يضمن تصريف الطلبات بمعدل ثابت بدلاً من إطلاقها دفعة واحدة. يتم نشر اكتمال العمليات عبر Amazon SNS، بينما تصل الأخطاء التشغيلية إلى نفس الموضوع مع الحفاظ على رسالة الخطأ الأصلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الإصدارات والتوزيع",
+          "paragraphs": [
+            {
+              "text": "يحتفظ سجل النماذج بنسخ ONNX القابلة للنقل، بينما يخزن S3 نسخة النموذج المجمعة عبر Neo، وهي مكتبة مشتركة محسنة للأجهزة يتم تحميلها بواسطة وقت تشغيل DLR. تحمل الحزم معرّف الكاميرا كبيانات وصفية، مما يسمح بإعادة التدريب دائماً من تاريخ الكاميرا الخاصة بها. هذا يضمن أن كل حزمة معتمدة تحتوي على ملف جاهز للأجهزة، مستعداً لأي آلية توزيع يستخدمها المصنع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التنفيذ والتكلفة",
+          "paragraphs": [
+            {
+              "text": "يتوفر الكود الكامل في مستودع aws-samples على GitHub. يتطلب التنفيذ حساباً بامتيازات IAM، ودلو S3، ومستودع ECR، بالإضافة إلى موارد Step Functions وLambda وSQS وSNS وEventBridge وDynamoDB. لا حاجة لزيادة حصص الخدمات، حيث يقتصر التنفيذ المتزامن على خمسة خطوط أنابيب كحد أقصى افتراضياً. تكلف عملية تشغيل كاملة على بيانات اصطناعية حوالي 0.07 دولار فقط، مما يجعلها حلاً اقتصادياً وقابلاً للتوسع.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "الرؤية الحاسوبية",
+        "أمازون ويب سيرفيسز",
+        "SageMaker",
+        "الحوسبة الطرفية",
+        "MLOps"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز",
+        "Amazon SageMaker",
+        "SageMaker Neo",
+        "AWS Step Functions",
+        "DLR runtime"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "26 أكتوبر 2026",
+      "modifiedLabel": "26 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 483
+    },
+    "en": {
+      "title": "AWS Updates Fleet Computer Vision Pipeline With SageMaker SDK v3",
+      "description": "Discover how the new reference architecture uses Amazon SageMaker SDK v3, SageMaker Neo, and Step Functions to manage thousands of edge cameras.",
+      "deck": "A newly updated reference architecture leverages Amazon SageMaker SDK v3 and Amazon SageMaker Neo to automate training, evaluation, and edge compilation for thousands of individual plant cameras.",
+      "summaryBullets": [
+        "Amazon SageMaker SDK v3 introduces modular packages including sagemaker-core, sagemaker-train, sagemaker-serve, and sagemaker-mlops.",
+        "The updated pipeline replaces Amazon SageMaker Edge Manager with Amazon SageMaker Neo for efficient edge device optimization.",
+        "A dual-branch SageMaker Pipeline simultaneously trains an anomaly detector and a defect classifier for each individual camera.",
+        "AWS Step Functions and Amazon SQS orchestrate fleet-scale training to respect standard account quotas and concurrency limits."
+      ],
+      "sections": [
+        {
+          "heading": "Scaling Fleet-Wide Computer Vision at the Edge",
+          "paragraphs": [
+            {
+              "text": "Managing computer vision model lifecycles across an industrial fleet presents distinct hurdles once a proof of concept moves into full production. While a single model works well for one controlled camera, deploying that same setup across multiple manufacturing lines reveals that every camera captures a unique environment. Variations in viewing angles, reflections off stainless steel surfaces, and shifting ambient light mean that pooled training data often underperforms compared to individual, fine-tuned models.",
+              "links": []
+            },
+            {
+              "text": "To address the complex challenge of training, evaluating, versioning, and shipping thousands of distinct camera models without manual intervention, a newly published reference architecture updates previous MLOps deployment patterns. Utilizing modern tooling available through <a href=\"https://aws.amazon.com/sagemaker/\">Amazon SageMaker</a>, engineering teams can now automate the entire lifecycle of per-camera computer vision models while keeping operational costs remarkably low.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker",
+                  "url": "https://aws.amazon.com/sagemaker/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Dual-Branch Pipelines and Edge Optimization",
+          "paragraphs": [
+            {
+              "text": "The updated architecture implements a dual-branch Amazon SageMaker Pipeline parameterized by camera ID, running thirteen distinct steps per execution. Three parallel entry steps preprocess incoming images, fetch the latest anomaly model, and retrieve the latest classifier model. The system then trains a small convolutional autoencoder to flag anomalies via reconstruction error alongside a fine-tuned ResNet18 classifier designed to confirm product defects.",
+              "links": []
+            },
+            {
+              "text": "Following rigorous evaluation against held-out data and strict quality gates, approved models are compiled directly using <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html\">SageMaker Neo</a>. This compilation step transforms portable ONNX artifacts into device-optimized shared libraries loaded by the DLR runtime. Developers can inspect the complete reference implementation and automation scripts directly within the <a href=\"https://github.com/aws-samples/sample-sagemaker-fleet-cv-pipeline\">aws-samples GitHub repository</a> to understand the full pipeline mechanics.",
+              "links": [
+                {
+                  "text": "SageMaker Neo",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html"
+                },
+                {
+                  "text": "aws-samples GitHub repository",
+                  "url": "https://github.com/aws-samples/sample-sagemaker-fleet-cv-pipeline"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Orchestrating Fleet-Scale Retraining",
+          "paragraphs": [
+            {
+              "text": "Running thousands of simultaneous training jobs can easily overwhelm standard cloud account quotas. To solve this, the orchestration layer relies on an Amazon Simple Queue Service FIFO queue paired with an AWS Lambda function that triggers individual Step Functions executions. Each execution must acquire a concurrency slot through a DynamoDB semaphore before launching its pipeline, ensuring that sudden bursts of retraining requests drain at a predictable, controlled rate.",
+              "links": []
+            },
+            {
+              "text": "Operational monitoring is integrated throughout the infrastructure. Successful completions publish status updates to an Amazon Simple Notification Service topic, while operational errors are automatically routed to the same topic via an Amazon EventBridge rule that preserves error diagnostics. By maintaining strict execution ceilings, the orchestration framework keeps concurrent training workloads safely within standard account limits.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Adopting SageMaker SDK v3 Architecture",
+          "paragraphs": [
+            {
+              "text": "The architectural update incorporates the latest structural changes introduced in Amazon SageMaker Python SDK v3. The SDK reorganizes functionality into modular packages including sagemaker-core, sagemaker-train, sagemaker-serve, and sagemaker-mlops. Consequently, training configuration parameters that were previously passed across Estimator constructor arguments in version 2 are now encapsulated within typed configuration objects supplied directly to ModelTrainer.",
+              "links": []
+            },
+            {
+              "text": "Deploying the complete stack via the AWS Cloud Development Kit requires careful management of AWS Region variables across deployment commands to prevent partial synthesis mismatches. Additional information on maintaining proper execution permissions, bucket configurations, and repository resources can be found by following guidance on the official <a href=\"https://aws.amazon.com/blogs/machine-learning/\">Artificial Intelligence</a> blog and associated repositories.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker",
+        "Computer Vision",
+        "MLOps",
+        "AWS",
+        "SageMaker Neo",
+        "Edge Computing",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker",
+        "SageMaker Neo",
+        "AWS Step Functions"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 26, 2026",
+      "modifiedLabel": "October 26, 2026",
+      "readMinutes": 3,
+      "wordCount": 588
+    }
+  },
+  "datePublished": "2026-10-26T21:37:40.011625+03:00",
+  "dateModified": "2026-10-26T21:37:40.011625+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/fleet-wide-computer-vision-lifecycle-at-the-edge-with-sagemaker-sdk-v3/hero.webp",
+    "card": "/forum/assets/posts/2026/10/fleet-wide-computer-vision-lifecycle-at-the-edge-with-sagemaker-sdk-v3/card.webp",
+    "social": "/forum/assets/posts/2026/10/fleet-wide-computer-vision-lifecycle-at-the-edge-with-sagemaker-sdk-v3/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق معمارية SageMaker SDK v3 لإدارة نماذج الرؤية الحاسوبية",
+      "en": "AWS Updates Fleet Computer Vision Pipeline With SageMaker SDK v3"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20483-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/fleet-wide-computer-vision-lifecycle-at-the-edge-with-sagemaker-sdk-v3/inline-01.webp",
+        "width": 1100,
+        "height": 698,
+        "alt": {
+          "ar": "أمازون تطلق معمارية SageMaker SDK v3 لإدارة نماذج الرؤية الحاسوبية",
+          "en": "Solution architecture: SQS FIFO queue triggers AWS Lambda, which starts a Step Functions state machine with an Amazon DynamoDB semaphore for concurrency control. The state machine launches a 13-step SageMaker Pipeline wi"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/fleet-wide-computer-vision-lifecycle-at-the-edge-with-sagemaker-sdk-v3/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20483-1-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/fleet-wide-computer-vision-lifecycle-at-the-edge-with-sagemaker-sdk-v3/",
+      "type": "official",
+      "title": "Fleet-wide computer vision lifecycle at the edge with SageMaker SDK v3"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/fleet-wide-computer-vision-lifecycle-at-the-edge-with-sagemaker-sdk-v3",
+  "sourceTitle": "Fleet-wide computer vision lifecycle at the edge with SageMaker SDK v3",
+  "trendScore": 113.35,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-26T18:37:40+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/fleet-wide-computer-vision-lifecycle-at-the-edge-with-sagemaker-sdk-v3.json"
+}
