@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "4253eb49870be4f8293c",
+  "slug": "build-agentic-retrieval-on-managed-amazon-bedrock-knowledge-base-with-cdk",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/build-agentic-retrieval-on-managed-amazon-bedrock-knowledge-base-with-cdk/",
+    "en": "/forum/en/apps/build-agentic-retrieval-on-managed-amazon-bedrock-knowledge-base-with-cdk/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تطلق نظام استرجاع وكيلي مدعوم بالذكاء الاصطناعي عبر CDK",
+      "description": "تقدّم أمازون ويب سيرفيسز حلاً جديداً لبناء أنظمة استرجاع الوكلاء على قاعدة معرفة Bedrock المدارة، باستخدام AWS CDK، مع ميزات مراقبة وتقييم متقدمة.",
+      "deck": "تتيح أمازون ويب سيرفيسز الآن بناء أنظمة استرجاع الوكلاء (Agentic Retrieval) على قاعدة معرفة Bedrock المدارة، مع دمج أدوات المراقبة والتقييم في عملية النشر عبر AWS CDK.",
+      "summaryBullets": [
+        "يوفر النظام وكلاء ذكاء اصطناعي يقررون مسار الاسترجاع بين قواعد معرفة متعددة بدلاً من الاعتماد على استعلام واحد.",
+        "يعتمد الحل على قاعدة معرفة Bedrock المدارة التي تتولى إدارة التخزين والفهرسة دون الحاجة إلى قواعد بيانات متجهة خارجية.",
+        "يشمل النشر لوحات مراقبة CloudWatch متعددة الطبقات ونظامين للتقييم، فوري ومستمر، لضمان جودة الإجابات.",
+        "يتم تنفيذ البنية التحتية بالكامل كتطبيق AWS CDK واحد، مما يبسط إدارة التبعيات والنشر."
+      ],
+      "sections": [
+        {
+          "heading": "تجاوز حدود أنظمة RAG التقليدية",
+          "paragraphs": [
+            {
+              "text": "تواجه أنظمة توليد المعلومات المعززة بالاسترجاع (RAG) التقليدية تحديات كبيرة عند التعامل مع أسئلة معقدة تتطلب دمج معلومات من مصادر متعددة أو اختيار المصدر الصحيح ديناميكياً. في هذه الأنظمة، يتم تنفيذ عملية استرجاع واحدة تليها عملية توليد واحدة، مما قد يؤدي إلى إجابات ناقصة أو غير دقيقة عندما يكون الإجابة موزعة على عدة مجموعات بيانات. لحل هذه المشكلة، تتجه أمازون ويب سيرفيسز نحو مفهوم الاسترجاع الوكيلي (Agentic Retrieval)، حيث يتدخل وكيل ذكاء اصطناعي في الحلقة لاتخاذ قرارات حول ما يجب استرجاعه، ومن أي قاعدة معرفة، ومتى يجب إعادة النظر في النتائج قبل صياغة الإجابة النهائية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قاعدة المعرفة المدارة كأساس جديد",
+          "paragraphs": [
+            {
+              "text": "يختلف هذا الحل الجوهري عن المقاربات السابقة التي كانت تتطلب إدارة قواعد بيانات متجهة مثل Amazon OpenSearch Serverless يدوياً. مع إطلاق قاعدة المعرفة المدارة (Managed Knowledge Base) في Amazon Bedrock، تتولى أمازون إدارة عمليات الإدخال والتخزين والفهرسة والاسترجاع بالكامل، بما في ذلك استخدام نماذج مدمجة وإعادة ترتيب النتائج. هذا يعني أن المطورين لم يعودوا بحاجة إلى إنشاء أو توسيع أو دفع تكاليف وحدات معالجة OpenSearch، مما يقلل من التعقيد التشغيلي بشكل كبير. كما أن ميزة الاسترجاع الوكيلي متاحة حصرياً على هذه القاعدة المدارة، مما يجعلها الخيار الأمثل لبناء تطبيقات المؤسسات التي تتطلب دقة عالية في الاستدلال.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور AgentCore في تمكين الوكلاء",
+          "paragraphs": [
+            {
+              "text": "يلعب Amazon Bedrock AgentCore دوراً محورياً في هذا الحل من خلال توفير البنية التحتية اللازمة لتشغيل الوكلاء. يوفر AgentCore بوابة (Gateway) تعرض كل قاعدة معرفة كأداة قابلة للاستدعاء عبر بروتوكول سياق النموذج (MCP)، بالإضافة إلى بيئة تشغيل (Runtime) تستضيف وكيل الاستدلال. كما يتضمن واجهة برمجة تطبيقات AgenticRetrieveStream التي تعيد ترتيب النتائج داخلياً وتعيد إجابة مركبة مدعومة بالاستشهادات. هذا التصميم يسمح للوكيل بالتخطيط متعدد الأدوار وتنفيذ عمليات الاسترجاع بشكل ديناميكي، مما يحسن من جودة الإجابات على الأسئلة المعقدة التي تتطلب تفاعلاً متكرراً مع البيانات.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "المراقبة والتقييم كجزء من التصميم",
+          "paragraphs": [
+            {
+              "text": "أحد التحديات الرئيسية في أنظمة الوكلاء هو صعوبة تتبع مسار الاستدلال وتقييم جودة المخرجات، خاصة عندما يتخذ الوكيل مسارات مختلفة لكل سؤال. لمعالجة ذلك، يتضمن هذا الحل طبقات متعددة من المراقبة عبر Amazon CloudWatch، مع لوحات معلومات تغطي سبع طبقات من القياسات، بدءاً من زمن الاستجابة وحجم الاستدعاءات وصولاً إلى استخدام الرموز (Tokens). كما يوفر النظام شكلين من التقييم: تقييم فوري عند الطلب، وتقييم مستمر، مما يتيح للمهندسين فهم سلوك النظام وضمان دقة الإجابات بشكل دائم. هذه الميزات تجعل المراقبة عنصراً أساسياً في التصميم بدلاً من كونها إضافة لاحقة.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch",
+                  "url": "https://docs.aws.amazon.com/cloudwatch/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "النشر عبر AWS CDK",
+          "paragraphs": [
+            {
+              "text": "يتم تنفيذ هذا الحل بالكامل كتطبيق AWS CDK واحد بلغة بايثون، مما يضمن اتساق البنية التحتية وسهولة إدارتها. على عكس الحلول السابقة التي كانت تتطلب تسلسل يدوي لأكواد CDK متعددة، يستنتج CDK الترتيب الصحيح تلقائياً. يبدأ النظام بمخزن Amazon S3 كمصدر للبيانات، ثم ينتقل إلى إنشاء قاعدة المعرفة المدارة، وتكوين بوابة AgentCore، وتعيين وكيل الاستدلال. هذا النهج يبسط عملية النشر ويقلل من الأخطاء البشرية، مع توفير بيئة قابلة للتطوير تدعم متطلبات المؤسسات الكبيرة.",
+              "links": [
+                {
+                  "text": "AWS CDK",
+                  "url": "https://docs.aws.amazon.com/cdk/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مقارنة مع الحلول السابقة",
+          "paragraphs": [
+            {
+              "text": "يأتي هذا التطور كتحسين كبير على ما تم نشره في عام 2024، حيث كانت الحلول تعتمد على تصميم ضربة واحدة (Single-shot) وتتطلب إدارة يدوية لمكونات مثل مجموعات OpenSearch Serverless. اليوم، مع قاعدة المعرفة المدارة، اختفت الحاجة إلى إدارة قواعد البيانات المتجهة، وأصبح الاسترجاع وكيلياً بطبيعته. كما أن نصف مكونات التطبيق تقريباً مخصص الآن لتوفير الرؤية والشفافية حول سلوك الوكيل، مما يعكس تحولاً في فلسفة بناء أنظمة الذكاء الاصطناعي من مجرد توليد إجابات إلى إدارة عمليات معقدة قابلة للمراقبة والتقييم.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون ويب سيرفيسز",
+        "Amazon Bedrock",
+        "الذكاء الاصطناعي",
+        "استرجاع المعلومات",
+        "AWS CDK",
+        "الوكلاء الذكيون",
+        "قواعد المعرفة"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Amazon Bedrock AgentCore",
+        "AWS CDK",
+        "Amazon CloudWatch",
+        "Amazon S3",
+        "Amazon OpenSearch Serverless"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "26 أكتوبر 2026",
+      "modifiedLabel": "26 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 635
+    },
+    "en": {
+      "title": "Building Agentic Retrieval on Amazon Bedrock with AWS CDK",
+      "description": "Learn how to build enterprise agentic retrieval on a Managed Amazon Bedrock Knowledge Base using the AWS CDK and Amazon Bedrock AgentCore.",
+      "deck": "A new architectural pattern for enterprise retrieval brings multi-turn planning, semantic routing, and built-in observability to Managed Amazon Bedrock Knowledge Bases.",
+      "summaryBullets": [
+        "Enterprise agentic retrieval addresses limitations in traditional single-shot RAG by introducing reasoning agents into the loop.",
+        "Managed Amazon Bedrock Knowledge Bases handle ingestion, storage, indexing, and retrieval natively without requiring manual vector store provisioning.",
+        "Amazon Bedrock AgentCore exposes knowledge bases as Model Context Protocol tools via a dedicated Gateway.",
+        "The complete architecture deploys as a single AWS CDK application featuring seven layers of observability and evaluation dashboards."
+      ],
+      "sections": [
+        {
+          "heading": "Understanding the Limits of Traditional RAG",
+          "paragraphs": [
+            {
+              "text": "Traditional Retrieval-Augmented Generation systems follow a straightforward approach: they embed a question, fetch the nearest chunks from a single index, and hand those chunks to a model to generate an answer. While this single-shot pipeline works well for straightforward inquiries, it breaks down when facing complex cross-corpus queries or tasks requiring multiple iterations. A single retrieval call often returns incomplete information, leading to fluent yet inaccurate answers because the system lacks a mechanism to re-examine the corpus or route questions dynamically.",
+              "links": []
+            },
+            {
+              "text": "To solve these architectural hurdles, developers are turning to enterprise agentic retrieval. By integrating a reasoning agent into the workflow, the system can determine whether retrieval is necessary, select the appropriate data source, and perform multiple lookups before composing a grounded and cited response. These capabilities are central to modern implementations on <a href=\"https://aws.amazon.com/blogs/machine-learning/build-agentic-retrieval-on-a-managed-amazon-bedrock-knowledge-base-with-cdk/\">AWS Machine Learning Blog</a> frameworks, marking a significant evolution from older single-shot solutions.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/build-agentic-retrieval-on-a-managed-amazon-bedrock-knowledge-base-with-cdk/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "The Evolution from DIY to Managed Knowledge Bases",
+          "paragraphs": [
+            {
+              "text": "Earlier deployment patterns, such as the approach detailed in a previous <a href=\"https://aws.amazon.com/blogs/machine-learning/build-an-end-to-end-rag-solution-using-knowledge-bases-for-amazon-bedrock-and-the-aws-cdk/\">2024 post</a>, required developers to manually provision and sequence separate resources like vector stores and storage buckets. In contrast, current architectures leverage the Managed Knowledge Base type provided by <a href=\"https://docs.aws.amazon.com/bedrock/\">Amazon Bedrock</a>, which autonomously manages data ingestion, storage, indexing, and retrieval.",
+              "links": [
+                {
+                  "text": "2024 post",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/build-an-end-to-end-rag-solution-using-knowledge-bases-for-amazon-bedrock-and-the-aws-cdk/"
+                },
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://docs.aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "This managed model eliminates the need to provision or scale customer-managed vector infrastructure such as collections in <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless.html\">Amazon OpenSearch Serverless</a>. By removing the overhead of managing OpenSearch Compute Units, engineering teams can focus entirely on application logic while relying on service-managed models for embedding and internal reranking.",
+              "links": [
+                {
+                  "text": "Amazon OpenSearch Serverless",
+                  "url": "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Powering Agentic Workflows with AgentCore and CDK",
+          "paragraphs": [
+            {
+              "text": "The agentic capabilities of the new architecture are powered by <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/\">Amazon Bedrock AgentCore</a>. This component features a Gateway that exposes each knowledge base as a Model Context Protocol tool, alongside a Runtime that hosts the reasoning agent. Utilizing the AgenticRetrieveStream API, the system executes multi-turn planning and returns synthesized answers complete with citations.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "Deploying this multi-component infrastructure is streamlined through the <a href=\"https://docs.aws.amazon.com/cdk/\">AWS CDK</a>. Instead of orchestrating resource stacks by hand, developers can define the entire application—including storage buckets managed via <a href=\"https://docs.aws.amazon.com/s3/\">Amazon Simple Storage Service (Amazon S3)</a> and the associated knowledge bases—as a single Python-based application.",
+              "links": [
+                {
+                  "text": "AWS CDK",
+                  "url": "https://docs.aws.amazon.com/cdk/"
+                },
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://docs.aws.amazon.com/s3/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Observability and Continuous Evaluation",
+          "paragraphs": [
+            {
+              "text": "Because agentic systems follow non-deterministic execution paths depending on the exact phrasing of a user's question, monitoring their internal behavior is critical. Operational visibility ensures that developers can track call volumes, latency, and token usage effectively across production environments.",
+              "links": []
+            },
+            {
+              "text": "To address this requirement, the reference architecture integrates deep telemetry directly into the deployment package. Utilizing <a href=\"https://docs.aws.amazon.com/cloudwatch/\">Amazon CloudWatch</a>, the application provisions specialized dashboards spanning seven distinct layers of observability alongside both on-demand and continuous evaluation frameworks.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch",
+                  "url": "https://docs.aws.amazon.com/cloudwatch/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS CDK",
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "Cloud Computing",
+        "Machine Learning",
+        "RAG"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "AWS",
+        "Amazon Bedrock",
+        "Amazon OpenSearch Serverless"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "October 26, 2026",
+      "modifiedLabel": "October 26, 2026",
+      "readMinutes": 3,
+      "wordCount": 535
+    }
+  },
+  "datePublished": "2026-10-26T20:37:39.608546+03:00",
+  "dateModified": "2026-10-26T20:37:39.608546+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/build-agentic-retrieval-on-managed-amazon-bedrock-knowledge-base-with-cdk/hero.webp",
+    "card": "/forum/assets/posts/2026/10/build-agentic-retrieval-on-managed-amazon-bedrock-knowledge-base-with-cdk/card.webp",
+    "social": "/forum/assets/posts/2026/10/build-agentic-retrieval-on-managed-amazon-bedrock-knowledge-base-with-cdk/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق نظام استرجاع وكيلي مدعوم بالذكاء الاصطناعي عبر CDK",
+      "en": "Building Agentic Retrieval on Amazon Bedrock with AWS CDK"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21614-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/build-agentic-retrieval-on-managed-amazon-bedrock-knowledge-base-with-cdk/inline-01.webp",
+        "width": 1388,
+        "height": 890,
+        "alt": {
+          "ar": "أمازون تطلق نظام استرجاع وكيلي مدعوم بالذكاء الاصطناعي عبر CDK",
+          "en": "Agent routing a question across two managed knowledge bases through the Gateway, with every step landing in Amazon CloudWatch"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-agentic-retrieval-on-a-managed-amazon-bedrock-knowledge-base-with-cdk/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21614-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/build-agentic-retrieval-on-managed-amazon-bedrock-knowledge-base-with-cdk/inline-02.webp",
+        "width": 1400,
+        "height": 650,
+        "alt": {
+          "ar": "أمازون تطلق نظام استرجاع وكيلي مدعوم بالذكاء الاصطناعي عبر CDK",
+          "en": "Flow diagram: user question to AgentCore Runtime, out through AgentCore Gateway to two AgenticRetrieveStream tools backed by financial and weather managed knowledge bases fed from Amazon S3, returning a cited answer, wit"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-agentic-retrieval-on-a-managed-amazon-bedrock-knowledge-base-with-cdk/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21614-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/build-agentic-retrieval-on-managed-amazon-bedrock-knowledge-base-with-cdk/inline-03.webp",
+        "width": 1400,
+        "height": 893,
+        "alt": {
+          "ar": "أمازون تطلق نظام استرجاع وكيلي مدعوم بالذكاء الاصطناعي عبر CDK",
+          "en": "Managed ingestion result showing one document indexed per knowledge base with zero failures"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-agentic-retrieval-on-a-managed-amazon-bedrock-knowledge-base-with-cdk/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21614-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/build-agentic-retrieval-on-managed-amazon-bedrock-knowledge-base-with-cdk/inline-04.webp",
+        "width": 1400,
+        "height": 747,
+        "alt": {
+          "ar": "أمازون تطلق نظام استرجاع وكيلي مدعوم بالذكاء الاصطناعي عبر CDK",
+          "en": "AWS CloudFormation console listing four stacks — bmkb-obs-cdk-kb, -gateway, -agent, and -dashboards — each with status CREATE_COMPLETE."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-agentic-retrieval-on-a-managed-amazon-bedrock-knowledge-base-with-cdk/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21614-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-agentic-retrieval-on-a-managed-amazon-bedrock-knowledge-base-with-cdk/",
+      "type": "official",
+      "title": "Build agentic retrieval on a Managed Amazon Bedrock Knowledge Base with CDK"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-agentic-retrieval-on-a-managed-amazon-bedrock-knowledge-base-with-cdk",
+  "sourceTitle": "Build agentic retrieval on a Managed Amazon Bedrock Knowledge Base with CDK",
+  "trendScore": 118.88,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-26T17:37:39+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/build-agentic-retrieval-on-managed-amazon-bedrock-knowledge-base-with-cdk.json"
+}
