@@ -1,0 +1,311 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "3bb7f581684ef39f682a",
+  "slug": "groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models/",
+    "en": "/forum/en/ai/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون بيديروك تخفض تكاليف وكلاء الذكاء الاصطناعي عبر التخزين المؤقت",
+      "description": "تقدم أمازون بيديروك ميزة التخزين المؤقت للبرومبت لوكلاء الذكاء الاصطناعي، مما يقلل التكاليف والوقت المستغرق في إعادة إرسال السياق، ويحسّن أداء نماذج OpenAI على المنصة.",
+      "deck": "تواجه وكلاء الذكاء الاصطناعي تحدياً كبيراً يتمثل في إعادة قراءة السياق الكامل في كل خطوة، مما يرفع التكاليف. تقدم أمازون حلاً عبر التخزين المؤقت للبرومبت.",
+      "summaryBullets": [
+        "وكلاء الذكاء الاصطناعي يعيدون إرسال السياق الكامل (الأدوات والتعليمات والتاريخ) في كل خطوة، مما يرفع التكاليف والوقت.",
+        "التخزين المؤقت للبرومبت في أمازون بيديروك يحفظ الحالة السابقة ويعيد استخدامها، مما يقلل التكاليف والوقت المستغرق.",
+        "يوجد نوعان من التخزين المؤقت: الضمني (تختاره أمازون) والصريح (يحدده المطور)، ويُوصى باستخدامهما معاً.",
+        "يجب أن يكون النص المُخزَّن مؤقتاً متطابقاً تماماً في كل طلب، مع إبقاء العناصر المتغيرة (مثل التاريخ) بعد الجزء المخزَّن.",
+        "التخزين المؤقت يعمل مع نماذج OpenAI على أمازون بيديروك، ويقلل التكاليف بشكل كبير في الجلسات الطويلة."
+      ],
+      "sections": [
+        {
+          "heading": "مشكلة الوكلاء: إعادة قراءة السياق في كل خطوة",
+          "paragraphs": [
+            {
+              "text": "في كل خطوة يقوم بها وكيل الذكاء الاصطناعي، يجب عليه إعادة إرسال السياق الكامل إلى النموذج، بما في ذلك تعريفات الأدوات والتعليمات وسجل المحادثة. هذا يؤدي إلى رفع التكاليف والوقت المستغرق، خاصة في الجلسات الطويلة. كما توضح أمازون في مدونتها التقنية، النموذج لا يملك ذاكرة داخلية بين الطلبات، لذا يجب إعادة قراءة كل شيء من جديد. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "أمازون في مدونتها التقنية",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+                },
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "حل التخزين المؤقت للبرومبت",
+          "paragraphs": [
+            {
+              "text": "يحل التخزين المؤقت للبرومبت هذه المشكلة من خلال حفظ الحالة السابقة (النص التعليمي، الأدوات، المحتوى) وإعادة استخدامها في الطلبات التالية. بدلاً من إعادة حساب كل شيء، يعالج النموذج فقط الجزء الجديد من الطلب. هذا يقلل التكاليف بشكل كبير، خاصة في الجلسات الطويلة حيث يتكرر إرسال نفس السياق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أنواع التخزين المؤقت: الضمني والصريح",
+          "paragraphs": [
+            {
+              "text": "يوجد نوعان من التخزين المؤقت في أمازون بيديروك: الضمني، حيث تختار أمازون ما يُخزَّن مؤقتاً، والصريح، حيث يحدد المطور نقطة النهاية للجزء المخزَّن. يُوصى باستخدامهما معاً للحصول على أفضل أداء. التخزين الضمني مفيد للمحادثات المتنامية، بينما الصريح مفيد للمحتوى المشترك بين الجلسات، مثل الأدوات والتعليمات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات التخزين المؤقت الناجح",
+          "paragraphs": [
+            {
+              "text": "لكي يعمل التخزين المؤقت بشكل صحيح، يجب أن يكون النص المُخزَّن مؤقتاً متطابقاً تماماً في كل طلب. هذا يعني أن تعليمات الوكيل وقائمة الأدوات يجب أن تكون مُسلسلة بنفس الطريقة في كل مرة. يجب إبقاء العناصر المتغيرة، مثل التاريخ أو اسم المستخدم، بعد الجزء المخزَّن مؤقتاً. كما يجب أن يبلغ الجزء المخزَّن 1024 توكن على الأقل ليُعتبر مؤهلاً للتخزين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تطبيق التخزين المؤقت في الجلسات الطويلة",
+          "paragraphs": [
+            {
+              "text": "في الجلسات الطويلة، حيث يتغير المحتوى والأدوات، يُستخدم التخزين الضمني لمتابعة المحادثة. الطلب الأول لا يحتوي على علامة صريحة، لذا يأتي النقطة التلقائية بعد مهمة المستخدم، مما يغطي الأدوات والتعليمات والمهمة معاً. هذا مفيد عندما تستمر الخطوة التالية في نفس المهمة. أما إذا تغيّرت المهمة، فلا يتطابق البادئة مع المهمة القديمة، ولا يُنشئ التخزين الضمني عنصراً منفصلاً للأدوات والتعليمات فقط. في هذه الحالة، يُستخدم علامة صريحة لجعل البادئة القصيرة قابلة لإعادة الاستخدام عبر المهام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النتائج والأثر على التكاليف",
+          "paragraphs": [
+            {
+              "text": "في أحد الاختبارات باستخدام التخزين الصريح، كُتب بادئة من 4000 توكن للأدوات والتعليمات في الطلب الأول، وقُرئت في الطلبات التالية. هذا يعني أن التكلفة في الطلبات التالية كانت أقل بكثير، حيث لم يُحتسب البادئة مرة أخرى. التخزين المؤقت يقلل التكاليف والوقت المستغرق، ويجعل الوكلاء أكثر استجابة وثباتاً.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون بيديروك",
+        "وكلاء الذكاء الاصطناعي",
+        "التخزين المؤقت للبرومبت",
+        "OpenAI",
+        "تقليل التكاليف",
+        "تحسين الأداء"
+      ],
+      "entities": [
+        "أمازون بيديروك",
+        "OpenAI",
+        "وكلاء الذكاء الاصطناعي",
+        "التخزين المؤقت للبرومبت"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "26 أكتوبر 2026",
+      "modifiedLabel": "26 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 479
+    },
+    "en": {
+      "title": "Amazon Bedrock Prompt Caching for OpenAI Models",
+      "description": "Discover how prompt caching patterns on Amazon Bedrock help AI agents cut input costs and reduce latency by eliminating redundant context processing.",
+      "deck": "AI agents repeatedly re-read their entire context with every turn, but prompt caching patterns on Amazon Bedrock offer a way to maintain continuity without re-sending the same instructions, tools, and history.",
+      "summaryBullets": [
+        "AI agents repeatedly process their full context on every turn, driving up input costs and latency.",
+        "Prompt caching allows services to store input prompts and reuse them across requests at a fraction of the cost.",
+        "Developers can use implicit caching, explicit caching, or a combination of both approaches.",
+        "Explicit caching requires the shared prefix to reach a minimum of 1,024 tokens to qualify."
+      ],
+      "sections": [
+        {
+          "heading": "The Groundhog Day Dilemma for AI Agents",
+          "paragraphs": [
+            {
+              "text": "Every time an autonomous AI agent takes a step—whether it calls a tool, reads a result, or decides on its next action—it must send the large language model its entire story so far. Because models lack internal memory between requests, they must re-read tool definitions, developer instructions, and previous tool results on every single turn. By turn 20 of a coding session, the model re-reads turns one through nineteen, leaving developers to pay for those tokens repeatedly. Further details are available from AWS Machine Learning Blog in the original source material.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "Prompt caching breaks this repetitive cycle by storing the input prompt and reusing it on subsequent requests at a fraction of the standard input price. As detailed in the official guidance, understanding model behavior helps optimize these interactions. Further details are available from Artificial Intelligence in the original source material.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Understanding Implicit and Explicit Caching Modes",
+          "paragraphs": [
+            {
+              "text": "When a model reads a prompt, it performs a prefill process where it builds its key-value vectors to form the working state before generating tokens. Prompt caching preserves this state. With implicit caching, the service automatically selects where the reusable prefix ends based on conversation growth. Conversely, explicit caching allows code to mark specific endpoints using designated parameters to share content across sessions.",
+              "links": []
+            },
+            {
+              "text": "Developers can combine both methods to establish a reusable starting point while allowing the platform to automatically manage the growing conversation history. To ensure successful caching, the reusable prefix must reach a minimum threshold of 1,024 tokens.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Implementing Static and Dynamic Prompt Caching",
+          "paragraphs": [
+            {
+              "text": "Caching static content like tool lists and system instructions requires explicit mode to designate where the saved prefix terminates. By assigning a cache key, applications indicate which requests share a cache pool. For example, a tools-and-instructions prefix of roughly 4,000 tokens can write once and subsequently read those same tokens on later requests without triggering an additional write.",
+              "links": []
+            },
+            {
+              "text": "To maintain cache hits, developers must ensure that instructions and tool lists serialize identically across requests. Dynamic variables such as timestamps, user names, or request identifiers should always be placed after the cached instructions to prevent cache misses.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Managing Conversation History and Tool Loops",
+          "paragraphs": [
+            {
+              "text": "As agents execute tasks, applications route requested tool arguments to matching functions and collect their outputs. Appending the model output and tool results to a history list allows the system to send cumulative turns back to the model until a final answer is reached. In implicit mode, Amazon Bedrock leverages the unchanged prefix to lower latency and maintain high operational efficiency throughout complex multi-turn workflows.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "Prompt Caching",
+        "AI Agents",
+        "OpenAI Models",
+        "AWS",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Amazon Bedrock",
+        "AWS",
+        "OpenAI"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 26, 2026",
+      "modifiedLabel": "October 26, 2026",
+      "readMinutes": 3,
+      "wordCount": 521
+    }
+  },
+  "datePublished": "2026-10-26T20:57:39.766934+03:00",
+  "dateModified": "2026-10-26T20:57:39.766934+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models/hero.webp",
+    "card": "/forum/assets/posts/2026/10/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models/card.webp",
+    "social": "/forum/assets/posts/2026/10/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models/social.jpg",
+    "alt": {
+      "ar": "أمازون بيديروك تخفض تكاليف وكلاء الذكاء الاصطناعي عبر التخزين المؤقت",
+      "en": "Amazon Bedrock Prompt Caching for OpenAI Models"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/ML-22246-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models/inline-01.webp",
+        "width": 1400,
+        "height": 519,
+        "alt": {
+          "ar": "أمازون بيديروك تخفض تكاليف وكلاء الذكاء الاصطناعي عبر التخزين المؤقت",
+          "en": "Five growing agent requests, with tools, instructions, and earlier history marked in red and each new turn in yellow."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/ML-22246-1-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models/inline-02.webp",
+        "width": 1400,
+        "height": 555,
+        "alt": {
+          "ar": "أمازون بيديروك تخفض تكاليف وكلاء الذكاء الاصطناعي عبر التخزين المؤقت",
+          "en": "Turn 1 writes the tools and instructions through a breakpoint. Turn 2 reads that same prefix from cache and processes its new question."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/ML-22246-2-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models/inline-03.webp",
+        "width": 1400,
+        "height": 644,
+        "alt": {
+          "ar": "أمازون بيديروك تخفض تكاليف وكلاء الذكاء الاصطناعي عبر التخزين المؤقت",
+          "en": "Rolling breakpoints, where each turn reads all earlier turns and writes only its own tool result."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/ML-22246-3-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models/inline-04.webp",
+        "width": 1400,
+        "height": 562,
+        "alt": {
+          "ar": "أمازون بيديروك تخفض تكاليف وكلاء الذكاء الاصطناعي عبر التخزين المؤقت",
+          "en": "Bar chart comparing the input cost of each caching setup on GPT-6 Astra, relative to no caching."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/ML-22246-4-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/",
+      "type": "official",
+      "title": "Groundhog Day for AI agents: Prompt caching patterns for using OpenAI models on Amazon Bedrock"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock",
+  "sourceTitle": "Groundhog Day for AI agents: Prompt caching patterns for using OpenAI models on Amazon Bedrock",
+  "trendScore": 128.41,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-26T17:57:39+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models.json"
+}
