@@ -1,5 +1,340 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-26T16:37:39+00:00",
-  "last_published_story_id": "9a15b40232fdbf825a34"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-26T16:42:33+00:00",
+  "target_publish_at": "2026-10-26T19:57:39.224313+03:00",
+  "story": {
+    "title": "Microsoft releases emergency .NET patches for critical Brotli flaw",
+    "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-emergency-net-patches-for-critical-brotli-flaw",
+    "domain": "bleepingcomputer.com",
+    "summary": "Microsoft released emergency .NET security updates to patch a critical vulnerability known as Broccoli2Shell, also tracked as Node2Shell and HTTP2Shell. [...]",
+    "published_at": "2026-10-26T15:38:24+00:00",
+    "discovered_at": "2026-10-26T15:42:02+00:00",
+    "source": {
+      "name": "BleepingComputer",
+      "feed": "https://www.bleepingcomputer.com/feed/",
+      "type": "journalism",
+      "trust": 0.88,
+      "priority": 22,
+      "defaultCategory": "security"
+    },
+    "category": "apps",
+    "category_label": "التطبيقات والبرامج",
+    "score": 46,
+    "verification": {
+      "confidence": 0.88,
+      "reason": "trusted_journalism_single_source",
+      "official": false,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "cbcc5c5d1532cb4996ba",
+    "trend": {
+      "score": 98.59,
+      "age_hours": 1.06,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-emergency-net-patches-for-critical-brotli-flaw/",
+      "name": "BleepingComputer",
+      "domain": null,
+      "kind": "journalism",
+      "type": "journalism",
+      "feed_title": "Microsoft releases emergency .NET patches for critical Brotli flaw",
+      "title": "Microsoft releases emergency .NET patches for critical Brotli flaw",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "مايكروسوفت تُصدر تحديثات طارئة لـ .NET لسد ثغرة حرجة في Brotli",
+      "description": "أصدرت مايكروسوفت تحديثات أمنية طارئة لسد ثغرة حرجة في مكتبة Brotli ضمن إطار عمل .NET، مما يتيح تنفيذ أكواد عن بُعد. يُنصح المطورون بتطبيق التحديثات فوراً لتجنب الاختراق.",
+      "deck": "كشفت مايكروسوفت عن إصدار تحديثات أمنية خارج الجدول المعتاد لمعالجة ثغرة حرجة في فك ضغط البيانات، وهي خطوة استثنائية تعكس خطورة الاستغلال المحتمل.",
+      "summary_bullets": [
+        "ثغرة Broccoli2Shell (CVE-2026-111497) تسمح بتنفيذ أكواد عن بُعد عبر تدفقات بيانات مضغوطة بشكل خبيث.",
+        "التحديثات الطارئة تغطي إصدارات .NET 8 و9 و10، بالإضافة إلى النسخة التجريبية النهائية من .NET 11.",
+        "المعالجة تتطلب تحديث تطبيقات .NET نفسها، وليس فقط مكتبة النظام الأساسية، إذا كانت التطبيقات تتضمن نسخة خاصة من المكتبة.",
+        "توجد استغلالات جاهزة (PoC) على GitHub، لكن لا توجد تقارير مؤكدة عن استغلالها في العالم الحقيقي حتى الآن."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق تحديثات أمنية طارئة",
+          "paragraphs": [
+            {
+              "text": "أصدرت شركة مايكروسوفت تحديثات أمنية طارئة خارج الجدول الزمني المعتاد (Out-of-Band) لمعالجة ثغرة أمنية حرجة تؤثر على إطار عمل .NET. تأتي هذه الخطوة السريعة استجابةً لثغرة تُعرف باسم Broccoli2Shell، والتي تُصنَّف أيضاً تحت مسميات Node2Shell وHTTP2Shell. وتهدف التحديثات إلى سد الفجوة الأمنية التي تسمح للمهاجمين بالتلاعب في طريقة معالجة البيانات المضغوطة، مما قد يؤدي إلى عواقب أمنية خطيرة على الخوادم والتطبيقات التي تعتمد على هذه التقنية. ويمكن الرجوع إلى BleepingComputer للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-emergency-net-patches-for-critical-brotli-flaw/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "طبيعة الثغرة وآلية الاستغلال",
+          "paragraphs": [
+            {
+              "text": "تعود جذور هذه الثغرة، المسجلة برقم CVE-2026-111497، إلى خطأ في كتابة بيانات خارج الحدود (Out-of-bounds write) داخل فك ضغط Brotli. وكشف فريق Imperva Red Team عن هذه المشكلة، حيث يعتمد الخلل على خوارزمية الضغط الخالية من الفقدان التي طورها جوجل وتُستخدم على نطاق واسع في الويب. عند استغلال هذه الثغرة بنجاح، يمكن لمهاجم غير مخصص الصلاحيات إرسال تدفق بيانات مضغوط بـ Brotli بشكل خبيث، مما يؤدي إلى انهيار النظام أو تسرب الذاكرة، وفي الحالات الأكثر خطورة، يمكنه الحصول على تنفيذ أكواد عن بُعد (RCE) على الأجهزة التي تحتوي على نسخ ضعيفة من مكتبات Brotli.",
+              "links": [
+                {
+                  "text": "CVE-2026-111497",
+                  "url": "https://nvd.nist.gov/vuln/detail/cve-2026-111497"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التأثير على تطبيقات ASP.NET Core",
+          "paragraphs": [
+            {
+              "text": "أوضحت مايكروسوفت في بيانها الرسمي أن التطبيقات قد تتأثر إذا كانت تعالج البيانات المضغوطة بـ Brotli عبر فك ضغط طلبات ASP.NET Core، أو عبر فك ضغط استجابات HttpClient تلقائياً، أو من خلال استدعاء واجهات برمجة التطبيقات الخاصة بـ System.IO.Compression. ومن الجدير بالذكر أن فك ضغط Brotli غير مفعّل افتراضياً في التثبيتات القياسية لـ .NET أو ASP.NET Core. وبالتالي، فإن التطبيقات التي تختار يدوياً تفعيل هذه الميزة أو تستدعي واجهات فك الضغط بشكل صريح هي الأكثر عرضة للخطر. كما أشارت الشركة إلى إمكانية استغلال الثغرة لترقية الصلاحيات عن بُعد في الأنظمة التي تستخدم تكوينات غير افتراضية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الإصدارات المتأثرة والتحديثات المتاحة",
+          "paragraphs": [
+            {
+              "text": "لمعالجة هذا الخلل، أطلقت مايكروسوفت تحديثات أمنية طارئة لإصدارات .NET 8 و.NET 9 و.NET 10، بالإضافة إلى النسخة المرشحة للإصدار الثالث (RC3) من .NET 11. ونصحت الشركة المطورين والمديرين بتطبيق هذه التحديثات في أقرب وقت ممكن لتقليل النافذة الزمنية المتاحة للمهاجمين. وتشمل التحديثات حزم SDK وRuntime لكل إصدار من الإصدارات المذكورة، مما يضمن تغطية شاملة للمكونات البرمجية الأساسية التي قد تكون عرضة للاستغلال.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحذيرات حول مكتبات النظام والتطبيقات المستقلة",
+          "paragraphs": [
+            {
+              "text": "حذّر بورتال إلكتروني مخصص لتتبع هذه الثغرة من أن تحديث مكتبة Brotli على مستوى النظام لا يكفي بالضرورة لحماية التطبيقات التي تتضمن نسخاً خاصة بها من هذه المكتبة. وهذا يعني أن بعض التطبيقات قد تظل عرضة للخطر حتى بعد تحديث النظام الأساسي، إذا كانت تعتمد على نسخ مدمجة (Bundled) من مكتبة الضغط. لذلك، يجب على المطورين التأكد من تحديث جميع الاعتماديات البرمجية داخل مشاريعهم، وليس فقط تحديثات النظام التشغيلي، لضمان الحماية الكاملة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توصيات أمنية فورية",
+          "paragraphs": [
+            {
+              "text": "بالنسبة للمؤسسات التي لا تستطيع تطبيق التحديثات البرمجية فوراً بسبب قيود تشغيلية أو بيئية، أوصت مايكروسوفت باتخاذ تدابير احترازية عاجلة. وتشمل هذه التدابير حجب الطلبات الواردة المضغوطة بـ Brotli باستخدام وكيل (Proxy) أو جدار حماية، أو تعطيل فك ضغط Brotli مؤقتاً حتى يتم تطبيق التصحيحات البرمجية. وتهدف هذه الخطوات إلى تقليل سطح الهجوم ومنع المهاجمين من إرسال البيانات الخبيثة التي تستغل الخلل في فك الضغط.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حالة الاستغلال في العالم الحقيقي",
+          "paragraphs": [
+            {
+              "text": "على الرغم من أن نماذج الاستغلال التجريبية (Proof-of-Concept) لهذه الثغرة قد تم نشرها بالفعل على منصة GitHub، مما يسهل على المهاجمين فهم آلية الاختراق، إلا أنه لم تصدر أي تقارير مؤكدة عن استغلال خبيث لهذه الثغرة في بيئات الإنتاج الحقيقية حتى الآن. وتُعد هذه الفترة الزمنية حاسمة للمطورين والمديرين لتقييم بيئاتهم وتطبيق التحديثات قبل أن تتحول الثغرة من تهديد نظري إلى هجوم نشط واسع النطاق.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "مايكروسوفت",
+        ".NET",
+        "أمن سيبراني",
+        "Brotli",
+        "ثغرة حرجة",
+        "تحديثات أمنية",
+        "تطوير البرمجيات"
+      ],
+      "entities": [
+        "مايكروسوفت",
+        ".NET",
+        "Brotli",
+        "Imperva Red Team",
+        "ASP.NET Core"
+      ],
+      "article_type": "news",
+      "confidence_note": "الخبر يعتمد حصرياً على المصادر المقدمة، مع التركيز على التفاصيل التقنية للإصدارات المتأثرة وآلية الاستغلال كما وردت في النصوص المرفقة."
+    },
+    "en": {
+      "title": "Microsoft Issues Emergency .NET Patches for Critical Brotli Flaw",
+      "description": "Microsoft has released emergency out-of-band security updates for .NET to patch a critical-severity Brotli compression vulnerability tracked as CVE-2026-111497.",
+      "deck": "Microsoft has released emergency security updates for .NET to address a critical-severity vulnerability in the Brotli data decoder.",
+      "summary_bullets": [
+        "The critical-severity vulnerability is known as Broccoli2Shell, Node2Shell, or HTTP2Shell and is tracked as CVE-2026-111497.",
+        "The flaw stems from an out-of-bounds write in the Brotli decoder used to decompress data.",
+        "Successful exploitation can cause crashes, memory leaks, remote code execution, or remote privilege escalation on systems with non-default configurations.",
+        "Microsoft released out-of-band patches for .NET 8, .NET 9, .NET 10, and .NET 11 Release Candidate 3.",
+        "No reports of malicious exploitation in the wild have emerged yet, though proof-of-concept exploits have been published."
+      ],
+      "sections": [
+        {
+          "heading": "Emergency Security Updates Issued",
+          "paragraphs": [
+            {
+              "text": "Microsoft has released emergency .NET security updates to patch a critical vulnerability known as Broccoli2Shell, which is also tracked under the names Node2Shell and HTTP2Shell, as reported by BleepingComputer.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-emergency-net-patches-for-critical-brotli-flaw/"
+                }
+              ]
+            },
+            {
+              "text": "The vulnerability has been officially designated as CVE-2026-111497. According to details released in the official advisory, the flaw originates from an out-of-bounds write within the Brotli decoder.",
+              "links": [
+                {
+                  "text": "CVE-2026-111497",
+                  "url": "https://nvd.nist.gov/vuln/detail/cve-2026-111497"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Discovery and Technical Analysis",
+          "paragraphs": [
+            {
+              "text": "The critical security issue was discovered by researchers on the Imperva Red Team. The vulnerability impacts software that expands data compressed via Google's widely utilized Brotli lossless compression algorithm.",
+              "links": []
+            },
+            {
+              "text": "When exploited, unprivileged attackers can leverage a maliciously crafted Brotli-compressed stream to provoke application crashes or memory leaks. In certain scenarios, this can result in remote code execution on devices equipped with vulnerable Brotli binaries or libraries.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Attack Vectors and Affected Configurations",
+          "paragraphs": [
+            {
+              "text": "Comprehensive technical specifics regarding the vulnerability and mitigation guidance are detailed on the official Microsoft advisory page for the security update.",
+              "links": [
+                {
+                  "text": "Microsoft advisory",
+                  "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-111497"
+                }
+              ]
+            },
+            {
+              "text": "According to Microsoft said, attackers can leverage this specific flaw to remotely escalate privileges on systems running unpatched .NET installations configured with non-default settings.",
+              "links": [
+                {
+                  "text": "Microsoft said",
+                  "url": "https://devblogs.microsoft.com/dotnet/dotnet-october-2026-oob-security-updates/"
+                }
+              ]
+            },
+            {
+              "text": "Microsoft noted that applications can be impacted if they process Brotli-compressed data via ASP.NET Core request decompression, HttpClient automatic response decompression, or through the System.IO.Compression Brotli APIs. However, the company emphasized that Brotli decompression is not enabled by default in standard out-of-the-box .NET or ASP.NET Core installations, meaning applications must manually opt in or explicitly invoke the decompression APIs.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Available Patches and Versions",
+          "paragraphs": [
+            {
+              "text": "To counter the vulnerability, Microsoft has made emergency out-of-band updates available for multiple framework versions, including the .NET 8 SDK and Runtime and newer iterations.",
+              "links": [
+                {
+                  "text": ".NET 8 SDK and Runtime",
+                  "url": "https://dotnet.microsoft.com/download/dotnet/8.0"
+                }
+              ]
+            },
+            {
+              "text": "Patches have likewise been issued for the .NET 9 SDK and Runtime, along with releases covering the .NET 10 SDK and Runtime and .NET 11 Release Candidate 3.",
+              "links": [
+                {
+                  "text": ".NET 9 SDK and Runtime",
+                  "url": "https://dotnet.microsoft.com/download/dotnet/9.0"
+                },
+                {
+                  "text": ".NET 10 SDK and Runtime",
+                  "url": "https://dotnet.microsoft.com/download/dotnet/10.0"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Mitigation and Outlook",
+          "paragraphs": [
+            {
+              "text": "Although proof-of-concept exploits targeting Broccoli2Shell have already been published on GitHub, administrators have not yet reported any instances of malicious exploitation actively occurring in the wild. Industry tracking details are also available via an online portal tracking the flaw.",
+              "links": [
+                {
+                  "text": "online portal tracking the flaw",
+                  "url": "https://broccoli2shell.com/#other"
+                }
+              ]
+            },
+            {
+              "text": "Security analysts warn that simply updating the system-level Brotli library will not resolve the risk for applications that bundle their own private copy of the library. Administrators who cannot immediately apply the official software updates are advised to block incoming Brotli-compressed requests via a proxy or firewall, or to temporarily disable Brotli decoding until patches can be properly deployed.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Microsoft",
+        ".NET",
+        "Brotli",
+        "Broccoli2Shell",
+        "Cybersecurity",
+        "Vulnerability",
+        "Patch"
+      ],
+      "entities": [
+        "Microsoft",
+        "Imperva Red Team",
+        "ASP.NET Core"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based entirely on the provided BleepingComputer article and associated source links."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 650,
+      "word_count_en": 498
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "cbcc5c5d1532cb4996ba",
+      "title": "Microsoft releases emergency .NET patches for critical Brotli flaw",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 650,
+          "word_count_en": 498
+        }
+      ]
+    }
+  ],
+  "slug": "microsoft-releases-emergency-net-patches-for-critical-brotli-flaw",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/microsoft-releases-emergency-net-patches-for-critical-brotli-flaw/hero.webp",
+    "card": "/forum/assets/posts/2026/10/microsoft-releases-emergency-net-patches-for-critical-brotli-flaw/card.webp",
+    "social": "/forum/assets/posts/2026/10/microsoft-releases-emergency-net-patches-for-critical-brotli-flaw/social.jpg",
+    "alt": {
+      "ar": "مايكروسوفت تُصدر تحديثات طارئة لـ .NET لسد ثغرة حرجة في Brotli",
+      "en": "Microsoft Issues Emergency .NET Patches for Critical Brotli Flaw"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/10/26/Microsoft-NET.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
