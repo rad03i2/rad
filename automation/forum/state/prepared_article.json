@@ -1,5 +1,330 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-26T09:33:37+00:00",
-  "last_published_story_id": "67e7c3666f8e455b7a0d"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-26T09:37:14+00:00",
+  "target_publish_at": "2026-10-26T12:53:37.090189+03:00",
+  "story": {
+    "title": "PHP2Shell security flaws now sucessfully exploited in the wild",
+    "url": "https://www.bleepingcomputer.com/news/security/php2shell-security-flaws-now-sucessfully-exploited-in-the-wild",
+    "domain": "bleepingcomputer.com",
+    "summary": "Two critical RCE vulnerabilities (CVE-2026-109618 and CVE-2026-109619), collectively tracked as PHP2Shell, have been successfully exploited in the wild. [...]",
+    "published_at": "2026-10-26T09:19:57+00:00",
+    "discovered_at": "2026-10-26T09:21:29+00:00",
+    "source": {
+      "name": "BleepingComputer",
+      "feed": "https://www.bleepingcomputer.com/feed/",
+      "type": "journalism",
+      "trust": 0.88,
+      "priority": 22,
+      "defaultCategory": "security"
+    },
+    "category": "security",
+    "category_label": "الأمن التقني",
+    "score": 49,
+    "verification": {
+      "confidence": 0.88,
+      "reason": "trusted_journalism_single_source",
+      "official": false,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "bf12d0254fb716020f31",
+    "trend": {
+      "score": 96.4,
+      "age_hours": 0.28,
+      "corroboration_count": 0,
+      "entity_momentum": 9.51,
+      "category_boost": 6
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://www.bleepingcomputer.com/news/security/php2shell-security-flaws-now-sucessfully-exploited-in-the-wild/",
+      "name": "BleepingComputer",
+      "domain": null,
+      "kind": "journalism",
+      "type": "journalism",
+      "feed_title": "PHP2Shell security flaws now sucessfully exploited in the wild",
+      "title": "PHP2Shell security flaws now sucessfully exploited in the wild",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "استغلال ثغرات PHP2Shell الحرجة بنجاح في العالم الحقيقي",
+      "description": "كشفت أجهزة الطُعم عن استغلال ناجح لثغرتي PHP2Shell الحرجتين، مما يؤكد تنفيذ أكواد عن بُعد على خوادم Apache mod_php، وسط تحذيرات أمنية عاجلة.",
+      "deck": "تحوّلت ثغرات PHP2Shell من تهديد نظري إلى هجوم فعلي بعد رصد أدلة قاطعة على تنفيذ أكواد خبيثة، مما يستدعي تدخلاً فورياً من مسؤولي الأنظمة.",
+      "summary_bullets": [
+        "رصدت أجهزة طُعم تابعة لـ Perplexity أدلة على تنفيذ أكواد عن بُعد ناجح عبر ثغرتي CVE-2026-109618 وCVE-2026-109619.",
+        "أكد الباحث ماركو هاتشينز أن هذا الاستغلال هو الأكثر دقة تقنياً حتى الآن ضد نظام Apache mod_php.",
+        "أصدر فريق أمان PHP تصحيحات عاجلة في 21 أكتوبر، لكن تفاصيل الثغرات تسربت قبل ذلك مع نشر استغلالات غير فعالة.",
+        "رصدت شركات أمنية محاولات استغلال سابقة، لكنها كانت غير ناجحة، بينما كشف فريق Amazon عن نشاط مهاجمين قبل التصحيح بأربعة أيام.",
+        "نصح المطورون بإيقاف خاصية session.upload_progress مؤقتاً لحماية الأنظمة من ثغرة جديدة غير مصححة."
+      ],
+      "sections": [
+        {
+          "heading": "تأكيد الاستغلال الفعلي",
+          "paragraphs": [
+            {
+              "text": "شهدت الساحة الأمنية تطوراً حاسماً مع تأكيد استغلال ثغرتين حرجتين في لغة PHP، تُعرفان مجتمعين باسم PHP2Shell، في بيئات حقيقية. التقطت أجهزة الطُعم التي يديرها عادل كريمي، رئيس فريق الكشف والاستجابة في Perplexity، أدلة قاطعة على تنفيذ أكواد عن بُعد (RCE) ناجح. استهدف الهجوم تثبيت Apache mod_php الذي يعمل بإصدار PHP 8.4.26، حيث لم يقتصر الأمر على مجرد انهيار النظام، بل تضمن تسريب ذاكرة قابل للاستخدام. ويمكن الرجوع إلى BleepingComputer للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/php2shell-security-flaws-now-sucessfully-exploited-in-the-wild/"
+                }
+              ]
+            },
+            {
+              "text": "أوضح كريمي أن الاستجابة الخبيثة سلّمت ملف كوكيز مفكك بحجم 800 كيلوبايت، وظهر عنوان دالة مشتق من هذا التسريب ضمن حمولة التنفيذ اللاحقة. كما لاحظ أن العميل اعترف بالاستجابة الكاملة، بينما نُفّذ أمر shell بعد 1.6 مللي ثانية فقط من آخر بايت مسجل في طلب التنفيذ، مما يؤكد نجاح العملية بالكامل. ويمكن الرجوع إلى Sergiu Gatlan للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Sergiu Gatlan",
+                  "url": "https://www.bleepingcomputer.com/author/sergiu-gatlan/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تقييم الخبراء والمراقبة المستمرة",
+          "paragraphs": [
+            {
+              "text": "لم يبقَ هذا الاكتشاف محصوراً في نطاق واحد، إذ أكد ماركو هاتشينز، باحث التهديدات في شركة Expel، صحة نتائج كريمي. أشار هاتشينز، الذي كان يتتبع سلسلة من التقارير المزعومة عن استغلال PHP2Shell، إلى أن هذا التوثيق الفني العميق يمثل أعلى جودة تأكيد للاستغلال في العالم الحقيقي حتى الآن.",
+              "links": []
+            },
+            {
+              "text": "وأضاف هاتشينز أن التحليل التقني العميق لمحاولة الاستغلال الناجحة ضد تثبيت Apache mod_php يعزز مصداقية البيانات المسجلة. هذا التأكيد المتقاطع بين باحث مستقل وشركة أمنية كبرى يرفع من مستوى الخطورة المصنفة لهذه الثغرات، محولاً المخاوف النظرية إلى واقع تشغيلي يتطلب استجابة فورية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التصحيحات العاجلة والتسريب المسبق",
+          "paragraphs": [
+            {
+              "text": "استجاب فريق أمان PHP للتهديد بإصدار تصحيحات لثغرات PHP2Shell يوم الأربعاء 21 أكتوبر، بعد يوم واحد فقط من طلبه من المسؤولين الاستعداد لتثبيت التحديثات الأمنية فور توفرها. ومع ذلك، واجه الفريق تحدياً كبيراً حيث تسربت تفاصيل الثغرات، بما في ذلك معرّفات CVE ونصائح التخفيف المقدمة لبعض مزودي البنية التحتية الحرجة، إلى الإنترنت قبل إطلاق التصحيحات الرسمية.",
+              "links": []
+            },
+            {
+              "text": "رغم تسرب المعلومات ونشر بعض استغلالات البرهان على المفهوم (PoC) قبل التصحيح، صرّح فريق أمان PHP بأن هذه الاستغلالات لم تكن فعالة. هذا التمييز مهم لفهم طبيعة التهديد؛ فبينما كانت الأدوات المتاحة للمهاجمين في تلك المرحلة محدودة، فإن التسريب أتاح لهم الوقت لتحسين أساليبهم، وهو ما يبدو أنه حدث لاحقاً بناءً على الأدلة الجديدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "رصد المحاولات السابقة",
+          "paragraphs": [
+            {
+              "text": "قبل الكشف العام، رصدت عدة شركات أمنية، بما في ذلك Cloudflare وHadrian وwatchTowr وPrevidian وPatchstack، محاولات استغلال لهذه الثغرات. ومع ذلك، صنفت جميع هذه الشركات المحاولات على أنها غير ناجحة. هذا التباين بين الرصد السابق والتأكيد اللاحق يسلط الضوء على صعوبة تمييز المحاولات الفاشلة عن الناجحة في الوقت الفعلي دون تحليل عميق للبيانات.",
+              "links": []
+            },
+            {
+              "text": "من جهتها، لاحظ فريق استخبارات التهديدات في Amazon مهاجمين يستهدفون ثغرات PHP2Shell قبل أربعة أيام من إصدار التصحيحات. ومع ذلك، أشار فريق TRACE في Dataminr إلى أن النشاط الخبيث كان محدوداً بالمسح وتحديد البصمة واستخدام استغلالات غير فعالة، دون أي اختراقات معروفة حتى ظهور نتائج كريمي. هذا يؤكد أن النافذة الزمنية بين الرصد والاستغلال الفعلي كانت قصيرة لكنها حاسمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إجراءات التخفيف الجديدة",
+          "paragraphs": [
+            {
+              "text": "في يوم الجمعة، شارك فريق أمان PHP أيضاً تدابير تخفيف لثغرة تنفيذ أكواد عن بُعد جديدة (تُتتبع كـ CVE-2026-115560) لا يوجد لها تصحيح رسمي بعد. لا يمكن استغلال هذه الثغرة إلا عند استهداف أنظمة تتميز بمزيج غير معتاد من إعدادات التكوين ورمز التطبيق، مما يقلل من نطاقها المحتمل لكنه لا يلغي خطورتها.",
+              "links": []
+            },
+            {
+              "text": "نصح المطورون المسؤولين بإعداد session.upload_progress.enabled=0 لحظر الهجمات المحتملة حتى يتم إصدار تصحيح أمني. يُعد هذا الإجراء تدبيراً احترازياً كان قد تم التوصية به بالفعل قبل إصدار تصحيحات PHP2Shell، مما يعكس نهجاً دفاعياً متعدد الطبقات لحماية البنية التحتية من الثغرات المستجدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "السياق الواسع للتهديد",
+          "paragraphs": [
+            {
+              "text": "تكتسب هذه التطورات أهمية مضاعفة نظراً للانتشار الواسع للغة PHP، التي تُستخدم في تطوير الويب وتشكل نحو 70% من جميع مواقع الإنترنت. تشير تقديرات VirusTotal الأخيرة إلى وجود أكثر من 5.1 مليون مضيف PHP مكشوف على الإنترنت، ومن بينها حوالي 3.8 مليون مضيف لديها على الأقل منفذ واحد مفتوح للهجمات.",
+              "links": []
+            },
+            {
+              "text": "هذا الحجم الهائل من السطح الهجومي يجعل أي ثغرة حرجة في PHP تهديداً عالمياً. مع توثيق استغلال ناجح، يتحول التركيز من مجرد التحديث الوقائي إلى التحقيق في الاختراقات المحتملة. على المؤسسات مراجعة سجلات الوصول وتحليل أي نشاط غير عادي حول تاريخ 21 أكتوبر، خاصة تلك المرتبطة بتسريب الذاكرة أو تنفيذ أوامر shell غير متوقعة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمن تقني",
+        "PHP",
+        "ثغرات أمنية",
+        "RCE",
+        "استغلال ثغرات",
+        "CVE-2026-109618",
+        "CVE-2026-109619"
+      ],
+      "entities": [
+        "PHP",
+        "Perplexity",
+        "Expel",
+        "Amazon Threat Intelligence",
+        "Cloudflare",
+        "Hadrian",
+        "watchTowr",
+        "Previdian",
+        "Patchstack",
+        "Dataminr"
+      ],
+      "article_type": "news",
+      "confidence_note": "الخبر يعتمد على مصادر موثوقة وتأكيدات متقاطعة من باحثين مستقلين وشركات أمنية كبرى، مما يرفع مستوى الثقة في صحة الاستغلال الفعلي."
+    },
+    "en": {
+      "title": "PHP2Shell Flaws Successfully Exploited in the Wild",
+      "description": "Critical PHP2Shell remote code execution vulnerabilities are now successfully exploited in the wild following early disclosures and leaks.",
+      "deck": "Two critical remote code execution vulnerabilities collectively tracked as PHP2Shell have moved past non-functional scanning into confirmed in-the-wild exploitation.",
+      "summary_bullets": [
+        "Two critical RCE vulnerabilities, tracked as CVE-2026-109618 and CVE-2026-109619, are now successfully exploited.",
+        "Perplexity detection and response lead Adel Karimi recorded honeypot evidence against an Apache mod_php installation running PHP 8.4.26.",
+        "Expel threat researcher Marcus Hutchins confirmed the findings as high-quality evidence of real exploitation.",
+        "The PHP security team previously shipped emergency patches for the flaws after details and non-functional proof-of-concept exploits leaked online."
+      ],
+      "sections": [
+        {
+          "heading": "Confirmed In-The-Wild Exploitation",
+          "paragraphs": [
+            {
+              "text": "Two critical remote code execution vulnerabilities, collectively tracked as PHP2Shell and designated as CVE-2026-109618 and CVE-2026-109619, have now been successfully exploited in the wild according to recent researcher findings. The malicious activity was initially caught by Adel Karimi, who serves as the detection and response lead at Perplexity, via honeypots that recorded confirmed remote code execution targeting an Apache mod_php installation running PHP 8.4.26.",
+              "links": [
+                {
+                  "text": "confirmed remote code execution",
+                  "url": "https://www.linkedin.com/posts/malwaretech_confirmed-in-the-wild-exploitation-of-php2shell-share-7519864366863847424-TaMU/"
+                }
+              ]
+            },
+            {
+              "text": "According to details shared by Karimi, the successful exploitation delivered usable memory disclosure rather than just a process crash or suspicious behavior. The response delivered an 800 KiB decoded cookie dump along with a derived function address used in the subsequent execution payload. The client acknowledged the full response while the shell command ran approximately 1.6 milliseconds after the final captured byte of the execution request.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Researcher Validation and Prior Activity",
+          "paragraphs": [
+            {
+              "text": "The technical breakdown and evidence were subsequently reviewed by Expel threat researcher Marcus Hutchins, who has been tracking a continuous stream of reports regarding the PHP2Shell flaws. Hutchins noted that this instance represents the highest quality confirmation of in-the-wild exploitation seen to date against the specified Apache mod_php environment.",
+              "links": [
+                {
+                  "text": "who has been tracking",
+                  "url": "https://x.com/MalwareTechBlog/status/2114077217261334609"
+                }
+              ]
+            },
+            {
+              "text": "Prior to these confirmed episodes, security researchers at Amazon Threat Intelligence had already spotted threat actors targeting the PHP2Shell vulnerabilities four days before security updates were published. Additional cybersecurity firms such as Cloudflare, Hadrian, watchTowr, Previdian, and Patchstack also detected preliminary scanning attempts before public disclosure, though those earlier efforts were flagged as unsuccessful.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Patch Timeline and Leaks",
+          "paragraphs": [
+            {
+              "text": "The PHP security team officially patched the critical PHP2Shell vulnerabilities on Wednesday, October 21. This followed an earlier warning sent to administrators to prepare for the deployment of emergency security updates as soon as they became available. Technical details and proof-of-concept exploits had previously leaked online prior to the official patch release, though developers maintained that those initial variants were non-functional.",
+              "links": []
+            },
+            {
+              "text": "In addition to the PHP2Shell fixes, the PHP security team shared mitigation steps for a separate remote code execution vulnerability tracked as CVE-2026-115560, which currently lacks a direct patch. Administrators have been advised to set session.upload_progress.enabled=0 to block potential attacks involving specific configuration and application code combinations until a permanent update is ready.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Scope and Impact on Ecosystem",
+          "paragraphs": [
+            {
+              "text": "Hypertext Preprocessor (PHP) remains a foundational web development language utilized across a vast portion of internet infrastructure. Recent estimates from VirusTotal indicate that roughly 70% of all websites rely on PHP, with over 5.1 million PHP hosts exposed online and approximately 3.8 million maintaining at least one open port vulnerable to potential attacks.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "PHP",
+        "PHP2Shell",
+        "RCE",
+        "Cybersecurity",
+        "Vulnerabilities",
+        "Apache",
+        "Exploits"
+      ],
+      "entities": [
+        "PHP",
+        "Apache",
+        "Perplexity",
+        "Expel",
+        "Amazon Threat Intelligence",
+        "VirusTotal"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based on BleepingComputer reporting and researcher documentation."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 776,
+      "word_count_en": 500
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "bf12d0254fb716020f31",
+      "title": "PHP2Shell security flaws now sucessfully exploited in the wild",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 776,
+          "word_count_en": 500
+        }
+      ]
+    }
+  ],
+  "slug": "php2shell-security-flaws-now-sucessfully-exploited-in-the-wild",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/php2shell-security-flaws-now-sucessfully-exploited-in-the-wild/hero.webp",
+    "card": "/forum/assets/posts/2026/10/php2shell-security-flaws-now-sucessfully-exploited-in-the-wild/card.webp",
+    "social": "/forum/assets/posts/2026/10/php2shell-security-flaws-now-sucessfully-exploited-in-the-wild/social.jpg",
+    "alt": {
+      "ar": "استغلال ثغرات PHP2Shell الحرجة بنجاح في العالم الحقيقي",
+      "en": "PHP2Shell Flaws Successfully Exploited in the Wild"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/10/26/PHP-headpic.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/php2shell-security-flaws-now-sucessfully-exploited-in-the-wild/inline-01.webp",
+        "width": 1108,
+        "height": 576,
+        "alt": {
+          "ar": "استغلال ثغرات PHP2Shell الحرجة بنجاح في العالم الحقيقي",
+          "en": "Adel Ka PHP2Shell tweet"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Image related to the report from BleepingComputer"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/php2shell-security-flaws-now-sucessfully-exploited-in-the-wild/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/u/1109292/2026/Adel%20Ka%20PHP2Shell%20tweet.png"
+      }
+    ]
+  }
 }
