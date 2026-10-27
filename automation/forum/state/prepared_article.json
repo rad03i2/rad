@@ -1,5 +1,302 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-27T18:52:28+00:00",
-  "last_published_story_id": "81bde9d52bbfd755ca0c"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-27T18:59:26+00:00",
+  "target_publish_at": "2026-10-27T22:12:27.782318+03:00",
+  "story": {
+    "title": "Build specialized multimodal models with LFM3",
+    "url": "https://huggingface.co/blog/LiquidAI/lfm3",
+    "domain": "huggingface.co",
+    "summary": "",
+    "published_at": "2026-10-27T17:16:52+00:00",
+    "discovered_at": "2026-10-27T17:32:19+00:00",
+    "source": {
+      "name": "Hugging Face Blog",
+      "feed": "https://huggingface.co/blog/feed.xml",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 26,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 65,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "1c5b51464767c2ad2949",
+    "trend": {
+      "score": 108.27,
+      "age_hours": 1.7,
+      "corroboration_count": 0,
+      "entity_momentum": 13.93,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://huggingface.co/blog/LiquidAI/lfm3",
+      "name": "Hugging Face Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Build specialized multimodal models with LFM3",
+      "title": "Build specialized multimodal models with LFM3",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "Liquid AI تكشف عن LFM3: نماذج متعددة الوسائط مخصصة للأجهزة الطرفية",
+      "description": "تطلق Liquid AI جيل LFM3 الجديد من النماذج الأساسية، مدمجاً النص والصوت والرؤية في بنية موحدة بحجم 2 مليار معلمة، مما يتيح تخصيص الذكاء الاصطناعي على جهاز واحد.",
+      "deck": "تقدم Liquid AI عائلة LFM3 التي تجمع بين النصوص والصوت والرؤية في بنية واحدة، مصممة للتشغيل الفوري على الأجهزة الطرفية مع كفاءة عالية في المعالجة.",
+      "summary_bullets": [
+        "بنية ثلاثية الهجينة (Tri-hybrid) تجمع بين الالتفاف والنوافذ المنزلقة والانتباه العالمي لتحسين الأداء.",
+        "تقليل حجم المعلمات بنسبة 35% مقارنة بالجيل السابق مع الحفاظ على دقة أعلى في المهام الوكيلة.",
+        "دعم مدخلات الفيديو والصوت مع زمن استجابة منخفض يصل إلى 50 مللي ثانية للبدء بالنطق.",
+        "إمكانية ضبط النموذج (Fine-tuning) على جهاز واحد فقط (GPU) لتخصيصه حسب البيانات المحلية.",
+        "نافذة سياق ممتدة تصل إلى 256K توكن لدعم الوكلاء الذكيين في التطبيقات الطويلة."
+      ],
+      "sections": [
+        {
+          "heading": "توحيد البنية التحتية للذكاء المتعدد الوسائط",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Liquid AI عن إطلاق الجيل الجديد من نماذجها الأساسية، المعروفة باسم LFM3، في خطوة تهدف إلى توحيد معالجة الوسائط المختلفة تحت مظلة تقنية واحدة. بدلاً من الاعتماد على نماذج منفصلة لكل مهمة، تتيح هذه العائلة الجديدة للمستخدمين اختيار النموذج المناسب لنوع البيانات (نص، رؤية، صوت، أو شامل) وضبطه على بياناتهم الخاصة. تأتي هذه النماذج بحجم موحّد يقارب 2 مليار معلمة، مما يجعلها خفيفة الوزن وقابلة للتشغيل على أجهزة الحاسوب الشخصية والأجهزة الطرفية دون الحاجة إلى بنية تحتية سحابية ضخمة. يمكن الاطلاع على التفاصيل التقنية الكاملة عبر مدونة Liquid AI الرسمية على منصة Hugging Face. ويمكن الرجوع إلى Hugging Face Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Liquid AI",
+                  "url": "https://huggingface.co/LiquidAI"
+                },
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/LiquidAI/lfm3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "بنية ثلاثية الهجينة لكفاءة أعلى",
+          "paragraphs": [
+            {
+              "text": "يعتمد نموذج LFM3-1.7B-Base على بنية معمارية جديدة تسمى \"المزيج ثلاثي الهجينة\" (Tri-hybrid layer mix). تتكون هذه البنية من 13 طبقة من الالتفافات القصيرة الموجهة، و5 طبقات من الانتباه بنافذة منزلقة (Sliding-Window Attention) بحجم 256 توكن، و6 طبقات من الانتباه العالمي. هذه التركيبة تهدف إلى تحقيق توازن بين السرعة المحلية والدقة في فهم السياق الطويل. كما تتضمن البنية بوابات سيجمويد (Sigmoid gates) لكل رأس انتباه، مما يسمح بإيقاف الرؤوس غير الضرورية لتقليل استهلاك الطاقة وتحسين عملية الكم (Quantization).",
+              "links": []
+            },
+            {
+              "text": "أظهرت الاختبارات أن هذه البنية الجديدة تتفوق على الجيل السابق LFM2.5-2.6B رغم استخدام عدد أقل من المعلمات بنسبة 35%. في سياق المعالجة الطويلة، يحقق النموذج سرعة أعلى بنسبة 25% عند التعامل مع 8 آلاف توكن مقارنة بالنماذج المماثلة. تم تدريب النموذج الأساسي على 22 تريليون توكن، مع مرحلة تدريب وسيطة على 3.5 تريليون توكن إضافية تركز على مسارات الوكلاء (Agentic traces) واستدعاء الأدوات، مما وسع نافذة السياق إلى 256 ألف توكن.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معالجة الرؤية والفيديو بكفاءة محسنة",
+          "paragraphs": [
+            {
+              "text": "يتميز نموذج LFM3-VL-2B بدعمه لأول مرة مدخلات الفيديو في عائلة LFM، مما يفتح آفاقاً جديدة للتطبيقات الروبوتية وفهم المشاهد الديناميكية. يستخدم النموذج مشفراً بصرياً داخلياً (In-house Vision Encoder) يجمع بين الالتفاف والانتباه، ويستهلك حسابات أقل بنسبة 3 مرات مقارنة بمشفّر SigLIP2 المستخدم في النماذج السابقة. على الرغم من أن حجمه 1.9 مليار معلمة فقط، إلا أنه يحسن متوسط الأداء في 62 معياراً بصرياً من 57.6 إلى 71.4 نقطة، متجاوزاً نماذج أكبر حجماً مثل Gemma 4 12B.",
+              "links": []
+            },
+            {
+              "text": "يعمل المشفر البصري على دمج أزواج الإطارات المأخوذة من الفيديو في شريحة زمنية واحدة، مما يقلل طول التسلسل الزمني للنصف. هذا التحسين يسمح للنموذج بالاستدلال خطوة بخطوة قبل تقديم الإجابة، مما يجعله أساساً قوياً لتطبيقات الروبوتات التي تتطلب فهم العلاقات المكانية بين الكائنات في الوقت الفعلي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تقنيات صوتية سريعة ودقيقة",
+          "paragraphs": [
+            {
+              "text": "في مجال الصوت، يقدم LFM3-Audio-2B مشفراً صوتياً جديداً يعتمد على الانتباه بنافذة منزلقة والالتفافات القصيرة، وهو مصمم ليكون سببياً بالكامل (Fully Causal). هذا التصميم يتيح للنموذج البدء في معالجة الكلام أثناء نطق المستخدم، مما يخفض زمن الاستجابة الأولي (Time to First Token) إلى 50 مللي ثانية فقط. كما تم تطوير مشفر صوتي جديد باسم LiquidCodec، الذي يحول الرموز المولدة إلى كلام بسرعة تصل إلى 87 ضعفاً من الوقت الفعلي على معالج Apple M4 Max، مع دعم الترميز البثي (Streaming decoding).",
+              "links": []
+            },
+            {
+              "text": "يحسن النموذج الصوتي جودة النطق بشكل ملحوظ، حيث سجل درجة 3.83 في معيار UTMOSv2 مقارنة بـ 3.22 في الجيل السابق. يدعم النموذج 18 لغة للترجمة والفهم، ويمكنه تحويل الطلبات المنطوقة إلى استدعاءات أدوات (Tool Calls)، مما يجعله مناسباً للتطبيقات التفاعلية التي تتطلب استجابة صوتية فورية ودقيقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نموذج شامل (Omni) لتكامل الحواس",
+          "paragraphs": [
+            {
+              "text": "أطلقت Liquid AI نموذج LFM3-Omni-2B، وهو أول نموذج شامل في العائلة يدعم مدخلات النص والرؤية والصوت معاً، ويخرج النص والكلام. يعمل هذا النموذج كبديل موحد لنماذج التعرف على الكلام (ASR) ونماذج اللغة الكبيرة (LLM) ونماذج توليد الكلام (TTS) المنفصلة. يمكن للنموذج الإجابة على أسئلة منطوقة حول صور، أو مشاهدة والاستماع إلى فيديو في نفس الوقت، وتحويل ما يراه ويسمعه إلى إجراءات عملية عبر استدعاء الأدوات.",
+              "links": []
+            },
+            {
+              "text": "في اختبارات فهم الفيديو الصوتي، تفوق LFM3-Omni-2B نماذج أكبر حجماً تصل إلى 10.7 مليار معلمة، مثل Qwen2.5-Omni-7B، في مجموعة Daily-Omni. يعتمد النموذج على مشفر LiquidCodec لنقل الردود الصوتية بشكل فوري أثناء توليدها، مما يوفر تجربة تفاعلية سلسة تشبه المحادثة الطبيعية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التخصيص والتشغيل على الأجهزة الطرفية",
+          "paragraphs": [
+            {
+              "text": "صُممت جميع نماذج LFM3 لتكون قابلة للتخصيص (Fine-tuning) على بطاقة رسومية واحدة (GPU)، مما يسهل على المطورين تكييف النماذج مع مصطلحاتهم الخاصة وبياناتهم الداخلية. النموذج النصي LFM3-1.7B يتناسب في حجمه مع 1 جيجابايت عند دقة 4-bit، مما يسمح بتشغيل الوكلاء الذكيين (Agents) مباشرة على الجهاز دون اتصال بالإنترنت. تم تدريب النموذج للعمل مع أطر عمل وكلاء مثل Hermes Agent وPi وOpenClaw.",
+              "links": []
+            },
+            {
+              "text": "في المهام الوكيلة، حقق LFM3-1.7B نتائج متقدمة، حيث سجل 38.42 نقطة في معيار WebArena-Verified مقارنة بـ 3.02 للنموذج السابق. كما تفوق على Qwen3.5-9B في المهام الطويلة داخل المتصفحات وتطبيقات الأعمال. توفر هذه الكفاءة والنقطة السعرية/الأداءية فرصة للشركات لبناء أنظمة ذكاء اصطناعي مخصصة تعمل محلياً مع حماية للبيانات وسرعة استجابة عالية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Liquid AI",
+        "LFM3",
+        "الذكاء الاصطناعي",
+        "نماذج متعددة الوسائط",
+        "الحوسبة الطرفية",
+        "الوكلاء الذكيون",
+        "معالجة الفيديو",
+        "معالجة الصوت"
+      ],
+      "entities": [
+        "Liquid AI",
+        "LFM3",
+        "Hugging Face",
+        "Qwen",
+        "Gemma",
+        "Apple M4 Max",
+        "Qualcomm Hexagon NPU"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من المدونة الرسمية المنشورة على Hugging Face بتاريخ 2026-10-27. تم التحقق من أرقام الأداء والمواصفات التقنية المذكورة في النص المصدر."
+    },
+    "en": {
+      "title": "Liquid AI Unveils LFM3 Multimodal Model Family",
+      "description": "Liquid AI introduces LFM3, a new generation of multimodal foundation models spanning text, vision, audio, omni, and decision capabilities on a 2B backbone.",
+      "deck": "Liquid AI has announced the launch of LFM3, a new generation of Liquid Foundation Models designed to bring text, vision, audio, omni, and decision models onto a single shared backbone within the 2B parameter range.",
+      "summary_bullets": [
+        "LFM3 features a tri-hybrid architecture designed for enhanced capability per parameter and long-context performance.",
+        "The 2B-class model lineup includes dedicated variants for text, vision, audio, omni, and decision tasks, all branching from LFM3-1.7B-Base.",
+        "The text model fits in approximately 1 GB at 4-bit precision and supports a 256K context window for on-device agent applications.",
+        "New in-house vision and audio encoders reduce computational overhead while matching or exceeding previous benchmark figures."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to LFM3",
+          "paragraphs": [
+            {
+              "text": "Liquid AI has officially launched its LFM3 series, engineered to serve as a versatile foundation for specialized intelligence applications. Detailed on the Hugging Face Blog, the new generation unifies text, vision, audio, omni, and decision models onto a shared backbone. This design allows developers to select a model tailored to a specific modality, fine-tune it using local data on a single GPU, and deploy it efficiently where applications run.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/LiquidAI/lfm3"
+                }
+              ]
+            },
+            {
+              "text": "Compared to the previous LFM2 family, the LFM3 architecture brings four major improvements. These include higher capability per parameter, a unified backbone for six 2B-class models, edge optimization with small memory footprints, and single-GPU fine-tuning capabilities. Further details about the architecture and development can be found directly via LiquidAI.",
+              "links": [
+                {
+                  "text": "LiquidAI",
+                  "url": "https://huggingface.co/LiquidAI"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Tri-Hybrid Architecture and Long-Context Performance",
+          "paragraphs": [
+            {
+              "text": "The foundation of the lineup, LFM3-1.7B-Base, incorporates a 24-layer tri-hybrid mix consisting of 13 gated short convolutions, 5 sliding-window attention layers with a 256-token window, and 6 global attention layers. Liquid AI utilized hardware-in-the-loop architecture searches covering 14 device and backend combinations—ranging from mobile phones and Raspberry Pi 5 units to laptops, cloud CPUs, GPUs, and Qualcomm Hexagon NPUs—to optimize the model for agentic use cases.",
+              "links": []
+            },
+            {
+              "text": "In addition to its layer mix, the base model features head-wise gated attention with sigmoid scaling to suppress activation outliers and partial RoPE application in global attention layers. Pre-trained on 22 trillion tokens, the model concludes with a mid-training stage using curated data and agentic traces, which successfully extends its context window to 256K tokens.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Specialized Models: Text, Vision, and Audio",
+          "paragraphs": [
+            {
+              "text": "The LFM3-1.7B model is built for local agents, tool calling, structured outputs, and domain-specific fine-tuning. It outperforms its predecessor with 35% fewer parameters and has been post-trained for execution within agentic frameworks. Meanwhile, the LFM3-VL-2B vision model introduces native video input support, step-by-step reasoning, and object localization capabilities suited for robotics and on-device visual understanding.",
+              "links": []
+            },
+            {
+              "text": "For auditory applications, the LFM3-Audio-2B model handles voice chat, speech recognition, synthesis, and translation across 18 languages on edge hardware. Powered by a new in-house audio encoder and the LiquidCodec speech tokenizer, the audio model achieves low time-to-first-token latencies and supports real-time streaming capabilities.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Unified Omni Capabilities",
+          "paragraphs": [
+            {
+              "text": "Rounding out the release is LFM3-Omni-2B, Liquid AI's first omni model designed to see, listen, and talk back within a single on-device architecture. Replacing separate automatic speech recognition, vision-language, large language, and text-to-speech models, it can process simultaneous audio and video inputs while performing tasks such as visual question answering and tool invocation.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Liquid AI",
+        "LFM3",
+        "Multimodal Models",
+        "Artificial Intelligence",
+        "Edge AI",
+        "Hugging Face",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Liquid AI",
+        "Hugging Face"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly derived from the provided source text covering the launch and architectural details of Liquid AI's LFM3 models on Hugging Face."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 844,
+      "word_count_en": 513
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "1c5b51464767c2ad2949",
+      "title": "Build specialized multimodal models with LFM3",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 844,
+          "word_count_en": 513
+        }
+      ]
+    }
+  ],
+  "slug": "build-specialized-multimodal-models-with-lfm3",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/build-specialized-multimodal-models-with-lfm3/hero.webp",
+    "card": "/forum/assets/posts/2026/10/build-specialized-multimodal-models-with-lfm3/card.webp",
+    "social": "/forum/assets/posts/2026/10/build-specialized-multimodal-models-with-lfm3/social.jpg",
+    "alt": {
+      "ar": "Liquid AI تكشف عن LFM3: نماذج متعددة الوسائط مخصصة للأجهزة الطرفية",
+      "en": "Liquid AI Unveils LFM3 Multimodal Model Family"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/644249b08443bce4c9890a0f/wEKXxH6qGa7vmHjn5KA-W.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
