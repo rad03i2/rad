@@ -1,5 +1,447 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-27T15:21:28+00:00",
-  "last_published_story_id": "d7e464add4da97a4e759"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-27T15:29:41+00:00",
+  "target_publish_at": "2026-10-27T18:41:27.779683+03:00",
+  "story": {
+    "title": "Introducing the Cloudflare PHP Capture the Flag challenge",
+    "url": "https://blog.cloudflare.com/php-ctf",
+    "domain": "blog.cloudflare.com",
+    "summary": "We are launching a PHP Capture the Flag challenge integrated with our Bug Bounty program to test our WAF protections. Security researchers are invited to bypass our defenses and capture the flag to help make the Internet safer.",
+    "published_at": "2026-10-27T13:00:00+00:00",
+    "discovered_at": "2026-10-27T13:08:01+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "web",
+    "category_label": "الويب",
+    "score": 61,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "2e7d78b7cb862cf6267f",
+    "trend": {
+      "score": 116.04,
+      "age_hours": 2.46,
+      "corroboration_count": 0,
+      "entity_momentum": 12.0,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/php-ctf",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Introducing the Cloudflare PHP Capture the Flag challenge",
+      "title": "Introducing the Cloudflare PHP Capture the Flag challenge | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "كلودفلير تطلق مسابقة التقاط العلم لاختبار حماية جدار الحماية",
+      "description": "أطلقت كلودفلير مسابقة \"التقاط العلم\" لبيئة PHP عبر برنامج المكافآت لاختبار قواعد حماية جدار حماية تطبيقات الويب ودعوة الباحثين لتجاوز الدفاعات.",
+      "deck": "أعلنت منصة الحماية والسحابة عن تحدٍ تقني جديد يستهدف اختبار كفاءة قواعد حماية تطبيقات الويب ضد ثغرات لغة البرمجة الشهيرة.",
+      "summary_bullets": [
+        "إطلاق مسابقة التقاط العلم لبيئة PHP مدمجة مع برنامج مكافآت الأخطاء.",
+        "التركيز على ثغرات محددة ترتبط ببيئات التشغيل الشهيرة عبر الحاويات.",
+        "شروط صارمة للمشاركة تتضمن تقديم تقارير تفصيلية والالتزام بالقواعد.",
+        "التأكيد على أن أنظمة الحماية لا تغني عن التحديثات البرمجية الفورية."
+      ],
+      "sections": [
+        {
+          "heading": "خلفية التحدي والأحداث الأمنية الأخيرة",
+          "paragraphs": [
+            {
+              "text": "شهدت أسبوعيات الأمن السيبراني مؤخراً تطورات بالغة الأهمية تركت بصماتها على تاريخ أمن الإنترنت، بدأت بتسجيل حادثة مساس طالت عددًا من شهادات الوساطة وتحديداً عندما تبين أن eight eMudhra intermediate certificates were compromised مما أثار احتمالية ظهور شهادات مزورة قد تُستغل لانتحال صفة الخوادم الموثوقة على شبكة الإنترنت، وتلى ذلك ظهور مشكلات تقنية جسيمة أُطلق عليها اصطلاحاً php2shell والتي مثلت ثغرات بالغة الخطورة ضمن لغة البرمجة PHP التي تعتمد عليها نسبة هائلة من تطبيقات الويب العالمية في تشغيل بنيتها التحتية والبرمجية.",
+              "links": [
+                {
+                  "text": "eight eMudhra intermediate certificates were compromised",
+                  "url": "https://blog.cloudflare.com/emudhra-certificate-compromise/"
+                },
+                {
+                  "text": "php2shell",
+                  "url": "https://blog.cloudflare.com/php-vulnerabilities-waf-protection/"
+                }
+              ]
+            },
+            {
+              "text": "في ظل هذه المعطيات المتسارعة، تحركت الفرق الهندسية والأمنية للعمل على مدار الساعة بهدف تأمين العملاء والمساهمة في تعزيز سلامة الإنترنت بشكل عام، حيث قامت بإصدار تحديثات برمجية للعملاء وتطبيق multiple mitigations إلى جانب تحديث جدار حماية تطبيقات الويب بقواعد جديدة تمنع المهاجمين من استغلال الثغرات، فضلاً عن إدخال ميزة مبتكرة تُعرف باسم full transaction detection، مع إتاحة هذه القدرات الأمنية المتقدمة لجميع المشتركين بمختلف الخطط بما فيها الخطط المجانية دون استثناء.",
+              "links": [
+                {
+                  "text": "multiple mitigations",
+                  "url": "https://blog.cloudflare.com/emudhra-certificate-compromise/#our-response"
+                },
+                {
+                  "text": "full transaction detection",
+                  "url": "https://blog.cloudflare.com/full-transaction-waf/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إطلاق مسابقة التقاط العلم عبر برنامج مكافآت الأخطاء",
+          "paragraphs": [
+            {
+              "text": "إن حماية الأنظمة الرقمية من الثغرات البرمجية والتهديدات المستجدة تمثل عملية مستمرة لا تنتهي بحدث واحد، خصوصاً مع الانتشار الواسع لتقنيات الذكاء الاصطناعي التي تمنح الأطراف الخبيثة القدرة على اكتشاف متجهات هجومية جديدة بسرعة وكفاءة غير مسبوقة، ولأجل ذلك أصبح جمع البيانات الواقعية لاختبار الفرضيات وتحسين خطوط الدفاع أمراً جوهرياً لا غنى عنه لضمان متانة الأنظمة وتكاملها في وجه أي محاولات اختراق محتملة.",
+              "links": []
+            },
+            {
+              "text": "بناءً على ذلك، أعلنت المنصة عن تدشين Cloudflare PHP Capture the Field challenge والمتاحة من خلال Bug Bounty program بهدف وضع تثبيت PHP مصمم عمداً ليكون ضعيفاً خلف جدار الحماية، ودعوة الباحثين الأمنيين على منصة HackerOne لمحاولة تجاوز تلك الدفاعات واكتشاف العلم الخفي، وذلك في خطوة تهدف إلى الاستفادة من الخبرات الجماعية لمجتمع أمن المعلومات في تحسين مرونة البنية التحتية وتوفير بيئة تصفح أكثر أمناً للمستخدمين.",
+              "links": [
+                {
+                  "text": "Bug Bounty program",
+                  "url": "https://hackerone.com/cloudflare"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تفاصيل البيئة التقنية ونطاق الاختبار",
+          "paragraphs": [
+            {
+              "text": "يركز التحدي بشكل مباشر على ثغرتين رئيسيتين هما CVE-2026-109618 و CVE-2026-109619 اللتان تمثلان الأساس الثغري وراء ظاهرة php2shell، حيث تعمل البيئة المستهدفة على نسخة قياسية تتمثل في PHP 8.5.11 مع ملحقاتها القياسية، مدمجة مع خادم أباتشي الثاني عبر وحدة mod_php وملف رئيسي فارغ داخل حاوية سحابية تُعرف باسم Cloudflare Container مع تفعيل قواعد الحماية الافتراضية المخصصة لهذه الثغرات، علماً بأن البيئة المعزولة تضم ملفاً سرياً يحمل اسم /flag ويتم إرجاع البيئة إلى حالتها الأصلية بما في ذلك ملف العلم كل بضع دقائق.",
+              "links": [
+                {
+                  "text": "CVE-2026-109618",
+                  "url": "https://www.cve.org/CVERecord?id=CVE-2026-109618"
+                },
+                {
+                  "text": "CVE-2026-109619",
+                  "url": "https://www.cve.org/CVERecord?id=CVE-2026-109618"
+                },
+                {
+                  "text": "PHP 8.5.11",
+                  "url": "https://www.php.net/releases/8_5_11.php"
+                },
+                {
+                  "text": "Cloudflare Container",
+                  "url": "https://developers.cloudflare.com/containers/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "شروط وتوجيهات المشاركة وتقديم التقارير",
+          "paragraphs": [
+            {
+              "text": "تخضع كافة جوانب هذا التحدي لشروط برنامج مكافآت الأخطاء وقواعد المنصة ذات الصلة، ويُشترط على المشاركين إنشاء حساب على منصة HackerOne وقراءة الشروط والموافقة عليها مسبقاً، ثم إثبات القدرة على تنفيذ أكواد PHP أو الأوامر البرمجية داخل البيئة المعزولة عبر طلب POST مخول، واستخدام ذلك التنفيذ عن بُعد لاسترجاع محتويات ملف العلم والتحقق منها بنجاح عبر واجهة المستخدم الخاصة بالتحدي، مع ضرورة إرسال تقرير خاص مفصل يتضمن المسار ونقاط النهاية والحمولات المستخدمة.",
+              "links": []
+            },
+            {
+              "text": "تؤكد التوجيهات أن التحقق عبر واجهة المستخدم لا يعد بحد ذاته تقريراً مقدماً أو يمنح أولوية إبلاغ، كما تُستبعد حالات الإفصاح عن الملفات دون تنفيذ الأوامر، أو محاولات الاستغلال المحلية البحتة، أو إعادة اكتشاف الثغرات المعروفة مسبقاً، ويُشترط للحصول على الجوائز تقديم طريقة تجاوز مميزة ومختلفة جوهرياً، مع الالتزام التام بالنطاق المخصص لاختبار نقاط النهاية المحمية عبر مسار php/* وباستخدام طريقة POST حصراً لضمان سلامة البنية التحتية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوصيات الأمنية وآفاق التعاون المستقبلي",
+          "paragraphs": [
+            {
+              "text": "تذكرنا الأحداث الأخيرة بأن بناء إنترنت أفضل يتطلب عملاً شاقاً وم مشتركاً يجمع الباحثين والمطورين وفرق العمل عبر مختلف قطاعات الصناعة التقنية لمواجهة التهديدات المتصاعدة، كما تشدد المنصة على أن جدار حماية تطبيقات الويب يمثل خط دفاع مهم ولكنه لا يُغني أبداً عن ضرورة ترقيع البرمجيات الضعيفة وإصلاح العيوب الكامنة في شيفراتها المصدرية.",
+              "links": []
+            },
+            {
+              "text": "ختاماً، تأمل الجهة المنظمة أن يمثل هذا التحدي فرصة مفيدة لكل المهتمين بأمن المعلومات للمشاركة الفعالة في تحصين الفضاء الرقمي، حيث يمكن للمهتمين زيارة صفحة التحدي المخصصة للاطلاع على التفاصيل الكاملة والمساهمة في جهود اختبار الحماية واكتشاف الثغرات المحتملة لتعزيز أمان الويب العالمي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "كلودفلير",
+        "ثغرات أمنية",
+        "برنامج مكافآت الأخطاء",
+        "أمن الويب",
+        "تحدي التقاط العلم",
+        "جدار حماية"
+      ],
+      "entities": [
+        "Cloudflare",
+        "HackerOne",
+        "PHP",
+        "Apache"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر بناءً على مدونة كلودفلير الرسمية مع الالتزام الدقيق بالنطاق الزمني والروابط المسموحة والاشتراطات التقنية للمسابقة."
+    },
+    "en": {
+      "title": "Cloudflare Launches PHP Capture the Flag Challenge on HackerOne",
+      "description": "Cloudflare has introduced a PHP Capture the Flag challenge integrated with its Bug Bounty program to test WAF protections against recent vulnerabilities.",
+      "deck": "Cloudflare has launched a limited-time PHP Capture the Flag challenge integrated into its Bug Bounty program to test and strengthen its web application firewall defenses against serious vulnerabilities.",
+      "summary_bullets": [
+        "Cloudflare introduces a PHP Capture the Flag challenge integrated with its Bug Bounty program on HackerOne.",
+        "The challenge focuses on testing WAF protections against CVE-2026-109618 and CVE-2026-109619, the two PHP vulnerabilities behind php2shell.",
+        "Participants are tasked with bypassing WAF protections, executing code within a sandboxed PHP installation, and recovering the contents of a local flag file.",
+        "Eligible submissions require a materially distinct bypass method, remote code execution, successful UI verification, and a private HackerOne report."
+      ],
+      "sections": [
+        {
+          "heading": "Background and Context",
+          "paragraphs": [
+            {
+              "text": "Following a demanding period for internet security that involved significant vulnerabilities and runtime disclosures, Cloudflare worked continuously to protect its customers and the broader web ecosystem. The events included a situation where eight eMudhra intermediate certificates were compromised, which created the potential for forged certificates to impersonate servers. Shortly afterward, security researchers and teams addressed critical flaws tied to php2shell, involving severe vulnerabilities in the PHP runtime utilized by a major portion of the web.",
+              "links": [
+                {
+                  "text": "eight eMudhra intermediate certificates were compromised",
+                  "url": "https://blog.cloudflare.com/emudhra-certificate-compromise/"
+                },
+                {
+                  "text": "php2shell",
+                  "url": "https://blog.cloudflare.com/php-vulnerabilities-waf-protection/"
+                }
+              ]
+            },
+            {
+              "text": "In response to these developments, Cloudflare deployed client updates alongside multiple mitigations, updated its web application firewall with new rules to block exploitation attempts, and rolled out a new feature known as full transaction detection. These capabilities were made broadly available across all plans, including free tiers, reinforcing the company's commitment to baseline web security.",
+              "links": [
+                {
+                  "text": "multiple mitigations",
+                  "url": "https://blog.cloudflare.com/emudhra-certificate-compromise/#our-response"
+                },
+                {
+                  "text": "full transaction detection",
+                  "url": "https://blog.cloudflare.com/full-transaction-waf/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Introducing the CTF Challenge",
+          "paragraphs": [
+            {
+              "text": "Because the rapid adoption of artificial intelligence allows attackers to discover new attack vectors with unprecedented speed and efficiency, collecting real-world data to test defense assumptions remains crucial. To address this need, the organization launched the Cloudflare PHP Capture the Flag challenge hosted through its Bug Bounty program. Security researchers are invited to inspect a deliberately vulnerable installation placed behind the company's web application firewall defenses.",
+              "links": [
+                {
+                  "text": "Cloudflare PHP Capture the Flag challenge",
+                  "url": "https://php-rce.cloudflare.app/"
+                },
+                {
+                  "text": "Bug Bounty program",
+                  "url": "https://hackerone.com/cloudflare"
+                }
+              ]
+            },
+            {
+              "text": "The operational parameters of the challenge keep the scope straightforward by focusing directly on CVE-2026-109618 and CVE-2026-109619, which are the two underlying flaws associated with php2shell. The target environment runs stock PHP 8.5.11 equipped with standard PHP extensions, Apache 2 via mod_php, and an empty index.php file inside a sandboxed Cloudflare Container, guarded by default WAF rules. A file designated as /flag resides inside the sandbox environment, and the entire sandbox along with the flag file is reset every few minutes.",
+              "links": [
+                {
+                  "text": "CVE-2026-109618",
+                  "url": "https://www.cve.org/CVERecord?id=CVE-2026-109618"
+                },
+                {
+                  "text": "CVE-2026-109619",
+                  "url": "https://www.cve.org/CVERecord?id=CVE-2026-109619"
+                },
+                {
+                  "text": "PHP 8.5.11",
+                  "url": "https://www.php.net/releases/8_5_11.php"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Mission Objectives and Rules",
+          "paragraphs": [
+            {
+              "text": "Participants accepting the mission are tasked with bypassing the web application firewall protections, exploiting the PHP sandbox, and recovering the contents of the /flag file using their own research tools. Detailed environment specifications, scope parameters, and the flag verification form are available directly on the challenge page. All testing must target the authorized challenge hostname endpoints using the POST method, while out-of-scope areas include direct infrastructure access, upstream PHP projects, and unrelated third-party systems.",
+              "links": [
+                {
+                  "text": "challenge page",
+                  "url": "https://php-rce.cloudflare.app/"
+                }
+              ]
+            },
+            {
+              "text": "To claim a bounty for an eligible bypass, participants must have a HackerOne account, agree to the bounty terms, demonstrate attacker-controlled code or command execution through an authorized POST request, and recover the flag contents. Successful recovery must be validated through the user interface promptly before a sandbox reset occurs, followed by submitting a private report containing the exploit chain and relevant metadata.",
+              "links": [
+                {
+                  "text": "HackerOne",
+                  "url": "https://hackerone.com/cloudflare"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Submission Guidelines",
+          "paragraphs": [
+            {
+              "text": "Submissions must include comprehensive details such as the endpoint, complete payload, request sequence, headers, encoding, and body bytes. Researchers must also provide raw request or response captures or a readable proof of concept capable of reproducing the full chain, alongside an explanation of the WAF bypass and execution method. Furthermore, participants need to supply the attempt ID, successful verification results, UTC timestamps, and a clear description of what makes their method materially distinct.",
+              "links": []
+            },
+            {
+              "text": "Cloudflare notes that UI verification alone does not substitute for a HackerOne report or establish reporting priority. Standalone file disclosure without remote code execution, local-only exploits, rediscovery of known PHP vulnerabilities, or partial chains without full objective completion are ineligible for awards. Duplicate rules apply strictly, meaning only the first complete and reproducible report for a distinct method is considered for bounties.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Industry Implications",
+          "paragraphs": [
+            {
+              "text": "While response blocking and security layers help prevent exposed data from reaching unauthorized parties, the company emphasizes that mitigations do not replace the necessity of patching vulnerable software at the origin. Administrators running PHP environments are encouraged to monitor the latest PHP security advisories and apply relevant software updates promptly. The limited-time competition remains open until removed from the platform, and interested researchers can visit the initiative to participate.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "PHP",
+        "Capture the Flag",
+        "Bug Bounty",
+        "HackerOne",
+        "Cybersecurity",
+        "WAF",
+        "Vulnerabilities"
+      ],
+      "entities": [
+        "Cloudflare",
+        "HackerOne",
+        "PHP",
+        "Apache"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based entirely on the provided Cloudflare official blog post text."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 376,
+      "word_count_en": 508
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 688,
+      "word_count_en": 736
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "80f1268cc18d15dd9e47",
+      "title": "[Hands-On] Comfort, Convenience, and More: A Day With Galaxy Buds On",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "2e7d78b7cb862cf6267f",
+      "title": "Introducing the Cloudflare PHP Capture the Flag challenge",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 376,
+          "word_count_en": 508
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 688,
+          "word_count_en": 736
+        }
+      ]
+    }
+  ],
+  "slug": "introducing-the-cloudflare-php-capture-the-flag-challenge",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/introducing-the-cloudflare-php-capture-the-flag-challenge/hero.webp",
+    "card": "/forum/assets/posts/2026/10/introducing-the-cloudflare-php-capture-the-flag-challenge/card.webp",
+    "social": "/forum/assets/posts/2026/10/introducing-the-cloudflare-php-capture-the-flag-challenge/social.jpg",
+    "alt": {
+      "ar": "كلودفلير تطلق مسابقة التقاط العلم لاختبار حماية جدار الحماية",
+      "en": "Cloudflare Launches PHP Capture the Flag Challenge on HackerOne"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M5YGNS8F8NYE3V5QERKYNG79.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-the-cloudflare-php-capture-the-flag-challenge/inline-01.webp",
+        "width": 1200,
+        "height": 630,
+        "alt": {
+          "ar": "كلودفلير تطلق مسابقة التقاط العلم لاختبار حماية جدار الحماية",
+          "en": "Introducing the Cloudflare PHP Capture the Flag challenge"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/php-ctf",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M5YGNQT67RHHAB1MHRC11SME.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/introducing-the-cloudflare-php-capture-the-flag-challenge/inline-02.webp",
+        "width": 1400,
+        "height": 469,
+        "alt": {
+          "ar": "كلودفلير تطلق مسابقة التقاط العلم لاختبار حماية جدار الحماية",
+          "en": "Cloudflare Launches PHP Capture the Flag Challenge on HackerOne"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Diagram of sending the exploit payload, capturing and verifying the flag."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/php-ctf",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M5YGNP9QEXR0RW14AZ0NCBGQ.png&w=1430&h=480&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
