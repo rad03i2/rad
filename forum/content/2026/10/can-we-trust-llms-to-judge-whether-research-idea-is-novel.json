@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "1d6c5c59e46e52b936cb",
+  "slug": "can-we-trust-llms-to-judge-whether-research-idea-is-novel",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/can-we-trust-llms-to-judge-whether-research-idea-is-novel/",
+    "en": "/forum/en/ai/can-we-trust-llms-to-judge-whether-research-idea-is-novel/"
+  },
+  "locales": {
+    "ar": {
+      "title": "دراسة Ai2 تكشف عدم موثوقية نماذج الذكاء الاصطناعي في تقييم حداثة الأفكار البحثية",
+      "description": "أطلقت Ai2 معياراً جديداً يوضح أن تغييرات طفيفة في التعليمات البرمجية قد تقلب حكم نماذج اللغة الكبيرة على حداثة الأفكار العلمية بنسبة تتجاوز 50 نقطة مئوية.",
+      "deck": "تُظهر نتائج جديدة من معهد Allen Institute for AI أن الاعتماد على نماذج الذكاء الاصطناعي كقضاة لتمييز الأفكار البحثية الجديدة عن القديمة يواجه تحديات منهجية كبيرة.",
+      "summaryBullets": [
+        "أطلقت Ai2 دراسة ومجموعة بيانات جديدة تقيس قدرة نماذج اللغة الكبيرة على تقييم حداثة الأفكار العلمية بدقة.",
+        "كشفت التجارب أن تغيير صياغة بسيطة في الأوامر البرمجية قد يغيّر دقة النموذج في التمييز بين الأفكار بنسبة تفوق 50 نقطة مئوية.",
+        "أدى استخدام أنظمة مخصصة لتقييم الحداثة إلى نتائج أسوأ من الاعتماد على نموذج Claude Opus 4.6 مع أوامر بسيطة.",
+        "اعتمد الباحثون على مراجعات مؤتمر ICLR 2026 لبناء مجموعات بيانات موثوقة للأفكار البشرية والاصطناعية."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق معيار جديد لتقييم الحداثة العلمية",
+          "paragraphs": [
+            {
+              "text": "أعلن معهد Allen Institute for AI (Ai2) عن إطلاق دراسة جديدة تحمل عنوان \"Old Ideas, Novel Problems\"، تهدف إلى قياس مدى موثوقية نماذج اللغة الكبيرة (LLMs) في تقييم حداثة الأفكار البحثية العلمية. وتأتي هذه المبادرة ضمن جهود المعهد لتطوير أنظمة ذكاء اصطناعي تدعم مراحل الاكتشاف العلمي المختلفة، بدءاً من استكشاف البيانات وصولاً إلى توليد الفرضيات واختبارها.",
+              "links": [
+                {
+                  "text": "Old Ideas, Novel Problems",
+                  "url": "https://arxiv.org/abs/2610.02022"
+                }
+              ]
+            },
+            {
+              "text": "يشمل الإصدار الجديد ورقة بحثية، ومجموعة بيانات (Benchmark)، وأدوات برمجية مفتوحة المصدر تختبر \"قضاة الحداثة\"، بالإضافة إلى خط أنابيب آلي يمكن للباحثين استخدامه لبناء مجموعات تقييم جديدة. وتهدف هذه الأدوات إلى معالجة فجوة مهمة في أتمتة الاكتشاف العلمي، حيث لا يكفي توليد الأفكار فقط، بل يجب التأكد من أنها تقدم مساهمة جديدة فعلاً ولا تعيد تدوير أعمال سابقة. ويمكن الرجوع إلى DataVoyager للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "DataVoyager",
+                  "url": "https://allenai.org/blog/asta-datavoyager"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحدٍ منهجي في تقييم الأفكار",
+          "paragraphs": [
+            {
+              "text": "يواجه الباحثون صعوبة في التحقق من صحة \"قضاة الحداثة\"، وهي النماذج التي تُسند إليها مهمة تقييم ما إذا كانت فكرة بحثية جديدة مقارنة بالأعمال السابقة. ولا توجد طريقة قياسية موحدة لبناء هذه القضاة، حيث يختار كل فريق نموذجاً مختلفاً، وصياغة أوامر (Prompts)، وميزانية استدلال، وأحياناً أنظمة استرجاع أدبيات. وتُظهر الدراسة أن هذه الاختيارات التقنية يمكن أن تؤثر بشكل جوهري على الحكم النهائي.",
+              "links": []
+            },
+            {
+              "text": "المشكلة الأساسية التي كشفتها Ai2 هي أن هذه القضاة غالباً ما تُختبر على أبحاث بشرية مكتوبة يدوياً، بينما الهدف الفعلي هو تقييم أفكار تولدها أنظمة الذكاء الاصطناعي. هذا الفارق بين بيئة الاختبار والبيئة التطبيقية يخلق شكوكاً حول مدى صلاحية هذه النماذج في الاستخدامات العملية الحقيقية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بناء مجموعات بيانات مبنية على المراجعات",
+          "paragraphs": [
+            {
+              "text": "لضمان جودة التقييم، اعتمد فريق Ai2 على مراجعات الأقران لمؤتمر ICLR 2026 لبناء مجموعات بيانات موثوقة. بدلاً من اعتبار قبول الورقة دليلاً على حداثتها، قام الباحثون بتعدين المراجعات لاستخراج المقاطع التي ناقش فيها المراجعون أصالة المساهمة صراحةً. هذا التمييز مهم لأن الورقة قد تُقبل لكونها قوية تقنياً دون أن تكون جديدة، والعكس صحيح.",
+              "links": []
+            },
+            {
+              "text": "أُنشئت مجموعة \"عالية الحداثة\" تضم 154 فكرة بحثية بشرية من أوراق مقبولة ضمن أعلى 10% تقييماً في مجالها، حيث أشاد المراجعون بحداثتها دون اعتراض. وبالمقابل، أُنشئت مجموعة \"منخفضة الحداثة\" تضم 145 فكرة من أوراق مرفوضة ضمن أدنى 10% تقييماً، حيث أثار المراجعون مخاوف بشأن الأصالة. وأظهرت مراجعة مستقلة أن المقيمين وافقوا على إشارة الحداثة المستخرجة في 47 من أصل 50 حالة، مما يؤكد دقة المنهجية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اختبار الأفكار البشرية مقابل المولدة آلياً",
+          "paragraphs": [
+            {
+              "text": "لم يقتصر التقييم على الأفكار البشرية، بل شمل أيضاً أفكاراً مولدة آلياً. تم إقران الأفكار البشرية الـ154 مع 154 فكرة أخرى تولدها نموذج لغة بسيط، بافتراض أن الأفكار المولدة أقل حداثة. لم يتلقَ المولد أدوات بحث أو تكرار، مما يجعل المقارنة حذرة وعادلة. كما خضعت 30 زوجة من هذه الأفكار لمراجعة خبير مستقل، الذي فضّل الفكرة البشرية في جميع الحالات ولم يعتبر أي فكرة مولدة جديدة.",
+              "links": []
+            },
+            {
+              "text": "تشير هذه النتائج إلى أن عدم الاستقرار في الأحكام لا يعتمد بالضرورة على صحة التسميات (Labels)، بل على ثبات النموذج نفسه. فعندما تعطي إعدادات تقييم معقولة إجابات متناقضة لنفس الزوج من الأفكار، فإن هذا التباين يكشف عن عدم استقرار جوهري في قدرة النموذج على التمييز.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حساسية عالية للتغييرات الطفيفة",
+          "paragraphs": [
+            {
+              "text": "اختبر الباحثون ستة قضاة من نماذج اللغة الكبيرة، بما في ذلك إصدارات GPT-5 وClaude Sonnet وOpus، عبر تقييمات نقطية وزوجية. وكشفت النتائج أن التغييرات الصغيرة في صياغة الأوامر البرمجية (Prompting) أحدثت أكبر التغيرات في الأداء. على سبيل المثال، عند اختبار GPT-5.4 على أزواج من الأفكار، انخفضت دقة النموذج من 93.5% إلى 40.9% بمجرد تبسيط صياغة السؤال، وهو مستوى أدنى من الصدفة العشوائية.",
+              "links": []
+            },
+            {
+              "text": "في المقابل، كان التأثير محدوداً على مجموعة الأفكار البشرية فقط، مما يوحي بأن القضاة قد يبدون مستقرين عند التعامل مع نصوص بشرية، لكنهم يتصرفون بشكل مختلف تماماً عند مواجهة أفكار مولدة آلياً. كما لم تحسّن أنظمة الاسترجاع أو زيادة ميزانية الاستدلال من جودة الأحكام بشكل متسق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أداء أنظمة التقييم المتخصصة",
+          "paragraphs": [
+            {
+              "text": "فاجأت النتائج أداء أنظمة التقييم المصممة خصيصاً لهذا الغرض، حيث أدت أسوأ من خط الأساس البسيط الذي يعتمد على نموذج Claude Opus 4.6 مع أوامر مباشرة. هذا يشير إلى أن التعقيد الإضافي في بنية التقييم لا يضمن بالضرورة دقة أعلى، بل قد يضيف ضجيجاً يعيق الحكم الصحيح.",
+              "links": []
+            },
+            {
+              "text": "توفر Ai2 الآن هذه الأدوات والبيانات للباحثين لدراسة هذه المشكلة بعمق. وتؤكد الدراسة أن الطريق نحو الاعتماد الكامل على الذكاء الاصطناعي في اكتشاف الأفكار الجديدة ما زال طويلاً، ويحتاج إلى طرق أكثر موثوقية للتمييز بين الابتكار الحقيقي وإعادة التغليف للأعمال القديمة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "نماذج اللغة الكبيرة",
+        "اكتشاف علمي",
+        "تقييم البحث",
+        "Ai2",
+        "ICLR 2026"
+      ],
+      "entities": [
+        "Ai2",
+        "GPT-5.1",
+        "GPT-5.2",
+        "GPT-5.4",
+        "Claude Sonnet 4.5",
+        "Claude Opus 4.5",
+        "Claude Opus 4.6",
+        "ICLR 2026"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "27 أكتوبر 2026",
+      "modifiedLabel": "27 أكتوبر 2026",
+      "readMinutes": 5,
+      "wordCount": 784
+    },
+    "en": {
+      "title": "Can We Trust LLMs to Judge Research Idea Novelty?",
+      "description": "A new study and benchmark investigate how reliably large language models can evaluate the novelty of scientific research ideas.",
+      "deck": "Researchers have introduced a new study and benchmark examining whether large language models can reliably evaluate the novelty of scientific research ideas.",
+      "summaryBullets": [
+        "Ai2 released a new study titled 'Old Ideas, Novel Problems' examining LLM novelty evaluation.",
+        "A benchmark, dataset, and evaluation code have been published alongside the research.",
+        "Tests show that small changes to prompts can cause accuracy shifts of over 50 percentage points.",
+        "Novelty evaluation systems appeared unstable and struggled to produce consistent verdicts."
+      ],
+      "sections": [
+        {
+          "heading": "Evaluating AI as Novelty Judges",
+          "paragraphs": [
+            {
+              "text": "As artificial intelligence begins to play a larger role in scientific discovery, systems are increasingly used to generate hypotheses, synthesize evidence, and explore structured data. However, generating ideas is only part of the automated discovery challenge; these ideas must also be genuinely novel rather than mere repackagings of existing work. To determine this, research teams frequently rely on another large language model acting as a novelty judge.",
+              "links": []
+            },
+            {
+              "text": "To study how reliably these models can perform this task, researchers released a new study detailed in the <a href=\"https://huggingface.co/blog/allenai/novelty-bench\">Hugging Face Blog</a>. Alongside the findings, the team published a benchmark, data, and code to test how well different models evaluate research originality.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/allenai/novelty-bench"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Building the Evaluation Benchmark",
+          "paragraphs": [
+            {
+              "text": "To test whether novelty judges can accurately distinguish between more novel and less novel concepts, researchers needed empirical evidence of originality. They constructed an automated pipeline utilizing peer reviews from ICLR 2026. Instead of relying simply on paper acceptance, the pipeline mined reviewer comments for explicit discussions regarding a contribution's originality.",
+              "links": []
+            },
+            {
+              "text": "The resulting evaluation data is accessible via the <a href=\"https://huggingface.co/datasets/allenai/novelty-judge-bench\">Data</a> repository, offering structured test sets for developers and researchers. Additionally, the corresponding <a href=\"https://github.com/allenai/novelty-eval\">Code</a> repository has been made available to support further community testing and pipeline replication.",
+              "links": [
+                {
+                  "text": "Data",
+                  "url": "https://huggingface.co/datasets/allenai/novelty-judge-bench"
+                },
+                {
+                  "text": "Code",
+                  "url": "https://github.com/allenai/novelty-eval"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Instability in Model Judgments",
+          "paragraphs": [
+            {
+              "text": "The benchmark tested six prominent large language models across multiple evaluation configurations. These models included GPT-5.1, GPT-5.2, GPT-5.4, Claude Sonnet 4.5, Claude Opus 4.5, and Claude Opus 4.6. The experiments varied prompts, reasoning budgets, formatting styles, and retrieval options to observe how these adjustments affected the final judgments.",
+              "links": []
+            },
+            {
+              "text": "Results demonstrated that novelty evaluation is surprisingly unstable. Small modifications to evaluation prompts produced drastically different outcomes. In one specific experiment, altering just a few words in a prompt changed a model's accuracy in identifying the more novel idea by over 50 percentage points.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Implications for Automated Science",
+          "paragraphs": [
+            {
+              "text": "The study highlights that retrieval mechanisms and additional reasoning budgets do not consistently improve judgment quality. Furthermore, purpose-built novelty evaluation systems performed worse in certain tests than a simple prompted baseline using Claude Opus 4.6.",
+              "links": []
+            },
+            {
+              "text": "Further details regarding the underlying research methodology and findings can be examined directly in the <a href=\"https://arxiv.org/abs/2610.02022\">Old Ideas, Novel Problems</a> publication. These findings indicate that significant challenges remain before automated systems can reliably vet the originality of scientific research ideas.",
+              "links": [
+                {
+                  "text": "Old Ideas, Novel Problems",
+                  "url": "https://arxiv.org/abs/2610.02022"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial Intelligence",
+        "Large Language Models",
+        "Scientific Discovery",
+        "Machine Learning",
+        "Research Benchmarks"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Ai2",
+        "ICLR 2026",
+        "OpenAI",
+        "Anthropic"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 27, 2026",
+      "modifiedLabel": "October 27, 2026",
+      "readMinutes": 3,
+      "wordCount": 456
+    }
+  },
+  "datePublished": "2026-10-27T22:32:28.073559+03:00",
+  "dateModified": "2026-10-27T22:32:28.073559+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/can-we-trust-llms-to-judge-whether-research-idea-is-novel/hero.webp",
+    "card": "/forum/assets/posts/2026/10/can-we-trust-llms-to-judge-whether-research-idea-is-novel/card.webp",
+    "social": "/forum/assets/posts/2026/10/can-we-trust-llms-to-judge-whether-research-idea-is-novel/social.jpg",
+    "alt": {
+      "ar": "دراسة Ai2 تكشف عدم موثوقية نماذج الذكاء الاصطناعي في تقييم حداثة الأفكار البحثية",
+      "en": "Can We Trust LLMs to Judge Research Idea Novelty?"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/ZrKpGOLkSf0LmAf3bnJIX.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/can-we-trust-llms-to-judge-whether-research-idea-is-novel/inline-01.webp",
+        "width": 1400,
+        "height": 1000,
+        "alt": {
+          "ar": "دراسة Ai2 تكشف عدم موثوقية نماذج الذكاء الاصطناعي في تقييم حداثة الأفكار البحثية",
+          "en": "A light bulb surrounded by six AI models making different novelty judgments."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/novelty-bench",
+        "originalUrl": "https://www.datocms-assets.com/64837/1793023853-novelty-bench-header.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/can-we-trust-llms-to-judge-whether-research-idea-is-novel/inline-02.webp",
+        "width": 1400,
+        "height": 983,
+        "alt": {
+          "ar": "دراسة Ai2 تكشف عدم موثوقية نماذج الذكاء الاصطناعي في تقييم حداثة الأفكار البحثية",
+          "en": "Bar chart comparing how often six AI models chose the reviewer-praised human idea under two prompts. Claude Opus 4.6: 100.0% vs. 72.7%; GPT-5.2: 81.8% vs. 76.0%; Claude Opus 4.5: 92.2% vs. 58.4%; GPT-5.1: 79.2% vs. 56.5%"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/novelty-bench",
+        "originalUrl": "https://www.datocms-assets.com/64837/1793023853-novelty-bench-prompt-wording-chart.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/allenai/novelty-bench",
+      "type": "official",
+      "title": "Can we trust LLMs to judge whether a research idea is novel?"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/allenai/novelty-bench",
+  "sourceTitle": "Can we trust LLMs to judge whether a research idea is novel?",
+  "trendScore": 107.64,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-27T19:32:28+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/can-we-trust-llms-to-judge-whether-research-idea-is-novel.json"
+}
