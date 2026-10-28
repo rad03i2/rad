@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "ec733f799e1aaee3d1ac",
+  "slug": "nvidia-nemotron-transcribe-and-granary-v2-intelligent-multilingual-transcription-you-can-pro",
+  "categorySlug": "computers",
+  "urls": {
+    "ar": "/forum/ar/computers/nvidia-nemotron-transcribe-and-granary-v2-intelligent-multilingual-transcription-you-can-pro/",
+    "en": "/forum/en/computers/nvidia-nemotron-transcribe-and-granary-v2-intelligent-multilingual-transcription-you-can-pro/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إنفيديا تطلق Nemotron 3.5 Transcribe لتحويل الصوت إلى نص متعدد اللغات",
+      "description": "تقدم إنفيديا نموذج Nemotron 3.5 Transcribe مفتوح الأوزان، الذي يجمع بين النسخ والترجمة وتحديد المتحدثين بدقة عالية، مع أدوات Granary v2 للتخصيص.",
+      "deck": "أطلقت إنفيديا نموذجاً جديداً مفتوح الأوزان يجمع بين النسخ الآلي، الترجمة، وتحديد المتحدثين، مع دعم 40 لغة وإمكانية التخصيص عبر أوامر نصية.",
+      "summaryBullets": [
+        "يدعم النموذج 40 لغة في النسخ و31 لغة في الترجمة، مع تحديد هوية حتى 8 متحدثين في التسجيلات الطويلة.",
+        "يتصدر النموذج قوائم التقييم المفتوحة في دقة النسخ (WER) وتحديد المتحدثين، متفوقاً على نماذج تجارية.",
+        "يتيح Granary v2 وNeMo Speech للمطورين ضبط النموذج على مصطلحات متخصصة مثل المجال الطبي لتقليل الأخطاء.",
+        "يعمل النموذج بكفاءة على بطاقة رسومية واحدة، مع بنية معمارية هجينة تقلل من المعاملات النشطة لكل رمز."
+      ],
+      "sections": [
+        {
+          "heading": "نموذج موحّد للمهام الصوتية المعقدة",
+          "paragraphs": [
+            {
+              "text": "أعلنت إنفيديا عن إطلاق نموذج Nemotron 3.5 Transcribe، وهو نموذج مفتوح الأوزان مصمم لتحويل الكلام المسجل إلى نص مفيد ومتعدد الاستخدامات. يتوفر النموذج حالياً على منصات Hugging Face وModelScope، ويجمع بين أربع مهام أساسية في نقطة تفتيش واحدة: النسخ الآلي، تحديد المتحدثين (Diarization)، الترجمة، والإجابة على الأسئلة الصوتية. يهدف هذا التوجه إلى معالجة القيود التقليدية في أنظمة النسخ التي غالباً ما تفشل في تحديد هوية المتحدثين أو التعامل مع المصطلحات المتخصصة بدقة.",
+              "links": [
+                {
+                  "text": "Hugging Face",
+                  "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
+                }
+              ]
+            },
+            {
+              "text": "يتميز النموذج بدعم واسع للغة، حيث ينسخ 40 لغة مختلفة، ويترجم 31 لغة منها إلى الإنجليزية أو العكس، كما يستطيع تحديد هوية المتحدثين في 13 لغة. يمكنه معالجة تسجيلات تصل مدتها إلى ساعة كاملة مع تمييز حتى 8 متحدثين، مما يجعله مناسباً للاجتماعات الطويلة والمقابلات التفصيلية. تتيح البنية المعمارية للمطورين توجيه المخرجات باستخدام لغة طبيعية، مما يوفر مرونة عالية في التحكم في شكل النص النهائي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أداء متصدر في قوائم التقييم العالمية",
+          "paragraphs": [
+            {
+              "text": "حقق Nemotron 3.5 Transcribe نتائج رائدة في عدة قوائم تقييم مستقلة. على لوحة Hugging Face Open ASR Leaderboard، احتل النموذج المرتبة الأولى بين النماذج مفتوحة الأوزان في فئة الإنجليزية بنسبة خطأ في الكلمات (WER) متوسطة بلغت 5.33%. وفي فئة اللغات المتعددة، سجل أدنى نسبة خطأ متوسطة (4.62%) عبر سبع لغات، متفوقاً على النماذج المفتوحة الأخرى المقارنة.",
+              "links": []
+            },
+            {
+              "text": "أما في تقييمات تحديد المتحدثين، فقد تصدر النموذج قائمة David AI DAI-ASR-I18N متعددة اللغات بنسبة خطأ (DER) بلغت 18.26%، متفوقاً على نموذج Nemotron 3 Diarization المخصص من إنفيديا نفسه. كما حقق أدنى نسبة خطأ في مطابقة الكلمات (cpWER) في اختبار VoiceArena Diarization-Bench، مما يؤكد دقته في التعامل مع الكلام المتداخل والتسجيلات المعقدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "كفاءة معمارية وهجينة",
+          "paragraphs": [
+            {
+              "text": "يعتمد النموذج على بنية معمارية هجينة تجمع بين شيفرة صوتي (Encoder) ولغة نموذجية تعمل بنظام الخبراء المختلطين (Mixture-of-Experts) الذي يدمج تقنيتي Mamba وTransformer. هذا التصميم يسمح بنشاط حوالي 4 مليارات معامل فقط لكل رمز، رغم أن إجمالي حجم النموذج يبلغ 30 مليار معامل. هذه الكفاءة تجعل النموذج قادراً على العمل على بطاقة رسومية (GPU) واحدة من إنفيديا، بدءاً من أنظمة DGX Spark وصولاً إلى أنظمة مراكز البيانات من الجيل Blackwell.",
+              "links": []
+            },
+            {
+              "text": "وفقاً لتقييمات Artificial Analysis، يقع النموذج على حدود باريتو (Pareto frontier) للدقة مقابل المعاملات النشطة، حيث يتساوى مع نماذج أكبر حجماً في الدقة لكنه يستخدم سدس المعاملات النشطة تقريباً. هذا يجعله خياراً جذاباً للمطورين الذين يبحثون عن توازن بين الأداء العالي والتكلفة الحسابية المنخفضة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أدوات Granary v2 للتخصيص والتدريب",
+          "paragraphs": [
+            {
+              "text": "إلى جانب النموذج، أطلقت إنفيديا خط أنابيب البيانات Granary v2 متعدد اللغات، المتاح على Hugging Face وModelScope. يتيح هذا الخط للمطورين الوصول إلى بيانات منسقة وأدوات NeMo Speech الدقيقة لضبط النموذج (Fine-tuning) على احتياجاتهم الخاصة. بدلاً من الاعتماد فقط على الأوامر النصية، يمكن للمطورين تعريف الشكل الكتابي المطلوب وتكييف النموذج مع اللهجات والمصطلحات التي تظهر في تطبيقاتهم الفعلية.",
+              "links": [
+                {
+                  "text": "ModelScope",
+                  "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
+                }
+              ]
+            },
+            {
+              "text": "في دراسة حالة طبية، أظهر ضبط النموذج على مصطلحات طبية محددة انخفاضاً نسبياً بنسبة 45.8% في معدل خطأ الكلمات (WER) مقارنة بأفضل أوامر نصية (Prompts) ممكنة. هذا يؤكد فعالية التدريب المخصص في التعامل مع المجالات المتخصصة حيث تكون الدقة في النطق والإملاء أمراً حاسماً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تطبيقات عملية ومرونة في الاستخدام",
+          "paragraphs": [
+            {
+              "text": "تتيح مرونة النموذج للمطورين الحصول على مخرجات مختلفة من نفس التسجيل الصوتي بناءً على التعليمات المقدمة. على سبيل المثال، يمكن طلب نسخ التسجيل مع تسمية كل متحدث، أو طلب ترجمة النص، أو حتى الإجابة على أسئلة محددة حول محتوى التسجيل. تدعم البنية أيضاً الطوابع الزمنية على مستوى الكلمة (Word-level timestamps)، مما يتيح ربط النص بالوقت الدقيق في الفيديو أو الصوت.",
+              "links": []
+            },
+            {
+              "text": "أظهرت شركة Agora، التي توفر بنية تحتية للصوت والفيديو في الوقت الفعلي، كيف يمكن استخدام هذه الميزات في الفصول الدراسية. من خلال استخدام الطوابع الزمنية، يمكن عرض النص المنسوخ بجانب إعادة تشغيل التسجيل، مما يساعد الطلاب على رؤية ما قيل ومتى قيل. هذا التطبيق يوضح كيف يمكن تحويل التسجيلات الصوتية إلى موارد تعليمية تفاعلية وسهلة الاسترجاع.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "إنفيديا",
+        "ذكاء اصطناعي",
+        "نسخ آلي",
+        "معالجة اللغة الطبيعية",
+        "نماذج مفتوحة الأوزان",
+        "تحديد المتحدثين"
+      ],
+      "entities": [
+        "NVIDIA",
+        "Nemotron 3.5 Transcribe",
+        "Granary v2",
+        "Hugging Face",
+        "ModelScope",
+        "NeMo Speech"
+      ],
+      "category": "الحواسيب",
+      "dateLabel": "28 أكتوبر 2026",
+      "modifiedLabel": "28 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 690
+    },
+    "en": {
+      "title": "NVIDIA Launches Nemotron 3.5 Transcribe and Granary v2",
+      "description": "NVIDIA introduces Nemotron 3.5 Transcribe and Granary v2, delivering advanced multilingual transcription, speaker attribution, and promptable audio tools.",
+      "deck": "NVIDIA has released Nemotron 3.5 Transcribe alongside the Granary v2 data pipeline, combining multilingual transcription, translation, speaker attribution, and audio question-answering into a single open-weight model.",
+      "summaryBullets": [
+        "Nemotron 3.5 Transcribe supports transcription across 40 languages, translation for 31 languages, and speaker attribution for up to eight speakers.",
+        "The model pairs a speech encoder with a hybrid Mamba-Transformer mixture-of-experts language model, activating about 4 billion of its 30 billion parameters per token.",
+        "It ranks first among open-weight models on the Hugging Face Open ASR Leaderboard for English and scores strongly across various artificial analysis and diarization benchmarks.",
+        "Granary v2 provides a multilingual data pipeline and reusable curation tools paired with NeMo Speech fine-tuning recipes for domain adaptation."
+      ],
+      "sections": [
+        {
+          "heading": "Unified Multilingual Capabilities and Architecture",
+          "paragraphs": [
+            {
+              "text": "NVIDIA has introduced Nemotron 3.5 Transcribe, an open-weight, promptable speech model that merges transcription, speaker attribution (diarization), translation, and audio question-answering into a single unified checkpoint. According to details shared on the Hugging Face Blog, the model can transcribe speech in 40 languages, translate 31 of them to or from English, and perform speaker attribution across 13 languages. It is designed to process recordings up to an hour long and can label up to eight distinct speakers.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog"
+                },
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
+                }
+              ]
+            },
+            {
+              "text": "Under the hood, Transcribe pairs a speech encoder with a hybrid Mamba-Transformer mixture-of-experts language model. This architecture enables the system to run efficiently on a single NVIDIA GPU—ranging from DGX Spark to Blackwell data-center systems—utilizing approximately 4 billion active parameters out of a total 30 billion per token. Developers can leverage natural language prompts to guide output formatting, adapt recognition to specific domain vocabulary, and choose where their audio is processed.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Strong Leaderboard Performance and Benchmarks",
+          "paragraphs": [
+            {
+              "text": "Nemotron 3.5 Transcribe has secured top placements across multiple prominent evaluations for speech recognition and speaker diarization. On the Hugging Face Open ASR Leaderboard for English, it ranks first among open-weight models with a 5.33% average word error rate (WER). It also achieves the lowest mean WER in the leaderboard's multilingual and long-form evaluation tracks.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, the model sits on Artificial Analysis’s accuracy-active-parameter frontier, tying for first place among open-weight models with a 2.8% AA-WER index score. In speaker attribution benchmarks, Transcribe posts the lowest error rate on David AI’s 21-language diarization leaderboard and secures the top rank in VoiceArena's 14-system comparison.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Granary v2 Data Pipeline and Fine-Tuning Recipes",
+          "paragraphs": [
+            {
+              "text": "Alongside the model release, NVIDIA has introduced Granary v2, offering a multilingual data pipeline and reusable curation tools. Combined with NeMo Speech fine-tuning tools, developers can extend prompt-level control directly into the training phase, adapting the model to specialized vocabulary and distinct application environments.",
+              "links": []
+            },
+            {
+              "text": "In a medical case study highlighted by the project documentation, fine-tuning cut the word error rate on held-out speakers by 45.8% relative to the best baseline prompt. This allows healthcare providers and enterprise users to better preserve standard medical spelling, handle complex domain jargon, and manage unconventional formatting requirements safely.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Real-World Applications and Prompting Flexibility",
+          "paragraphs": [
+            {
+              "text": "The promptable design of Nemotron 3.5 Transcribe allows a single checkpoint to handle diverse tasks based on simple natural language instructions. Users can direct the system to transcribe a recording while labeling every speaker, translate dialogue, or answer audio questions using the model's recommended reasoning presets.",
+              "links": []
+            },
+            {
+              "text": "Real-world implementations are already underway across various sectors. For instance, Agora integrated word-level timestamps from Nemotron 3.5 Transcribe into a classroom demonstration on their real-time voice and video platform. This setup generates structured transcripts alongside session replays, giving students clear visibility into what was said and when.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "NVIDIA",
+        "Nemotron",
+        "Granary v2",
+        "Speech Recognition",
+        "AI",
+        "Hugging Face",
+        "Audio Processing"
+      ],
+      "entities": [
+        "NVIDIA",
+        "Hugging Face",
+        "Agora",
+        "Artificial Analysis",
+        "David AI",
+        "VoiceArena"
+      ],
+      "category": "Computing",
+      "dateLabel": "October 28, 2026",
+      "modifiedLabel": "October 28, 2026",
+      "readMinutes": 3,
+      "wordCount": 574
+    }
+  },
+  "datePublished": "2026-10-28T18:42:34.475959+03:00",
+  "dateModified": "2026-10-28T18:42:34.475959+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/nvidia-nemotron-transcribe-and-granary-v2-intelligent-multilingual-transcription-you-can-pro/hero.webp",
+    "card": "/forum/assets/posts/2026/10/nvidia-nemotron-transcribe-and-granary-v2-intelligent-multilingual-transcription-you-can-pro/card.webp",
+    "social": "/forum/assets/posts/2026/10/nvidia-nemotron-transcribe-and-granary-v2-intelligent-multilingual-transcription-you-can-pro/social.jpg",
+    "alt": {
+      "ar": "إنفيديا تطلق Nemotron 3.5 Transcribe لتحويل الصوت إلى نص متعدد اللغات",
+      "en": "NVIDIA Launches Nemotron 3.5 Transcribe and Granary v2"
+    },
+    "credit": "Mikhbar",
+    "sourceUrl": "",
+    "sourceType": "generated-fallback",
+    "generatedFallback": true,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary",
+      "type": "official",
+      "title": "NVIDIA Nemotron 3.5 Transcribe and Granary v2: Intelligent Multilingual Transcription You Can Prompt and Adapt"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary",
+  "sourceTitle": "NVIDIA Nemotron 3.5 Transcribe and Granary v2: Intelligent Multilingual Transcription You Can Prompt and Adapt",
+  "trendScore": 121.81,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-28T15:42:34+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/nvidia-nemotron-transcribe-and-granary-v2-intelligent-multilingual-transcription-you-can-pro.json"
+}
