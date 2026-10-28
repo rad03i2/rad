@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "303c17a3cab1c27ee61b",
+  "slug": "even-after-php2shell-blast-radius-matters-more-than-cvss-score",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/even-after-php2shell-blast-radius-matters-more-than-cvss-score/",
+    "en": "/forum/en/ai/even-after-php2shell-blast-radius-matters-more-than-cvss-score/"
+  },
+  "locales": {
+    "ar": {
+      "title": "PHP2Shell: لماذا نطاق الضرر أهم من درجة الخطورة",
+      "description": "بعد ثغرات PHP2Shell، يوضح تقرير أن تقليل صلاحيات الحسابات والوكلاء الذكيين يحد من أضرار الاختراق بشكل أكبر من الاعتماد على سرعة تطبيق التصحيحات.",
+      "deck": "أثبتت ثغرات PHP2Shell أن المهاجمين يستغلون نقاط الضعف الحرجة قبل أن تتمكن المؤسسات من تطبيق التصحيحات، مما يجعل إدارة الهويات وصلاحيات الوصول عنصراً حاسماً في تقليل الأضرار.",
+      "summaryBullets": [
+        "اكتشف باحثون ثغرتين في PHP باستخدام نماذج ذكاء اصطناعي، واستُغلّت قبل إصدار التصحيح الرسمي.",
+        "توقعت شركة Token Security أن إدارة الهويات والوكلاء الذكيين تقلل من نطاق الضرر (Blast Radius) مقارنة بالتركيز على درجة الخطورة (CVSS).",
+        "تظهر البيانات أن متوسط إصلاح الثغرات المستغلة يستغرق أسابيع، بينما تبدأ الاستغلال في أيام.",
+        "توصي الشركات بتقييد صلاحيات الحسابات غير البشرية والوكلاء الذكيين لمنع الحركة الجانبية للمهاجمين."
+      ],
+      "sections": [
+        {
+          "heading": "استغلال أسرع من التصحيح",
+          "paragraphs": [
+            {
+              "text": "أظهرت حادثة PHP2Shell كيف يمكن للمهاجمين استغلال الثغرات الحرجة بسرعة فائقة، غالباً قبل أن تتمكن المؤسسات من تطبيق التصحيحات. تشير تقديرات شركة Token Security إلى أن تقييد وصول الحسابات الخادمة ومفاتيح API والوكلاء الذكيين لا يقل أهمية عن إصلاح الثغرات نفسها لتقليل الأضرار الناتجة عن الاختراق.",
+              "links": [
+                {
+                  "text": "Token Security",
+                  "url": "https://www.token.security/?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=oct-28"
+                }
+              ]
+            },
+            {
+              "text": "تنبأ محللو الأمن بأن شركات أمن التطبيقات ستشهد ربعاً قوياً من المبيعات، حيث أصبحت PHP2Shell أقوى حجة ميزانية لدى الموردين منذ سنوات. ساعد الذكاء الاصطناعي الباحثين في العثور على ثغرتين للتنفيذ عن بُعد في اللغة التي تقف خلف 69% من الويب، واستهدفها المهاجمون قبل إصدار التصحيح، مما يبرز الحاجة الملحّة لاكتشاف المزيد من الأخطاء وإصلاحها بسرعة أكبر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "سباق زمني غير متكافئ",
+          "paragraphs": [
+            {
+              "text": "كانت الثغرتان المسؤولتان عن PHP2Shell موجودة في كود PHP منذ عام 2012. عثر عليهما باحثون في Calif وWiz في أغسطس بمساعدة نماذج من OpenAI وGoogle، وأُعلنا عنهما بشكل مشترك مع OpenAI. رصدت Amazon محاولة استغلال في 17 أكتوبر، أي قبل أربعة أيام من الكشف الرسمي. أصدر PHP التصحيح في 21 أكتوبر، ورصدت watchTowr محاولات استغلال في نفس اليوم.",
+              "links": []
+            },
+            {
+              "text": "لاحظ Cloudflare تصاعداً سريعاً في حركة الهجوم بعد الكشف، وفي 26 أكتوبر، أضافت CISA كلا الثغرتين إلى قائمة الثغرات المعروفة بالاستغلال. في المقابل، لا تتحرك جهود الإصلاح بنفس السرعة؛ إذ يشير تقرير Verizon DBIR لعام 2026 إلى أن الوقت الوسيط لإصلاح الثغرة المعروفة بالاستغلال هو 43 يوماً.",
+              "links": [
+                {
+                  "text": "Cloudflare",
+                  "url": "https://blog.cloudflare.com/php-vulnerabilities-waf-protection"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحديات إصلاح PHP",
+          "paragraphs": [
+            {
+              "text": "ستستغرق عملية التنظيف بعد PHP2Shell وقتاً أطول من المعتاد. يتم توزيع PHP داخل الأجهزة ولوحات التحكم في الاستضافة التي لا يستطيع العملاء تصحيحها بأنفسهم. علاوة على ذلك، لم تحصل الإصدارات 8.1 والأقدم على إصدارات رسمية محدثة. حتى 27 أكتوبر، عُدّ Censys 32.5 مليون خدمة PHP متصلة بالإنترنت لا تزال تعمل بإصدارات قد تكون عرضة للخطر، بالإضافة إلى أكثر من 60 مليون خدمة أخرى لا تبلغ عن إصدارها على الإطلاق.",
+              "links": []
+            },
+            {
+              "text": "بغض النظر عن طريقة الحساب، ستبقى سرعة الإصلاح أبطأ من وتيرة الاستغلال في المستقبل المنظور، حتى عندما يستفيد التصحيح نفسه بشكل كبير من سير العمل المدعوم بالذكاء الاصطناعي. هذا الفجوة المتسعة تجعل من المغري الاستثمار بكثافة في كبح الموجة، لكن حتى لو وجد مسح مدعوم بالذكاء الاصطناعي 2000 ثغرة يوم صفر جديدة في بيئتك غداً، لن يؤدي ذلك إلى وضع أمني أقوى، بل سيوفر قائمة فقط.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الهوية كعقدة تحكم",
+          "paragraphs": [
+            {
+              "text": "تعمل الوكلاء الآن عبر أنظمتك بصلاحيات لم يراجعها أحد. تكتشف أداة Token Security AI Agent Security كل وكيل، وتربطه بمالك، وتحدد ما يمكنه فعله. في سياق المؤسسات، يتحدد تأثير الهجوم بمدى وصول الهويات المخترقة. تمنح الصدفة على خادم PHP المهاجم وصولاً إلى كل ما يمكن للخادم قراءته، من متغيرات البيئة إلى مفاتيح السحابة في ملفات الإعداد.",
+              "links": []
+            },
+            {
+              "text": "يمكن لـ PHP2Shell أيضاً تسريب ذاكرة العامل، بما في ذلك كلمات المرور، الرموز، ومفاتيح API. مهاجم ينفذ الكود على مضيف واحد يفتح باباً إلى ممر، لكن القيم الحقيقية عادة ما تكون في غرف مقفلة. تتحكم الهويات في مدى قدرة المهاجم على الحركة الجانبية، وهي عملية قابلة للقياس، على عكس اكتشاف الثغرات الذي هو عملية مفتوحة النهاية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أهمية نطاق الضرر",
+          "paragraphs": [
+            {
+              "text": "مع الموارد المحدودة، يميل البعض للبقاء مركزيين على الثغرات: فهرسة ما وجدته النشرات والماسحات، وفرزها، والعمل من الأعلى. لكن الفهرسة تستغرق أسابيع، وإصلاح النتائج الأكثر إلحاحاً يستغرق وقتاً أطول. هذا الرهان يعطي الأولوية لدرجة خطورة الثغرة (درجة CVSS) على نطاق الضرر. المهاجمون لا يبحثون عن المسار الأكثر مباشرة، بل عن الأسهل.",
+              "links": []
+            },
+            {
+              "text": "أظهرت عناوين أكتوبر الأخرى هذا المسار. في LiteLLM، استخدم المهاجمون مفتاح رئيسي مكشوف في مستودع عام لجلب رمز مالك منظمة GitHub غير محدود النطاق من منصة وكلاء داخلية. سمح هذا الهوية بسرقة رموز صيانة إضافية، وتحويل سير عمل الإصدار، ونشر عناصر لسرقة البيانات. لا يمكنك الفوز في سباق تصحيح كل خادم قبل وصول المهاجمين، لكن يمكنك تحديد قيمة الخادم المخترق بالنسبة لهم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الخلاصة والتوصيات",
+          "paragraphs": [
+            {
+              "text": "اكتشف وفهرس كل وكيل ذكي وهوية غير بشرية، وابدأ بتأمين تلك التي تصل إلى أكثر. عيّن مالكاً، وحدد نطاق الوصول حسب الغرض والنوايا، وأزل الاعتمادات الخاملة، وحكم باستمرار على دورة حياة الهوية. بالنسبة للوكلاء الذكيين، اذهب أبعد وامنح الوصول حسب النية. هذا هو معنى معالجة الهوية كعقدة تحكم. يحدد التصحيح سرعة إغلاق الثغرة، بينما يحدد الهوية ما يحصده المهاجم عندما تعجز عن ذلك.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "PHP2Shell",
+        "أمن المعلومات",
+        "الذكاء الاصطناعي",
+        "إدارة الهويات",
+        "الثغرات الأمنية",
+        "Token Security"
+      ],
+      "entities": [
+        "PHP",
+        "Token Security",
+        "Amazon",
+        "Cloudflare",
+        "CISA",
+        "Verizon",
+        "LiteLLM",
+        "Calif",
+        "Wiz",
+        "OpenAI",
+        "Google"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "28 أكتوبر 2026",
+      "modifiedLabel": "28 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 739
+    },
+    "en": {
+      "title": "PHP2Shell Exploits Highlight Need to Limit Blast Radius",
+      "description": "Following rapid exploitation of PHP2Shell, security experts urge organizations to limit identity reach and blast radius rather than relying solely on patching.",
+      "deck": "Rapid exploitation of new PHP vulnerabilities demonstrates why organizations must limit identity permissions and attack blast radius rather than relying strictly on remediation speed.",
+      "summaryBullets": [
+        "Exploitation of two remote code execution flaws in PHP began before official patch availability.",
+        "Millions of internet-facing servers remain on unpatched or unsupported PHP versions.",
+        "Remediation timelines average weeks, while new vulnerability disclosures occur daily.",
+        "Security specialists advise using identity controls to restrict lateral movement after compromise."
+      ],
+      "sections": [
+        {
+          "heading": "Rapid Exploitation of PHP Codebase Flaws",
+          "paragraphs": [
+            {
+              "text": "The discovery of two severe remote code execution vulnerabilities in PHP, the language behind 69% of the web, has underscored how quickly threat actors move from initial discovery to active exploitation. Discovered in August by researchers at Calif and Wiz with assistance from OpenAI and Google artificial intelligence models, the underlying flaws had been present in PHP's codebase since 2012. The discoveries were disclosed jointly with OpenAI.",
+              "links": [
+                {
+                  "text": "the language behind 69% of the web",
+                  "url": "https://w3techs.com/technologies/details/pl-php"
+                },
+                {
+                  "text": "since 2012",
+                  "url": "https://sansec.io/research/php2shell"
+                }
+              ]
+            },
+            {
+              "text": "Attack activity began prior to official disclosures. On October 17, Amazon saw an exploitation attempt four days before public notification. PHP issued official security releases containing patches for the two flaws on October 21. That same day, cybersecurity firm watchTowr saw exploitation attempts in the wild. Network provider Cloudflare reported rapid escalations in attack traffic following disclosure, and on October 26, CISA added both flaws to its catalog of known exploited vulnerabilities.",
+              "links": [
+                {
+                  "text": "Amazon saw an exploitation attempt",
+                  "url": "https://aws.amazon.com/blogs/security/amazon-threat-intelligence-identifies-php2shell-exploitation-prior-to-public-disclosure-in-madpot/"
+                },
+                {
+                  "text": "two flaws",
+                  "url": "https://www.php.net/archive/2026.php#2026-10-21-5"
+                },
+                {
+                  "text": "watchTowr saw exploitation",
+                  "url": "https://www.tanium.com/blog/php2shell-responding-to-cve-2026-109618-and-cve-2026-109619"
+                },
+                {
+                  "text": "CISA added both flaws",
+                  "url": "https://www.cisa.gov/news-events/alerts/2026/10/26/cisa-adds-two-known-exploited-vulnerabilities-catalog"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Widespread Exposure and Patching Obstacles",
+          "paragraphs": [
+            {
+              "text": "Cleaning up vulnerable PHP deployments presents major operational hurdles across enterprise environments. PHP is frequently embedded inside hardware appliances and hosting control panels that end users cannot patch independently. Furthermore, older PHP releases, including version 8.1 and earlier, did not receive official update builds.",
+              "links": []
+            },
+            {
+              "text": "Scanning data reflects the scale of lingering exposure. As of October 27, internet search engine Censys identified 32.5 million internet-facing PHP services running potentially vulnerable versions. An additional 60 million internet-facing instances failed to report a version number altogether, obscuring their patch status.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Remediation Speeds Lag Behind Exploitation",
+          "paragraphs": [
+            {
+              "text": "While exploitation often begins before public disclosure, remediation across organizations proceeds at a much slower pace. According to Verizon's 2026 DBIR, the median time-to-fix for a known exploited vulnerability stands at 43 days. Research from Qualys shows a mean remediation time of 21.2 days, with 63 percent of critical vulnerabilities remaining open after one week. Meanwhile, approximately 195 new Common Vulnerabilities and Exposures (CVEs) are published daily.",
+              "links": [
+                {
+                  "text": "Verizon's 2026 DBIR",
+                  "url": "https://www.verizon.com/business/resources/reports/dbir/"
+                }
+              ]
+            },
+            {
+              "text": "Security industry analysts observe that even when AI-driven workflows assist in patch application, remediation speed will remain slower than exploitation pace for the foreseeable future. Although supported PHP branches required only installing updated releases, several government entities and corporations temporarily took public websites offline while awaiting fixes.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Focusing on Identity and Blast Radius Reduction",
+          "paragraphs": [
+            {
+              "text": "Because security teams cannot patch at machine speed, experts argue that organizations should focus on reducing what an attacker can reach post-exploitation by treating identity as the control plane. Ultimate incident severity depends heavily on which service accounts, API keys, cloud roles, and tokens a compromised workload can access.",
+              "links": []
+            },
+            {
+              "text": "A compromised shell on a PHP host grants attackers immediate access to local readables, such as environment variables and cloud keys stored in configuration files. The PHP2Shell vulnerability can also leak worker memory containing passwords, tokens, and API keys. Restricting lateral movement prevents attackers from using leaked credentials to access core internal assets.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Lateral Movement Demonstrates Access Risks",
+          "paragraphs": [
+            {
+              "text": "Recent security incidents highlight how threat actors prioritize credential reuse over complex zero-day exploitation chains. In an attack against LiteLLM, threat actors located a master key exposed in a public repository and used it to retrieve an unscoped GitHub organization-owner token from an internal agent platform.",
+              "links": []
+            },
+            {
+              "text": "Using that compromised identity, the attackers acquired two additional maintainer tokens, compromised the software release workflow, and published credential-stealing artifacts. The technique demonstrates how moving laterally via leaked credentials offers attackers a simpler path than attempting direct exploits against databases or secure infrastructure.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Governing Non-Human Identities and AI Agents",
+          "paragraphs": [
+            {
+              "text": "To address the growing reliance on autonomous tools, cybersecurity vendor Token Security emphasizes the need to discover and inventory every non-human identity, service account, and AI agent active within enterprise networks. The vendor offers a tool, AI Agent Security, designed to identify agents, link them to designated owners, and restrict their functional scope.",
+              "links": []
+            },
+            {
+              "text": "To limit blast radius, security teams are advised to assign owners to non-human credentials, restrict access based on operational intent, eliminate dormant credentials, and maintain continuous identity governance. By scoping permissions strictly to purpose, organizations can control potential breach damage even when automated server patching lags behind active threats.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "PHP2Shell",
+        "Cybersecurity",
+        "Vulnerabilities",
+        "Token Security",
+        "Identity Management",
+        "Patch Management",
+        "AI Agents"
+      ],
+      "entities": [
+        "PHP",
+        "Token Security",
+        "CISA",
+        "Amazon",
+        "Cloudflare",
+        "watchTowr",
+        "Qualys",
+        "Censys"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 28, 2026",
+      "modifiedLabel": "October 28, 2026",
+      "readMinutes": 4,
+      "wordCount": 738
+    }
+  },
+  "datePublished": "2026-10-28T17:42:33.950231+03:00",
+  "dateModified": "2026-10-28T17:42:33.950231+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/even-after-php2shell-blast-radius-matters-more-than-cvss-score/hero.webp",
+    "card": "/forum/assets/posts/2026/10/even-after-php2shell-blast-radius-matters-more-than-cvss-score/card.webp",
+    "social": "/forum/assets/posts/2026/10/even-after-php2shell-blast-radius-matters-more-than-cvss-score/social.jpg",
+    "alt": {
+      "ar": "PHP2Shell: لماذا نطاق الضرر أهم من درجة الخطورة",
+      "en": "PHP2Shell Exploits Highlight Need to Limit Blast Radius"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/posts/2026/10/27/green-pumpkin.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/even-after-php2shell-blast-radius-matters-more-than-a-cvss-score/",
+      "type": "journalism",
+      "title": "Even after PHP2Shell, blast radius matters more than a CVSS score"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/security/even-after-php2shell-blast-radius-matters-more-than-a-cvss-score",
+  "sourceTitle": "Even after PHP2Shell, blast radius matters more than a CVSS score",
+  "trendScore": 94.77,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-28T14:42:34+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/even-after-php2shell-blast-radius-matters-more-than-cvss-score.json"
+}
