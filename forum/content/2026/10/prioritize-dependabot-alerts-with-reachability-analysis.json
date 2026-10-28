@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "15614e45c12695c21304",
+  "slug": "prioritize-dependabot-alerts-with-reachability-analysis",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/prioritize-dependabot-alerts-with-reachability-analysis/",
+    "en": "/forum/en/apps/prioritize-dependabot-alerts-with-reachability-analysis/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub تطلق تحليلاً للوصول لتبسيط تنبيهات Dependabot",
+      "description": "أطلقت GitHub ميزة تحليل الوصول لتحديد الثغرات القابلة للاستغلال فعلياً في الكود، مما يساعد المطورين على تحديد الأولويات بدقة وتقليل الوقت المهدر في معالجة تنبيهات الأمان غير الحرجة.",
+      "deck": "تسعى GitHub إلى تحسين كفاءة فرق التطوير من خلال ميزة جديدة تتيح التمييز بين الثغرات النظرية والتطبيقية في الحزم البرمجية.",
+      "summaryBullets": [
+        "إطلاق ميزة تحليل الوصول (Reachability Analysis) للمعاينة العامة في JavaScript وTypeScript.",
+        "تحديد المسارات الاستدعائية من الكود إلى الدوال الضعيفة لتقييم خطورة التنبيهات.",
+        "الميزة مجانية ولا تتطلب ترخيص GitHub Advanced Security أو استهلاك دقائق GitHub Actions.",
+        "توفر أربعة أحكام للتحليل: قابل للوصول، قابل للوصول محتملاً، غير قابل للوصول، وغير متاح.",
+        "تشغيل تلقائي عبر GitHub Actions دون الحاجة لإعدادات إضافية أو خوادم ذاتية."
+      ],
+      "sections": [
+        {
+          "heading": "تجاوز إشكالية تراكم التنبيهات الأمنية",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق التطوير تحدياً متزايداً مع تراكم تنبيهات Dependabot بسرعة تفوق قدرتها على المعالجة. غالباً ما تحتوي أشجار الاعتماديات على حزم تحتوي على ثغرات أمنية، لكن هذا لا يعني بالضرورة أن الكود الفعلي يستخدم الجزء الضعيف من تلك الحزمة. توفر GitHub الآن سياقاً إضافياً يساعد المطورين على اتخاذ قرارات مستنيرة بشأن أين يبدأون العمل، من خلال ميزة تحليل الوصول الجديدة التي أصبحت متاحة في مرحلة المعاينة العامة. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-28-prioritize-dependabot-alerts-with-reachability-analysis/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل تحليل الوصول",
+          "paragraphs": [
+            {
+              "text": "تعتمد الميزة على تقنية CodeQL لبناء رسم استدعاء (Call Graph) يغطي المستودع وحزمه المعتمدة. تبحث الأداة عن مسارات استدعاء من كود المستخدم إلى الدوال الضعيفة المحددة في قاعدة بيانات GitHub Advisory Database. تستخدم التحليل بيانات منسقة لتحديد الدوال المتأثرة، مما يوفر دقة عالية في تحديد ما إذا كان الكود يتفاعل فعلياً مع الثغرة أم لا. يتم تنفيذ هذا التحليل تلقائياً في سير عمل GitHub Actions مُدار من قبل GitHub، مما يعني أنه لا يحتاج إلى تثبيت أو صيانة يدوية من قبل الفريق.",
+              "links": [
+                {
+                  "text": "GitHub Advisory Database",
+                  "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "أحكام التحليل وأثرها على الأولويات",
+          "paragraphs": [
+            {
+              "text": "يُصنف كل تنبيه مفتوح في Dependabot ضمن أحد أربعة أحكام: 'قابل للوصول' إذا وُجد مسار استدعاء واحد على الأقل، و'قابل للوصول محتملاً' إذا تعذر تحديد المسار (وينصح بمعالجته كقابلة للوصول)، و'غير قابل للوصول' إذا لم يُعثر على أي مسار (وتكون أولويتها أدنى)، و'غير متاح' إذا تعذر التحليل. تظهر هذه الأحكام على التنبيهات الحالية دون إغلاقها أو تجاهلها تلقائياً، مما يمنح المطورين مرونة في الفلترة والترتيب حسب الحالة على صفحات المستودع والمنظمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكلفة والتوافر التقني",
+          "paragraphs": [
+            {
+              "text": "تتميز الميزة بأنها مجانية بالكامل، حيث لا تتطلب ترخيص GitHub Advanced Security ولا تُحتسب دقائق GitHub Actions المستخدمة في التحليل ضمن الفاتورة. تتوفر الميزة حالياً لمستخدمي GitHub Enterprise Cloud، بما في ذلك إصدارات الإقامة البيانات. تشمل اللغات المدعومة JavaScript وTypeScript مع ملفات قفل npm أو Yarn أو pnpm. تُنفذ التحليلات على خوادم GitHub المستضافة، ولا تدعم الخوادم الذاتية (Self-hosted) خلال فترة المعاينة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إعدادات التشغيل والقيود الحالية",
+          "paragraphs": [
+            {
+              "text": "يكون تحليل الوصول معطلاً افتراضياً، ويمكن تفعيله لعدد كبير من المستودعات عبر إعدادات أمان مخصصة للمنظمة أو المؤسسة، أو لمستودع فردي من خلال إعدادات الأمان المتقدم. يجب أن تكون تنبيهات Dependabot مفعلة لرؤية الأحكام. تبدأ الفحوصات الأولى فور التفعيل وقد تستغرق من دقائق إلى ساعات، ثم تُعاد الفحوصات يومياً طالما توجد تنبيهات مفتوحة. قد تواجه المستودعات الكبيرة أو متعددة المانيفستات قيوداً، حيث قد تظهر النتيجة 'غير متاح' إذا تجاوزت مدة التحليل ثلاث ساعات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع الأدوات والأتمتة",
+          "paragraphs": [
+            {
+              "text": "تتيح GitHub للمطورين دمج إشارة تحليل الوصول في أدواتهم الداخلية والوكلاء الآليين عبر واجهة برمجة التطبيقات REST الخاصة بتنبيهات Dependabot. هذا التكامل يسمح بإنشاء أنظمة تنبيه مخصصة تأخذ في الاعتبار سياق الوصول بالإضافة إلى عوامل أخرى مثل خطورة الثغرة ونقاط EPSS وسياق الإنتاج. يوفر هذا النهج المتكامل رؤية شاملة تساعد الفرق على معالجة ثغرات الاعتماديات بطرق تناسب سير عملهم الفعلي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "Dependabot",
+        "الأمن السيبراني",
+        "CodeQL",
+        "JavaScript",
+        "TypeScript",
+        "إدارة الاعتماديات"
+      ],
+      "entities": [
+        "GitHub",
+        "Dependabot",
+        "CodeQL",
+        "GitHub Enterprise Cloud",
+        "GitHub Advisory Database"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "29 أكتوبر 2026",
+      "modifiedLabel": "29 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 531
+    },
+    "en": {
+      "title": "GitHub Introduces Dependabot Reachability Analysis Preview",
+      "description": "GitHub launches reachability analysis for Dependabot alerts in public preview, helping teams prioritize JavaScript and TypeScript vulnerabilities.",
+      "deck": "A new public preview on GitHub brings reachability analysis to Dependabot alerts, offering JavaScript and TypeScript developers deeper context on dependency vulnerabilities without requiring a GitHub Advanced Security license.",
+      "summaryBullets": [
+        "Reachability analysis for Dependabot is now available in public preview for JavaScript and TypeScript projects.",
+        "The feature evaluates call paths to determine if your code actually uses vulnerable package functions.",
+        "Verdicts include Reachable, Potentially reachable, Unreachable, and Reachability unavailable.",
+        "The capability is free of charge and does not require a GitHub Advanced Security license or incur GitHub Actions minute charges."
+      ],
+      "sections": [
+        {
+          "heading": "Understanding Dependabot Reachability Analysis",
+          "paragraphs": [
+            {
+              "text": "Managing security vulnerabilities in software projects can quickly overwhelm development teams as alerts accumulate. Finding a vulnerable package in a dependency tree does not automatically mean that application code actually utilizes the vulnerable components. To help address this challenge, GitHub has announced a public preview for reachability analysis, providing developers with additional context when deciding which vulnerabilities to remediate first. Further details are available from GitHub Changelog in the original source material.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-28-prioritize-dependabot-alerts-with-reachability-analysis/"
+                }
+              ]
+            },
+            {
+              "text": "The new capability works alongside existing metrics like severity scores, EPSS scores, production context, and developer knowledge. By examining call paths from application code to vulnerable functions within dependencies, the system surfaces clear evidence directly on each alert, streamlining the triage process for engineering teams.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "How the Analysis Works",
+          "paragraphs": [
+            {
+              "text": "Dependabot executes reachability analysis automatically through a managed GitHub Actions workflow, meaning teams do not need to manually install or maintain infrastructure. For each advisory, the system leverages curated data identifying vulnerable functions inside affected packages. CodeQL constructs a comprehensive call graph spanning the repository and its dependencies to search for active paths from application code to those functions.",
+              "links": []
+            },
+            {
+              "text": "To learn more about how this mechanism operates behind the scenes, developers can review the documentation provided on the platform.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Understanding Verdicts and Prioritization",
+          "paragraphs": [
+            {
+              "text": "Each open Dependabot alert receives a specific verdict determined by the analysis. A verdict of \"Reachable\" indicates that application code contains at least one call path to the vulnerable function. \"Potentially reachable\" is assigned when the analysis cannot definitively determine whether code calls the vulnerable function, and these alerts should be treated as reachable.",
+              "links": []
+            },
+            {
+              "text": "Conversely, \"Unreachable\" means the analysis finished successfully and found no call path, designating these alerts as lower priority. If an alert cannot be analyzed at all, it is marked as \"Reachability unavailable\" and should be triaged normally. These verdicts are integrated directly into existing Dependabot alert pages without ever automatically closing or dismissing alerts.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Availability, Pricing, and Configuration",
+          "paragraphs": [
+            {
+              "text": "The reachability analysis feature is provided free of charge for GitHub Enterprise Cloud customers, including those using GitHub Enterprise Cloud with data residency. Organizations are not billed for the GitHub Actions minutes consumed by the analysis, and a GitHub Advanced Security license is not required to utilize the tool.",
+              "links": []
+            },
+            {
+              "text": "During the public preview, the feature supports JavaScript and TypeScript projects that utilize an npm, Yarn, or pnpm lockfile. The analysis executes on GitHub-hosted runners, as self-hosted runners are unsupported during this phase. Teams can enable reachability analysis across multiple repositories simultaneously by setting up a custom security configuration at the organization or enterprise level, or activate it individually within specific repository settings.",
+              "links": [
+                {
+                  "text": "custom security configuration",
+                  "url": "https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-at-scale/configure-organization-security/establish-complete-coverage/create-custom-configuration"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Scan Frequency and Community Feedback",
+          "paragraphs": [
+            {
+              "text": "Initial scans begin immediately after activation and typically complete within minutes to a few hours, depending on repository scale. Following the first scan, the platform reruns analyses daily as long as open Dependabot alerts remain present, ensuring verdicts adapt accurately to changes in source code and underlying advisories.",
+              "links": []
+            },
+            {
+              "text": "Developers wishing to share questions, report issues, or provide feedback on the new reachability analysis preview are encouraged to participate in the designated community discussion.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "Dependabot",
+        "Security",
+        "JavaScript",
+        "TypeScript",
+        "CodeQL",
+        "Software Development"
+      ],
+      "entities": [
+        "GitHub",
+        "Dependabot",
+        "CodeQL"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "October 29, 2026",
+      "modifiedLabel": "October 29, 2026",
+      "readMinutes": 3,
+      "wordCount": 599
+    }
+  },
+  "datePublished": "2026-10-29T00:46:28.187302+03:00",
+  "dateModified": "2026-10-29T00:46:28.187302+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/prioritize-dependabot-alerts-with-reachability-analysis/hero.webp",
+    "card": "/forum/assets/posts/2026/10/prioritize-dependabot-alerts-with-reachability-analysis/card.webp",
+    "social": "/forum/assets/posts/2026/10/prioritize-dependabot-alerts-with-reachability-analysis/social.jpg",
+    "alt": {
+      "ar": "GitHub تطلق تحليلاً للوصول لتبسيط تنبيهات Dependabot",
+      "en": "GitHub Introduces Dependabot Reachability Analysis Preview"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/11/669139577-e21748f7-f984-4dab-ab6e-6d5d68ddb19f.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/prioritize-dependabot-alerts-with-reachability-analysis/inline-01.webp",
+        "width": 1240,
+        "height": 1050,
+        "alt": {
+          "ar": "GitHub تطلق تحليلاً للوصول لتبسيط تنبيهات Dependabot",
+          "en": "Call paths view on a Dependabot alert, tracing a call from server.js through the moment package to the vulnerable function"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من GitHub Changelog",
+          "en": "Image related to the report from GitHub Changelog"
+        },
+        "credit": "GitHub Changelog",
+        "sourceUrl": "https://github.blog/changelog/2026-10-28-prioritize-dependabot-alerts-with-reachability-analysis/",
+        "originalUrl": "https://github.com/user-attachments/assets/85a1c0bd-5d68-4f27-ad63-73746d5ddaa9"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/prioritize-dependabot-alerts-with-reachability-analysis/inline-02.webp",
+        "width": 1400,
+        "height": 921,
+        "alt": {
+          "ar": "GitHub تطلق تحليلاً للوصول لتبسيط تنبيهات Dependabot",
+          "en": "Dependabot alerts list filtered by reachability:reachable, showing a Reachable label next to each alert's severity"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من GitHub Changelog",
+          "en": "Image related to the report from GitHub Changelog"
+        },
+        "credit": "GitHub Changelog",
+        "sourceUrl": "https://github.blog/changelog/2026-10-28-prioritize-dependabot-alerts-with-reachability-analysis/",
+        "originalUrl": "https://github.com/user-attachments/assets/d2b71b16-499b-4c1c-8f10-d9a941b86e2f"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-10-28-prioritize-dependabot-alerts-with-reachability-analysis/",
+      "type": "official",
+      "title": "Prioritize Dependabot alerts with reachability analysis"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-10-28-prioritize-dependabot-alerts-with-reachability-analysis",
+  "sourceTitle": "Prioritize Dependabot alerts with reachability analysis",
+  "trendScore": 109.15,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-28T21:46:28+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/prioritize-dependabot-alerts-with-reachability-analysis.json"
+}
