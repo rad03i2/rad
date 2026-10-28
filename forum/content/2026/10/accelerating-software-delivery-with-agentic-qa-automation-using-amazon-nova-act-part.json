@@ -1,0 +1,346 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "3592c2289faff55994bb",
+  "slug": "accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part/",
+    "en": "/forum/en/apps/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون توسّع أدوات QA Studio لإدارة فرق اختبار البرمجيات",
+      "description": "تقدّم أمازون ويب سيرفيسز في الجزء الثالث من سلسلة QA Studio ميزات جديدة لتنظيم الاختبارات وإدارة صلاحيات الفرق، مما يعزز كفاءة تسليم البرمجيات عبر منصات ذكية.",
+      "deck": "مع انتشار أتمتة الاختبارات، تتحول التحديات من كتابة الاختبارات إلى تنظيمها وتحديد المسؤوليات، وهو ما تعالجه التحديثات الأخيرة لمنصة QA Studio.",
+      "summaryBullets": [
+        "إضافة مفهوم 'التطبيقات' لتنظيم الاختبارات وربطها بمالكيها وبيئاتها.",
+        "توفير لوحات معلومات صحية تعتمد على مقاييس CloudWatch لتتبع معدلات النجاح والفشل.",
+        "نظام صلاحيات دقيق مبنٍ على الفرق والأدوار (Admin, Team Lead, Editor, Executor, Viewer).",
+        "دعم الوصول المشترك بين الفرق مع الحفاظ على أمان التعديلات."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي التوسع في أتمتة الاختبارات",
+          "paragraphs": [
+            {
+              "text": "مع نمو اعتماد أتمتة ضمان الجودة داخل المؤسسات، تظهر مشكلة جديدة لا تتعلق بكتابة الاختبارات بل بإدارتها. عندما تبدأ فرق متعددة في استخدام المنصة، يصبح تنظيم مئات حالات الاختبار وتحديد من يملك صلاحية التعديل عليها التحدي الحقيقي. في هذا الجزء الثالث من سلسلة QA Studio، تركز أمازون ويب سيرفيسز على حل هذه العقبة عبر إضافة ميزات تنظيمية وإدارية.",
+              "links": [
+                {
+                  "text": "أمازون ويب سيرفيسز",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part-3/"
+                }
+              ]
+            },
+            {
+              "text": "يهدف التحديث إلى الإجابة عن سؤالين أساسيين: كيف نعرف صحة تغطية الاختبارات لتطبيق معين؟ ومن هو المسؤول عن هذا التطبيق؟ في الجزء الأول من السلسلة، تم تقديم QA Studio كحل مرجعي مبني على تقنية Amazon Nova Act، مما يتيح للفرق تعريف الاختبارات بلغة طبيعية وتنفيذها عبر تنقل بصري مدعوم بالذكاء الاصطناعي. أما الجزء الثاني فقد أضاف مجموعات الاختبارات وأوامر سطر الأوامر لاختبارات الانحدار في خطوط التسليم المستمر.",
+              "links": [
+                {
+                  "text": "Amazon Nova Act",
+                  "url": "https://aws.amazon.com/ai/agentic-ai/nova-act/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مفهوم التطبيق كوحدة تنظيمية",
+          "paragraphs": [
+            {
+              "text": "في التحديث الجديد، يمثل 'التطبيق' في QA Studio النظام قيد الاختبار، سواء كان موقعاً إلكترونياً أو تطبيقاً ويب أو واجهة خدمة. يعمل التطبيق كحاوية تمنح مجموعة من الاختبارات 'منازل' وأصحاباً محددين. بدلاً من قائمة مسطحة تضم كل الاختبارات، تعمل كل فرقة داخل التطبيقات التي تملكها، مما يسهل تتبع الملكية والمساءلة.",
+              "links": []
+            },
+            {
+              "text": "يتطلب إنشاء تطبيق اسم وعنوان URL أساسي، بالإضافة إلى بيئات اختيارية مثل التطوير والاختبار والإنتاج. من صفحة التطبيق، يمكن للفرق إنشاء حالات استخدام جديدة أو إضافة موجودة، وتجميعها في مجموعات اختبارات. هذه البنية تضمن أن حالات الاستخدام ومجموعات الاختبارات ترث ملكية التطبيق الأم، مما يبسّط إدارة الصلاحيات على مستوى التطبيق بدلاً من اختبار فردي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مراقبة صحة التطبيقات عبر المقاييس",
+          "paragraphs": [
+            {
+              "text": "تسجل QA Studio نتيجة كل تنفيذ كمقاييس مخصصة في Amazon CloudWatch، مقسمة حسب التطبيق والبيئة. تحوّل هذه المقاييس إلى عرض بصري للصحة على صفحة التطبيق، حيث تظهر ثلاثة أرقام رئيسية: معدل النجاح، إجمالي عدد التنفيذات، وعدد الفشل الحالي. كما يحسب النظام 'درجة صحة' تتراوح بين 0 و100، تبدأ من معدل النجاح وتخصم عقوبة للاختبارات غير المستقرة (Flaky Tests)، مما يمنع تقديم صورة مثالية زائفة لتطبيق يعاني من تقلبات.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch",
+                  "url": "https://aws.amazon.com/cloudwatch/"
+                }
+              ]
+            },
+            {
+              "text": "يتيح تبويب المقاييس للفرق التحليل الزمني عبر نوافذ زمنية مدتها 7 أيام بدقة ساعة أو 30 يوماً بدقة يومية. يمكن تصفية العرض حسب البيئة لمقارنة سلوك بيئة الاختبار مع الإنتاج. كما توفر المنصة عرضين مخصصين: الأول يرتب الاختبارات غير المستقرة حسب تكرار تقلبها، والثاني يحدد الفشل الأخير للفرز السريع، مع ربط مباشر بسجلات المسارات والتسجيلات المرئية من الجزء الأول.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة المستخدمين والصلاحيات بناءً على الفرق",
+          "paragraphs": [
+            {
+              "text": "تحدد إدارة المستخدمين بناءً على الفرق أي التطبيقات تملكها كل فرقة. ينتمي كل تطبيق إلى فريق واحد فقط، ولا يرى أعضاء الفريق الآخر تطبيقاته. يحتوي كل عضو على أحد خمسة أدوار تراكمية: مدير (Admin) للوصول الشامل، قائد فريق (Team Lead) لإدارة الأعضاء وإنشاء التطبيقات، محرر (Editor) لإنشاء وتعديل الاختبارات، منفذ (Executor) للتشغيل فقط، ومشاهد (Viewer) للقراءة فقط.",
+              "links": []
+            },
+            {
+              "text": "بما أن الأدوار تراكمية، يمتلك قائد الفريق صلاحيات المحرر والمشاهد. تتبع صلاحية الوصول لحالة استخدام أو مجموعة اختبارات التطبيق الذي يحتويها. هذا التصميم يبقي إدارة الصلاحيات على مستوى التطبيق بدلاً من آلاف الاختبارات الفردية. يرى المدير صفحة مستخدمين تعرض كل الحسابات مع فرقها وأدوارها، وصفحة فرق تلخص عدد الأعضاء والتطبيقات لكل فريق، مما يتيح رؤية شاملة للتوسع التنظيمي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الوصول المشترك والتكامل التقني",
+          "paragraphs": [
+            {
+              "text": "نادراً ما تعمل الفرق في عزلة تامة؛ فقد تحتاج فرقة ميزات إلى تشغيل اختبارات على تطبيق تملكه فرقة منصات دون منحها صلاحية التعديل. يدعم QA Studio هذا السيناريو عبر 'الوصول المشترك'، حيث يمكن للفريق المالك مشاركة التطبيق مع فرق أخرى بصلاحيات محددة. هذا يضمن التعاون الكافي مع الحفاظ على أمان الملكية والتحكم في التغييرات.",
+              "links": []
+            },
+            {
+              "text": "تستند البنية التحتية لهذه الميزات إلى خدمات أمازون السحابية الأساسية مثل Amazon Cognito لإدارة الهوية، وAWS Lambda للمعالجة، وAmazon DynamoDB للتخزين، وAmazon API Gateway للواجهات البرمجية، مع إمكانية النشر عبر AWS Cloud Development Kit. هذه التكاملات تضمن قابلية التوسع والأمان اللازمين لتبني حلول ضمان الجودة المؤسسية الكبيرة.",
+              "links": [
+                {
+                  "text": "Amazon Cognito",
+                  "url": "https://aws.amazon.com/cognito/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون ويب سيرفيسز",
+        "ضمان الجودة",
+        "أتمتة الاختبارات",
+        "الذكاء الاصطناعي",
+        "QA Studio",
+        "Amazon Nova Act",
+        "إدارة المشاريع"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز",
+        "QA Studio",
+        "Amazon Nova Act",
+        "Amazon CloudWatch",
+        "Amazon Cognito"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "28 أكتوبر 2026",
+      "modifiedLabel": "28 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 660
+    },
+    "en": {
+      "title": "Scaling QA Studio with Applications and Access Control",
+      "description": "Part 3 of the QA Studio series introduces applications for organizing tests, health metrics reporting, and team-based user management.",
+      "deck": "The latest installment of the QA Studio series addresses the complexities of scaling automated testing across organizations by introducing structured applications, comprehensive health metrics, and robust team-based user management.",
+      "summaryBullets": [
+        "QA Studio adds structured applications to organize tests, group use cases, and assign clear ownership across teams.",
+        "New health metrics track pass rates, executions, and failures, including specialized views for flaky tests and recent errors.",
+        "Team-based user management establishes five cumulative roles to control who can view, execute, edit, or administer tests.",
+        "The system utilizes technologies such as Amazon Nova Act to streamline visual navigation and test execution."
+      ],
+      "sections": [
+        {
+          "heading": "Scaling Test Automation Across Organizations",
+          "paragraphs": [
+            {
+              "text": "As quality assurance automation adoption grows inside an organization, a new operational challenge emerges that has little to do with writing individual tests. When multiple teams begin using test automation, hundreds of test cases belonging to different products accumulate, leaving no quick way to assess overall application test coverage health. In the initial rollout of this architecture, as detailed in the first post , teams learned to define tests in natural language and execute them using AI-powered visual navigation via <a href=\"https://aws.amazon.com/ai/agentic-ai/nova-act/\">Amazon Nova Act</a>.",
+              "links": [
+                {
+                  "text": "first post",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act/"
+                },
+                {
+                  "text": "Amazon Nova Act",
+                  "url": "https://aws.amazon.com/ai/agentic-ai/nova-act/"
+                }
+              ]
+            },
+            {
+              "text": "Following subsequent updates—such as those introduced in the second post for batch regression testing in continuous integration and continuous delivery pipelines—Part 3 of the QA Studio series introduces structural capabilities to help organizations scale test automation securely and efficiently.",
+              "links": [
+                {
+                  "text": "second post",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part-2/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Organizing Tests with Applications",
+          "paragraphs": [
+            {
+              "text": "To solve the organizational bottleneck of managing sprawling test suites, QA Studio introduces applications to represent systems under test, such as websites, web applications, and service front ends. An application acts as a container that provides a home and an assigned owner for a specific collection of tests. Individual use cases and regression test suites belong directly to an application, allowing teams to inherit ownership seamlessly.",
+              "links": []
+            },
+            {
+              "text": "Instead of navigating a single flat list containing every test across a deployment, individual squads work exclusively within the applications they own. Creating an application requires only a name, a base URL, and an optional set of environments like development, staging, and production. From the application page, teams can create new use cases in context, incorporate existing ones, and group them into structured test suites while monitoring overall health metrics.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Understanding Application Health and Metrics",
+          "paragraphs": [
+            {
+              "text": "Understanding test results over time helps teams determine whether an application's development lifecycle remains healthy, going beyond checking whether a single build is ready for release. QA Studio records execution outcomes, which can be integrated with tools like <a href=\"https://aws.amazon.com/cloudwatch/\">Amazon CloudWatch</a> custom metrics, dimensioned by specific applications and environments to present a comprehensive health view.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch",
+                  "url": "https://aws.amazon.com/cloudwatch/"
+                }
+              ]
+            },
+            {
+              "text": "The top of the application page displays three key figures: the pass rate over a selected window, the total number of executions, and the current failure count. Additionally, QA Studio computes a health score ranging from zero to one hundred, starting from the pass rate and subtracting penalties for flaky tests to prevent falsely perfect performance pictures. Dedicated views also allow teams to rank flaky use cases and review recent failures for quick triage.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Team-Based User Management and Roles",
+          "paragraphs": [
+            {
+              "text": "While metrics report on application health, team-based user management establishes ownership boundaries. QA Studio organizes access around distinct teams where an application belongs to exactly one team, restricting visibility for unauthorized users. Every team member holds one of five cumulative roles: Admin, Team Lead, Editor, Executor, and Viewer.",
+              "links": []
+            },
+            {
+              "text": "The Admin role provides studio-wide access to every team, application, and user account. Team Leads manage their own members and create applications, while Editors create and modify use cases and test suites. Executors run tests without changing them, and Viewers maintain read-only access to team applications and results, simplifying permission management at the application level.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "QA Automation",
+        "Amazon Nova Act",
+        "Software Testing",
+        "Cloud Architecture",
+        "DevOps",
+        "Continuous Integration"
+      ],
+      "entities": [
+        "Amazon Nova Act",
+        "Amazon CloudWatch",
+        "QA Studio"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "October 28, 2026",
+      "modifiedLabel": "October 28, 2026",
+      "readMinutes": 3,
+      "wordCount": 607
+    }
+  },
+  "datePublished": "2026-10-28T22:24:36.938106+03:00",
+  "dateModified": "2026-10-28T22:24:36.938106+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part/hero.webp",
+    "card": "/forum/assets/posts/2026/10/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part/card.webp",
+    "social": "/forum/assets/posts/2026/10/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part/social.jpg",
+    "alt": {
+      "ar": "أمازون توسّع أدوات QA Studio لإدارة فرق اختبار البرمجيات",
+      "en": "Scaling QA Studio with Applications and Access Control"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21434-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part/inline-01.webp",
+        "width": 1346,
+        "height": 626,
+        "alt": {
+          "ar": "أمازون توسّع أدوات QA Studio لإدارة فرق اختبار البرمجيات",
+          "en": "QA Studio application detail page showing pass rate, executions, and failures above the use cases and test suites tabs"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part-3/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21434-1-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part/inline-02.webp",
+        "width": 1347,
+        "height": 1050,
+        "alt": {
+          "ar": "أمازون توسّع أدوات QA Studio لإدارة فرق اختبار البرمجيات",
+          "en": "QA Studio metrics tab with a daily success and failure chart, failure hotspots, and a flaky use case ranking"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part-3/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21434-2-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part/inline-03.webp",
+        "width": 1400,
+        "height": 288,
+        "alt": {
+          "ar": "أمازون توسّع أدوات QA Studio لإدارة فرق اختبار البرمجيات",
+          "en": "QA Studio studio-wide Users page listing each account with its team and role, with team and role filters"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part-3/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21434-3-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part/inline-04.webp",
+        "width": 1400,
+        "height": 301,
+        "alt": {
+          "ar": "أمازون توسّع أدوات QA Studio لإدارة فرق اختبار البرمجيات",
+          "en": "QA Studio Teams page listing each team with its member count and application count"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part-3/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21434-4-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part-3/",
+      "type": "official",
+      "title": "Accelerating software delivery with agentic QA automation using Amazon Nova Act – Part 3"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part-3",
+  "sourceTitle": "Accelerating software delivery with agentic QA automation using Amazon Nova Act – Part 3",
+  "trendScore": 130.6,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-28T19:24:37+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part.json"
+}
