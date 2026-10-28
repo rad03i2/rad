@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "d48e37e09df5a7b1656f",
+  "slug": "github-agentic-workflows-generally-available",
+  "categorySlug": "automation",
+  "urls": {
+    "ar": "/forum/ar/automation/github-agentic-workflows-generally-available/",
+    "en": "/forum/en/automation/github-agentic-workflows-generally-available/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub يطلق أتمتة العمل الوكيلية بشكل عام",
+      "description": "أعلنت GitHub عن إتاحة Agentic Workflows بشكل عام، مما يتيح للمطورين أتمتة المهام المعقدة باستخدام وكلاء البرمجة داخل GitHub Actions مع أمان متقدم.",
+      "deck": "أصبح مشروع GitHub Agentic Workflows مفتوح المصدر متاحاً بشكل عام، مما يتيح للمطورين أتمتة المهام المعقدة مثل فرز المشكلات وتحليل أخطاء CI باستخدام وكلاء البرمجة داخل بيئة GitHub Actions.",
+      "summaryBullets": [
+        "إتاحة Agentic Workflows بشكل عام لجميع خطط GitHub (Free, Team, Enterprise).",
+        "إمكانية تعريف الأتمتة بلغة طبيعية في ملفات Markdown وتحويلها تلقائياً إلى YAML.",
+        "تضمين طبقات أمان متعددة تشمل جدران حماية وكشف التهديدات وعزل الوكلاء.",
+        "دعم جديد لتشغيل الوكلاء على خوادم ARC الخاصة مع Docker-in-Docker.",
+        "تحسينات في التنبؤ بالميزانية وتوجيه النماذج حسب نوع المهمة."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق عام لأتمتة العمل الوكيلية",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة GitHub رسمياً عن إتاحة مشروع Agentic Workflows بشكل عام (GA)، وهو مشروع مفتوح المصدر طورته وحدة GitHub Next. يتيح هذا التحديث للمطورين أتمتة المهام التي تعتمد على الاستدلال، مثل فرز المشكلات (Issue Triage)، وتحليل أخطاء خطوط التكامل المستمر (CI)، وتحديث التوثيق، وكتابة الاختبارات، وذلك من خلال استخدام وكلاء البرمجة (Coding Agents) داخل بيئة GitHub Actions. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-10-28-github-agentic-workflows-generally-available/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تعريف الأتمتة بلغة طبيعية",
+          "paragraphs": [
+            {
+              "text": "تتميز هذه الأداة بقدرتها على قبول تعريفات الأتمتة بلغة طبيعية داخل ملفات Markdown، حيث يقوم النظام بتحويل هذه التعريفات تلقائياً إلى ملفات YAML قياسية متوافقة مع GitHub Actions. وبما أن هذه العمليات تعمل ضمن إطار GitHub Actions، فإنها تستفيد من مجموعات المشغلات (Runner Groups) والقيود السياسية (Policy Constraints) الموجودة مسبقاً في بيئة المستخدم. كما يتيح النظام للمستخدمين اختيار استخدام GitHub Copilot أو إحضار وكيل برمجة خاص بهم (BYO Agent) لتشغيل كل سير عمل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج ملموسة في بيئات التطوير",
+          "paragraphs": [
+            {
+              "text": "أشارت GitHub إلى أن نتائج تطبيق سير العمل الوكيلية قابلة للقياس. وذكر بن ألتن، كبير مديري فريق الاستراتيجية والهندسة والابتكار في شركة Accenture، أن أحد قادة الفرق وفّر حوالي 29 ساعة أسبوعياً في عمله التطويري وحده. وعلى مستوى الفريق بأكمله، تضاعفت سرعة التنفيذ (Velocity) أكثر من مرة في المتوسط، وأصبح الذكاء الاصطناعي مسؤولاً عن إنشاء 91% من التزامات (Commits) الفريق. كما ساهمت هذه الأتمتة في تقليل أخطاء الإنتاج من حوالي 11,000 خطأ يومياً إلى أقل من 1,000 خطأ، ودفع عملية هجرة تقنية من البداية إلى النهاية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "طبقات الأمان والحماية",
+          "paragraphs": [
+            {
+              "text": "تدمج GitHub Agentic Workflows طبقات حماية متعددة لضمان أمان الأتمتة. تعمل الوكلاء على الوصول إلى محتوى GitHub باحترام قواعد فلتر السلامة (Integrity Filter)، وتعمل بصلاحيات قراءة فقط افتراضياً، وتنفيذ داخل حاوية معزولة (Sandboxed Container) خلف جدار حماية سير العمل الوكيل (Agent Workflow Firewall). كما يتم التحقق من المخرجات من خلال عملية مخرجات آمنة، ويوجد عمل مخصص لكشف التهديدات يفحص جميع التغييرات المقترحة قبل تطبيقها.",
+              "links": [
+                {
+                  "text": "Agent Workflow Firewall",
+                  "url": "https://github.github.com/gh-aw/introduction/architecture/?utm_source=agentic-workflows-changelog-firewall&utm_medium=changelog&utm_campaign=universe-2026#agent-workflow-firewall-awf"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "قدرات جديدة للإتاحة العامة",
+          "paragraphs": [
+            {
+              "text": "شملت حزمة الإصدار العام عدة تحسينات تقنية، منها دعم Actions Runner Controller (ARC) و Docker-in-Docker، مما يتيح تشغيل سير العمل الوكيلية على خوادم ARC المستضافة ذاتياً. كما تم تحسين التنبؤ بالميزانية، حيث لم يعد الأمر تجريبياً، ويشمل الآن أرصدة كشف التهديدات والنطاقات الشهرية للحصول على صورة أوضح عن إنفاق أرصدة الذكاء الاصطناعي. بالإضافة إلى ذلك، تم تحديث قائمة النماذج، وإتاحة اختيار مزودي النماذج لكل سير عمل، وإضافة قوالب سير عمل جديدة يمكن إضافتها عبر أداة gh aw add-wizard.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توجيه النماذج والعزل المحسن",
+          "paragraphs": [
+            {
+              "text": "أضاف النظام ميزة توجيه النماذج (Model Routing)، التي تسمح لسير العمل باستخدام موجّه نماذج يحسّن الأداء بناءً على نوع المهمة وصعوبتها. كما تم تحسين عزل الوكلاء، حيث يمكن تشغيلهم داخل Cloud Hypervisor أو NVX micro-VM، مع استخدام enclaves لمنع تسرب البيانات في سير العمل التي تمتد عبر مستودعات متعددة. يمكن للمستخدمين الاطلاع على قائمة التغييرات الكاملة في ملاحظات الإصدار.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البدء والاستخدام",
+          "paragraphs": [
+            {
+              "text": "أصبح GitHub Agentic Workflows متاحاً بشكل عام على github.com لخطط GitHub Free و Team و Enterprise. يتطلب استخدام محرك GitHub Copilot CLI الافتراضي لتشغيل سير العمل امتلاك ترخيص Copilot. يمكن للمطورين البدء بمتابعة دليل البدء السريع لتثبيت امتداد CLI وتشغيل أول سير عمل في دقائق. كما يمكن استكشاف سير العمل المبنية مسبقاً في مستودع agentics الخاص بـ GitHub Next، والذي يقدم أمثلة جاهزة للاستخدام تغطي فرز المشكلات، وإدارة الاعتماديات، ومراجعة الشيفرة، والإبلاغ.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "أتمتة",
+        "ذكاء اصطناعي",
+        "GitHub Actions",
+        "وكلاء برمجة",
+        "تطوير البرمجيات",
+        "أمان"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Next",
+        "GitHub Agentic Workflows",
+        "GitHub Copilot",
+        "Accenture",
+        "Ben Alton"
+      ],
+      "category": "الأتمتة",
+      "dateLabel": "28 أكتوبر 2026",
+      "modifiedLabel": "28 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 608
+    },
+    "en": {
+      "title": "GitHub Agentic Workflows Generally Available for Automation",
+      "description": "GitHub Next's open-source Agentic Workflows project is now generally available, bringing reasoning-based automation to GitHub Actions.",
+      "deck": "GitHub has officially launched GitHub Agentic Workflows into general availability, allowing developers to automate reasoning-based tasks using coding agents inside GitHub Actions.",
+      "summaryBullets": [
+        "GitHub Agentic Workflows, an open-source project from GitHub Next, is now generally available on github.com.",
+        "Developers can define automation in natural language Markdown files that compile into standard Actions YAML.",
+        "Workflows incorporate layered safeguards including read-only defaults, sandboxing, and an Agent Workflow Firewall.",
+        "General availability features include Actions Runner Controller and Docker-in-Docker support, improved budget forecasting, and model routing."
+      ],
+      "sections": [
+        {
+          "heading": "General Availability and Core Capabilities",
+          "paragraphs": [
+            {
+              "text": "GitHub has announced that GitHub Agentic Workflows is now generally available. Originating as an open-source project from GitHub Next, the tool lets developers automate reasoning-based tasks—such as issue triage, CI failure analysis, documentation updates, and test writing—by integrating coding agents directly inside GitHub Actions. You can get started by checking the GitHub Agentic Workflows release notes and following the quickstart guide.",
+              "links": [
+                {
+                  "text": "GitHub Agentic Workflows release notes",
+                  "url": "https://github.com/github/gh-aw/releases"
+                },
+                {
+                  "text": "quickstart guide",
+                  "url": "https://github.github.com/gh-aw/setup/quick-start/?utm_source=agentic-workflows-changelog-quickstart&utm_medium=changelog&utm_campaign=universe-2026/"
+                }
+              ]
+            },
+            {
+              "text": "Users can define their automation within natural language Markdown files, which are then compiled by GitHub Agentic Workflows into standard Actions YAML. Because these operate as standard GitHub Actions, they seamlessly reuse existing runner groups and policy constraints. Teams can power each workflow using GitHub Copilot or by bringing their own preferred coding agent. More information is available through the GitHub Agentic Workflows documentation.",
+              "links": [
+                {
+                  "text": "GitHub Agentic Workflows documentation",
+                  "url": "https://github.github.com/gh-aw/?utm_source=agentic-workflows-changelog-docs&utm_medium=changelog&utm_campaign=universe-2026"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Real-World Impact and Developer Velocity",
+          "paragraphs": [
+            {
+              "text": "According to feedback from early implementations, the developer workflows have delivered measurable results. Ben Alton, a senior manager on the Strategy, Architecture & Innovation team at Accenture, noted that one of his leads saved an estimated 29 hours a week on development work alone. Across the team, measured velocity more than doubled on average, and AI authorship scaled to cover 91% of commits.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, teams utilizing these workflows reported a significant reduction in production errors, dropping from roughly 11,000 per day to under 1,000, while successfully driving end-to-end technology migrations. Prebuilt workflows covering triage, dependency management, code review, and reporting can be found in the agentics repository.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Layered Safeguards and Security Controls",
+          "paragraphs": [
+            {
+              "text": "Security is a central focus of the general release. GitHub Agentic Workflows incorporates layered safeguards for automation processes. Agents access content while strictly respecting integrity filter rules and operating under read-only permissions by default. Furthermore, they execute inside sandboxed containers protected by the Agent Workflow Firewall.",
+              "links": [
+                {
+                  "text": "Agent Workflow Firewall",
+                  "url": "https://github.github.com/gh-aw/introduction/architecture/?utm_source=agentic-workflows-changelog-firewall&utm_medium=changelog&utm_campaign=universe-2026#agent-workflow-firewall-awf"
+                }
+              ]
+            },
+            {
+              "text": "Additional security measures include output validation through the safe outputs process and a dedicated threat detection job that actively scans all proposed changes prior to their application. This ensures that automated actions remain secure and predictable across enterprise environments.",
+              "links": [
+                {
+                  "text": "threat detection",
+                  "url": "https://github.github.com/gh-aw/reference/threat-detection/?utm_source=agentic-workflows-changelog-threat-detection&utm_medium=changelog&utm_campaign=universe-2026"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "New Features and General Availability Enhancements",
+          "paragraphs": [
+            {
+              "text": "The general availability release introduces several critical technical enhancements. Support has been added for Actions Runner Controller (ARC) and Docker-in-Docker, enabling teams to run agentic workflows directly on self-hosted ARC runners. Additionally, budget forecasting has been improved; the `gh aw forecast` command is no longer experimental and now incorporates threat detection credits alongside monthly ranges for comprehensive AI credit tracking.",
+              "links": []
+            },
+            {
+              "text": "Other additions include a refreshed model inventory, customizable model providers for individual workflows, and new workflow templates accessible via the `gh aw add-wizard`. Workflows can also leverage a model router designed to optimize selection based on task type and difficulty. For enhanced isolation, agents can execute inside a Cloud Hypervisor or NVX micro-VM, protecting against data leaks in cross-repository workflows through secure enclaves.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Availability and Licensing Requirements",
+          "paragraphs": [
+            {
+              "text": "GitHub Agentic Workflows is available on github.com across GitHub Free, Team, and Enterprise tiers. While bringing a custom coding agent is supported, utilizing the default GitHub Copilot CLI engine to power a workflow requires an active Copilot license.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "GitHub Actions",
+        "Agentic Workflows",
+        "Automation",
+        "Artificial Intelligence",
+        "GitHub Copilot",
+        "DevOps"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Next",
+        "GitHub Copilot",
+        "Accenture"
+      ],
+      "category": "Automation",
+      "dateLabel": "October 28, 2026",
+      "modifiedLabel": "October 28, 2026",
+      "readMinutes": 3,
+      "wordCount": 584
+    }
+  },
+  "datePublished": "2026-10-28T19:23:18.523617+03:00",
+  "dateModified": "2026-10-28T19:23:18.523617+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/github-agentic-workflows-generally-available/hero.webp",
+    "card": "/forum/assets/posts/2026/10/github-agentic-workflows-generally-available/card.webp",
+    "social": "/forum/assets/posts/2026/10/github-agentic-workflows-generally-available/social.jpg",
+    "alt": {
+      "ar": "GitHub يطلق أتمتة العمل الوكيلية بشكل عام",
+      "en": "GitHub Agentic Workflows Generally Available for Automation"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/10/680621053-8ccb2d63-3035-4ec2-b12d-2455b119183a.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-10-28-github-agentic-workflows-generally-available/",
+      "type": "official",
+      "title": "GitHub Agentic Workflows generally available"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-10-28-github-agentic-workflows-generally-available",
+  "sourceTitle": "GitHub Agentic Workflows generally available",
+  "trendScore": 137.73,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-28T16:23:18+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/github-agentic-workflows-generally-available.json"
+}
