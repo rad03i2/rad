@@ -1,5 +1,397 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-29T16:15:14+00:00",
-  "last_published_story_id": "71388d1960a212bec9bf"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-29T16:21:18+00:00",
+  "target_publish_at": "2026-10-29T19:35:13.722909+03:00",
+  "story": {
+    "title": "Accelerate agentic AI with NVIDIA Nemotron models on Amazon EKS and SageMaker HyperPod EKS",
+    "url": "https://aws.amazon.com/blogs/machine-learning/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker-hyperpod-eks",
+    "domain": "aws.amazon.com",
+    "summary": "NVIDIA Nemotron 3.5 Super VL is a 120B-parameter mixture-of-experts model that pairs reasoning and tool use with multimodal understanding. This post explores its architecture and use cases, then shows how to deploy it on Amazon EKS, EKS Auto Mode, and Amazon SageMaker HyperPod EKS with NVIDIA Dynamo and vLLM.",
+    "published_at": "2026-10-29T16:11:08+00:00",
+    "discovered_at": "2026-10-29T16:12:21+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 75,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "a9b9a484569ff3374252",
+    "trend": {
+      "score": 140.95,
+      "age_hours": 0.13,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker-hyperpod-eks/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Accelerate agentic AI with NVIDIA Nemotron models on Amazon EKS and SageMaker HyperPod EKS",
+      "title": "Accelerate agentic AI with NVIDIA Nemotron models on Amazon EKS and SageMaker HyperPod EKS | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "نشر نماذج Nemotron على منصات أمازون للذكاء الاصطناعي",
+      "description": "استكشف كيفية تسريع وكلاء الذكاء الاصطناعي باستخدام نماذج NVIDIA Nemotron على منصات Amazon EKS وSageMaker HyperPod EKS لتعزيز الأداء.",
+      "deck": "أعلنت أمازون وبدعم من أدوات وتقنيات متقدمة عن إمكانية تشغيل وتسريع نماذج نيفيديا نيموترون المتطورة للوكلاء الذكاء الاصطناعي على البنى التحتية السحابية الحديثة.",
+      "summary_bullets": [
+        "إطلاق نموذج NVIDIA Nemotron 3.5 Super VL كنموذج خبير يضم 120 مليار معامل.",
+        "دعم التكامل مع خدمات Amazon Elastic Kubernetes Service (Amazon EKS) وSageMaker HyperPod.",
+        "استخدام آليات متقدمة لتعزيز كفاءة التخزين المؤقت واستدلال البيانات.",
+        "إمكانية دمج مهام التفكير المنطقي والتعامل مع النصوص والصور والفيديوهات بكفاءة عالية."
+      ],
+      "sections": [
+        {
+          "heading": "مواصفات نموذج NVIDIA Nemotron الجديد",
+          "paragraphs": [
+            {
+              "text": "انضم نموذج NVIDIA Nemotron 3.5 Super VL إلى عائلة النماذج المتاحة على خدمات أمازون السحابية، حيث يُعد نموذجاً متطوراً يعتمد على هندسة مزيج الخبراء (MoE) مع 120 مليار معامل، وينشط 12 مليار معامل لكل رمز نصي. يجمع النموذج بين القدرة على الاستدلال، واستخدام الأدوات، وفهم النصوص والصور والمستندات ومقاطع الفيديو ضمن منصة واحدة تدعم مختلف المهام البصرية والنصية.",
+              "links": [
+                {
+                  "text": "NVIDIA Nemotron 3.5 Super VL",
+                  "url": "https://aws.amazon.com/about-aws/whats-new/2026/01/nvidia-nemotron-3.5-super-vl-on-sagemaker-jumpstart/"
+                }
+              ]
+            },
+            {
+              "text": "تم تصميم النموذج بهندسة هجينة تجمع بين طبقات Mamba-2 والانتباه وطبقات الخبراء مع مُشفر بصري من نوع RADIO. وقد أظهرت تقييمات الأداء تفوقاً ملحوظاً في اختبارات وكلاء الذكاء الاصطناعي والاستدلال على الرسوم البيانية، مما يجعله خياراً مثالياً للتطبيقات المعقدة التي تتطلب فهماً عميقاً متعدد الوسائط واستجابات دقيقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية النشر عبر خدمات أمازون كوبربريتس",
+          "paragraphs": [
+            {
+              "text": "توفر المبادرة التقنية إمكانية نشر هذه النماذج المتقدمة بسلاسة باستخدام خدمات الكลาود المدارة من أمازون. يمكن للمطورين الاستفادة من مرونة خدمات Amazon Elastic Kubernetes Service (Amazon EKS) وAmazon EKS Auto Mode لتشغيل أحمال العمل الثقيلة للذكاء الاصطناعي بكفاءة تشغيلية عالية وموثوقية مثبتة.",
+              "links": [
+                {
+                  "text": "Amazon Elastic Kubernetes Service (Amazon EKS)",
+                  "url": "https://aws.amazon.com/eks/"
+                },
+                {
+                  "text": "Amazon EKS Auto Mode",
+                  "url": "https://aws.amazon.com/eks/auto-mode/"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد البنية المعمارية الموصى بها على فصل العقد لتنفيذ مهام النظام وخدمات الاستدلال، حيث تتولى عقد الوحدات المركزية تشغيل أنظمة النظام بينما تتولى العقد المعززة بوحدات معالجة الرسوميات تشغيل النماذج الضخمة. يتم ربط عقد المعالجة الرسومية عبر محولات متطورة لضمان أداء مستقر وسرعة فائقة في معالجة البيانات عبر العقد المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع بيئات SageMaker HyperPod EKS",
+          "paragraphs": [
+            {
+              "text": "تتيح البيئة الهندسية المتكاملة إمكانية الاستفادة القصوى من بيئات التشغيل المتقدمة عبر تفعيل أحدث التقنيات السحابية. يُمكّن استخدام بيئة Amazon SageMaker HyperPod EKS فرق التطوير والذكاء الاصطناعي من إدارة وتوسيع نطاق المجموعات العنقودية الكبيرة المخصصة لتدريب واستدلال النماذج الكبيرة بكل يسر وسهولة.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod EKS",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-eks.html"
+                }
+              ]
+            },
+            {
+              "text": "تتكامل هذه البنية مع أدوات إضافية مثل NVIDIA Dynamo وvLLM لتقديم النماذج بشكل مجمّع أو مفكك، مما يتيح توزيع مراحل المعالجة الأولية والاستدلال على عقد مختلفة. تسهم هذه المرونة في تقليل زمن الانتقال وتحسين معدل النقل الإجمالي للرموز النصية، مما يلبي متطلبات الأداء الصارمة لتطبيقات الوكلاء المتقدمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دعم سير عمل وكلاء الذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "تدعم نماذج نيفيديا الجديدة مجموعة واسعة من سيناريوهات وكلاء الذكاء الاصطناعي التي تدمج بين التفكير المنطقي والفهم المرئي المتقدم. تشمل مجالات التطبيق البرمجة، والبحث عبر الويب، وفهم المستندات وتحليل الجداول والرسوم البيانية، بالإضافة إلى الأمن السيبراني وتحليل التهديدات، وفهم مقاطع الفيديو ومراجعة محتواها بدقة.",
+              "links": []
+            },
+            {
+              "text": "تتكامل هذه النماذج بسلاسة مع أطر عمل الوكلاء المفتوحة وأنظمة التنسيق من خلال التطبيقات المرجعية وأدوات نيفيديا المخصصة. يتيح ذلك للمؤسسات بناء وتخصيص وكلاء أذكياء قادرين على اتخاذ القرارات وحل المشكلات المعقدة بناءً على سياق بصري ونصي متكامل وموثوق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تقييم الأداء والتخطيط السعري",
+          "paragraphs": [
+            {
+              "text": "تعتمد فرق العمل على أدوات قياس الأداء المتخصصة لتقييم كفاءة النماذج المنشورة وتحديد مؤشرات الأداء الرئيسية مثل زمن الوصول للرمز الأول ومعدل نقل الرموز في الثانية. تساعد هذه القياسات في دراسة العلاقة بين حجم الاستعلامات المتزامنة وزمن الاستجابة، وهو ما يعد أمراً بالغ الأهمية للتخطيط الدقيق للسعة المخصصة للبنية التحتية.",
+              "links": []
+            },
+            {
+              "text": "تقدم المدونة الرسمية لآلة التعلم في أمازون تفاصيل شاملة حول معمارية النشر وخطوات الإعداد والتحقق من الكفاءة عبر الأكواد المرجعية المتاحة. تتيح هذه الموارد للمؤسسات إمكانية تجربة النشر وتقييم النتائج في حساباتهم السحابية الخاصة وتطوير حلول ذكاء اصطناعي فعالة وقابلة للتوسع.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون",
+        "نيفيديا",
+        "الحوسبة السحابية",
+        "كوبربريتس",
+        "نماذج اللغات الكبيرة"
+      ],
+      "entities": [
+        "NVIDIA",
+        "Amazon Web Services",
+        "NVIDIA Nemotron",
+        "Amazon EKS",
+        "Amazon SageMaker HyperPod EKS"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر بناءً على المصدر الرسمي مع التركيز على التقنيات السحابية ومواصفات النماذج."
+    },
+    "en": {
+      "title": "Deploying NVIDIA Nemotron 3.5 Super VL on AWS EKS and SageMaker",
+      "description": "Learn how to deploy the NVIDIA Nemotron 3.5 Super VL mixture-of-experts model on Amazon EKS, EKS Auto Mode, and SageMaker HyperPod EKS.",
+      "deck": "A new architectural reference implementation enables high-performance deployments of the NVIDIA Nemotron 3.5 Super VL multimodal model across Amazon Elastic Kubernetes Service (Amazon EKS) environments.",
+      "summary_bullets": [
+        "NVIDIA Nemotron 3.5 Super VL is a 120B-parameter mixture-of-experts model activating 12B parameters per token.",
+        "The model integrates reasoning and tool use with support for text, image, document, and video understanding.",
+        "Deployments can be executed on Amazon Elastic Kubernetes Service (Amazon EKS), Amazon EKS Auto Mode, and Amazon SageMaker HyperPod EKS using NVIDIA Dynamo and vLLM.",
+        "Validations have been conducted on p6-b200.48xlarge and p5en.48xlarge instances utilizing Elastic Fabric Adapter connections."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to NVIDIA Nemotron 3.5 Super VL",
+          "paragraphs": [
+            {
+              "text": "NVIDIA Nemotron 3.5 Super VL joins the NVIDIA Nemotron 3 Nano, Nano Omni, Super, Ultra, and Nemotron 3.5 Lightning models already available on AWS. It operates as a 120B-parameter mixture-of-experts model that activates 12 billion parameters per token. By combining advanced reasoning and tool use with comprehensive text, image, document, and video understanding, a single model can effectively serve both text-based and visual tasks.",
+              "links": []
+            },
+            {
+              "text": "The open multimodal model is distilled from Nemotron 3 Ultra, with NVIDIA publishing its weights, training datasets, and post-training recipes. This open approach allows developers to customize the architecture for domain-specific workloads and execute them on infrastructure under their direct control. The model utilizes hybrid Mamba-2, MoE, and attention layers alongside a RADIO vision encoder.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Performance Capabilities",
+          "paragraphs": [
+            {
+              "text": "The hybrid Mamba-Transformer MoE architecture interleaves Mamba-2, attention, and expert layers. Sparse routing activates a fraction of the total parameters, ensuring that the compute cost per token matches a much smaller model while GPU memory retains the full parameter set. Furthermore, Mamba-2 layers maintain a constant-size state during generation, preventing memory from expanding with sequence length in the manner typical of KV caches, which helps keep long-context operations affordable.",
+              "links": []
+            },
+            {
+              "text": "Nemotron 3.5 Super VL supports complex agent workflows that seamlessly combine logical reasoning with visual understanding. Use cases span across coding assistance, web research, document intelligence, cyber security threat triage, and video search or incident analysis. The model integrates with major open agent frameworks through official reference implementations and cookbooks.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deployment on AWS Infrastructure",
+          "paragraphs": [
+            {
+              "text": "A detailed technical walkthrough for deploying Nemotron 3.5 Super VL and Nemotron 3 Ultra is hosted via the aws-do-eks project. This workflow covers prerequisites, cluster creation, model weight downloads, deployment, testing, benchmarking, and cleanup procedures. The reference setup is designed to run smoothly on standard infrastructure including Amazon Elastic Kubernetes Service (Amazon EKS) and specialized orchestration platforms.",
+              "links": [
+                {
+                  "text": "Amazon Elastic Kubernetes Service (Amazon EKS)",
+                  "url": "https://aws.amazon.com/eks/"
+                }
+              ]
+            },
+            {
+              "text": "When utilizing Amazon EKS Auto Mode, AWS manages cluster scaling, GPU configurations, and Elastic Fabric Adapter support on behalf of the user. Kubernetes manifests remain consistent across orchestrator options. Control planes host the core APIs, while data planes separate standard system and test pods on CPU nodes from the resource-heavy model tasks running on GPU nodes.",
+              "links": [
+                {
+                  "text": "Amazon EKS Auto Mode",
+                  "url": "https://aws.amazon.com/eks/auto-mode/"
+                }
+              ]
+            },
+            {
+              "text": "For specialized high-performance workloads, administrators can also configure deployments using Amazon SageMaker HyperPod EKS. Container images are stored within Amazon Elastic Container Registry, while model weights reside on shared Amazon FSx for Lustre volumes connected via Elastic Fabric Adapter interfaces.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod EKS",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-eks.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Validation and Benchmarking",
+          "paragraphs": [
+            {
+              "text": "NVIDIA Dynamo serves the model either aggregated on a single node or disaggregated, separating prefill and decode phases onto different nodes. For vision-language tasks, image and video encoding stages can run disaggregated on dedicated hardware nodes. These architectures have been thoroughly validated using instances equipped with NVIDIA B200 and NVIDIA H200 GPUs.",
+              "links": []
+            },
+            {
+              "text": "Cluster connectivity and network performance are verified using an NVIDIA Collective Communications Library all-reduce micro-benchmark. Observing active traffic across all hardware components confirms proper operational status. Performance metrics such as time to first token, inter-token latency, and token throughput can then be evaluated using the NVIDIA aiperf tool to plan capacity effectively.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "NVIDIA",
+        "Nemotron",
+        "Kubernetes",
+        "Artificial Intelligence",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "AWS",
+        "NVIDIA",
+        "Amazon EKS",
+        "SageMaker HyperPod"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based on official AWS Machine Learning Blog documentation."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:sections",
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 272,
+      "word_count_en": 520
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 556,
+      "word_count_en": 608
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "a9b9a484569ff3374252",
+      "title": "Accelerate agentic AI with NVIDIA Nemotron models on Amazon EKS and SageMaker HyperPod EKS",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:sections",
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 272,
+          "word_count_en": 520
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 556,
+          "word_count_en": 608
+        }
+      ]
+    }
+  ],
+  "slug": "accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker/hero.webp",
+    "card": "/forum/assets/posts/2026/10/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker/card.webp",
+    "social": "/forum/assets/posts/2026/10/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker/social.jpg",
+    "alt": {
+      "ar": "نشر نماذج Nemotron على منصات أمازون للذكاء الاصطناعي",
+      "en": "Deploying NVIDIA Nemotron 3.5 Super VL on AWS EKS and SageMaker"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-21105-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker/inline-01.webp",
+        "width": 702,
+        "height": 408,
+        "alt": {
+          "ar": "نشر نماذج Nemotron على منصات أمازون للذكاء الاصطناعي",
+          "en": "Standard Amazon EKS cluster with a control plane, CPU and GPU data plane nodes, Amazon ECR, Amazon FSx for Lustre, and EFA connectivity"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker-hyperpod-eks/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-21105-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker/inline-02.webp",
+        "width": 702,
+        "height": 439,
+        "alt": {
+          "ar": "نشر نماذج Nemotron على منصات أمازون للذكاء الاصطناعي",
+          "en": "Dashboard showing full GPU utilization and EFA adapter traffic during an NCCL all-reduce test"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker-hyperpod-eks/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-21105-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker/inline-03.webp",
+        "width": 702,
+        "height": 436,
+        "alt": {
+          "ar": "نشر نماذج Nemotron على منصات أمازون للذكاء الاصطناعي",
+          "en": "aiperf output panes showing time to first token, inter-token latency, and throughput metrics for the deployed model"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker-hyperpod-eks/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-21105-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker/inline-04.webp",
+        "width": 936,
+        "height": 580,
+        "alt": {
+          "ar": "نشر نماذج Nemotron على منصات أمازون للذكاء الاصطناعي",
+          "en": "Concurrency sweep chart comparing TTFT and ITL for aggregated versus disaggregated deployments across concurrency levels"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker-hyperpod-eks/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-21105-4.png"
+      }
+    ]
+  }
 }
