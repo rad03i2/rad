@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "ec60372839277a56324c",
+  "slug": "microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates",
+  "categorySlug": "computers",
+  "urls": {
+    "ar": "/forum/ar/computers/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates/",
+    "en": "/forum/en/computers/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates/"
+  },
+  "locales": {
+    "ar": {
+      "title": "مايكروسوفت تصلح عطل سطح المكتب عن بُعد في تحديثات ويندوز",
+      "description": "أعلنت مايكروسوفت عن إصلاح مشكلة تمنع المستخدمين العاديين من الاتصال عبر سطح المكتب عن بُعد عند تفعيل ميزة حماية المسؤول، مع توفير حل بديل مؤقت.",
+      "deck": "تم حل عطل تقني كان يؤثر على اتصالات سطح المكتب عن بُعد في أنظمة ويندوز 11، حيث كانت ميزة الأمان الجديدة تعيق وصول المستخدمين غير المشرفين.",
+      "summaryBullets": [
+        "تم إصلاح المشكلة عبر تحديث KB5127936 الذي صدر في 28 أكتوبر 2026.",
+        "العطل كان يمنع المستخدمين العاديين من الاتصال بسبب تفعيل ميزة حماية المسؤول.",
+        "توفر مايكروسوفت حلاً مؤقتاً يتطلب تعطيل السياسة عبر Intune أو Group Policy.",
+        "المشكلة تؤثر بشكل رئيسي على الأجهزة المدارة مؤسسياً المستخدمة كمضيفات للاتصال."
+      ],
+      "sections": [
+        {
+          "heading": "إصلاح عاجل لمشكلة الاتصال",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة مايكروسوفت رسمياً عن حل مشكلة معروفة كانت تمنع المستخدمين غير المشرفين من الاتصال بالأجهزة عبر تقنية سطح المكتب عن بُعد (Remote Desktop). جاء هذا الإعلان بعد فترة من التقارير التي أشارت إلى تعطل الخدمة لدى بعض المؤسسات، خاصة عندما تكون ميزة الأمان المعروفة باسم حماية المسؤول (Administrator protection) مفعلة على النظام. وتعتبر هذه الميزة جزءاً من استراتيجيات الأمان الحديثة التي تهدف إلى تعزيز حماية البيانات الحساسة ومنع التعديلات غير المصرح بها على نظام التشغيل. ويمكن الرجوع إلى BleepingComputer للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Administrator protection",
+                  "url": "https://www.bleepingcomputer.com/tag/administrator-protection/"
+                },
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل ميزة الحماية",
+          "paragraphs": [
+            {
+              "text": "عند تفعيل ميزة حماية المسؤول، يقوم نظام ويندوز بطلب مصادقة إضافية من المستخدمين القياسيين (Standard Users) باستخدام تقنية Windows Hello، سواء عبر رمز PIN أو البيانات البيومترية. يحدث هذا الطلب عند محاولة المستخدم تغيير إعدادات السجل (Registry) أو تثبيت تطبيقات جديدة. بدأت هذه الميزة في الانتشار تدريجياً منذ أكتوبر 2025، وأصبحت مفعلة افتراضياً في المؤسسات التي تستخدم خطوط أساس أمان ويندوز (Windows security baselines) بعد تثبيت تحديثات الأمان لشهر أكتوبر 2026. هذا التوجه يعكس رغبة مايكروسوفت في رفع مستوى الأمان الافتراضي على أجهزة العمل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تفاصيل العطل التقني",
+          "paragraphs": [
+            {
+              "text": "اعترفت مايكروسوفت في 13 أكتوبر بوجود خلل يؤدي إلى فشل اتصالات سطح المكتب عن بُعد مع ظهور رمز الخطأ 0xC000000D. حدث هذا العطل بعد تثبيت التحديث غير الأمني KB5124010 لشهر سبتمبر 2026، أو أي تحديثات لاحقة صدرت بعده، على الأنظمة التي تعمل بإصدارات ويندوز 11 24H2 وما بعدها. وأوضح البيان الرسمي أن المشكلة تؤثر بشكل أساسي على الأجهزة البعيدة المدارة مؤسسياً والتي تعمل كمضيفات لسطح المكتب عن بُعد مع تفعيل ميزة حماية المسؤول، بغض النظر عن الطريقة التي تم تفعيل الميزة بها. هذا التأكيد يؤكد أن العطل مرتبط بتفاعل بين تحديث النظام وميزة الأمان الجديدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الحل الدائم عبر التحديثات",
+          "paragraphs": [
+            {
+              "text": "أكدت مايكروسوفت يوم الأربعاء أن المشكلة تم حلها للمستخدمين الذين قاموا بتثبيت التحديث المسبق KB5127936 لهذا الشهر. وأشارت الشركة في بيانها إلى أن هذا العطل تم معالجته من خلال تحديثات ويندوز التي صدرت في 28 أكتوبر 2026، والتي تحمل الرقم المرجعي KB5127936، وأي تحديثات لاحقة. ونصحت الشركة المستخدمين بتثبيت أحدث تحديث أمان متاح لأجهزتهم، مشيرة إلى أنه يحتوي على تحسينات مهمة وحلول للمشكلات، بما في ذلك هذا العطل المحدد. يُعد هذا التحديث جزءاً من سلسلة التحديثات المسبقة التي تهدف إلى اختبار الاستقرار قبل الإطلاق الشامل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حل بديل مؤقت للمؤسسات",
+          "paragraphs": [
+            {
+              "text": "بالإضافة إلى التحديث، تقدم مايكروسوفت حلاً مؤقتاً للمستخدمين الذين يفضلون عدم تثبيت التحديث المسبق والانتظار حتى التحديثات التراكمية الشهرية القادمة في يوم الثلاثاء التصحيحي (Patch Tuesday). يتطلب هذا الحل من مسؤولي تقنية المعلومات تعطيل ميزة حماية المسؤول عن طريق إعادة تعيين سياسة \"نوع وضع موافقة المسؤول لحساب المستخدم\" (User Account Control Type Of Admin Approval Mode). يمكن تنفيذ هذا الإجراء عبر أدوات إدارة مثل Microsoft Intune أو Group Policy. يوفر هذا الخيار مرونة للمؤسسات التي لديها سياسات صارمة لتثبيت التحديثات فقط في أوقات محددة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "سجل سابق لمشكلات مشابهة",
+          "paragraphs": [
+            {
+              "text": "لم تكن هذه المرة الأولى التي تواجه فيها مايكروسوفت مشكلات تتعلق بخدمات سطح المكتب عن بُعد. فقد أصلحت الشركة مشكلة مشابهة في مارس 2025 كانت تسبب فشل اتصالات سطح المكتب وخدمات RDS بعد تثبيت تحديثات ويندوز الصادرة منذ يناير 2025. كما أصدرت الشركة في الشهر الماضي تحديثات ويندوز طارئة خارج الجدول الزمني المعتاد (out-of-band) لإصلاح أعطال خدمات سطح المكتب عن بُعد التي سببتها تحديثات الأمان لشهر سبتمبر 2026. تشير هذه السلسلة من الأحداث إلى تحديات تقنية متكررة في ضمان توافق ميزات الأمان الجديدة مع خدمات الاتصال عن بُعد.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "مايكروسوفت",
+        "ويندوز 11",
+        "سطح المكتب عن بُعد",
+        "تحديثات الأمان",
+        "KB5127936",
+        "إدارة تقنية المعلومات"
+      ],
+      "entities": [
+        "مايكروسوفت",
+        "ويندوز 11",
+        "KB5127936",
+        "KB5124010",
+        "Administrator protection",
+        "Windows Hello",
+        "Microsoft Intune",
+        "Group Policy"
+      ],
+      "category": "الحواسيب",
+      "dateLabel": "29 أكتوبر 2026",
+      "modifiedLabel": "29 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 617
+    },
+    "en": {
+      "title": "Microsoft fixes Remote Desktop failures in Windows",
+      "description": "Microsoft has fixed a Windows 11 issue that blocked non-admin Remote Desktop connections when Administrator protection was enabled.",
+      "deck": "Microsoft has resolved a Windows 11 issue that caused Remote Desktop connections to fail for non-admin users on affected managed devices. The fix is included in updates released on October 28 and later.",
+      "summaryBullets": [
+        "The failure affected non-admin Remote Desktop users on Windows 11 24H2 and later.",
+        "Microsoft traced the issue to systems using Administrator protection.",
+        "The fix is included in the KB5127936 preview update and later releases.",
+        "Administrators can temporarily disable the affected policy while waiting for the next security update."
+      ],
+      "sections": [
+        {
+          "heading": "Microsoft confirms a Remote Desktop fix",
+          "paragraphs": [
+            {
+              "text": "Microsoft has fixed a known Windows 11 problem that prevented non-admin users from connecting to devices through Remote Desktop when the Administrator protection security feature was enabled. The company confirmed that the issue was resolved by Windows updates released on October 28, 2026, including the KB5127936 preview update, and by later updates.",
+              "links": [
+                {
+                  "text": "Administrator protection",
+                  "url": "https://www.bleepingcomputer.com/tag/administrator-protection/"
+                },
+                {
+                  "text": "KB5127936 preview update",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/windows-11-kb5127936-update-released-with-41-changes-and-fixes/"
+                }
+              ]
+            },
+            {
+              "text": "Microsoft recommends installing the latest security update because it includes the Remote Desktop correction along with other improvements and issue resolutions. The company’s notice applies to users who installed the preview update or any later Windows release containing the fix.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Who was affected",
+          "paragraphs": [
+            {
+              "text": "The issue primarily affected enterprise-managed remote devices being used as Remote Desktop hosts. Microsoft said the problem could occur on systems running Windows 11 version 24H2 and later, regardless of how Administrator protection had been enabled.",
+              "links": []
+            },
+            {
+              "text": "Microsoft acknowledged the problem on October 13 after users reported Remote Desktop connection failures with error code 0xC000000D. The failures began after the KB5124010 September 2026 non-security preview update or Windows updates released after it. A report from BleepingComputer described the problem as affecting non-admin users rather than administrators.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "How Administrator protection works",
+          "paragraphs": [
+            {
+              "text": "Administrator protection is a Windows security feature designed to add an authentication step for standard users when they perform actions that require elevated privileges. When the feature is active, users are prompted to authenticate with Windows Hello, such as a PIN or biometric method, when changing the Windows Registry or installing new applications.",
+              "links": []
+            },
+            {
+              "text": "The feature began rolling out in October 2025. It became enabled by default for organizations using Windows security baselines after those organizations installed the October 2026 Windows security update. That rollout increased the number of managed systems where the Remote Desktop problem could appear.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Temporary workaround for administrators",
+          "paragraphs": [
+            {
+              "text": "Organizations that do not want to install the preview update can use a temporary workaround while waiting for the next month’s Patch Tuesday cumulative updates. Microsoft advises IT administrators to disable Administrator protection by resetting the “User Account Control Type Of Admin Approval Mode” policy.",
+              "links": []
+            },
+            {
+              "text": "The policy can be reset through Microsoft Intune or Group Policy. This workaround changes the security configuration on affected devices, so administrators must decide whether to use it or install the available update based on their organization’s deployment and security requirements.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Part of a series of Remote Desktop issues",
+          "paragraphs": [
+            {
+              "text": "The latest incident follows other Remote Desktop and Remote Desktop Services problems linked to Windows updates. Microsoft fixed a similar issue in March 2025 that caused connection failures after updates released since January 2025.",
+              "links": []
+            },
+            {
+              "text": "The company also released emergency out-of-band Windows updates in September 2026 to address Remote Desktop Services failures caused by that month’s security updates. The incidents show how changes in Windows security and servicing can affect organizations that rely on Remote Desktop hosts for remote access.",
+              "links": []
+            },
+            {
+              "text": "For the current Administrator protection issue, Microsoft’s stated resolution is to install the update released on October 28, 2026, or a later release. Administrators managing Windows 11 24H2 and newer systems should verify that the relevant update has been deployed where non-admin Remote Desktop access is required.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Microsoft",
+        "Windows 11",
+        "Remote Desktop",
+        "Administrator protection",
+        "Windows updates",
+        "Remote Desktop Services"
+      ],
+      "entities": [
+        "Microsoft",
+        "Windows 11",
+        "Remote Desktop",
+        "Administrator protection",
+        "Microsoft Intune",
+        "Group Policy"
+      ],
+      "category": "Computing",
+      "dateLabel": "October 29, 2026",
+      "modifiedLabel": "October 29, 2026",
+      "readMinutes": 3,
+      "wordCount": 592
+    }
+  },
+  "datePublished": "2026-10-29T17:55:13.060944+03:00",
+  "dateModified": "2026-10-29T17:55:13.060944+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates/hero.webp",
+    "card": "/forum/assets/posts/2026/10/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates/card.webp",
+    "social": "/forum/assets/posts/2026/10/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates/social.jpg",
+    "alt": {
+      "ar": "مايكروسوفت تصلح عطل سطح المكتب عن بُعد في تحديثات ويندوز",
+      "en": "Microsoft fixes Remote Desktop failures in Windows"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/10/29/Windows_headpic.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates/",
+      "type": "journalism",
+      "title": "Microsoft fixes Remote Desktop failures caused by recent Windows updates"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates",
+  "sourceTitle": "Microsoft fixes Remote Desktop failures caused by recent Windows updates",
+  "trendScore": 101.98,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-29T14:55:13+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/microsoft-fixes-remote-desktop-failures-caused-by-recent-windows-updates.json"
+}
