@@ -1,5 +1,331 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-29T17:35:15+00:00",
-  "last_published_story_id": "0f01adb2acab0a67ba71"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-29T17:39:20+00:00",
+  "target_publish_at": "2026-10-29T20:55:14.366193+03:00",
+  "story": {
+    "title": "Lend and borrow resources across teams with AWS Batch’s quota management for SageMaker Training jobs",
+    "url": "https://aws.amazon.com/blogs/machine-learning/lend-and-borrow-resources-across-teams-with-aws-batchs-quota-management-for-sagemaker-training-jobs",
+    "domain": "aws.amazon.com",
+    "summary": "AWS Batch quota management is a new scheduling capability you can use to divide GPU capacity into quota shares per team or project, automatically lend idle capacity across shares, and use preemption to run your highest-priority SageMaker Training jobs first, all without manual coordination.",
+    "published_at": "2026-10-29T16:58:57+00:00",
+    "discovered_at": "2026-10-29T17:03:10+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "c69b58c8afe4ed5cc82e",
+    "trend": {
+      "score": 104.75,
+      "age_hours": 0.64,
+      "corroboration_count": 0,
+      "entity_momentum": 12.0,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/lend-and-borrow-resources-across-teams-with-aws-batchs-quota-management-for-sagemaker-training-jobs/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Lend and borrow resources across teams with AWS Batch’s quota management for SageMaker Training jobs",
+      "title": "Lend and borrow resources across teams with AWS Batch’s quota management for SageMaker Training jobs | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "AWS Batch تتيح إدارة حصص GPU بين فرق الذكاء الاصطناعي",
+      "description": "أطلقت AWS ميزة إدارة الحصص في AWS Batch لتوزيع سعة GPU بين الفرق، مع استعارة الموارد الخاملة تلقائياً وتنفيذ الأولويات دون تدخل يدوي.",
+      "deck": "تخفف الميزة الجديدة من عبء التنسيق اليدوي لإدارة موارد التدريب المشتركة، وتضمن تشغيل المهام ذات الأولوية القصوى أولاً.",
+      "summary_bullets": [
+        "تقسيم سعة GPU إلى حصص مخصصة لكل فريق أو مشروع مع استراتيجيات مشاركة مرنة.",
+        "استعارة الموارد الخاملة تلقائياً بين الحصص لرفع كفاءة الاستخدام وتقليل الهدر.",
+        "إمكانية استبدال المهام ذات الأولوية المنخفضة (Preemption) لضمان سرعة بدء المهام الحرجة.",
+        "تكامل مباشر مع SageMaker Python SDK لإرسال مهام التدريب إلى طوابير AWS Batch."
+      ],
+      "sections": [
+        {
+          "heading": "تجاوز تحديات التنسيق اليدوي",
+          "paragraphs": [
+            {
+              "text": "مع توسع المؤسسات في عمليات الذكاء الاصطناعي وتزايد عدد الفرق التي تعتمد على موارد التدريب المشتركة، أصبح تنسيق الوصول إلى وحدات معالجة الرسوميات (GPU) تحدياً إدارياً كبيراً. كانت الفرق تحتاج سابقاً إلى إنشاء طوابير منفصلة وضبط حدود السعة يدوياً لضمان وصول الموارد المناسبة في الوقت المناسب، مما أضاف طبقات من التعقيد والتواصل بين الإداريين. لاحظت شركة AWS هذا العبء المتزايد، حيث كان العملاء يطلبون طريقة لتعريف الحصص لكل فريق ومشاركة السعة الخاملة تلقائياً، وهو ما دفع الشركة لتطوير ميزة جديدة تعالج هذه المشكلة جذرياً. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/lend-and-borrow-resources-across-teams-with-aws-batchs-quota-management-for-sagemaker-training-jobs/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل إدارة الحصص",
+          "paragraphs": [
+            {
+              "text": "تعمل ميزة إدارة الحصص (Quota Management) كإمكانية جدولة جديدة داخل AWS Batch تتيح للإداريين تقسيم سعة الحوسبة إلى حصص (Quota Shares) منظمة حسب الفريق أو المشروع. كل حصة تتضمن حدود سعة محددة واستراتيجيات لمشاركة الموارد الخاملة. هذه الاستراتيجيات تحدد ما إذا كانت الموارد الخاملة ستُحجز، أو تُستعار لفرق أخرى لديها مهام معلقة، أو كليهما معاً. تعمل الحصة كطابور افتراضي متداخل ضمن طابور مهام رئيسي، مما يسمح لنظام AWS Batch بأولوية المعالجة للحصص التي لم تصل بعد إلى حدود سعتها القصوى.",
+              "links": [
+                {
+                  "text": "AWS Batch",
+                  "url": "https://aws.amazon.com/batch/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الاستعارة التلقائية والاستبدال",
+          "paragraphs": [
+            {
+              "text": "تتميز الميزة الجديدة بقدرتها على إدارة الموارد الديناميكية دون تدخل بشري. عندما تصل مهام جديدة إلى حصة قد تكون قد أعارت سعتها لفرق أخرى، يقوم النظام تلقائياً باستعادة هذه الموارد من خلال عملية تسمى الاستبدال بين الحصص (Cross-share preemption). هذا يعني أن الإداريين لم يعودوا بحاجة إلى تتبع المهام المستعارة وإيقافها يدوياً. كما يمكن للنظام السماح للمهام بالاستعارة من حصص أخرى إذا كانت سعتها خاملة، مما يضمن عدم هدر الموارد المتاحة. هذه الآلية تزيد من استغلال البنية التحتية الحالية بشكل كبير.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أولوية المهام داخل الحصة",
+          "paragraphs": [
+            {
+              "text": "إلى جانب إدارة الموارد بين الفرق، تتيح الميزة تفعيل الاستبدال بناءً على الأولوية داخل الحصة الواحدة (In-share preemption). عند تفعيل هذه الخاصية، يمكن للمهام ذات الأولوية الأعلى استبدال المهام ذات الأولوية المنخفضة التي تكون في حالة مجدولة أو قيد البدء أو التشغيل. هذا يضمن بدء تنفيذ المهام الحرجة في مقدمة الطابور بأسرع وقت ممكن. توفر هذه المرونة خيارات متعددة للإداريين، من حجز سعة ثابتة لا تتأثر بأي استبدال، إلى السماح بمرونة كاملة في استعارة الموارد واستبدالها حسب الحاجة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع SageMaker",
+          "paragraphs": [
+            {
+              "text": "لإتاحة استخدام هذه الميزات، قامت AWS بتوسيع وحدة aws_batch داخل مكتبة SageMaker Python SDK. يسمح هذا التكامل للمطورين بإرسال مهام تدريب SageMaker برمجياً إلى طوابير AWS Batch التي تم تفعيل إدارة الحصص فيها. يتطلب الإعداد إنشاء سياسة جدولة (Scheduling Policy) وبيئة خدمة (Service Environment) وطابور مهام مخصص. توفر AWS أمثلة عملية عبر واجهة سطر الأوامر (CLI) ولوحة التحكم، بالإضافة إلى كتيبات تعليمية (Notebooks) توضح كيفية تحديد الحصص وتخصيص استراتيجيات المشاركة لكل فريق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "سيناريوهات الاستخدام العملية",
+          "paragraphs": [
+            {
+              "text": "توضح الأمثلة العملية ثلاثة سيناريوهات نموذجية: الأول لمهام الخلفية التي تستفيد من استعارة أكبر قدر من السعة المتاحة مع قبول الاستبدال لأن المهام تستخدم نقاط تحقق (Checkpointing). الثاني لمهام ذات أولوية متوسطة تفضل الانتظار بدلاً من التعرض للاستبدال المتكرر. والثالث لمهام حرجة تتطلب بدءاً فورياً دون انقطاع، حيث يتم حجز السعة بالكامل دون إعارة أو استعارة. هذه المرونة تتيح لكل فريق اختيار الإعداد الأنسب لطبيعة عمله، مما يحسن من كفاءة العمليات الكلية للمنظمة دون التضحية بأداء المهام الحساسة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "SageMaker",
+        "AWS Batch",
+        "إدارة الموارد",
+        "الذكاء الاصطناعي",
+        "GPU",
+        "بنية تحتية سحابية"
+      ],
+      "entities": [
+        "AWS",
+        "AWS Batch",
+        "Amazon SageMaker",
+        "SageMaker Python SDK"
+      ],
+      "article_type": "news",
+      "confidence_note": "المحتوى مستند حصرياً إلى المدونة الرسمية لـ AWS Machine Learning، مع التركيز على الميزات التقنية الجديدة دون إضافة تقديرات خارجية."
+    },
+    "en": {
+      "title": "AWS Batch Adds Quota Management for SageMaker Training Jobs",
+      "description": "AWS Batch introduces quota management to divide GPU capacity into shares, automatically lend idle resources, and prioritize SageMaker training workloads.",
+      "deck": "AWS Batch has launched a new quota management capability designed to help organizations divide, share, and prioritize GPU compute resources across multiple machine learning teams and projects.",
+      "summary_bullets": [
+        "AWS Batch quota management allows teams to divide GPU capacity into specific quota shares per project or team.",
+        "The new feature automatically lends idle capacity across shares and uses preemption to run high-priority jobs first.",
+        "Resource-sharing strategies include RESERVE, LEND, and LEND_AND_BORROW to maximize overall compute utilization.",
+        "Integration is supported via the SageMaker Python SDK v3 for programmatic job submission."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of AWS Batch Quota Management",
+          "paragraphs": [
+            {
+              "text": "As artificial intelligence and machine learning operations scale across organizations, coordinating shared graphics processing unit (GPU) capacity can introduce substantial administrative overhead. To address this, <a href=\"https://aws.amazon.com/batch/\">AWS Batch</a> has introduced a new scheduling capability that allows administrators to divide compute capacity into quota shares organized by team, project, or workload.",
+              "links": [
+                {
+                  "text": "AWS Batch",
+                  "url": "https://aws.amazon.com/batch/"
+                }
+              ]
+            },
+            {
+              "text": "According to the <a href=\"https://aws.amazon.com/blogs/machine-learning/lend-and-borrow-resources-across-teams-with-aws-batchs-quota-management-for-sagemaker-training-jobs/\">AWS Machine Learning Blog</a>, this new feature works backward from multi-team training environments by providing an automated way to define allocations per team, share idle capacity, and run high-priority workloads first without requiring manual coordination.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/lend-and-borrow-resources-across-teams-with-aws-batchs-quota-management-for-sagemaker-training-jobs/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Resource-Sharing Strategies and Quota Shares",
+          "paragraphs": [
+            {
+              "text": "Each quota share defined within <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/quota-management.html\">quota management</a> includes specific capacity limits and resource-sharing configurations. These strategies dictate how idle compute is handled: it can be reserved until jobs arrive using the RESERVE strategy, lent to other shares using LEND, or configured to both lend when idle and borrow when needed via LEND_AND_BORROW.",
+              "links": [
+                {
+                  "text": "quota management",
+                  "url": "https://docs.aws.amazon.com/batch/latest/userguide/quota-management.html"
+                }
+              ]
+            },
+            {
+              "text": "When scheduling jobs, AWS Batch prioritizes quota shares that remain under their respective capacity limits. If incoming jobs arrive in a share that has previously lent out its capacity, the system performs cross-share preemption to automatically reclaim those resources without requiring manual intervention from administrators.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Preemption and Priority Handling",
+          "paragraphs": [
+            {
+              "text": "Administrators can also turn on priority-based in-share preemption when configuring individual quota shares. While cross-share preemption reclaims lent capacity, in-share preemption targets lower-priority jobs that are currently in the SCHEDULED, STARTING, or RUNNING state. This mechanism ensures that higher-priority jobs waiting at the front of the queue can begin execution much sooner.",
+              "links": []
+            },
+            {
+              "text": "For example, background projects might utilize a LEND_AND_BORROW strategy with in-share preemption enabled, allowing higher-priority background tasks to preempt lower-priority tasks within the same share. Conversely, critical workloads can be configured to reserve capacity strictly for themselves without lending or borrowing.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Configuration and SDK Integration",
+          "paragraphs": [
+            {
+              "text": "To get started with these capabilities, administrators must configure a <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_CreateSchedulingPolicy.html\">Scheduling Policy</a> containing a quota share policy alongside a <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_CreateServiceEnvironment.html\">Service Environment</a> specifying instance capacity limits.",
+              "links": [
+                {
+                  "text": "Scheduling Policy",
+                  "url": "https://docs.aws.amazon.com/batch/latest/APIReference/API_CreateSchedulingPolicy.html"
+                },
+                {
+                  "text": "Service Environment",
+                  "url": "https://docs.aws.amazon.com/batch/latest/APIReference/API_CreateServiceEnvironment.html"
+                }
+              ]
+            },
+            {
+              "text": "These components are then connected to <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_CreateJobQueue.html\">a SageMaker Training job queue</a>. Detailed instructions for <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/create-quota-management-resources.html\">configuring quota management resources</a> and establishing <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/create-quota-shares.html\">quota shares</a> are available in the official AWS user guide.",
+              "links": [
+                {
+                  "text": "a SageMaker Training job queue",
+                  "url": "https://docs.aws.amazon.com/batch/latest/APIReference/API_CreateJobQueue.html"
+                },
+                {
+                  "text": "configuring quota management resources",
+                  "url": "https://docs.aws.amazon.com/batch/latest/userguide/create-quota-management-resources.html"
+                },
+                {
+                  "text": "quota shares",
+                  "url": "https://docs.aws.amazon.com/batch/latest/userguide/create-quota-shares.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Practical Implementation and Getting Started",
+          "paragraphs": [
+            {
+              "text": "The integration supports programmatic job submission via the updated <a href=\"https://github.com/aws/sagemaker-python-sdk/tree/master/sagemaker-train/src/sagemaker/train/aws_batch\">aws_batch</a> module within the SageMaker Python SDK v3. Developers can reference <a href=\"https://github.com/aws/amazon-sagemaker-examples/blob/default/%20%20%20%20%20%20training/sm-training-queues_getting_started_with_model_trainer/utils/aws_batch_resource_management.py#L571-L707\">sample IAM permissions</a> to ensure correct API access when invoking AWS Batch and SageMaker resources.",
+              "links": [
+                {
+                  "text": "aws_batch",
+                  "url": "https://github.com/aws/sagemaker-python-sdk/tree/master/sagemaker-train/src/sagemaker/train/aws_batch"
+                },
+                {
+                  "text": "sample IAM permissions",
+                  "url": "https://github.com/aws/amazon-sagemaker-examples/blob/default/%20%20%20%20%20%20training/sm-training-queues_getting_started_with_model_trainer/utils/aws_batch_resource_management.py#L571-L707"
+                }
+              ]
+            },
+            {
+              "text": "By leveraging these updated SDK tools and scheduling configurations, machine learning engineers and administrators can efficiently share constrained GPU resources across diverse enterprise projects.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS Batch",
+        "Amazon SageMaker",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "GPU Capacity",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "AWS Batch",
+        "Amazon SageMaker",
+        "AWS Machine Learning"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly reflects the provided source material from the AWS Machine Learning Blog without introducing outside claims or external assumptions."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 574,
+      "word_count_en": 512
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "c69b58c8afe4ed5cc82e",
+      "title": "Lend and borrow resources across teams with AWS Batch’s quota management for SageMaker Training jobs",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 574,
+          "word_count_en": 512
+        }
+      ]
+    }
+  ],
+  "slug": "lend-and-borrow-resources-across-teams-with-aws-batch-quota-management-for",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/lend-and-borrow-resources-across-teams-with-aws-batch-quota-management-for/hero.webp",
+    "card": "/forum/assets/posts/2026/10/lend-and-borrow-resources-across-teams-with-aws-batch-quota-management-for/card.webp",
+    "social": "/forum/assets/posts/2026/10/lend-and-borrow-resources-across-teams-with-aws-batch-quota-management-for/social.jpg",
+    "alt": {
+      "ar": "AWS Batch تتيح إدارة حصص GPU بين فرق الذكاء الاصطناعي",
+      "en": "AWS Batch Adds Quota Management for SageMaker Training Jobs"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
