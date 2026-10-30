@@ -1,5 +1,468 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-30T18:48:33+00:00",
-  "last_published_story_id": "84abd1857de5dfd951d9"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-30T18:53:45+00:00",
+  "target_publish_at": "2026-10-30T22:08:32.256395+03:00",
+  "story": {
+    "title": "4 real? Tracking exploitation and patching of eMudhra’s weak keys",
+    "url": "https://blog.cloudflare.com/emudhra-patching",
+    "domain": "blog.cloudflare.com",
+    "summary": "Four, just four: that’s the key to break into any unpatched connection on the Internet that is using eMudhra certificates. Here’s how we quickly patched Cloudflare, what evidence we can see of attempted exploitation, and how much of the rest of the Internet remains exposed.",
+    "published_at": "2026-10-30T17:38:50+00:00",
+    "discovered_at": "2026-10-30T17:42:59+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 61,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "ae464ce18b4f9c4a6a8a",
+    "trend": {
+      "score": 105.03,
+      "age_hours": 1.23,
+      "corroboration_count": 0,
+      "entity_momentum": 9.51,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/emudhra-patching",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "4 real? Tracking exploitation and patching of eMudhra’s weak keys",
+      "title": "4 real? Tracking exploitation and patching of eMudhraâs weak keys | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "ثغرة مفتاح الرقم 4: تفاصيل أزمة شهادات eMudhra وجهود الإصلاح",
+      "description": "تستعرض هذه المادة تفاصيل ثغرة المفاتيح الضعيفة لشركة eMudhra وتأثيراتها التقنية، إلى جانب إجراءات الإصلاح السريعة ورصد محاولات الاستغلال عبر شبكة الإنترنت.",
+      "deck": "أحدثت ثغرة شهادات eMudhra ضجة واسعة في أوساط أمن المعلومات نظراً لضعف المفاتيح الرقمية المستخدمة، مما دفع الشركات والجهات التقنية لاتخاذ إجراءات فورية لاحتواء المخاطر.",
+      "summary_bullets": [
+        "اكتشاف مفاتيح تشفير بالغة الضعف لشركة eMudhra تبدأ برقم 4 وليست أرقاماً عشوائية معقدة.",
+        "الشركة المعنية أعلنت خروجها من قطاع سلطات الشهادات العامة وأرجعت المشكلة لخطأ في سكربت التوليد.",
+        "Cloudflare تحركت فوراً لتأمين أنظمتها الحساسة باستخدام أدوات تحليل تعتمد على الذكاء الاصطناعي.",
+        "رصد آلاف محاولات المصافحة واختبارات القبول للشهادات المتضررة عبر منصات الاختبار المختلفة."
+      ],
+      "sections": [
+        {
+          "heading": "خلفية الأزمة وضعف المفاتيح الرقمية",
+          "paragraphs": [
+            {
+              "text": "في التاسع عشر من شهر أكتوبر عام 2026، برزت إلى السطح تفاصيل صادمة تتعلق بثمانية مفاتيح تشفير ضعيفة جداً تابعة لشركة eMudhra؛ فبدلاً من اختيار أرقام عشوائية طويلة ومعقدة لتأمين الاتصالات عبر الإنترنت، تم اختيار أرقام بسيطة للغاية مثل الرقم 4، إلى جانب مفاتيح أخرى تتسم بالضعف ذاته مثل الأرقام 56 و66 و115 وغيرها من المفاتيح المكشوفة.",
+              "links": []
+            },
+            {
+              "text": "تختلف هذه الحادثة جذرياً عن حوادث اختراق سلطات إصدار الشهادات السابقة مثل حوادث DigiNotar وTÜRKTRUST وTrustWave، حيث كانت الاختراقات السابقة تقتصر على جهات أو مهاجمين محددين لإصدار شهادات مزورة، بينما تتيح المفاتيح الخاصة والمتوسطة المتضررة لشركة eMudhra لأي شخص استرجاعها فورياً من الشهادات العامة ذاتها لإنشاء شهادات لأي نطاق غير محمي.",
+              "links": [
+                {
+                  "text": "DigiNotar",
+                  "url": "https://www.cfr.org/cyber-operations/compromise-of-certificate-issuer-diginotar"
+                },
+                {
+                  "text": "TÜRKTRUST",
+                  "url": "https://www.infosecurity-magazine.com/news/turktrust-no-harm-from-fake-digital-certificates/"
+                },
+                {
+                  "text": "TrustWave",
+                  "url": "https://www.zdnet.com/article/trustwave-sold-root-certificate-for-surveillance/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "استجابة eMudhra وموقفها الرسمي",
+          "paragraphs": [
+            {
+              "text": "عقب تفجر الأزمة، أعلنت شركة eMudhra خروجها نهائياً من قطاع سلطات الشهادات العامة، مرجعة ما حدث إلى خطأ بشري أو تقني في سكربت توليد المفاتيح، رغم أنها لم تقم بنشر هذا السكربت حتى الآن لمراجعته.",
+              "links": []
+            },
+            {
+              "text": "وفي سياق متصل، قامت الشركة بالتوقيع على قائمة إبطال الشهادات باستخدام مفتاح يُعتقد أنه وُلّد بشكل صحيح، قبل أن تعود وتصححه ليُوقع باستخدام المفتاح الضعيف، مما زاد من تعقيد المشهد التقني وأثار تساؤلات حول دور المدققين والجهات المعنية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إجراءات الاحتواء العاجلة في Cloudflare",
+          "paragraphs": [
+            {
+              "text": "مع ظهور التقارير الأولى، سارعت منصة Cloudflare للتعامل مع الموقف لحماية أنظمتها وعملاءها، حيث بدأت في تأمين الأنظمة عالية الأهمية فوراً في التاسع عشر من أكتوبر باستخدام وكلاء التوجيه المعتمدين على Pingora لرفض المفاتيح الضعيفة.",
+              "links": [
+                {
+                  "text": "Pingora",
+                  "url": "https://blog.cloudflare.com/how-we-built-pingora-the-proxy-that-connects-cloudflare-to-the-internet/"
+                }
+              ]
+            },
+            {
+              "text": "ترافق ذلك مع إطلاق تحليل شامل لشفرات المصدر مدعوم بالذكاء الاصطناعي لتحديد كافة الأنظمة الأخرى التي تثق بتلك المفاتيح الضعيفة، واستكمال مراجعتها وإصلاحها وفق جداول زمنية دقيقة لضمان عدم وجود ثغرات خفية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "رصد محاولات الاستغلال والشهادات المزورة",
+          "paragraphs": [
+            {
+              "text": "لتعقب أي محاولة لاستخدام شهادات eMudhra الضعيفة، أضافت الشركة آليات تسجيل بيانات دقيقة عبر Pingora لرصد اتصالات TLS الخارجية، وقد أسفرت هذه الجهود خلال الأسبوع التالي عن رصد نحو 22 ألف محاولة مصافحة مرتبطة بالمفاتيح الضعيفة.",
+              "links": []
+            },
+            {
+              "text": "تركزت ثلثا هذه المحاولات على مواقع اختبار مخصصة مثل emudhra.we-have-a-problem.com، بينما أظهرت تحليلات الشهادات المزورة وجود أسماء نطاقات تخص منظمات أخرى وأجهزة إنترنت الأشياء، وغالباً ما كانت تُمثل شهادات افتراضية للخوادم وليست محاولات اعتراض مباشرة للاتصالات.",
+              "links": [
+                {
+                  "text": "emudhra.we-have-a-problem.com",
+                  "url": "http://emudhra.we-have-a-problem.com"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تتبّع استجابة الزوار وتقييم المخاطر",
+          "paragraphs": [
+            {
+              "text": "نظراً لصعوبة اختبار مدى ثقة الزوار بالمفاتيح الضعيفة بشكل مباشر دون قطع الاتصالات، اعتمدت المنصة على تقنيات الاختبار غير المباشر من خلال صفحات التحدي عبر إرسال اتصالات فحص موزعة، وهو ما ساهم في تقييم مدى استمرار اعتماد العملاء على تلك الشهادات المتضررة.",
+              "links": []
+            },
+            {
+              "text": "تؤكد المتابعة المستمرة أن المنظومة التقنية للأمن السيبراني تظل في حالة يقظة تامة لرصد أي مؤشرات غير معتادة، مع ضرورة التزام كافة الجهات بتطبيق التحديثات والحلول الموصى بها في مدونة Cloudflare Blog الرسمية.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/emudhra-patching"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمن المعلومات",
+        "شهادات الرقمية",
+        "تشفير",
+        "الثغرات الأمنية",
+        "Cloudflare",
+        "eMudhra"
+      ],
+      "entities": [
+        "Cloudflare",
+        "eMudhra",
+        "Pingora",
+        "DigiNotar",
+        "TÜRKTRUST",
+        "TrustWave",
+        "Mozilla"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر بدقة متناهية استناداً حصراً للمصادر المتاحة مع الالتزام بالمعايير الصحفية التقنية."
+    },
+    "en": {
+      "title": "Tracking Exploitation and Patching of eMudhra’s Weak Keys",
+      "description": "An in-depth look at how Cloudflare tracked exploitation attempts, analyzed source code using AI, and patched eMudhra's unprecedentedly weak certificate keys.",
+      "deck": "Following the discovery of shockingly weak cryptographic keys generated by certificate authority eMudhra, security teams have raced to assess the damage, patch vulnerable systems, and monitor the Internet for potential exploitation.",
+      "summary_bullets": [
+        "eMudhra's affected intermediate private keys relied on exceptionally weak numbers, including the single digit 4.",
+        "Cloudflare rapidly deployed patches across its high-priority systems and utilized AI-assisted source code analysis.",
+        "Monitoring via Pingora revealed thousands of handshake attempts using the weak keys, though most involved tests or self-signed setups.",
+        "eMudhra has announced its exit from the public certificate authority business following the incident."
+      ],
+      "sections": [
+        {
+          "heading": "Unprecedented Weakness in Certificate Authority Keys",
+          "paragraphs": [
+            {
+              "text": "On October 19, 2026, security researchers learned about eMudhra’s eight shockingly weak keys. Instead of picking a robust 115-digit number for a virtual combination lock to protect connections across the Internet, the certificate authority chose the number 4. Even worse, it was not a four-digit number, but simply the single digit 4. Other keys in the set were similarly vulnerable, including 56, 66, 115, 155, 156, 230, and 237.",
+              "links": []
+            },
+            {
+              "text": "The implications of this incident are severe. While past certificate authority compromises—such as incidents involving DigiNotar, TÜRKTRUST, and TrustWave—restricted key access to a limited group of attackers or organizations for issuing fraudulent certificates, the eMudhra incident differs fundamentally. The affected intermediate private keys could be recovered almost instantly by anyone directly from public certificates. This meant that anyone could independently recover the signing keys and generate valid-looking certificates for any domain accepted by unpatched clients that do not enforce Certificate Transparency.",
+              "links": [
+                {
+                  "text": "DigiNotar",
+                  "url": "https://www.cfr.org/cyber-operations/compromise-of-certificate-issuer-diginotar"
+                },
+                {
+                  "text": "TÜRKTRUST",
+                  "url": "https://www.infosecurity-magazine.com/news/turktrust-no-harm-from-fake-digital-certificates/"
+                },
+                {
+                  "text": "TrustWave",
+                  "url": "https://www.zdnet.com/article/trustwave-sold-root-certificate-for-surveillance/"
+                }
+              ]
+            },
+            {
+              "text": "In response to the cryptographic failure, eMudhra announced it is exiting the public certification authority business. The organization attributed the issue to a mistake in its key generation script, though it has not yet publicly shared the script. Further complicating the timeline, the authority signed a certificate revocation list with a potentially correctly generated key before correcting it to be signed with the weak key.",
+              "links": [
+                {
+                  "text": "announced",
+                  "url": "https://arstechnica.com/security/2026/10/disgraced-emudhra-drops-out-of-tls-business-following-certificate-debacle/"
+                },
+                {
+                  "text": "mistake",
+                  "url": "https://bugzilla.mozilla.org/show_bug.cgi?id=2083449#c10"
+                },
+                {
+                  "text": "signed",
+                  "url": "https://bugzilla.mozilla.org/show_bug.cgi?id=2083449#c7"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Rapid Remediation and AI-Assisted Code Analysis",
+          "paragraphs": [
+            {
+              "text": "Following the disclosure, organizations quickly initiated mitigation protocols. Cloudflare published initial developer guidance outlining the immediate action required to mitigate the leak and detailing what customers needed to do on their end to remain secure against potential certificate impersonation attempts.",
+              "links": [
+                {
+                  "text": "what customers needed to do",
+                  "url": "https://blog.cloudflare.com/emudhra-certificate-compromise/#what-customers-should-do"
+                }
+              ]
+            },
+            {
+              "text": "Cloudflare began patching high-impact infrastructure immediately on October 19. These targets included customer origin-facing proxies built on Pingora, which handle the vast majority of the network's outbound connections. Engineers patched these proxies within hours to actively reject the vulnerable eMudhra keys.",
+              "links": [
+                {
+                  "text": "Pingora",
+                  "url": "https://blog.cloudflare.com/how-we-built-pingora-the-proxy-that-connects-cloudflare-to-the-internet/"
+                }
+              ]
+            },
+            {
+              "text": "Simultaneously, the engineering team deployed an AI-assisted analysis tool to scan internal source code repositories to identify every system that trusted the weak keys. Within four hours, the analysis completed. Teams assigned preliminary analytical tickets to each system for confirmation, ensuring that high-impact systems were patched immediately while lower-impact targets followed shortly after.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Monitoring Exploitation Attempts Across Global Infrastructure",
+          "paragraphs": [
+            {
+              "text": "To monitor whether customer servers or potential attackers attempted to present certificates signed by eMudhra's weak keys, infrastructure teams integrated advanced logging capabilities into Pingora. Because this outbound service manages the vast majority of outgoing TLS connections from network machines, any snooping attempts utilizing the weak keys would instantly trigger logging mechanisms.",
+              "links": []
+            },
+            {
+              "text": "One week after rolling out the logging systems, network analytics captured approximately 22,000 attempted handshakes employing the weak eMudhra keys. Notably, two-thirds of these attempts represented fetches of designated test sites, including domains such as emudhra.we-have-a-problem.com, which security advisories highlighted in previous developer guidance documents.",
+              "links": [
+                {
+                  "text": "emudhra.we-have-a-problem.com",
+                  "url": "http://emudhra.we-have-a-problem.com"
+                }
+              ]
+            },
+            {
+              "text": "Almost all of the remaining third of connection attempts were directed at origin servers that appeared to have independently configured certificates using the weak intermediate key. Because network layers had already been patched, every single handshake configured to verify certificates was successfully refused.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Analysis of Forged Certificates and Client Trust",
+          "paragraphs": [
+            {
+              "text": "Among the observed traffic, roughly 160 handshakes stood out due to anomalous Subject Alternative Names naming external organizations and consumer Internet of Things devices, unrelated to the requested Server Name Indication. Investigators observed that these forged certificates were generated immediately after the keys leaked, with some carrying validity periods stretching over two years—far longer than permitted public CA issuance windows.",
+              "links": []
+            },
+            {
+              "text": "Despite these forged certificates appearing shortly after the vulnerability became public—with one dated October 20 at 18:19 UTC, less than an hour after a public bug report—they resembled default server certificates rather than active interception attempts. Because they referenced domain names inconsistent with the requested connections, hostname verification checks caused them to fail automatically.",
+              "links": []
+            },
+            {
+              "text": "To evaluate whether visitors still trusted the weak keys without disrupting active browsing sessions, network operators implemented indirect testing methods using challenge pages. By deploying specialized probe connections across a fraction of verification pages, security systems measured client trust metrics to understand the broader state of client-side patch adoption across the wider Internet.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Ongoing Security Guidance and Next Steps",
+          "paragraphs": [
+            {
+              "text": "The eMudhra incident highlights ongoing systemic risks associated with certificate authority cryptographic generation practices and public trust structures. While major service providers have successfully isolated and mitigated vulnerabilities within their perimeter controls, the prolonged exposure of weak intermediate keys underscores the critical importance of robust auditing, transparent cryptographic practices, and rapid automated vulnerability patching.",
+              "links": []
+            },
+            {
+              "text": "Organizations operating public-facing infrastructure are advised to review all trusted certificate authorities, enforce strict Certificate Transparency monitoring, and update client trust stores to eliminate vulnerable intermediate keys. Detailed technical findings and continuous updates regarding remediation efforts remain available directly through the official Cloudflare Blog.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/emudhra-patching"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "eMudhra",
+        "Cloudflare",
+        "Cybersecurity",
+        "TLS",
+        "Certificates",
+        "Cryptography",
+        "Vulnerabilities"
+      ],
+      "entities": [
+        "Cloudflare",
+        "eMudhra",
+        "Pingora",
+        "Mozilla",
+        "DigiNotar",
+        "TÜRKTRUST",
+        "TrustWave"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based on official Cloudflare blog post and technical documentation sources."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "en:sections",
+        "en:article_too_short"
+      ],
+      "word_count_ar": 539,
+      "word_count_en": 435
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 498,
+      "word_count_en": 878
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "ae464ce18b4f9c4a6a8a",
+      "title": "4 real? Tracking exploitation and patching of eMudhra’s weak keys",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "en:sections",
+            "en:article_too_short"
+          ],
+          "word_count_ar": 539,
+          "word_count_en": 435
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 498,
+          "word_count_en": 878
+        }
+      ]
+    }
+  ],
+  "slug": "real-tracking-exploitation-and-patching-of-emudhra-weak-keys",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/real-tracking-exploitation-and-patching-of-emudhra-weak-keys/hero.webp",
+    "card": "/forum/assets/posts/2026/10/real-tracking-exploitation-and-patching-of-emudhra-weak-keys/card.webp",
+    "social": "/forum/assets/posts/2026/10/real-tracking-exploitation-and-patching-of-emudhra-weak-keys/social.jpg",
+    "alt": {
+      "ar": "ثغرة مفتاح الرقم 4: تفاصيل أزمة شهادات eMudhra وجهود الإصلاح",
+      "en": "Tracking Exploitation and Patching of eMudhra’s Weak Keys"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M66XYHSQQJRRA4097AJD12PN.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/real-tracking-exploitation-and-patching-of-emudhra-weak-keys/inline-01.webp",
+        "width": 1200,
+        "height": 630,
+        "alt": {
+          "ar": "ثغرة مفتاح الرقم 4: تفاصيل أزمة شهادات eMudhra وجهود الإصلاح",
+          "en": "4 real? Tracking exploitation and patching of eMudhra’s weak keys"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/emudhra-patching",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M66XYMMC146K2EF0FS41ADG9.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/real-tracking-exploitation-and-patching-of-emudhra-weak-keys/inline-02.webp",
+        "width": 1150,
+        "height": 1050,
+        "alt": {
+          "ar": "ثغرة مفتاح الرقم 4: تفاصيل أزمة شهادات eMudhra وجهود الإصلاح",
+          "en": "Tracking Exploitation and Patching of eMudhra’s Weak Keys"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Example of Cloudflare challenge page"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/emudhra-patching",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M66XYKGD874ECXR54KTZNNC9.png&w=1430&h=1306&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/real-tracking-exploitation-and-patching-of-emudhra-weak-keys/inline-03.webp",
+        "width": 1128,
+        "height": 1050,
+        "alt": {
+          "ar": "ثغرة مفتاح الرقم 4: تفاصيل أزمة شهادات eMudhra وجهود الإصلاح",
+          "en": "Tracking Exploitation and Patching of eMudhra’s Weak Keys"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/emudhra-patching",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M66XYGH3HN2Q33VYKY5GGWHT.png&w=1430&h=1332&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/10/real-tracking-exploitation-and-patching-of-emudhra-weak-keys/inline-04.webp",
+        "width": 1094,
+        "height": 1050,
+        "alt": {
+          "ar": "ثغرة مفتاح الرقم 4: تفاصيل أزمة شهادات eMudhra وجهود الإصلاح",
+          "en": "Tracking Exploitation and Patching of eMudhra’s Weak Keys"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/emudhra-patching",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M66XYNT0S9QRA88PM5K167X1.png&w=1430&h=1372&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
