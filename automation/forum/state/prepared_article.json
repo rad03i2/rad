@@ -1,5 +1,356 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-10-30T17:35:27+00:00",
-  "last_published_story_id": "d7f3b41f1dba70c81d25"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-10-30T17:44:17+00:00",
+  "target_publish_at": "2026-10-30T20:55:27.023275+03:00",
+  "story": {
+    "title": "How Worldwide Express automated freight exceptions with Amazon Bedrock",
+    "url": "https://aws.amazon.com/blogs/machine-learning/how-worldwide-express-automated-freight-exceptions-with-amazon-bedrock",
+    "domain": "aws.amazon.com",
+    "summary": "Worldwide Express automated its less-than-truckload freight billing-exception process with a multi-agent solution built on Amazon Bedrock. Six months after launch, the company cut active exceptions by 75%, improved time-to-cash by four weeks, and unlocked $10 million in free cash flow.",
+    "published_at": "2026-10-30T17:32:20+00:00",
+    "discovered_at": "2026-10-30T17:33:03+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "automation",
+    "category_label": "الأتمتة",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "7dcc9758baf5cb29b362",
+    "trend": {
+      "score": 131.93,
+      "age_hours": 0.19,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 8
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-worldwide-express-automated-freight-exceptions-with-amazon-bedrock/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How Worldwide Express automated freight exceptions with Amazon Bedrock",
+      "title": "How Worldwide Express automated freight exceptions with Amazon Bedrock | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "Worldwide Express تخفض استثناءات الشحن 75% عبر الذكاء الاصطناعي",
+      "description": "اعتمدت Worldwide Express على Amazon Bedrock لأتمتة معالجة استثناءات الفوترة في الشحن، مما أدى إلى تحرير 10 ملايين دولار من التدفق النقدي وتحسين دورة التحصيل.",
+      "deck": "نجحت شركة Worldwide Express في تحويل عملية معالجة استثناءات الشحن اليدوية إلى نظام ذكي متعدد الوكلاء، مما حقق مكاسب مالية وتشغيلية ملموسة خلال ستة أشهر فقط.",
+      "summary_bullets": [
+        "تطوير حل ذكاء اصطناعي متعدد الوكلاء مدمج مع نظام إدارة النقل SpeedShip.",
+        "خفض 75% من الاستثناءات النشطة وتحسين وقت التحصيل بمدة أربعة أسابيع.",
+        "تحرير 10 ملايين دولار من التدفق النقدي الحر ومليون دولار سنوياً من التوفيرات.",
+        "اعتماد نموذج عمل يعتمد على الوكلاء المتخصصين لكل نوع من استثناءات الفوترة.",
+        "تحقيق دقة تتجاوز 99% مما سمح بالاعتماد على الاعتماد الجماعي للتوصيات."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي الحجم والتكاليف الخفية",
+          "paragraphs": [
+            {
+              "text": "تواجه شركة Worldwide Express، التابعة لمجموعة ShipStation Global، تحدياً كبيراً ناتجاً عن حجم عملياتها الضخم الذي يولد إيرادات تصل إلى 5 مليارات دولار سنوياً. على الرغم من التعامل مع أكثر من 75 ناقلاً للشحن الجزئي (LTL) وخدمة أكثر من 130 ألف عميل، كانت الشركة تعاني من تكلفة خفية تتمثل في تجميد 15 مليون دولار شهرياً من التدفق النقدي الحر. هذا التجميد كان سببه تراكم استثناءات فوترة لم يتم حلها، حيث كانت كل حالة تتطلب متابعة يدوية دقيقة مع الناقلين والعملاء، مما أدى إلى إطالة فترة تحويل الطلبات إلى سيولة نقدية.",
+              "links": []
+            },
+            {
+              "text": "في قطاع الشحن الجزئي، تفشل حوالي 14% من الفواتير في اجتياز عملية المطابقة الثلاثية القياسية بين أمر الشراء واستلام البضائع وفاتورة الناقل. عند حدوث هذا الفشل، تدخل الفاتورة في مسار معالجة الاستثناءات، وهو مسار كان يستهلك معظم طاقة فريق إدارة التكاليف المالية (FinOps) في Worldwide Express، نظراً لاختلاف قواعد التسعير وإجراءات الاعتراض لدى كل ناقل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تصميم الحل متعدد الوكلاء",
+          "paragraphs": [
+            {
+              "text": "لتجاوز هذه العقبة، تعاونت Worldwide Express مع فريق AWS Business Transformation & Value Advisory وشركة LTM لبناء حل ذكاء اصطناعي متعدد الوكلاء يعتمد على منصة Amazon Bedrock. تم تصميم هذا الحل ليتم دمج مباشر مع نظام إدارة النقل (TMS) الخاص بالشركة، وهو نظام SpeedShip. الهدف كان استبدال العمليات اليدوية المتسلسلة بنظام ذكي قادر على اتخاذ قرارات سياقية معقدة، وهو ما لا تستطيع أدوات الأتمتة الروبوتية التقليدية (RPA) التعامل معه بفعالية بسبب الحاجة إلى تفسير السياسات والتحقق من صحة الرسوم.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "يعتمد البنية التحتية للحل على خدمات AWS، حيث يوفر Amazon Bedrock قدرات الاستدلال الذكي، بينما يعمل Amazon Elastic Compute Cloud (Amazon EC2) كالمحرك التنفيذي. هذا التصميم يمنح فريق التقنية تحكماً دقيقاً في منطق التنسيق بين الوكلاء وحدود اتخاذ القرار، مما يضمن أن تكون كل آلية عمل شفافة وقابلة للتدقيق، وهو أمر حاسم في عمليات تسوية الفواتير.",
+              "links": [
+                {
+                  "text": "Amazon Elastic Compute Cloud (Amazon EC2)",
+                  "url": "https://aws.amazon.com/ec2/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل الوكلاء المتخصصين",
+          "paragraphs": [
+            {
+              "text": "عند اكتشاف استثناء في الفاتورة، يقوم النظام بتوجيهه إلى أحد ثلاثة وكلاء ذكاء اصطناعي متخصصين، كل منهم مصمم للتعامل مع نوع محدد من النزاعات. الوكيل الأول، وهو وكيل مطابقة الفواتير، يعمل على تحديد سجل الشحن المطابق وإبراز أي عدم تطابق في الكميات أو رموز الخدمة. الوكيل الثاني، وكيل تباين التسعير، يقارن الرسوم المفروضة من الناقل بالتسعير المتعاقد عليه لتحديد ما إذا كان الفرق مبرراً.",
+              "links": []
+            },
+            {
+              "text": "أما الوكيل الثالث، وكيل التحقق من الرسوم الإضافية، فيفحص الرسوم غير المتوقعة مثل رسوم رفع البضائع أو رسوم التوصيل السكني للتأكد من وجودها في سجلات التسليم الفعلية. قبل إصدار أي توصية، يقوم كل وكيل بجلب قواعد الفوترة والسياسات الخاصة بالناقل المعني من قاعدة معرفية مخصصة، مما يضمن أن تكون القرارات مبنية على قواعد الناقل نفسه دون الحاجة إلى كتابة كود مخصص لكل ناقل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع الأنظمة الحالية",
+          "paragraphs": [
+            {
+              "text": "تتميز هذه البنية بتكاملها العميق مع نظام SpeedShip عبر واجهات برمجة التطبيقات (APIs) نفسها التي يستخدمها المحللون البشريون. هذا يعني أن الذكاء الاصطناعي يرى نفس البيانات التي يراها الموظف، بما في ذلك أسعار العقود وتفاصيل الشحن وإثباتات التسليم، ويكتب حله في نفس مسار العمل. كما يوفر Amazon Bedrock وصولاً موحداً إلى نماذج الذكاء الاصطناعي الأساسية عبر واجهة API واحدة، مع الاستفادة من ضوابط الحوكمة الحالية الخاصة بـ AWS.",
+              "links": []
+            },
+            {
+              "text": "لضمان قبول الفريق المالي للنتائج، تم تضمين خطوة اعتماد بشري في المراحل الأولى من الإطلاق. كان المراجع البشري يعتمد التوصيات عبر واجهة المستخدم الخاصة بنظام SpeedShip. ومع ارتفاع دقة النظام، تحول الاعتماد الجماعي إلى الخيار الافتراضي، مما قلل من الحاجة للتدخل اليدوي المتكرر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النتائج التشغيلية والمالية",
+          "paragraphs": [
+            {
+              "text": "بعد ستة أشهر من الإطلاق، حققت Worldwide Express نتائج ملموسة عبر أكثر من 40 ناقلاً للشحن الجزئي. أظهرت البيانات انخفاضاً بنسبة 75% في عدد الاستثناءات النشطة، وتحسناً في وقت التحصيل (Time-to-Cash) بمقدار أربعة أسابيع. كما ساهم النظام في توفير مليون دولار سنوياً وتحرير دفعة واحدة بقيمة 10 ملايين دولار من التدفق النقدي الحر الذي كان مجمداً سابقاً.",
+              "links": []
+            },
+            {
+              "text": "يغلق النظام حالياً حوالي 10,000 استثناء أسبوعياً، مما يمثل 50% من إجمالي الحالات. يعتمد الفريق على لوحات تحكم تتتبع معدل الأتمتة لكل ناقل، ومعدل الخطأ حسب نوع الاستثناء، ووقت الحل. عندما يرفض المراجع البشري توصية، يتم تسجيل هذا الرفض لتعديل أوامر الوكلاء وقواعد المعرفة بناءً على سجل الرفض، مما يؤدي إلى زيادة تغطية الأتمتة تدريجياً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الدروس المستفادة والتوسع",
+          "paragraphs": [
+            {
+              "text": "تُظهر تجربة Worldwide Express كيف يمكن للذكاء الاصطناعي الوكيل (Agentic AI) معالجة العمليات المالية المعقدة التي تتطلب حكماً سياقياً. من خلال البدء بتقييم الفرص في دورة الطلب إلى النقد، تمكنت الشركة من الانتقال من مرحلة التقييم إلى الإنتاج في أقل من ستة أشهر. يؤكد هذا النجاح على أهمية اختيار المشاكل التي تتطلب تفسيراً للبيانات غير المهيكلة أو شبه المهيكلة، حيث تتفوق حلول الذكاء الاصطناعي على الأتمتة التقليدية.",
+              "links": []
+            },
+            {
+              "text": "كما يبرز الدور الحاسم للشراكات التقنية، حيث ساعدت خبرة LTM في بناء البنية التحتية المناسبة وتكاملها مع الأنظمة القائمة. توفر هذه البنية نموذجاً قابلاً للتوسع يمكن تطبيقه في صناعات أخرى تعاني من تعقيدات في عمليات المطابقة والتسوية المالية.",
+              "links": [
+                {
+                  "text": "LTM",
+                  "url": "https://www.ltm.com/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "ذكاء اصطناعي",
+        "أتمتة",
+        "Amazon Bedrock",
+        "لوجستيات",
+        "إدارة مالية",
+        "Worldwide Express",
+        "AWS"
+      ],
+      "entities": [
+        "Worldwide Express",
+        "ShipStation Global",
+        "Amazon Bedrock",
+        "Amazon EC2",
+        "LTM",
+        "SpeedShip",
+        "AWS"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستخلصة حصرياً من مدونة AWS الرسمية، مع التركيز على الأرقام المعلنة من الشركة والبنية التقنية الموصوفة."
+    },
+    "en": {
+      "title": "Worldwide Express Automates LTL Freight Exceptions",
+      "description": "Discover how Worldwide Express used Amazon Bedrock to automate freight billing exceptions, cutting active issues by 75% and improving cash flow.",
+      "deck": "Worldwide Express has modernized its less-than-truckload freight billing process using a multi-agent artificial intelligence solution built on AWS infrastructure.",
+      "summary_bullets": [
+        "Worldwide Express partnered with AWS and LTM to deploy a multi-agentic AI framework.",
+        "The system uses Amazon Bedrock for AI reasoning and Amazon Elastic Compute Cloud (Amazon EC2) as its engine.",
+        "Six months after launch, active billing exceptions dropped by 75 percent.",
+        "The automation initiative unlocked $10 million in free cash flow and improved time-to-cash by four weeks."
+      ],
+      "sections": [
+        {
+          "heading": "The Challenge of LTL Freight Exceptions",
+          "paragraphs": [
+            {
+              "text": "Worldwide Express, operating as part of ShipStation Global, generates approximately $5 billion in systemwide revenue, serving more than 130,000 customers alongside over 75 less-than-truckload (LTL) carriers. However, this massive operational scale introduced a significant financial bottleneck. Every month, $15 million in free cash flow remained frozen due to unresolved billing exceptions that required manual tracking across different carrier rules.",
+              "links": []
+            },
+            {
+              "text": "In the LTL freight sector, roughly 14 percent of invoices fail standard three-way matching between purchase orders, goods receipts, and carrier invoices. When a match fails, the invoice enters a manual exception-handling pipeline categorized into line-item mismatches, pricing variances, and unexpected accessorial charges. Each dispute traditionally required a five-step manual review process that consumed substantial bandwidth from the FinOps team.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deploying a Multi-Agent Solution",
+          "paragraphs": [
+            {
+              "text": "To resolve these operational hurdles, Worldwide Express collaborated with AWS and LTM to design a multi-agentic AI solution that integrates directly into their transportation management system, SpeedShip. The project moved from assessment to production in less than six months following an engagement with the AWS Business Transformation & Value Advisory team in June 2025.",
+              "links": []
+            },
+            {
+              "text": "Rather than relying on rigid rule-based process automation, which struggles with the contextual judgment needed for variable freight tariffs, the company turned to advanced artificial intelligence tools. The underlying architecture leverages Amazon Bedrock to provide foundational AI reasoning capabilities, while system execution relies on Amazon Elastic Compute Cloud (Amazon EC2).",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "Amazon Elastic Compute Cloud (Amazon EC2)",
+                  "url": "https://aws.amazon.com/ec2/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Specialized AI Agents in Action",
+          "paragraphs": [
+            {
+              "text": "When an invoice exception is flagged, the system routes the data to one of three specialized AI agents designed to handle specific dispute categories. The Invoice Matching Agent identifies discrepancies in quantities and service codes against shipment records. Meanwhile, the Pricing Variance Agent evaluates carrier charges against contracted rates, and the Accessorial Validation Agent checks unexpected fees against actual delivery events.",
+              "links": []
+            },
+            {
+              "text": "Each custom agent operates using a defined instruction prompt, a set of actions that integrate with the SpeedShip transportation management system, and access to specific carrier knowledge bases. Before making a recommendation, the agent retrieves the relevant carrier tariff rules and standard operating procedures. Developers can review regional availability and foundation models using the documentation for Supported models by AWS Region in Amazon Bedrock.",
+              "links": [
+                {
+                  "text": "Supported models by AWS Region in Amazon Bedrock",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-regions.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Integration and Workflow Control",
+          "paragraphs": [
+            {
+              "text": "The custom agents connect to SpeedShip via the same APIs utilized by human analysts, allowing the AI to evaluate shipment details, delivery proof, and contract rates within familiar workflows. Because every carrier maintains distinct billing rules and dispute procedures, the system stores individual carrier documentation so that every decision remains grounded in specific operating standards without requiring separate codebases for each carrier.",
+              "links": []
+            },
+            {
+              "text": "During the initial rollout, human reviewers utilized the SpeedShip user interface to approve recommendations before finalization. Once system accuracy exceeded 99 percent, bulk approvals became the default workflow. Dashboards track automation rates, error categories, resolution times, and human override frequencies to continuously refine prompt instructions based on historical feedback.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Measurable Business Results",
+          "paragraphs": [
+            {
+              "text": "Six months after launching the automated exception management workflow across more than 40 LTL carriers, Worldwide Express reported substantial financial and operational gains. The specialized agents currently close approximately 10,000 exceptions weekly, representing nearly 50 percent of total volume.",
+              "links": []
+            },
+            {
+              "text": "The initiative successfully reduced active exceptions by 75 percent, accelerated time-to-cash by four weeks, generated $1 million in annual savings, and delivered a one-time $10 million free cash flow infusion. Organizations interested in exploring similar modernization frameworks can request a conversation through official AWS channels.",
+              "links": [
+                {
+                  "text": "request a conversation",
+                  "url": "https://aws.amazon.com/contact-us/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Worldwide Express",
+        "Amazon Bedrock",
+        "AWS",
+        "Artificial Intelligence",
+        "Freight Automation",
+        "Supply Chain",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "Worldwide Express",
+        "ShipStation Global",
+        "Amazon Web Services",
+        "LTM"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly derived from the provided source text regarding Worldwide Express and Amazon Bedrock without introducing outside claims."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 842,
+      "word_count_en": 642
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "7dcc9758baf5cb29b362",
+      "title": "How Worldwide Express automated freight exceptions with Amazon Bedrock",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 842,
+          "word_count_en": 642
+        }
+      ]
+    }
+  ],
+  "slug": "how-worldwide-express-automated-freight-exceptions-with-amazon-bedrock",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/how-worldwide-express-automated-freight-exceptions-with-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/10/how-worldwide-express-automated-freight-exceptions-with-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/10/how-worldwide-express-automated-freight-exceptions-with-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "Worldwide Express تخفض استثناءات الشحن 75% عبر الذكاء الاصطناعي",
+      "en": "Worldwide Express Automates LTL Freight Exceptions"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-20953-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/how-worldwide-express-automated-freight-exceptions-with-amazon-bedrock/inline-01.webp",
+        "width": 1400,
+        "height": 1013,
+        "alt": {
+          "ar": "Worldwide Express تخفض استثناءات الشحن 75% عبر الذكاء الاصطناعي",
+          "en": "Exception-handling architecture: SpeedShip and other data sources feed detected exceptions to three agents on Amazon EC2 that call Amazon Bedrock, then route resolutions to a human reviewer"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-worldwide-express-automated-freight-exceptions-with-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-20953-1-2.png"
+      }
+    ]
+  }
 }
