@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "7f9f135df680a48af008",
+  "slug": "managing-amazon-bedrock-costs-end-to-end-playbook-for-finops-and-platform",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/managing-amazon-bedrock-costs-end-to-end-playbook-for-finops-and-platform/",
+    "en": "/forum/en/ai/managing-amazon-bedrock-costs-end-to-end-playbook-for-finops-and-platform/"
+  },
+  "locales": {
+    "ar": {
+      "title": "دليل شامل لإدارة تكاليف أمازون بيدروك لفرق الفينوبس والمنصات",
+      "description": "تعرف على نموذج تشغيلي من خمس مراحل لإدارة وتتبع تكاليف أمازون بيدروك بكفاءة، مخصص لفرق الفينوبس وهندسة المنصات على منصة إيه دبليو إس.",
+      "deck": "نشرت مدونة تعلم الآلة في إي دبليو إس دليلاً عملياً لإدارة تكاليف خدمة أمازون بيدروك، يتضمن نموذجاً تشغيلياً خماسياً يهدف إلى ضبط النفقات عبر تحسين الرؤية والميزانيات.",
+      "summaryBullets": [
+        "تقديم نموذج تشغيلي خמاسي المراحل لإدارة تكاليف أمازون بيدروك يشمل التخصيص والمراقبة والإنفاذ.",
+        "التركيز على ربط كل دولار بهوية مستخدم أو فريق لتجنب فقدان تتبع التكاليف في البوابات المشتركة.",
+        "استخدام آليات متقدمة مثل علامات الجلسات وتقرير الاستخدام والتكلفة لتحقيق دقة الفوترة."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات تكاليف الذكاء الاصطناعي التوليدي والتحول نحو نموذج تشغيلي",
+          "paragraphs": [
+            {
+              "text": "تمثل إدارة التكاليف في مجال الذكاء الاصطناعي التوليدي مسؤولية مشتركة بين الفرق التي تطور التطبيقات والفرق المسؤولة عن الميزانية السحابية. ومع توسع استخدام النماذج، لا تكفي المقارنة التقليدية لمعدلات الرموز أو تقصير النصوص التوجيهية للإجابة عن تساؤلات قادة الشؤون المالية والهندسة حول هوية الفريق المستهلك ونوعية أحمال العمل. تزداد هذه التحديات إلحاحاً مع أحمال العمل الوكيلية التي تصدر استدعاءات متعددة للنماذج لكل مهمة بسياق أوسع، مما يجعل استهلاك الموارد مرتبطاً بتصميم وطبيعة عمل النظام بدلاً من تفاعلات المستخدم الفردية. ولهذا السبب، قدمت [AWS Machine Learning Blog](https://aws.amazon.com/blogs/machine-learning/managing-amazon-bedrock-costs-end-to-end-a-playbook-for-finOps-and-platform-teams/) نموذجاً تشغيلياً متكرراً يربط النفقات بأصحابها، ويضمن مراقبة الطلبات وإنفاذ الميزانيات وتحسين الافتراضيات عبر خدمة [Amazon Bedrock](https://aws.amazon.com/bedrock/).",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "المراحل الخمس للنموذج التشغيلي المستمر",
+          "paragraphs": [
+            {
+              "text": "يستند الدليل إلى خمس مراحل أساسية تُنفذ كحلقة مستمرة؛ تبدأ المرحلة الأولى بالتخصيص لضمان هبوط كل دولار على هوية وفريق وتطبيق محدد. تليها مرحلة المراقبة التي تسجل كل طلب مع بيانات وصفية كافية لتحديد مصدر الإنفاق بدقة. ثم تأتي مرحلة الإنفاذ عبر ضبط ميزانيات ذات صلاحيات حقيقية تتضمن تنبيهات وحظراً صارماً للمخاطر. وتعمل مرحلة التحسين على ضبط الافتراضيات المركزية للمنصة مثل توجيه النماذج والتخزين المؤقت وحدود الرموز للحد من الهدر، ليتم اختتام الدورة بمرحلة التشغيل والمراجعة التي تحول البيانات إلى قرارات إدارية وهندسية مشتركة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحقيق التخصيص الدقيق للتكاليف عبر الهويات والتقارير",
+          "paragraphs": [
+            {
+              "text": "تعتمد دقة التخصيص بشكل أساسي على الاستفادة من آليات التتبع الحبيبي المتاحة في الخدمة؛ حيث تقوم أمازون بيدروك تلقائياً بنسب تكاليف الاستدلال إلى موثقي هويات إدارة الوصول. ولتفعيل هذا التتبع، يمكن الاعتماد على تقارير الاستخدام والتكلفة مثل [AWS Cost and Usage Report (CUR) 2.0](https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html) وتفعيل البيانات المرتبطة بمدير الهويات، مما يتيح ظهور الوسوم في أدوات الإدارة والتحليل مثل [AWS Cost Explorer](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/) خلال فترة قصيرة تتيح تصفية النفقات حسب الفريق أو مركز التكلفة دون الحاجة لبناء بنية تحتية مخصصة.",
+              "links": [
+                {
+                  "text": "AWS Cost and Usage Report (CUR) 2.0",
+                  "url": "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
+                },
+                {
+                  "text": "AWS Cost Explorer",
+                  "url": "https://aws.amazon.com/aws-cost-management/aws-cost-explorer/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "معالجة مشكلة الأدوار المشتركة وإدارة الجلسات",
+          "paragraphs": [
+            {
+              "text": "تواجه المنصات الكبرى أحياناً مشكلة الأدوار المشتركة، حيث تستخدم بوابات اللغات الكبيرة دوراً موحداً يؤدي إلى فقدان رؤية الاستخدام الفردي تماماً. ولحل هذه المشكلة، يُنصح بتطبيق إدارة جلسات لكل مستخدم على حدة من خلال افتراض دور الاستدلال وتمرير سمات المستخدم كعلامات جلسة مؤقتة. تضمن هذه المنهجية استعادة ظهور الهويات الفردية والمستأجرين ضمن السجلات التنظيمية للفوترة، مما يسهل على الفرق التقنية والمالية تتبع الموارد بدقة تامة تماشياً مع التوجيهات الرسمية المنشورة في [Artificial Intelligence](https://aws.amazon.com/blogs/machine-learning/).",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "نمذجة الأسعار وتخطيط النفقات المستقبلية",
+          "paragraphs": [
+            {
+              "text": "قبل الشروع في عمليات التحسين الواسعة، يُفضل استخدام الأدوات المتاحة لتقدير معدلات الاستهلاك الفعلية ومقارنتها بالمتوسطات العامة المنشورة. ويمكن للمطورين وفرق الفينوبس الاستعانة بأدوات التخطيط والمحاكاة المتوفرة عبر [AWS Pricing Calculator](https://calculator.aws/) والاطلاع على تفاصيل الأسعار المتجددة عبر [Amazon Bedrock pricing page](https://aws.amazon.com/bedrock/pricing) لبناء نماذج مالية دقيقة تتناسب مع الاحتياجات التشغيلية الفعلية لأحمال العمل الذكية.",
+              "links": [
+                {
+                  "text": "AWS Pricing Calculator",
+                  "url": "https://calculator.aws/"
+                },
+                {
+                  "text": "Amazon Bedrock pricing page",
+                  "url": "https://aws.amazon.com/bedrock/pricing"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون بيدروك",
+        "الذكاء الاصطناعي",
+        "إدارة التكاليف",
+        "فينوبس",
+        "سحابيات",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Bedrock",
+        "AWS",
+        "FinOps",
+        "AWS Cost Explorer"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "31 أكتوبر 2026",
+      "modifiedLabel": "31 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 491
+    },
+    "en": {
+      "title": "Managing Amazon Bedrock Costs: A FinOps Playbook",
+      "description": "Explore an end-to-end operational model for FinOps and platform teams to manage, attribute, and optimize Amazon Bedrock generative AI costs.",
+      "deck": "A newly detailed five-stage operating model helps FinOps and platform engineering teams track, govern, and optimize spending on Amazon Bedrock generative AI workloads.",
+      "summaryBullets": [
+        "Introduces a five-stage operating model covering attribution, observability, enforcement, optimization, and review cadences.",
+        "Utilizes AWS Cost and Usage Report (CUR) 2.0 alongside AWS Identity and Access Management (IAM) principal attribution.",
+        "Addresses the shared-role problem in language model gateways using per-user session management and session tags.",
+        "Outlines alternative attribution pathways including application inference profiles and projects for specific workloads."
+      ],
+      "sections": [
+        {
+          "heading": "The Generative AI Cost Challenge",
+          "paragraphs": [
+            {
+              "text": "Managing expenses for generative AI applications represents a shared responsibility between development teams and cloud finance stakeholders. While early cost-saving tactics often focus on comparing per-model token rates or shortening prompts, these methods rarely answer critical financial questions as usage scales across an enterprise.",
+              "links": []
+            },
+            {
+              "text": "Agentic workflows introduce additional complexity because they issue multiple model invocations and maintain larger contexts per task compared to standard conversational assistants. Consequently, token consumption scales with workflow autonomy rather than simple user interactions, making cost management an essential architectural discipline. Teams can model rates using the AWS Pricing Calculator and review official details via the Amazon Bedrock pricing page to better understand their workload requirements.",
+              "links": [
+                {
+                  "text": "AWS Pricing Calculator",
+                  "url": "https://calculator.aws/"
+                },
+                {
+                  "text": "Amazon Bedrock pricing page",
+                  "url": "https://aws.amazon.com/bedrock/pricing"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "A Five-Stage Operating Loop for FinOps",
+          "paragraphs": [
+            {
+              "text": "To move beyond simple guesswork, organizations are adopting a repeatable, five-stage operating model for Amazon Bedrock. The framework divides responsibilities clearly between FinOps practitioners and platform engineering teams to maintain accountability without stifling innovation.",
+              "links": []
+            },
+            {
+              "text": "The continuous loop begins with attribution, ensuring every dollar maps directly to an identity, team, and application. The second stage focuses on observability so that every request includes descriptive metadata. Subsequent stages enforce budgets, optimize platform defaults centrally, and establish a review cadence to turn metrics into actionable financial decisions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Granular Cost Attribution and IAM Principles",
+          "paragraphs": [
+            {
+              "text": "Effective cost management relies entirely on accurate attribution. Amazon Bedrock automatically attributes inference costs to the AWS Identity and Access Management (IAM) principal that executed the API call across all available models.",
+              "links": []
+            },
+            {
+              "text": "By activating IAM principal data in AWS Cost and Usage Report (CUR) 2.0 and tagging IAM principals with business dimensions, organizations achieve invoice-grade visibility. These tagged entries appear inside AWS Cost Explorer within 24 to 48 hours for streamlined filtering by team, application, or cost center, as detailed in reports on introducing granular cost attribution for Amazon Bedrock.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Resolving the Shared-Role Problem",
+          "paragraphs": [
+            {
+              "text": "A common challenge in enterprise deployments is the shared-role problem, where a centralized large language model gateway invokes Amazon Bedrock using a single IAM role. This architecture can completely eliminate per-user visibility if not configured properly.",
+              "links": []
+            },
+            {
+              "text": "To restore per-user and per-tenant attribution, platforms can implement per-user session management. By having the gateway assume the invocation role once per user, passing user attributes as session tags, and caching credentials safely for up to an hour, organizations maintain detailed tracking behind a shared access point.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Alternative Attribution Paths and Workloads",
+          "paragraphs": [
+            {
+              "text": "In addition to core IAM principal attribution, Amazon Bedrock provides application inference profiles and workspace projects to accommodate various infrastructure patterns. Application inference profiles allow teams with stable application sets to pre-create per-application resources on the runtime endpoint.",
+              "links": []
+            },
+            {
+              "text": "Alternatively, projects and workspaces support OpenAI-compatible workloads across the bedrock-mantle endpoint. Developers can explore further guidance on managing AI costs with Amazon Bedrock Projects to determine the optimal attribution strategy for their specific architectural requirements.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "FinOps",
+        "Cloud Computing",
+        "Generative AI",
+        "AWS",
+        "Cost Management"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "AWS Cost Explorer"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 31, 2026",
+      "modifiedLabel": "October 31, 2026",
+      "readMinutes": 3,
+      "wordCount": 547
+    }
+  },
+  "datePublished": "2026-10-31T02:08:50.455353+03:00",
+  "dateModified": "2026-10-31T02:08:50.455353+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/managing-amazon-bedrock-costs-end-to-end-playbook-for-finops-and-platform/hero.webp",
+    "card": "/forum/assets/posts/2026/10/managing-amazon-bedrock-costs-end-to-end-playbook-for-finops-and-platform/card.webp",
+    "social": "/forum/assets/posts/2026/10/managing-amazon-bedrock-costs-end-to-end-playbook-for-finops-and-platform/social.jpg",
+    "alt": {
+      "ar": "دليل شامل لإدارة تكاليف أمازون بيدروك لفرق الفينوبس والمنصات",
+      "en": "Managing Amazon Bedrock Costs: A FinOps Playbook"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21654-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/managing-amazon-bedrock-costs-end-to-end-playbook-for-finops-and-platform/inline-01.webp",
+        "width": 1400,
+        "height": 352,
+        "alt": {
+          "ar": "دليل شامل لإدارة تكاليف أمازون بيدروك لفرق الفينوبس والمنصات",
+          "en": "Five-stage Amazon Bedrock cost operating model loop: attribute, observe, enforce, optimize, operate"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/managing-amazon-bedrock-costs-end-to-end-a-playbook-for-finops-and-platform-teams/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21654-1-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/managing-amazon-bedrock-costs-end-to-end-a-playbook-for-finops-and-platform-teams/",
+      "type": "official",
+      "title": "Managing Amazon Bedrock costs end to end: A playbook for FinOps and platform teams"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/managing-amazon-bedrock-costs-end-to-end-a-playbook-for-finops-and-platform-teams",
+  "sourceTitle": "Managing Amazon Bedrock costs end to end: A playbook for FinOps and platform teams",
+  "trendScore": 115.93,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-10-30T23:08:50+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/10/managing-amazon-bedrock-costs-end-to-end-playbook-for-finops-and-platform.json"
+}
