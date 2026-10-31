@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "95235900cc342af4eb02",
+  "slug": "built-an-ai-tamagotchi-before-meta-could",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/built-an-ai-tamagotchi-before-meta-could/",
+    "en": "/forum/en/ai/built-an-ai-tamagotchi-before-meta-could/"
+  },
+  "locales": {
+    "ar": {
+      "title": "مطوّر يبني طماغوتشي ذكاء اصطناعي قبل إطلاق Meta",
+      "description": "استخدم مطوّر عادي رقاقة Waveshare ESP32-S3 وذكاء Claude لتحويلها إلى مساعد ذكي تفاعلي، متفوقاً على وعود Meta بميزة Muse Charm قبل وصولها للسوق.",
+      "deck": "بدلاً من انتظار منتج Meta القادم، اعتمد مطوّر على أدوات مفتوحة المصدر لتحويل جهاز صغير إلى مساعد ذكي قابل للبرمجة بالكامل.",
+      "summaryBullets": [
+        "استخدام رقاقة Waveshare ESP32-S3 بتكلفة 50 دولاراً كبديل مبدئي لمنتج Muse Charm.",
+        "اعتماد على نموذج Claude لإعادة برمجة الجهاز وإضافة ميزات تفاعلية مثل الألعاب والصوت.",
+        "تحسين تجربة الاستخدام عبر إضافة سجل محادثات وصوت ناطق بدلاً من الاعتماد على الشاشة الصغيرة.",
+        "تحويل الجهاز إلى كاميرا عن بُعد وساعة جيب، مع تحذيرات تتعلق بخصوصية البيانات.",
+        "إبراز أهمية الأجهزة المخصصة التي تسمح بالبرمجة الحرة مقارنة بالهواتف الذكية."
+      ],
+      "sections": [
+        {
+          "heading": "بداية التجربة: بديل اقتصادي لمنتج Meta",
+          "paragraphs": [
+            {
+              "text": "أحدثت شركة Meta ضجة واسعة في مجال الذكاء الاصطناعي من خلال تقديم واجهات مرنة وجذابة، حيث تسعى لبيع جهاز Muse Charm في موسم الأعياد ليتيح للمستخدمين حمل مساعد ذكي معهم كطماغوتشي. ومع ذلك، اختار أحد المطورين عدم شراء هذا الجهاز المنتظر، مفضلاً بناء نسخة مشابهة في المنزل بتكلفة أقل بكثير. كلفته هذه التجربة 50 دولاراً فقط، وهو مبلغ اعتبره استحقاقاً مقابل الخبرة التعليمية التي اكتسبها أثناء عملية البناء والبرمجة. ويمكن الرجوع إلى The Verge للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "The Verge",
+                  "url": "https://www.theverge.com/gadgets/1013375/muse-charm-gadgets-preview-waveshare-esp32-claude-vibe-code"
+                }
+              ]
+            },
+            {
+              "text": "على الرغم من أن النسخة المنزلية لا تحتوي على كاميرات أو راديو خلوي 5G، إلا أنها تتواصل فعلياً مع خدمة Muse وتوفر أفاتارات لطيفة. كما أن الجهاز يعمل كساعة جيب وكواجهة عرض لكاميرا عن بُعد، ويمكنه نظرياً التحكم في المنزل الذكي، شريطة إدخال كميات كبيرة من الكود المخصص لتحقيق هذه الوظائف.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اختيار العتاد: رقاقة Waveshare المعتمدة",
+          "paragraphs": [
+            {
+              "text": "قبل أسابيع، قام المطوّر بشراء حاسوب معلق بشاشة لمس بحجم 1.75 بوصة تم شحنه من الصين، وتحديداً نموذج Waveshare ESP32-S3 1.75C. لم يقتصر الأمر على تشابه المظهر الخارجي مع جهاز Muse Charm، بل أن هذه الرقاقة معتمدة رسمياً من قبل Meta. فهي واحدة من الاقتراحات الأولى للشركة لمن يرغب في بناء ما يسمى بـ \"Muse Gadget\"، وهو جهاز يستخدم الكود المفتوح ورموز Meta للاتصال المباشر بسحابة Muse AI.",
+              "links": [
+                {
+                  "text": "Waveshare ESP32-S3 1.75C",
+                  "url": "https://www.waveshare.com/esp32-s3-touch-amoled-1.75c.htm"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحديات الإعداد الأولي",
+          "paragraphs": [
+            {
+              "text": "عند وصول الساعة الجيب الفضية، بدا الجهاز عديم الفائدة في البداية. كان الإعداد سهلاً نسبياً، حيث تم توصيله بالحاسوب وتوجيه نموذج Claude نحو مستودع GitHub الخاص بـ Meta، ثم إقرانه مع تطبيق الهاتف. لكن حتى بعد إدخال مفاتيح Meta، ظن الجهاز في البداية أن المستخدم يرسل مقاطع صوتية لتحويلها لنص بدلاً من أوامر مباشرة. وبعد توضيح ذلك، كانت ردود Muse بطيئة ولا تنطق بصوت مسموع.",
+              "links": []
+            },
+            {
+              "text": "كان من الصعب معرفة ما يقوله الجهاز لأنه يعرض كلمات قليلة على الشاشة في كل مرة، دون مكان لقراءة الرسائل الكاملة إلا عبر استخدام الهاتف وتطبيق Muse الخاص به. كما أن بناء Meta الأصلي جاء مع أفاتار واحد فقط يجلس في مكانه، ولم يقم باكتشاف أجهزة المنزل الذكي تلقائياً كما تفعل أجهزة Amazon Echo أو Google Home. هذا جعل الجهاز غير مفيد عملياً بعد التثبيت الأولي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تدخل الذكاء الاصطناعي في البرمجة",
+          "paragraphs": [
+            {
+              "text": "لكن بعد جلسات قليلة مع Claude Code، تم سد معظم هذه الفجوات. كل ما كان على المطوّر فعله هو إعادة توصيل الجهاز بالحاسوب وطلب إعادة برمجة كل ميزة يريدها. عندما اشتكى من عدم قدرته على قراءة أو سماع ردود Muse بشكل صحيح، وهي مشكلة أشار إليها آخرون أيضاً، قام Claude ببناء صفحة لسجل المحادثات تتيح التمرير يميناً لقراءة الردود، وأدخل صوتاً بريطانياً من ElevenLabs ينطق الإجابات بصوت عالٍ.",
+              "links": []
+            },
+            {
+              "text": "بفضل هذا التعديل، أصبح بإمكان المطوّر الضغط على زر لالتقاط صورة من الهاتف عبر الغرفة مع معاينة حية عالية الجودة، وإصلاح مشكلة انعكاس الكاميرا الأمامية. كما أضاف Claude معاينة كاميرا منخفضة الجودة عبر بلوتوث، مما يسمح بالحصول على صور من زوايا إبداعية دون الحاجة للاتصال بشبكة Wi-Fi المنزلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إضافة ميزات تفاعلية وألعاب",
+          "paragraphs": [
+            {
+              "text": "طلب المطوّر من Claude إنشاء مجموعة كاملة من الأفاتارات المختلفة مشابهة لتلك التي عرضتها Meta خلال مؤتمر Connect، مع إضافة لعبة مصغرة تشبه طماغوتشي تتطلب فيها الشخصيات الطعام واللعب والنوم والاستحمام. عندما بدت اللعبة بسيطة جداً لجذب الانتباه، أضاف مستويات مختلفة للجوع والملل والوسخ، وجعل المكافآت تسبب فوضى وتزيد من اتساخ الأفاتار، بينما يؤدي اللعب المفرط إلى إرهاق الحيوان الأليف.",
+              "links": []
+            },
+            {
+              "text": "عند ملاحظة أن المطوّر كان يفلت زر التحدث مبكراً مما يؤدي إلى إرسال صوت شبه فارغ، قام Claude بإصلاح المشكلة خلال دقائق عبر إرسال الصوت فقط إذا تجاوز الثانية. التباطؤ الواضح الوحيد المتبقي ينبع من خوادم Meta نفسها، حيث تكون الاستجابة سريعة أحياناً وبطيئة جداً في أوقات أخرى.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مخاوف الخصوصية والنتائج النهائية",
+          "paragraphs": [
+            {
+              "text": "بسبب سهولة إعادة البرمجة، طلب المطوّر بناء ميزات خاصة، بما في ذلك واجهة ساعة جيب تعمل بثلاث عقارب تخبر الوقت فعلياً، حيث استغرق الأمر 15 دقيقة فقط. كما وجد وحمّل وقصّ مقاطع فيديو لزوك وهو يقدم Muse Charm، وثبت مشغل فيديو لعرضها على الجهاز. يؤكد المطوّر أنه لا يملك خبرة برمجية ولا يعرف ما إذا كان الكود جيداً أو عيباً قاتلاً.",
+              "links": []
+            },
+            {
+              "text": "لا يثق المطوّر بـ Meta أو وكيل Muse ببياناته أو شبكته المنزلية، خاصة بعد سماعه عن كيفية تسريب عنوان منزل أحد المراجعين. لذلك، وضع الجهاز على شبكة Wi-Fi ضيافة كإجراء احترازي. هذا يعني أنه لا يعرف مدى فائدة Muse Charm لمن يعرفون البرمجة ومستعدون للمخاطرة، لكنه يعتقد أن السبب في امتلاك عتاد مخصص هو القيام بأشياء لا يمكن فعلها على الهاتف، مثل برمجة الجهاز بالكامل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "ذكاء اصطناعي",
+        "Meta",
+        "Waveshare",
+        "ESP32",
+        "أجهزة قابلة للبرمجة",
+        "Claude",
+        "طماغوتشي رقمي"
+      ],
+      "entities": [
+        "Meta",
+        "Waveshare",
+        "Claude",
+        "Muse Charm",
+        "ElevenLabs",
+        "Sam Altman"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "31 أكتوبر 2026",
+      "modifiedLabel": "31 أكتوبر 2026",
+      "readMinutes": 5,
+      "wordCount": 791
+    },
+    "en": {
+      "title": "Building a DIY AI Tamagotchi with Off-the-Shelf Hardware",
+      "description": "Discover how a tech user built an alternative AI Tamagotchi using the Waveshare ESP32-S3 1.75C development kit and custom code instead of buying Meta's official device.",
+      "deck": "Meta’s upcoming Muse Charm aims to bring companion AI to portable hardware, but developers and hobbyists are already experimenting with off-the-shelf alternatives to build custom pocket AI devices.",
+      "summaryBullets": [
+        "Meta plans to release the Muse Charm this holiday season as a portable Tamagotchi-style AI companion device.",
+        "A hobbyist built a $50 alternative using the Waveshare ESP32-S3 1.75C development board and AI coding tools.",
+        "The DIY device connects to Meta’s Muse AI cloud using open-source resources and sample applications.",
+        "Custom programming added features like conversation history, ElevenLabs voice output, custom avatars, and a Tamagotchi-style minigame."
+      ],
+      "sections": [
+        {
+          "heading": "The Rise of Portable AI Companions",
+          "paragraphs": [
+            {
+              "text": "Mark Zuckerberg’s Meta has positioned its upcoming hardware lineup to make artificial intelligence visually engaging by offering a squishy face and compact form factors. This holiday season, the company plans to release a Muse Charm, designed to let users carry an AI assistant around much like a classic Tamagotchi.",
+              "links": [
+                {
+                  "text": "a Muse Charm",
+                  "url": "https://www.theverge.com/tech/999750/muse-charm-meta-ai-hardware"
+                }
+              ]
+            },
+            {
+              "text": "However, obtaining an official Meta device is not the only route for enthusiasts interested in wearable AI companions. Meta's ecosystem includes developer documentation and sample applications that allow users to assemble similar gadgets using readily available commercial hardware components.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Assembling the DIY Pocket Pendant",
+          "paragraphs": [
+            {
+              "text": "An alternative device can be built using the Waveshare ESP32-S3 1.75C touchscreen computer pendant, which drops-shipped from China for around $50. This push-to-talk AI devkit functions as an officially sanctioned starting point for those looking to build a \"Muse Gadget,\" utilizing Meta's open-source code and authentication tokens to establish a direct connection to the Muse AI cloud.",
+              "links": [
+                {
+                  "text": "Waveshare ESP32-S3 1.75C",
+                  "url": "https://www.waveshare.com/esp32-s3-touch-amoled-1.75c.htm"
+                }
+              ]
+            },
+            {
+              "text": "While the hardware resembles a silver metal pocket watch, the initial out-of-the-box setup provides limited standalone utility. Setting up the device involved connecting it to a computer, pointing coding assistants toward Meta's GitHub repository, and pairing the hardware with the official phone application.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Overcoming Initial Software Limitations",
+          "paragraphs": [
+            {
+              "text": "Initial testing revealed several constraints in the default software configuration provided by Meta. The hardware's default interface only displayed a small number of words on screen at a time without an integrated place to read full messages, and the system initially interpreted short voice queries as audio transcription clips rather than interactive commands.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, the basic build featured only a single avatar with limited interactivity and lacked automatic discovery for common smart home ecosystems. Software engineers Anant Narayanan and Jeremy Payne provided sample applications for streaming video from a phone camera, but the lack of a remote shutter button restricted its practical photography use.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Expanding Functionality Through Custom Coding",
+          "paragraphs": [
+            {
+              "text": "By utilizing conversational coding assistants such as Claude, the builder was able to address many of the hardware's functional shortcomings. Modifications included creating a conversation history interface to review past responses, integrating an ElevenLabs British voice synthesis model to speak answers aloud, and improving audio capture thresholds so that short button presses did not disrupt processing.",
+              "links": []
+            },
+            {
+              "text": "Additional programming sessions enabled remote camera previews over Bluetooth, a functional pocket watch interface with three working hands, and a video player capable of running clips introducing the Muse Charm hardware. The developer also implemented a Tamagotchi-inspired minigame featuring multiple levels of hunger, boredom, and cleanliness for custom digital avatars.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Security Precautions and Outlook",
+          "paragraphs": [
+            {
+              "text": "Despite the successful integration of custom features, security and privacy concerns remain surrounding cloud-connected AI agents. Reports regarding data handling and privacy incidents with Meta's AI integrations have prompted caution, leading developers to isolate such experimental hardware on guest wireless networks.",
+              "links": []
+            },
+            {
+              "text": "As the tech industry prepares for the commercial release of dedicated AI wearables, projects like the DIY Muse Charm highlight the growing appeal of programmable development kits. Whether consumers will prefer closed commercial accessories or open-ended development hardware remains to be seen as more products reach the market.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Meta",
+        "Waveshare",
+        "AI",
+        "Tamagotchi",
+        "Wearables",
+        "Gadgets"
+      ],
+      "entities": [
+        "Meta",
+        "Waveshare",
+        "Claude",
+        "ElevenLabs"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "October 31, 2026",
+      "modifiedLabel": "October 31, 2026",
+      "readMinutes": 3,
+      "wordCount": 604
+    }
+  },
+  "datePublished": "2026-10-31T20:29:39.359802+03:00",
+  "dateModified": "2026-10-31T20:29:39.359802+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/built-an-ai-tamagotchi-before-meta-could/hero.webp",
+    "card": "/forum/assets/posts/2026/10/built-an-ai-tamagotchi-before-meta-could/card.webp",
+    "social": "/forum/assets/posts/2026/10/built-an-ai-tamagotchi-before-meta-could/social.jpg",
+    "alt": {
+      "ar": "مطوّر يبني طماغوتشي ذكاء اصطناعي قبل إطلاق Meta",
+      "en": "Building a DIY AI Tamagotchi with Off-the-Shelf Hardware"
+    },
+    "credit": "The Verge",
+    "sourceUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/verge-sean-hollister-muse-gadget-331A2564-01-3.jpg?quality=90&strip=all&crop=4%2C9.7534360513847%2C96%2C75.393048208485&w=1200",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "The Verge",
+      "url": "https://www.theverge.com/gadgets/1013375/muse-charm-gadgets-preview-waveshare-esp32-claude-vibe-code",
+      "type": "journalism",
+      "title": "I built an AI Tamagotchi before Meta could"
+    }
+  ],
+  "sourceUrl": "https://www.theverge.com/gadgets/1013375/muse-charm-gadgets-preview-waveshare-esp32-claude-vibe-code",
+  "sourceTitle": "I built an AI Tamagotchi before Meta could",
+  "trendScore": 93.56,
+  "verification": {
+    "confidence": 0.86,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-31T17:29:39+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/built-an-ai-tamagotchi-before-meta-could.json"
+}
