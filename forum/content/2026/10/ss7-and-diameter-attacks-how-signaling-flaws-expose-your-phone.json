@@ -1,0 +1,315 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "504569e0ffffdf59919e",
+  "slug": "ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone",
+  "categorySlug": "security",
+  "urls": {
+    "ar": "/forum/ar/security/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone/",
+    "en": "/forum/en/security/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone/"
+  },
+  "locales": {
+    "ar": {
+      "title": "ثغرات بروتوكولات الاتصال تكشف هاتفك للاختراق",
+      "description": "تعرف على كيفية استغلال ثغرات بروتوكولات SS7 وDiameter في شبكات الاتصال لتتبع المواقع واعتراض الرسائل وانتحال الشخصيات دون اختراق الأجهزة.",
+      "deck": "تتيح الثغرات الكامنة في بروتوكولات إشارات الاتصال للمهاجمين تتبع مواقع الهواتف، واعتراض المكالمات ورموز التحقق، وانتحال صفة المشتركين من داخل شبكات الاتصالات نفسها ودون الحاجة لتثبيت برمجيات خبيثة على أجهزة الضحايا.",
+      "summaryBullets": [
+        "ثغرات بروتوكولي SS7 وDiameter تهدد أمن الهواتف عبر استغلال آلية الثقة بين شبكات الاتصالات.",
+        "تُمكّن هذه الثغرات المهاجمين من تتبع المواقع في الوقت الفعلي واعتراض رموز التحقق عبر الرسائل القصيرة.",
+        "تظهر التحقيقات والأبحاث استخدام هذه التقنيات في حملات مراقبة عالمية وهجمات ضد الحسابات المصرفية.",
+        "تعتمد جدران حماية المشغلين أحياناً على بيانات موقع قديمة، مما يسهل خداعها عبر هويات شبكية بديلة."
+      ],
+      "sections": [
+        {
+          "heading": "كيف تعمل هجمات إشارات الاتصال",
+          "paragraphs": [
+            {
+              "text": "تواجه الهواتف الذكية مخاطر أمنية متقدمة تتمثل في إمكانية تتبع مواقعها، واعتراض رموز المصادقة الثنائية المرسلة عبر الرسائل القصيرة، وحتى انتحال أرقام الهواتف، وذلك بالكامل دون الحاجة إلى برمجيات خبيثة، أو روابط تصيد، أو الوصول المباشر إلى الجهاز المستهدف.",
+              "links": []
+            },
+            {
+              "text": "تحدث هذه الهجمات في عمق شبكات الاتصالات، وتحديدا ضمن بروتوكولات التحكم بين شركات الاتصالات المعروفة باسم الإشارات، والتي تعد الامتداد الميكانيكي والمؤتمت للوحة تحويل الهواتف القديمة. وغالباً لا يلاحظ المستخدمون العاديون هذه الأنشطة، بينما تعجز غالبية شركات الاتصالات عن التصدي لها بشكل موثوق، كما ورد في تقارير نشرتها BleepingComputer.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تاريخ طويل من الاستغلال والتهديدات الأمنية",
+          "paragraphs": [
+            {
+              "text": "لا تُعد هجمات إشارات الاتصال ظاهرة جديدة، إذ تعود الثغرات المستغلة فيها إلى عقود مضت. وقد ظهرت مؤخراً في عناوين الأخبار عندما استغلت جهات مرتبطة بإيران تقنيات شبكية قديمة لتحديد مواقع هواتف أفراد عسكريين أمريكيين في الشرق الأوسط أثناء الحرب.",
+              "links": []
+            },
+            {
+              "text": "تم استخدام هذه الثغرات في جرائم يومية، مثل اعتراض رموز المرور لمرة واحدة الخاصة بالحسابات المصرفية، وهو ما وثقته تقارير صحفية سابقة حول استهداف حسابات البنوك، فضلاً عن العروض التوضيحية التي قدمها مؤثرون تقنيون مثل Veritasium.",
+              "links": [
+                {
+                  "text": "Veritasium",
+                  "url": "https://www.veritasium.com/videos/2025/1/17/exposing-the-flaw-in-our-phone-system"
+                }
+              ]
+            },
+            {
+              "text": "كما كشفت أبحاث أجرها مركز Citizen Lab عن حملات مراقبة تجارية طويلة الأمد استغلت بروتوكولي SS7 وDiameter لتنفيذ آلاف الهجمات ضد أهداف في عشرات الدول، بالتوازي مع حوادث شهيرة شملت اختراق هواتف شخصيات سياسية على الهواء مباشرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بروتوكولات الاتصال وأوجه القصور الهيكلية",
+          "paragraphs": [
+            {
+              "text": "يتطلب كل اتصال، أو رسالة نصية، أو جلسة بيانات محمولة من شركة الاتصالات التحقق من كون المستخدم عميلاً مشتركاً وتوجيه حركة البيانات إلى الوجهة الصحيحة. وتعتمد الشركات في ذلك على رسائل الإشارات الخلفية لتحديد الموقع وتحويل البيانات.",
+              "links": []
+            },
+            {
+              "text": "يعتمد النظام على بروتوكولين رئيسيين هما SS7 (الذي يعود تاريخه إلى حقبة السبعينيات ويُستخدم في شبكات الجيل الثاني والثالث) وبروتوكول Diameter (الخلف الحديث المُستخدم في شبكات الجيل الرابع ومعظم شبكات الجيل الخامس). وقد صُمم هذان البروتوكولان في وقت كانت فيه شبكات المشغلين محدودة وموثوقة فيما بينها، مما جعلها تفترض أن أي حركة مرور قادمة من مشغل آخر هي حركة شرعية تماماً، حيث يفتقر نظام SS7 إلى آليات مصادقة قوية للطلب، بينما يعاني Diameter من قصور في التطبيق العملي للتشفير والاعتماد على نموذج ثقة متبادل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قدرات المهاجمين عبر شبكات الإشارات",
+          "paragraphs": [
+            {
+              "text": "يمكن للمهاجم القادر على الوصول إلى عمود إشارات الاتصالات العالمي، سواء عبر ترتيبات تجارية أو من خلال مشغل مخترق، إرسال رسائل تتعامل معها الشركات عالمياً بثقة. وتتيح هذه الرسائل للمهاجمين تنفيذ عدة ممارسات خطيرة، مثل جمع معرّفات المشتركين الدوليين (IMSI)، وتحديد مواقع الأفراد في الوقت الفعلي عبر استعلامات مخصصة، واعتراض الاتصالات والرسائل النصية التي تتضمن رموز التحقق الثنائي المستخدمة في حماية الحسابات المصرفية.",
+              "links": []
+            },
+            {
+              "text": "بالإضافة إلى ذلك، يمكن للمهاجمين انتحار شخصية المستخدمين أو حظر خدماتهم، فضلاً عن إحداث اضطرابات في البنى التحتية لشبكات الاتصالات عبر رسائل تم تكوينها بشكل متعمد لإرباك أنظمة المزودين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحديات جدران الحماية وجهود الحماية المتقدمة",
+          "paragraphs": [
+            {
+              "text": "تحاول جدران حماية المشغلين التصدي لهذه الرسائل عبر فحص سرعة تنقل المستخدم الجغرافي والتحقق من منطقية المسافة المقطوعة بين الاتصالات. ومع ذلك، تشير الأبحاث الحديثة التي عُرضت في مؤتمر أمن اللاسلكي إلى أن بيانات الموقع التي تعتمد عليها جدران الحماية قد تكون قديمة في كثير من الأحيان، وتتأخر لفترات تتراوح بين ساعتين وعشر ساعات، مما يمنح المهاجمين فرصة للعثور على هويات شبكية بديلة تبدو مقنعة للمزود الأصلي.",
+              "links": []
+            },
+            {
+              "text": "في ظل هذه التحديات المستمرة، تتجه الشركات والخدمات المتخصصة نحو توفير حلول اتصالات محمولة تركز على الخصوصية والأمن للحد من هذه المخاطر الكامنة في البنية التحتية لقطاع الاتصالات.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الأمن التقني",
+        "ثغرات الاتصالات",
+        "SS7",
+        "Diameter",
+        "أمن الهواتف",
+        "القرصنة",
+        "حماية البيانات"
+      ],
+      "entities": [
+        "SS7",
+        "Diameter",
+        "BleepingComputer",
+        "Citizen Lab",
+        "Veritasium",
+        "Cape"
+      ],
+      "category": "الأمن التقني",
+      "dateLabel": "31 أكتوبر 2026",
+      "modifiedLabel": "31 أكتوبر 2026",
+      "readMinutes": 4,
+      "wordCount": 627
+    },
+    "en": {
+      "title": "SS7 and Diameter Flaws Expose Mobile Networks",
+      "description": "Explore how vulnerabilities in SS7 and Diameter signaling protocols allow attackers to track phone locations, intercept calls, and bypass 2FA.",
+      "deck": "Flaws in core telecom signaling protocols continue to expose mobile users to tracking, interception, and impersonation without requiring any device compromise.",
+      "summaryBullets": [
+        "Telecom signaling protocols SS7 and Diameter manage routing, verification, and roaming.",
+        "Attackers can exploit structural trust issues to track locations and intercept SMS codes.",
+        "Citizen Lab and other researchers have exposed widespread commercial surveillance campaigns.",
+        "Mobile carriers utilize firewalls, but delayed location updates create exploitable windows."
+      ],
+      "sections": [
+        {
+          "heading": "The Core Vulnerabilities of Telecom Signaling",
+          "paragraphs": [
+            {
+              "text": "Every single phone call, text message, and mobile data session relies on backend carrier-to-carrier control protocols known as signaling. Serving as the automated descendants of traditional telephone switchboards, signaling protocols like SS7 and Diameter act as the connective tissue between global providers. However, these underlying systems represent one of the most overlooked attack surfaces in mobile security.",
+              "links": []
+            },
+            {
+              "text": "Two primary protocols handle the vast majority of this traffic: SS7, introduced in the 1970s and primarily used in 2G and 3G networks, and Diameter, its successor used in 4G and most 5G networks. Designed in an era when only a small number of large operators interconnected, both protocols fundamentally assume that any traffic claiming to originate from a legitimate operator is trustworthy. SS7 features virtually no process to authenticate the machine making a request. While Diameter supports stronger authentication on paper, operators frequently omit basic protections such as encryption and continue to rely on the same outdated peer-to-peer trust model.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Real-World Exploits and Surveillance Campaigns",
+          "paragraphs": [
+            {
+              "text": "While signaling vulnerabilities have existed for decades, they have recently gained prominent attention through high-profile incidents and extensive security research. Signaling attacks were reportedly exploited when Iranian-linked actors used outdated network technology to locate the phones of US personnel in the Middle East, as <span style=\"color:blue;\">reportedly exploited</span> sources detailed. Beyond geopolitical conflicts, researchers and journalists have demonstrated these flaws repeatedly. Veritasium famously hijacked a tech influencer's calls and texts using only his phone number, and US Congressman Ted Lieu’s phone was hacked on live TV via SS7.",
+              "links": [
+                {
+                  "text": "reportedly exploited",
+                  "url": "https://www.nytimes.com/2026/07/14/world/middleeast/iran-cyberattack-us-military-phones-tracking.html"
+                }
+              ]
+            },
+            {
+              "text": "Furthermore, Citizen Lab exposed <span style=\"color:blue;\">two long-running commercial surveillance campaigns</span> abusing both SS7 and Diameter protocols, uncovering thousands of attacks targeting individuals across dozens of countries. Criminal enterprises have also leveraged these weaknesses to target <span style=\"color:blue;\">bank accounts</span> by intercepting SMS verification codes.",
+              "links": [
+                {
+                  "text": "two long-running commercial surveillance campaigns",
+                  "url": "https://citizenlab.ca/research/uncovering-global-telecom-exploitation-by-covert-surveillance-actors/"
+                },
+                {
+                  "text": "bank accounts",
+                  "url": "https://www.vice.com/en/article/criminals-hackers-ss7-uk-banks-metro-bank/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "How Attackers Exploit Signaling Networks",
+          "paragraphs": [
+            {
+              "text": "An attacker who gains access to the global signaling backbone—either through commercial leasing arrangements or by compromising a legitimate operator—can transmit messages that telecom carriers worldwide treat as legitimate. Because these operations occur entirely within automated carrier transactions, they leave no trace on the victim's device and require no malware or phishing links.",
+              "links": []
+            },
+            {
+              "text": "With network access, malicious actors can execute several distinct malicious actions. They can harvest a subscriber's International Mobile Subscriber ID (IMSI) by pretending to route a call or SMS, harvest real-time location coordinates or cell tower connections, and intercept communications by falsely claiming the subscriber has roamed onto another network. Combining intercepted communications with stolen credentials frequently results in <span style=\"color:blue;\">intercepted SMS one-time passcodes</span>, allowing attackers to bypass two-factor authentication and drain financial assets.",
+              "links": [
+                {
+                  "text": "intercepted SMS one-time passcodes",
+                  "url": "https://www.bleepingcomputer.com/news/security/hackers-use-flaws-in-telephony-core-protocol-to-bypass-2fa-on-bank-accounts/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Carrier Defenses and Structural Limitations",
+          "paragraphs": [
+            {
+              "text": "Mobile carriers deploy signaling firewalls designed to block improperly routed messages and run velocity checks to determine whether physical travel between locations is plausible. If a subscriber was recently in New York, a sudden roaming claim from a distant network might trigger a denial.",
+              "links": []
+            },
+            {
+              "text": "However, structural challenges remain. According to <span style=\"color:blue;\">research</span> presented at the Wireless Security conference, privacy-first mobile carrier Cape measured Diameter updates from visited networks arriving as infrequently as every two to ten hours. In regions like the US and Germany, hundreds of distinct networks are reachable within an hour of travel time, giving sophisticated attackers ample opportunity to find a plausible operator identity. Citizen Lab’s report demonstrated this evasion tactic, showing actors rotating through multiple operator identities across various countries and pivoting between SS7 and Diameter to bypass uncoordinated carrier firewalls.",
+              "links": [
+                {
+                  "text": "research",
+                  "url": "https://dl.acm.org/doi/10.1145/3734477.3736150"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Mitigation and Security-Focused Services",
+          "paragraphs": [
+            {
+              "text": "As telecom networks grapple with systemic signaling flaws, security-focused mobile services are emerging to help defend against protocol exploitation. Companies like <span style=\"color:blue;\">Cape</span> offer alternative mobile services built from the ground up with security and privacy at their core to help protect users from covert tracking and interception.",
+              "links": [
+                {
+                  "text": "Cape",
+                  "url": "https://www.cape.co/?utm_source=BleepingComputer&utm_medium=article_sponsorship&utm_campaign=BleepingComputer_ArticleSponsorship_Oct30"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "SS7",
+        "Diameter",
+        "Telecom Security",
+        "Mobile Privacy",
+        "Cybersecurity",
+        "Citizen Lab",
+        "Cape"
+      ],
+      "entities": [
+        "SS7",
+        "Diameter",
+        "Citizen Lab",
+        "Cape",
+        "BleepingComputer"
+      ],
+      "category": "Cybersecurity",
+      "dateLabel": "October 31, 2026",
+      "modifiedLabel": "October 31, 2026",
+      "readMinutes": 4,
+      "wordCount": 690
+    }
+  },
+  "datePublished": "2026-10-31T05:29:30.970824+03:00",
+  "dateModified": "2026-10-31T05:29:30.970824+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone/hero.webp",
+    "card": "/forum/assets/posts/2026/10/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone/card.webp",
+    "social": "/forum/assets/posts/2026/10/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone/social.jpg",
+    "alt": {
+      "ar": "ثغرات بروتوكولات الاتصال تكشف هاتفك للاختراق",
+      "en": "SS7 and Diameter Flaws Expose Mobile Networks"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/posts/2026/10/29/cell-tower-header.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/10/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone/inline-01.webp",
+        "width": 1400,
+        "height": 347,
+        "alt": {
+          "ar": "ثغرات بروتوكولات الاتصال تكشف هاتفك للاختراق",
+          "en": "call flow"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Image related to the report from BleepingComputer"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/security/c/cape/signaling-attacks/call-flow.jpg"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone/",
+      "type": "journalism",
+      "title": "SS7 and Diameter Attacks: How Signaling Flaws Expose Your Phone"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/security/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone",
+  "sourceTitle": "SS7 and Diameter Attacks: How Signaling Flaws Expose Your Phone",
+  "trendScore": 93.25,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-31T02:29:31+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/ss7-and-diameter-attacks-how-signaling-flaws-expose-your-phone.json"
+}
