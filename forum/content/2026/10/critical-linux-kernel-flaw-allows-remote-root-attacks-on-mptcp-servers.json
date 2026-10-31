@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "6617c8ee53373e8872f5",
+  "slug": "critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers",
+  "categorySlug": "security",
+  "urls": {
+    "ar": "/forum/ar/security/critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers/",
+    "en": "/forum/en/security/critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers/"
+  },
+  "locales": {
+    "ar": {
+      "title": "ثغرة حرجة في نواة لينكس تتيح هجمات جذرية عن بُعد",
+      "description": "باحثون في أنثروبيك يطورون استغلالاً لثغرة CVE-2026-98432 في نواة لينكس، تتيح تنفيذ أوامر جذرية عن بُعد على خوادم MPTCP دون مصادقة.",
+      "deck": "كشفت شركة أنثروبيك عن استغلال حرج لثغرة في نواة لينكس يسمح بمهاجمة الخوادم عن بُعد، مع تحذيرات من تأثيرها على أنظمة متعددة.",
+      "summaryBullets": [
+        "ثغرة Use-After-Free في كود TCP بإصدار 9.8 من 10.",
+        "استغلالها يتطلب تفعيل MPTCP أو ظروف محددة.",
+        "تأثيرها يمتد لنسخة لينكس 4.4 وما بعدها.",
+        "تحديثات متاحة لبعض التوزيعات لكن لا تزال فجوات في أخرى.",
+        "لا توجد تقارير مؤكدة عن استغلالها في العالم الحقيقي حتى الآن."
+      ],
+      "sections": [
+        {
+          "heading": "استغلال حرج يكشف ثغرة في نواة لينكس",
+          "paragraphs": [
+            {
+              "text": "أعلن باحثون في شركة أنثروبيك عن تطوير استغلال لثغرة حرجة في نواة لينكس، مما يتيح للمهاجمين غير الموثقين تنفيذ أوامر عن بُعد بصلاحيات جذرية على الخوادم التي تعمل مع مستمعي MPTCP. هذه الثغرة، المسجلة تحت رقم CVE-2026-98432، تؤثر أيضاً على اتصالات TCP العادية، على الرغم من عدم إثبات تنفيذ الشيفرة عن بُعد على الخوادم التي لا تحتوي على مستمع MPTCP بشكل عام. ويمكن الرجوع إلى BleepingComputer للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "CVE-2026-98432",
+                  "url": "https://nvd.nist.gov/vuln/detail/cve-2026-98432"
+                },
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية الثغرة وتأثيرها على الاتصالات",
+          "paragraphs": [
+            {
+              "text": "تُعد MPTCP ميزة في بروتوكول TCP تسمح باستخدام مسارات شبكة متعددة في نفس الوقت لتحسين الأداء والموثوقية، وهي شائعة في الأجهزة ذات اتصالات متعددة. الثغرة نفسها هي ثغرة Use-After-Free في كود شبكات IPv4 TCP في النواة، وحصلت على تقييم حرج 9.8 من 10 من فريق CVE الخاص بلينكس. وفقاً للنصيحة الأمنية لنواة لينكس، تنبع المشكلة من سباق في معالجة طلبات اتصال TCP، مما قد يؤدي إلى حالة Use-After-Free.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تقييم المخاطر من قبل الشركات الكبرى",
+          "paragraphs": [
+            {
+              "text": "على الرغم من أن تفعيل الثغرة لا يتطلب مصادقة، تشير شركة ريد هات إلى أن استغلال سباق الشروط أكثر تعقيداً من مجرد إرسال حزمة شبكة خبيثة. تصنف ريد هات الثغرة كمشكلة محتملة لإنهاء الخدمة قد تسبب انهيار النواة، مع تقييم أقل 5.9 بسبب تعقيد الاستغلال. لكن باحثي أنثروبيك أثبتوا إمكانية استغلالها لتنفيذ الشيفرة عن بُعد تحت ظروف محددة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور الذكاء الاصطناعي في تطوير الاستغلال",
+          "paragraphs": [
+            {
+              "text": "أوضحت تقرير أنثروبيك أن نموذج ذكاء اصطناعي غير منشور طور استغلالاً يتجاوز عشوائية تخطيط مساحة عناوين النواة (KASLR) وينفذ أوامر جذرية. استغرق الاستغلال حوالي 53 دقيقة لتحقيق تنفيذ الشيفرة عن بُعد، مما يظهر أن الثغرة قد تستغل لأكثر من مجرد إنهاء الخدمة. هذا يسلط الضوء على القدرات المتزايدة للذكاء الاصطناعي في اكتشاف الثغرات الأمنية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوزيعات المتأثرة وحالة التصحيحات",
+          "paragraphs": [
+            {
+              "text": "تؤثر الثغرة على نوى لينكس منذ الإصدار 4.4، بما في ذلك توزيعات مثل أوبونتو وريد هات إنتربرايز لينكس وروكي لينكس. وفقاً لتتبع أمان كانونيكال، تبقى أوبونتو 22.04 و24.04 و26.04 و26.10 معرضة للخطر، مع وجود تصحيحات قيد التقدم. ريد هات تذكر أن RHEL 8 و9 و10 متأثرة، بينما RHEL 7 غير متأثرة. روكي لينكس 8 و9 و10 متأثرة أيضاً، مع توجيهات مؤقتة للحماية عبر جدران الحماية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توصيات التخفيف والإجراءات الفورية",
+          "paragraphs": [
+            {
+              "text": "يُنصح المسؤولون بمراجعة نشرات أمان توزيعاتهم وتثبيت حزم النواة المحدثة. للأنظمة التي لا تتوفر لها تصحيحات بعد، يمكن تقليل المخاطر عن طريق تقييد الوصول للشبكات الموثوقة أو عناوين IP. توصي CIQ أيضاً بحجب حزم IPv4 TCP التي تحتوي على خيارات IP مؤقتاً قبل وصولها لكود المعالجة المتأثر، مع تقديم أمثلة لقواعد nftables. من المهم ملاحظة أن تعطيل MPTCP وحده غير كافٍ لأن الثغرة يمكن تفعيلها عبر حركة TCP عادية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "لينكس",
+        "أمن تقني",
+        "MPTCP",
+        "CVE-2026-98432",
+        "أنثروبيك",
+        "نواة لينكس",
+        "هجمات عن بُعد"
+      ],
+      "entities": [
+        "أنثروبيك",
+        "ريد هات",
+        "كانونيكال",
+        "ديبيان",
+        "روكي لينكس",
+        "CIQ"
+      ],
+      "category": "الأمن التقني",
+      "dateLabel": "31 أكتوبر 2026",
+      "modifiedLabel": "31 أكتوبر 2026",
+      "readMinutes": 3,
+      "wordCount": 483
+    },
+    "en": {
+      "title": "Critical Linux Kernel Flaw Allows Remote Root Attacks",
+      "description": "A critical use-after-free vulnerability in the Linux kernel allows unauthenticated attackers to achieve remote root execution on servers with MPTCP listeners.",
+      "deck": "Security researchers have developed an exploit for a critical Linux kernel vulnerability impacting multiple major distributions, though no in-the-wild exploitation has been confirmed.",
+      "summaryBullets": [
+        "A critical use-after-free vulnerability, tracked as CVE-2026-98432, affects Linux kernels dating back to version 4.4.",
+        "Anthropic researchers demonstrated that an unreleased Claude AI model successfully generated an exploit achieving remote root execution.",
+        "The flaw stems from a race condition in IPv4 TCP networking code, impacting Multipath TCP (MPTCP) listeners and standard TCP connections.",
+        "Major distributions including Ubuntu, Red Hat Enterprise Linux, Rocky Linux, and Debian are addressing the flaw with kernel updates."
+      ],
+      "sections": [
+        {
+          "heading": "Critical Flaw in Linux Kernel Networking Code",
+          "paragraphs": [
+            {
+              "text": "Security researchers at Anthropic have developed an exploit for a critical Linux kernel vulnerability that allows unauthenticated attackers to remotely execute commands as root on servers running Multipath TCP (MPTCP) listeners. Tracked as CVE-2026-98432, the vulnerability is a use-after-free issue residing in the kernel's IPv4 TCP networking code and received a severity score of 9.8 out of 10 from the Linux kernel CVE team.",
+              "links": [
+                {
+                  "text": "CVE-2026-98432",
+                  "url": "https://nvd.nist.gov/vuln/detail/cve-2026-98432"
+                }
+              ]
+            },
+            {
+              "text": "The vulnerability affects Linux kernels dating back to version 4.4, including widely deployed enterprise and community distributions such as Ubuntu, Red Hat Enterprise Linux (RHEL), and Rocky Linux. According to the Linux kernel advisory, the root cause is a race condition tied to how the kernel handles TCP connection requests during option transfers and retransmissions.",
+              "links": [
+                {
+                  "text": "Linux kernel advisory",
+                  "url": "https://git.kernel.org/pub/scm/linux/security/vulns.git/plain/cve/published/2026/CVE-2026-98432.mbox"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "AI-Assisted Exploit Development and Remote Code Execution",
+          "paragraphs": [
+            {
+              "text": "While Multipath TCP is designed to let a single connection utilize multiple network paths simultaneously—such as Wi-Fi and cellular networks—it introduces a significant attack vector when configured with active listeners. An Anthropic report detailed how an unreleased Claude AI model successfully constructed an exploit that bypassed kernel address space layout randomization (KASLR) to execute arbitrary commands as root.",
+              "links": [
+                {
+                  "text": "Anthropic report",
+                  "url": "https://www.anthropic.com/research/discovering-vulnerabilities-with-claude"
+                }
+              ]
+            },
+            {
+              "text": "The AI-driven exploit achieved remote root code execution in approximately 53 minutes. Although Red Hat initially classified the vulnerability as a denial-of-service issue with a lower severity score of 5.9 due to the complexity of racing the condition, Anthropic's demonstration confirmed that full system compromise is possible under specific conditions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Unintentional Exposure Through Go Programming Language",
+          "paragraphs": [
+            {
+              "text": "Although MPTCP is not universally enabled by default across all applications, certain software configurations activate it automatically. Beginning with Go 1.24, the programming language enables MPTCP by default for TCP listeners on Linux systems provided the underlying kernel supports the feature. Consequently, administrators may run Go-based network services with active MPTCP listeners without realizing it.",
+              "links": [
+                {
+                  "text": "enables MPTCP by default",
+                  "url": "https://go.dev/doc/godebug#go-124"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Vendor Responses and Mitigation Strategies",
+          "paragraphs": [
+            {
+              "text": "Linux vendors and maintainers have begun releasing patches across various distributions. Canonical's security tracker notes that Ubuntu versions 22.04 LTS, 24.04 LTS, 26.04 LTS, and 26.10 remain vulnerable while kernel fixes are actively prepared. Meanwhile, Debian's security tracker confirms that fixes have landed in kernel package version 6.1.190-1 for Debian 12 (Bookworm) and 6.12.113-1 for Debian 13 (Trixie).",
+              "links": [
+                {
+                  "text": "Canonical's security tracker",
+                  "url": "https://ubuntu.com/security/CVE-2026-98432"
+                },
+                {
+                  "text": "Debian's security tracker",
+                  "url": "https://security-tracker.debian.org/tracker/CVE-2026-98432"
+                }
+              ]
+            },
+            {
+              "text": "For environments awaiting official kernel updates, mitigation guidance from Rocky Linux support provider CIQ outlines temporary firewall protections. Because disabling MPTCP alone does not eliminate the risk—since the underlying vulnerability can also be triggered via standard TCP traffic—administrators are advised to apply temporary packet-filtering rules, restrict access to trusted networks, or deploy updated kernel packages as soon as they become available.",
+              "links": [
+                {
+                  "text": "mitigation guidance",
+                  "url": "https://kb.ciq.com/article/security-advisories/cve-2026-98432-mitigation"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Linux Kernel",
+        "Cybersecurity",
+        "Vulnerabilities",
+        "Anthropic",
+        "Multipath TCP",
+        "Red Hat",
+        "Ubuntu",
+        "Debian"
+      ],
+      "entities": [
+        "Anthropic",
+        "Red Hat",
+        "Canonical",
+        "Debian",
+        "CIQ"
+      ],
+      "category": "Cybersecurity",
+      "dateLabel": "October 31, 2026",
+      "modifiedLabel": "October 31, 2026",
+      "readMinutes": 3,
+      "wordCount": 521
+    }
+  },
+  "datePublished": "2026-10-31T03:09:29.856268+03:00",
+  "dateModified": "2026-10-31T03:09:29.856268+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/10/critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers/hero.webp",
+    "card": "/forum/assets/posts/2026/10/critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers/card.webp",
+    "social": "/forum/assets/posts/2026/10/critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers/social.jpg",
+    "alt": {
+      "ar": "ثغرة حرجة في نواة لينكس تتيح هجمات جذرية عن بُعد",
+      "en": "Critical Linux Kernel Flaw Allows Remote Root Attacks"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/10/29/Linux.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers/",
+      "type": "journalism",
+      "title": "Critical Linux kernel flaw allows remote root attacks on MPTCP servers"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/security/critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers",
+  "sourceTitle": "Critical Linux kernel flaw allows remote root attacks on MPTCP servers",
+  "trendScore": 94.94,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-10-31T00:09:30+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/10/critical-linux-kernel-flaw-allows-remote-root-attacks-on-mptcp-servers.json"
+}
