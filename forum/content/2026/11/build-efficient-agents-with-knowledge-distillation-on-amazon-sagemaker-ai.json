@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "7e203c274434cb6cae50",
+  "slug": "build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/",
+    "en": "/forum/en/ai/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تتيح بناء وكلاء ذكاء اصطناعي اقتصاديين عبر تقطير المعرفة",
+      "description": "تشرح أمازون كيفية استخدام تقطير المعرفة التسلسلي على SageMaker AI لنقل سلوك النماذج الكبيرة إلى نماذج أصغر، مما يقلل التكاليف التشغيلية للوكلاء الذكيين.",
+      "deck": "تواجه تطبيقات الوكلاء الذكية تحدياً مالياً بسبب تكرار استدعاء النماذج المتقدمة. تقدم أمازون حلاً تقنياً يقلل التكاليف مع الحفاظ على الجودة.",
+      "summaryBullets": [
+        "تقنية تقطير المعرفة التسلسلي (SeqKD) تتيح تدريب نماذج صغيرة على سلوك النماذج الكبيرة دون الحاجة للوصول إلى أوزانها الداخلية.",
+        "تُستخدم بيانات المسارات (Trajectories) التي تولدها المعلمة المتقدمة لتدريب النموذج الطالب على حل المهام متعددة الخطوات.",
+        "يعمل الحل على بنية أمازون SageMaker AI، مما يسمح بتقليل التكاليف التشغيلية عند النشر على نطاق واسع.",
+        "يُظهر المثال العملي كيفية تحسين وكيل تسوق باستخدام نموذج Qwen3.5-4B بعد تدريبه على بيانات من نموذج GLM-5.3."
+      ],
+      "sections": [
+        {
+          "heading": "التحدي: تكلفة الوكلاء الذكية على النطاق الإنتاجي",
+          "paragraphs": [
+            {
+              "text": "تعمل المساعدات الوكيلة المبنية على النماذج المتقدمة (Frontier Models) عبر حلقات متعددة الخطوات تتضمن البحث، وقراءة النتائج، والتحقق، واتخاذ القرار. كل خطوة من هذه الخطوات تمثل استدعاءً منفصلاً للنموذج، مما يؤدي إلى تراكم التكاليف بشكل كبير عند التعامل مع عدد ضخم من المستخدمين. هذا التكرار يجعل استدامة المشروع مالياً صعبة، حيث تتآكل العائدات الاستثمارية بسرعة إذا استمر الاعتماد على النماذج باهظة الثمن لكل تفاعل. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/"
+                }
+              ]
+            },
+            {
+              "text": "الحل البديهي هو استخدام نماذج أصغر حجماً، فهي أسرع وأقل تكلفة في الاستضافة. لكن المشكلة الأساسية تكمن في الجودة؛ فالنماذج الصغيرة عادةً ما تنقصها القدرة على معالجة المهام المعقدة التي تتطلبها الوكلاء الذكية. هنا يأتي دور تقطير المعرفة (Knowledge Distillation) لسد هذه الفجوة، من خلال نقل سلوك النموذج الكبير (المعلم) إلى نموذج أصغر (الطالب)، مما يحافظ على مستوى الجودة مع الاستفادة من سرعة وكفاءة النموذج الصغير.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية تقطير المعرفة التسلسلي (SeqKD)",
+          "paragraphs": [
+            {
+              "text": "يعتمد النهج المقدم في هذا السياق على تقطير المعرفة على مستوى التسلسل (SeqKD). هذه الطريقة تستخدم نموذج المعلم لتوليد استجابات عالية الجودة، ثم يتم تدريب نموذج الطالب على هذه الاستجابات عبر الضبط الدقيق الإشرافي (SFT). الميزة الرئيسية لهذا النهج هي أنه لا يتطلب الوصول إلى الأوزان الداخلية أو القيم الاحتمالية (Logits) للمعلم، مما يجعله قابلاً للتطبيق حتى مع النماذج المغلقة أو تلك المتاحة فقط عبر واجهات برمجة التطبيقات (API).",
+              "links": []
+            },
+            {
+              "text": "في سياق الوكلاء، التسلسل الذي ينتجه المعلم ليس مجرد نص، بل هو مسار (Trajectory) منظم يتكون من خطوات الاستدلال، واستدعاءات الأدوات، والملاحظات المرتجعة. تدريب الطالب على هذا المسار الكامل يعلمه منطق اتخاذ القرار متعدد الخطوات، وليس مجرد إجابة نصية واحدة. هذا يجعل مهمة الوكيل مثالاً مثالياً لتطبيق تقطير المعرفة التسلسلي، حيث أن السلوك نفسه هو ما يتم نسخه.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تجاوز قيود النماذج المغلقة",
+          "paragraphs": [
+            {
+              "text": "غالباً ما تكون النماذج المتقدمة متاحة فقط عبر واجهات برمجة التطبيقات، مما يمنع المطورين من الوصول إلى أوزانها أو قيمها الاحتمالية. هذا الاستبعاد يقضي على أساليب التقطير التقليدية التي تعتمد على الوصول الداخلي. في هذه الحالة، يمثل تقطير المعرفة التسلسلي الخيار الوحيد الفعال، حيث يعتمد حصرياً على النصوص التي يولدها المعلم. هذا يتيح للمطورين التوقف عن دفع أسعار النماذج المتقدمة لكل طلب بعد أن يبدأ النموذج الطالب في تولي المهام.",
+              "links": []
+            },
+            {
+              "text": "تُعد هذه التقنية أساسية في بناء نماذج الاستدلال الصغيرة القوية. على سبيل المثال، اعتمدت نماذج DeepSeek-R1 المستخلصة بشكل كبير على هذه المنهجية، حيث تم نقل قدرات الاستدلال من معلم كبير إلى طلاب أصغر من خلال تدريبهم على مسارات الاستدلال التي تولدها المعلمة. هذا يؤكد فعالية النهج في نقل القدرات المعقدة عندما تكون الظروف التقنية مناسبة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات التنفيذ والبنية التحتية",
+          "paragraphs": [
+            {
+              "text": "لتطبيق هذا الحل، يتطلب الأمر حساباً في أمازون سحابياً مع دور IAM يمنح صلاحيات القراءة والكتابة على مخازن البيانات، بالإضافة إلى إذن لاستدعاء نموذج المعلم. كما يتطلب الوصول إلى خدمات تخصيص النماذج في Amazon SageMaker AI في منطقة AWS مدعومة. يجب توفر بيئة تطوير مثل Amazon SageMaker Studio أو بيئة محلية مهيأة مع أدوات البرمجة اللازمة.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker Studio",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated.html"
+                }
+              ]
+            },
+            {
+              "text": "من الناحية التقنية، يُنصح باستخدام بيئة Python 3.12 أو أحدث، مع تثبيت مكتبات SDK الخاصة بـ SageMaker. لضمان كفاءة خطوات إعداد البيانات والتقييم المحلي، يُوصى باستخدام وحدة معالجة سحابية من نوع ml.m5.4xlarge على الأقل. كما يتطلب الأمر معرفة مسبقة بلغة بايثون وتقنيات الضبط الدقيق، بالإضافة إلى مجموعة بيانات مهام مجهزة بمقياس تقييم برمجي (Programmatic Scorer) للتحقق من صحة المسارات المولدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دراسة حالة: تحسين وكيل التسوق",
+          "paragraphs": [
+            {
+              "text": "يوضح المقال عملية تطبيقية كاملة تبدأ باستخدام نموذج GLM-5.3 المتاح عبر Amazon Bedrock كمعلم. يعمل هذا النموذج كوكيل تسوق على مجموعة اختبار ShoppingBench لتوليد مسارات حل للمهام. يقوم مقياس التقييم الخاص بالمجموعة بالاحتفاظ فقط بالمسارات التي تحل المهمة بنجاح، وتُستخدم هذه المسارات الناجحة لضبط نموذج الطالب Qwen3.5-4B.",
+              "links": []
+            },
+            {
+              "text": "بعد التدريب، يتم تقييم النموذج المستخلص على مجموعة بيانات منفصلة (Held-out split) من نفس المعيار للتأكد من قدرته على التعميم. النتيجة هي وكيل تسوق يعمل بكفاءة عالية وتكلفة أقل بكثير من النموذج الأصلي، مما يثبت جدوى استخدام تقطير المعرفة التسلسلي لتحسين الأداء الاقتصادي للوكلاء الذكيين في البيئات الإنتاجية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "SageMaker AI",
+        "تقطير المعرفة",
+        "الوكلاء الذكيون",
+        "تقليل التكاليف",
+        "تعلم الآلة"
+      ],
+      "entities": [
+        "Amazon SageMaker AI",
+        "Amazon Bedrock",
+        "GLM-5.3",
+        "Qwen3.5-4B",
+        "ShoppingBench",
+        "DeepSeek-R1"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "2 نوفمبر 2026",
+      "modifiedLabel": "2 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 720
+    },
+    "en": {
+      "title": "Build Efficient Agents Using Sequence-Level Knowledge Distillation",
+      "description": "Learn how to transfer frontier model behavior to lower-cost student models using sequence-level knowledge distillation on Amazon SageMaker AI.",
+      "deck": "A new guide outlines how developers can use sequence-level knowledge distillation on Amazon SageMaker AI to deploy efficient agentic assistants while reducing production costs.",
+      "summaryBullets": [
+        "Agentic assistants often rely on multi-step tool loops that incur high per-task costs at scale.",
+        "Sequence-level knowledge distillation (SeqKD) transfers a frontier model's agentic behavior into a smaller, cheaper student model.",
+        "SeqKD utilizes text outputs and generated trajectories without needing teacher logits or weights.",
+        "Developers can leverage Amazon SageMaker AI model customization alongside Amazon Bedrock to build and evaluate efficient agents."
+      ],
+      "sections": [
+        {
+          "heading": "The Production Challenge of Agentic Workloads",
+          "paragraphs": [
+            {
+              "text": "Agentic assistants built on frontier models typically execute a multi-step tool loop involving search, reading results, refining, verifying, and deciding. Because a single completed task requires multiple model calls, per-task costs compound rapidly at production scale, eroding project ROI and hindering deployment. Using a smaller model offers a faster and more cost-effective alternative, but smaller models often fall short on complex agentic tasks.",
+              "links": []
+            },
+            {
+              "text": "To bridge this performance gap, developers can turn to knowledge distillation. This technique transfers the behavior of a larger teacher model into a smaller student model, training the student to reproduce the teacher's outputs and maintain quality at a reduced speed and cost.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Understanding Sequence-Level Knowledge Distillation",
+          "paragraphs": [
+            {
+              "text": "The applicable form of distillation discussed in the guidance is sequence-level knowledge distillation, or SeqKD. It operates by using a teacher model to generate high-quality responses, which are then used to train a student model via supervised fine-tuning. Because SeqKD requires only the teacher's text without access to teacher logits or reinforcement learning infrastructure, it functions seamlessly even with closed or API-only frontier models.",
+              "links": []
+            },
+            {
+              "text": "In the context of agents, the teacher produces a trajectory—an ordered run of reasoning, tool calls, and observations where each step depends on prior actions. Training the student on the entire sequence teaches it the reasoning path that leads to each action rather than just a single paragraph of answer text. Well-known examples of this approach include DeepSeek-R1 distilled models, which were created by fine-tuning smaller students on a large teacher's generated reasoning traces.",
+              "links": [
+                {
+                  "text": "DeepSeek-R1 distilled models",
+                  "url": "https://arxiv.org/abs/2501.12948"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and Infrastructure Requirements",
+          "paragraphs": [
+            {
+              "text": "Implementing this workflow requires an AWS account equipped with an AWS Identity and Access Management (IAM) role for SageMaker AI that grants read and write permissions to an Amazon S3 bucket and permits invocation of the teacher model. Additionally, developers need access to Amazon SageMaker AI model customization in a supported AWS Region alongside a frontier teacher model hosted on Amazon Bedrock.",
+              "links": [
+                {
+                  "text": "AWS Identity and Access Management (IAM) role for SageMaker AI",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/security-iam.html"
+                },
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "For the local environment, teams can utilize Amazon SageMaker Studio or a local IDE with the AWS CLI configured. The setup requires a Python 3.12 or higher kernel running the SageMaker Python SDK v3 and boto3. For data preparation and local scoring tasks executed on the CPU, an ml.m5.4xlarge instance is recommended as a minimum for the notebook environment.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker Studio",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated.html"
+                },
+                {
+                  "text": "AWS CLI configured",
+                  "url": "https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html"
+                },
+                {
+                  "text": "SageMaker Python SDK v3",
+                  "url": "https://sagemaker.readthedocs.io/"
+                },
+                {
+                  "text": "ml.m5.4xlarge instance",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-available-instance-types.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Executing the Distillation Pipeline",
+          "paragraphs": [
+            {
+              "text": "The end-to-end pipeline involves generating agent trajectories using a frontier teacher model, such as GLM-5.3 accessed through Amazon Bedrock. A programmatic scorer filters the generated data to retain only the trajectories that successfully solve the task. These verified trajectories are then used to fine-tune a student model via serverless supervised fine-tuning leveraging Amazon SageMaker AI model customization.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI model customization",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/customize-model.html"
+                }
+              ]
+            },
+            {
+              "text": "Following the fine-tuning process, the resulting distilled student model can be evaluated against a held-out benchmark split on Amazon SageMaker AI, allowing organizations to maintain high agent performance while significantly lowering operational and inference expenses.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker/ai/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker AI",
+        "Knowledge Distillation",
+        "Artificial Intelligence",
+        "AWS",
+        "Machine Learning",
+        "Agentic Workflows"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker AI",
+        "Amazon Bedrock"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 2, 2026",
+      "modifiedLabel": "November 2, 2026",
+      "readMinutes": 3,
+      "wordCount": 560
+    }
+  },
+  "datePublished": "2026-11-02T20:23:54.196810+03:00",
+  "dateModified": "2026-11-02T20:23:54.196810+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/hero.webp",
+    "card": "/forum/assets/posts/2026/11/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/card.webp",
+    "social": "/forum/assets/posts/2026/11/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح بناء وكلاء ذكاء اصطناعي اقتصاديين عبر تقطير المعرفة",
+      "en": "Build Efficient Agents Using Sequence-Level Knowledge Distillation"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-22281-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/inline-01.webp",
+        "width": 1400,
+        "height": 602,
+        "alt": {
+          "ar": "أمازون تتيح بناء وكلاء ذكاء اصطناعي اقتصاديين عبر تقطير المعرفة",
+          "en": "Diagram of an agentic task as a loop: search, read results, refine, verify, and decide, with each step a separate billed call to the frontier model"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-22281-1-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/inline-02.webp",
+        "width": 1400,
+        "height": 532,
+        "alt": {
+          "ar": "أمازون تتيح بناء وكلاء ذكاء اصطناعي اقتصاديين عبر تقطير المعرفة",
+          "en": "Diagram of SeqKD: the teacher generates trajectories and the student trains on them as ordinary supervised fine-tuning"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-22281-2-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/inline-03.webp",
+        "width": 1400,
+        "height": 826,
+        "alt": {
+          "ar": "أمازون تتيح بناء وكلاء ذكاء اصطناعي اقتصاديين عبر تقطير المعرفة",
+          "en": "Architecture diagram of distilling a shopping agent on SageMaker AI: the teacher generates trajectories, the scorer keeps the solved ones, the student is fine-tuned, and results are evaluated on the held-out split"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-22281-3-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/inline-04.webp",
+        "width": 1400,
+        "height": 740,
+        "alt": {
+          "ar": "أمازون تتيح بناء وكلاء ذكاء اصطناعي اقتصاديين عبر تقطير المعرفة",
+          "en": "Bar chart of Absolute Success Rate by shopper intent, showing the distilled 4B student matching the GLM-5.3 teacher and a medium-sized frontier model"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-22281-4-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai/",
+      "type": "official",
+      "title": "Build efficient agents with knowledge distillation on Amazon SageMaker AI"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai",
+  "sourceTitle": "Build efficient agents with knowledge distillation on Amazon SageMaker AI",
+  "trendScore": 134.46,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-02T17:23:54+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/build-efficient-agents-with-knowledge-distillation-on-amazon-sagemaker-ai.json"
+}
