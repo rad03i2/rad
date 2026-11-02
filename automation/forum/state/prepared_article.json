@@ -1,5 +1,332 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-02T17:43:55+00:00",
-  "last_published_story_id": "046f31786bb677e60806"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-02T17:53:09+00:00",
+  "target_publish_at": "2026-11-02T21:03:54.332202+03:00",
+  "story": {
+    "title": "How Circle K accelerated DevOps incident triage to under 15 minutes with Amazon Bedrock",
+    "url": "https://aws.amazon.com/blogs/machine-learning/how-circle-k-accelerated-devops-incident-triage-to-under-15-minutes-with-amazon-bedrock",
+    "domain": "aws.amazon.com",
+    "summary": "Circle K's DevOps team cut incident triage from 45-60 minutes to under 15 by building an agentic triage system on Amazon Bedrock. This post walks through the architecture, the initial Amazon Bedrock Flows implementation, the migration to Amazon Bedrock AgentCore, and the lessons learned from scaling it.",
+    "published_at": "2026-11-02T17:00:58+00:00",
+    "discovered_at": "2026-11-02T17:02:28+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "4cb0c7e800cdcdc0ecc7",
+    "trend": {
+      "score": 111.59,
+      "age_hours": 0.87,
+      "corroboration_count": 0,
+      "entity_momentum": 13.93,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-circle-k-accelerated-devops-incident-triage-to-under-15-minutes-with-amazon-bedrock/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How Circle K accelerated DevOps incident triage to under 15 minutes with Amazon Bedrock",
+      "title": "How Circle K accelerated DevOps incident triage to under 15 minutes with Amazon Bedrock | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "سيركل كي تخفض زمن معالجة الحوادث إلى أقل من 15 دقيقة",
+      "description": "اعتمدت سيركل كي على أرامازون بيدروك لبناء نظام ذكاء اصطناعي أوتوماتيكي، مما قلص زمن فرز الحوادث التشغيلية من 60 دقيقة إلى أقل من 15 دقيقة.",
+      "deck": "نجحت شركة سيركل كي في تسريع استجابة فرق العمليات السحابية (DevOps) بشكل جذري عبر تبنّي بنية تحتية للذكاء الاصطناعي التوليدي.",
+      "summary_bullets": [
+        "خفّضت سيركل كي متوسط زمن فرز الحوادث التشغيلية من 45-60 دقيقة إلى أقل من 15 دقيقة.",
+        "اعتمد الحل على منصة أرامازون بيدروك لإدارة نماذج الذكاء الاصطناعي التوليدي من خلال واجهة برمجية موحدة.",
+        "انتقلت البنية التحتية من أرامازون بيدروك فلوز إلى أرامازون بيدروك أجننت كور لتحسين الأداء.",
+        "يجمع النظام بيانات من عدة مصادر مثل السجلات والتتبعات وتوثيق الكود لتقديم ملخصات جاهزة للمهندسين."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي التوسع في العمليات السحابية",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق العمليات السحابية تحدياً كبيراً يتمثل في الوقت الذي يستغرقه المهندسون لفهم طبيعة الأعطال قبل بدء إصلاحها. في شركة سيركل كي، التي تدير أكثر من 17,200 متجر في 27 دولة، كان هذا التحدي يتفاقم مع توسع البنية التحتية السحابية التي تدعم أنظمة نقاط البيع وشحن المركبات الكهربائية على منصة أرامازون ويب سيرفيسز. كان المهندسون يقضون ما بين 45 إلى 60 دقيقة في جمع المعلومات من عدة أدوات قبل اتخاذ أي إجراء.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اعتماد الذكاء الاصطناعي التوليدي",
+          "paragraphs": [
+            {
+              "text": "للتغلب على هذا البطء، قررت سيركل كي بناء نظام فرز أوتوماتيكي يعتمد على الذكاء الاصطناعي. تم اختيار أرامازون بيدروك، وهو خدمة مدارة بالكامل تجعل نماذج الذكاء الاصطناعي التوليدي متاحة عبر واجهة برمجية واحدة. سمح هذا الاختيار للفريق بتجنب تعقيدات استضافة النماذج وإدارة الإصدارات، مع الاستفادة من تكامل الخدمة مع سياسات الأمان الحالية للشركة.",
+              "links": [
+                {
+                  "text": "أرامازون بيدروك",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "البنية التحتية الأولية للنظام",
+          "paragraphs": [
+            {
+              "text": "بدأت سيركل كي بتطوير النظام باستخدام أرامازون بيدروك فلوز كطبقة للتنسيق. يبدأ العمل عندما يرسل نظام المراقبة تنبيهاً إلى خدمة أرامازون سنس، التي تمرره إلى طابور أرامازون إس كيو إس. يقوم دالة لامدا بعد ذلك باستخراج بيانات التنبيه وتفعيل سير عمل الذكاء الاصطناعي. يتضمن هذا السير عمل وكلاء متخصصين بالتوازي لجمع البيانات من مصادر مختلفة.",
+              "links": [
+                {
+                  "text": "أرامازون بيدروك فلوز",
+                  "url": "https://aws.amazon.com/bedrock/flows/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية جمع المعلومات والتحليل",
+          "paragraphs": [
+            {
+              "text": "يعمل وكيلان بالتوازي في المرحلة الأولى: الأول يفحص حالة البنية التحتية مثل خدمات أرامازون إي سي إس ومقاييس الأداء في كلاودووتش، بينما يستعلم الوكيل الثاني عن السجلات والتتبعات في أرامازون أوبن سيرش. بعد جمع هذه البيانات، يعمل وكيل ثالث للبحث في مستودعات جيت هاب للكشف عن الكود أو التعريفات التي قد تكون سبباً للمشكلة. يجمع النظام هذه المخرجات لتقديم ملخص منظم للمهندسين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الانتقال إلى أجننت كور",
+          "paragraphs": [
+            {
+              "text": "مع تزايد حجم العمليات، قررت سيركل كي الانتقال من بنية فلوز إلى أرامازون بيدروك أجننت كور. ساهم هذا التحديث في تحسين كفاءة النظام وقدرته على التعامل مع حجم أكبر من الحوادث. كما ساعد في إدارة سياق الوكلاء بشكل أفضل، مما أدى إلى تقليل زمن الاستجابة بشكل ملحوظ.",
+              "links": [
+                {
+                  "text": "أرامازون بيدروك أجننت كور",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "النتائج والتحسنات المحققة",
+          "paragraphs": [
+            {
+              "text": "أدى هذا التحول إلى خفض متوسط زمن فرز الحوادث إلى أقل من 15 دقيقة، وهو انخفاض يتراوح بين 67 و75 بالمئة مقارنة بالوضع السابق. أصبح المهندسون يستلمون سياقاً عملياً وجاهزاً بدلاً من التنبيهات الخام، مما مكنهم من البدء بالإصلاح فوراً. كما ساهم النظام في توحيد المعايير التشغيلية وتقليل الأخطاء الناتجة عن الاختلاف في خبرة المهندسين المناوبين.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أرامازون بيدروك",
+        "سيركل كي",
+        "العمليات السحابية",
+        "إدارة الحوادث",
+        "أرامازون ويب سيرفيسز"
+      ],
+      "entities": [
+        "سيركل كي",
+        "أرامازون بيدروك",
+        "أرامازون بيدروك فلوز",
+        "أرامازون بيدروك أجننت كور",
+        "أرامازون كلاودووتش",
+        "أرامازون أوبن سيرش"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستخلصة حصرياً من مدونة أرامازون الرسمية، مع التركيز على الأرقام والبنية المذكورة."
+    },
+    "en": {
+      "title": "Circle K Cuts DevOps Incident Triage Times With Amazon Bedrock",
+      "description": "Circle K's DevOps team accelerated incident triage from up to 60 minutes down to under 15 minutes by implementing an agentic AI system on Amazon Bedrock.",
+      "deck": "By deploying an agentic triage system on Amazon Bedrock, Circle K successfully reduced its mean DevOps incident triage time by up to 75 percent.",
+      "summary_bullets": [
+        "Circle K operates cloud-native infrastructure supporting over 17,200 convenience and fuel retail stores across 27 countries.",
+        "Manual incident investigations previously required engineers to spend 45 to 60 minutes gathering logs, traces, and runbooks.",
+        "An automated system built on Amazon Bedrock autonomous agents now delivers structured summaries to Slack within minutes.",
+        "The initiative cut mean triage times to under 15 minutes, representing a 67 to 75 percent reduction in response overhead."
+      ],
+      "sections": [
+        {
+          "heading": "The Scaling Challenge of Cloud-Native Infrastructure",
+          "paragraphs": [
+            {
+              "text": "For many DevOps teams, handling alerts involves a familiar and time-consuming manual investigation pattern. Before any remediation can begin, engineers often spend 45 to 60 minutes pulling logs, checking service health, and correlating symptoms across disparate tools. At Circle K, this operational challenge scaled directly alongside its expanding business footprint. The enterprise operates more than 17,200 convenience and fuel retail stores across 27 countries, backed by a cloud-native infrastructure that powers point-of-sale systems, loyalty applications, and electric vehicle charging applications.",
+              "links": []
+            },
+            {
+              "text": "As digital operations expanded, the overhead required for incident triage grew proportionally. More services naturally generated a higher volume of alerts, and each alert historically demanded manual investigation before troubleshooting could even commence. To resolve this bottleneck, Circle K turned to foundation models made accessible through [Amazon Bedrock](https://aws.amazon.com/bedrock/), a fully managed service that allows organizations to leverage advanced AI models via a single API.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Automating Context Gathering and Investigation",
+          "paragraphs": [
+            {
+              "text": "Before building the automated solution, Circle K's DevOps team monitored infrastructure across multiple AWS accounts using Grafana. A typical operating day brought alerts concerning container restarts, elevated error rates, latency spikes, and failed deployments. Investigating these signals manually required a repetitive sequence of steps, including reviewing recent operational logs in [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/), examining application-level traces, checking task status, and cross-referencing internal runbooks.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch",
+                  "url": "https://aws.amazon.com/cloudwatch/"
+                }
+              ]
+            },
+            {
+              "text": "Recognizing that these manual queries would only multiply as more services came online, the team launched a research and development initiative. Their primary goal was to automate repetitive context gathering while preserving the operational judgment of human engineers. They evaluated multiple approaches, including self-managed open source frameworks, but ultimately selected AWS managed services to avoid the substantial overhead of model hosting, security controls, and prompt versioning.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Designing the Agentic Architecture",
+          "paragraphs": [
+            {
+              "text": "The initial iteration of Circle K's solution was built using [Amazon Bedrock Flows](https://aws.amazon.com/bedrock/flows/) to coordinate a specialized group of cooperating agents. The automated pipeline triggers whenever a Grafana alert publishes a notification to an Amazon SNS topic, which subsequently forwards the payload to an Amazon SQS queue. A dedicated AWS Lambda function polls the queue, extracts the necessary payload data, and invokes the workflow.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Flows",
+                  "url": "https://aws.amazon.com/bedrock/flows/"
+                }
+              ]
+            },
+            {
+              "text": "Inside the orchestration layer, multiple agents execute tasks in parallel to investigate the root cause of an incident. The AWSResourceExplorerAgent checks infrastructure details across workload accounts, including container health and metric data. Concurrently, another specialized component queries application-level logs using [Amazon OpenSearch Service](https://aws.amazon.com/opensearch-service/) to keep individual context windows manageable given the high volume of log data.",
+              "links": [
+                {
+                  "text": "Amazon OpenSearch Service",
+                  "url": "https://aws.amazon.com/opensearch-service/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Accelerating Response Times and Maintaining Security",
+          "paragraphs": [
+            {
+              "text": "Following the parallel exploration phase, a final analysis node synthesizes the gathered data into a structured summary delivered directly to Slack. On-call engineers now receive immediate, actionable context rather than raw alerts, allowing them to begin troubleshooting immediately. According to internal incident response metrics, this agentic approach has successfully reduced mean triage times to under 15 minutes, translating to a 67 to 75 percent reduction in initial investigation overhead.",
+              "links": []
+            },
+            {
+              "text": "Data privacy and security remained a critical requirement throughout the deployment. Because production logs and internal infrastructure details can contain sensitive information, Circle K benefited from the native data handling assurances provided by the platform, ensuring customer operational data is not utilized to train underlying foundation models.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Circle K",
+        "Amazon Bedrock",
+        "DevOps",
+        "Artificial Intelligence",
+        "Cloud Computing",
+        "AWS"
+      ],
+      "entities": [
+        "Circle K",
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Grafana"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based entirely on the official AWS Machine Learning Blog post detailing Circle K's DevOps triage architecture."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 450,
+      "word_count_en": 623
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "4cb0c7e800cdcdc0ecc7",
+      "title": "How Circle K accelerated DevOps incident triage to under 15 minutes with Amazon Bedrock",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 450,
+          "word_count_en": 623
+        }
+      ]
+    }
+  ],
+  "slug": "how-circle-accelerated-devops-incident-triage-to-under-15-minutes-with-amazon",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-circle-accelerated-devops-incident-triage-to-under-15-minutes-with-amazon/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-circle-accelerated-devops-incident-triage-to-under-15-minutes-with-amazon/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-circle-accelerated-devops-incident-triage-to-under-15-minutes-with-amazon/social.jpg",
+    "alt": {
+      "ar": "سيركل كي تخفض زمن معالجة الحوادث إلى أقل من 15 دقيقة",
+      "en": "Circle K Cuts DevOps Incident Triage Times With Amazon Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21514-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-circle-accelerated-devops-incident-triage-to-under-15-minutes-with-amazon/inline-01.webp",
+        "width": 1024,
+        "height": 420,
+        "alt": {
+          "ar": "سيركل كي تخفض زمن معالجة الحوادث إلى أقل من 15 دقيقة",
+          "en": "Amazon Bedrock Flows triage architecture: a Grafana alert flows through Amazon SNS, SQS, and Lambda to parallel agents that post a summary to Slack"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-circle-k-accelerated-devops-incident-triage-to-under-15-minutes-with-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21514-first-arch-final.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/how-circle-accelerated-devops-incident-triage-to-under-15-minutes-with-amazon/inline-02.webp",
+        "width": 1020,
+        "height": 420,
+        "alt": {
+          "ar": "سيركل كي تخفض زمن معالجة الحوادث إلى أقل من 15 دقيقة",
+          "en": "Production architecture with Amazon Bedrock AgentCore Runtime and Gateway: Lambda invokes a single agent that posts a Slack summary"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-circle-k-accelerated-devops-incident-triage-to-under-15-minutes-with-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21514-second-arch-final.jpg"
+      }
+    ]
+  }
 }
