@@ -1,5 +1,408 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-02T14:03:53+00:00",
-  "last_published_story_id": "1674d5c39a22db8d4515"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-02T14:07:54+00:00",
+  "target_publish_at": "2026-11-02T17:23:52.132683+03:00",
+  "story": {
+    "title": "How we halved DNS build delay and cut memory use by 85%",
+    "url": "https://blog.cloudflare.com/dns-targeted-zone-builds",
+    "domain": "blog.cloudflare.com",
+    "summary": "Zone setting changes used to rebuild entire DNS zones, even ones with tens of millions of records. Here is how we built a planner that picks the smallest safe build, cutting full builds by 40%, peak memory by 85%, and halving build delay.",
+    "published_at": "2026-11-02T14:00:00+00:00",
+    "discovered_at": "2026-11-02T14:07:30+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "web",
+    "category_label": "الويب",
+    "score": 58,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "d888d4590bb365d280db",
+    "trend": {
+      "score": 112.46,
+      "age_hours": 0.13,
+      "corroboration_count": 0,
+      "entity_momentum": 15.51,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/dns-targeted-zone-builds",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How we halved DNS build delay and cut memory use by 85%",
+      "title": "How we halved DNS build delay and cut memory use by 85% | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "كلاودفلير تقلص زمن بناء DNS وتخفض استهلاك الذاكرة بنسبة 85%",
+      "description": "أطلقت كلاودفلير مخططاً ذكياً لبناء نطاقات DNS يستهدف التغييرات الدقيقة فقط، مما قلص زمن الاستجابة للنصف وخفّض ذروة استهلاك الذاكرة بنسبة 85%، مع الحفاظ على أمان البيانات.",
+      "deck": "بعد سنوات من التحسينات، نجحت كلاودفلير في تجاوز عقبة إعادة بناء النطاقات الضخمة بالكامل، مما سمح بتسريع نشر التغييرات وتقليل العبء على البنية التحتية.",
+      "summary_bullets": [
+        "تطوير مخطط بناء مستهدف يختار أصغر عملية بناء آمنة بدلاً من إعادة بناء النطاق كاملاً.",
+        "خفض ذروة استهلاك الذاكرة بنسبة 85% وتقليل زمن التأخير في بناء DNS إلى النصف.",
+        "تصنيف التغييرات إلى خمس فئات بناءً على تأثيرها على السجلات أو البيانات الوصفية المشتركة.",
+        "الحفاظ على مبدأ الأمان حيث لا يتم تقليل حجم العمل إلا عند إثبات أن النتيجة مطابقة تماماً للبناء الكامل.",
+        "معالجة التحديات التقنية مثل البيانات المشتركة بين النطاقات المتطابقة في الاسم وتغير قاعدة البيانات أثناء المعالجة."
+      ],
+      "sections": [
+        {
+          "heading": "تطور حجم البيانات وتحديات البنية التحتية",
+          "paragraphs": [
+            {
+              "text": "شهدت بنية كلاودفلير لنشر DNS نمواً هائلاً منذ آخر تحديث رئيسي لها في عام 2022. في ذلك الوقت، كان نظام بناء النطاقات يستقبل حوالي 250 تغييراً في السجلات في الثانية، بينما وصل هذا الرقم اليوم إلى 700 تغييراً تقريباً، بالإضافة إلى 100 حدث آخر يتعلق بإعدادات النطاق. ومع ذلك، لم يكن حجم الأحداث هو التحدي الحقيقي، بل طبيعة العمل المطلوب لتنفيذها وكيفية نموه مع حجم النطاق. بعض النطاقات تحتوي الآن على أكثر من 20 مليون سجل، ومن المتوقع أن تستمر في النمو لتصل إلى مئات الملايين، مما يجعل إعادة البناء الكاملة مكلفة ومستهلكة للموارد.",
+              "links": [
+                {
+                  "text": "كلاودفلير",
+                  "url": "https://blog.cloudflare.com/dns-targeted-zone-builds"
+                }
+              ]
+            },
+            {
+              "text": "يعمل النظام على تحويل كل تغيير في قاعدة البيانات إلى بيانات يمكن لخوادم DNS الرسمية استخدامها، وهو عملية تسمى \"البناء\". في عام 2022، كانت عمليات البناء لكل سجل أسرع بـ 150 مرة من البناء الكامل في المتوسط، وبنسبة 4250 مرة في نطاق اختباري يحتوي على مليون سجل. هذا الفارق الهائل دفع الفريق إلى تطبيق نفس المنطق على تغييرات إعدادات النطاق، التي كانت تتطلب سابقاً إعادة بناء النطاق كاملاً حتى لو كان التغيير بسيطاً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "لماذا كانت إعادة البناء الكاملة ضرورية سابقاً؟",
+          "paragraphs": [
+            {
+              "text": "كان التحدي الرئيسي في إثبات أمان تقليل حجم العمل. بينما يحدد حدث السجل بالضبط ما الذي تغير، فإن حدث النطاق قد يأتي من منتجات متعددة في كلاودفلير، وقد لا يوضح سبب التغيير، وقد يؤثر على بيانات مشتركة بين عدة نطاقات تحمل نفس الاسم. اختيار حجم عمل زائد يهدر الطاقة، بينما اختيار حجم عمل ناقص قد يؤدي إلى بقاء بيانات DNS قديمة أو غير صحيحة على الحافة. لهذا السبب، طور الفريق مخطط بناء مستهدف يختار أصغر بناء يمكن إثبات أمانه، مع جدولة جديدة تجمع العمل لنفس النطاق.",
+              "links": []
+            },
+            {
+              "text": "النطاق في DNS هو مجموعة السجلات والإعدادات الخاصة بمجال معين. تستخدم كلاودفلير خط أنابيب متعدد المراحل لتحويل التغييرات في هذا النطاق إلى بيانات متاحة عبر شبكتها العالمية. يبدأ الأمر عندما يغير العميل سجلاً DNS عبر واجهة برمجة التطبيقات أو لوحة التحكم، أو عندما يغير نظام آخر إعداداً في النطاق. ثم تنتج قاعدة البيانات حدثاً في Kafka، والذي يجمعه مُجمّع أحداث DNS ويرسله إلى منشئ النطاق.",
+              "links": [
+                {
+                  "text": "Kafka",
+                  "url": "https://kafka.apache.org/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل المخطط الجديد وتصنيف البناء",
+          "paragraphs": [
+            {
+              "text": "يقوم منشئ النطاق بقراءة بيانات النطاق المطلوبة وتحويلها إلى مفاتيح تفهمها خوادم DNS الرسمية، ثم يقارن هذه المفاتيح مع مخزن المفاتيح والقيم الموزع Quicksilver. يكتب النظام فقط ما تغير، وينشر Quicksilver هذه التغييرات عبر الشبكة. المشكلة في البناء الكامل أنه يقرأ ويشفّر ويقارن كل سجل، ويحتفظ بالنطاق كاملاً في الذاكرة أثناء العملية. بالنسبة للنطاقات الضخمة التي تحتوي على عشرات الملايين من السجلات، لا يتسع النطاق كاملاً في الذاكرة أصلاً، مما يجعل هذا النهج غير عملي.",
+              "links": [
+                {
+                  "text": "Quicksilver",
+                  "url": "https://blog.cloudflare.com/introducing-quicksilver-configuration-distribution-at-internet-scale/"
+                }
+              ]
+            },
+            {
+              "text": "أصبحت إعدادات النطاق تجعل الاستهداف أكثر صعوبة. على سبيل المثال، تفعيل أو تعطيل Universal SSL يحدّث البيانات الوصفية ويمكن أن يغير سجلات CAA في قمة النطاق. سجلات CAA تخبر سلطات الشهادات ما إذا كان مسموحاً لها بإصدار شهادة للمجال. بينما كان البناء الكامل يحتاج فقط لمعرفة أن النطاق تغير، يجب على البناء المستهدف الإجابة عن ثلاثة أسئلة: هل يمكن أن تتغير البيانات الوصفية المشتركة أو قائمة النطاقات المنشورة؟ وما هي الحالة السابقة التي يجب إزالتها من Quicksilver؟",
+              "links": [
+                {
+                  "text": "Universal SSL",
+                  "url": "https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "فئات البناء الخمس ومعايير الأمان",
+          "paragraphs": [
+            {
+              "text": "بعد تحليل كل إعداد عبر الكود الذي يولّد مخرجات DNS، صنّف الفريق التأثيرات المحتملة. ليست كل الأحداث محددة الدقة؛ فبعض دوال قاعدة البيانات تحدّث فقط طابعاً زمنياً للإشارة إلى أن شيئاً ما تغير في النطاق. في بعض الأحيان يكون هذا مجرد تدوين إداري، وفي أحيان أخرى يعني أن بيانات تغيرت في مكان آخر ويجب قراءتها مرة أخرى. نظراً لأن هذه الحالات تبدو متطابقة في الحدث، فإن تحديث الطابع الزمني فقط لا يزال يسبب بناءً كاملاً حتى يتم تحديد الغرض منه. المخطط لا يحوّل عدم اليقين إلى تقليل في حجم العمل.",
+              "links": []
+            },
+            {
+              "text": "يقوم المخطط باختيار واحد من خمس فئات بناء: الموارد فقط (إعادة بناء السجلات لأسماء DNS محددة دون تغيير البيانات الوصفية)، الموارد والبيانات الوصفية (إعادة بناء أسماء محددة وبيانات وصفية مشتركة)، القمة والبيانات الوصفية (إعادة بناء قمة النطاق والبيانات الوصفية)، التطهير (إزالة نطاق يجب عدم نشره)، والبناء الكامل (إعادة بناء كل سجل عندما لا يمكن إثبات أمان عمل أصغر). القاعدة بسيطة: كل مفتاح يكتبه البناء المستهدف يجب أن يكون مطابقاً حرفياً لما كان سيكتبه البناء الكامل. إذا تعذر إثبات ذلك، يتم تنفيذ بناء كامل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إزالة الحالة القديمة ومعالجة البيانات المشتركة",
+          "paragraphs": [
+            {
+              "text": "عملية إزالة الحالة القديمة تعمل بنفس طريقة بناء السجلات الفردية في عام 2022. تتضمن أحداث السجلات السجلات المحذوفة والإصدار السابق من السجلات المحدّثة. يقوم منشئ النطاق بمسح Quicksilver بحثاً عن المفاتيح الموجودة تحت كل اسم يعيد بناؤه، وإزالة أي مفاتيح لم يكتبها البناء الجديد. تبقى عمليات البناء الكاملة ضرورية عندما يمكن أن يؤثر التغيير على السجلات في أي مكان في النطاق، أو عندما قد يحتاج النطاق إلى النشر لأول مرة.",
+              "links": []
+            },
+            {
+              "text": "هناك استثناء مقصود واحد: البناء الكامل يحتفظ بكل سجل من قاعدة البيانات وكل مفتاح موجود في Quicksilver للنطاق في الذاكرة في وقت واحد، والنطاقات الأكبر حجماً لا تتسع لهذا. من خلال تقليل ذروة استهلاك الذاكرة بنسبة 85%، أصبح لدى النظام مساحة أمان إضافية تسمح بتقليل فترات الانتظار التي كانت ضرورية دائماً للمرونة. هذا أدى إلى خفض الوقت من تغيير DNS إلى كتابة بياناته في Quicksilver إلى النصف، مما يحسن كفاءة النظام بشكل كبير دون المساس بأمان البيانات.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "DNS",
+        "كلاودفلير",
+        "بنية تحتية",
+        "أداء",
+        "Quicksilver",
+        "Kafka",
+        "تقنية الويب"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Quicksilver",
+        "Kafka",
+        "DNS",
+        "Universal SSL",
+        "CAA records"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال يعتمد حصرياً على مدونة كلاودفلير الرسمية المرفقة، مع التركيز على الأرقام التقنية المذكورة (85% ذاكرة، 50% زمن) وآلية عمل المخطط الجديد. تم تجنب الترجمة الحرفية وإعادة صياغة المحتوى بأسلوب صحفي تقني سلس."
+    },
+    "en": {
+      "title": "Cloudflare Cuts DNS Build Delay and Memory Usage",
+      "description": "Cloudflare has introduced a targeted DNS build planner that cuts full builds by 40%, lowers peak memory by 85%, and halves overall build delay.",
+      "deck": "A new targeted build planner and scheduler have optimized Cloudflare's DNS propagation pipeline, drastically reducing memory consumption and latency for massive zones.",
+      "summary_bullets": [
+        "Cloudflare's Zone Builder handles roughly 700 DNS record changes per second alongside numerous zone setting events.",
+        "The new targeted build planner selects the smallest safe build, avoiding unnecessary full zone rebuilds.",
+        "The updates cut full builds by 40% and peak memory usage by 85%.",
+        "Pipeline wait times have been halved, speeding up the transition from a DNS change to edge availability."
+      ],
+      "sections": [
+        {
+          "heading": "Scaling Pressures on the DNS Pipeline",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has significantly updated its DNS propagation pipeline to handle massive growth in record updates and zone setting modifications. When the company last wrote about our DNS propagation pipeline in 2022, the Zone Builder processed approximately 250 DNS record changes every second. Today, that figure has nearly tripled to about 700 changes per second, alongside roughly 100 additional events such as zone setting changes.",
+              "links": [
+                {
+                  "text": "last wrote about our DNS propagation pipeline in 2022",
+                  "url": "https://blog.cloudflare.com/dns-build-improvement/"
+                }
+              ]
+            },
+            {
+              "text": "While the sheer volume of events is managed by the global network, the primary challenge stems from how some of those tasks scale with zone size. Certain domains now contain more than 20 million records, with expectations that these numbers will eventually reach the hundreds of millions.",
+              "links": [
+                {
+                  "text": "global network",
+                  "url": "https://www.cloudflare.com/network/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "The Evolution from Full Builds to Targeted Planning",
+          "paragraphs": [
+            {
+              "text": "Each event triggers a build process that reads the current database state, converts it into the edge format, and writes modifications to Quicksilver. Previously, zone setting changes would routinely trigger full rebuilds of entire zones, even those containing tens of millions of records, consuming immense computational capacity and memory.",
+              "links": [
+                {
+                  "text": "Quicksilver",
+                  "url": "https://blog.cloudflare.com/introducing-quicksilver-configuration-distribution-at-internet-scale/"
+                }
+              ]
+            },
+            {
+              "text": "Although per-record builds were already significantly faster than full builds, targeting zone settings proved more complex. Record events clearly identify individual changes, whereas zone events can originate from multiple Cloudflare products, lack explicit context regarding why a zone shifted, and can alter shared data across multiple zones with identical names.",
+              "links": [
+                {
+                  "text": "zone",
+                  "url": "https://developers.cloudflare.com/fundamentals/concepts/accounts-and-zones/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "How the New Targeted Planner Operates",
+          "paragraphs": [
+            {
+              "text": "To solve these challenges, engineers developed a targeted build planner alongside a new scheduler designed to combine work for identical zones. Rather than performing a full rebuild for routine updates, the system selects the smallest build it can mathematically prove is safe.",
+              "links": []
+            },
+            {
+              "text": "Customers typically modify DNS records via the DNS Records API or dashboard, while other services modify zone settings. These modifications generate Kafka events that are aggregated and passed to the Zone Builder for processing and distribution across the edge infrastructure.",
+              "links": [
+                {
+                  "text": "DNS Records API",
+                  "url": "https://developers.cloudflare.com/api/resources/dns/subresources/records/"
+                },
+                {
+                  "text": "Kafka",
+                  "url": "https://kafka.apache.org/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Categorizing Build Types and Ensuring Safety",
+          "paragraphs": [
+            {
+              "text": "The updated architecture distinguishes between record keys and shared metadata keys. This distinction allows the planner to categorize work into five distinct build paths, ranging from isolated resource updates to full zone rebuilds when safety cannot be formally proven.",
+              "links": []
+            },
+            {
+              "text": "For instance, settings like Universal SSL may require updates to Certification Authority Authorization records at the zone apex. CAA records ensure certificate authorities issue certificates strictly in accordance with domain policies.",
+              "links": [
+                {
+                  "text": "CAA records",
+                  "url": "https://developers.cloudflare.com/ssl/edge-certificates/caa-records/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Measurable Performance Gains",
+          "paragraphs": [
+            {
+              "text": "The introduction of the targeted build planner and scheduler has delivered substantial operational improvements. Full builds have been cut by 40%, and peak memory usage across the pipeline has dropped by an impressive 85%.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, the resulting memory headroom allowed Cloudflare to safely shorten necessary resilience waits in the pipeline. This reduction has effectively halved the total delay from the moment a DNS change is initiated until its data is successfully written to Quicksilver.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "DNS",
+        "Quicksilver",
+        "Kafka",
+        "Performance Optimization",
+        "Web Infrastructure"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Kafka",
+        "Quicksilver"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly based on the provided Cloudflare Blog source text, ensuring all technical details, metrics, and internal product references align precisely with the source."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 922,
+      "word_count_en": 548
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "d888d4590bb365d280db",
+      "title": "How we halved DNS build delay and cut memory use by 85%",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 922,
+          "word_count_en": 548
+        }
+      ]
+    }
+  ],
+  "slug": "how-we-halved-dns-build-delay-and-cut-memory-use-by-85",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-we-halved-dns-build-delay-and-cut-memory-use-by-85/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-we-halved-dns-build-delay-and-cut-memory-use-by-85/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-we-halved-dns-build-delay-and-cut-memory-use-by-85/social.jpg",
+    "alt": {
+      "ar": "كلاودفلير تقلص زمن بناء DNS وتخفض استهلاك الذاكرة بنسبة 85%",
+      "en": "Cloudflare Cuts DNS Build Delay and Memory Usage"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M6426V7J1FR4KZEYMQP555R0.01M6426VZJHB2XCKTQ39W2S71Z.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-we-halved-dns-build-delay-and-cut-memory-use-by-85/inline-01.webp",
+        "width": 1200,
+        "height": 675,
+        "alt": {
+          "ar": "كلاودفلير تقلص زمن بناء DNS وتخفض استهلاك الذاكرة بنسبة 85%",
+          "en": "Cloudflare Cuts DNS Build Delay and Memory Usage"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/dns-targeted-zone-builds",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M6427MMYH94N030R2BSS8Z72.01M6427NA85VEN498BC5RPEDXK.png&w=2400&h=1350&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/how-we-halved-dns-build-delay-and-cut-memory-use-by-85/inline-02.webp",
+        "width": 1029,
+        "height": 1050,
+        "alt": {
+          "ar": "كلاودفلير تقلص زمن بناء DNS وتخفض استهلاك الذاكرة بنسبة 85%",
+          "en": "image7.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Diagram of the DNS propagation pipeline: the DNS Records API, zone settings, and internal services write to databases or Kafka topics, the DNS Kafka Aggregator combines them, and the DNS Zone Builder writes to Quicksilver."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/dns-targeted-zone-builds",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M6429DPKR3AKSQD74XKFE1X8.01M6429ES21TZ6EVYVVTNNWWC1.png&w=1430&h=1460&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/how-we-halved-dns-build-delay-and-cut-memory-use-by-85/inline-03.webp",
+        "width": 1400,
+        "height": 524,
+        "alt": {
+          "ar": "كلاودفلير تقلص زمن بناء DNS وتخفض استهلاك الذاكرة بنسبة 85%",
+          "en": "image8.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Diagram of Kafka messages 1 to n where a large build on message 2 blocks commits for messages 3 to n, and a pod restart replays messages 2 to n."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/dns-targeted-zone-builds",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M642B4Q909W1GB77PYHKW931.01M642B5K8V3NES41KX6GN4QD4.png&w=1430&h=536&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/how-we-halved-dns-build-delay-and-cut-memory-use-by-85/inline-04.webp",
+        "width": 1400,
+        "height": 483,
+        "alt": {
+          "ar": "كلاودفلير تقلص زمن بناء DNS وتخفض استهلاك الذاكرة بنسبة 85%",
+          "en": "image12.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Diagram of the mirror setup: the production Kafka stream feeds both the production and mirror Zone Builders, each writes to its own Quicksilver, and a comparer samples both and reports to the DNS Mirror Dashboard."
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/dns-targeted-zone-builds",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M642DE32NFRN0W0MVAT2TPP9.01M642DFPN64HJEBJBQH08NV4P.png&w=1430&h=494&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
