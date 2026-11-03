@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "63945bc794809749828f",
+  "slug": "cwe-bench-v2-more-coverage-quality-and-transparency",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/cwe-bench-v2-more-coverage-quality-and-transparency/",
+    "en": "/forum/en/ai/cwe-bench-v2-more-coverage-quality-and-transparency/"
+  },
+  "locales": {
+    "ar": {
+      "title": "CWE-bench v2 يوسّع تغطية اختبارات الأمان للذكاء الاصطناعي",
+      "description": "أطلقت Collinear AI النسخة الثانية من CWE-bench، وهي مجموعة من 100 مهمة مفتوحة المصدر لاختبار قدرات الوكلاء في اكتشاف وإصلاح الثغرات الأمنية بدقة عالية.",
+      "deck": "تهدف النسخة الجديدة إلى رفع معايير الشفافية والجودة في تقييم النماذج اللغوية على مهام الأمن السيبراني المعقدة، مع توفير أدوات تقييم برمجية حتمية.",
+      "summaryBullets": [
+        "إطلاق 100 مهمة عامة تغطي 91 نوعاً من نقاط الضعف (CWE) في مستودعات مفتوحة المصدر.",
+        "تقييم برمجياً حتمياً يضمن قابلية إعادة إنتاج النتائج دون تكلفة إضافية.",
+        "تصدر Gemini 4 Argon الترتيب بنسبة نجاح 67.8%، متقدماً على Claude Opus 5.5.",
+        "توفر بيئات Docker جاهزة عبر Harbor لتشغيل الاختبارات مباشرة من Hugging Face.",
+        "إمكانية استخدام البيئات نفسها لتدريب الوكلاء الدفاعيين عبر مكافآت التعلم المعزز."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق CWE-bench v2 لتوسيع آفاق التقييم",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Collinear AI عن إطلاق النسخة الثانية من منصة CWE-bench، وهي مخصصة لاختبار حدود القدرات السيبرانية للنماذج المتقدمة. تتيح هذه النسخة الوصول إلى مجموعة عامة من 100 مهمة يمكن لأي مطور أو باحث تشغيلها وتقييم نماذجه عليها. يعتمد التصميم على تسليم وكيل ذكاء اصطناعي نسخة من مستودع مفتوح المصدر حقيقي مع تعليمات موجزة، بهدف العثور على نقطة ضعف أمنية وإصلاحها دون كسر الوظائف الحالية.",
+              "links": [
+                {
+                  "text": "Collinear AI",
+                  "url": "https://collinear.ai/"
+                },
+                {
+                  "text": "CWE-bench",
+                  "url": "https://cwe-bench.com/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "منهجية التقييم والشفافية",
+          "paragraphs": [
+            {
+              "text": "تتميز المنهجية الجديدة بتقييم برمجياً كاملاً، مما يجعل النتائج حتمية وقابلة لإعادة الإنتاج من قبل أي شخص دون تكاليف إضافية. تم صياغة الفحوصات البرمجية بمساعدة لجان تحكيم تعتمد على نماذج لغوية كبيرة، مع التركيز على صعوبة المهام وعادلتها. كما تحتفظ الشركة بمجموعة مهام محجوزة (held-out set) لم يرها أي نموذج سابقاً، لمتابعة التقدم المستمر. يمكن للباحثين طلب تقييم نماذجهم على هذه المجموعة المحجوزة عبر التواصل المباشر مع فريق الأمن في الشركة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التغطية الشاملة لنقاط الضعف",
+          "paragraphs": [
+            {
+              "text": "تسعى المنصة إلى تحقيق شمولية تامة في التغطية، حيث تغطي المهام المئة 91 نوعاً مختلفاً من نقاط الضعف (CWE). هذا التنوع يتطلب من النموذج فهم أسطح الضعف المتعددة التي قد يستغلها المهاجم، وليس مجرد التعرف على الأنماط المألوفة. يؤكد المطورون أن الدفاع الناجح يتطلب توقع طرق الاختراق المحتملة والتعامل معها بدقة في كل مرة، مما يجعل هذا المعيار اختباراً حقيقياً للقدرات التحليلية للذكاء الاصطناعي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معايير الجودة والمراجعة اليدوية",
+          "paragraphs": [
+            {
+              "text": "خضعت كل مهمة في المجموعة لمراجعة دقيقة لضمان الجودة، حيث تم التحقق من عدة معايير: هل تبدو التعليمات واقعية؟ هل يمكن استنتاج السلوك المطلوب من التعليمات؟ هل يتحقق المقيس من السلوك الصحيح وليس البنية المحددة للإصلاح؟ كما تم التأكد من أن الكود الأصلي يفشل وأن الإصلاح المرجعي يمر، مع الحفاظ على عمل الوظائف الأصلية. تمت مراجعة كل مهمة يدوياً، وتُرحب الشركة بالملاحظات والمساهمات في المجموعة العامة لتحسينها باستمرار.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج التقييم والأداء",
+          "paragraphs": [
+            {
+              "text": "تُتتبع النتائج في مكانين على منصة Hugging Face: لوحة قيادة تغطي النماذج مفتوحة الوزن، ولوحة قيادة شاملة تشمل النماذج المتاحة عبر الواجهات البرمجية فقط. من بين 11 نموذجاً تم تقييمها، تصدر Gemini 4 Argon بنسبة نجاح 67.8% في المحاولة الأولى (pass@1)، متقدماً بفارق ضئيل على Claude Opus 5.5 بنسبة 67.3%. حلّت 95 مهمة على الأقل بنجاح بواسطة نموذج واحد، مما يؤكد قابلية حل المهام، لكن حتى النموذج المتصدر فشل في 19% من المجموعة في كل محاولة، مما يشير إلى أن التحديات ما زالت صعبة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكلفة والكفاءة الاقتصادية",
+          "paragraphs": [
+            {
+              "text": "من حيث التكلفة، تشكل ثلاثة نماذج جبهة باريتو (Pareto frontier): DeepSeek V4.1 Flash، وClaude Opus 5.5، وGemini 4 Argon. حقق DeepSeek نسبة نجاح 57.0% بتكلفة 0.04 دولار لكل عملية تنفيذ، بينما أضاف Opus 10 نقاط مئوية بتكلفة 1.83 دولار، وتقدم Gemini قليلاً بتكلفة 3.92 دولار. هذا التوازن بين الأداء والتكلفة يوفر خيارات متنوعة للمطورين حسب ميزانياتهم وأهدافهم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الأدوات التقنية والتكامل",
+          "paragraphs": [
+            {
+              "text": "تعمل كل مهمة كبيئة Harbor مستقلة، وتتكون من بيئة Docker، تعليمات، ومقيس حتمي. يأتي مجموعة البيانات مع سجل registry.json، مما يتيح لأداة Harbor تشغيل الاختبار الكامل مباشرة من مستودع Hugging Face دون الحاجة إلى استنساخ يدوي. كما تم وسم المهام بعلامة rl-environment، مما يعني أن نفس البيئات والمقيسات يمكن استخدامها لتقديم مكافآت لتدريب الوكلاء الدفاعيين، وليس فقط لتقييمهم.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "الأمن السيبراني",
+        "CWE-bench",
+        "Collinear AI",
+        "Hugging Face",
+        "تقييم النماذج",
+        "مفتوح المصدر"
+      ],
+      "entities": [
+        "Collinear AI",
+        "CWE-bench",
+        "Hugging Face",
+        "Gemini 4 Argon",
+        "Claude Opus 5.5",
+        "DeepSeek V4.1 Flash",
+        "Harbor"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "4 نوفمبر 2026",
+      "modifiedLabel": "4 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 578
+    },
+    "en": {
+      "title": "CWE-bench v2 Launches With 100 Tasks to Test AI Cyber Capabilities",
+      "description": "CWE-bench v2 has been released by Collinear AI, offering a public set of 100 tasks designed to evaluate frontier AI models on security workflows.",
+      "deck": "Collinear AI has released CWE-bench v2, introducing a public suite of tasks, expanded coverage across multiple vulnerability classes, and updated evaluations for 11 artificial intelligence models.",
+      "summaryBullets": [
+        "CWE-bench v2 features a public set of 100 tasks spanning 91 different Common Weakness Enumerations.",
+        "Gemini 4 Argon leads the evaluated models with 67.8% pass@1 and 81.0% pass@4, closely followed by Claude Opus 5.5.",
+        "Scoring is fully programmatic and reproducible using a self-contained Harbor task format running in Dockerized environments.",
+        "The benchmark maintains a held-out set to track progress on unseen tasks, with evaluation access available via Collinear AI."
+      ],
+      "sections": [
+        {
+          "heading": "Expanding Frontier Cyber Capabilities Testing",
+          "paragraphs": [
+            {
+              "text": "Collinear AI has announced the release of CWE-bench v2, a benchmarking initiative created to test the limits of frontier cyber capabilities. According to the Hugging Face Blog, the new version opens up a public set of 100 tasks that allow developers and researchers to run and evaluate their models under consistent setups.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/cwe-bench"
+                },
+                {
+                  "text": "CWE-bench",
+                  "url": "https://cwe-bench.com/"
+                }
+              ]
+            },
+            {
+              "text": "The evaluation setup places an autonomous agent in a checkout of a real open-source repository equipped with a short instruction. The objective requires the agent to find and fix a security weakness without breaking existing functionality. Scoring is entirely programmatic to ensure deterministic results that can be reproduced without extra cost. The curation process involves LLM judge panels to guide the tasks toward appropriate levels of hardness and fairness.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Comprehensive Vulnerability Coverage and Quality Control",
+          "paragraphs": [
+            {
+              "text": "The public set encompasses 100 tasks covering 91 different CWEs across a wide range of vulnerability classes. Developers note that models cannot rely solely on recognizing familiar patterns, as defenders must anticipate diverse attacker methods successfully across multiple weakness surfaces.",
+              "links": []
+            },
+            {
+              "text": "To maintain high standards, every task undergoes manual review and rigorous quality checks. Organizers verify that instructions read realistically rather than like evaluation settings, all graded behaviors can be inferred from instructions, verifiers check for correct behavior rather than specific fix structures, starter code fails while reference fixes pass, original functionality remains intact, and verifiers reject memorized solutions like known upstream patches.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Model Performance and Leaderboard Results",
+          "paragraphs": [
+            {
+              "text": "Results are tracked across Hugging Face Hub spaces, distinguishing between open-weight models and API-only models such as Gemini, Claude, and GPT. Out of 11 evaluated models, Gemini 4 Argon leads with 67.8% pass@1 and 81.0% pass@4, narrowly edging out Claude Opus 5.5, which recorded 67.3% pass@1 and 78.0% pass@4.",
+              "links": []
+            },
+            {
+              "text": "While 95 of the tasks were solved by at least one model, indicating the set is solvable, the long tail remains far from resolved, with the top leader still failing 19% of the set on every attempt. Cost-efficiency evaluations reveal a Pareto frontier formed by DeepSeek V4.1 Flash, Claude Opus 5.5, and Gemini 4 Argon, with DeepSeek achieving 57.0% pass@1 at a lower cost per rollout.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Technical Architecture and Environment Setup",
+          "paragraphs": [
+            {
+              "text": "Every task functions as a self-contained Harbor task comprising a Dockerized environment, an instruction, and a deterministic verifier. Because the dataset ships with a registry.json file, Harbor can execute the entire benchmark directly from the repository without requiring manual cloning.",
+              "links": []
+            },
+            {
+              "text": "In addition to evaluation, the tasks are tagged as rl-environment, meaning the same environments and verifiers can supply rewards for training defensive agents. While a public set is readily available, organizers also maintain a held-out set to monitor progress on tasks that models have not previously encountered.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "artificial intelligence",
+        "cybersecurity",
+        "machine learning",
+        "Hugging Face",
+        "benchmarks",
+        "vulnerabilities",
+        "Collinear AI"
+      ],
+      "entities": [
+        "Collinear AI",
+        "Hugging Face",
+        "Gemini",
+        "Claude",
+        "DeepSeek",
+        "Harbor"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 4, 2026",
+      "modifiedLabel": "November 4, 2026",
+      "readMinutes": 3,
+      "wordCount": 541
+    }
+  },
+  "datePublished": "2026-11-04T02:07:23.993748+03:00",
+  "dateModified": "2026-11-04T02:07:23.993748+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/cwe-bench-v2-more-coverage-quality-and-transparency/hero.webp",
+    "card": "/forum/assets/posts/2026/11/cwe-bench-v2-more-coverage-quality-and-transparency/card.webp",
+    "social": "/forum/assets/posts/2026/11/cwe-bench-v2-more-coverage-quality-and-transparency/social.jpg",
+    "alt": {
+      "ar": "CWE-bench v2 يوسّع تغطية اختبارات الأمان للذكاء الاصطناعي",
+      "en": "CWE-bench v2 Launches With 100 Tasks to Test AI Cyber Capabilities"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/cwe-bench/thumbnail.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/cwe-bench-v2-more-coverage-quality-and-transparency/inline-01.webp",
+        "width": 1400,
+        "height": 781,
+        "alt": {
+          "ar": "CWE-bench v2 يوسّع تغطية اختبارات الأمان للذكاء الاصطناعي",
+          "en": "CWE-bench v2: pass@1 against average cost per rollout, with the Pareto frontier"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/cwe-bench",
+        "originalUrl": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/cwe-bench/pareto.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/cwe-bench",
+      "type": "official",
+      "title": "CWE-bench v2: More coverage, quality, and transparency"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/cwe-bench",
+  "sourceTitle": "CWE-bench v2: More coverage, quality, and transparency",
+  "trendScore": 102.11,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-03T23:07:24+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/cwe-bench-v2-more-coverage-quality-and-transparency.json"
+}
