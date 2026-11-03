@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "a6f54d325d31634f8916",
+  "slug": "transformers-model-integration-contracts",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/transformers-model-integration-contracts/",
+    "en": "/forum/en/ai/transformers-model-integration-contracts/"
+  },
+  "locales": {
+    "ar": {
+      "title": "عقود تكامل نماذج ترانسفورمرز لتعزيز جودة الذكاء الاصطناعي",
+      "description": "تستعرض مدونة Hugging Face معايير جديدة لعقود تكامل نماذج الذكاء الاصطناعي تسمى Transformers Model Integration Contracts لاكتشاف الأخطاء.",
+      "deck": "أعلنت منصة Hugging Face عن مقترح جديد لمعايير تعبئة الاختبارات يسمى عقود تكامل النماذج، بهدف رصد الأخطاء البرمجية في وقت مبكر قبل وصولها إلى الفرع الرئيسي للمشروع.",
+      "summaryBullets": [
+        "تقديم معيار جديد باسم عقود تكامل النماذج لاختبار بنيات الذكاء الاصطناعي بكفاءة.",
+        "استخدام نماذج مصغرة وثابتة لتقليل الحاجة إلى موارد معالجة رسومية باهظة.",
+        "رصد الأخطاء المستترة مثل مشكلة فك التشفير في نماذج UMT5 قبل دمجها.",
+        "توفير أدوات واجهة سطر أوامر لتوليد الاختبارات ومراجعة النتائج بدقة."
+      ],
+      "sections": [
+        {
+          "heading": "خلفية المشكلة واكتشاف الأخطاء البرمجية",
+          "paragraphs": [
+            {
+              "text": "في شهر يوليو من عام 2026، جرى تفعيل الانتباه القياسي النقطي المقياس لـ PyTorch في مكتبة Transformers لصالح نموذج T5. وأدى هذا التحديث إلى السماح لفك تشفير نموذج UMT5 بالانتباه إلى الرموز المستقبلية دون التسبب في انهيار النظام، مما أبقى هذا الخطأ البرمجي مخفياً في الفرع الرئيسي لفترة طويلة.",
+              "links": [
+                {
+                  "text": "Transformers",
+                  "url": "https://github.com/huggingface/transformers"
+                }
+              ]
+            },
+            {
+              "text": "وعندما أعيد تشغيل تلك الالتزامات لاحقاً، تمكن نموذج UMT5 مصغر يعمل على وحدة المعالجة المركزية من رصد الخلل في كل التزام منها، مما دفع الفريق إلى تطوير اختبارات أعمق تركز على النماذج المصغرة والمثبتة.",
+              "links": []
+            },
+            {
+              "text": "تضم مكتبة Transformers أكثر من 750 نوعاً من النماذج مع مجموعة اختبارات ضخمة تتجاوز 88 ألف اختبار على وحدات المعالجة المركزية ومئات الآلاف على وحدات المعالجة الرسومية يومياً، مما يجعل تشغيل الاختبارات الكاملة لكل طلب دمج أمراً غير عملي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مفهوم عقود تكامل النماذج ومكوناتها",
+          "paragraphs": [
+            {
+              "text": "لمعالجة هذه التحديات، يقدم مشروع transformers-mic معياراً مقترحاً لتعبئة هذه الاختبارات يُعرف باسم عقود تكامل النماذج، ويتألف العقد من ثلاثة عناصر رئيسية تشمل النموذج المصغر، ومسار الاستخدام، والنتائج الأساسية المرجعية.",
+              "links": [
+                {
+                  "text": "transformers-mic",
+                  "url": "https://github.com/huggingface/transformers-mic"
+                }
+              ]
+            },
+            {
+              "text": "يتمثل العنصر الأول في نموذج مصغر يعتمد على إعدادات نقطة التفتيش الحقيقية مع طبقات أقل حجماً وعرضاً، مع الاحتفاظ بملفات ترميز النصوص ومعالجة البيانات دون تغيير لضمان دقة المحاكاة.",
+              "links": []
+            },
+            {
+              "text": "أما المسار فيتضمن مثالاً برمجياً قابلاً للتنفيذ لتوليد النصوص أو إجراء خطوات التدريب، بينما تُسجل النتائج الأساسية وتتم مراجعتها بشرياً لضمان توافق مخرجات النموذج المصغر مع السلوك المتوقع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل وتقليل حجم النماذج الضخمة",
+          "paragraphs": [
+            {
+              "text": "تتطلب عملية تقليص النماذج الكبيرة جداً قواعد دقيقة لضمان احتواء النموذج المصغر على مختلف أنواع الطبقات الموجودة في النسخة الأصلية، مثل طبقات الانتباه الكامل والانتباه الانزلاقي وتوليفات الخبراء.",
+              "links": []
+            },
+            {
+              "text": "على سبيل المثال، يوضح تقرير تقليص نموذج Llama 4 Scout كيف تم تحويل نموذج ضخم بمئات المليارات من المعلمات إلى نموذج أصغر بكثير مع الحفاظ على هيكل شبكات الرؤية واللغة وأنماط التوجيه الخاصة بالنماذج المعقدة.",
+              "links": []
+            },
+            {
+              "text": "تساعد هذه المقاربة في اختبار النماذج الكبيرة التي لا تناسب عادةً بيئات التشغيل القياسية للوحدات الرسومية، مما يتيح تشغيلها بسلاسة واختبارها على أجهزة أرخص ثمناً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الأدوات البرمجية وتجربة الأداء العملي",
+          "paragraphs": [
+            {
+              "text": "تعتمد المنصة على أداة سطر الأوامر tmic لإنشاء العقود وبناء النماذج المصغرة، حيث يمكن للنموذج اللغوي اقتراح مسار الاستخدام وبيان البيانات بينما تقع مسؤولية المراجعة والاعتماد على المبرمج البشري.",
+              "links": []
+            },
+            {
+              "text": "أثبتت الاختبارات قدرة هذه العقود على اكتشاف الأخطاء بكفاءة عالية خلال عمليات المحاكاة، حيث رصد نموذج UMT5 المصغر الخلل البرمجي فور ظهوره وحتى تاريخ تصحيحه دون الحاجة لتشغيل اختبارات ثقيلة على مدار الساعة.",
+              "links": []
+            },
+            {
+              "text": "تؤكد هذه التجربة التي قادها الخبراء مثل Tarek Ziadé التزام المنصة بتطوير وتدميق ممارسات الذكاء الاصطناعي المفتوح من خلال أدوات متطورة تضمن استقرار البرمجيات.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Hugging Face",
+        "برمجيات مفتوحة المصدر",
+        "نماذج اللغة الكبيرة",
+        "تطوير البرمجيات",
+        "تعلم الآلة"
+      ],
+      "entities": [
+        "Hugging Face",
+        "PyTorch",
+        "UMT5",
+        "Llama 4 Scout",
+        "SmolLM",
+        "Tarek Ziadé"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "3 نوفمبر 2026",
+      "modifiedLabel": "3 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 476
+    },
+    "en": {
+      "title": "Transformers Model Integration Contracts Introduced",
+      "description": "Discover how Model Integration Contracts and shrunk fixtures aim to catch regressions early across extensive test suites.",
+      "deck": "The open-source team highlights a proposed standard called Model Integration Contracts designed to package and run integration tests efficiently on smaller fixtures.",
+      "summaryBullets": [
+        "A bug in UMT5's decoder attention went undetected in the main branch for nearly two months during training.",
+        "Model Integration Contracts combine a shrunk fixture, a runnable usage path, and reviewed baseline outputs.",
+        "A CLI tool named tmic helps build fixtures and draft contracts for various architectures.",
+        "Using smaller fixtures allows developers to execute fast integration tests on cheap CPU runners."
+      ],
+      "sections": [
+        {
+          "heading": "Background on the UMT5 Attention Regression",
+          "paragraphs": [
+            {
+              "text": "On July 30, 2026, Transformers enabled PyTorch's scaled dot-product attention for T5. This update inadvertently allowed UMT5's decoder to attend to future tokens during training, enabling it to peek at expected answers. The bug remained undetected in the main branch for almost two months because full integration tests are resource-intensive and cannot practically run on every pull request.",
+              "links": [
+                {
+                  "text": "Transformers",
+                  "url": "https://github.com/huggingface/transformers"
+                }
+              ]
+            },
+            {
+              "text": "When the development team later replayed those commits, a small UMT5 model running on a CPU successfully flagged the issue across every affected commit. Further details and background can be found via the CPU study and the official documentation.",
+              "links": [
+                {
+                  "text": "CPU study",
+                  "url": "https://github.com/huggingface/transformers-mic/blob/main/docs/evidence.md#on-cpu"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Understanding Model Integration Contracts",
+          "paragraphs": [
+            {
+              "text": "To address testing limitations across hundreds of model types, the ecosystem proposes transformers-mic as a standard packaging format. A Model Integration Contract consists of three core components: a shrunk fixture model, a runnable Markdown usage path demonstrating tasks like text generation or training steps, and reviewed baseline outputs recorded from those runs.",
+              "links": [
+                {
+                  "text": "transformers-mic",
+                  "url": "https://huggingface.co/huggingface-mic"
+                }
+              ]
+            },
+            {
+              "text": "Fixtures are built by starting from a real checkpoint configuration and shrinking its dimensions, reducing hidden sizes, attention heads, and depth while preserving layer types, tokenizers, and processor files. For instance, an experimental UMT5 fixture reduced its weight size from 1,227 MB to 66 MB, making it practical for cheap CPU runners.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Contract Validation and Fleet Management",
+          "paragraphs": [
+            {
+              "text": "The validation contract holds true if running the specified usage path on the shrunk fixture continues to produce the expected baseline outputs. SmolLM contracts, for example, evaluate prompt generation against recorded token IDs, verify gradient finiteness, and ensure optimizer steps properly alter weights.",
+              "links": []
+            },
+            {
+              "text": "A fleet dataset on the Hub pins each integration contract to a frozen revision along with its package versions. Continuous integration runs record the fleet revision used, allowing engineers to reproduce results later and catch regressions before code merges into main.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Building Fixtures With the tmic CLI Tool",
+          "paragraphs": [
+            {
+              "text": "Developers can utilize the tmic command line interface to create contracts and build fixtures locally. For new architectures, large language models can draft the usage code and manifest, while CPU and GPU runs measure candidate baselines prior to human review and approval.",
+              "links": []
+            },
+            {
+              "text": "Shrinking processes preserve original weight file formats to ensure conversion logic continues to function identically to real checkpoints. For major architectures like Llama 4 Scout, billions of parameters scale down dramatically while maintaining structural routing properties.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial Intelligence",
+        "Open Source",
+        "Machine Learning",
+        "Model Testing",
+        "Transformers",
+        "Python"
+      ],
+      "entities": [
+        "Hugging Face",
+        "PyTorch",
+        "Transformers"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 3, 2026",
+      "modifiedLabel": "November 3, 2026",
+      "readMinutes": 3,
+      "wordCount": 468
+    }
+  },
+  "datePublished": "2026-11-03T10:44:02.428097+03:00",
+  "dateModified": "2026-11-03T10:44:02.428097+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/transformers-model-integration-contracts/hero.webp",
+    "card": "/forum/assets/posts/2026/11/transformers-model-integration-contracts/card.webp",
+    "social": "/forum/assets/posts/2026/11/transformers-model-integration-contracts/social.jpg",
+    "alt": {
+      "ar": "عقود تكامل نماذج ترانسفورمرز لتعزيز جودة الذكاء الاصطناعي",
+      "en": "Transformers Model Integration Contracts Introduced"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/peft-beyond-lora/thumbnail.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/transformers-model-integration-contracts/inline-01.webp",
+        "width": 1376,
+        "height": 768,
+        "alt": {
+          "ar": "عقود تكامل نماذج ترانسفورمرز لتعزيز جودة الذكاء الاصطناعي",
+          "en": "Transformers Model Integration Contracts Introduced"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/transformers-mic",
+        "originalUrl": "https://huggingface.co/blog/assets/ulysses/thumbnail.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/transformers-mic",
+      "type": "official",
+      "title": "Transformers Model Integration Contracts"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/transformers-mic",
+  "sourceTitle": "Transformers Model Integration Contracts",
+  "trendScore": 100.1,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-03T07:44:02+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/11/transformers-model-integration-contracts.json"
+}
