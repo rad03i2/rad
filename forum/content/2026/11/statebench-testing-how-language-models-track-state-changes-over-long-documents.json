@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "8d86676710497099b109",
+  "slug": "statebench-testing-how-language-models-track-state-changes-over-long-documents",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/statebench-testing-how-language-models-track-state-changes-over-long-documents/",
+    "en": "/forum/en/ai/statebench-testing-how-language-models-track-state-changes-over-long-documents/"
+  },
+  "locales": {
+    "ar": {
+      "title": "StateBench يكشف حدود نماذج الذكاء الاصطناعي في تتبع التغيرات الطويلة",
+      "description": "أطلقت Ai2 معيار StateBench لتقييم قدرة نماذج اللغة على تتبع حالة الكيانات في المستندات الطويلة، كاشفةً عن فجوات أداء حادة بين البنى العصبية المختلفة.",
+      "deck": "أظهرت اختبارات جديدة أن النماذج المتقدمة تفشل في مهام تتبع الحالة المعقدة عندما تزداد طول المدخلات، مما يسلط الضوء على قيود معمارية أساسية.",
+      "summaryBullets": [
+        "أطلقت مؤسسة Ai2 معيار StateBench لتقييم تتبع الحالة في المستندات الطويلة عبر أربعة مستويات صعوبة.",
+        "أظهرت النماذج الهجينة والعدائية أداءً أفضل في التعميم مقارنة بتحويلات Transformers في المهام المعقدة.",
+        "تراجعت دقة النماذج الرائدة مثل Gemini وClaude وGPT-6 بشكل حاد في المشكلات العامة ذات السلاسل الطويلة.",
+        "كشفت الدراسة أن التدريب المباشر على مهام تتبع الحالة يكشف عن حدود البنية التحتية للنموذج أكثر من بيانات التدريب الأولية."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق معيار StateBench لتقييم التتبع الطويل",
+          "paragraphs": [
+            {
+              "text": "أعلنت مؤسسة Ai2 عن إطلاق StateBench، وهو معيار مصمم خصيصاً لقياس قدرة نماذج اللغة على تتبع التغيرات في حالة الكيانات عبر مستندات طويلة. يهدف هذا المعيار إلى فهم كيف تحافظ النماذج على دقة المعلومات عندما تتطور الأحداث أو تتغير القيم عبر فترات زمنية أو نصية ممتدة، وهو تحدٍ أساسي في تطبيقات مثل قراءة الكود أو متابعة القصص المعقدة. ويمكن الرجوع إلى Hugging Face Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "StateBench",
+                  "url": "https://github.com/allenai/state-bench"
+                },
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/allenai/statebench"
+                }
+              ]
+            },
+            {
+              "text": "يبرز أهمية هذا المعيار في تمييزه بين أنواع مختلفة من صعوبة تتبع الحالة. فبينما قد تكفي بعض المهام في العثور على آخر تحديث لقيمة معينة، تتطلب مهام أخرى أكثر تعقيداً تتبع سلسلة من التغييرات المترابطة، حيث يؤدي تفويت خطوة واحدة إلى خطأ في النتيجة النهائية. هذا التمييز ضروري لفهم القدرات الحقيقية للنماذج في بيئات العمل الواقعية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أربعة مستويات صعوبة مستوحاة من البرمجة",
+          "paragraphs": [
+            {
+              "text": "يتكون StateBench من أربعة مستويات صعوبة تسمح بعمليات تحديث حالة متزايدة التعقيد. يمكن فهم هذه المستويات من خلال تشبيهات برمجية: المستوى الأول (R-trivial) يعتمد على إسناد قيم ثابتة لا تتغير، مما يتطلب من النموذج استرجاع القيمة الأولية فقط. المستوى الثاني (Aperiodic) يسمح بإعادة الإسناد بالقيمة، حيث يجب على النموذج تحديد أحدث قيمة وتجاهل السابقة،类似于 ضبط درجة حرارة التكييف.",
+              "links": []
+            },
+            {
+              "text": "يتطلب المستوى الثالث (Soluble) تحديثات ذاتية المرجعية، حيث تُبنى كل تحديث على القيمة الحالية، مما يشبه احتساب النقاط في لعبة رياضية. أما المستوى الرابع والأصعب (General finite) فيضيف الإسناد بالمرجع، حيث يمكن لمتغير أن يأخذ قيمة متغير آخر، مما يخلق اعتماديات معقدة تشبه تتبع كرة مخفية تحت أكواب يتم تبديل مواقعها باستمرار.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قيود نظرية في بنية Transformers",
+          "paragraphs": [
+            {
+              "text": "تواجه نماذج Transformers قيوداً نظرية موثقة جيداً في التعامل مع متغيرات الحالة ذات السلاسل الطويلة من الاعتماديات. هذه القيود هي ما دفع الباحثين لتطوير بنى بديلة وهجينة، مثل Gated DeltaNet، التي تحمل ذاكرة تشغيلية متقدمة. بينما ركزت الاختبارات السابقة على أصعب الحالات، يهدف StateBench إلى فهم الفروق الدقيقة بين البنى المختلفة عبر طيف كامل من الصعوبات، وليس فقط في الحالات القصوى.",
+              "links": []
+            },
+            {
+              "text": "تستند هذه المستويات إلى نظرية Krohn–Rhodes، وهي فرع من الجبر يصف كيفية تفكيك مشكلات تتبع الحالة إلى بدائيات ذرية. يمثل كل مستوى في التسلسل الهرمي للمعيار فئة من المشكلات التي يمكن بناؤها من مجموعة مختلفة من هذه البدائيات، مما يوفر إطاراً نظرياً قوياً للمقارنة بين القدرات الحسابية المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اختبار النماذج المفتوحة المصدر",
+          "paragraphs": [
+            {
+              "text": "اختبرت الفريق مجموعة من النماذج المفتوحة المصدر المسبقة التدريب على مستويات StateBench المختلفة. شملت هذه النماذج Olmo 3 (بنية Transformer) وOlmo Hybrid (الذي يضيف طبقات Gated DeltaNet)، بالإضافة إلى نماذج أصغر حجماً. جميع هذه النماذج تم تدريبها على نفس البيانات، ولم تتعرض لأي سياق أطول من 64,000 توكن خلال مرحلة التدريب، بينما اختُبرت على مدخلات تتجاوز هذه الطول بكثير.",
+              "links": []
+            },
+            {
+              "text": "أظهرت النتائج أن معظم النماذج أدت أداءً جيداً في المشكلات البسيطة (R-trivial)، لكن دقتها انخفضت في المشكلات الدورية (Aperiodic) مع زيادة طول المدخلات، وبقيت عند مستوى الصدفة في المشكلات العامة. كما لاحظ الباحثون أن صيغة المشكلة تؤثر بشكل كبير على الأداء؛ فبينما حققت بعض النماذج درجات عالية في صيغ RULER، فشلت في صيغ تحرير جداول البيانات لنفس المشكلات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أداء النماذج الرائدة في المهام الصعبة",
+          "paragraphs": [
+            {
+              "text": "اختُبرت أربعة نماذج رائدة، بما في ذلك Gemini 3.8 Flash وClaude Opus 5.5 وGPT-6 Sol وLuna، على قراءة سلاسل الإسناد وتوليد القيم النهائية للمتغيرات. أظهرت جميع هذه النماذج أداءً قوياً في المستويين البسيط والدوري. ومع ذلك، انخفضت الدقة بشكل حاد في المستويين القابلين للذوبان والعامة مع زيادة طول المدخلات، لتصل إلى 13% أو أقل في أطول المشكلات العامة.",
+              "links": []
+            },
+            {
+              "text": "يعزى هذا التراجع جزئياً إلى الحساسية العالية في المستويات الصعبة، حيث يمكن أن تؤثر خطوات أكثر بكثير على النتيجة النهائية. هذا يقلل من هامش الخطأ المسموح به للنموذج، مما يجعل أي تفويت لتحديث واحد كافياً لإنتاج إجابة خاطئة تماماً. هذه النتائج تشير إلى أن الطول وحده ليس التحدي الوحيد، بل تعقيد الاعتماديات هو العامل الحاسم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التدريب المباشر يكشف حدود البنية",
+          "paragraphs": [
+            {
+              "text": "لتحديد ما إذا كانت الصعوبات التي تواجهها النماذج في المستويات العليا ناتجة عن حدود البنية المعمارية نفسها، أم عن قصور في بيانات التدريب المسبق، أجرى الباحثون تجارب تدريب مباشر مستهدف. يُعتبر هذا الإعداد أكثر ملاءمة لكشف الدرجة التي تأتي منها مشاكل تتبع الحالة من البنية التحتية والمُحسِّن (Optimizer) بدلاً من البيانات المستخدمة في التدريب المسبق.",
+              "links": []
+            },
+            {
+              "text": "أظهرت النتائج أن النماذج العودية والهجينة يمكنها التعميم لمسافات أبعد بكثير من Transformers عندما يتم تدريبها مباشرة على هذه المهام. هذا يؤكد أن الفجوة في الأداء ليست دائماً بسبب نقص البيانات، بل قد تكون مرتبطة بالقدرة الحسابية الجوهرية للبنية في إدارة الذاكرة والتبعيات الطويلة. توفر هذه الرؤى إرشادات قيمة للمطورين عند اختيار البنى المناسبة لتطبيقات السياق الطويل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "StateBench",
+        "Ai2",
+        "Long-Context",
+        "State Tracking",
+        "LLMs",
+        "Transformers",
+        "Gated DeltaNet",
+        "AI Benchmark"
+      ],
+      "entities": [
+        "StateBench",
+        "Ai2",
+        "Transformers",
+        "Gated DeltaNet",
+        "Gemini 3.8 Flash",
+        "Claude Opus 5.5",
+        "GPT-6 Sol",
+        "GPT-6 Luna",
+        "Olmo 3",
+        "Olmo Hybrid"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "3 نوفمبر 2026",
+      "modifiedLabel": "3 نوفمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 806
+    },
+    "en": {
+      "title": "StateBench Released to Test Long-Document State Tracking",
+      "description": "A new benchmark evaluates how well language models track changing entity states across long documents, revealing limitations in current architectures.",
+      "deck": "Researchers have introduced StateBench to measure the ability of language models to follow evolving data states and variable assignments in lengthy inputs.",
+      "summaryBullets": [
+        "StateBench evaluates long-context state tracking across four distinct difficulty levels based on mathematical complexity.",
+        "Testing reveals that frontier models like Gemini 3.8 Flash, Claude Opus 5.5, and GPT-6 Sol and Luna struggle with harder state tracking as context lengths grow.",
+        "Recurrent and hybrid models show a greater capacity to generalize when trained directly on these challenging tasks compared to standard transformers.",
+        "The benchmark framework is publicly accessible alongside its associated code and evaluation datasets."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to StateBench",
+          "paragraphs": [
+            {
+              "text": "State tracking forms the foundation of many complex tasks, ranging from interpreting code where variables are reassigned to following narratives where characters move and objects change hands. To better understand how artificial intelligence systems handle these demands, researchers have introduced StateBench, a dedicated evaluation framework designed to assess long-context state tracking capabilities. Further details are available from Hugging Face Blog in the original source material.",
+              "links": [
+                {
+                  "text": "StateBench",
+                  "url": "https://github.com/allenai/state-bench"
+                },
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/allenai/statebench"
+                }
+              ]
+            },
+            {
+              "text": "While some state-tracking problems only require locating the most recent update, harder variants demand following strict chains of changes where a single missed step can ruin the final answer. Theoretical limits on transformers handling these deep dependency chains have inspired alternative designs, such as recurrent and hybrid architectures that utilize running memory.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Four Levels of Complexity",
+          "paragraphs": [
+            {
+              "text": "StateBench categorizes problems into four distinct difficulty levels inspired by Krohn–Rhodes theory, an algebraic branch describing how state-tracking problems can be decomposed. These levels scale from immutable assignments to complex operations involving references and swaps.",
+              "links": []
+            },
+            {
+              "text": "The easiest tier, r-trivial, uses immutable assignments where a variable's value never shifts. Aperiodic problems introduce reassignment by value, requiring models to spot the newest entry while ignoring older ones. Soluble problems add self-referential updates where values build upon previous totals, similar to keeping score in a game.",
+              "links": []
+            },
+            {
+              "text": "The hardest tier, general finite problems, introduces assignment by reference. This creates intricate dependencies, such as swapping variable values or following an object hidden under moving cups, aligning with prior studies on the strict boundaries of long-document comprehension.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Evaluating Open and Frontier Models",
+          "paragraphs": [
+            {
+              "text": "Initial evaluations examined open pretrained architectures like Olmo 3 and Olmo Hybrid, alongside smaller variants. When scored across the tier hierarchy, almost all models successfully processed r-trivial problems, lost accuracy on aperiodic problems as inputs lengthened, and dropped to chance levels on general finite problems.",
+              "links": []
+            },
+            {
+              "text": "Further testing was conducted on prominent frontier systems, including Gemini 3.8 Flash, Claude Opus 5.5, and GPT-6 Sol and Luna. Although these advanced systems performed well on simpler r-trivial and aperiodic tasks, their accuracy plummeted sharply on soluble and general finite problems as context sizes expanded, dropping to 13% or lower on the longest sequences.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture Versus Training Data",
+          "paragraphs": [
+            {
+              "text": "To investigate whether performance drops stem from foundational architectural limits or simply a lack of pretraining exposure, researchers utilized specialized direct training regimes. Their findings indicate that recurrent and hybrid models can generalize significantly farther than pure transformers when explicitly trained on these hierarchical tasks.",
+              "links": []
+            },
+            {
+              "text": "As language models are deployed across longer contexts and more complex coding workflows, benchmarks like StateBench provide vital insights into architectural differences and help guide the development of next-generation AI systems.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "StateBench",
+        "Artificial Intelligence",
+        "Language Models",
+        "Transformers",
+        "Hugging Face",
+        "Machine Learning",
+        "Benchmarks"
+      ],
+      "entities": [
+        "StateBench",
+        "Hugging Face",
+        "Gemini",
+        "Claude",
+        "GPT-6"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 3, 2026",
+      "modifiedLabel": "November 3, 2026",
+      "readMinutes": 3,
+      "wordCount": 526
+    }
+  },
+  "datePublished": "2026-11-03T22:26:47.293092+03:00",
+  "dateModified": "2026-11-03T22:26:47.293092+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/statebench-testing-how-language-models-track-state-changes-over-long-documents/hero.webp",
+    "card": "/forum/assets/posts/2026/11/statebench-testing-how-language-models-track-state-changes-over-long-documents/card.webp",
+    "social": "/forum/assets/posts/2026/11/statebench-testing-how-language-models-track-state-changes-over-long-documents/social.jpg",
+    "alt": {
+      "ar": "StateBench يكشف حدود نماذج الذكاء الاصطناعي في تتبع التغيرات الطويلة",
+      "en": "StateBench Released to Test Long-Document State Tracking"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/5g9HfQLFFaQE0fslWrxh0.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/statebench-testing-how-language-models-track-state-changes-over-long-documents/inline-01.webp",
+        "width": 1400,
+        "height": 1000,
+        "alt": {
+          "ar": "StateBench يكشف حدود نماذج الذكاء الاصطناعي في تتبع التغيرات الطويلة",
+          "en": "StateBench illustration showing colored paths changing positions across a sequence."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/statebench",
+        "originalUrl": "https://www.datocms-assets.com/64837/1792006215-statebench-draft-blog-google-docs-image-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/statebench-testing-how-language-models-track-state-changes-over-long-documents/inline-02.webp",
+        "width": 1255,
+        "height": 1050,
+        "alt": {
+          "ar": "StateBench يكشف حدود نماذج الذكاء الاصطناعي في تتبع التغيرات الطويلة",
+          "en": "Accuracy of pretrained transformer, hybrid, and Gated DeltaNet models versus input length in tokens; soluble results are not reported."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/statebench",
+        "originalUrl": "https://www.datocms-assets.com/64837/1792006353-statebench-draft-blog-google-docs-image-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/statebench-testing-how-language-models-track-state-changes-over-long-documents/inline-03.webp",
+        "width": 1305,
+        "height": 1050,
+        "alt": {
+          "ar": "StateBench يكشف حدود نماذج الذكاء الاصطناعي في تتبع التغيرات الطويلة",
+          "en": "Accuracy of Gemini 3.8 Flash, Claude Opus 5.5, GPT-6 Sol, and GPT-6 Luna across the four StateBench levels versus input length in tokens."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/statebench",
+        "originalUrl": "https://www.datocms-assets.com/64837/1792006435-statebench-draft-blog-google-docs-image-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/statebench-testing-how-language-models-track-state-changes-over-long-documents/inline-04.webp",
+        "width": 1255,
+        "height": 1050,
+        "alt": {
+          "ar": "StateBench يكشف حدود نماذج الذكاء الاصطناعي في تتبع التغيرات الطويلة",
+          "en": "Accuracy of transformer, hybrid, and Gated DeltaNet models trained directly on StateBench across all four levels versus input length in assignments."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/statebench",
+        "originalUrl": "https://www.datocms-assets.com/64837/1792006493-statebench-draft-blog-google-docs-image-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/allenai/statebench",
+      "type": "official",
+      "title": "StateBench: Testing how language models track state changes over long documents"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/allenai/statebench",
+  "sourceTitle": "StateBench: Testing how language models track state changes over long documents",
+  "trendScore": 107.17,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-03T19:26:47+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/statebench-testing-how-language-models-track-state-changes-over-long-documents.json"
+}
