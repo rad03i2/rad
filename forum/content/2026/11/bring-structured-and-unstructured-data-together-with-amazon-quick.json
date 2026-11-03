@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "0f2d755e3513ed127d81",
+  "slug": "bring-structured-and-unstructured-data-together-with-amazon-quick",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/bring-structured-and-unstructured-data-together-with-amazon-quick/",
+    "en": "/forum/en/ai/bring-structured-and-unstructured-data-together-with-amazon-quick/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون كويك توحّد البيانات المهيكلة وغير المهيكلة في تجربة واحدة",
+      "description": "تتيح أمازون كويك ربط مستودعات S3 مع مجموعات البيانات المهيكلة لإنشاء وكيل محادثة ذكي يجيب على أسئلة الأعمال عبر واجهة موحدة، مما يلغي الحاجة لتبديل الأدوات.",
+      "deck": "تقدم أمازون حلاً تقنياً جديداً يجمع بين البيانات الرقمية المنظمة والمستندات النصية في مساحة عمل واحدة، مما يسهل التحليلات المعقدة عبر الذكاء الاصطناعي.",
+      "summaryBullets": [
+        "ربط مستودعات Amazon S3 كمصدر معرفة للبيانات غير المهيكلة مثل التقارير والمستندات.",
+        "إنشاء مجموعات بيانات محسّنة (Enriched Datasets) لتحسين دقة تحويل الأسئلة إلى استعلامات SQL.",
+        "بناء وكيل محادثة مخصص يستجيب للأسئلة التي تمتد عبر النوعين من البيانات في نفس الجلسة.",
+        "تطبيق حواجز أمان ذكية (AI Guardrails) لضمان سلامة المحتوى والامتثال للسياسات التنظيمية."
+      ],
+      "sections": [
+        {
+          "heading": "تحدّي تعدد مصادر البيانات في المؤسسات",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات الحديثة تحدياً كبيراً في التعامل مع البيانات التي تأتي بأشكال متباينة؛ فبينما تُخزَّن البيانات المهيكلة في قواعد البيانات والجداول، تتوزع البيانات غير المهيكلة في المستندات والتقارير والملفات المبعثرة عبر أنظمة الملفات. يتطلب تحليل هذه المصادر معاً عادةً التنقل بين عدة أدوات، وتنفيذ استعلامات منفصلة، وربط النتائج يدوياً، مما يستهلك الوقت ويقلل من كفاءة اتخاذ القرار. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/bring-structured-and-unstructured-data-together-with-amazon-quick/"
+                }
+              ]
+            },
+            {
+              "text": "لتجاوز هذه العقبات، قدمت أمازون حلاً موحداً من خلال منصة Amazon Quick، التي تتيح للمستخدمين دمج البيانات المهيكلة عبر مجموعات البيانات المحسّنة، والبيانات غير المهيكلة عبر قواعد المعرفة المدعومة بـ S3. يتيح هذا الدمج الاستعلام عن كلا النوعين من البيانات عبر وكيل ذكاء اصطناعي محادثة واحد، مما يوفر تجربة سلسة ومترابطة.",
+              "links": [
+                {
+                  "text": "Amazon Quick",
+                  "url": "https://docs.aws.amazon.com/quick/latest/userguide/welcome.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "معمارية الحل: من طبقة البيانات إلى الوكيل",
+          "paragraphs": [
+            {
+              "text": "تعتمد المعمارية المقترحة على ثلاث طبقات رئيسية. في طبقة البيانات، تُخزَّن المحتويات غير المهيكلة مثل ملفات PDF والتقارير في Amazon S3 وتُفهرس عبر قاعدة معرفة، بينما تُحمَّل البيانات المهيكلة كمجموعات بيانات محسّنة تتضمن أوصافاً دلالية تساعد الوكيل على ترجمة الأسئلة إلى استعلامات SQL. في طبقة مساحة العمل (Space)، يجتمع كلا النوعين من البيانات في مساحة موحدة يمكنها أيضاً تضمين لوحات المعلومات ومرفقات الملفات.",
+              "links": []
+            },
+            {
+              "text": "أما طبقة الوكيل، فتتكون من وكيل محادثة مخصص مرتبط بمساحة العمل. عند طرح سؤال، يحدد الوكيل تلقائياً ما إذا كان يجب الاستعلام عن قاعدة المعرفة، أو مجموعة البيانات، أو كليهما، ثم يعيد إجابة مدمجة مع الاستشهادات اللازمة. كما تطبق المنصة حواجز أمان ذكية مدمجة، مثل فحص سلامة المحتوى، على تفاعلات المحادثة لضمان الأمان.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات الإعداد والبدء",
+          "paragraphs": [
+            {
+              "text": "لتنفيذ هذا الحل، يحتاج المستخدم إلى حساب Amazon Quick باشتراك Enterprise، حيث إن إنشاء مجموعات البيانات يتطلب هذا المستوى من الاشتراك. كما يتطلب الأمر وجود مستودع Amazon S3 يحتوي على المستندات التجارية الخاصة بالشركة، ومنح صلاحيات قراءة لهذا المستودع عبر وحدة تحكم الإدارة. يجب أن يكون المستودع في نفس المنطقة (Region) التي يعمل فيها Amazon Quick لضمان الاتصال السلس.",
+              "links": []
+            },
+            {
+              "text": "تشمل المتطلبات أيضاً صلاحيات إنشاء التكاملات وقواعد المعرفة ومجموعات البيانات والوكلاء. بالنسبة للبيانات التجريبية، يمكن رفع مستندات غير مهيكلة إلى المستودع، وتحميل ملفات البيانات المهيكلة مباشرة إلى المنصة في الخطوات اللاحقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ربط مستودعات S3 كمصدر معرفة",
+          "paragraphs": [
+            {
+              "text": "تبدأ العملية بربط Amazon Quick بمستودع S3. من وحدة التحكم، يتم اختيار قسم المعرفة (Knowledge) ثم إضافة تكامل جديد من نوع Amazon S3. يتطلب الأمر تحديد اسم التكامل، وموقع المستودع (سواء كان في نفس حساب AWS أو حساب آخر)، وعنوان المستودع (URI). بعد إنشاء التكامل، تطلب المنصة إنشاء قاعدة معرفة لفهرسة محتويات S3 للبحث المدعوم بالذكاء الاصطناعي.",
+              "links": []
+            },
+            {
+              "text": "يمكن للمستخدم اختيار فهرسة جميع المحتويات أو تحديد مجلدات وملفات معينة عبر مرشحات بادئة (Prefixes). كما تتوفر خيارات متقدمة مثل قوائم التحكم في الوصول (ACLs) على مستوى المستند، والتي يجب تحديدها قبل إنشاء قاعدة المعرفة لأنها غير قابلة للتعديل لاحقاً. يبدأ الفهرسة في الخلفية بمجرد التأكيد على الإنشاء.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إنشاء وتحسين مجموعات البيانات المهيكلة",
+          "paragraphs": [
+            {
+              "text": "تُحمَّل البيانات المهيكلة، مثل ملف CSV الذي يحتوي على مبيعات المنتجات، عبر قسم البيانات (Data) في المنصة. بعد رفع الملف، تقوم المنصة باستيعابه في محرك الحسابات في الذاكرة (SPICE). هنا يأتي دور التحسين الدلالي؛ حيث يقوم المستخدم بتعديل أنواع البيانات تلقائياً المكتشفة، مثل تغيير التاريخ من نص إلى تاريخ، والمبالغ المالية من نص إلى أرقام عشرية، لضمان دقة التحليل.",
+              "links": []
+            },
+            {
+              "text": "يضيف المستخدم أيضاً أوصافاً دلالية على مستوى مجموعة البيانات توضح سياق البيانات التجارية، مثل نطاق المناطق الجغرافية والفترات الزمنية. تساعد هذه الأوصاف الوكيل على فهم البيانات في سياقها الصحيح وتحويل أسئلة اللغة الطبيعية إلى استعلامات SQL أكثر دقة وكفاءة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بناء مساحة العمل والوكيل المخصص",
+          "paragraphs": [
+            {
+              "text": "بعد إعداد مصادر البيانات، يتم إنشاء مساحة عمل (Space) تجمع بين قاعدة المعرفة غير المهيكلة ومجموعة البيانات المهيكلة. تعمل هذه المساحة كسياق موحد حيث يمكن للوكيل الوصول إلى جميع المصادر. يمكن تضمين لوحات المعلومات ومكونات إضافية أخرى في هذه المساحة لتوفير رؤية شاملة.",
+              "links": []
+            },
+            {
+              "text": "أخيراً، يُنشأ وكيل محادثة مخصص مرتبط بهذه المساحة. عند طرح سؤال يجمع بين بيانات المبيعات (المهيكلة) ومحتوى التقارير (غير المهيكلة)، يقوم الوكيل بتحليل السؤال، واستدعاء المصادر المناسبة، وتقديم إجابة مدمجة مع استشهادات واضحة. تتيح هذه البنية التوسعة المستقبلية، حيث يمكن إضافة مصادر بيانات جديدة للمساحة، وسيتكيف الوكيل تلقائياً لاستخدامها مع احترام صلاحيات المستخدم.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون كويك",
+        "الذكاء الاصطناعي",
+        "تحليل البيانات",
+        "Amazon S3",
+        "وكلاء المحادثة",
+        "بيانات مهيكلة"
+      ],
+      "entities": [
+        "Amazon Quick",
+        "Amazon S3",
+        "AWS",
+        "SPICE"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "3 نوفمبر 2026",
+      "modifiedLabel": "3 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 731
+    },
+    "en": {
+      "title": "Amazon Quick Unifies Structured and Unstructured Data",
+      "description": "Discover how Amazon Quick bridges structured metrics and unstructured documents into a single conversational AI experience for enterprise business intelligence.",
+      "deck": "Organizations can now bridge structured databases and unstructured document repositories into a unified conversational experience using Amazon Quick.",
+      "summaryBullets": [
+        "Amazon Quick combines structured data and unstructured content into a single workspace layer.",
+        "Users can connect Amazon S3 buckets as knowledge bases to index reports, PDFs, and files.",
+        "Enriched datasets allow custom AI chat agents to accurately translate natural language questions into SQL queries.",
+        "Built-in AI guardrails provide content safety screening for all conversational interactions."
+      ],
+      "sections": [
+        {
+          "heading": "Bridging Structured and Unstructured Data",
+          "paragraphs": [
+            {
+              "text": "Organizations traditionally collect data across multiple disparate formats, forcing analysts to switch between separate tools when examining structured metrics and unstructured files. Structured data typically resides within databases and spreadsheets, whereas unstructured data is scattered across documents, reports, and file systems. To address these workflow challenges, Amazon Quick provides a unified solution that bridges both data domains into a single experience, allowing teams to query diverse information through a conversational interface.",
+              "links": [
+                {
+                  "text": "Amazon Quick",
+                  "url": "https://docs.aws.amazon.com/quick/latest/userguide/welcome.html"
+                }
+              ]
+            },
+            {
+              "text": "The platform architecture is built upon distinct functional layers that handle data ingestion, workspace convergence, and conversational processing. At the data layer, administrators connect unstructured content via Amazon Simple Storage Service and structure metrics through enriched datasets. This dual approach ensures that reports and raw performance indicators converge seamlessly within the workspace layer.",
+              "links": [
+                {
+                  "text": "enriched datasets",
+                  "url": "https://docs.aws.amazon.com/quick/latest/userguide/working-with-datasets.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Connecting Knowledge Bases and S3 Storage",
+          "paragraphs": [
+            {
+              "text": "Setting up unstructured data integration begins by establishing an S3 connection within the platform console. Administrators can designate specific buckets and configure background indexing to prepare documents for AI-powered search. According to the AWS Machine Learning Blog, users can establish S3-backed knowledge bases to process documentation, business reviews, and market analysis reports effectively.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                },
+                {
+                  "text": "S3-backed knowledge bases",
+                  "url": "https://docs.aws.amazon.com/quick/latest/userguide/s3-integration.html"
+                }
+              ]
+            },
+            {
+              "text": "To ensure secure and proper execution, specific account permissions are mandatory before linking cloud storage buckets. Teams must configure Amazon Quick access to your S3 bucket through the administrative console to grant read-only permissions by default, ensuring that background indexing processes can safely read incoming files without modifying the original storage repository.",
+              "links": [
+                {
+                  "text": "Amazon Quick access to your S3 bucket",
+                  "url": "https://docs.aws.amazon.com/quick/latest/userguide/s3-admin-setup.html#s3-grant-bucket-access"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Transforming and Enriching Structured Datasets",
+          "paragraphs": [
+            {
+              "text": "While unstructured files are processed via knowledge bases, structured data relies on explicit file uploads and dataset preparation. Users can ingest transactional logs and operational metrics directly into the platform's in-memory calculation engine, SPICE. Proper dataset configuration is essential for accurate natural language processing.",
+              "links": []
+            },
+            {
+              "text": "Once files are loaded, administrators must review column definitions and apply precise data types. Transforming string values into appropriate date, decimal, or integer formats ensures that downstream AI components can correctly interpret the underlying metrics. Furthermore, adding semantic descriptions helps the agent understand business context, enabling more precise translations from conversational prompts into functional SQL queries.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Building Spaces and Custom Chat Agents",
+          "paragraphs": [
+            {
+              "text": "The workspace layer of the architecture is defined by Spaces, which aggregate the connected data sources, uploaded files, and dashboards into a centralized environment. Within a Space, both structured metrics and unstructured knowledge sources converge, providing the necessary context for conversational agents to query across disparate silos.",
+              "links": []
+            },
+            {
+              "text": "Custom chat agents link directly to these Spaces to function as the primary interface for end users. When a query is submitted, the agent evaluates the request to determine whether to query the knowledge base, the dataset, or both simultaneously. It then aggregates the findings into a comprehensive response complete with citations, allowing teams to review both qualitative reports and quantitative figures in a single interaction.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Security, Governance, and Subscription Requirements",
+          "paragraphs": [
+            {
+              "text": "Maintaining enterprise-grade security is a core component of the multi-layered architecture. Amazon Quick applies built-in AI guardrails across chat interactions, enforcing content safety screening to protect sensitive business environments and ensure responsible artificial intelligence usage.",
+              "links": [
+                {
+                  "text": "AI guardrails",
+                  "url": "https://docs.aws.amazon.com/quick/latest/userguide/guardrails.html"
+                }
+              ]
+            },
+            {
+              "text": "To implement this unified architecture, organizations must adhere to specific platform prerequisites. Creating advanced datasets and leveraging full workspace capabilities requires an Enterprise subscription. Administrators should carefully evaluate Amazon Quick pricing tiers and verify that all necessary integration permissions are configured prior to deployment.",
+              "links": [
+                {
+                  "text": "Amazon Quick pricing",
+                  "url": "https://aws.amazon.com/quick/pricing/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Quick",
+        "AWS",
+        "Artificial Intelligence",
+        "Cloud Storage",
+        "Data Analytics",
+        "Business Intelligence",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Quick",
+        "Amazon S3"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 3, 2026",
+      "modifiedLabel": "November 3, 2026",
+      "readMinutes": 3,
+      "wordCount": 621
+    }
+  },
+  "datePublished": "2026-11-03T23:06:47.674640+03:00",
+  "dateModified": "2026-11-03T23:06:47.674640+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/bring-structured-and-unstructured-data-together-with-amazon-quick/hero.webp",
+    "card": "/forum/assets/posts/2026/11/bring-structured-and-unstructured-data-together-with-amazon-quick/card.webp",
+    "social": "/forum/assets/posts/2026/11/bring-structured-and-unstructured-data-together-with-amazon-quick/social.jpg",
+    "alt": {
+      "ar": "أمازون كويك توحّد البيانات المهيكلة وغير المهيكلة في تجربة واحدة",
+      "en": "Amazon Quick Unifies Structured and Unstructured Data"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-22035-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/bring-structured-and-unstructured-data-together-with-amazon-quick/inline-01.webp",
+        "width": 1400,
+        "height": 667,
+        "alt": {
+          "ar": "أمازون كويك توحّد البيانات المهيكلة وغير المهيكلة في تجربة واحدة",
+          "en": "Architecture diagram showing the data, workspace, and agent layers that connect structured datasets and an Amazon S3 knowledge base to a chat agent in Amazon Quick"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/bring-structured-and-unstructured-data-together-with-amazon-quick/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-22035-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/bring-structured-and-unstructured-data-together-with-amazon-quick/inline-02.webp",
+        "width": 1400,
+        "height": 759,
+        "alt": {
+          "ar": "أمازون كويك توحّد البيانات المهيكلة وغير المهيكلة في تجربة واحدة",
+          "en": "Create S3 knowledge base dialog showing the Connect S3 bucket fields for name, bucket location, and bucket URL"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/bring-structured-and-unstructured-data-together-with-amazon-quick/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-22035-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/bring-structured-and-unstructured-data-together-with-amazon-quick/inline-03.webp",
+        "width": 1400,
+        "height": 757,
+        "alt": {
+          "ar": "أمازون كويك توحّد البيانات المهيكلة وغير المهيكلة في تجربة واحدة",
+          "en": "Create knowledge base dialog with the Business Knowledge Base name and content selection options"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/bring-structured-and-unstructured-data-together-with-amazon-quick/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-22035-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/bring-structured-and-unstructured-data-together-with-amazon-quick/inline-04.webp",
+        "width": 1400,
+        "height": 676,
+        "alt": {
+          "ar": "أمازون كويك توحّد البيانات المهيكلة وغير المهيكلة في تجربة واحدة",
+          "en": "Transform tab showing data type changes applied to columns in the Product_Sales.csv dataset"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/bring-structured-and-unstructured-data-together-with-amazon-quick/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-22035-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/bring-structured-and-unstructured-data-together-with-amazon-quick/",
+      "type": "official",
+      "title": "Bring structured and unstructured data together with Amazon Quick"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/bring-structured-and-unstructured-data-together-with-amazon-quick",
+  "sourceTitle": "Bring structured and unstructured data together with Amazon Quick",
+  "trendScore": 104.73,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-03T20:06:47+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/bring-structured-and-unstructured-data-together-with-amazon-quick.json"
+}
