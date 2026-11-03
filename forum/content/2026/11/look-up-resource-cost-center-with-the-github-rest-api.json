@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "9bd4399ba924a984ce43",
+  "slug": "look-up-resource-cost-center-with-the-github-rest-api",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/look-up-resource-cost-center-with-the-github-rest-api/",
+    "en": "/forum/en/web/look-up-resource-cost-center-with-the-github-rest-api/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub يتيح معرفة مركز تكلفة الموارد عبر REST API",
+      "description": "أضافت GitHub نقطة نهاية جديدة إلى REST API لمعرفة مركز تكلفة المستخدمين والمنظمات والمستودعات وفرق المؤسسات مباشرة.",
+      "deck": "أعلنت GitHub إتاحة طريقة مباشرة للعثور على مركز التكلفة المرتبط بمورد داخل المؤسسة عبر REST API. ويشمل ذلك المستخدمين والمنظمات والمستودعات وفرق المؤسسات.",
+      "summaryBullets": [
+        "نقطة النهاية الجديدة تبحث عن مركز تكلفة مورد محدد بدل فحص جميع مراكز التكلفة.",
+        "الاستجابة تعرض معرّف مركز التكلفة واسمه عند وجود عضوية.",
+        "تشمل الموارد المدعومة المستخدم والمنظمة والمستودع وفريق المؤسسة.",
+        "تختلف صلاحيات البحث بحسب دور المستخدم وإمكانية الوصول إلى فواتير المؤسسة."
+      ],
+      "sections": [
+        {
+          "heading": "طريقة مباشرة للبحث",
+          "paragraphs": [
+            {
+              "text": "أعلنت GitHub تحديثًا يسهّل معرفة مركز التكلفة الذي ينتمي إليه مورد داخل المؤسسة باستخدام واجهة GitHub REST API. وتتيح الوظيفة الجديدة تمرير نوع المورد واسمه إلى نقطة نهاية مخصصة، بدل الاعتماد على عملية بحث غير مباشرة تبدأ بعرض جميع مراكز التكلفة ثم فحص الموارد المرتبطة بكل مركز. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub REST API",
+                  "url": "https://github.blog/changelog/2026-11-03-look-up-a-resources-cost-center-with-the-github-rest-api/"
+                },
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-11-03-look-up-a-resources-cost-center-with-the-github-rest-api/"
+                }
+              ]
+            },
+            {
+              "text": "يستهدف التغيير الحالات التي يحتاج فيها المسؤول أو المستخدم المخوّل إلى معرفة الجهة المالية التي يتبع لها مورد بعينه. وبحسب الإعلان، يمكن استخدام البحث مع المستخدمين والمنظمات والمستودعات وفرق المؤسسات، ما يوفر استعلامًا محددًا عن مورد واحد بدل مراجعة قائمة واسعة من مراكز التكلفة والموارد التابعة لها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ما الذي تعيده الاستجابة؟",
+          "paragraphs": [
+            {
+              "text": "عند العثور على عضوية للمورد، تتضمن استجابة نقطة النهاية معرّف مركز التكلفة واسمه. وتمنح هذه البيانات المستهلكين طريقة واضحة للتعامل مع نتيجة البحث، سواء كان الهدف عرض المركز المرتبط بالمورد أو استخدام المعرّف والاسم في إجراءات إدارية أو فوترية أخرى داخل المؤسسة.",
+              "links": []
+            },
+            {
+              "text": "أما إذا لم يكن المورد تابعًا لأي مركز تكلفة، فتأتي مصفوفة العضويات فارغة. ويعني ذلك أن غياب النتيجة يظهر ضمن بنية الاستجابة نفسها، بدل الحاجة إلى استنتاجه من خطأ أو من غياب بيانات متوقعة. ويظل تفسير النتيجة مرتبطًا بالمورد الذي أُرسل نوعه واسمه وبنطاق الوصول المتاح لصاحب الطلب.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الموارد المشمولة بالبحث",
+          "paragraphs": [
+            {
+              "text": "تغطي الوظيفة أربعة أنواع من الموارد التي ذكرتها GitHub صراحة: المستخدم، والمنظمة، والمستودع، وفريق المؤسسة. ولا يقدم الإعلان قائمة أوسع من ذلك، لذلك يقتصر الاستخدام المعلن على تمرير نوع واحد من هذه الأنواع مع اسم المورد المطلوب التحقق من مركز تكلفته.",
+              "links": []
+            },
+            {
+              "text": "تساعد هذه الصيغة على جعل السؤال أكثر تحديدًا في البيئات التي تضم عدة مراكز تكلفة. فبدل أن يبدأ المستهلك من مراكز التكلفة ويقارن الموارد الموجودة في كل منها، يبدأ من المورد المعروف لديه ويطلب عضويته مباشرة. وبهذا تتغير نقطة الانطلاق من استعراض شامل إلى استعلام موجّه عن مورد محدد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الصلاحيات تحدد نطاق النتائج",
+          "paragraphs": [
+            {
+              "text": "توضح GitHub أن مالكي المؤسسة ومديري الفوترة وتطبيقات GitHub التي تمتلك صلاحية القراءة لفوترة المؤسسة يستطيعون البحث عن أي مورد داخل المؤسسة. وتحدد هذه الصلاحية نطاقًا واسعًا للبحث، لأنها تتيح لهذه الفئات الاستعلام عن الموارد دون قصر العملية على ما يظهر في نطاق وصول أضيق.",
+              "links": []
+            },
+            {
+              "text": "في المقابل، يستطيع مالكو المنظمات والمستخدمون الذين لديهم أدوار مخصصة تتضمن صلاحية القراءة لفوترة المؤسسة البحث فقط في الموارد ومراكز التكلفة التي يمكنهم رؤيتها مسبقًا. لذلك لا تعني إتاحة نقطة النهاية أن كل مستخدم سيتمكن تلقائيًا من الاطلاع على جميع مراكز التكلفة أو جميع الموارد في المؤسسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "كيفية البدء باستخدام الوظيفة",
+          "paragraphs": [
+            {
+              "text": "للاطلاع على طريقة الاستدعاء والمعلمات وبنية النتيجة، أحالت GitHub المستخدمين إلى توثيق نقطة النهاية [Get cost center membership for a resource](https://docs.github.com/enterprise-cloud@latest/rest/billing/cost-centers#get-cost-center-membership-for-a-resource) ضمن توثيق REST الخاص بالفوترة ومراكز التكلفة. ويقدم هذا المرجع التفاصيل اللازمة لبناء الطلب وفق نوع المورد واسمه.",
+              "links": []
+            },
+            {
+              "text": "يأتي التحديث ضمن تحسينات أدوات إدارة الفوترة في GitHub، مع تركيز واضح على تقليل العمل اليدوي عند تتبع ارتباط الموارد بمراكز التكلفة. ويمكن قراءة الإعلان الأصلي في [GitHub Changelog](https://github.blog/changelog/2026-11-03-look-up-a-resources-cost-center-with-the-github-rest-api/) لمعرفة نطاق التغيير كما أعلنته الشركة، مع مراعاة أن القدرة الفعلية على البحث تظل خاضعة للصلاحيات المرئية لكل حساب أو تطبيق.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "REST API",
+        "مراكز التكلفة",
+        "الفوترة",
+        "إدارة المؤسسات",
+        "واجهات برمجة التطبيقات"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub REST API",
+        "مركز التكلفة",
+        "المؤسسة",
+        "المستودع",
+        "فريق المؤسسة"
+      ],
+      "category": "الويب",
+      "dateLabel": "3 نوفمبر 2026",
+      "modifiedLabel": "3 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 548
+    },
+    "en": {
+      "title": "GitHub API Adds Direct Cost Center Lookup",
+      "description": "GitHub’s REST API can now identify the cost center assigned to users, organizations, repositories, and enterprise teams.",
+      "deck": "GitHub has added a REST API capability that lets authorized users identify the cost center associated with a resource. The change removes the need to inspect every cost center individually.",
+      "summaryBullets": [
+        "The API can look up cost center membership for users, organizations, repositories, and enterprise teams.",
+        "Responses provide the cost center’s ID and name.",
+        "Resources without an assigned cost center return an empty memberships array.",
+        "Access depends on enterprise billing permissions and the caller’s visibility."
+      ],
+      "sections": [
+        {
+          "heading": "A more direct billing lookup",
+          "paragraphs": [
+            {
+              "text": "GitHub has introduced a way to use its REST API to determine which cost center a resource belongs to. The lookup covers four resource types named in the company’s announcement: users, organizations, repositories, and enterprise teams. The change is aimed at making cost-center administration more direct for people managing billing information across an enterprise. Further details are available from GitHub Changelog in the original source material.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-11-03-look-up-a-resources-cost-center-with-the-github-rest-api/"
+                }
+              ]
+            },
+            {
+              "text": "Before this capability was available, administrators had to list every cost center and scan the resources associated with each one to find a particular membership. GitHub’s new approach allows the caller to provide the resource type and name to a dedicated lookup endpoint instead. That changes the task from reviewing a complete collection to requesting the membership information for a known resource.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "What the response contains",
+          "paragraphs": [
+            {
+              "text": "The response includes the cost center’s ID and name, giving administrators both an identifier and a human-readable label for the matching cost center. This can help distinguish cost centers with similar administrative roles or support systems that need to store a stable identifier alongside a display name.",
+              "links": []
+            },
+            {
+              "text": "GitHub also specifies how the API represents a resource that is not assigned to a cost center. In that case, the memberships array is empty. The response therefore provides an explicit result for the absence of a membership rather than requiring users to infer it from a failed search through the full list of cost centers.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Permissions determine visibility",
+          "paragraphs": [
+            {
+              "text": "The lookup is governed by the caller’s permissions within the enterprise. Enterprise owners and billing managers can use it to look up any resource in the enterprise. GitHub Apps with read access to enterprise billing can also perform lookups across the enterprise, according to the changelog.",
+              "links": []
+            },
+            {
+              "text": "Other users have a narrower scope. Organization owners and users with custom roles that include read access to enterprise billing can look up only the resources and cost centers they are already allowed to see. The API therefore does not expand visibility beyond the permissions attached to the account, role, or app making the request.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Relevant for enterprise administration",
+          "paragraphs": [
+            {
+              "text": "Cost centers provide an organizational way to associate resources with billing ownership, and the new lookup is particularly relevant when an administrator already knows the resource that needs to be checked. A repository, organization, user, or enterprise team can now serve as the starting point for finding its cost-center assignment.",
+              "links": []
+            },
+            {
+              "text": "The change may also simplify internal tools that need to answer resource-level billing questions. Instead of collecting all cost centers and searching their resource lists, those tools can use the resource’s type and name as the inputs to a focused request, subject to the permissions available to the integration or operator.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Documentation and availability",
+          "paragraphs": [
+            {
+              "text": "GitHub directs users to the REST API documentation for the operation titled Get cost center membership for a resource. The documentation is the appropriate reference for the request details and supported usage of the new lookup capability.",
+              "links": [
+                {
+                  "text": "Get cost center membership for a resource",
+                  "url": "https://docs.github.com/enterprise-cloud@latest/rest/billing/cost-centers#get-cost-center-membership-for-a-resource"
+                }
+              ]
+            },
+            {
+              "text": "The announcement does not describe any changes to cost-center assignments themselves. Instead, it focuses on how authorized users and applications can retrieve membership information more efficiently. The central result is a narrower, resource-first lookup that returns the relevant cost-center identity when one exists and an empty memberships array when it does not.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "REST API",
+        "cost centers",
+        "enterprise billing",
+        "developer tools",
+        "web"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub REST API",
+        "GitHub Apps",
+        "enterprise billing"
+      ],
+      "category": "Web",
+      "dateLabel": "November 3, 2026",
+      "modifiedLabel": "November 3, 2026",
+      "readMinutes": 3,
+      "wordCount": 615
+    }
+  },
+  "datePublished": "2026-11-03T19:27:04.199917+03:00",
+  "dateModified": "2026-11-03T19:27:04.199917+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/look-up-resource-cost-center-with-the-github-rest-api/hero.webp",
+    "card": "/forum/assets/posts/2026/11/look-up-resource-cost-center-with-the-github-rest-api/card.webp",
+    "social": "/forum/assets/posts/2026/11/look-up-resource-cost-center-with-the-github-rest-api/social.jpg",
+    "alt": {
+      "ar": "GitHub يتيح معرفة مركز تكلفة الموارد عبر REST API",
+      "en": "GitHub API Adds Direct Cost Center Lookup"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/themes/github-2021-child/dist/img/social-v3-new-releases.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-11-03-look-up-a-resources-cost-center-with-the-github-rest-api/",
+      "type": "official",
+      "title": "Look up a resource’s cost center with the GitHub REST API"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-11-03-look-up-a-resources-cost-center-with-the-github-rest-api",
+  "sourceTitle": "Look up a resource’s cost center with the GitHub REST API",
+  "trendScore": 130.72,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-03T16:27:04+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/11/look-up-resource-cost-center-with-the-github-rest-api.json"
+}
