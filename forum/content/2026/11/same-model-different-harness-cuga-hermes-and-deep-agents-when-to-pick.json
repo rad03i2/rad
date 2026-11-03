@@ -1,0 +1,294 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "b05fd13d79e76b342d3b",
+  "slug": "same-model-different-harness-cuga-hermes-and-deep-agents-when-to-pick",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/same-model-different-harness-cuga-hermes-and-deep-agents-when-to-pick/",
+    "en": "/forum/en/ai/same-model-different-harness-cuga-hermes-and-deep-agents-when-to-pick/"
+  },
+  "locales": {
+    "ar": {
+      "title": "آي بي إم تكشف: تغيير هيكل CUGA يرفع أداء نماذج الذكاء الاصطناعي إلى 81%",
+      "description": "تُظهر تجربة من آي بي إم أن تغيير هيكل التشغيل (Harness) لنموذج الذكاء الاصطناعي يرفع نسبة إنجاز المهام من 30% إلى 81%، مع التركيز على تطبيق قواعد صارمة في بيئات المؤسسات.",
+      "deck": "تُظهر دراسة حديثة من فريق أبحاث آي بي إم أن اختيار هيكل التشغيل (Harness) المناسب قد يكون عاملاً حاسماً في أداء نماذج الذكاء الاصطناعي، حيث حققت النتائج قفزات نوعية عند استخدام هيكل CUGA المخصص للبيئات المؤسسية.",
+      "summaryBullets": [
+        "أظهرت مقارنة بين ثلاثة هياكل تشغيل (CUGA, Hermes, Deep Agents) باستخدام نفس النموذج أن تغيير الهيكل وحده رفع نسبة إنجاز المهام من 30% إلى 81%.",
+        "يُركّز هيكل CUGA على تطبيق قواعد مؤسسية صارمة (مثل الموافقات المالية وحماية البيانات) عبر طبقة سياسات منفصلة عن النموذج، مما يقلل من الأخطاء التشغيلية.",
+        "تتيح تقنية CUGA للمؤسسات نشر وكلاء الذكاء الاصطناعي داخل بيئاتها السحابية السيادية أو المعزولة (Air-gapped) مع الحفاظ على التحكم الكامل في التكاليف والأدوات.",
+        "تؤكد النتائج أن نجاح وكلاء الذكاء الاصطناعي يعتمد على ملاءمة الهيكل لنوع العمل، حيث تتفوق الهياكل المخصصة للمهام المؤسسية في الاتساق والدقة مقارنة بالهياكل العامة."
+      ],
+      "sections": [
+        {
+          "heading": "أهمية هيكل التشغيل في أداء الوكلاء",
+          "paragraphs": [
+            {
+              "text": "في مشهد مزدحم بنحو 200 هيكل تشغيل (Agent Harness) متاح حالياً، يبرز سؤال جوهري: هل يعتمد نجاح وكيل الذكاء الاصطناعي على النموذج اللغوي وحده؟ تشير بيانات من مجتمع المطورين، وتحديداً قوائم مثل awesome-agent-harness، إلى أن الهيكل يلعب دوراً محورياً لا يقل أهمية عن النموذج نفسه. فعلى سبيل المثال، أظهرت إحدى التحليلات أن تغيير الهيكل فقط لنموذج GLM-5.2 رفع نسبة نجاحه في اختبارات SWE-bench Pro من 23% إلى 52%. بناءً على ذلك، طرح فريق أبحاث آي بي إم سؤالاً مختلفاً: ما هو الهيكل الأنسب لنوع العمل المحدد؟ ويمكن الرجوع إلى Hugging Face Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/ibm-research/cuga-harness"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تجربة مقننة: نفس النموذج، نتائج متباينة",
+          "paragraphs": [
+            {
+              "text": "لإثبات هذه الفرضية، أجرى فريق البحث تجربة مضبوطة باستخدام نموذج مفتوح الأوزان واحد (GLM-5.3-flash) وثلاثة هياكل تشغيل مختلفة: CUGA من آي بي إم، وHermes من Nous Research، وDeep Agents من LangChain. تم اختبار الهياكل على منصة AppWorld، وهي مجموعة معايير تضم 90 مهمة عبر 9 تطبيقات و457 واجهة برمجة تطبيقات (API)، تشمل مهام مثل البريد الإلكتروني والمدفوعات وتخزين الملفات. الهدف من استخدام AppWorld هو محاكاة قدرات أتمتة الأعمال المؤسسية، مثل تسجيل الدخول وقراءة توثيق الواجهات وتغيير الحالة عبر تطبيقات متعددة. ويمكن الرجوع إلى Back to Articles للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Back to Articles",
+                  "url": "https://huggingface.co/blog"
+                }
+              ]
+            },
+            {
+              "text": "أظهرت النتائج فروقاً كبيرة في الأداء. بينما ركز Hermes على المساعدين الشخصيين الدائمين وDeep Agents على المهام البحثية الطويلة، تميز CUGA بقدرته على التعامل مع واجهات التطبيقات المؤسسية. بلغ معدل إنجاز المهام (TGC) 81% لـ CUGA، مقابل 30% تقريباً للهياكل الأخرى. الأهم من ذلك هو مؤشر الاتساق (SGC)، حيث نجح CUGA في إتمام جميع متغيرات 20 سيناريو، مقارنة بـ 8 فقط لـ Hermes و2 لـ Deep Agents. هذا الفارق يؤكد أن الهيكل المصمم خصيصاً للمهام المؤسسية يقلل من الأخطاء العشوائية ويضمن اتساق النتائج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "طبقة السياسات: من التعليمات إلى التنفيذ الإلزامي",
+          "paragraphs": [
+            {
+              "text": "تتميز هياكل الوكلاء التقليدية بوضع القواعد التجارية (Business Rules) داخل موجه النظام (System Prompt)، وهو ما يعتبره خبراء آي بي إم مجرد \"تعليمات\" وليس \"تنفيذاً\". فالنموذج قد يخطئ في فهمها، أو قد يتأثر برسائل حقن (Injection) تغيّر سلوكه أثناء التنفيذ. على النقيض، ينقل هيكل CUGA هذه القواعد إلى طبقة سياسات منفصلة تعمل داخل وقت التشغيل (Runtime). وفقاً لورقة بحثية بعنوان \"Governance by Construction for Generalist Agents\"، تعمل هذه السياسات في أربع نقاط حرجة خلال كل عملية تنفيذ، مما يضمن تطبيق القواعد بغض النظر عن قرارات النموذج.",
+              "links": []
+            },
+            {
+              "text": "تُقسم هذه السياسات إلى نوعين: توجيه (Guidance) الذي يوجه النموذج، وتنفيذ إلزامي (Enforcement) يشمل الموافقات (Approvals) وحمايات الأدوات (ToolGuards). على سبيل المثال، في حالة طلب دفع فواتير، قد يدفع الوكيل بدون سياسات مبالغ غير مستحقة أو مرفوضة، بينما يوقف الوكيل المزود بالسياسات العملية للموافقة ويدفع فقط المبلغ القانوني المستحق. هذا الفارق الجوهري يجعل CUGA مناسباً للبيئات التي تتطلب دقة عالية في العمليات المالية وإدارة بيانات العملاء الحساسة (PII).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "السيادة الرقمية والتحكم في التكاليف",
+          "paragraphs": [
+            {
+              "text": "من الناحية التشغيلية، يوفر CUGA مرونة عالية في النشر، إذ يعمل مع أي نقطة نهاية متوافقة مع OpenAI، سواء كانت نماذج مفتوحة الأوزان أو استضافة سحابية. تتيح التقنية للمؤسسات نشر الوكلاء داخل حدودها السيادة (Sovereign Boundary)، بما في ذلك السحابة الخاصة أو البيئات المعزولة عن الإنترنت (Air-gapped)، مع دعم تسجيل الدخول عبر OIDC وفصل أدوار الإدارة عن المحادثة. هذا يعزز أمان البيانات ويضمن امتثال المؤسسات للوائح المحلية الصارمة.",
+              "links": []
+            },
+            {
+              "text": "إضافة إلى ذلك، يركز CUGA على الشفافية في التكاليف من خلال ميزانيات محددة (Budgets) وتقارير تفصيلية (Run Receipts) توضح عدد الرموز (Tokens) واستدعاءات الأدوات والزمن المستغرق لكل عملية. كما يعتمد على الإعدادات بدلاً من كتابة الأكواد، حيث يمكن للمطورين تحديد الأدوات والسياسات عبر واجهة المستخدم أو SDK، واختبار مسودة قبل نشرها كنسخة مستقرة. هذا النهج يقلل من التعقيد التقني ويسهل إدارة الوكلاء على نطاق واسع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متى تختار CUGA؟",
+          "paragraphs": [
+            {
+              "text": "يؤكد فريق آي بي إم أن اختيار الهيكل يجب أن يكون دقيقاً مثل اختيار النموذج. فبينما قد تكون أدوات مثل opencode أو Codex مناسبة لوكلاء البرمجة، وHermes للمساعدين الشخصيين، فإن CUGA مصمم خصيصاً لأتمتة الأعمال عبر واجهات التطبيقات والويب تحت قواعد قابلة للتنفيذ. تشير النتائج إلى أن CUGA حافظ على المركز الأول في معايير WebArena وAppWorld خلال الفترة من فبراير 2025 إلى فبراير 2026، مما يعزز مكانته كأداة موثوقة للمؤسسات.",
+              "links": []
+            },
+            {
+              "text": "وتجدر الإشارة إلى أن هذه المقارنة أجريت من قبل فريق CUGA، وقد استخدم إعدادات AppWorld محددة لم تستخدمها الهياكل الأخرى. ومع ذلك، يدعو الفريق المطورين إلى مشاركة أي إعدادات محسنة لـ Hermes أو Deep Agents لإعادة الاختبار ونشر النتائج، بغض النظر عن الفائز. هذا النهج المفتوح يعكس التزاماً بالشفافية في تقييم أداء هياكل وكلاء الذكاء الاصطناعي، ويؤكد أن المستقبل يعتمد على التكامل بين نماذج قوية وهياكل تشغيل ذكية وقابلة للتخصيص.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "وكلاء الذكاء الاصطناعي",
+        "آي بي إم",
+        "CUGA",
+        "أتمتة الأعمال",
+        "السيادة الرقمية",
+        "تقنية LLM"
+      ],
+      "entities": [
+        "آي بي إم (IBM)",
+        "CUGA",
+        "Hermes",
+        "Deep Agents",
+        "LangChain",
+        "Nous Research",
+        "AppWorld",
+        "GLM-5.3-flash"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "3 نوفمبر 2026",
+      "modifiedLabel": "3 نوفمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 858
+    },
+    "en": {
+      "title": "IBM Research Details CUGA Open-Source Agent Harness",
+      "description": "IBM Research evaluates the CUGA open-source agent harness against Hermes and Deep Agents using AppWorld, highlighting enterprise deployment and runtime rules.",
+      "deck": "A new evaluation by IBM Research demonstrates how changing an AI agent harness can dramatically alter task completion rates while highlighting the specific enterprise benefits of the open-source CUGA framework.",
+      "summaryBullets": [
+        "IBM Research compared three agent harnesses using the same open-weight model and AppWorld tasks.",
+        "Task completion rates varied significantly from 30% to 81% depending solely on the chosen harness.",
+        "CUGA is IBM's open-source harness designed for enterprise work across APIs, apps, and web UIs.",
+        "The framework enforces business rules and policies at the runtime level rather than relying solely on system prompts."
+      ],
+      "sections": [
+        {
+          "heading": "Evaluating Agent Harnesses",
+          "paragraphs": [
+            {
+              "text": "With nearly 200 agent harnesses currently available to developers, industry analysis increasingly points to the harness as a critical factor in AI performance alongside the underlying model. Community lists track hundreds of these tools, demonstrating that changing a harness can substantially boost performance on complex benchmarks like SWE-bench Pro. Further details are available from Hugging Face Blog in the original source material.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/ibm-research/cuga-harness"
+                }
+              ]
+            },
+            {
+              "text": "To better understand these differences, IBM Research conducted a controlled experiment comparing three distinct harnesses—CUGA, Hermes from Nous Research, and Deep Agents from LangChain—using the exact same open-weight model and a standardized set of tasks. Further details are available from Back to Articles in the original source material.",
+              "links": [
+                {
+                  "text": "Back to Articles",
+                  "url": "https://huggingface.co/blog"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "AppWorld Benchmark Experiment",
+          "paragraphs": [
+            {
+              "text": "The evaluation utilized AppWorld, a benchmark comprising multi-step tasks across nine consumer applications and 457 APIs, such as email, file storage, and payment platforms. Every harness ran the GLM-5.3-flash open-weight model across 90 tasks in 30 scenarios, executing a single attempt per task under the Harbor evaluation framework.",
+              "links": []
+            },
+            {
+              "text": "While Hermes and Deep Agents are optimized for different use cases—such as always-on personal assistants or long multi-step research tasks—the AppWorld comparison tested multi-app API execution capabilities. The results showed that task completion rates fluctuated widely based entirely on the harness used, with consistency metrics further highlighting performance variations across scenarios.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Enterprise Focus and Runtime Enforcement",
+          "paragraphs": [
+            {
+              "text": "Enterprise environments require agents to interact with critical business systems like CRM and payment portals while adhering to strict governance rules. While teams often attempt to enforce rules through system prompts, instructions can be misinterpreted or bypassed. CUGA addresses this by moving business rules out of prompts and into the runtime harness.",
+              "links": []
+            },
+            {
+              "text": "The framework's policy layer enforces guidelines at multiple execution points, incorporating features like tool guards and payment approvals that operate independently of model decisions. Additional details regarding this governance model have been discussed in academic literature, including an ACM CAIS paper detailing governance by construction for generalist agents.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deployment and Capabilities",
+          "paragraphs": [
+            {
+              "text": "Licensed under Apache 2.0, CUGA is designed to operate with any OpenAI-compatible endpoint. It can be deployed locally, on Kubernetes within private or sovereign clouds, or inside air-gapped sovereign clusters equipped with OIDC sign-in and separated chat and management roles.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, IBM Sovereign Core builds upon the CUGA framework to enable fully contained agent execution within customer boundaries. The system also supports measurable cost controls via spending budgets and detailed run receipts tracking tokens, time, and tool calls.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Choosing the Right Harness",
+          "paragraphs": [
+            {
+              "text": "Industry guidance suggests matching the harness carefully to the intended workload. Terminal coding tasks benefit from tools like opencode, Codex, or Claude Code, while personal assistants rely on OpenClaw or Hermes.",
+              "links": []
+            },
+            {
+              "text": "For enterprise business automation across APIs, web UIs, and applications under strict enforceable rules, CUGA provides an Apache 2.0 open-source option built on top of LangGraph. Further information and community discussions regarding these harness comparisons can be explored through professional contributor profiles.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "CUGA",
+        "IBM Research",
+        "AI Agents",
+        "AppWorld",
+        "Enterprise AI",
+        "Harness",
+        "Open Source"
+      ],
+      "entities": [
+        "CUGA",
+        "IBM",
+        "Hermes",
+        "LangChain",
+        "AppWorld"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 3, 2026",
+      "modifiedLabel": "November 3, 2026",
+      "readMinutes": 3,
+      "wordCount": 570
+    }
+  },
+  "datePublished": "2026-11-03T21:23:12.481531+03:00",
+  "dateModified": "2026-11-03T21:23:12.481531+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/same-model-different-harness-cuga-hermes-and-deep-agents-when-to-pick/hero.webp",
+    "card": "/forum/assets/posts/2026/11/same-model-different-harness-cuga-hermes-and-deep-agents-when-to-pick/card.webp",
+    "social": "/forum/assets/posts/2026/11/same-model-different-harness-cuga-hermes-and-deep-agents-when-to-pick/social.jpg",
+    "alt": {
+      "ar": "آي بي إم تكشف: تغيير هيكل CUGA يرفع أداء نماذج الذكاء الاصطناعي إلى 81%",
+      "en": "IBM Research Details CUGA Open-Source Agent Harness"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/636c2b3c1df179e8b83d7730/HAejcV9UI0kFWjSLj5Hva.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/same-model-different-harness-cuga-hermes-and-deep-agents-when-to-pick/inline-01.webp",
+        "width": 1400,
+        "height": 875,
+        "alt": {
+          "ar": "آي بي إم تكشف: تغيير هيكل CUGA يرفع أداء نماذج الذكاء الاصطناعي إلى 81%",
+          "en": "CUGA Policy Playground: the same message sent to two live agents, one without policies and one with policies"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/ibm-research/cuga-harness",
+        "originalUrl": "https://cuga-project.github.io/cuga-artifacts/images/cuga-policy-playground.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/ibm-research/cuga-harness",
+      "type": "official",
+      "title": "Same Model, Different Harness: CUGA, Hermes, and Deep Agents — When to Pick CUGA?"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/ibm-research/cuga-harness",
+  "sourceTitle": "Same Model, Different Harness: CUGA, Hermes, and Deep Agents — When to Pick CUGA?",
+  "trendScore": 110.08,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-03T18:23:12+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/same-model-different-harness-cuga-hermes-and-deep-agents-when-to-pick.json"
+}
