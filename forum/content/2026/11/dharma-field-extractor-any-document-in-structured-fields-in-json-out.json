@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "32d4e91d243ef07f0795",
+  "slug": "dharma-field-extractor-any-document-in-structured-fields-in-json-out",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/dharma-field-extractor-any-document-in-structured-fields-in-json-out/",
+    "en": "/forum/en/ai/dharma-field-extractor-any-document-in-structured-fields-in-json-out/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Dharma Field Extractor: نموذج ذكاء اصطناعي لاستخراج البيانات من المستندات",
+      "description": "أطلقت Dharma-AI نموذج Dharma Field Extractor لاستخراج حقول محددة من أي مستند بصيغة JSON بدقة عالية وتكلفة أقل بكثير من النماذج العامة.",
+      "deck": "يقدّم النموذج الجديد حلاً متخصصاً لتحويل المستندات غير المهيكلة إلى بيانات منظمة، متفوقاً على نماذج الذكاء الاصطناعي الرائدة في الدقة والكفاءة الاقتصادية.",
+      "summaryBullets": [
+        "نموذج بـ 2 مليار معامل مصمم خصيصاً لاستخراج الحقول المطلوبة من المستندات بدلاً من النسخ الكامل.",
+        "يدعم وضعين: استخراج مفتوح بدون مخطط مسبق، أو استخراج موجّه بمخطط JSON محدد مسبقاً.",
+        "حقق النموذج دقة أعلى بتكلفة أقل بنسبة تصل إلى 147 مرة مقارنة بواجهات برمجة التطبيقات الرائدة.",
+        "تم تدريب النموذج على بيانات متعددة اللغات تشمل الإنجليزية والبرتغالية ولغات أخرى لضمان التعميم الواسع."
+      ],
+      "sections": [
+        {
+          "heading": "تخصص دقيق في استخراج البيانات",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Dharma-AI عن إطلاق نموذج Dharma Field Extractor، وهو نموذج ذكاء اصطناعي مخصص لاستخراج الحقول الهيكلية من المستندات المتنوعة. على عكس نماذج التعرف الضوئي على الحروف (OCR) التقليدية التي تعيد النص الكامل كما هو، يركّز هذا النموذج على تقديم البيانات المطلوبة فقط في صيغة JSON منظمة، مما يسهّل دمجها مباشرة في الأنظمة البرمجية downstream.",
+              "links": [
+                {
+                  "text": "Dharma-AI",
+                  "url": "https://huggingface.co/Dharma-AI"
+                }
+              ]
+            },
+            {
+              "text": "يأتي هذا الإطلاق بعد نجاح سابق للنسخة الخفيفة DharmaOCR-LITE، التي أثبتت فعالية التخصص الدقيق في مهام محددة. يهدف النموذج الجديد إلى معالجة فجوة شائعة في الأعمال، حيث تحتاج الشركات إلى بيانات محددة مثل أسماء المرضى أو بنود الفواتير، بدلاً من النص الكامل للمستند، مما يقلل الحاجة إلى كتابة كود إضافي لتفسير النتائج.",
+              "links": [
+                {
+                  "text": "DharmaOCR-LITE",
+                  "url": "https://huggingface.co/Dharma-AI/Dharma-OCR-LITE"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل ووضعان للاستخراج",
+          "paragraphs": [
+            {
+              "text": "يعمل النموذج من خلال استقبال صورة المستند وتقديم مخرجات JSON مبنية على نوع الطلب. يوفر النظام وضعين رئيسيين: الوضع المفتوح، حيث يحدد النموذج الحقول الهيكلية ذاتياً بناءً على السياق والتخطيط دون الحاجة إلى مخطط مسبق، ويعيد كل ما يجده كأزواج مفتاح-قيمة.",
+              "links": []
+            },
+            {
+              "text": "الوضع الثاني هو الموجّه بالمخطط (Schema-directed)، حيث يحدد المستخدم الشكل الدقيق للبيانات المطلوبة مع أنواع البيانات (نص، رقم، منطقي) وأسماء المفاتيح التي يستخدمها نظامه الحالي. إذا طلب المستخدم حقلاً غير موجود في المستند، يعيد النموذج قيمة null بدلاً من اختراع بيانات، مما يضمن دقة البيانات المرسلة إلى قواعد البيانات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية التقنية وبيانات التدريب",
+          "paragraphs": [
+            {
+              "text": "يقوم النموذج على أساس DharmaOCR-LITE v1.1، وهو إصدار جديد من 2 مليار معامل محسّن من خلال التدريب الإشرافي (SFT) وخوارزمية DPO. فوق هذا الأساس، تم تدريب محوّل LoRA على 43,384 مثالاً تدريبياً يغطي كلا وضعي الاستخراج، مما يسمح للنموذج بالتكيف مع تنسيقات مختلفة دون الحاجة إلى إعادة تدريب لكل نوع مستند.",
+              "links": []
+            },
+            {
+              "text": "تشمل بيانات التدريب تدفقات متعددة: بيانات إنجليزية متعددة المجالات من الويب العام، وبيانات برتغالية حقيقية من مصادر داخلية، وبيانات متعددة اللغات تغطي لغات أوروبية وآسيوية أخرى. تم تجميع البيانات على مستوى الحقل لضمان تنوع المستندات، بما في ذلك الفواتير، النماذج، كشوفات الحسابات، والمستمندات الشخصية، بدلاً من التركيز على نوع واحد فقط.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الأداء مقابل النماذج الرائدة",
+          "paragraphs": [
+            {
+              "text": "أجرت الشركة اختبارات شاملة شملت 546 مستنداً عبر ثلاثة سيناريوهات طلب، لتقييم النموذج مقابل أربع إعدادات من النماذج العامة الرائدة. أظهرت النتائج فجوة جودة تتراوح بين 1.8 نقطة (لمنافس قريب) و9.3 نقطة (لأوسع فجوة)، مما يؤكد تفوق النموذج المتخصص في هذه المهمة المحددة.",
+              "links": []
+            },
+            {
+              "text": "من حيث التكلفة، يتفوق النموذج بشكل كبير، حيث تتراوح التكلفة من 6 أضعاف أقل إلى 147 ضعفاً أقل مقارنة بالنماذج الرائدة. تعتمد هذه المقارنة على متوسط الرموز المدخلة والمخرجة لكل صفحة، مع مراعاة رموز الاستدلال. يعمل النموذج بشكل ذاتي الاستضافة (Self-hosted) على وحدة معالجة رسومية L40S واحدة، مما يجعله بديلاً حقيقياً للواجهات السحابية المكلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دقة النتائج على البيانات العامة",
+          "paragraphs": [
+            {
+              "text": "اختبر النموذج على مجموعات بيانات عامة مثل SROIE وFUNSD، والتي لم تُستخدم في عملية التدريب. في حالة إيصال SROIE، نجح النموذج في استخراج 18 حقلاً بدقة، بما في ذلك العناوين متعددة الأسطر والحقول الفارغة التي أعادها كقيم null، مع مطابقة الأرقام بدقة حتى السنت.",
+              "links": []
+            },
+            {
+              "text": "أما في نموذج FUNSD، فقد تعامل النموذج بشكل صحيح مع قائمة تحقق تحتوي على 12 حقلاً منطقياً، حيث حدد بدقة الحقل الوحيد المحدد (مع ملاحظة يدوية بجوارها) كقيمة true، والبقية كقيمة false. كما نجح في قراءة المعرفات المكتوبة بخط اليد بدقة، مما يعكس قدرته العالية على التعامل مع المستندات ذات الجودة المتفاوتة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "استخراج البيانات",
+        "OCR",
+        "Dharma-AI",
+        "JSON",
+        "النماذج اللغوية",
+        "المستندات"
+      ],
+      "entities": [
+        "Dharma-AI",
+        "Dharma Field Extractor",
+        "DharmaOCR-LITE",
+        "Hugging Face",
+        "SROIE",
+        "FUNSD"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "4 نوفمبر 2026",
+      "modifiedLabel": "4 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 597
+    },
+    "en": {
+      "title": "Dharma Launches Field Extractor for Structured JSON",
+      "description": "Dharma introduces the Field Extractor, a 2-billion-parameter model designed to pull structured JSON fields from any document type.",
+      "deck": "Dharma has introduced the Field Extractor, a specialized 2-billion-parameter model built to extract targeted fields into structured JSON from diverse document types at a fraction of the cost of frontier APIs.",
+      "summaryBullets": [
+        "The Field Extractor is a 2-billion-parameter model built on top of DharmaOCR-LITE v1.1.",
+        "It supports both open requests and schema-directed extractions, returning typed JSON objects.",
+        "The model was trained using a LoRA adapter on over 43,000 training examples across multiple languages and domains.",
+        "Benchmarks show it outperforms tested frontier LLMs while significantly reducing operating costs when self-hosted on a single GPU."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Dharma Field Extractor",
+          "paragraphs": [
+            {
+              "text": "Building on earlier work in document digitization, Dharma-AI has released a specialized tool designed to pull exact data fields from various document types. In April, the team released DharmaOCR-LITE, establishing a case for domain-specific models over general-purpose frontier APIs. While standard OCR provides the raw text of a complete page, many high-volume business workflows require specific data points—such as line items on an invoice, patient names on medical requisitions, or employee details from IDs—rather than unformatted text.",
+              "links": [
+                {
+                  "text": "DharmaOCR-LITE",
+                  "url": "https://huggingface.co/Dharma-AI/Dharma-OCR-LITE"
+                }
+              ]
+            },
+            {
+              "text": "General-purpose large language models can handle these extraction tasks through careful prompting, but doing so at high volume using frontier API pricing and latency can quickly become expensive. To address this challenge, the team developed the Field Extractor to take a document image alongside either an open request or an exact schema, returning structured, typed JSON data directly consumable by downstream systems.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Open and Schema-Directed Extraction Modes",
+          "paragraphs": [
+            {
+              "text": "The Field Extractor supports two distinct operational modes depending on user requirements. In open mode, no schema is supplied; the model analyzes context and layout to identify structured fields—such as labeled values or tables with header rows—and returns everything it discovers as key-value pairs. This approach is suited for situations where the contents of the document are not initially known.",
+              "links": []
+            },
+            {
+              "text": "Alternatively, schema-directed mode allows users to specify the exact structure, data types (string, number, or boolean), and key names required by their existing systems. If a requested field is missing from the document, the model returns null rather than generating a fictitious value. This ensures that the generated JSON matches predefined system shapes without requiring extra post-processing fields.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Model Architecture and Training Data",
+          "paragraphs": [
+            {
+              "text": "The foundation of the new tool is DharmaOCR-LITE v1.1, an optimized 2-billion-parameter version that incorporates supervised fine-tuning and direct preference optimization. On top of this base checkpoint, the developers trained a LoRA adapter using 43,384 training examples designed to cover both open and schema-directed operational modes.",
+              "links": []
+            },
+            {
+              "text": "The training dataset integrates three main streams: English multi-domain documents gathered from the public web, internal Brazilian documents in Portuguese, and a smaller multilingual selection covering other European and Asian languages. This multi-domain mix encompasses receipts, commercial invoices, forms, bank statements, identification documents, and synthetic files, promoting broader generalization beyond single filing formats.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Benchmark Performance and Cost Analysis",
+          "paragraphs": [
+            {
+              "text": "To evaluate the model, the creators established a benchmark covering 546 documents across three request scenarios for a total of 1,638 test cases. These scenarios included extracting every field without a schema, utilizing a partial schema with real fields, and applying a schema containing intentionally nonexistent fields. Scoring relied on field-level F1 metrics, Levenshtein similarity for matched values, and the proportion of valid JSON outputs.",
+              "links": []
+            },
+            {
+              "text": "When compared against four general-purpose frontier configurations, quality differences ranged from 1.8 points for the closest model to 9.3 points for the widest gap. Furthermore, cost comparisons demonstrated substantial reductions when deploying the sovereign model on local infrastructure, measured via GPU time on a single L40S card rather than per-token API billing.",
+              "links": []
+            },
+            {
+              "text": "Detailed information regarding the methodology, technical specifications, and academic context of the underlying architecture can be found in the accompanying research paper published on arXiv.",
+              "links": [
+                {
+                  "text": "paper",
+                  "url": "https://arxiv.org/abs/2604.14314"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial Intelligence",
+        "Document Extraction",
+        "JSON",
+        "OCR",
+        "Machine Learning",
+        "Data Processing",
+        "Open Source AI"
+      ],
+      "entities": [
+        "Dharma-AI",
+        "Hugging Face"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 4, 2026",
+      "modifiedLabel": "November 4, 2026",
+      "readMinutes": 3,
+      "wordCount": 610
+    }
+  },
+  "datePublished": "2026-11-04T21:27:52.664260+03:00",
+  "dateModified": "2026-11-04T21:27:52.664260+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/dharma-field-extractor-any-document-in-structured-fields-in-json-out/hero.webp",
+    "card": "/forum/assets/posts/2026/11/dharma-field-extractor-any-document-in-structured-fields-in-json-out/card.webp",
+    "social": "/forum/assets/posts/2026/11/dharma-field-extractor-any-document-in-structured-fields-in-json-out/social.jpg",
+    "alt": {
+      "ar": "Dharma Field Extractor: نموذج ذكاء اصطناعي لاستخراج البيانات من المستندات",
+      "en": "Dharma Launches Field Extractor for Structured JSON"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/6a725daa5ca641a21ab61956/c1ik58RednXjcqrx5s2Fo.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/Dharma-AI/dharma-field-extractor",
+      "type": "official",
+      "title": "Dharma Field Extractor: Any Document In, Structured Fields in JSON Out"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/Dharma-AI/dharma-field-extractor",
+  "sourceTitle": "Dharma Field Extractor: Any Document In, Structured Fields in JSON Out",
+  "trendScore": 106.85,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-04T18:27:52+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/dharma-field-extractor-any-document-in-structured-fields-in-json-out.json"
+}
