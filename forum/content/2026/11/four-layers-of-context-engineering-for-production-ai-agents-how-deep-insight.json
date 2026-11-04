@@ -1,0 +1,311 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "20366c4b5aede8776073",
+  "slug": "four-layers-of-context-engineering-for-production-ai-agents-how-deep-insight",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/four-layers-of-context-engineering-for-production-ai-agents-how-deep-insight/",
+    "en": "/forum/en/ai/four-layers-of-context-engineering-for-production-ai-agents-how-deep-insight/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Deep Insight يطبّق هندسة سياق من 4 طبقات لوكلاء الذكاء الاصطناعي",
+      "description": "تقدّم Deep Insight إطاراً عملياً من 4 طبقات لإدارة سياق وكلاء الذكاء الاصطناعي، لتقليل استهلاك الرموز وتحسين الأداء في مهام التحليل المعقدة.",
+      "deck": "تواجه وكلاء الذكاء الاصطناعي في بيئات الإنتاج تحديات كبيرة في إدارة السياق، مما يؤدي إلى استنزاف الموارد وتدهور الأداء. يعرض هذا المقال كيف تطبّق Deep Insight إطاراً من 4 طبقات لحل هذه المشكلة.",
+      "summaryBullets": [
+        "أطّر Deep Insight هندسة السياق في 4 طبقات: العزل المعماري، التحكم بالبرومبت، الأدوات القائمة على الملفات، والتحقق المستقل.",
+        "يقلل هذا الإطار استهلاك الرموز بنسبة 95% في الأدوات، ويخفض حجم البرومبت الأساسي بنسبة 97%.",
+        "يعتمد الحل على Strands Agents SDK وAmazon Bedrock AgentCore لبناء نظام متعدد الوكلاء.",
+        "يُظهر المقال كيف تتكامل هذه الطبقات لتجاوز حدود نافذة السياق المحدودة في نماذج اللغة الكبيرة."
+      ],
+      "sections": [
+        {
+          "heading": "التحدي: إدارة السياق في وكلاء الإنتاج",
+          "paragraphs": [
+            {
+              "text": "في بيئات الإنتاج، تُعد إدارة السياق عنق الزجاجة الحقيقي لوكلاء الذكاء الاصطناعي. قد تبدو نافذة سياق بحجم 200 ألف رمز سخية، لكن المهام الواقعية مثل تحليل البيانات وتوليد التقارير تستهلك معظمها في دقائق معدودة. يؤدي هذا الاستنزاف إلى فشل الوكلاء أثناء التنفيذ، أو فقدان الدقة، أو ارتفاع التكاليف بشكل كبير.",
+              "links": []
+            },
+            {
+              "text": "تتوفر إرشادات منشورة حول هذا الموضوع، لكن تطبيق التقنيات الفردية أسهل من قراءتها. عند تطبيقها معاً، تحدث فرق ملموس: في التنفيذ المرجعي، تقلل أداة واحدة للكتابة والتنفيذ الرموز التي يضيفها كل سكربت إلى السياق بنسبة 95% تقريباً، بينما يقلص تحميل المهارات عند الطلب حجم البرومبت الأساسي بنسبة 97% تقريباً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إطار Deep Insight: 4 طبقات لهندسة السياق",
+          "paragraphs": [
+            {
+              "text": "تنظم هذه السلسلة الإرشادات في ممارسات قابلة للتطبيق مباشرة. تتقارب منشورات هندسة Anthropic مع الميزات المدمجة في Strands Agents SDK على 4 طبقات لهندسة السياق: عزل السياق على مستوى البنية، والتحكم فيه عبر البرومبت، وتحويله إلى نظام الملفات، والتحقق منه بوسطاء مستقلين وحواجز أمان.",
+              "links": [
+                {
+                  "text": "Strands Agents SDK",
+                  "url": "https://strandsagents.com/"
+                }
+              ]
+            },
+            {
+              "text": "تُطبّق هذه التقنيات في Deep Insight، وهو حل مفتوح المصدر لتحليل البيانات متعدد الوكلاء، مبني على Strands Agents SDK وAmazon Bedrock AgentCore. يعمل هذا الحل كتنفيذ مرجعي طوال المقال، ويوضح كيف تعمل كل طبقة وما شكلها في الكود الفعلي.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الطبقة الأولى: العزل المعماري متعدد الوكلاء",
+          "paragraphs": [
+            {
+              "text": "تتضمن الطبقة الأولى منح كل وكيل متخصص نافذة سياق خاصة به، وإيصال النتائج المضغوطة فقط إلى المنسق. ينفذ Deep Insight هذا عبر تسلسل هرمي يضم منسقاً، ومخططاً، ومراجعاً للخطة، ومشرفاً، ووكلاء أدوات (مبرمج، ومحقق، ومُبلّغ، ومتتبع، ومدقق).",
+              "links": []
+            },
+            {
+              "text": "مع وكيل واحد، تتراكم كل المعلومات في سياق واحد وتتجاوز النافذة بسهولة. يمنح كل وكيل سياقه الخاص حتى المبرمج، الذي يستهلك أكثر، تحت 25 ألف رمز إجمالاً. يتلقى كل وكيل ما يحتاجه فقط، ويبلغ الآخرين بإشعار إكمال وملخص موجز.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الطبقة الثانية: التحكم في تدفق السياق عبر البرومبت",
+          "paragraphs": [
+            {
+              "text": "لا يكفي عزل السياق وحده: حتى مع السياقات المستقلة، قد ينفخ وكيل يولّد ردوداً طويلة سياق المشرف. تحدد الطبقة الثانية حدوداً لمدخلات كل وكيل عبر البرومبت. في Deep Insight، تُستخدم البرومبتات لتحديد كمية المعلومات التي يعيدها كل وكيل إلى المشرف.",
+              "links": []
+            },
+            {
+              "text": "تقوم 3 قواعد بمعظم العمل، كما تظهر في برومبتات Deep Insight. تنصح منشورات Anthropic هندسة البدء بالنموذج الأقوى وبرومبت بسيط، ثم إضافة تعليمات محددة تدريجياً بناءً على حالات الفشل المرصودة فعلياً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الطبقة الثالثة: تحويل السياق إلى نظام الملفات",
+          "paragraphs": [
+            {
+              "text": "تتضمن الطبقة الثالثة تحويل السياق إلى نظام الملفات لتقليل العبء على نافذة السياق. يستخدم Deep Insight أدوات قائمة على الملفات لتخزين البيانات الوسيطة والنتائج، مما يسمح للوكلاء بالوصول إليها عند الحاجة دون إبقاء كل شيء في الذاكرة.",
+              "links": []
+            },
+            {
+              "text": "يسمح هذا النهج للوكلاء بالتركيز على المهام الحالية مع إمكانية الرجوع إلى البيانات السابقة عند الحاجة، مما يقلل من حجم السياق النشط ويحسن كفاءة المعالجة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الطبقة الرابعة: التحقق بوسطاء مستقلين",
+          "paragraphs": [
+            {
+              "text": "تتضمن الطبقة الرابعة التحقق من السياق باستخدام وسطاء مستقلين وحواجز أمان. يضمن هذا أن تكون النتائج دقيقة وموثوقة، ويقلل من الأخطاء المتراكمة التي قد تحدث في السياقات الطويلة.",
+              "links": []
+            },
+            {
+              "text": "يُظهر التنفيذ المرجعي كيف تتكامل هذه الطبقات الأربعة لتوفير إدارة سياق فعالة، مما يسمح للوكلاء بأداء مهام معقدة دون تجاوز حدود نافذة السياق أو تدهور الأداء.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "وكلاء الذكاء الاصطناعي",
+        "هندسة السياق",
+        "Deep Insight",
+        "Strands Agents SDK",
+        "Amazon Bedrock",
+        "تحليل البيانات"
+      ],
+      "entities": [
+        "Deep Insight",
+        "Strands Agents SDK",
+        "Amazon Bedrock AgentCore",
+        "Anthropic",
+        "AWS"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "4 نوفمبر 2026",
+      "modifiedLabel": "4 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 578
+    },
+    "en": {
+      "title": "Deep Insight Framework Applies Four Context Layers to AI Agents",
+      "description": "Explore the four-layer context engineering framework used in Deep Insight to solve production AI agent token and context management bottlenecks.",
+      "deck": "A four-layer context engineering framework tackles production AI agent bottlenecks by combining architectural isolation, prompt controls, file-based tools, and verification safeguards.",
+      "summaryBullets": [
+        "Production AI agents often struggle with context window bottlenecks and context rot during complex data analysis tasks.",
+        "Deep Insight implements a four-layer context engineering framework using open-source tools and cloud infrastructure.",
+        "Architectural isolation keeps individual agent contexts small, such as keeping the Coder under 25K tokens.",
+        "Prompt controls and specialized tooling drastically reduce unnecessary token consumption during script execution and report generation."
+      ],
+      "sections": [
+        {
+          "heading": "Tackling the Production Context Bottleneck",
+          "paragraphs": [
+            {
+              "text": "When production artificial intelligence agents manage complex tasks like data analysis and report generation, context management frequently becomes a primary operational bottleneck. Although a 200K-token window initially appears generous, real-world workloads can consume most of it within minutes. This rapid consumption causes agents to fail mid-execution, lose analytical accuracy, or drive up operational expenses.",
+              "links": []
+            },
+            {
+              "text": "According to the AWS Machine Learning Blog, published guidance helps address these issues, but applying the techniques together delivers measurable improvements. In reference implementations, utilizing a single write-and-execute tool cuts the tokens added by scripts by approximately 95 percent, while loading required skills on demand shrinks system prompts by roughly 97 percent.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/four-layers-of-context-engineering-for-production-ai-agents-how-deep-insight-applies-them-in-working-code/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "The Four-Layer Context Engineering Framework",
+          "paragraphs": [
+            {
+              "text": "Deep Insight organizes established engineering practices into a structured, four-layer framework designed to optimize large language model context windows. Built as an open-source multi-agent data analysis solution, Deep Insight leverages the Strands Agents SDK and Amazon Bedrock AgentCore to demonstrate how each layer works in working code.",
+              "links": [
+                {
+                  "text": "Strands Agents SDK",
+                  "url": "https://strandsagents.com/"
+                },
+                {
+                  "text": "Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "As noted by Anthropic, model ability to accurately recall information decreases as the token count increases—a phenomenon known as context rot. The multi-layered approach addresses this by combining architecture design, prompt writing, externalized tools, and verification agents to ensure high performance throughout long-horizon tasks.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Layer 1: Isolating Context via Multi-Agent Architecture",
+          "paragraphs": [
+            {
+              "text": "The first layer of context engineering focuses on isolating context at the architecture level by assigning each specialized agent its own isolated context window. Rather than dumping all exploration, chart generation, and validation history into a single monolithic log, the orchestrator only receives compressed results.",
+              "links": []
+            },
+            {
+              "text": "Deep Insight implements this through a clear hierarchy featuring Coordinator, Planner, Plan Reviewer, Supervisor, and specialized Tool Agents including Coder, Validator, Reporter, Tracker, and Auditor. By keeping contexts separate, even resource-intensive components like the Coder remain under 25K tokens total, as detailed in documentation for the Strands Agents SDK.",
+              "links": [
+                {
+                  "text": "Strands Agents SDK",
+                  "url": "https://strandsagents.com/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Layer 2: Controlling Inflow Through Prompts",
+          "paragraphs": [
+            {
+              "text": "Even with independent agent contexts, long responses generated by sub-agents can quickly pollute a supervisor's window. The second layer addresses this by controlling context inflow through carefully structured prompts that limit response lengths and enforce explicit per-agent output token budgets.",
+              "links": []
+            },
+            {
+              "text": "By adopting insights highlighted in official engineering guidelines, developers can systematically refine prompts based on observed failure cases. This ensures that agents return only essential summaries rather than raw, verbose conversation histories that degrade downstream performance.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Infrastructure and Deployment on AWS",
+          "paragraphs": [
+            {
+              "text": "Underpinning the Deep Insight reference architecture are scalable cloud services designed to securely handle multi-agent systems in production environments. Developers building similar applications can integrate foundation models hosted on Amazon Bedrock to power advanced reasoning tasks with high reliability.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "Subsequent implementation stages focus on containerized execution and secure private networking, utilizing container orchestration platforms like AWS Fargate to support production-grade deployments without compromising data security or operational efficiency.",
+              "links": [
+                {
+                  "text": "AWS Fargate",
+                  "url": "https://aws.amazon.com/fargate/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial Intelligence",
+        "Context Engineering",
+        "Multi-Agent Systems",
+        "Amazon Bedrock",
+        "AWS Fargate",
+        "Deep Insight",
+        "Strands Agents SDK"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Bedrock",
+        "Strands Agents SDK",
+        "Deep Insight",
+        "Anthropic",
+        "AWS Fargate"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 4, 2026",
+      "modifiedLabel": "November 4, 2026",
+      "readMinutes": 3,
+      "wordCount": 546
+    }
+  },
+  "datePublished": "2026-11-04T19:34:44.337971+03:00",
+  "dateModified": "2026-11-04T19:34:44.337971+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/four-layers-of-context-engineering-for-production-ai-agents-how-deep-insight/hero.webp",
+    "card": "/forum/assets/posts/2026/11/four-layers-of-context-engineering-for-production-ai-agents-how-deep-insight/card.webp",
+    "social": "/forum/assets/posts/2026/11/four-layers-of-context-engineering-for-production-ai-agents-how-deep-insight/social.jpg",
+    "alt": {
+      "ar": "Deep Insight يطبّق هندسة سياق من 4 طبقات لوكلاء الذكاء الاصطناعي",
+      "en": "Deep Insight Framework Applies Four Context Layers to AI Agents"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21082-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/four-layers-of-context-engineering-for-production-ai-agents-how-deep-insight-applies-them-in-working-code/",
+      "type": "official",
+      "title": "Four layers of context engineering for production AI agents: How Deep Insight applies them in working code"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/four-layers-of-context-engineering-for-production-ai-agents-how-deep-insight-applies-them-in-working-code",
+  "sourceTitle": "Four layers of context engineering for production AI agents: How Deep Insight applies them in working code",
+  "trendScore": 130.98,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-04T16:34:44+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/four-layers-of-context-engineering-for-production-ai-agents-how-deep-insight.json"
+}
