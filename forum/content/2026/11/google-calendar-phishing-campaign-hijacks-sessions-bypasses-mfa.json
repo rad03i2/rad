@@ -1,0 +1,335 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "6dc56b5d71ca081cfc23",
+  "slug": "google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa",
+  "categorySlug": "security",
+  "urls": {
+    "ar": "/forum/ar/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/",
+    "en": "/forum/en/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/"
+  },
+  "locales": {
+    "ar": {
+      "title": "حملة تصيد عبر تقويم جوجل تخترق الجلسات وتتجاوز المصادقة الثنائية",
+      "description": "كشفت شركة Material Security عن حملة تصيد متطورة تستخدم دعوات تقويم جوجل لاختراق جلسات المستخدمين وتجاوز حماية MFA، مع تفكيك بنية تحتية تضم مئات النطاقات.",
+      "deck": "اعتمدت حملة التصيد على بوابات عكسية وروابط موثوقة من جوجل لخداع أنظمة الأمان، مما سمح للمهاجمين بالتحكم الكامل في حسابات الشركات.",
+      "summaryBullets": [
+        "استخدم المهاجمون دعوات تقويم جوجل وروابط إعادة توجيه موثوقة للوصول إلى صفحات تسجيل دخول مزيفة.",
+        "اعتمدت الحملة على بوابات عكسية لالتقاط رموز المصادقة الثنائية في الوقت الفعلي، مما جعل أنظمة MFA عديمة الجدوى.",
+        "أطلقت شركة Material Security عملية \"CloudFire\" لتفكيك البنية التحتية للمهاجمين، حيث تم تعطيل مئات النطاقات.",
+        "رصدت الشركة أكثر من 8,570 عنوان بريد إلكتروني مخترق عبر 6,354 نطاق جذري خلال شهر واحد.",
+        "أوصت الشركة بمراجعة سجلات تدقيق Workspace بسرعة وإلغاء الجلسات النشطة لمنع انتشار الاختراق."
+      ],
+      "sections": [
+        {
+          "heading": "آلية الهجوم عبر دعوات التقويم",
+          "paragraphs": [
+            {
+              "text": "منذ منتصف أغسطس 2026، شنت حملة تصيد متطورة تستهدف مستخدمين في الشركات عبر إرسال دعوات تقويم جوجل. وصفت شركة Material Security هذه الحملة بأنها تعتمد على خدع بسيطة مثل إشعارات البريد الصوتي أو طلبات العروض، لكنها تستخدم بنية تحتية معقدة. وصلت الرسائل غالباً من عناوين بريدية موثوقة سبق للمتلقي التواصل معها، مما زاد من مصداقيتها. أشار تقرير نشرته BleepingComputer إلى أن الروابط كانت تشير ظاهرياً إلى نطاقات جوجل الرسمية، مما جعل أنظمة السمعة تعتبرها آمنة تماماً.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تجاوز المصادقة الثنائية عبر بوابة عكسية",
+          "paragraphs": [
+            {
+              "text": "تكمن خطورة هذه الحملة في طريقة اعتراض الجلسة. بدلاً من سرقة كلمة المرور فقط، قام المهاجم بتشغيل بوابة عكسية (Reverse Proxy) أمام صفحة تسجيل الدخول الحقيقية لجوجل. عندما يدخل الضحية بياناته، يتم تمرير الطلبات إلى الخادم الحقيقي، بينما يراقب المهاجم الجلسة في الوقت الفعلي. أوضحت Material Security أن هذه البنية تسمح بتمرير رموز SMS وتطبيقات المصادقة وأرقام المطابقة الهاتفية مباشرة إلى جوجل، مما يعني أن كل طبقات المصادقة الثنائية (MFA) يتم تجاوزها دون أن يلاحظ الضحية أي شذوذ.",
+              "links": [
+                {
+                  "text": "Material Security",
+                  "url": "https://www.bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/material.security/?utm_campaign=54746213-ABM-AI%20Leading&utm_source=bleeping-computer&utm_medium=Third%20Party"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إخفاء البنية التحتية عن أنظمة الفحص",
+          "paragraphs": [
+            {
+              "text": "صُممت الحملة لتجنب أنظمة الفحص الآلي من خلال ثلاث طبقات: موجّه جوجل، وتحدي Cloudflare Turnstile، وصفحة الالتقاط. الصفحة الأخيرة لا تحتوي على موقع ثابت يمكن للزواحف (Crawlers) فحصه، بل يتم بناءها عبر جافاسكربت داخل المتصفح بعد اجتياز التحدي. هذا يعني أن سجلات الوكلاء (Proxy Logs) لا تسجل أي نشاط مشبوه. كما كانت النطاقات المستخدمة قابلة للتخلص منها بسهولة، حيث سجلت معظمها قبل أيام قليلة من الاستخدام، وأصدرت شهادات SSL برمجية بسرعة فائقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "عملية CloudFire لتفكيك البنية التحتية",
+          "paragraphs": [
+            {
+              "text": "أدرك فريق الأبحاث في Material Security أن ضبط قواعد الكشف وحدها لا يكفي، فقرر استهداف البنية التحتية نفسها في عملية أطلق عليها اسم \"Operation CloudFire\". قام الفريق بتحليل عناوين البوابات الخلفية والإبلاغ عنها عبر نظام إساءة الاستخدام لدى Cloudflare. بعد التحقق من صحة الادعاءات، قامت Cloudflare بتطبيق تحذيرات التصيد على هذه العناوين، مما أدى إلى حرق بنية المهاجم التحتية وجبره على إعادة تسجيل نطاقات جديدة. هذا الإجراء حمى أيضاً مستخدمي الإنترنت العاديين من النقر على روابط خبيثة.",
+              "links": [
+                {
+                  "text": "Material",
+                  "url": "https://material.security/?utm_campaign=54746213-ABM-AI%20Leading&utm_source=bleeping-computer&utm_medium=Third%20Party"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إحصائيات الكشف والتأثير",
+          "paragraphs": [
+            {
+              "text": "سجلت Material Security خلال شهر واحد من العملية 8,570 عنوان بريد إلكتروني مخترق فريد عبر 6,354 نطاق جذري. تؤكد الشركة أن نسبة الكشف تجاوزت 99% من الرسائل الخبيثة بعد بناء أنظمة الكشف المناسبة. ومع ذلك، حذرت من أن هذه الأرقام تعكس فقط العملاء الذين وافقوا على مشاركة البيانات، مما يعني أن الأعداد الحقيقية أعلى. كما لاحظ الفريق تحولاً في أساليب الهجوم من دعوات التقويم إلى مشاركة ملفات Google Drive، مما يتطلب تحديثاً مستمراً لأنظمة الدفاع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توصيات أمنية للمدافعين",
+          "paragraphs": [
+            {
+              "text": "نظراً لأن الاختراق يؤدي إلى جلسة جوجل حية تتيح الوصول إلى البريد وDrive ومنح صلاحيات OAuth، فإن نطاق التأثير يتجاوز صندوق الوارد. تنصح Material Security المدافعين بمراجعة سجلات تدقيق Workspace بانتظام، والتأكد من القدرة على إلغاء الجلسات النشطة واحتواء صلاحيات OAuth وإعادة تعيين الحسابات المتأثرة خلال ساعة واحدة. كما أكدت أن معالجة دعوات التقويم يجب أن تكون سطح تهديد مستقل، مع استخدام سياق كامل لحساب المستخدم وليس مجرد تحليل الرابط.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الأمن السيبراني",
+        "التصيد الاحتيالي",
+        "جوجل",
+        "المصادقة الثنائية",
+        "Material Security",
+        "حماية البريد الإلكتروني",
+        "استخبارات التهديدات"
+      ],
+      "entities": [
+        "Google",
+        "Material Security",
+        "Cloudflare",
+        "Operation CloudFire",
+        "Nyasher"
+      ],
+      "category": "الأمن التقني",
+      "dateLabel": "4 نوفمبر 2026",
+      "modifiedLabel": "4 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 574
+    },
+    "en": {
+      "title": "Google Calendar Phishing Hijacks Sessions and Bypasses MFA",
+      "description": "A sophisticated phishing campaign leverages Google Calendar invites and trusted redirects to hijack corporate Google sessions and bypass MFA.",
+      "deck": "A newly detailed threat campaign has been harvesting live corporate Google sessions since mid-August 2026 using trusted redirects, calendar invites, and live reverse proxies.",
+      "summaryBullets": [
+        "Attacks begin as mundane Google Calendar invites sent from known or compromised corporate contacts.",
+        "Phishing lures utilize trusted links such as Google’s own redirector, share.google, and Drive file links.",
+        "A live reverse proxy relays multi-factor authentication prompts in real time, bypassing standard MFA protections.",
+        "Operation CloudFire has successfully helped take down nearly 900 domains and targeted the underlying attacker infrastructure."
+      ],
+      "sections": [
+        {
+          "heading": "Anatomy of the Calendar Invite Phishing Campaign",
+          "paragraphs": [
+            {
+              "text": "Since mid-August 2026, a widespread phishing operation has been actively harvesting live Google sessions from corporate users. The campaign relies on a meticulously engineered chain where every standard security signal returns a reassuring answer. Security researchers at Material Security first identified the operation and tracked its evolution across multiple rotating lures and receiving endpoints.",
+              "links": [
+                {
+                  "text": "Material Security",
+                  "url": "https://www.bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/material.security/?utm_campaign=54746213-ABM-AI%20Leading&utm_source=bleeping-computer&utm_medium=Third%20Party"
+                },
+                {
+                  "text": "Material",
+                  "url": "https://material.security/?utm_campaign=54746213-ABM-AI%20Leading&utm_source=bleeping-computer&utm_medium=Third%20Party"
+                }
+              ]
+            },
+            {
+              "text": "The attack vectors typically arrive disguised as Google Calendar invites, often delivered via BCC and sent from organizations that the targeted recipient has previously corresponded with. Pretexts used by the attackers are notably mundane, ranging from voicemail notifications and RFP/RFI requests to court summonses and missed payment notices. By leveraging familiar communication channels and trusted entities, the operation establishes immediate credibility with recipients.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Leveraging Trusted Redirects and Dynamic Infrastructure",
+          "paragraphs": [
+            {
+              "text": "Rather than relying on sketchy external domains, most links within the calendar invites point directly to Google itself. A typical pattern involves Google’s own URL redirector containing the true malicious destination embedded within a query parameter, while other variants employ share.google, Drive file links, or Intuit transaction notification links.",
+              "links": []
+            },
+            {
+              "text": "When automated security scanners evaluate these messages, the underlying domain, certificate, and reputation consistently display legitimate and trusted histories. The campaign architecture incorporates three distinct layers designed to fool reputation systems. The first layer is the Google redirector, followed by a Cloudflare Turnstile challenge, and finally a dynamic password-capture page constructed entirely in the browser using JavaScript after the challenge is cleared.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Real-Time Reverse Proxy Bypasses Multi-Factor Authentication",
+          "paragraphs": [
+            {
+              "text": "Once victims land on the malicious destination, the attackers deploy a live reverse proxy positioned directly in front of the genuine Google sign-in page. When the user enters their password and receives a legitimate prompt, they approve it while the operator monitors the session in real time.",
+              "links": []
+            },
+            {
+              "text": "The backend server instantly relays SMS codes, authenticator app codes, Google’s Tap-Yes number matching prompts, and phone-based account recovery requests back to Google as they arrive. Because the human victim actively completes the challenges on behalf of the attacker, standard second-factor controls fail to prevent session hijacking.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Operation CloudFire and Infrastructure Takedowns",
+          "paragraphs": [
+            {
+              "text": "Recognizing that traditional signature updates and model retraining were insufficient to stop the persistent threat, Material Security launched Operation CloudFire to actively target the attacker's infrastructure. By analyzing gateway and backend URLs as messages were being sent, the team reported malicious endpoints through Cloudflare's abuse reporting system.",
+              "links": []
+            },
+            {
+              "text": "Cloudflare validated the fake interstitials and proxied sign-in pages, applying its own phishing warnings to those destinations. This collaborative effort helped take down nearly 900 domains used by the attackers, forcing the operators to continuously re-register, re-point, and re-certify their disposable infrastructure.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Broader Blast Radius and Workspace Impact",
+          "paragraphs": [
+            {
+              "text": "Because the successful attack results in a hijacked session rather than just a stolen password, the evidence primarily manifests inside Workspace audit logs. A compromised live Google session grants access to corporate mail, Google Drive files, and the ability to provision OAuth access tokens in the victim's name, extending the blast radius far beyond a standard email inbox.",
+              "links": []
+            },
+            {
+              "text": "Security analysts emphasize that corporate incident response teams must audit these logs rapidly. Organizations need the capability to revoke sessions, contain unauthorized OAuth grants, and reset affected user accounts within an hour to mitigate potential damage from active attackers.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Google Calendar",
+        "Phishing",
+        "MFA Bypass",
+        "Session Hijacking",
+        "Material Security",
+        "Operation CloudFire",
+        "Cybersecurity"
+      ],
+      "entities": [
+        "Google",
+        "Material Security",
+        "Cloudflare"
+      ],
+      "category": "Cybersecurity",
+      "dateLabel": "November 4, 2026",
+      "modifiedLabel": "November 4, 2026",
+      "readMinutes": 3,
+      "wordCount": 622
+    }
+  },
+  "datePublished": "2026-11-04T18:34:10.842699+03:00",
+  "dateModified": "2026-11-04T18:34:10.842699+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/hero.webp",
+    "card": "/forum/assets/posts/2026/11/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/card.webp",
+    "social": "/forum/assets/posts/2026/11/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/social.jpg",
+    "alt": {
+      "ar": "حملة تصيد عبر تقويم جوجل تخترق الجلسات وتتجاوز المصادقة الثنائية",
+      "en": "Google Calendar Phishing Hijacks Sessions and Bypasses MFA"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/09/22/google-workspace-breach.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/inline-01.webp",
+        "width": 1341,
+        "height": 1050,
+        "alt": {
+          "ar": "حملة تصيد عبر تقويم جوجل تخترق الجلسات وتتجاوز المصادقة الثنائية",
+          "en": "Attack flow"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Image related to the report from BleepingComputer"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/security/m/material/google-session-hijacking-campaign/1026-calendar-research-diagram.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/inline-02.webp",
+        "width": 900,
+        "height": 1050,
+        "alt": {
+          "ar": "حملة تصيد عبر تقويم جوجل تخترق الجلسات وتتجاوز المصادقة الثنائية",
+          "en": "Message delivery time of day heat map"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Message delivery time of day heat map"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/security/m/material/google-session-hijacking-campaign/detections-by-day-hour.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/inline-03.webp",
+        "width": 1400,
+        "height": 1020,
+        "alt": {
+          "ar": "حملة تصيد عبر تقويم جوجل تخترق الجلسات وتتجاوز المصادقة الثنائية",
+          "en": "Messages detected by week"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Messages detected by week"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/security/m/material/google-session-hijacking-campaign/Weekly%20malicious%20messages%20detected@2x-v2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/inline-04.webp",
+        "width": 1400,
+        "height": 1040,
+        "alt": {
+          "ar": "حملة تصيد عبر تقويم جوجل تخترق الجلسات وتتجاوز المصادقة الثنائية",
+          "en": "Domains registered by interval"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Domains registered by interval"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/security/m/material/google-session-hijacking-campaign/Malicious%20domains%20detected@2x.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa/",
+      "type": "journalism",
+      "title": "Google Calendar phishing campaign hijacks sessions, bypasses MFA"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa",
+  "sourceTitle": "Google Calendar phishing campaign hijacks sessions, bypasses MFA",
+  "trendScore": 100.88,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-11-04T15:34:11+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa.json"
+}
