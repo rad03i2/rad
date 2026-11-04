@@ -1,0 +1,315 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "a87ec7a4b5e96d706fdb",
+  "slug": "smart-approvals-in-amazon-quick-human-oversight-where-it-matters",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/smart-approvals-in-amazon-quick-human-oversight-where-it-matters/",
+    "en": "/forum/en/ai/smart-approvals-in-amazon-quick-human-oversight-where-it-matters/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تطلق «Smart Approvals» في Quick لإدارة موافقات الذكاء الاصطناعي",
+      "description": "تقدّم أمازون ميزة Smart Approvals في Amazon Quick لموازنة كفاءة الذكاء الاصطناعي مع الإشراف البشري، حيث تقيّم الإجراءات الآلية وتعيد الحساسة للمستخدم للمراجعة.",
+      "deck": "أعلنت أمازون ويب سيرفيسز عن إطلاق ميزة «Smart Approvals» ضمن منصة Amazon Quick، وهي أداة مصممة لتقليل التكرار المزعج لطلبات الموافقة مع الحفاظ على سيطرة البشر على القرارات الحساسة.",
+      "summaryBullets": [
+        "تقيّم الميزة الإجراءات المقترحة من قبل وكلاء الذكاء الاصطناعي بناءً على سياقات الطلب والإعدادات الحالية.",
+        "تعتمد على نموذج تصنيفي مستقل لفهم سياق المحادثة وعلاقات العمل دون منح صلاحيات دائمة.",
+        "تبقى الإجراءات المرفوضة أو التي تتطلب موافقة إلزامية محظورة، مع توثيق كامل عبر AWS CloudTrail.",
+        "تهدف الميزة إلى معالجة مشكلة «إرهاق الموافقات» التي تقلل من انتباه المستخدمين للمخاطر الحقيقية."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي الإشراف البشري في عصر الوكلاء",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق الأمن تحدياً متزايداً مع توسع دور وكلاء الذكاء الاصطناعي في تنفيذ المهام. فبينما تحدد الصلاحيات ما يمكن للوكيل فعله، يبقى هناك فرق بين الإجراء المسموح به والإجراء الذي يستحق حكم إنساني. تشير الأبحاث حول تحذيرات الأمان إلى أن تكرار طلبات الموافقة حتى للمهام الروتينية يؤدي إلى انخفاض انتباه المستخدمين وامتثالهم، مما يجعل التحدي الحقيقي هو الحفاظ على التركيز للمواقف التي تتطلب تدخلاً بشرياً فعلياً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل Smart Approvals",
+          "paragraphs": [
+            {
+              "text": "تعالج ميزة Smart Approvals في Amazon Quick هذا التحدي من خلال مراجعة الإجراءات المؤهلة ضمن ضوابط المستخدم الحالية. تقوم الأداة بتقييم كل إجراء مقترح مقابل طلب المستخدم، إما بالموافقة عليه تلقائياً أو إعادته للمستخدم للمراجعة. لا تمنح هذه العملية صلاحيات إضافية ولا تلغي الموافقات البشرية الإلزامية، بل تهدف إلى تقليل المقاطعات غير الضرورية في العمل الروتيني مع بقاء القرارات ذات الأثر الكبير بيد الإنسان.",
+              "links": [
+                {
+                  "text": "Amazon Quick",
+                  "url": "https://aws.amazon.com/quick/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دور السياسات والصلاحيات المخصصة",
+          "paragraphs": [
+            {
+              "text": "تحدد السياسات أهلية الإجراء للمراجعة التلقائية. قبل أي تقييم آلي، تفحص Amazon Quick كل إجراء مقترح مقابل الصلاحيات المخصصة (Custom Permissions)، وحواجز الأمان (Quick Guardrails)، وصلاحيات إجراءات الوصلات (Connector Action Permissions)، وإعدادات المستخدم. تبقى الإجراءات المرفوضة محظورة، وتظل الموافقات البشرية الإلزامية سارية. لا يصبح الإجراء مؤهلاً للمراجعة التلقائية إلا إذا كانت إعدادات المستخدم على «الاستفسار في كل مرة» ولم تتطلب أي ضوابط أخرى موافقة بشرية.",
+              "links": []
+            },
+            {
+              "text": "يستخدم المسؤولون الصلاحيات المخصصة لتحديد من يمكنه استخدام Smart Approvals. الميزة مفعلة افتراضياً، لكن الملفات الشخصية التي تعتمد سياسة الرفض الافتراضي (deny-by-default) يجب أن تسمح بها صراحة. كما يمكن للمستخدمين إيقاف الميزة بأنفسهم، وهو خيار يسري عبر جميع المحادثات والتشغيلات المجدولة، ولا يمكن لأي إعداد على مستوى الحساب إعادة تفعيلها لهم.",
+              "links": [
+                {
+                  "text": "deny-by-default",
+                  "url": "https://docs.aws.amazon.com/quick/latest/userguide/custom-permissions-governance.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "النموذج التصنيفي وفهم السياق",
+          "paragraphs": [
+            {
+              "text": "تعتمد Smart Approvals على نموذج مستقل يُعرف بـ «المصنف» (Classifier) لتقييم الإجراءات المؤهلة مقابل طلب المستخدم ومقطع محدود من المحادثة. يأخذ المصنف في الاعتبار ما يفعله الإجراء، وأين تذهب البيانات، ومن يتأثر به. يمكنه الاستعانة بمخطط معرفة المستخدم (Knowledge Graph) الذي يحتوي على الأشخاص وعلاقات العمل المستمدة من المصادر المتصلة، مما يساعد في فهم كيفية ارتباط المستلمين بالمستخدم، مثل معرفة ما إذا كان المستلم ضمن سلسلة الإشراف المباشر. تبقى هذه العملية داخل حساب Quick الخاص بالمستخدم، ولا تستخدم أمازون المحتوى الذي يراجعه المصنف لتدريب نماذجها أو تحسين الخدمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حدود التقييم والحماية من الحقن",
+          "paragraphs": [
+            {
+              "text": "قد يتطابق الإجراء مع الطلب ومع ذلك يستحق مراجعة بشرية، مثل إرسال محتوى خارج المنظمة، أو إلى قادة كبار في سلسلة الإشراف، أو تغيير الصلاحيات، أو حذف السجلات، أو بدء عمليات دفع. يزن المصنف السياق المحيط أيضاً، مما يضيف طبقة حماية ضد «حقن الأوامر غير المباشر» (Prompt Injection)، حيث تحاول الأوامر المخفية في المحتوى المسترجع إعادة توجيه الوكيل. توجّه Amazon Quick كلا من الوكيل والمصنف لمعاملة هذا المحتوى كمعلومات وليس كأوامر. ومع ذلك، قد يرتكب النموذج أخطاء، لذا يجب أن تتطلب الإجراءات الحساسة دائماً موافقة بشرية عبر صلاحيات إجراءات الوصلات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحقيق والتدقيق عبر CloudTrail",
+          "paragraphs": [
+            {
+              "text": "يقدم المصنف الحكم، بينما تفرض خدمة الصلاحيات السلطة. كل موافقة تلقائية تكون للاستخدام الواحد فقط، وتطبق على الإجراء والمعاملات المحددة التي تم تقييمها، ولا تمنح أي صلاحية مستمرة. توثق خدمة صلاحيات Quick تحديثات الصلاحيات المرتبطة بـ Smart Approvals في AWS CloudTrail داخل حساب المستخدم. يحدد كل حدث المستخدم، والوصلة، والإجراء، والوقت، ويضع علامة على الطلب بأنه مرتبط بـ Smart Approvals. كما تسجل قرارات فحص الصلاحيات، بما في ذلك الرفض، وتغييرات إعدادات المستخدم.",
+              "links": [
+                {
+                  "text": "AWS CloudTrail",
+                  "url": "https://aws.amazon.com/cloudtrail/"
+                }
+              ]
+            },
+            {
+              "text": "يمكن للباحثين ربط هذه الأحداث بالمستخدم والوقت مع أنشطة Quick الأخرى في CloudTrail والسجلات المُرسلة عبر Amazon CloudWatch Logs. تسجل سجلات المحادثة طلب المستخدم واستجابة النظام وسياق المحادثة، بينما تسجل سجلات بيانات الوكيل (Agent Metadata) التغييرات على الوكلاء. تساعد هذه المصادر معاً في إعادة بناء ما حدث دون اعتبار الموافقة دليلاً على التنفيذ. يحتفظ سجل CloudTrail بالأحداث لمدة 90 يوماً، لذا يُنصح بإعداد مسار (Trail) للتحقيقات الأطول، مع تقييد الوصول لسجلات المحادثة التي قد تحتوي على محتوى حساس.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch Logs",
+                  "url": "https://aws.amazon.com/cloudwatch/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "توصيات التنفيذ والاختبار",
+          "paragraphs": [
+            {
+              "text": "نظراً لأن Smart Approvals مفعلة افتراضياً، يجب البدء بتأكيد أن الإجراءات التي تتطلب موافقة بشرية مُعدّة عبر صلاحيات إجراءات الوصلات. يُنصح بإعداد مسار CloudTrail وتوصيل سجلات المحادثة وبيانات الوكيل إلى CloudWatch Logs لدعم التحقيقات. يجب تحديد معايير النجاح قبل الإطلاق التجريبي، مثل تقليل طلبات الموافقة للإجراءات الروتينية مع إبقاء الإجراءات الحساسة للمراجعة البشرية. أثناء الاختبار، يجب مراجعة عينة من الموافقات التلقائية واختبار الحالات عالية التأثير، مثل إرسال محتوى خارج المنظمة، للتأكد من إعادتها للمستخدم للمراجعة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "الأمن السيبراني",
+        "وكلاء الذكاء الاصطناعي",
+        "إدارة الصلاحيات",
+        "Amazon Quick"
+      ],
+      "entities": [
+        "Amazon Quick",
+        "Smart Approvals",
+        "AWS CloudTrail",
+        "Amazon CloudWatch Logs",
+        "Custom Permissions",
+        "Classifier"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "4 نوفمبر 2026",
+      "modifiedLabel": "4 نوفمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 766
+    },
+    "en": {
+      "title": "Smart Approvals in Amazon Quick Balances AI Oversight",
+      "description": "Amazon Quick introduces Smart Approvals to review eligible agent actions while preserving human oversight for consequential decisions.",
+      "deck": "Smart Approvals in Amazon Quick evaluates eligible agent actions within existing controls to help reduce unnecessary approval prompts while maintaining critical human oversight.",
+      "summaryBullets": [
+        "Smart Approvals evaluates proposed agent actions against user requests and existing controls to automatically approve routine steps or return them for human review.",
+        "The system utilizes a dedicated classifier to assess context, data destinations, and potential impacts without altering core permissions.",
+        "Administrators can configure Custom Permissions, connector action permissions, and security guardrails to dictate mandatory human approval boundaries.",
+        "Comprehensive auditing is supported through integration with AWS CloudTrail and Amazon CloudWatch Logs."
+      ],
+      "sections": [
+        {
+          "heading": "Balancing AI Autonomy and Human Oversight",
+          "paragraphs": [
+            {
+              "text": "As AI agents handle increasingly complex workflows, security leaders face the challenge of preserving human judgment without overwhelming users with repetitive prompts. Multi-step tasks can frequently generate repeated prompts for routine actions, which research indicates can diminish attention and adherence over time. To address this challenge, the AWS Machine Learning Blog detailed the launch of Smart Approvals in Amazon Quick.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/smart-approvals-in-amazon-quick-human-oversight-where-it-matters/"
+                },
+                {
+                  "text": "repeated prompts",
+                  "url": "https://arxiv.org/abs/2510.05307"
+                }
+              ]
+            },
+            {
+              "text": "Designed to optimize user attention, the new feature reviews eligible agent actions within existing governance controls. Instead of removing necessary safety checks or granting additional permissions, Smart Approvals automatically approves routine tasks when appropriate or returns them to the user for final review.",
+              "links": [
+                {
+                  "text": "Smart Approvals",
+                  "url": "https://docs.aws.amazon.com/quick/latest/userguide/smart-approvals.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "How Smart Approvals Evaluates Actions",
+          "paragraphs": [
+            {
+              "text": "When integrated with Amazon Quick, the feature evaluates each proposed action against Custom Permissions, platform guardrails, connector action permissions, and specific user settings. An action is deemed eligible for automated review only when the user setting is configured to ask each time and no other control explicitly mandates human intervention.",
+              "links": [
+                {
+                  "text": "Amazon Quick",
+                  "url": "https://aws.amazon.com/quick/"
+                }
+              ]
+            },
+            {
+              "text": "The system employs a separate model known as a classifier to assess eligible actions against the user's explicit request alongside a bounded view of the active conversation. The classifier analyzes the nature of the action, the destination of the data, and the parties affected. It may also consult the user's knowledge graph—containing working relationships drawn from connected sources—to understand recipient connections, while ensuring data is never used to train underlying models.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Security Boundaries and Mandatory Reviews",
+          "paragraphs": [
+            {
+              "text": "Certain consequential actions still consistently warrant human judgment, such as sending content outside the organization, modifying access permissions, deleting records, or initiating payments. The classifier carefully weighs surrounding context and acts as a safeguard against indirect prompt injection, treating retrieved text strictly as information rather than executable instructions.",
+              "links": []
+            },
+            {
+              "text": "Automatic approvals generated by the classifier are strictly single-use, apply only to the exact action and parameters reviewed, and grant no ongoing permissions. Actions that fail review, timeout, or require strict handling are immediately routed back to the user.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Auditing and Governance Capabilities",
+          "paragraphs": [
+            {
+              "text": "To support security investigations and compliance, the platform records permission updates associated with Smart Approvals directly into AWS CloudTrail. Each logged event records the user, connector, action, and timestamp, allowing security teams to reconstruct workflow events alongside detailed chat logs.",
+              "links": [
+                {
+                  "text": "AWS CloudTrail",
+                  "url": "https://aws.amazon.com/cloudtrail/"
+                }
+              ]
+            },
+            {
+              "text": "Administrators can further correlate these events using Amazon CloudWatch Logs to examine system responses, conversation contexts, and destination system records, ensuring comprehensive oversight without treating automated approvals as proof of final execution.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch Logs",
+                  "url": "https://aws.amazon.com/cloudwatch/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Quick",
+        "AWS",
+        "Artificial Intelligence",
+        "Cloud Security",
+        "Automation",
+        "Governance"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Quick",
+        "AWS CloudTrail",
+        "Amazon CloudWatch"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 4, 2026",
+      "modifiedLabel": "November 4, 2026",
+      "readMinutes": 3,
+      "wordCount": 497
+    }
+  },
+  "datePublished": "2026-11-04T19:54:44.467992+03:00",
+  "dateModified": "2026-11-04T19:54:44.467992+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/smart-approvals-in-amazon-quick-human-oversight-where-it-matters/hero.webp",
+    "card": "/forum/assets/posts/2026/11/smart-approvals-in-amazon-quick-human-oversight-where-it-matters/card.webp",
+    "social": "/forum/assets/posts/2026/11/smart-approvals-in-amazon-quick-human-oversight-where-it-matters/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق «Smart Approvals» في Quick لإدارة موافقات الذكاء الاصطناعي",
+      "en": "Smart Approvals in Amazon Quick Balances AI Oversight"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22232-featured-image-1.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/smart-approvals-in-amazon-quick-human-oversight-where-it-matters/inline-01.webp",
+        "width": 1385,
+        "height": 746,
+        "alt": {
+          "ar": "أمازون تطلق «Smart Approvals» في Quick لإدارة موافقات الذكاء الاصطناعي",
+          "en": "Existing controls route proposed actions to required user approval, Smart Approvals review, or a policy block. Smart Approvals may approve an eligible action for its exact parameters or return it to the user. Assessment"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/smart-approvals-in-amazon-quick-human-oversight-where-it-matters/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22232-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/smart-approvals-in-amazon-quick-human-oversight-where-it-matters/",
+      "type": "official",
+      "title": "Smart Approvals in Amazon Quick: Human oversight where it matters"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/smart-approvals-in-amazon-quick-human-oversight-where-it-matters",
+  "sourceTitle": "Smart Approvals in Amazon Quick: Human oversight where it matters",
+  "trendScore": 118.97,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-04T16:54:44+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/smart-approvals-in-amazon-quick-human-oversight-where-it-matters.json"
+}
