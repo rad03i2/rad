@@ -1,5 +1,393 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-05T18:01:29+00:00",
-  "last_published_story_id": "ee0727a487e657fdee3a"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-05T18:08:08+00:00",
+  "target_publish_at": "2026-11-05T21:21:28.450114+03:00",
+  "story": {
+    "title": "How Amazon Marketplace evaluates content quality with Amazon SageMaker AI",
+    "url": "https://aws.amazon.com/blogs/machine-learning/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai",
+    "domain": "aws.amazon.com",
+    "summary": "Learn how Amazon Marketplace evaluates A+ Content quality at scale on Amazon SageMaker AI by rendering each product page as a single snapshot, scoring it with a vision-language model fused with OCR readability signals in a CatBoost classifier, and using SHAP to turn each decision into prioritized, actionable recommendations for selling partners.",
+    "published_at": "2026-11-05T18:06:43+00:00",
+    "discovered_at": "2026-11-05T18:07:13+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "fad370bb7b6d436415c6",
+    "trend": {
+      "score": 120.5,
+      "age_hours": 0.01,
+      "corroboration_count": 0,
+      "entity_momentum": 15.51,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How Amazon Marketplace evaluates content quality with Amazon SageMaker AI",
+      "title": "How Amazon Marketplace evaluates content quality with Amazon SageMaker AI | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون توظف نماذج الذكاء الاصطناعي لتقييم جودة محتوى المتاجر",
+      "description": "تستخدم أمازون SageMaker AI ونماذج الرؤية واللغة لتقييم محتوى A+ بشكل شامل، مع تقديم توصيات قابلة للتنفيذ لتحسين تجربة العملاء ورفع المبيعات.",
+      "deck": "اعتمدت أمازون نهجاً تقنياً متقدماً لتقييم جودة المحتوى البصري والنصي في متجرها، مستفيدة من تقنيات الذكاء الاصطناعي التوليدي والتحليل التفسيري.",
+      "summary_bullets": [
+        "تحويل صفحات المنتجات إلى لقطات بصرية واحدة لتقييمها بشكل شامل بدلاً من فحص العناصر المنفصلة.",
+        "دمج إشارات القراءة البصرية (OCR) مع تقييمات نماذج الرؤية واللغة في مصنف CatBoost خفيف.",
+        "استخدام تقنية SHAP لتحويل النتائج الرقمية إلى توصيات عملية ومفصلة للبيانات التجارية.",
+        "تنفيذ خط أنابيب متكامل على منصة Amazon SageMaker AI لضمان الكفاءة والقابلية للتوسع."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي تقييم المحتوى الشامل",
+          "paragraphs": [
+            {
+              "text": "يُعد محتوى A+ الوسائط الغنية التي تعرضها العلامات التجارية على صفحات تفاصيل المنتجات في أمازون، حيث يساعد هذا المحتوى العملاء على اتخاذ قرارات شراء مستنيرة. تشير البيانات إلى أن الشركاء التجاريين الذين يستخدمون محتوى عالي الجودة يحققون زيادة في المبيعات تتراوح بين 8 و20 في المئة مقارنة بمن لا يستخدمونه. ومع ذلك، يواجه النظام تحدياً كبيراً بسبب تنوع العلامات التجارية، من تلك التي تمتلك فرق تصميم ضخمة إلى الشركات الناشئة ذات الموارد المحدودة، مما يؤدي إلى تفاوت كبير في جودة المحتوى.",
+              "links": []
+            },
+            {
+              "text": "تتكون صفحة المنتج النموذجية من مزيج من النصوص والصور والفيديو، وتقييم كل عنصر على حدة قد يفوت الجودة الحقيقية التي تنشأ من تفاعل هذه العناصر مع بعضها البعض. على سبيل المثال، قد تبدو صورة المنتج حادة والقائمة النصية خالية من الأخطاء النحوية، لكن عند عرضهما معاً قد تظهر تناقضات في المواصفات أو ترتيب عناصر يضر بتجربة العميل. لهذا السبب، يتطلب الأمر نظاماً تقييمياً قادراً على فهم السياق الكامل للصفحة بدلاً من الفحص الجزئي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النهج متعدد النماذج المدمجة",
+          "paragraphs": [
+            {
+              "text": "اعتمدت أمازون على نهج يجمع بين نماذج الرؤية واللغة (VLMs) ومكونات توليدية أخرى. تعمل هذه النماذج عن طريق اقتران مشفر صور بنموذج لغة كبير، حيث يقوم المشفر بتقسيم الصورة إلى أجزاء وتحويلها إلى تمثيلات رقمية، بينما يربطها محول صغير بمساحة مدخلات نموذج اللغة. تستفيد العديد من هذه النماذج من مشفرات الصور المستمدة من تقنيات مثل CLIP، مما يتيح لها فهم العلاقة بين الصورة والنص المرافق لها.",
+              "links": [
+                {
+                  "text": "CLIP",
+                  "url": "https://arxiv.org/abs/2103.00020"
+                }
+              ]
+            },
+            {
+              "text": "بدلاً من تدريب نموذج أساسي ضخم على آلاف الأمثلة المحدودة، وهو ما قد يؤدي إلى الإفراط في التخصيص (Overfitting)، قررت أمازون تثبيت النموذج التوليدي واستخدام مخرجاته كخصائص لمصنف خفيف الوزن. يعتمد هذا النظام على مصنف CatBoost، وهو مكتبة أشجار القرار المعززة بالتدرج، والتي تتفوق في التعامل مع مجموعات البيانات الجدولية الصغيرة. يتيح هذا التصميم إعادة تدريب النظام بسرعة على أجهزة المعالجة المركزية (CPU) فقط عند توافر بيانات جديدة أو تغيير المعايير، دون الحاجة إلى بنية تحتية معقدة للرسوميات (GPU).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التقييم الشامل عبر اللقطات البصرية",
+          "paragraphs": [
+            {
+              "text": "يقوم النظام بتحويل صفحة المنتج الكاملة إلى لقطة بصرية واحدة (Snapshot) تعرضها كما يراها العميل. يتم إرسال هذه اللقطة إلى نموذج الرؤية واللغة مع دليل تقييم (Rubric) يغطي أربعة أبعاد رئيسية: السرد البصري، عرض الميزات، تخطيط A+، وتحسين التحويل. يطلب النظام من النموذج منح درجة من 0 إلى 10 لكل بعد، مع قيمة ثقة وتفسير نصي يوضح سبب منح الدرجة.",
+              "links": []
+            },
+            {
+              "text": "تساعد هذه التفسيرات النصية الشركاء التجاريين على فهم نقاط الضعف في محتواهم. على سبيل المثال، قد يخفض النموذج الدرجة إذا لاحظ تكرار المعلومات أو غياب صور نمطية (Lifestyle imagery) توضح المنتج في سياق استخدامه. يتم دمج هذه الدرجات مع إشارات القراءة البصرية (OCR) التي تقيس وضوح النصوص، ثم تمرر جميعها إلى مصنف CatBoost للتنبؤ بجودة المحتوى بناءً على معايير الخبراء.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بناء بيانات التدريب والتحقق",
+          "paragraphs": [
+            {
+              "text": "لضمان دقة النظام، تم إنشاء مجموعة بيانات تدريبية من خلال تقييم 5,478 صفحة تفاصيل منتج من 10 فئات مختلفة. شارك في هذا التقييم خبير تسويق تجاري إلكتروني واحد وأربعة مقيمين محترفين، حيث قيّم كل منهم الصفحات بشكل مستقل كجودة عالية أو منخفضة بناءً على نفس المعايير. تم اعتماد التصويت بالأغلبية لإنشاء تسمية إجماعية لكل صفحة، مما أدى إلى توزيع شبه متوازن للفئات مع وجود 49.6 في المئة من الصفحات مصنفة كجودة عالية.",
+              "links": []
+            },
+            {
+              "text": "يضمن هذا المنهجية التقييمية أن يعكس النظام المعايير البشرية الحقيقية لجودة المحتوى في التجارة الإلكترونية. بدلاً من الاعتماد على المعرفة العامة للنموذج التوليدي، التي قد لا تتطابق دائماً مع معايير الجودة التجارية، يعمل المصنف المتدرب على هذه البيانات الخبيرة على مواءمة النتائج مع توقعات السوق والممارسات المثلى في القطاع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التفسير والتوصيات العملية",
+          "paragraphs": [
+            {
+              "text": "لا يكتفي النظام بتقديم درجة رقمية، بل يستخدم تقنية SHAP لتفسير قرارات النموذج. تتيح هذه التقنية تحديد العوامل التي أثرت بشكل أكبر على النتيجة النهائية، مما يسمح بتحويل كل قرار تقييمي إلى توصيات قابلة للتنفيذ ومقترحة حسب الأولوية. على سبيل المثال، إذا كانت مشكلة الترتيب البصري هي السبب الرئيسي لخفض الدرجة، ستوجه التوصيات الشريك التجاري إلى إعادة ترتيب العناصر لتحسين تدفق المعلومات.",
+              "links": []
+            },
+            {
+              "text": "تساعد هذه التوصيات الموجهة العلامات التجارية على تحويل المحتوى المتوسط إلى محتوى عالي الجودة يكون أكثر تماسكاً وملاءمة للعملاء. يساهم تحسين المحتوى في بناء علاقات طويلة الأمد مع العملاء، مما يؤدي في النهاية إلى زيادة الإيرادات للشركاء التجاريين على المنصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التنفيذ على منصة SageMaker AI",
+          "paragraphs": [
+            {
+              "text": "تم تنفيذ خط الأنابيب الكامل على منصة Amazon SageMaker AI، بدءاً من استهلاك البيانات والتعليق عليها، وصولاً إلى استضافة النماذج ومراقبة الأداء في بيئة الإنتاج. توفر المنصة أدوات مثل SageMaker Processing لمعالجة البيانات الأولية، وSageMaker Training Jobs لتدريب المصنف، وSageMaker AI Inference لاستضافة نماذج الرؤية واللغة وتقديم التقييمات في الوقت الفعلي.",
+              "links": [
+                {
+                  "text": "SageMaker AI Inference",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/deploy-model.html"
+                }
+              ]
+            },
+            {
+              "text": "تضمن هذه البنية التحتية الموزعة قابلية التوسع اللازمة لتقييم ملايين الصفحات يومياً بكفاءة عالية. كما تتيح المنصة استخدام نماذج جاهزة من SageMaker JumpStart لتسريع عملية التطوير، مع إمكانية تخصيص النماذج حسب الحاجة. يوفر هذا التكامل بين أدوات التعلم الآلي والبنية التحتية السحابية حلاً شاملاً لتحسين جودة المحتوى في بيئات التجارة الإلكترونية الكبيرة.",
+              "links": [
+                {
+                  "text": "SageMaker JumpStart",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-jumpstart.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون",
+        "SageMaker AI",
+        "نماذج الرؤية واللغة",
+        "التجارة الإلكترونية",
+        "تحليل البيانات",
+        "جودة المحتوى"
+      ],
+      "entities": [
+        "أمازون",
+        "Amazon SageMaker AI",
+        "CatBoost",
+        "SHAP",
+        "CLIP",
+        "A+ Content",
+        "Vision-Language Models"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من المدونة الرسمية لأمازون، مع التركيز على البنية التقنية ونتائج التقييم دون إضافة آراء خارجية."
+    },
+    "en": {
+      "title": "Amazon Marketplace Evaluates Content Quality with SageMaker AI",
+      "description": "Learn how Amazon Marketplace uses Amazon SageMaker AI, vision-language models, and CatBoost to evaluate A+ Content quality at scale.",
+      "deck": "Amazon Marketplace has detailed a multi-model fusion approach for evaluating the quality of rich media A+ Content on product pages using Amazon SageMaker AI.",
+      "summary_bullets": [
+        "Amazon Marketplace evaluates A+ Content quality at scale using a holistic snapshot method.",
+        "Vision-language models and OCR readability signals feed into a CatBoost classifier.",
+        "SHAP is utilized to turn model decisions into prioritized recommendations for selling partners.",
+        "The complete evaluation pipeline runs on Amazon SageMaker AI."
+      ],
+      "sections": [
+        {
+          "heading": "Evaluating A+ Content Quality at Scale",
+          "paragraphs": [
+            {
+              "text": "Amazon Marketplace has shared insights into how it evaluates A+ Content quality at scale. A+ Content represents the rich media widget on Amazon product detail pages, enabling brands to communicate unique product and brand value through visual assets. Selling partners using high-quality A+ Content can boost their sales by 8 to 20 percent compared to those without it. Because a wide variety of brands utilize this feature, content quality and composition vary significantly.",
+              "links": []
+            },
+            {
+              "text": "A typical A+ Content project combines text, images, and video into a cohesive product story. Evaluating each asset in isolation often misses the quality that emerges from how those assets work together. To address this, the organization implemented an end-to-end pipeline leveraging Amazon SageMaker AI to handle data ingestion, annotation, model hosting, explainability, and production monitoring.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Holistic Evaluation via Vision-Language Models",
+          "paragraphs": [
+            {
+              "text": "Conventional computer vision models can score individual assets, such as flagging a blurry image or a grammar error in a bullet list. However, a product detail page combines images, text, and layout modules into a single story where quality depends on the interaction between these elements. To capture this context, the evaluation system renders each complete ecommerce content page as a single snapshot and evaluates it holistically using a Vision-Language Model (VLM).",
+              "links": []
+            },
+            {
+              "text": "A VLM typically pairs an image encoder with a large language model. The encoder often relies on a vision transformer (ViT) architecture that splits an image into patches and converts them into embeddings. Similar architectures are explored in foundational vision-language research such as Flamingo and LLaVA. Many VLMs also reuse the image encoder from CLIP, which learns to match images with their corresponding captions.",
+              "links": [
+                {
+                  "text": "vision transformer (ViT)",
+                  "url": "https://arxiv.org/abs/2010.11929"
+                },
+                {
+                  "text": "Flamingo",
+                  "url": "https://arxiv.org/abs/2204.14198"
+                },
+                {
+                  "text": "LLaVA",
+                  "url": "https://arxiv.org/abs/2304.08485"
+                },
+                {
+                  "text": "CLIP",
+                  "url": "https://arxiv.org/abs/2103.00020"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Combining VLM Scores and CatBoost Classifiers",
+          "paragraphs": [
+            {
+              "text": "Pretrained VLMs prompted with a rubric score content from general knowledge, but those scores do not always match strict ecommerce quality standards. Fine-tuning the VLM directly would require expensive GPU training infrastructure and carries a risk of overfitting when using only a few thousand labeled examples. To solve this, the architecture keeps the VLM and rubric prompt fixed, using the VLM's structured outputs as features for a lightweight CatBoost classifier.",
+              "links": []
+            },
+            {
+              "text": "The VLM evaluates the page snapshot across four specific quality dimensions: Visual Storytelling, Feature Presentation, A+ Layout, and Conversion Optimization. Each dimension follows explicit criteria and point-deduction rules, returning a score from 0 to 10, a confidence value, and a natural-language rationale. These outputs feed into the CatBoost classifier, which was trained on expert annotations gathered from thousands of product detail pages.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Actionable Recommendations for Selling Partners",
+          "paragraphs": [
+            {
+              "text": "Beyond generating a quality score, the system aims to provide actionable recommendations that help selling partners improve their content. By combining VLM semantic scores with optical character recognition (OCR) readability signals, the evaluation framework ensures that both visual and textual elements meet expected standards.",
+              "links": []
+            },
+            {
+              "text": "The framework utilizes SHAP to explain quality decisions made by the classifier. This explainability layer translates complex model outputs into prioritized, actionable recommendations, allowing selling partners to make targeted improvements to their product detail pages and enhance the overall customer experience.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon",
+        "Amazon Marketplace",
+        "Amazon SageMaker AI",
+        "Vision-Language Models",
+        "Machine Learning",
+        "CatBoost",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "Amazon",
+        "Amazon Marketplace",
+        "Amazon SageMaker AI",
+        "CatBoost"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based entirely on the official AWS Machine Learning Blog source material provided."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 844,
+      "word_count_en": 574
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "fad370bb7b6d436415c6",
+      "title": "How Amazon Marketplace evaluates content quality with Amazon SageMaker AI",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 844,
+          "word_count_en": 574
+        }
+      ]
+    }
+  ],
+  "slug": "how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/social.jpg",
+    "alt": {
+      "ar": "أمازون توظف نماذج الذكاء الاصطناعي لتقييم جودة محتوى المتاجر",
+      "en": "Amazon Marketplace Evaluates Content Quality with SageMaker AI"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/30/ML-20598-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/inline-01.webp",
+        "width": 1400,
+        "height": 525,
+        "alt": {
+          "ar": "أمازون توظف نماذج الذكاء الاصطناعي لتقييم جودة محتوى المتاجر",
+          "en": "Block diagram of the VLM-based multi-model fusion approach with VLM, OCR, and classifier components"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/30/ML-20598-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/inline-02.webp",
+        "width": 1400,
+        "height": 464,
+        "alt": {
+          "ar": "أمازون توظف نماذج الذكاء الاصطناعي لتقييم جودة محتوى المتاجر",
+          "en": "Annotator performance and content difficulty distribution across raters"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/30/ML-20598-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/inline-03.webp",
+        "width": 1400,
+        "height": 940,
+        "alt": {
+          "ar": "أمازون توظف نماذج الذكاء الاصطناعي لتقييم جودة محتوى المتاجر",
+          "en": "Global SHAP value distributions across all VLM and OCR features"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/30/ML-20598-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/inline-04.webp",
+        "width": 1400,
+        "height": 445,
+        "alt": {
+          "ar": "أمازون توظف نماذج الذكاء الاصطناعي لتقييم جودة محتوى المتاجر",
+          "en": "Local SHAP distribution for a low-quality A+ Content sample where most features contribute negatively"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-amazon-marketplace-evaluates-content-quality-with-amazon-sagemaker-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/30/ML-20598-4.png"
+      }
+    ]
+  }
 }
