@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "614ec411e822a540898f",
+  "slug": "getting-started-with-web-answer-on-amazon-bedrock-agentcore",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/getting-started-with-web-answer-on-amazon-bedrock-agentcore/",
+    "en": "/forum/en/ai/getting-started-with-web-answer-on-amazon-bedrock-agentcore/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تطلق Web Answer على Bedrock AgentCore للبحث الذكي",
+      "description": "أعلنت أمازون عن توفر أداة Web Answer بشكل عام على Bedrock AgentCore، مما يتيح للوكلاء الإجابة على الأسئلة مع الاستشهاد بالمصادر في استدعاء واحد دون بناء خطوط معالجة معقدة.",
+      "deck": "تُحدث أداة Web Answer طريقة عمل وكلاء الذكاء الاصطناعي من خلال دمج البحث والتوليد والاستشهاد في خطوة واحدة، مما يقلل من تعقيد البنية التحتية المطلوبة.",
+      "summaryBullets": [
+        "توفر Web Answer إجابات مركّبة وموثقة بالمصادر من الويب في ثوانٍ معدودة.",
+        "تُخفي الأداة عن المطورين الحاجة لبناء خطوط معالجة للبحث والتوليد والاستشهاد يدوياً.",
+        "تعمل الأداة كمتصل مُدار (Managed Connector) ضمن بوابة AgentCore Gateway.",
+        "تتميز الأداة ببحث وكيلي (Agentic Search) يخطط للبحث وينفذه بالتوازي للتحقق من الحقائق."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق عام لأداة Web Answer",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة أمازون ويب سيرفيسز (AWS) رسمياً عن توفر أداة Web Answer بشكل عام ضمن منصة Amazon Bedrock AgentCore. تُمكّن هذه الأداة مطوري الوكلاء (Agents) من الحصول على إجابات مركّبة وموثقة بالمصادر للأسئلة المطروحة بلغة طبيعية، وذلك من خلال استدعاء أداة واحدة (Single Tool Call). وتهدف هذه الخطوة إلى تبسيط عملية تطوير الوكلاء الذين يحتاجون إلى الوصول إلى معلومات حديثة من الويب، حيث لم يعد المطورون مضطرين لبناء خطوط معالجة معقدة تشمل البحث، والاسترجاع، والتوليد، والاستشهاد بشكل منفصل. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/getting-started-with-web-answer-on-amazon-bedrock-agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "حل مشكلة تعقيد خطوط المعالجة",
+          "paragraphs": [
+            {
+              "text": "يواجه المطورون عادة تحديات كبيرة عند بناء وكلاء يعتمدون على مصادر الويب الحالية. يتطلب الأمر تقليدياً استدعاء واجهات برمجة تطبيقات للبحث، وتقييم مصداقية النتائج، وتنظيف محتوى الصفحات، ثم توجيه نموذج لغوي لتوليد الإجابة، وأخيراً هندسة استخراج الاستشهادات لضمان تتبع كل ادعاء إلى مصدره. كل خطوة من هذه الخطوات تمثل كوداً يجب صيانته ومصدراً محتملاً للأخطاء، مثل الهلوسة (Hallucination) عند نقص الأدلة، أو تقديم محتوى قديم، أو انقطاع الصلة بين الادعاء ومصدره. ويمكن الرجوع إلى Artificial Intelligence للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            },
+            {
+              "text": "تعمل أداة Web Answer على دمج هذه العملية الكاملة في طلب واحد. يرسل الوكيل سؤالاً، وتعيد الأداة إجابة موثقة بالمصادر خلال ثوانٍ. وهذا يقلل بشكل كبير من العبء التقني على المطورين ويحسن من موثوقية النتائج النهائية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل عبر بوابة AgentCore",
+          "paragraphs": [
+            {
+              "text": "يعمل النظام من خلال بوابة AgentCore Gateway، وهي ميزة ضمن Amazon Bedrock AgentCore. يرسل الوكيل سؤاله إلى البوابة، التي تقوم بمصادقة الاستدعاء باستخدام AWS Identity and Access Management (AWS IAM) أو JSON Web Token (JWT). ثم تستدعي البوابة أداة Web Answer، وهي متصل مُدار تملكه أمازون، باستخدام دور خدمة خاص بها. تقوم الأداة بتخطيط عمليات البحث، وتنفيذ عدة عمليات بحث بالتوازي، وقراءة الصفحات الرئيسية للتحقق من الحقائق. وإذا كانت الأدلة غير كافية، تعيد البحث مرة أخرى قبل كتابة الإجابة النهائية التي تربط كل ادعاء برابط مصدره. وتُعاد الإجابة مع استشهاداتها إلى الوكيل كنتيجة لأداة بروتوكول سياق النموذج (MCP).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مزايا Web Answer ومقارنتها بـ Web Search",
+          "paragraphs": [
+            {
+              "text": "تقدم أداة Web Answer إجابات مبنية على مصادر حديثة، حيث تنفذ عمليات بحث جديدة لكل سؤال، وتُعطى نموذجها التاريخ الحالي للبحث عن معلومات محدثة. كما تتميز بقدرة البحث الوكيل (Agentic Search)، حيث تخطط لعمليات البحث الخاصة بها، وتقرأ الصفحات للتحقق، وتقرر متى تكون الأدلة كافية للإجابة. وتُصمم الأداة مع تدابير حماية للذكاء الاصطناعي المسؤول.",
+              "links": []
+            },
+            {
+              "text": "تختلف Web Answer عن أداة Web Search المتاحة أيضاً على AgentCore. فعندما يستخدم المطور Web Search، يحصل على عناوين URLs مرتبة، وعناوين، ومقتطفات، وبيانات وصفية، ويبقى هو المسؤول عن التحكم في عملية التوليد باستخدام نموذج خاص به. أما Web Answer فتقوم بتشغيل النموذج، وحلقة الاسترجاع الوكيلية، والتوليد، والنسبة للمصادر نيابة عن المطور، لتقدم إجابة نهائية موثقة. وغالباً ما يستخدم المطورون كلا الأداتين معاً؛ حيث يستخدمون Web Search للمهام البحثية الواسعة التي تتطلب نتائج خام، وWeb Answer للأسئلة الواقعية المحددة التي تتطلب إجابة سريعة وموثقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خطوات الإعداد والتكامل",
+          "paragraphs": [
+            {
+              "text": "تتطلب عملية الإعداد منح دور الخدمة الخاص بالبوابة (Service Role) صلاحية استدعاء Web Answer. يجب إضافة سياسة تتضمن صلاحية bedrock-agentcore:InvokeWebAnswer إلى الدور، مع تحديد المعرف (ARN) الخاص بالأداة. كما يجب إضافة Web Answer كهدف (Target) على البوابة، حيث تتولى البوابة إدارة مخطط الأداة، وإدارة المعاملات، وحل نقاط النهاية، والمصادقة على الخلفية. ويمكن لمسؤول البوابة ضبط مرشح نطاقات (Domain Filter) على الهدف لتقييد البحث على نطاقات محددة أو استبعاد نطاقات معينة.",
+              "links": []
+            },
+            {
+              "text": "بعد اكتمال الإعداد، يمكن للوكلاء مثل Strands Agents أو LangChain اكتشاف الأداة من خلال قائمة الأدوات (tools/list) واستدعائها عبر tools/call. تدعم الأداة معاملات اختيارية مثل مرشح النطاقات، ونطاق تاريخ النشر، والبلد لتخصيص النتائج. وتعمل الأداة بشكل سلس مع أي عميل متوافق مع بروتوكول MCP.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون ويب سيرفيسز",
+        "Bedrock AgentCore",
+        "Web Answer",
+        "الذكاء الاصطناعي",
+        "وكلاء الذكاء الاصطناعي",
+        "MCP",
+        "البحث الوكيل"
+      ],
+      "entities": [
+        "Amazon Web Services (AWS)",
+        "Amazon Bedrock AgentCore",
+        "Web Answer",
+        "AgentCore Gateway",
+        "Strands Agents",
+        "Model Context Protocol (MCP)"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "6 نوفمبر 2026",
+      "modifiedLabel": "6 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 654
+    },
+    "en": {
+      "title": "Amazon Bedrock AgentCore Launches Web Answer Tool",
+      "description": "Amazon announces general availability of Web Answer on Amazon Bedrock AgentCore, providing synthesized and cited answers from web sources in a single tool call.",
+      "deck": "Amazon Bedrock AgentCore introduces Web Answer, a managed tool designed to streamline web retrieval pipelines by returning cited answers to natural-language questions in a single request.",
+      "summaryBullets": [
+        "Web Answer is now generally available on Amazon Bedrock AgentCore.",
+        "The tool collapses complex search, retrieval, synthesis, and citation pipelines into a single tool call.",
+        "Web Answer plans parallel searches, reads key pages, verifies facts, and ties claims to source URLs.",
+        "Developers can integrate the tool into an AgentCore Gateway and call it from compatible agents using the Model Context Protocol."
+      ],
+      "sections": [
+        {
+          "heading": "General Availability of Web Answer on AgentCore",
+          "paragraphs": [
+            {
+              "text": "Amazon has officially announced the general availability of Web Answer on Amazon Bedrock AgentCore, according to the AWS Machine Learning Blog. The new capability allows agent builders to receive synthesized and source-cited answers to natural-language questions through a single tool call, eliminating the need to construct and maintain custom search, retrieval, synthesis, and citation pipelines.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            },
+            {
+              "text": "Building agents that answer questions from current web sources historically required calling search APIs, deciding which results to trust, retrieving and cleaning page content, prompting a model for synthesis, and engineering custom citation extraction. These manual steps often introduce maintenance overhead, content staleness, and attribution drift. Web Answer aims to address these challenges by collapsing the entire pipeline into a single request that returns a cited response in seconds.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "How the Web Answer Pipeline Operates",
+          "paragraphs": [
+            {
+              "text": "When an agent sends a natural-language question to an AgentCore Gateway, the gateway authenticates the call via AWS Identity and Access Management or a JSON Web Token. The gateway then invokes Web Answer using its dedicated service role. Comprehensive implementation steps and structural definitions are detailed in the official Web Answer on Amazon Bedrock AgentCore documentation.",
+              "links": [
+                {
+                  "text": "Web Answer on Amazon Bedrock AgentCore documentation",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-target-connector-web-answer-tool.html"
+                }
+              ]
+            },
+            {
+              "text": "Upon receiving the request, Web Answer independently plans its searches, executes multiple queries in parallel, and reads web pages to check underlying facts. If the initial evidence proves insufficient, the tool executes additional searches before compiling an answer that links every claim to its corresponding source URL. The gateway then delivers the response and its associated citations back to the agent as a Model Context Protocol tool result.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Core Features and Responsible AI Safeguards",
+          "paragraphs": [
+            {
+              "text": "Web Answer functions as a managed gateway tool built to handle agentic search automatically. The system provides grounded and cited answers where each verified claim maps directly to an available source URL. Because Web Answer performs fresh searches for every submitted query and supplies the underlying model with the current date, agents can access up-to-date information.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, the tool is designed to manage its own search strategy, run parallel verification steps, and determine when sufficient evidence has been gathered to formulate an answer. In addition to these capabilities, Web Answer incorporates responsible AI safeguards to maintain reliability during operation.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Comparing Web Answer and Web Search on AgentCore",
+          "paragraphs": [
+            {
+              "text": "Amazon Bedrock AgentCore offers both Web Answer and Web Search tools to accommodate different integration requirements. The primary distinction between the two options centers on which entity manages the underlying model execution and retrieval loop.",
+              "links": []
+            },
+            {
+              "text": "While Web Search returns ranked URLs, titles, snippets, and metadata so developers retain full control over model synthesis and processing, Web Answer manages the model, the agentic retrieval loop, synthesis, and attribution entirely. Developers typically choose Web Search for broad research tasks requiring raw results, whereas Web Answer is suited for specific factual queries where a quick, cited answer is preferred without maintaining a dedicated retrieval pipeline.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and Gateway Configuration",
+          "paragraphs": [
+            {
+              "text": "To integrate Web Answer, administrators must provision an AgentCore Gateway in the appropriate region utilizing IAM inbound authentication. Detailed instructions for configuring the gateway infrastructure are available in the documentation for creating an Amazon Bedrock AgentCore Gateway.",
+              "links": []
+            },
+            {
+              "text": "Configuring the gateway requires appropriate permissions for the gateway service role to invoke the managed connector successfully. Additional guidance regarding required permissions and policy attachments can be found in the documentation covering the service role.",
+              "links": [
+                {
+                  "text": "service role",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-prerequisites-permissions.html#gateway-service-role-permissions"
+                }
+              ]
+            },
+            {
+              "text": "Once permissions are established, administrators add Web Answer as a connector target using its unique identifier. Outbound authentication is handled automatically by the gateway, which communicates with the backend using the designated service role without requiring manual credential storage.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Invoking Web Answer from an Agent",
+          "paragraphs": [
+            {
+              "text": "Agents discover the Web Answer tool through standard gateway discovery methods and invoke it via tool calls. This integration method supports various frameworks, including Strands Agents, LangChain, LangGraph, and CrewAI.",
+              "links": []
+            },
+            {
+              "text": "When encountering a question requiring current information, the agent calls the Web Answer tool to execute agentic search and retrieve a fully cited response. Optional parameters allow agents to apply domain filters, specify published-date ranges, and localize results by country as needed during execution.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AgentCore",
+        "Web Answer",
+        "Artificial Intelligence",
+        "AWS",
+        "Model Context Protocol",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Amazon",
+        "AWS",
+        "Amazon Bedrock",
+        "AgentCore"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 6, 2026",
+      "modifiedLabel": "November 6, 2026",
+      "readMinutes": 4,
+      "wordCount": 758
+    }
+  },
+  "datePublished": "2026-11-06T00:21:30.312665+03:00",
+  "dateModified": "2026-11-06T00:21:30.312665+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/getting-started-with-web-answer-on-amazon-bedrock-agentcore/hero.webp",
+    "card": "/forum/assets/posts/2026/11/getting-started-with-web-answer-on-amazon-bedrock-agentcore/card.webp",
+    "social": "/forum/assets/posts/2026/11/getting-started-with-web-answer-on-amazon-bedrock-agentcore/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق Web Answer على Bedrock AgentCore للبحث الذكي",
+      "en": "Amazon Bedrock AgentCore Launches Web Answer Tool"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22248-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/getting-started-with-web-answer-on-amazon-bedrock-agentcore/inline-01.webp",
+        "width": 1400,
+        "height": 366,
+        "alt": {
+          "ar": "أمازون تطلق Web Answer على Bedrock AgentCore للبحث الذكي",
+          "en": "Architecture diagram of a Web Answer request: an agent calls the Gateway, which authenticates the request and invokes the Web Answer connector, which plans and runs parallel web searches, verifies facts on key pages, and"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/getting-started-with-web-answer-on-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22248-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/getting-started-with-web-answer-on-amazon-bedrock-agentcore/",
+      "type": "official",
+      "title": "Getting started with Web Answer on Amazon Bedrock AgentCore"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/getting-started-with-web-answer-on-amazon-bedrock-agentcore",
+  "sourceTitle": "Getting started with Web Answer on Amazon Bedrock AgentCore",
+  "trendScore": 115.98,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-05T21:21:30+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/getting-started-with-web-answer-on-amazon-bedrock-agentcore.json"
+}
