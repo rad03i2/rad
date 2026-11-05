@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "8f24f3bf401edee420d3",
+  "slug": "cisco-watchguard-release-patches-sonicwall-won-fix-gms-flaws",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/cisco-watchguard-release-patches-sonicwall-won-fix-gms-flaws/",
+    "en": "/forum/en/apps/cisco-watchguard-release-patches-sonicwall-won-fix-gms-flaws/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cisco وWatchGuard تُصدر تصحيحات أمنية، وSonicWall تترك ثغرات GMS دون إصلاح",
+      "description": "أصدرت Cisco وWatchGuard تصحيحات لثغرات حرجة في منتجاتهما، بينما أعلنت SonicWall أنها لن تصلح ثغرتين في نظام GMS الذي انتهى دعمه، مما يترك المستخدمين عرضة لهجمات محتملة.",
+      "deck": "شهد الأسبوع الأخير نشاطاً أمنياً مكثفاً مع إصدار تصحيحات من كبرى شركات الأمن السيبراني، في حين يواجه مستخدمو SonicWall تحدياً جديداً بسبب توقف الدعم عن نظام إداري رئيسي يحتوي على ثغرات غير مُصلحة.",
+      "summaryBullets": [
+        "أصدرت Cisco تصحيحاً لثغرة تنفيذ كود عن بُعد في برنامج UCS Central Software.",
+        "عالجت WatchGuard ثغرة حرجة في نواة Linux وثغرات مصادقة في بوابات AuthPoint.",
+        "حذرت SonicWall من ثغرتين في نظام GMS الذي انتهى دعمه في أكتوبر 2025، مؤكدة عدم إصدار تصحيحات لهما.",
+        "حدّثت Cisco تنبيهها الخاص بثغرة Node2Shell لتشمل 19 منتجاً من منتجاتها.",
+        "أكدت الشركتان Cisco وWatchGuard عدم وجود استغلال معروف لهذه الثغرات في العالم الحقيقي حتى الآن."
+      ],
+      "sections": [
+        {
+          "heading": "تصحيحات Cisco وWatchGuard لثغرات حرجة",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركتا Cisco وWatchGuard هذا الأسبوع عن إصدار تصحيحات أمنية لمجموعة من الثغرات في منتجاتهما، شملت ثغرات تنفيذ كود عن بُعد (RCE) وثغرات في أنظمة المصادقة. أصدرت WatchGuard خمسة تنبيهات أمنية، أربعة منها تصف ثغرات ذات خطورة حرجة. كانت الأخطر منها هي CVE-2026-98432، التي حصلت على درجة CVSS تبلغ 9.8، وهي تتعلق بمشكلة استخدام بعد التحرير (use-after-free) في كود شبكات IPv4 داخل نواة نظام Linux. على الرغم من أن أنظمة Fireware OS وWatchGuard AP تحتوي على إصدارات النواة المتأثرة، إلا أن الشركة أكدت أنها غير عرضة لسلسلة استغلال RCE التي تفتحها هذه الثغرة. من ناحية أخرى، يعمل نظام Dimension على إصدار متأثر من Ubuntu، لكن WatchGuard أشارت إلى أن التصحيحات لم تكن متاحة بعد وقت النشر.",
+              "links": [
+                {
+                  "text": "WatchGuard",
+                  "url": "https://psirt.watchguard.com/"
+                }
+              ]
+            },
+            {
+              "text": "في السياق ذاته، أصدرت Cisco تصحيحاً لثغرة عالية الخطورة تحمل الرقم CVE-2026-76506 في برنامج UCS Central Software. تسمح هذه الثغرة للمهاجمين المصادقين بتنفيذ كود تعسفي عن بُعد أو تسريب معلومات حساسة. أكدت كل من WatchGuard وCisco في بياناتهما الرسمية أنهما غير على علم بأي استغلال معروف لهذه الثغرات في البيئات الإنتاجية أو على الإنترنت المفتوح حتى تاريخه.",
+              "links": [
+                {
+                  "text": "Cisco",
+                  "url": "https://sec.cloudapps.cisco.com/security/center/publicationListing.x"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "ثغرات المصادقة في بوابات AuthPoint",
+          "paragraphs": [
+            {
+              "text": "لم تقتصر جهود WatchGuard على معالجة ثغرة نواة Linux، بل شملت أيضاً معالجة ثلاث ثغرات حرجة في أنظمة المصادقة ضمن بوابات AuthPoint Authentication Gateway. تحمل هذه الثغرات أرقام CVE-2026-121639 وCVE-2026-121638 وCVE-2026-121640. بالإضافة إلى ذلك، عالج فريق الأمن في الشركة ثغرة عالية الخطورة تتعلق بتحقق السلامة (integrity validation) تحمل الرقم CVE-2026-121637. تُعد هذه البوابات عنصراً حاسماً في حماية الوصول إلى الشبكات، مما يجعل سرعة إصدار التصحيحات أمراً بالغ الأهمية لمنع أي محاولات اختراق مستهدفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحديث تنبيه Node2Shell لدى Cisco",
+          "paragraphs": [
+            {
+              "text": "في تطور متصل، قامت Cisco يوم الأربعاء بتحديث تنبيهها الأمني الخاص بثغرة CVE-2026-111497، المعروفة بأسماء Node2Shell وHTTP2Shell وBroccoli2Shell. هذه الثغرة هي خلل في الكتابة خارج الحدود (out-of-bounds write) في مكتبة ضغط البيانات Brotli من Google، والتي تم استغلالها فعلياً، مما دفع المؤسسات حول العالم إلى [scrambling to patch] (السعي المحموم لإصلاح) أنظمتها. وفقاً للتنبيه المحدّث، تأثرت 19 منتجاً من منتجات Cisco بهذه الثغرة، ولا تزال الشركة تحقق في عشرات المنتجات الأخرى المحتملة. كما أشار التقرير إلى أن هذا العيب الأمني يؤثر أيضاً على ما يقرب من اثني عشر منتجاً من منتجات شركة Splunk.",
+              "links": [
+                {
+                  "text": "scrambling to patch",
+                  "url": "https://www.securityweek.com/node2shell-brotli-flaw-triggers-patching-across-microsoft-node-js-python-packages/"
+                },
+                {
+                  "text": "Splunk",
+                  "url": "https://advisory.splunk.com/advisories/SVD-2026-1015"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "SonicWall تترك ثغرات GMS دون إصلاح",
+          "paragraphs": [
+            {
+              "text": "على النقيض من نهج الشركتين الأخريين، أصدرت SonicWall تحذيراً هذا الأسبوع بشأن منصتها الإدارية المركزية القديمة Global Management System (GMS). انتهى دعم هذا النظام (End-of-Life) في أكتوبر 2025، مما يعني توقف الشركة عن إصدار التحديثات الأمنية له. كشفت SonicWall أن النظام يعاني من ثغرتين ستبقى دون تصحيح. الثغرة الأولى، CVE-2026-109593، هي خلل حرج في قراءة الملفات يمكن استغلاله دون الحاجة إلى أي مصادقة، مما يفتح الباب أمام مهاجمين خارجيين للوصول إلى ملفات النظام.",
+              "links": [
+                {
+                  "text": "SonicWall",
+                  "url": "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0019"
+                }
+              ]
+            },
+            {
+              "text": "الثغرة الثانية، CVE-2026-109594، هي حقن SQL (SQL Injection) ذات خطورة متوسطة، تتيح للمهاجمين الوصول إلى قاعدة بيانات GMS وتعديل المعلومات المخزنة فيها. نظراً لأن النظام قد انتهى دعمه رسمياً، لن تقدم SonicWall أي تصحيحات لهذه الثغرات، مما يضع عبء الحماية على عاتق المستخدمين الذين لا يزالون يعتمدون على هذه المنصة لإدارة شبكاتهم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوصيات الأمنية للمؤسسات",
+          "paragraphs": [
+            {
+              "text": "يُنصح بإدارة أنظمة المعلومات في المؤسسات بتطبيق التصحيحات الصادرة عن Cisco وWatchGuard فوراً، خاصة تلك المتعلقة بثغرات المصادقة وتنفيذ الكود عن بُعد. بالنسبة لمستخدمي SonicWall، يجب تقييم المخاطر المرتبطة باستمرار استخدام نظام GMS، واتخاذ إجراءات تعويضية مثل عزل النظام عن الشبكات العامة أو استبداله بحلول إدارية حديثة مدعومة. كما يجب مراقبة أي نشاط غير معتاد على البوابات الأمنية التي تم تحديثها للتأكد من عدم وجود محاولات استغلال سابقة قبل إصدار التصحيحات.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cisco",
+        "WatchGuard",
+        "SonicWall",
+        "ثغرات أمنية",
+        "تصحيحات",
+        "Node2Shell",
+        "GMS",
+        "أمن سيبراني"
+      ],
+      "entities": [
+        "Cisco",
+        "WatchGuard",
+        "SonicWall",
+        "Splunk",
+        "Google",
+        "UCS Central Software",
+        "AuthPoint Authentication Gateway",
+        "Global Management System (GMS)"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "5 نوفمبر 2026",
+      "modifiedLabel": "5 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 661
+    },
+    "en": {
+      "title": "Cisco, WatchGuard Patch Bugs; SonicWall Skips GMS",
+      "description": "Cisco and WatchGuard released security patches for critical flaws, while SonicWall warned that legacy GMS vulnerabilities will remain unpatched.",
+      "deck": "Enterprise networking providers Cisco and WatchGuard have released fixes for multiple critical security vulnerabilities, while SonicWall confirmed two flaws in its legacy Global Management System platform will remain unpatched following its end-of-life status.",
+      "summaryBullets": [
+        "WatchGuard published five advisories addressing critical authentication bugs and a Linux kernel vulnerability across its product line.",
+        "Cisco remediated a high-severity code execution vulnerability in UCS Central Software and updated its tracking of the Node2Shell flaw.",
+        "SonicWall announced that two security bugs in its legacy Global Management System will not receive software fixes following its October 2025 EOL date.",
+        "Neither Cisco nor WatchGuard reported active exploitation in the wild for their newly disclosed product vulnerabilities."
+      ],
+      "sections": [
+        {
+          "heading": "Enterprise Security Overview",
+          "paragraphs": [
+            {
+              "text": "Enterprise technology vendors Cisco and WatchGuard have published security advisories to remediate high-severity and critical security flaws across their networking devices and administrative platforms. According to reports published by SecurityWeek, the updates address several severe software defects capable of facilitating remote code execution, authentication bypasses, and unauthorized data access within enterprise networks. Concurrently, network security provider SonicWall disclosed that its legacy centralized management platform contains two security vulnerabilities that will not receive official patches.",
+              "links": [
+                {
+                  "text": "SecurityWeek",
+                  "url": "https://www.securityweek.com/cisco-watchguard-release-patches-sonicwall-wont-fix-gms-flaws/"
+                }
+              ]
+            },
+            {
+              "text": "The simultaneous advisories highlight the differing approaches enterprise vendors take when balancing active software support against legacy infrastructure that has reached the end of its official lifecycle. While Cisco and WatchGuard have rolled out code updates to defend enterprise clients against potential intrusion vectors, organizations relying on legacy management software face elevated operational risk as unpatched vulnerabilities remain accessible to potential threat actors.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "WatchGuard Remediates Critical AuthPoint Flaws",
+          "paragraphs": [
+            {
+              "text": "Security provider WatchGuard released five distinct advisories detailing fixes for critical-severity and high-severity bugs across its hardware and software portfolio. The most severe issue disclosed by the vendor is CVE-2026-98432, which carries a Common Vulnerability Scoring System (CVSS) severity rating of 9.8. The vulnerability involves a use-after-free condition residing in the IPv4 networking code of the Linux kernel.",
+              "links": []
+            },
+            {
+              "text": "WatchGuard clarified that while Fireware OS and WatchGuard AP devices incorporate vulnerable versions of the Linux kernel, they are structured in a manner that prevents attackers from completing the remote code execution exploit chain opened by the underlying kernel flaw. However, the company noted that its Dimension management software runs on a vulnerable Ubuntu distribution for which patches are not yet available. Systems administrators seeking official updates are directed to check advisory updates issued by WatchGuard as technical remediations are finalized.",
+              "links": [
+                {
+                  "text": "WatchGuard",
+                  "url": "https://psirt.watchguard.com/"
+                }
+              ]
+            },
+            {
+              "text": "In addition to kernel-level fixes, WatchGuard issued urgent patches resolving three critical authentication vulnerabilities—designated as CVE-2026-121639, CVE-2026-121638, and CVE-2026-121640—alongside a high-severity integrity validation bug tracked as CVE-2026-121637. All four flaws affect the AuthPoint Authentication Gateway. WatchGuard stated that it is not aware of any active exploitation targeting these vulnerabilities in the wild prior to the release of the patches.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Cisco Fixes UCS Central Flaw and Expands Node2Shell Scope",
+          "paragraphs": [
+            {
+              "text": "Networking giant Cisco issued software fixes for CVE-2026-76506, a high-severity vulnerability in Cisco Unified Computing System (UCS) Central Software. If exploited, the vulnerability could enable an authenticated remote attacker to execute arbitrary code or exfiltrate confidential operational data from administrative management environments. Cisco confirmed that it has not found evidence of active in-the-wild exploitation for CVE-2026-76506.",
+              "links": []
+            },
+            {
+              "text": "Alongside its software release, Cisco updated its security advisory regarding CVE-2026-111497, a widely monitored out-of-bounds write defect in Google's Brotli data compression library commonly referred to as Node2Shell, HTTP2Shell, or Broccoli2Shell. Enterprise security teams have spent recent weeks scrambling to patch affected systems across diverse software ecosystems due to active exploit risks.",
+              "links": [
+                {
+                  "text": "scrambling to patch",
+                  "url": "https://www.securityweek.com/node2shell-brotli-flaw-triggers-patching-across-microsoft-node-js-python-packages/"
+                }
+              ]
+            },
+            {
+              "text": "Per Cisco's updated bulletin, at least 19 distinct Cisco products have been confirmed as vulnerable to Node2Shell, while internal teams continue auditing dozens of additional product lines. The scope of the underlying Brotli library bug extends well beyond network hardware, with nearly a dozen Splunk products also confirmed to be impacted by the flaw. Network administrators reviewing advisory publications from Cisco are encouraged to apply security updates as product investigations progress.",
+              "links": [
+                {
+                  "text": "Splunk",
+                  "url": "https://advisory.splunk.com/advisories/SVD-2026-1015"
+                },
+                {
+                  "text": "Cisco",
+                  "url": "https://sec.cloudapps.cisco.com/security/center/publicationListing.x"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "SonicWall Leaves Legacy GMS Flaws Unpatched",
+          "paragraphs": [
+            {
+              "text": "In contrast to vendors shipping proactive software updates, security equipment manufacturer SonicWall announced that two security vulnerabilities affecting its legacy Global Management System (GMS) will remain unpatched. The centralized management platform reached its formal End-of-Life (EOL) milestone in October 2025, bringing an end to routine software maintenance and vulnerability patches from the vendor.",
+              "links": []
+            },
+            {
+              "text": "The lingering security flaws pose notable operational risks to enterprise environments that have not yet decommissioned the legacy platform. The first issue, designated as CVE-2026-109593, is a critical-severity file read flaw that can be exploited by remote attackers without authentication. The second defect, tracked as CVE-2026-109594, is a medium-severity SQL injection vulnerability that could permit unauthorized users to view or alter confidential records stored within the GMS database. Specific technical details regarding the EOL software risk have been detailed in security notices published by SonicWall.",
+              "links": [
+                {
+                  "text": "SonicWall",
+                  "url": "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0019"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Enterprise Risk and Mitigation Strategies",
+          "paragraphs": [
+            {
+              "text": "The simultaneous security announcements underscore the importance of maintainable software inventories and prompt patch application across corporate infrastructure. Although neither Cisco nor WatchGuard reported zero-day exploitation for their newly patched vulnerabilities, administrative tools and management software frequently become high-value targets for attackers once public technical advisories are released.",
+              "links": []
+            },
+            {
+              "text": "Cybersecurity administrators are advised to prioritize patch deployment for Cisco UCS Central Software and WatchGuard AuthPoint Authentication Gateway. Organizations maintaining legacy SonicWall GMS installations are strongly urged to migrate to supported platforms or restrict network access to prevent exposure to unauthenticated file read exploits and database tampering.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cisco",
+        "WatchGuard",
+        "SonicWall",
+        "Cybersecurity",
+        "Patch Management",
+        "Vulnerabilities",
+        "Node2Shell"
+      ],
+      "entities": [
+        "Cisco",
+        "WatchGuard",
+        "SonicWall",
+        "Splunk",
+        "AuthPoint",
+        "UCS Central Software",
+        "Global Management System"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "November 5, 2026",
+      "modifiedLabel": "November 5, 2026",
+      "readMinutes": 5,
+      "wordCount": 883
+    }
+  },
+  "datePublished": "2026-11-05T16:10:05.534170+03:00",
+  "dateModified": "2026-11-05T16:10:05.534170+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/cisco-watchguard-release-patches-sonicwall-won-fix-gms-flaws/hero.webp",
+    "card": "/forum/assets/posts/2026/11/cisco-watchguard-release-patches-sonicwall-won-fix-gms-flaws/card.webp",
+    "social": "/forum/assets/posts/2026/11/cisco-watchguard-release-patches-sonicwall-won-fix-gms-flaws/social.jpg",
+    "alt": {
+      "ar": "Cisco وWatchGuard تُصدر تصحيحات أمنية، وSonicWall تترك ثغرات GMS دون إصلاح",
+      "en": "Cisco, WatchGuard Patch Bugs; SonicWall Skips GMS"
+    },
+    "credit": "SecurityWeek",
+    "sourceUrl": "https://www.securityweek.com/wp-content/uploads/2025/07/software-vulnerability-patch-update.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "SecurityWeek",
+      "url": "https://www.securityweek.com/cisco-watchguard-release-patches-sonicwall-wont-fix-gms-flaws/",
+      "type": "journalism",
+      "title": "Cisco, WatchGuard Release Patches; SonicWall Won’t Fix GMS Flaws"
+    }
+  ],
+  "sourceUrl": "https://www.securityweek.com/cisco-watchguard-release-patches-sonicwall-wont-fix-gms-flaws",
+  "sourceTitle": "Cisco, WatchGuard Release Patches; SonicWall Won’t Fix GMS Flaws",
+  "trendScore": 102.79,
+  "verification": {
+    "confidence": 0.87,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-11-05T13:10:05+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/cisco-watchguard-release-patches-sonicwall-won-fix-gms-flaws.json"
+}
