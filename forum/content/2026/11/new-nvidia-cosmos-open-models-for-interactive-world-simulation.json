@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "f25b9201ad6bdcc6fc96",
+  "slug": "new-nvidia-cosmos-open-models-for-interactive-world-simulation",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/new-nvidia-cosmos-open-models-for-interactive-world-simulation/",
+    "en": "/forum/en/ai/new-nvidia-cosmos-open-models-for-interactive-world-simulation/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إنفيديا تكشف عن نماذج Cosmos 3 المفتوحة لمحاكاة التفاعلات",
+      "description": "أطلقت إنفيديا أربعة نقاط تحقق مفتوحة ضمن عائلة Cosmos 3 لتوليد بيانات القيادة ومحاكاة الروبوتات التفاعلية، مما يوسع قدرات تطوير أنظمة الذكاء الاصطناعي.",
+      "deck": "أضافت إنفيديا أربعة نماذج مفتوحة الأوزان إلى منصة Cosmos 3، مصممة لتوليد مشاهد قيادة متعددة المستشعرات ومحاكاة روبوتية تفاعلية عالية الدقة.",
+      "summaryBullets": [
+        "إطلاق أربعة نقاط تحقق جديدة: Transfer-Auto, Sim-Auto, Sim-Transfer, و Sim-Bimanual.",
+        "جميع النماذج مبنية على Cosmos 3 Nano وتحتوي على 16 مليار معلمة قابلة للتدريب.",
+        "دعم توليد بيانات متزامنة للكاميرات و LiDAR لمحاكاة القيادة الذاتية.",
+        "تتيح النماذج محاكاة روبوتات ذات ذراعين وتحويل مدخلات المحاكاة الفيزيائية إلى فيديو واقعي.",
+        "النماذج مرخصة بموجب OpenMDW1.1 للسماح بالاستخدام التجاري وغير التجاري."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق عائلة نماذج Cosmos 3 الجديدة",
+          "paragraphs": [
+            {
+              "text": "أعلنت إنفيديا عن إضافة أربعة نقاط تحقق مفتوحة الأوزان جديدة إلى منصة تطوير نماذج العالم Cosmos 3. تهدف هذه الإضافات إلى تعزيز قدرات توليد محاكاة العالم التفاعلية وتوليد مشاهد قيادة ذاتية متعددة المستشعرات ومتعددة الزوايا. تأتي هذه الخطوة ضمن رؤية الشركة لتوفير بنية تحتية مفتوحة للباحثين والمطورين لبناء عوالم محاكاة أكثر ثراءً واستجابة.",
+              "links": [
+                {
+                  "text": "إنفيديا",
+                  "url": "https://huggingface.co/nvidia"
+                },
+                {
+                  "text": "Cosmos 3",
+                  "url": "https://huggingface.co/collections/nvidia/cosmos3"
+                }
+              ]
+            },
+            {
+              "text": "تشمل النماذج الأربعة: Cosmos3-Nano-Transfer-Auto لتوليد بيانات قيادة متعددة الزوايا مع ظروف جوية وإضاءة متنوعة، و Cosmos3-Nano-Sim-Auto لبث ملاحظات الكاميرا و LiDAR المتزامنة لمحاكاة القيادة، و Cosmos3-Nano-Sim-Transfer لتحويل ضوابط المحاكي والنص إلى فيديو واقعي، و Cosmos3-Nano-Sim-Bimanual للتنبؤ بالفيديو بناءً على أفعال الروبوت أو الكاميرا. جميع هذه النماذج هي أمثلة بعد التدريب (post-trained) من Cosmos 3 Nano وتتميز بـ 16 مليار معلمة قابلة للتدريب.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توليد بيانات القيادة الذاتية",
+          "paragraphs": [
+            {
+              "text": "يُعد نموذج Cosmos3-Nano-Transfer-Auto نموذجاً ثنائي الاتجاه لتوليد بيانات القيادة الاصطناعية بشكل غير متصل. يولد هذا النموذج فيديو متزامناً عبر ما يصل إلى 11 زاوية كاميرا، بما في ذلك الكاميرات العينية (fisheyes)، ويدعم التوليد المشترك لبيانات RGB و LiDAR. تعتمد الضوابط على خريطة سيناريو العالم (WSM) لكل كاميرا لتحديد بنية المشهد وحركة المرور، بينما توجه الأوامر النصية المظهر البصري.",
+              "links": []
+            },
+            {
+              "text": "يمكن للمطورين تغيير الظروف البيئية لتوسيع نطاق التدريب والتقييم، مع خيار استخدام صور RGB أولية لتثبيت مظهر المشهد. يستخدم التوليد المشترك لـ LiDAR ضوابط خريطة المدى (range-map) من الخرائط عالية الدقة (HD-map) المتوافقة مع الكاميرات. كما يخدم هذا النموذج كقاعدة لتكييف Cosmos مع ترتيب المستشعرات ومجال القيادة الخاص بالمستخدمين من خلال التدريب الإضافي على بياناتهم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المحاكاة التفاعلية والبث المباشر",
+          "paragraphs": [
+            {
+              "text": "يُمثل Cosmos3-Nano-Sim-Auto النسخة المبثوثة (streaming) المستخلصة سببياً من نموذج Transfer-Auto. يولد هذا النموذج مقاطع صغيرة متتالية من فيديو الكاميرا وبيانات LiDAR المتزامنة في خطوات إزالة الضوضاء القليلة، مستخدماً التاريخ المولد والضوابط المحدثة لدعم البث السريع والتشغيل التفاعلي الطويل. يتطلب التفاعل المغلق الحلقة وجود وقت تشغيل للمحاكاة ومُصيّر WSM لتحديث الضوابط من مدخلات القيادة.",
+              "links": []
+            },
+            {
+              "text": "من ناحية أخرى، يعمل نموذج Cosmos3-Nano-Sim-Transfer على تحويل ضوابط المحاكي الفيزيائي والنص إلى ملاحظات بصرية (RGB) يمكن للسياسات (policies) استهلاكها. في هذا السيناريو، يدير المحاكي الحسابات الفيزيائية والحالة، بينما يوجه النص المظهر، مما يسمح بفصل دقيق بين الفيزياء والمظهر البصري المولد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تطبيقات الروبوتات ذات الذراعين",
+          "paragraphs": [
+            {
+              "text": "يُصمم نموذج Cosmos3-Nano-Sim-Bimanual لمحاكاة كيفية تطور البيئة استجابةً لأفعال روبوتات ذات ذراعين. يدعم هذا النموذج المحاكاة التفاعلية للروبوتات من طراز YAM و AgiBot، سواء كانت مضبوطة بواسطة سياسة ذكاء اصطناعي أو عبر عصا تحكم يدوية. يبدأ المستخدم بصورة، ثم يحرّك الروبوت أو الكاميرا لتوليد الملاحظات التالية، مما يتيح تبديلاً سلساً بين تغييرات زاوية الرؤية وأفعال التلاعب بالأجسام.",
+              "links": []
+            },
+            {
+              "text": "تتطلب هذه النماذج بيئة تشغيل على Linux مع معالج رسومي من إنفيديا وأدوات Docker. تم اختبار إعداد vLLM-Omni المنشور على معالج GB200 واحد، مع التأكيد على أن هذا ليس مواصفة دنيا للذاكرة. يقوم الخادم بتنزيل الأوزان بينما يجلب العملاء مدخلات العينة، مما يسهل عملية التكامل في بيئات التطوير المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية التقنية والتراخيص",
+          "paragraphs": [
+            {
+              "text": "تعتمد نماذج Cosmos 3 على هيكل أساسي يجمع بين محولات (Mixture-of-Transformers) يربط شبكات معالجة النص وتوليد الصور عبر آلية الانتباه (attention). يتنبأ المولد بكل مقطع قصير بناءً على الأمر النصي والضوابط المتاحة والتاريخ المولد. تعمل النماذج على تمثيلات فيديو مضغوطة تسمى (latents)، حيث يمثل كل خطوة زمنية أربعة إطارات RGB بعد الصورة الأولية.",
+              "links": []
+            },
+            {
+              "text": "تُتاح جميع النماذج الأربعة بموجب ترخيص OpenMDW1.1، مما يسمح بالاستخدام التجاري وغير التجاري وفقاً لشروطه. تهدف إنفيديا من خلال فتح الأوزان وصفات التدريب الإضافي إلى توفير نقطة انطلاق مشتركة لتكييف النماذج ومقارنة الأساليب والمساهمة في التحسينات. تؤكد الشركة أن التحديات ما زالت قائمة، وتحتاج إلى قياس مدى دعم النماذج لتعلم السياسات وتقييمها وفهم حدودها.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "إنفيديا",
+        "Cosmos 3",
+        "الذكاء الاصطناعي",
+        "القيادة الذاتية",
+        "الروبوتات",
+        "محاكاة العالم",
+        "نماذج مفتوحة"
+      ],
+      "entities": [
+        "إنفيديا",
+        "Cosmos 3",
+        "Cosmos3-Nano-Transfer-Auto",
+        "Cosmos3-Nano-Sim-Auto",
+        "Cosmos3-Nano-Sim-Transfer",
+        "Cosmos3-Nano-Sim-Bimanual",
+        "OpenMDW1.1"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "5 نوفمبر 2026",
+      "modifiedLabel": "5 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 633
+    },
+    "en": {
+      "title": "NVIDIA Releases Four Cosmos 3 Open World Models",
+      "description": "NVIDIA introduces four 16B parameter Cosmos 3 Nano models for interactive multi-sensor driving simulation and bimanual robotics research.",
+      "deck": "NVIDIA has expanded its Cosmos 3 model suite with four open-weight checkpoints designed for interactive world simulation and robotics training.",
+      "summaryBullets": [
+        "NVIDIA added four 16B parameter open-weight checkpoints to its Cosmos 3 Nano family.",
+        "The models support multi-sensor autonomous driving data generation, physics-based rendering, and bimanual robotic simulation.",
+        "All released checkpoints use the OpenMDW1.1 license, permitting both commercial and non-commercial application.",
+        "The underlying Mixture-of-Transformers architecture uses temporal-causal attention and operates on compressed latent video representations."
+      ],
+      "sections": [
+        {
+          "heading": "Open Models for Interactive World Simulation",
+          "paragraphs": [
+            {
+              "text": "Artificial intelligence hardware and software developer nvidia has unveiled four new open-weight checkpoints for its Cosmos 3 world model development platform. Published on the Hugging Face Blog, the new releases expand the Cosmos 3 Nano model family to support interactive world simulation, physical robotics, and multi-sensor autonomous driving environments. All four checkpoints feature 16 billion trainable parameters and serve as post-trained examples of the Cosmos 3 Nano base architecture.",
+              "links": [
+                {
+                  "text": "nvidia",
+                  "url": "https://huggingface.co/nvidia"
+                },
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation"
+                }
+              ]
+            },
+            {
+              "text": "Distributed under the OpenMDW1.1 license, the models permit both commercial and non-commercial use. NVIDIA designed the release to offer researchers and developers a shared starting point for adapting models to custom sensors, comparing simulation methods, and testing autonomous control policies. The models address ongoing challenges in synthetic environment generation, ensuring visual appearance and 3D geometry agree across changing weather, lighting conditions, time of day, and camera viewpoints.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Multi-Sensor Autonomous Driving Datasets",
+          "paragraphs": [
+            {
+              "text": "Two of the new checkpoints target autonomous vehicle development through offline dataset generation and real-time streaming simulation. The offline model, designated Cosmos3-Nano-Transfer-Auto, functions as a bidirectional system capable of generating synchronized video across up to 11 camera views, including fisheye lenses. It supports joint RGB and LiDAR data generation, allowing developers to vary environmental conditions and extend evaluation coverage while maintaining precise spatial alignment.",
+              "links": []
+            },
+            {
+              "text": "Transfer-Auto uses per-camera World Scenario Map (WSM) controls to define road layout, scene structure, and traffic motion, while text prompts steer visual appearance. Initial RGB images can anchor visual style, and aligned HD-map range-map controls guide joint LiDAR output. NVIDIA positions Transfer-Auto as a foundation for adapting Cosmos to custom sensor setups, serving as the starting point for fine-tuning on specific camera layouts and domain environments.",
+              "links": []
+            },
+            {
+              "text": "For interactive simulation, NVIDIA released Cosmos3-Nano-Sim-Auto, the causally distilled streaming variant of Transfer-Auto. Sim-Auto streams successive small chunks of synchronized camera video and LiDAR in a few denoising steps. By combining rolling generated history with updated WSM driving controls, the distilled model enables fast interactive rollouts where a driving policy continuously receives updated sensor observations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Visual Rendering for Robotics and Physics Simulators",
+          "paragraphs": [
+            {
+              "text": "The release also expands simulation capabilities for physics software and mechanical robotics. The Cosmos3-Nano-Sim-Transfer checkpoint acts as a visual rendering engine for external simulators. In this pipeline, the host physics simulator calculates object contacts, motion, and physical state, while Sim-Transfer converts spatial controls and text prompts into photorealistic color video observations consumable by an autonomous agent policy.",
+              "links": []
+            },
+            {
+              "text": "Direct action-to-observation prediction is handled by Cosmos3-Nano-Sim-Bimanual, which models how an environment changes in response to robotic arm movements. Sim-Bimanual supports interactive two-arm simulation for YAM and AgiBot robot embodiments, driven by autonomous policies or human-operated joysticks. Users can supply an initial image and issue control sequences that seamlessly transition between camera viewpoint changes and robotic manipulation tasks.",
+              "links": []
+            },
+            {
+              "text": "To process physical commands accurately, Sim-Bimanual employs a defined action schema. A mixed-action example detailed in the technical report utilizes 59 control values, which are padded to 64 during model training. This schema standardizes coordinate frames, rotations, gripper calibration, validity masks, and control domains so that each value maps to the intended physical movement.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Technical Architecture and System Deployment",
+          "paragraphs": [
+            {
+              "text": "The Cosmos 3 family relies on a Mixture-of-Transformers backbone that links separate text-processing and visual-generation networks using attention mechanisms. The generator predicts short video segments from prompt inputs, spatial controls, and temporal history. The system processes video as compressed representations known as latents, refining noisy inputs into clear frames through multi-step denoising.",
+              "links": []
+            },
+            {
+              "text": "The architecture incorporates temporal-causal attention, allowing the generator to read available history and control inputs while blocking future target observations. A key/value (KV) cache retains attention context across steps to accelerate sequential rollouts. Within this frame structure, each latent time step corresponds to four RGB frames. Transfer-Auto predicts one latent step per chunk, whereas the optimized Sim-Bimanual setup generates two steps per chunk to minimize overall generation latency.",
+              "links": []
+            },
+            {
+              "text": "Running inference with the Cosmos 3 checkpoints requires a Linux operating system, an NVIDIA GPU, Docker, and the NVIDIA Container Toolkit. NVIDIA reported testing its published vLLM-Omni server configuration on a single GB200 accelerator, noting that this setup represents a test platform rather than a strict minimum memory specification. Readers searching for additional AI developments can navigate Back to Articles for broader technical coverage.",
+              "links": [
+                {
+                  "text": "Back to Articles",
+                  "url": "https://huggingface.co/blog"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "NVIDIA",
+        "Cosmos 3",
+        "World Models",
+        "Robotics",
+        "Autonomous Vehicles",
+        "Artificial Intelligence",
+        "Machine Learning"
+      ],
+      "entities": [
+        "NVIDIA",
+        "Cosmos3-Nano-Transfer-Auto",
+        "Cosmos3-Nano-Sim-Auto",
+        "Cosmos3-Nano-Sim-Transfer",
+        "Cosmos3-Nano-Sim-Bimanual",
+        "Hugging Face",
+        "YAM",
+        "AgiBot"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 5, 2026",
+      "modifiedLabel": "November 5, 2026",
+      "readMinutes": 4,
+      "wordCount": 770
+    }
+  },
+  "datePublished": "2026-11-05T23:01:29.556977+03:00",
+  "dateModified": "2026-11-05T23:01:29.556977+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/new-nvidia-cosmos-open-models-for-interactive-world-simulation/hero.webp",
+    "card": "/forum/assets/posts/2026/11/new-nvidia-cosmos-open-models-for-interactive-world-simulation/card.webp",
+    "social": "/forum/assets/posts/2026/11/new-nvidia-cosmos-open-models-for-interactive-world-simulation/social.jpg",
+    "alt": {
+      "ar": "إنفيديا تكشف عن نماذج Cosmos 3 المفتوحة لمحاكاة التفاعلات",
+      "en": "NVIDIA Releases Four Cosmos 3 Open World Models"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/677c471f8b4c4e271e57eaa5/rtmGVvFdD6JqkjBc26vsp.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation",
+      "type": "official",
+      "title": "New NVIDIA Cosmos 3 Open Models for Interactive World Simulation"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation",
+  "sourceTitle": "New NVIDIA Cosmos 3 Open Models for Interactive World Simulation",
+  "trendScore": 121.92,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-05T20:01:29+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/new-nvidia-cosmos-open-models-for-interactive-world-simulation.json"
+}
