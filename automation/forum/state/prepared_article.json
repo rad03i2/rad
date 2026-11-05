@@ -1,5 +1,330 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-05T09:30:04+00:00",
-  "last_published_story_id": "5523ef782a102f9407e4"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-05T09:39:02+00:00",
+  "target_publish_at": "2026-11-05T12:50:03.310458+03:00",
+  "story": {
+    "title": "GhostMap Android flaw lets malicious app trigger persistent boot loop",
+    "url": "https://www.bleepingcomputer.com/news/security/ghostmap-android-flaw-lets-malicious-app-trigger-persistent-boot-loop",
+    "domain": "bleepingcomputer.com",
+    "summary": "Attackers can force Android devices into a continuous boot loop using a specially crafted app that requires no permissions and only needs to be installed. [...]",
+    "published_at": "2026-11-05T09:18:29+00:00",
+    "discovered_at": "2026-11-05T09:37:34+00:00",
+    "source": {
+      "name": "BleepingComputer",
+      "feed": "https://www.bleepingcomputer.com/feed/",
+      "type": "journalism",
+      "trust": 0.88,
+      "priority": 22,
+      "defaultCategory": "security"
+    },
+    "category": "mobile",
+    "category_label": "الهواتف",
+    "score": 43,
+    "verification": {
+      "confidence": 0.88,
+      "reason": "trusted_journalism_single_source",
+      "official": false,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "dd3dbae0137e1e4cc887",
+    "trend": {
+      "score": 92.87,
+      "age_hours": 0.32,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 5
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://www.bleepingcomputer.com/news/security/ghostmap-android-flaw-lets-malicious-app-trigger-persistent-boot-loop/",
+      "name": "BleepingComputer",
+      "domain": null,
+      "kind": "journalism",
+      "type": "journalism",
+      "feed_title": "GhostMap Android flaw lets malicious app trigger persistent boot loop",
+      "title": "GhostMap Android flaw lets malicious app trigger persistent boot loop",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "ثغرة GhostMap تهدد أجهزة أندرويد بحلقة إعادة تشغيل لا نهائية",
+      "description": "اكتشفت Bitdefender ثغرة GhostMap التي تسمح لتطبيق خبيث بإجبار أجهزة أندرويد على إعادة التشغيل المتكررة دون الحاجة لأي أذونات، مما يعيق الوصول لوضع الأمان.",
+      "deck": "كشفت شركة Bitdefender عن ثغرة أمنية جديدة في نظام أندرويد تتيح للمهاجمين تعطيل الأجهزة عن طريق حلقة إعادة تشغيل مستمرة، في وقت لم تصدر فيه جوجل أي تصحيح حتى الآن.",
+      "summary_bullets": [
+        "تستغل الثغرة اختلاف تفسير ضغط الملفات بين مكتبتين في أندرويد لتسبب انهيار النظام.",
+        "التطبيق الضار لا يحتوي على أكواد تنفيذية ولا يطلب أذونات، ويكتفي بالتثبيت فقط.",
+        "أجهزة Pixel 10 تعرضت لحلقة إعادة تشغيل استمرت 110 مرات في الوضع العادي.",
+        "جوجل صنفت المشكلة كخارج النطاق ولم تصدر تصحيحاً، مما أثار قلق الباحثين.",
+        "الحلول المتاحة حالياً محدودة وتشمل إعادة ضبط المصنع أو استخدام ADB إذا كان مفعلاً مسبقاً."
+      ],
+      "sections": [
+        {
+          "heading": "اكتشاف ثغرة GhostMap في نظام أندرويد",
+          "paragraphs": [
+            {
+              "text": "كشفت شركة الأمن السيبراني الرومانية Bitdefender عن ثغرة أمنية خطيرة في نظام تشغيل أندرويد، أطلقت عليها اسم 'GhostMap'. تتيح هذه الثغرة للمهاجمين إجبار الأجهزة على الدخول في حلقة إعادة تشغيل مستمرة (Boot Loop)، مما يؤدي إلى تعطيل الجهاز تماماً عن العمل. ما يميز هذه الهجمة هو أنها لا تتطلب من التطبيق الضار الحصول على أي أذونات خاصة، ولا يحتاج حتى إلى أن يكون نشطاً أو مفتوحاً على الشاشة، بل يكفي مجرد تثبيته على الجهاز. ويمكن الرجوع إلى BleepingComputer للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/ghostmap-android-flaw-lets-malicious-app-trigger-persistent-boot-loop/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل الثغرة التقنية",
+          "paragraphs": [
+            {
+              "text": "تعود جذور المشكلة إلى اختلاف في طريقة تفسير ضغط الملفات (ZIP) بين مكتبتين مختلفتين في نظام أندرويد. هذا الاختلاف يسمح بتجاوز فحوصات الحجم، مما يؤدي إلى تعيين ملف في منطقة ذاكرة غير مخصصة له. عندما يحاول أي عملية في النظام قراءة هذا الملف، يرسل المعالج إشارة SIGBUS لإيقاف العملية بسبب الوصول إلى مساحة ذاكرة غير صالحة. وبما أن النظام يحاول قراءة الملف تلقائياً بعد التثبيت، فإن العملية تنهار، فيعيد النظام تشغيلها، لتكرار نفس الدورة في حلقة لا نهائية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تفاصيل الاكتشاف والتجربة العملية",
+          "paragraphs": [
+            {
+              "text": "اكتشف الباحثون في Bitdefender هذه الثغرة أثناء تحليلهم لبرمجية خبيثة تستهدف تطبيقات البنوك، حيث كانت تسبب انهيار أجهزة المحاكاة (Emulators) عند محاولة قراءة موارد التطبيق. لإثبات جدوى الهجوم، أنشأ الباحثون تطبيقاً تجريبياً لا يحتوي على أي أكواد تنفيذية ولا يطلب أذونات. عند تثبيته على جهاز Pixel 10 الذي يعمل بنظام أندرويد 17 مع تصحيحات أغسطس، بدأ الجهاز في إعادة التشغيل بعد ثانية واحدة فقط من التثبيت.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تأثير الهجوم على المستخدمين",
+          "paragraphs": [
+            {
+              "text": "أظهرت الاختبارات أن حلقة إعادة التشغيل استمرت 110 مرات في الوضع العادي، و72 مرة في وضع الأمان (Safe Mode). التحذير الأهم من Bitdefender هو أن هذه الحلقة تمنع المستخدمين من الوصول إلى وضع الأمان، وهو الخيار المعتاد لتشخيص المشكلات واستعادة عمل الجهاز. هذا يعني أن المستخدم قد يجد نفسه محاصراً في جهاز معطل تماماً دون سبل بسيطة للإصلاح من واجهة النظام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استجابة جوجل وموقفها من التصحيح",
+          "paragraphs": [
+            {
+              "text": "رغم خطورة الثغرة، تشير التقارير إلى أن جوجل كانت على علم بها منذ أغسطس الماضي. أرسل فريق Bitdefender تقريراً في 20 أغسطس، لكنهم تلقوا رداً بأن المشكلة 'غير قابلة للتكرار' وبالتالي لن يتم إصلاحها. وبعد إرسال نسخة موسعة في 25 أغسطس، صنفت جوجل المشكلة كخارج النطاق المحدد للتصحيحات الأمنية الحالية، مع الاحتفاظ بها للنظر فيها في تحديثات مستقبلية. حتى الآن، لم تصدر جوجل أي تصريح رسمي يوضح موعد التصحيح، وفقاً لما أوردته BleepingComputer.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/ghostmap-android-flaw-lets-malicious-app-trigger-persistent-boot-loop/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "سبل الحماية والإصلاح المتاحة",
+          "paragraphs": [
+            {
+              "text": "حالياً، لا توجد طريقة لمنع الهجوم بعد تثبيت التطبيق، حيث تفتقر أدوات الأمان الطرفية إلى الصلاحيات اللازمة لحظر التثبيت. الحل الوحيد للتخلص من الحلقة هو إعادة ضبط المصنع (Factory Reset) التي تمسح جميع البيانات المحلية، أو حذف الملف الخاطئ عبر واجهة ADB. لكن استخدام ADB يتطلب أن تكون خاصية التصحيح مفعلة مسبقاً على الجهاز، وأن يتم تنفيذ الأوامر قبل انهيار النظام، وهو أمر صعب التحقيق في حالة الهجوم النشط.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أندرويد",
+        "أمن سيبراني",
+        "Bitdefender",
+        "ثغرة أمنية",
+        "GhostMap",
+        "جوجل",
+        "هواتف ذكية"
+      ],
+      "entities": [
+        "Bitdefender",
+        "Android",
+        "Google",
+        "Pixel 10",
+        "GhostMap",
+        "BleepingComputer"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من تقرير BleepingComputer المنشور، مع التأكيد على أن جوجل لم تصدر تصحيحاً رسمياً بعد."
+    },
+    "en": {
+      "title": "GhostMap Flaw Triggers Persistent Android Boot Loops",
+      "description": "Bitdefender details GhostMap, an Android memory mapping vulnerability that allows zero-permission apps to force endless boot loops.",
+      "deck": "Cybersecurity researchers at Bitdefender have uncovered a flaw in Android's library architecture that allows malformed applications to force affected devices into continuous crash loops without requesting any permissions.",
+      "summary_bullets": [
+        "GhostMap stems from inconsistent ZIP compression handling between two core Android system libraries.",
+        "A specially crafted app requires zero permissions, no executable code, and no manual launch to trigger persistent crash loops.",
+        "The vulnerability causes the core system_server process to crash repeatedly, preventing normal device operation and Safe Mode access.",
+        "Remediation is currently limited to executing a full factory reset or deleting the malformed package via Android Debug Bridge.",
+        "Google initially designated the flaw as out of scope for immediate security patches, reserving it for future consideration."
+      ],
+      "sections": [
+        {
+          "heading": "Discovery of the GhostMap Vulnerability",
+          "paragraphs": [
+            {
+              "text": "Cybersecurity researchers at Romanian firm Bitdefender have disclosed details surrounding a vulnerability dubbed GhostMap, which enables malicious applications to force Android devices into a continuous boot loop. The flaw was initially identified while Bitdefender analysts were investigating an Android banking trojan that repeatedly crashed their internal emulators whenever the software attempted to read specific application resources.",
+              "links": []
+            },
+            {
+              "text": "According to the security team's findings, GhostMap arises from structural discrepancies between two internal Android system libraries. These libraries handle and interpret ZIP compression methods differently. Because application packages on Android operate as modified ZIP files, this compression mismatch allows a specially crafted malformed APK file to bypass standard file size validation checks. Consequently, the operating system attempts to map the file into an unallocated region of system memory beyond the file's actual boundaries.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Zero-Permission Denial-of-Service Mechanism",
+          "paragraphs": [
+            {
+              "text": "When an affected system process attempts to read data from the unallocated memory space created by the malformed package, the central processing unit triggers a SIGBUS signal. This CPU signal is designed to halt any process attempting to access an invalid memory space. In the case of GhostMap, the memory reading failure causes an immediate crash of whichever process touches the malformed file.",
+              "links": []
+            },
+            {
+              "text": "To demonstrate the impact of this denial-of-service vulnerability, Bitdefender engineered a proof-of-concept application containing no executable code. The application requests zero permissions during installation and does not require the target user to open or launch it. Instead, the malicious package includes a resource that the essential Android core service system_server automatically attempts to inspect immediately following package installation.",
+              "links": []
+            },
+            {
+              "text": "When system_server reads the resource, it triggers the memory mapping flaw and receives a SIGBUS signal, causing the vital system process to crash and restart. Upon rebooting, system_server automatically attempts to re-read the same resource, triggering an identical crash and establishing a persistent, automated denial-of-service loop.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Test Results and Safe Mode Disruptions",
+          "paragraphs": [
+            {
+              "text": "During laboratory evaluations, Bitdefender tested the GhostMap exploit using a Pixel 10 device running Android 17 equipped with the August 5 security patch level. Following package installation, the target device initiated the crash sequence approximately one second after the installation process completed. The crash loop repeated 110 times while operating in standard boot mode and maintained 72 crash cycles when forced into safe mode.",
+              "links": []
+            },
+            {
+              "text": "The continuous restarting of system_server severely impacts device functionality and usability. Bitdefender warned that the persistent crash loop prevents users from effectively accessing Android's built-in Safe Mode. Normally, Safe Mode provides an isolated environment allowing users to troubleshoot system instability or uninstall problematic applications. Under a GhostMap attack, the automated crash loop disrupts Safe Mode before standard removal tools can be accessed.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Remediation Methods and Recovery Limitations",
+          "paragraphs": [
+            {
+              "text": "Resolving a GhostMap crash loop currently requires invasive or highly technical recovery interventions. According to the research findings, device owners affected by the persistent boot loop have only two potential recovery paths. The primary non-technical option is executing a complete factory reset, which restores the hardware to factory settings but permanently erases all locally stored user data.",
+              "links": []
+            },
+            {
+              "text": "Alternatively, technical users can stop the automated crash loop by removing the malformed application file via the Android Debug Bridge (ADB) utility. However, this technical mitigation requires pre-existing configurations; the debugging feature must already be enabled on the target device prior to the attack. Furthermore, administrators utilizing ADB must execute cleanup scripts within a narrow window of opportunity before the operating system triggers another crash cycle.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Google Response and Industry Context",
+          "paragraphs": [
+            {
+              "text": "Bitdefender initially reported the GhostMap vulnerability to Google on August 20. However, Google closed the ticket with a response of 'Won’t Fix (Not Reproducible),' designating the issue as outside the scope of its security fixes. Bitdefender submitted an expanded technical report on August 25, believing the initial report was misclassified, but Google maintained that the issue did not warrant an immediate security update, though the company reserved it for potential consideration in a future update release.",
+              "links": []
+            },
+            {
+              "text": "With official operating system patches pending, Bitdefender notes that protection mechanisms remain limited. Third-party security applications running on the device can potentially detect malformed packages during the installation phase and display warnings. However, because third-party security software lacks administrative permissions to block package installations outright, users must manually heed security warnings before installation completes. The issue highlights broader Android stability vulnerabilities, reminiscent of previous system disruption exploits detailed by security outlets like BleepingComputer, such as the New Android SMS of Death exploit can remotely crash unpatched phones.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/ghostmap-android-flaw-lets-malicious-app-trigger-persistent-boot-loop/"
+                },
+                {
+                  "text": "New Android SMS of Death exploit can remotely crash unpatched phones",
+                  "url": "https://www.bleepingcomputer.com/news/security/new-android-sms-of-death-exploit-can-remotely-crash-unpatched-phones/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Android",
+        "Bitdefender",
+        "GhostMap",
+        "Vulnerability",
+        "Cybersecurity",
+        "Google",
+        "Mobile Security"
+      ],
+      "entities": [
+        "Android",
+        "Bitdefender",
+        "Google",
+        "Pixel 10"
+      ],
+      "article_type": "news",
+      "confidence_note": "Article is entirely based on the provided source material from BleepingComputer detailing Bitdefender's GhostMap report."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 553,
+      "word_count_en": 848
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "fbaa86a829ad59fd10c5",
+      "title": "A thousand fewer paths to root",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "dd3dbae0137e1e4cc887",
+      "title": "GhostMap Android flaw lets malicious app trigger persistent boot loop",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 553,
+          "word_count_en": 848
+        }
+      ]
+    }
+  ],
+  "slug": "ghostmap-android-flaw-lets-malicious-app-trigger-persistent-boot-loop",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/ghostmap-android-flaw-lets-malicious-app-trigger-persistent-boot-loop/hero.webp",
+    "card": "/forum/assets/posts/2026/11/ghostmap-android-flaw-lets-malicious-app-trigger-persistent-boot-loop/card.webp",
+    "social": "/forum/assets/posts/2026/11/ghostmap-android-flaw-lets-malicious-app-trigger-persistent-boot-loop/social.jpg",
+    "alt": {
+      "ar": "ثغرة GhostMap تهدد أجهزة أندرويد بحلقة إعادة تشغيل لا نهائية",
+      "en": "GhostMap Flaw Triggers Persistent Android Boot Loops"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/10/14/android.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
