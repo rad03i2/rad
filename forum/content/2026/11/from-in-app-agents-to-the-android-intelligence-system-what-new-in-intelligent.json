@@ -1,0 +1,420 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "019f4212ce24f09b343c",
+  "slug": "from-in-app-agents-to-the-android-intelligence-system-what-new-in-intelligent",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/from-in-app-agents-to-the-android-intelligence-system-what-new-in-intelligent/",
+    "en": "/forum/en/ai/from-in-app-agents-to-the-android-intelligence-system-what-new-in-intelligent/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أندرويد تكشف أدوات التطبيقات الذكية في قمة المطورين",
+      "description": "تكشف أندرويد عن وكلاء داخل التطبيقات ونظام ذكاء موحّد، مع أدوات جديدة للتنفيذ على الجهاز وربط التطبيقات بـGemini و«بحث Google».",
+      "deck": "استعرضت أندرويد في قمة المطورين أدوات جديدة لبناء تطبيقات قادرة على فهم أهداف المستخدم وتنفيذ مهام متعددة، داخل التطبيق وعبر تطبيقات أخرى.",
+      "summaryBullets": [
+        "Android MCP يربط قدرات التطبيقات بوكلاء الذكاء الاصطناعي على الأجهزة.",
+        "واجهات ML Kit GenAI الجديدة تدعم بناء سير عمل وكيلة بالكامل على الجهاز.",
+        "LiteRT في Google Play services يشغّل النماذج المخصصة مع تقليص حجم حزمة التطبيق.",
+        "منصة Connected Apps تتيح الوصول إلى المستخدمين عبر Gemini و«بحث Google»."
+      ],
+      "sections": [
+        {
+          "heading": "من النقر داخل التطبيقات إلى تنفيذ الأهداف",
+          "paragraphs": [
+            {
+              "text": "قالت Android Developers إن المستخدمين في عصر الذكاء الاصطناعي لا يكتفون بالتنقل بين شاشات التطبيقات، بل يعبّرون عن أهداف عامة ويتوقعون من وكلاء مثل Gemini إنجاز سير عمل متعدد الخطوات. وقد تمتد هذه المهام عبر أكثر من تطبيق على الجهاز، مثل مراجعة التقويم وحجز رحلة وإرسال وقت الوصول إلى جهة اتصال.",
+              "links": [
+                {
+                  "text": "Android Developers",
+                  "url": "https://developer.android.com/blog/posts/android-intelligence-system-in-app-agents-ads"
+                }
+              ]
+            },
+            {
+              "text": "وتقدم الشركة «نظام الذكاء في أندرويد» بوصفه أساساً نظامياً يربط الوكلاء بالتطبيقات مع توفير آليات لحماية المستخدمين. ويعمل النظام عبر منظومة أجهزة تشمل الهواتف والأجهزة القابلة للارتداء ونظارات الواقع الممتد والتلفزيونات والسيارات.",
+              "links": []
+            },
+            {
+              "text": "يقسم النظام المساعدة إلى نمطين. في المساعدة المطلوبة، يطلب المستخدم من الوكيل تنفيذ هدف محدد، فينسق الوكيل الأدوات اللازمة بين التطبيقات. أما المساعدة الاستباقية فتتوقع الاحتياج وتعرض اقتراحات سياقية في شاشة القفل والإشعارات ولوحات المفاتيح وداخل التطبيقات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Android MCP يفتح قدرات التطبيقات أمام الوكلاء",
+          "paragraphs": [
+            {
+              "text": "تمنح أندرويد المطورين أدوات مبنية على معيار MCP المألوف للتحكم في كيفية اتصال تطبيقاتهم بنظام الذكاء. ويأتي Android MCP، المدعوم بمكتبة AppFunctions من Jetpack، كإطار موحّد لاستدعاء الأدوات، بحيث يمكن ربط التطبيق بوكلاء مؤهلين على الجهاز، سواء كان الوكيل النظامي أو وكيلاً مدمجاً داخل التطبيق.",
+              "links": [
+                {
+                  "text": "Android MCP",
+                  "url": "https://developer.android.com/ai/appfunctions"
+                }
+              ]
+            },
+            {
+              "text": "وتوصي أندرويد بالمسار المحلي عندما يعتمد مسار الاستخدام على التشفير من طرف إلى طرف أو على بيانات حساسة موجودة في الجهاز، أو عندما يحتاج التطبيق إلى المستشعرات والعتاد، أو إلى تنفيذ العمليات محلياً، أو عندما لا تتوافر نقطة نهاية خادمية. وفي الحالات التي تتطلب وصولاً عبر منصات متعددة، يمكن للمطورين استخدام خادم remote MCP.",
+              "links": []
+            },
+            {
+              "text": "وإذا لم يدمج التطبيق هذه الأدوات، يستطيع الوكيل اللجوء إلى إطار Computer Control في أندرويد لإتمام بعض الإجراءات من خلال التحكم بواجهة الاستخدام، من دون تكامل مباشر من جانب التطبيق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "وكلاء محليون ونماذج مخصصة داخل التطبيق",
+          "paragraphs": [
+            {
+              "text": "توسّع أندرويد واجهات ML Kit GenAI لتتيح بناء سير عمل وكيلة بالكامل على الجهاز، مستفيدة من قدرات Gemini Nano 4 الجديدة، ومنها استدعاء الدوال. وتشمل الأدوات Prompt API للوصول المباشر إلى النموذج، وAgentic API التي تنفذ الدوال تلقائياً، وتحفظ سجل المحادثة، وتدير حلقة التنسيق، وتضم حواجز حماية تلقائية.",
+              "links": []
+            },
+            {
+              "text": "كما تعرض الشركة تحديثات أخرى لواجهات الذكاء الاصطناعي المحلية، من بينها نمط التفكير والتعليمات النظامية في Prompt API، وواجهة Embeddings التجريبية المدعومة بنموذج EmbeddingGemma 2. وتقول أندرويد إن Gemini Nano 4، المبني على Gemma 4، يحقق تسارعاً يصل إلى ثلاثة أضعاف في الاستدلال ويخفض استخدام الذاكرة بما يصل إلى أربعة أضعاف مقارنة بالإصدار السابق، وفق اختبارات داخلية.",
+              "links": []
+            },
+            {
+              "text": "وبالنسبة إلى النماذج المخصصة، يتيح LiteRT في Google Play services أداءً أسرع عبر وحدة معالجة الرسوميات، مع إزالة بيئة التشغيل من حزمة التطبيق وتقليص حجمها بنحو 8 ميغابايت. وأصبح هذا الخيار متاحاً أيضاً لنظامي Wear OS وAndroid Automotive OS.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "من المعالجة المحلية إلى الخدمات السحابية",
+          "paragraphs": [
+            {
+              "text": "تقدم Firebase AI Logic مساراً هجيناً للتطبيقات التي تجمع بين المعالجة المحلية والسحابية. ويمكن للمطور استدعاء نماذج سحابية متقدمة مثل Gemini 4، مع استخدام Gemini Nano على الجهاز عندما يكون متاحاً. ولحماية التطبيق وضبط تكاليف التشغيل، تشير أندرويد إلى أدوات مثل Firebase App Check وقوالب المطالبات الموجودة على الخادم وحدود الإنفاق.",
+              "links": []
+            },
+            {
+              "text": "وفي عرض القمة، ظهر مساعد حجز مباشر مبني باستخدام Jetpack Compose. وأصبح مُصيّر A2UI Compose متاحاً بنسخة ألفا، ليسمح للوكلاء بإرسال واجهات Compose أصلية تفاعلية وغنية عبر بروتوكول JSON، بحيث يستطيع الوكيل بناء الواجهة بدلاً من الاكتفاء بإرجاع نص.",
+              "links": []
+            },
+            {
+              "text": "وتوضح أمثلة أخرى طريقة جمع هذه الأدوات في تطبيقات واقعية، من مدرس لغة للواقع الممتد يستخدم واجهات التعرف على الكلام والترجمة الصوتية وتحويل النص إلى كلام، إلى مساعد قيادة بالذكاء الاصطناعي لبطولة Formula E يعتمد على Gemini Nano والوصول المباشر إلى النموذج وAgent Development Kit.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "وصول التطبيقات إلى Gemini و«بحث Google»",
+          "paragraphs": [
+            {
+              "text": "أعلنت أندرويد أيضاً منصة Connected Apps Platform للوصول إلى المستخدمين ذوي النية العالية عبر Gemini و«بحث Google». وتجمع المنصة بين Android MCP للتنفيذ الأصلي على الجهاز وخوادم remote MCP للوصول إلى منصات متعددة.",
+              "links": [
+                {
+                  "text": "Connected Apps Platform",
+                  "url": "https://developer.android.com/ai/intelligence-system"
+                }
+              ]
+            },
+            {
+              "text": "يمكن للمطورين بدء البناء والاختبار محلياً عبر وضع المطور في تطبيقات Gemini، ثم الانضمام إلى قائمة انتظار المعاينة عند الاستعداد للإنتاج. وتوضح أندرويد أن سعة المعاينة محدودة حالياً بتطبيقات جاهزة للإنتاج ضمن فئات مدعومة، على أن يتوسع الوصول الذاتي لاحقاً.",
+              "links": []
+            },
+            {
+              "text": "وتدعو الشركة المطورين إلى متابعة الكلمة الرئيسية لقمة Android Developer Summit والاطلاع على 10 جلسات جديدة متاحة عند الطلب، إلى جانب الموارد الخاصة بدمج التطبيقات مع نظام الذكاء. وتوفر هذه المواد شرحاً لبناء التطبيقات الذكية واختبارها ونشرها باستخدام الأدوات والواجهات التي أُعلن عنها.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أندرويد",
+        "الذكاء الاصطناعي",
+        "Gemini",
+        "تطوير التطبيقات",
+        "ML Kit",
+        "Android MCP"
+      ],
+      "entities": [
+        "Google",
+        "Android",
+        "Android Developers",
+        "Gemini",
+        "ML Kit GenAI",
+        "LiteRT",
+        "Firebase AI Logic",
+        "Connected Apps Platform"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "6 نوفمبر 2026",
+      "modifiedLabel": "6 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 745
+    },
+    "en": {
+      "title": "Android expands intelligent apps with agents and MCP",
+      "description": "Android introduces new agent and AI tools, including Android MCP, ML Kit GenAI APIs and A2UI, for smarter apps across devices.",
+      "deck": "Google has outlined new tools for developers building agentic Android experiences, from system-level app integration to on-device AI workflows. The updates were presented as part of the Android Developer Summit.",
+      "summaryBullets": [
+        "Android MCP lets qualified agents call app capabilities through a unified Android framework.",
+        "ML Kit GenAI APIs add tools for on-device agentic workflows and function execution.",
+        "A2UI Compose renderer enables agents to stream native interactive interfaces.",
+        "Connected Apps Platform extends app reach across Gemini and Google Search."
+      ],
+      "sections": [
+        {
+          "heading": "Android shifts from app navigation to goal completion",
+          "paragraphs": [
+            {
+              "text": "Android is adding new ways for developers to build intelligent, agentic experiences as users increasingly express goals instead of navigating through individual app screens. In a post published by Android Developers, the company said AI agents such as Gemini are expected to complete multi-step workflows, including tasks that span several apps on a device.",
+              "links": [
+                {
+                  "text": "Android Developers",
+                  "url": "https://developer.android.com/blog/posts/android-intelligence-system-in-app-agents-ads"
+                }
+              ]
+            },
+            {
+              "text": "The Android intelligence system is described as the foundation for connecting agents with apps while protecting users. It is designed to support both prompted assistance, when a user directly asks an agent to complete a task, and proactive assistance, when the system surfaces contextual suggestions in places such as lock screens, notifications, virtual keyboards and apps.",
+              "links": [
+                {
+                  "text": "Android intelligence system",
+                  "url": "https://developer.android.com/ai/intelligence-system"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Android MCP provides a native integration path",
+          "paragraphs": [
+            {
+              "text": "A central part of the update is Android MCP, a unified tool-calling framework powered by the AppFunctions Jetpack library. It allows qualified AI agents on a device, including the system agent and an app’s own on-device agent, to access capabilities exposed by Android applications.",
+              "links": [
+                {
+                  "text": "Android MCP",
+                  "url": "https://developer.android.com/ai/appfunctions"
+                }
+              ]
+            },
+            {
+              "text": "Google presents Android MCP as a complement to remote MCP servers rather than a replacement. The Android-native approach is recommended for user journeys involving end-to-end encryption, sensitive local data, device sensors or hardware, local execution, or situations where an app has no server endpoint. Developers can also use remote MCP when they need cross-platform reach.",
+              "links": [
+                {
+                  "text": "remote MCP",
+                  "url": "https://developers.google.com/connected-apps/mcp"
+                },
+                {
+                  "text": "MCP",
+                  "url": "https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro"
+                }
+              ]
+            },
+            {
+              "text": "For actions that do not have app-side integration, agents can fall back to Android’s Computer Control framework. The company says this gives developers multiple routes for enabling task completion, with direct tool integration intended to provide faster and more reliable execution.",
+              "links": [
+                {
+                  "text": "Computer Control framework",
+                  "url": "https://developer.android.com/ai/computer-control"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "On-device agents gain new ML Kit capabilities",
+          "paragraphs": [
+            {
+              "text": "The summit update also expands the tools available for building AI features directly inside Android apps. ML Kit GenAI APIs now include building blocks for agentic workflows that run on-device, alongside direct model access through the Prompt API and a new Agentic API.",
+              "links": [
+                {
+                  "text": "ML Kit GenAI APIs",
+                  "url": "https://developer.android.com/"
+                }
+              ]
+            },
+            {
+              "text": "According to Android Developers, the Agentic API can automatically execute functions, preserve conversation history, manage the orchestration loop and apply guardrails. The company also highlighted additional on-device capabilities, including thinking mode and system instructions for the Prompt API, as well as an alpha Embeddings API powered by EmbeddingGemma 2.",
+              "links": []
+            },
+            {
+              "text": "Google also described Gemini Nano 4, built on Gemma 4, as using per-layer embeddings, quantization-aware training and multi-token prediction. In the company’s internal testing benchmarks, the model delivered up to a threefold inference speedup and used up to four times less memory than the previous Gemini Nano version.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Custom models and hybrid cloud processing",
+          "paragraphs": [
+            {
+              "text": "Developers bringing their own machine-learning models can use LiteRT in Google Play services for faster GPU performance without including the runtime in the application package. Android Developers said this can make an APK about 8 MB smaller. The option is also available on Wear OS and Android Automotive OS.",
+              "links": []
+            },
+            {
+              "text": "For applications that combine local and cloud processing, Firebase AI Logic offers a hybrid approach. Developers can call advanced cloud models such as Gemini 4 while using on-device inference with Gemini Nano when it is available. The related production controls include Firebase App Check, server prompt templates and Firebase spend caps.",
+              "links": []
+            },
+            {
+              "text": "The company pointed to several possible applications for these tools, including an XR language teacher that combines speech recognition, speech translation and text-to-speech APIs, and a Formula E AI co-driver built with Gemini Nano, ML Kit direct model access and the Agent Development Kit.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "A2UI lets agents generate native Compose interfaces",
+          "paragraphs": [
+            {
+              "text": "The Jetpack Compose A2UI renderer is now available in alpha, giving agents a way to stream rich, interactive native Compose interfaces through a JSON protocol. Android Developers showcased the technology in a live booking assistant demo and described it as a way for agents to “speak UI” inside an app.",
+              "links": []
+            },
+            {
+              "text": "The approach is intended to connect an agent’s reasoning and actions with interface elements that users can interact with, rather than limiting the agent to text responses. Developers can review the implementation resources and provide feedback while the renderer remains in alpha.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Connected Apps extend reach to Gemini and Search",
+          "paragraphs": [
+            {
+              "text": "Google is also opening a path for apps to reach users across Gemini and Google Search through the Connected Apps Platform. The platform combines Android MCP for native on-device execution with remote MCP servers for cross-platform access, allowing users to move from asking questions to taking actions.",
+              "links": [
+                {
+                  "text": "Connected Apps Platform",
+                  "url": "https://developer.android.com/ai/appfunctions"
+                }
+              ]
+            },
+            {
+              "text": "Developers can build and test locally with Gemini Apps Developer Mode. Production access currently requires joining a preview waitlist, and Android Developers said capacity is limited to selected production-ready apps in supported categories, with broader self-serve access planned for later.",
+              "links": []
+            },
+            {
+              "text": "The company has also released 10 new on-demand sessions covering the latest intelligent-app experiences. Together, the new system integrations, on-device APIs, cloud tools and interface capabilities outline Google’s effort to make Android apps accessible to agents while preserving native execution and user-facing controls.",
+              "links": [
+                {
+                  "text": "10 new on-demand sessions",
+                  "url": "https://goo.gle/ADS26-Intelligent-Apps"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Android",
+        "artificial intelligence",
+        "AI agents",
+        "Gemini",
+        "Android MCP",
+        "ML Kit",
+        "Jetpack Compose"
+      ],
+      "entities": [
+        "Google",
+        "Android",
+        "Gemini",
+        "Android MCP",
+        "ML Kit GenAI APIs",
+        "LiteRT",
+        "Firebase AI Logic",
+        "Jetpack Compose"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 6, 2026",
+      "modifiedLabel": "November 6, 2026",
+      "readMinutes": 4,
+      "wordCount": 876
+    }
+  },
+  "datePublished": "2026-11-06T00:01:30.098099+03:00",
+  "dateModified": "2026-11-06T00:01:30.098099+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/from-in-app-agents-to-the-android-intelligence-system-what-new-in-intelligent/hero.webp",
+    "card": "/forum/assets/posts/2026/11/from-in-app-agents-to-the-android-intelligence-system-what-new-in-intelligent/card.webp",
+    "social": "/forum/assets/posts/2026/11/from-in-app-agents-to-the-android-intelligence-system-what-new-in-intelligent/social.jpg",
+    "alt": {
+      "ar": "أندرويد تكشف أدوات التطبيقات الذكية في قمة المطورين",
+      "en": "Android expands intelligent apps with agents and MCP"
+    },
+    "credit": "Android Developers",
+    "sourceUrl": "https://developer.android.com/static/blog/assets/Googlebook_Blog_Strapi_4a4a7d3291_Z1ReCnu.webp",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/from-in-app-agents-to-the-android-intelligence-system-what-new-in-intelligent/inline-01.webp",
+        "width": 1200,
+        "height": 600,
+        "alt": {
+          "ar": "أندرويد تكشف أدوات التطبيقات الذكية في قمة المطورين",
+          "en": "From in-app agents to the Android intelligence system: What’s new in intelligent apps at the Android Developer Summit"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/android-intelligence-system-in-app-agents-ads",
+        "originalUrl": "https://developer.android.com/static/blog/assets/ADS_Intelligent_Aps_df6b69d7ef_Z1LuzQ9.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/from-in-app-agents-to-the-android-intelligence-system-what-new-in-intelligent/inline-02.webp",
+        "width": 1400,
+        "height": 700,
+        "alt": {
+          "ar": "أندرويد تكشف أدوات التطبيقات الذكية في قمة المطورين",
+          "en": "Android expands intelligent apps with agents and MCP"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/android-intelligence-system-in-app-agents-ads",
+        "originalUrl": "https://developer.android.com/static/blog/assets/Strapi_2ca09e764b_1JLHid.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/from-in-app-agents-to-the-android-intelligence-system-what-new-in-intelligent/inline-03.webp",
+        "width": 1024,
+        "height": 512,
+        "alt": {
+          "ar": "أندرويد تكشف أدوات التطبيقات الذكية في قمة المطورين",
+          "en": "Android expands intelligent apps with agents and MCP"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/android-intelligence-system-in-app-agents-ads",
+        "originalUrl": "https://developer.android.com/static/blog/assets/Social_Android_Jetpack_Compose_January_24_ba31d9063b_ZrjgNw.webp"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Android Developers",
+      "url": "https://developer.android.com/blog/posts/android-intelligence-system-in-app-agents-ads",
+      "type": "official",
+      "title": "From in-app agents to the Android intelligence system: What’s new in intelligent apps at the Android Developer Summit"
+    }
+  ],
+  "sourceUrl": "https://developer.android.com/blog/posts/android-intelligence-system-in-app-agents-ads",
+  "sourceTitle": "From in-app agents to the Android intelligence system: What’s new in intelligent apps at the Android Developer Summit",
+  "trendScore": 115.91,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-05T21:01:30+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/from-in-app-agents-to-the-android-intelligence-system-what-new-in-intelligent.json"
+}
