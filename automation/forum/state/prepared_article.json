@@ -1,5 +1,416 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-06T17:01:38+00:00",
-  "last_published_story_id": "c09ed239791d8febad3d"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-06T17:08:23+00:00",
+  "target_publish_at": "2026-11-06T20:21:37.818430+03:00",
+  "story": {
+    "title": "Taxbit Assist: A grounded, role-aware AI agent on Amazon Bedrock AgentCore",
+    "url": "https://aws.amazon.com/blogs/machine-learning/taxbit-assist-a-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore",
+    "domain": "aws.amazon.com",
+    "summary": "Taxbit built Taxbit Assist, a cited, permission-aware AI assistant embedded in its enterprise dashboard, on Amazon Bedrock AgentCore. This post shows how they grounded answers in a curated knowledge base, enforced role-aware and region-compliant safety, and continuously measured answer quality on live production traffic.",
+    "published_at": "2026-11-06T16:49:42+00:00",
+    "discovered_at": "2026-11-06T16:52:42+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "8dc1ca775a3702bbbdcd",
+    "trend": {
+      "score": 112.9,
+      "age_hours": 0.25,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/taxbit-assist-a-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Taxbit Assist: A grounded, role-aware AI agent on Amazon Bedrock AgentCore",
+      "title": "Taxbit Assist: A grounded, role-aware AI agent on Amazon Bedrock AgentCore | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "Taxbit تطلق مساعد AI قائم على Amazon Bedrock AgentCore",
+      "description": "قامت Taxbit ببناء Taxbit Assist، مساعد AI قائم على Amazon Bedrock AgentCore، يقدم إجابات موثوقة ومتوافقة مع الأدوار والمناطق، مع قياس مستمر لجودة الإجابات داخل لوحة تحكم المؤسسة.",
+      "deck": "يساعد Taxbit Assist فرق الامتثال على العثور على إجابات موثوقة مباشرة داخل لوحة تحكم Taxbit، مع ضمان الأمان القائم على الأدوار والإقامة الإقليمية للبيانات.",
+      "summary_bullets": [
+        "مساعد AI قائم على Amazon Bedrock AgentCore ومدمج في لوحة تحكم المؤسسة.",
+        "إجابات موثوقة ومُدعمة بمصدر من قاعدة معرفية مُختارة.",
+        "تطبيق قيود الأمان القائمة على الأدوار والمناطق والامتثال للمعايير الدولية.",
+        "بنية تحتية قابلة للتطوير تستخدم AgentCore runtime وStrands Agents SDK.",
+        "قياس مستمر لجودة الإجابات باستخدام OpenTelemetry وAmazon CloudWatch."
+      ],
+      "sections": [
+        {
+          "heading": "نظرة عامة على Taxbit Assist",
+          "paragraphs": [
+            {
+              "text": "قامت Taxbit ببناء مساعد AI مخصص، يُسمى Taxbit Assist، وهو مساعد قائم على الإذن ومدمج مباشرة في لوحة تحكم المؤسسة الخاصة بها. يهدف المساعد إلى تزويد فرق الامتثال بإجابات فورية وموثوقة دون الحاجة إلى مغادرة المنتج. من خلال الاستفادة من منصة Amazon Bedrock AgentCore، يتمكن Taxbit Assist من تقديم إجابات قائمة على مصدر من قاعدة معرفية مُختارة، مع ضمان الامتثال للسياسات الداخلية واللوائح الخارجية. يمكن للمستخدمين طرح الأسئلة المتعلقة بوضع النماذج، وجمع الوثائق، وإدارة المهام الروتينية، ويتلقى المساعد ردودًا مدعومة برابط إلى مصدر المعلومات الأصلي.",
+              "links": [
+                {
+                  "text": "Taxbit Assist",
+                  "url": "https://www.taxbit.com/platform/assist"
+                }
+              ]
+            },
+            {
+              "text": "يستخدم Taxbit Assist بنية تحتية قائمة على AgentCore runtime، مدعومة بـ Strands Agents SDK، مما يسمح بنشر وكلاء قابلين للتطوير عبر أي إطار عمل أو نموذج. يتم توجيه كل طلب عبر عملية فحص الأمان، واسترجاع المعرفة، والتحقق من الأذونات قبل تقديم الإجابة النهائية. يتم تتبع جودة الإجابات باستمرار باستخدام OpenTelemetry traces التي يتم إرسالها إلى Amazon CloudWatch، مما يوفر رؤية قابلة للتنفيذ لتحسين أداء المساعد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البناء على Amazon Bedrock AgentCore",
+          "paragraphs": [
+            {
+              "text": "اختارت Taxbit منصة Amazon Bedrock AgentCore لعدة أسباب رئيسية. أولاً، توفر بيئة التشغيل المُدارة الخاصة بها عمليات البنية التحتية الخلفية، مما يسمح للفريق الصغير بالتركيز على منطق الاسترجاع والسلامة. ثانيًا، تقوم ميزة AgentCore memory المدمجة بإزالة الحاجة إلى متجر منفصل لحالة المحادثة، بينما يضمن العزل لكل جلسة بقاء سياق كل مستخدم معزولًا وآمنًا. يسمح هذا التصميم للفريق بنشر المساعد على نطاق واسع دون الحاجة إلى بناء حلقة الوكيل، أو متجر حالة المحادثة، أو العزل بنفسه.",
+              "links": []
+            },
+            {
+              "text": "يتم تشغيل المساعد عبر نموذج أساسي (FM) على Amazon Bedrock، مع استخدام ملفات تعريف الاستدلال عبر المناطق لضمان إقامة البيانات. يتم تطبيق البادئة الجغرافية المستمدة من منطقة النشر على معرف ملف التعريف، مما يضمن بقاء الاستدلال داخل المنطقة المحددة (الاتحاد الأوروبي أو الولايات المتحدة). بالإضافة إلى ذلك، تدعم Taxbit نموذج \"جلب مفتاحك الخاص\" (BYOK)، حيث يتم تشفير سجلات المحادثة ومتاجر البيانات الأخرى باستخدام مفتاح AWS Key Management Service (AWS KMS) الخاص بالعميل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ضمان موثوقية الإجابات وسلامتها",
+          "paragraphs": [
+            {
+              "text": "يتم استرجاع الإجابات من قاعدة معرفية مُدارة على Amazon Bedrock Knowledge Bases، والتي تستخدم تقنية الاسترجاع المعزز للتوليد (RAG) المدعومة بـ Amazon S3 Vectors. يتم إعادة ترتيب المقتطفات المرشحة على الخادم، ثم يقوم النموذج الأساسي بالتحقق من وصول المستخدم إلى الميزة أو الدور ذي الصلة قبل التوصية بأي سير عمل. يتم فحص كل رسالة واردة باستخدام Amazon Bedrock Guardrails لإخفاء المعلومات الشخصية (PII) ومنع المحتوى غير المسموح به، مما يضمن بقاء النموذج مغلقًا في حالة حظر الرسالة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Guardrails",
+                  "url": "https://aws.amazon.com/bedrock/guardrails/"
+                },
+                {
+                  "text": "Amazon Bedrock Knowledge Bases",
+                  "url": "https://aws.amazon.com/bedrock/knowledge-bases/"
+                }
+              ]
+            },
+            {
+              "text": "يتم تطبيق أربعة قيود رئيسية على التصميم: الإجابات القائمة على المصدر، والوعي بالأدوار والمنظمات، وعدم تقديم المشورة الضريبية، والإقامة الإقليمية للبيانات. يتم تتبع كل إجابة مرة أخرى إلى مصدر يمكن للمستخدم فتحه وقراءته، ولا يقدم المساعد أي نصائح ضريبية تتجاوز وثائق المنتج. يتم تطبيق الأمان القائم على الأدوار لمنع المستخدمين غير المصرح لهم من الوصول إلى سير العمل الخاصة بالمسؤولين، ويتم قياس جودة الإجابات باستمرار على حركة الإنتاج الحية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الامتثال وإقامة البيانات",
+          "paragraphs": [
+            {
+              "text": "تم تطوير Taxbit Assist وتشغيله وفقًا لـ ISO/IEC 42001، المعيار الدولي لأنظمة إدارة الذكاء الاصطناعي. تمتلك Taxbit أيضًا شهادات ISO/IEC 27001 وISO/IEC 27701، وتحافظ على تقرير SOC 2 Type II. لا تقوم Taxbit بتدريب أو ضبط أي نموذج، ولا يستخدم Amazon Bedrock المطالبات أو الاستكمالات لتدريب النماذج. يتم تشفير سجلات المحادثة ومتاجر البيانات الأخرى باستخدام مفتاح العميل الخاص في حسابات BYOK، مما يضمن حماية بيانات العملاء.",
+              "links": []
+            },
+            {
+              "text": "يتم التعامل مع كل طلب عبر ملفات تعريف استدلال التطبيق التي توفر رؤية للتكلفة. يتم تغليف ملف تعريف الاستدلال النظامي بملف تعريف تطبيق موسوم، مما يضمن حمل كل استدلال للنموذج علامات تخصيص التكلفة وظهوره في AWS Cost Explorer، مقسمًا حسب عبء العمل. بالإضافة إلى ذلك، يؤدي تخزين المطالبات إلى تقليل زمن الوصول وتكلفة الرموز، حيث يتم تخزين البادئة الثابتة عبر المستخدمين، بينما تنتقل بيانات السياق لكل طلب مع رسالة المستخدم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحديات الهندسية والحلول المستقبلية",
+          "paragraphs": [
+            {
+              "text": "أثبتت القيود الأربعة الأساسية - القائمة على المصدر، والوعي بالأدوار، وعدم تقديم المشورة الضريبية، والإقامة الإقليمية - أنها محورية في تصميم Taxbit Assist. من خلال الاستفادة من Amazon Bedrock AgentCore، تمكن الفريق من التركيز على منطق الاسترجاع والسلامة بدلاً من بناء البنية التحتية الأساسية. يتم قياس جودة الإجابات باستمرار باستخدام OpenTelemetry traces التي يتم إرسالها إلى Amazon CloudWatch، مما يوفر رؤية قابلة للتنفيذ لتحسين أداء المساعد.",
+              "links": []
+            },
+            {
+              "text": "تتطلع Taxbit إلى توسيع قدرات Taxbit Assist من خلال دمج المزيد من مصادر المعرفة المتخصصة وتحسين عملية فحص الأمان. من خلال الاستمرار في الاستفادة من قدرات Amazon Bedrock المتطورة، تهدف Taxbit إلى الحفاظ على مساعد AI الذي يلبي احتياجات فرق الامتثال مع الحفاظ على أعلى معايير الأمان والامتثال والخصوصية.",
+              "links": [
+                {
+                  "text": "Taxbit",
+                  "url": "https://www.taxbit.com/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Amazon Bedrock",
+        "Taxbit",
+        "الامتثال",
+        "الأمان"
+      ],
+      "entities": [
+        "Taxbit",
+        "Amazon Bedrock AgentCore",
+        "Strands Agents SDK",
+        "Amazon Bedrock Guardrails",
+        "Amazon Bedrock Knowledge Bases"
+      ],
+      "article_type": "news",
+      "confidence_note": "معلومات من مدونة AWS Machine Learning الرسمية"
+    },
+    "en": {
+      "title": "Taxbit Launches Grounded AI Assistant on Amazon Bedrock AgentCore",
+      "description": "Taxbit Assist embeds a cited, role-aware AI agent in its compliance dashboard, built on Amazon Bedrock AgentCore with Guardrails, Knowledge Bases, and S3 Vectors for regulated enterprises.",
+      "deck": "Taxbit has deployed Taxbit Assist, a permission-aware AI assistant grounded in curated product knowledge, directly inside its enterprise dashboard for digital-asset tax compliance teams.",
+      "summary_bullets": [
+        "Taxbit Assist runs on Amazon Bedrock AgentCore using the Strands Agents SDK with managed runtime and built-in memory.",
+        "Answers are retrieved from an Amazon Bedrock Knowledge Base backed by Amazon S3 Vectors and cited with source links.",
+        "Role and organization awareness prevents users from seeing workflows they cannot access, and the system refuses tax advice.",
+        "Geography-aware inference profiles keep EU and US data residency separate, with optional BYOK encryption via AWS KMS."
+      ],
+      "sections": [
+        {
+          "heading": "Product Context and Motivation",
+          "paragraphs": [
+            {
+              "text": "Taxbit, a digital-asset tax and accounting compliance platform founded in 2018, serves exchanges, payment services, and brokers that need to calculate gains and losses, collect tax documentation, and file information returns at scale. The company found that knowledge required to use its dashboard effectively was scattered across its public website, API documentation, and help-center articles, with a meaningful share never documented at all. When customers asked questions such as \"what does this form status mean?\" they either searched manually or filed support tickets.",
+              "links": [
+                {
+                  "text": "Taxbit",
+                  "url": "https://www.taxbit.com/"
+                }
+              ]
+            },
+            {
+              "text": "To address this, Taxbit built Taxbit Assist, a cited, permission-aware AI assistant now embedded in the Taxbit dashboard. According to internal production analytics, more than 55 percent of users who ask Assist a question return to ask another within 24 hours.",
+              "links": [
+                {
+                  "text": "Taxbit Assist",
+                  "url": "https://www.taxbit.com/platform/assist"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Architecture on Amazon Bedrock AgentCore",
+          "paragraphs": [
+            {
+              "text": "Taxbit Assist is a Strands Agents SDK application running on AgentCore runtime, a capability of Amazon Bedrock AgentCore. The managed agent runtime removed the need for Taxbit's small team to build and operate the agent loop, conversation-state store, and session isolation themselves. Built-in AgentCore memory, a capability of Amazon Bedrock AgentCore, eliminated a separate conversation-state store, while per-session isolation kept each user's context contained.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                },
+                {
+                  "text": "Strands Agents SDK",
+                  "url": "https://strandsagents.com/"
+                }
+              ]
+            },
+            {
+              "text": "The request flow begins when a user asks a question in the Taxbit dashboard. A streaming chat API forwards the question to AgentCore runtime along with the user's verified identity — email, organization ID, and dashboard roles. The runtime screens the incoming message with Amazon Bedrock Guardrails, masking personally identifiable information in place and blocking the message before any model invocation if necessary.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Guardrails",
+                  "url": "https://aws.amazon.com/bedrock/guardrails/"
+                }
+              ]
+            },
+            {
+              "text": "The agent then retrieves candidate passages from an Amazon Bedrock Knowledge Bases knowledge base and reranks them server-side. The knowledge base uses the fully managed Retrieval Augmented Generation capability of Amazon Bedrock, backed by Amazon S3 Vectors, a capability of Amazon Simple Storage Service. Amazon Bedrock models reason over the retrieved passages and verify that the user has access to the relevant feature and role before recommending any workflow. The answer streams back to the dashboard with source links, while AgentCore memory carries the conversation across turns.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Knowledge Bases",
+                  "url": "https://aws.amazon.com/bedrock/knowledge-bases/"
+                },
+                {
+                  "text": "Amazon S3 Vectors",
+                  "url": "https://aws.amazon.com/s3/features/vectors/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Grounding, Safety, and Compliance",
+          "paragraphs": [
+            {
+              "text": "Four constraints shaped the assistant: answers must be grounded and cited so users can open and read every source; the assistant must be role and organization aware; it must not provide tax advice — distinguishing between explaining how Taxbit computes cost basis and telling a user which method to elect; and it must support regional data residency from a single codebase with continuous quality measurement in production.",
+              "links": []
+            },
+            {
+              "text": "Taxbit Assist is developed and operated in line with ISO/IEC 42001, the international standard for AI management systems. Taxbit is also certified to ISO/IEC 27001 and ISO/IEC 27701 and holds a SOC 2 Type II report. The company does not train or fine-tune any model, and Amazon Bedrock does not use prompts or completions to train models.",
+              "links": []
+            },
+            {
+              "text": "The agent is a small Python application comprising a system prompt, a model, and eight tools. It ships as an ARM64 container image that AgentCore runtime pulls from Amazon Elastic Container Registry and scales on demand. Tools include two access checks — one for organization entitlement and one for the user's dashboard role — four support ticket tools to create, list, update, and close the caller's own tickets, and a current-time tool for rare sub-day precision questions. In this version, the agent has no read access to customer tax data; it answers from product knowledge, and the only writes it can perform are the caller's own support tickets.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Security Model and Identity Handling",
+          "paragraphs": [
+            {
+              "text": "A foundational security decision ensures the model never handles identity. The user's email, organization ID, and roles come from the trusted calling service and are bound into each tool through a closure before the model sees them. The model can decide whether to check permissions but not whose permissions to check, because identity is not a parameter it can set. User input is sanitized at the boundary so a prompt injection cannot imitate the trusted context line.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Data Residency, Cost Visibility, and Performance",
+          "paragraphs": [
+            {
+              "text": "The agent runs a foundation model through Amazon Bedrock, invoked through cross-Region inference profiles. Geography-aware inference handles data residency: the inference profile ID carries a geography prefix derived from the deployment Region, so EU deployments keep inference within the EU and US deployments stay in the US. Beyond geography, a bring-your-own-key model is supported; in BYOK accounts, conversation history and other stores that hold client data are encrypted with the customer's own AWS Key Management Service key.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html"
+                }
+              ]
+            },
+            {
+              "text": "Application inference profiles handle cost visibility. Each deployment wraps the system inference profile in a tagged application profile, so every model invocation carries cost-allocation tags and appears in AWS Cost Explorer broken down by workload. Amazon Bedrock prompt caching cuts latency and token cost: the system prompt is byte-identical for every request and ends with a cache checkpoint, so the static prefix is cached across users while per-request context travels on the user message.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Knowledge Base Engineering",
+          "paragraphs": [
+            {
+              "text": "Most engineering effort went into the knowledge base: an Amazon Bedrock knowledge base backed by Amazon S3 Vectors, with Cohere Embed English v3 for embeddings producing 1,024-dimension float32 vectors compared by cosine distance. The fully managed stack allowed Taxbit to focus on curation and retrieval quality rather than infrastructure.",
+              "links": [
+                {
+                  "text": "Amazon S3 Vectors",
+                  "url": "https://aws.amazon.com/s3/features/vectors/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Taxbit",
+        "Amazon Bedrock AgentCore",
+        "AI agents",
+        "RAG",
+        "compliance",
+        "digital assets",
+        "tax technology",
+        "AWS"
+      ],
+      "entities": [
+        "Taxbit",
+        "Taxbit Assist",
+        "Amazon Bedrock AgentCore",
+        "Strands Agents SDK",
+        "Amazon Bedrock Guardrails",
+        "Amazon Bedrock Knowledge Bases",
+        "Amazon S3 Vectors"
+      ],
+      "article_type": "news",
+      "confidence_note": "Single authoritative source (AWS Machine Learning Blog) with detailed technical architecture; all claims attributed to Taxbit or AWS blog post."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 787,
+      "word_count_en": 970
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "8dc1ca775a3702bbbdcd",
+      "title": "Taxbit Assist: A grounded, role-aware AI agent on Amazon Bedrock AgentCore",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 787,
+          "word_count_en": 970
+        }
+      ]
+    }
+  ],
+  "slug": "taxbit-assist-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/taxbit-assist-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore/hero.webp",
+    "card": "/forum/assets/posts/2026/11/taxbit-assist-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore/card.webp",
+    "social": "/forum/assets/posts/2026/11/taxbit-assist-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore/social.jpg",
+    "alt": {
+      "ar": "Taxbit تطلق مساعد AI قائم على Amazon Bedrock AgentCore",
+      "en": "Taxbit Launches Grounded AI Assistant on Amazon Bedrock AgentCore"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21532-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/taxbit-assist-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore/inline-01.webp",
+        "width": 937,
+        "height": 513,
+        "alt": {
+          "ar": "Taxbit تطلق مساعد AI قائم على Amazon Bedrock AgentCore",
+          "en": "Architecture diagram showing the request flow from dashboard user through AgentCore Runtime, including guardrails screening, knowledge base retrieval, Claude Sonnet reasoning, permission checks, and response streaming to"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/taxbit-assist-a-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21532-1.gif"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/taxbit-assist-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore/inline-02.webp",
+        "width": 937,
+        "height": 484,
+        "alt": {
+          "ar": "Taxbit تطلق مساعد AI قائم على Amazon Bedrock AgentCore",
+          "en": "Pipeline diagram showing content from published, code-derived, and curated sources flowing through Lambda scrapers into S3, then through a post-chunking transform into the knowledge base."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/taxbit-assist-a-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21532-2.gif"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/taxbit-assist-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore/inline-03.webp",
+        "width": 1400,
+        "height": 760,
+        "alt": {
+          "ar": "Taxbit تطلق مساعد AI قائم على Amazon Bedrock AgentCore",
+          "en": "Evaluation diagram showing CloudWatch traces fanning out to AgentCore evaluations, a quality judge, a tax-advice classifier, and human review in Slack, with approved corrections feeding back into the knowledge base."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/taxbit-assist-a-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21532-3.png"
+      }
+    ]
+  }
 }
