@@ -1,5 +1,430 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-06T17:41:39+00:00",
-  "last_published_story_id": "1109c7dc5eeb22026df6"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-06T17:49:28+00:00",
+  "target_publish_at": "2026-11-06T21:01:38.180451+03:00",
+  "story": {
+    "title": "Govern AI agent access with Okta Cross App Access and Amazon Bedrock AgentCore – Part 2",
+    "url": "https://aws.amazon.com/blogs/machine-learning/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock-agentcore-part-2",
+    "domain": "aws.amazon.com",
+    "summary": "In Part 1 you built one governed agent. Part 2 scales the pattern to an enterprise: Amazon Bedrock AgentCore Gateway becomes the single front door and redeems Okta's grant, Cedar policies bind each tool to the agent, a second agent runs on Amazon EKS, and AgentCore Observability traces every allow and deny beside Okta's log in Amazon CloudWatch.",
+    "published_at": "2026-11-06T17:09:23+00:00",
+    "discovered_at": "2026-11-06T17:12:41+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "e22092f79218deeb3820",
+    "trend": {
+      "score": 107.75,
+      "age_hours": 0.65,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock-agentcore-part-2/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Govern AI agent access with Okta Cross App Access and Amazon Bedrock AgentCore – Part 2",
+      "title": "Govern AI agent access with Okta Cross App Access and Amazon Bedrock AgentCore – Part 2 | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "توسيع حوكمة وكلاء الذكاء الاصطناعي مع أوكتا وأمازون بدروك",
+      "description": "دليل عملي لتوسيع نطاق حوكمة وكلاء الذكاء الاصطناعي في المؤسسات باستخدام ميزات أمازون بدروك وتكامل أوكتا كروس أب أكcess المتقدم لبيئات العمل الضخمة.",
+      "deck": "تنتقل أمازون ويب سيرفيسز بالبنية التحتية لوكلاء الذكاء الاصطناعي من النطاق التجريبي الفردي إلى البيئات المؤسسية الكبرى، معتمدة على بوابة مركزية وسياسات أمان صارمة.",
+      "summary_bullets": [
+        "تطوير نموذج الحوكمة الفردي السابق ليشمل بيئات المؤسسات الكبرى التي تتضمن مئات الوكلاء وآلاف الأدوات.",
+        "اعتماد بوابة موحدة لتكون المدخل الرئيسي واستبدال تفويضات المصادقة بكفاءة عالية.",
+        "استخدام سياسات سييدار لربط الأدوات بالوكلاء ونطاقات الصلاحيات بدقة متناهية.",
+        "إدماج وكيل ثاني يعمل على منصة الإكس لتأكيد مرونة المعمارية بغض النظر عن موقع التشغيل.",
+        "مراقبة كافة عمليات السماح والمنع عبر أدوات المراقبة المركزية وسجلات النظام."
+      ],
+      "sections": [
+        {
+          "heading": "الانتقال نحو بيئات المؤسسات الكبرى",
+          "paragraphs": [
+            {
+              "text": "بعد النجاح في بناء وكيل مهام أولي مستند إلى منصة أمازون بدروك، تتجه المؤسسات اليوم لتوسيع هذا النمط المعماري ليلائم البيئات الضخمة. في الجزء الأول من هذه التجربة، تم بناء وكيل واحد مع خوادم بروتوكول سياق النموذج، مع تطبيق التحققات الأمنية مباشرة داخل كل خادم. غير أن هذا النموذج البسيط لا يمكن تعميمه مباشرة في الشركات الكبرى التي تضم مئات الوكلاء وآلاف الأدوات المتنوعة. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "أمازون بدروك",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                },
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock-agentcore-part-2/"
+                }
+              ]
+            },
+            {
+              "text": "لمعالجة هذا التحدي، تقدم المدونة الرسمية للملخصات التقنية نمطاً مطوراً يعتمد على جعل البوابة المركزية نقطة دخول واحدة تتولى معالجة تفويضات الوصول الصادرة عن نظام إدارة الهوية. يهدف هذا التحديث إلى تسهيل عملية الإدارة المركزية وتوفير رؤية موحدة للعمليات الأمنية عبر منصة أمازون بدروك ومختلف الأنظمة المرتبطة بها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل المعمارية وبوابة المدخل الواحد",
+          "paragraphs": [
+            {
+              "text": "تعتمد البنية الجديدة على دخول المستخدم للمنصة، حيث يقوم النظام الخلفي بتبديل الرمز المميز برمز تفويض مخصص يتم إصدار خصيصاً لوكيل المهام الأول. يمرر الوكيل هذا الرمز إلى البوابة المخصصة باعتباره رمز الحامل لجلسة العمل، بينما تتولىauthorizer البوابة التحقق من صلاحيات الرموز الواردة بدقة وفق المعايير المعتمدة مسبقاً في النظام.",
+              "links": []
+            },
+            {
+              "text": "تتولى محركات السياسات تقييم القواعد المحددة لكل أداة وكل عملية استدعاء قبل أن تسمح البوابة بالوصول إلى الهدف المطلوب. وفي حال رفض الطلب، يتم منع استبدال الرمز، مما يرفع مستوى الحماية والأمان السيبراني للبيانات الحساسة داخل البنية التحتية للمؤسسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تكامل الوكلاء على منصات حاويات الكوبيرنيتس",
+          "paragraphs": [
+            {
+              "text": "لإثبات مرونة المعمارية الجديدة وقدرتها على العمل عبر بيئات مختلفة، تم إدماج وكيل ثاني مخصص لإعداد التقارير ويعمل بشكل مستقل على بيئة إدارة الحاويات الشهيرة. لا تهتم البوابة المركزية بالموقع الجغرافي أو البنيوي الذي ينفذ من خلاله الوكيل، طالما أنه يتبع نفس مسار الهوية والمصادقة المعتمد في المؤسسة.",
+              "links": []
+            },
+            {
+              "text": "تتطلب عملية النشر هذه تكاليف تشغيلية محددة تختلف باختلاف حجم العقد واستخدام الخدمات السحابية، حيث يتم احتساب رسوم التحكم والموارد بناءً على الاستخدام الفعلي. يجب على فرق العمل مراجعة تفاصيل التكاليف لضمان كفاءة الميزانية التقنية قبل الانتقال إلى مراحل الإنتاج الفعلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تتبع المراقبة وسجلات التدقيق المتقدمة",
+          "paragraphs": [
+            {
+              "text": "تعتمد مراقبة النظام على أدوات تتبع متطورة ترصد كل عملية سماح أو منع بدقة متناهية. تقوم هذه الأدوات بتسجيل كافة الأحداث وتتبعها عبر المنصات السحابية المخصصة للتحليلات الأمنية، مما يمنح مديري الأنظمة رؤية شاملة وواضحة لتحركات الوكلاء والطلبات الموجهة نحو الأدوات المختلفة.",
+              "links": []
+            },
+            {
+              "text": "تساعد هذه السجلات المركزية فرق الأمان في تتبع الأخطاء أو محاولات الوصول غير المصرح بها فور وقوعها، مما يعزز من متانة البنية الأمنية للذكاء الاصطناعي ويضمن الامتثال الكامل للمعايير التنظيمية المعتمدة داخل الشركات والمؤسسات الكبرى.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التنفيذ العملي واعتبارات النشر الأمني",
+          "paragraphs": [
+            {
+              "text": "تستغرق عملية إعداد الإضافات الجديدة نحو ساعة ونصف تقريباً، وتعتمد أساساً على النماذج البرمجية المتاحة عبر المستودعات المفتوحة لمساعد المطورين في بناء النمط المعماري المطلوب. ومع ذلك، تؤكد الجهات المطورة أن الأكواد المقدمة هي أمثلة توضيحية لغير غرض الإنتاج التجاري المباشر.",
+              "links": []
+            },
+            {
+              "text": "يُنصح بشدة بالتنسيق مع فرق الأمان والشؤون القانونية داخل المؤسسة لمراجعة السياسات والرموز البرمجية، والتأكد من استيفائها لكافة متطلبات التنظيم والامتثال والخصوصية قبل الشروع في نشر النظام على نطاق واسع يخدم العملاء والمستخدمين النهائيين.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون بدروك",
+        "أوكتا",
+        "الحوكمة والأمان",
+        "الحوسبة السحابية",
+        "سجلات التدقيق",
+        "كوبيرنيتس"
+      ],
+      "entities": [
+        "Amazon Bedrock AgentCore",
+        "Okta",
+        "AWS",
+        "Amazon EKS",
+        "Cedar"
+      ],
+      "article_type": "news",
+      "confidence_note": "تم صياغة الخبر استناداً حصراً للمصادر التقنية الرسمية مع الالتزام التام بالروابط والشروط المحددة للمنصة."
+    },
+    "en": {
+      "title": "Scaling AI Agent Access With Okta and Amazon Bedrock",
+      "description": "Learn how to scale enterprise AI agent access using Okta Cross App Access, Amazon Bedrock AgentCore Gateway, Cedar policies, and Amazon EKS.",
+      "deck": "Building on the initial foundational task agent, enterprise deployments can scale secure AI agent access using Amazon Bedrock AgentCore and Okta Cross App Access.",
+      "summary_bullets": [
+        "Amazon Bedrock AgentCore Gateway acts as a single front door for enterprise environments.",
+        "Cedar policies bind each individual tool directly to the agent and the delegated scope.",
+        "A second reporting agent running on Amazon EKS demonstrates multi-agent scalability.",
+        "Amazon Bedrock AgentCore Observability integrates with Amazon CloudWatch for unified telemetry tracking."
+      ],
+      "sections": [
+        {
+          "heading": "Scaling Enterprise AI Architectures",
+          "paragraphs": [
+            {
+              "text": "Following the foundational setup established in Part 1 where a single task agent was built on <a href=\"https://aws.amazon.com/bedrock/agentcore/\">Amazon Bedrock AgentCore</a>, enterprise deployments require a pattern that scales cleanly. While a small topology of one agent and two Model Context Protocol servers works for initial testing, managing hundreds of agents and thousands of tools demands centralized governance.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "To address enterprise scale, the architecture introduces the Amazon Bedrock AgentCore Gateway as a single front door. This gateway redeems Okta grants for each target, while Policy in <a href=\"https://aws.amazon.com/bedrock/agentcore/\">Amazon Bedrock AgentCore</a> evaluates Cedar policies to bind tools securely to specific agents and scopes.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Request Flow",
+          "paragraphs": [
+            {
+              "text": "The updated architecture introduces several operational components working together. When a user signs in, the backend for frontend exchanges the ID token for an Identity Assertion JWT Authorization Grant issued to the task agent. The agent then forwards this token to its Gateway as the bearer token for its MCP session.",
+              "links": []
+            },
+            {
+              "text": "Before invoking any target, Policy in AgentCore evaluates Cedar policies for each tool listing and call. If permitted, the Gateway uses AgentCore Identity to redeem the grant at Okta's custom authorization server through the credential provider established previously.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Extending to Amazon EKS and Observability",
+          "paragraphs": [
+            {
+              "text": "To demonstrate that the front door mechanism functions independently of where an agent runs, a second reporting agent is introduced running on Amazon Elastic Kubernetes Service. This agent operates under its own Okta identity and follows a parallel path through its own dedicated Gateway.",
+              "links": []
+            },
+            {
+              "text": "For tracking and monitoring, <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability.html\">AgentCore Observability</a> combined with Amazon CloudWatch provides a single interface to read every allow and deny decision, alongside Okta logs streamed through Amazon EventBridge.",
+              "links": [
+                {
+                  "text": "AgentCore Observability",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Gateway Configuration and Cedar Policies",
+          "paragraphs": [
+            {
+              "text": "Configuring the Gateway involves setting up an inbound authorizer whose issuer is Okta's org authorization server, with an audience pointing to the custom authorization server. Each MCP server acts as a Gateway target using token exchange for outbound authorization.",
+              "links": []
+            },
+            {
+              "text": "Security enforcement relies heavily on attaching a Policy engine to the Gateway in enforce mode. Cedar policies expose JWT claims as tags, allowing fine-grained control over read and write scopes while maintaining default-deny security postures.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Implementation Costs and References",
+          "paragraphs": [
+            {
+              "text": "Implementing these enterprise additions requires approximately 90 minutes. Costs include the EKS control plane alongside node fees and management charges detailed further in <a href=\"https://aws.amazon.com/eks/pricing/\">Amazon EKS pricing</a> and <a href=\"https://aws.amazon.com/bedrock/agentcore/pricing/\">Amazon Bedrock AgentCore pricing</a>.",
+              "links": [
+                {
+                  "text": "Amazon EKS pricing",
+                  "url": "https://aws.amazon.com/eks/pricing/"
+                },
+                {
+                  "text": "Amazon Bedrock AgentCore pricing",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/pricing/"
+                }
+              ]
+            },
+            {
+              "text": "Developers can reference the foundational sample repository available via <a href=\"https://github.com/awslabs/agentcore-samples/tree/main/01-features/05-authenticate-and-authorize/08-okta-xaa-delegation-chain\">08-okta-xaa-delegation-chain</a> on GitHub to build out these architectural patterns for non-production evaluations.",
+              "links": [
+                {
+                  "text": "08-okta-xaa-delegation-chain",
+                  "url": "https://github.com/awslabs/agentcore-samples/tree/main/01-features/05-authenticate-and-authorize/08-okta-xaa-delegation-chain"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "Okta",
+        "Cedar Policies",
+        "Amazon EKS",
+        "CloudWatch",
+        "Identity Management",
+        "AI Agents"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Okta",
+        "Amazon Bedrock AgentCore",
+        "Amazon CloudWatch",
+        "Amazon EKS"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based directly on the official AWS Machine Learning Blog source material."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "en:article_too_short"
+      ],
+      "word_count_ar": 746,
+      "word_count_en": 362
+    },
+    {
+      "attempt": 2,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 299,
+      "word_count_en": 598
+    },
+    {
+      "attempt": 3,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 567,
+      "word_count_en": 488
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "e22092f79218deeb3820",
+      "title": "Govern AI agent access with Okta Cross App Access and Amazon Bedrock AgentCore – Part 2",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "en:article_too_short"
+          ],
+          "word_count_ar": 746,
+          "word_count_en": 362
+        },
+        {
+          "attempt": 2,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 299,
+          "word_count_en": 598
+        },
+        {
+          "attempt": 3,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 567,
+          "word_count_en": 488
+        }
+      ]
+    }
+  ],
+  "slug": "govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/11/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/11/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "توسيع حوكمة وكلاء الذكاء الاصطناعي مع أوكتا وأمازون بدروك",
+      "en": "Scaling AI Agent Access With Okta and Amazon Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-p2-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock/inline-01.webp",
+        "width": 1082,
+        "height": 1050,
+        "alt": {
+          "ar": "توسيع حوكمة وكلاء الذكاء الاصطناعي مع أوكتا وأمازون بدروك",
+          "en": "Part 1 solution extended with AgentCore Gateway, Policy, and Observability, a second agent on Amazon EKS, and the audit path"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock-agentcore-part-2/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-p2-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock/inline-02.webp",
+        "width": 1400,
+        "height": 540,
+        "alt": {
+          "ar": "توسيع حوكمة وكلاء الذكاء الاصطناعي مع أوكتا وأمازون بدروك",
+          "en": "Gateway inbound authorizer accepting only ID-JAGs that Okta issued to the agent for the resource’s authorization server"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock-agentcore-part-2/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-p2-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock/inline-03.webp",
+        "width": 1400,
+        "height": 844,
+        "alt": {
+          "ar": "توسيع حوكمة وكلاء الذكاء الاصطناعي مع أوكتا وأمازون بدروك",
+          "en": "Gateway target for the task manager configured to redeem the ID-JAG through the Part 1 credential provider"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock-agentcore-part-2/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-p2-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock/inline-04.webp",
+        "width": 1400,
+        "height": 775,
+        "alt": {
+          "ar": "توسيع حوكمة وكلاء الذكاء الاصطناعي مع أوكتا وأمازون بدروك",
+          "en": "Audit path where AgentCore spans and Okta’s System Log both reach CloudWatch and one Omni query joins them"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock-agentcore-part-2/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-p2-4.png"
+      }
+    ]
+  }
 }
