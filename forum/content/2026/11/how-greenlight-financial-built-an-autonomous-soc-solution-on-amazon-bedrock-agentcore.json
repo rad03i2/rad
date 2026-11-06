@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "39d0fa8ab15570a16f24",
+  "slug": "how-greenlight-financial-built-an-autonomous-soc-solution-on-amazon-bedrock-agentcore",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/how-greenlight-financial-built-an-autonomous-soc-solution-on-amazon-bedrock-agentcore/",
+    "en": "/forum/en/ai/how-greenlight-financial-built-an-autonomous-soc-solution-on-amazon-bedrock-agentcore/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Greenlight Financial تطلق نظام Luna الآمن على Amazon Bedrock AgentCore",
+      "description": "تستخدم Greenlight Financial نظام Luna متعدد الوكلاء على Amazon Bedrock AgentCore لحل أكثر من 90% من حالات الأمن المالي تلقائياً، مما يقلل التدخل البشري ويحسن كفاءة العمليات.",
+      "deck": "اعتمدت Greenlight Financial على بنية تحتية ذكية لإدارة عمليات الأمن السيبراني والمخاطر المالية، مما أتاح معالجة آلاف الحالات شهرياً بسرعة فائقة ودقة عالية.",
+      "summaryBullets": [
+        "يعالج نظام Luna أكثر من 90% من 4,000 حالة أمن ومخاطر شهرياً دون تدخل بشري.",
+        "يعتمد النظام على بنية متعددة المستويات تضم أكثر من 30 وكيلاً متخصصاً.",
+        "يستخدم ذاكرة حادثة (Episodic Memory) للتعلم المستمر وتقليل الإنذارات الكاذبة.",
+        "تمتد قدرات النظام من العمليات الأمنية إلى فرز المخاطر المالية المعقدة."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي حجم الإنذارات الأمنية",
+          "paragraphs": [
+            {
+              "text": "تواجه Greenlight Financial، التي تقدم منتجات مالية للعائلات، تحدياً كبيراً في معالجة 3,000 إلى 4,000 إنذار أمني ومخاطر شهرياً. تأتي هذه الإنذارات من مصادر متعددة تشمل بطاقات الاختراق على الويب المظلم، الشذوذات في الهوية والوصول، وتنبيهات البنية التحتية، والأحداث المالية المشبوهة. تتطلب كل حالة مراجعة متقاطعة لمصادر بيانات متعددة، مما يستهلك من 15 إلى 30 دقيقة من وقت المحلل البشري لكل حالة، وهو ما يجعل العملية غير مستدامة عند هذا الحجم. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-greenlight-financial-built-an-autonomous-soc-solution-on-amazon-bedrock-agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "بنية Luna متعددة المستويات",
+          "paragraphs": [
+            {
+              "text": "للتغلب على هذا التحدي، طورت الشركة نظام Luna الذي يعمل على Amazon Bedrock AgentCore. يعتمد النظام على نمط مشرف هرمي يحاكي عمل فرق العمليات الأمنية البشرية. يتولى المستوى الأول (Tier 1) التعامل مع الحجم الكبير من الحالات الروتينية باستخدام نموذج لغة متقدم يعمل عبر Amazon Bedrock AgentCore runtime داخل شبكة خاصة. يستقبل هذا المستوى الحالات عبر Amazon API Gateway ونظام Tines SOAR، ويوجه أكثر من 30 وكيلاً متخصصاً لإصدار الحكم في ثوانٍ معدودة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التصعيد للتعقيد العالي",
+          "paragraphs": [
+            {
+              "text": "عندما تتجاوز الحالة عتبة الثقة في المستوى الأول، يتم تصعيدها إلى المستوى الثاني (Tier 2) الذي يستخدم نموذج أساس متقدم على Amazon Bedrock يتمتع بقدرات استدلال موسعة. يتولى هذا الوكيل إعادة التحقيق في الحالات المعقدة التي تتطلب ربطاً سببياً بين 3 إلى 5 مصادر بيانات، وإنتاج تقارير تفصيلية مع سلاسل أدلة للمراجعة البشرية. يعمل هذا المستوى بشكل مجدول لمعالجة الدفعات، وبشكل فوري للحالات العاجلة، مما يضمن توازناً بين السرعة والعمق التحليلي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الذاكرة الحادثة والتعلم المستمر",
+          "paragraphs": [
+            {
+              "text": "يميز نظام Luna عن أدوات الفرز التقليدية هو طبقة الذاكرة المبنية على AgentCore memory. تسمح هذه الذاكرة للنظام بتخزين الأحداث الأخيرة ونتائج الحلول، مما يتيح له التعرف على الأنماط وتجنب الإنذارات الكاذبة. على سبيل المثال، إذا كان نمط وصول معين يتكرر بشكل متوقع كل أسبوع، يتعلم النظام بعد أول حل أن هذا السلوك طبيعي ويضيفه تلقائياً إلى قائمة السماح، مما يحسن الدقة مع مرور الوقت دون تدخل يدوي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دورة مغلقة للتعلم",
+          "paragraphs": [
+            {
+              "text": "تعمل Greenlight Financial على تغذية النظام بنتائج الحلول عبر خط أنابيب مخصص. يلتقط دالة AWS Lambda كل حل من أحداث Tines، وتخزن DynamoDB أنماط الحلول وتزيل التكرارات. عندما يحل النظام حالة بنفس الطريقة ثلاث مرات، يسجلها كنمط مؤكد. ثم تقوم دالة أخرى بمعالجة هذه التعلميات لتحويلها إلى سياق عملي يستهلكه المشرفون أثناء الاستدلال، مما يؤدي إلى تحسين تدريجي في دقة الفرز الأولي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج تشغيلية في قطاع منظم",
+          "paragraphs": [
+            {
+              "text": "أظهرت النتائج التشغيلية أن النظام يحل أكثر من 90% من الحالات دون تدخل بشري، مع وقت وسيط للفرز في الحالات الروتينية لا يتجاوز بضع ثوانٍ. كما وسعت الشركة نطاق استخدام النظام من العمليات الأمنية البحتة إلى فرز المخاطر المالية، مما يوفر حلاً قابلاً للتوسع في الصناعات الخاضعة للتنظيم. تعتمد البنية على قرارات بنية تحتية مدروسة تضمن الامتثال لمعايير الخدمات المالية مع الحفاظ على المرونة في التعامل مع البيانات الحساسة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "الأمن السيبراني",
+        "Amazon Bedrock",
+        "Greenlight Financial",
+        "وكلاء AI",
+        "إدارة المخاطر",
+        "SOC"
+      ],
+      "entities": [
+        "Greenlight Financial",
+        "Amazon Bedrock AgentCore",
+        "Luna",
+        "AWS",
+        "Tines SOAR"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "6 نوفمبر 2026",
+      "modifiedLabel": "6 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 520
+    },
+    "en": {
+      "title": "Greenlight Builds Autonomous SOC on Amazon Bedrock",
+      "description": "Greenlight Financial resolves over 90% of monthly security and risk cases automatically using Luna, a multi-agent system on Amazon Bedrock AgentCore.",
+      "deck": "Greenlight Financial has deployed an autonomous security operations center solution named Luna, leveraging advanced infrastructure to autonomously handle thousands of monthly security and risk cases.",
+      "summaryBullets": [
+        "Greenlight Financial resolves more than 90% of up to 4,000 monthly security and risk cases without human intervention.",
+        "Luna relies on a tiered multi-agent system hosted on Amazon Bedrock AgentCore.",
+        "The architecture features over 30 specialized agents, a Tier 1 volume handler, and a Tier 2 complexity supervisor.",
+        "Episodic memory capabilities allow the system to continuously learn from historical resolution patterns and reduce false positives."
+      ],
+      "sections": [
+        {
+          "heading": "Autonomous Security Operations at Scale",
+          "paragraphs": [
+            {
+              "text": "Greenlight Financial, a provider of financial products for families including debit cards, savings tools, and connected devices like the Family Hub and Pet Tracker, handles sensitive financial data under strict regulatory frameworks akin to major banks. To manage its heavy security workload, the company developed Luna, an autonomous security operations center solution built using Amazon Bedrock AgentCore.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "The company's security operations center typically processes between 3,000 and 4,000 security and risk alerts every month. These arrive from four primary vectors: dark web breach cards, identity and access anomalies, infrastructure alerts from tools like EDR and SIEM, and financial risk events tied to card processing systems. Because manual cross-referencing of these alerts takes human analysts up to 30 minutes per case, Greenlight sought a scalable, automated approach to triage and resolve routine events at machine speed while safely escalating complex cases.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Tiered Multi-Agent Architecture",
+          "paragraphs": [
+            {
+              "text": "Luna employs a hierarchical multi-agent structure comprising over 30 specialized agents divided across two main supervisory tiers. Tier 1 is designed to handle high-volume routine cases. It utilizes the AgentCore runtime hosted within an Amazon Virtual Private Cloud, deploying code directly through ZIP files and Amazon S3.",
+              "links": [
+                {
+                  "text": "Amazon S3",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            },
+            {
+              "text": "During initial triage, Tier 1 receives cases via Tines SOAR automated alert ingestion or through the Luna Queue API and Model Context Protocol endpoint exposed via Amazon API Gateway. The Tier 1 supervisor orchestrates specialized agents to synthesize findings and deliver verdicts for routine alerts in single-digit seconds.",
+              "links": []
+            },
+            {
+              "text": "For the roughly 10 percent of cases that exceed confidence thresholds, the system escalates to a Tier 2 supervisor. This second tier leverages an advanced foundation model on Amazon Bedrock equipped with extended reasoning capabilities to execute multi-step investigations, invoke deeper tooling via boto3, and compile comprehensive evidence reports for human review.",
+              "links": [
+                {
+                  "text": "advanced foundation model on Amazon Bedrock",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Flexible Entry Points for Engineering Teams",
+          "paragraphs": [
+            {
+              "text": "Different technical teams across Greenlight interact with Luna through distinct access channels tailored to their specific workflows. Tines SOAR serves as the primary volume driver by feeding automated alerts directly into the Tier 1 supervisor.",
+              "links": []
+            },
+            {
+              "text": "In addition to automated pipelines, security, risk, and production operations engineers can request ad-hoc investigations directly via API access. On-call engineers can also utilize a dedicated Claude Desktop extension, providing an interactive chat interface to trigger deep-dive investigations with full tool access.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Memory and Continuous Learning",
+          "paragraphs": [
+            {
+              "text": "A key differentiator for Luna is its use of AgentCore memory, which prevents the system from operating as a stateless triage tool. The memory layer stores recent events and resolution outcomes, allowing Luna to check against historical patterns from the last 30 days to automatically recognize recurring maintenance behavior or benign access patterns.",
+              "links": []
+            },
+            {
+              "text": "Beyond short-term memory, semantic preferences and resolution templates are persisted to retain institutional knowledge over longer periods. A dedicated AWS Lambda and DynamoDB pipeline captures resolution outcomes from Tines events, aggregates recurring patterns after repeated successes, and feeds continuous learnings back into Tier 1 to incrementally improve first-pass accuracy.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial Intelligence",
+        "Amazon Bedrock",
+        "Security Operations Center",
+        "Financial Services",
+        "Cloud Computing",
+        "Automation"
+      ],
+      "entities": [
+        "Greenlight Financial",
+        "Amazon Web Services",
+        "Luna"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 6, 2026",
+      "modifiedLabel": "November 6, 2026",
+      "readMinutes": 3,
+      "wordCount": 574
+    }
+  },
+  "datePublished": "2026-11-06T22:41:39.219887+03:00",
+  "dateModified": "2026-11-06T22:41:39.219887+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-greenlight-financial-built-an-autonomous-soc-solution-on-amazon-bedrock-agentcore/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-greenlight-financial-built-an-autonomous-soc-solution-on-amazon-bedrock-agentcore/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-greenlight-financial-built-an-autonomous-soc-solution-on-amazon-bedrock-agentcore/social.jpg",
+    "alt": {
+      "ar": "Greenlight Financial تطلق نظام Luna الآمن على Amazon Bedrock AgentCore",
+      "en": "Greenlight Builds Autonomous SOC on Amazon Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21973-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-greenlight-financial-built-an-autonomous-soc-solution-on-amazon-bedrock-agentcore/inline-01.webp",
+        "width": 1400,
+        "height": 864,
+        "alt": {
+          "ar": "Greenlight Financial تطلق نظام Luna الآمن على Amazon Bedrock AgentCore",
+          "en": "Luna’s tiered multi-agent architecture, with a Tier 1 supervisor orchestrating specialized agents and escalating complex cases to a Tier 2 supervisor"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-greenlight-financial-built-an-autonomous-soc-solution-on-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/c-ml-21973-arch.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-greenlight-financial-built-an-autonomous-soc-solution-on-amazon-bedrock-agentcore/",
+      "type": "official",
+      "title": "How Greenlight Financial built an autonomous SOC solution on Amazon Bedrock AgentCore"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-greenlight-financial-built-an-autonomous-soc-solution-on-amazon-bedrock-agentcore",
+  "sourceTitle": "How Greenlight Financial built an autonomous SOC solution on Amazon Bedrock AgentCore",
+  "trendScore": 105.01,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-06T19:41:39+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/how-greenlight-financial-built-an-autonomous-soc-solution-on-amazon-bedrock-agentcore.json"
+}
