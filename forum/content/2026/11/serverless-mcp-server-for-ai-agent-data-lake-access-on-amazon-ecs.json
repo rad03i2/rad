@@ -1,0 +1,321 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "1109c7dc5eeb22026df6",
+  "slug": "serverless-mcp-server-for-ai-agent-data-lake-access-on-amazon-ecs",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/serverless-mcp-server-for-ai-agent-data-lake-access-on-amazon-ecs/",
+    "en": "/forum/en/ai/serverless-mcp-server-for-ai-agent-data-lake-access-on-amazon-ecs/"
+  },
+  "locales": {
+    "ar": {
+      "title": "AWS تطلق خادم MCP سحابياً للوصول الآمن إلى بحيرات البيانات",
+      "description": "تقدّم AWS حلاً سحابياً جديداً يعتمد على بروتوكول MCP لتسهيل وصول وكلاء الذكاء الاصطناعي إلى بيانات المؤسسات، مع تقليل التعقيد التقني وتوحيد أذونات الوصول.",
+      "deck": "أعلنت شركة أمازون ويب سيرفيسز (AWS) عن بنية تحتية سحابية جديدة تتيح لوكلاء الذكاء الاصطناعي الوصول الآمن إلى بيانات المؤسسات دون الحاجة إلى كتابة أكواد مخصصة لكل مجموعة بيانات.",
+      "summaryBullets": [
+        "يعتمد الحل على خادم سحابي (Serverless) يعمل على Amazon ECS Fargate لتوفير بوابة مركزية للوكلاء.",
+        "تقليل جهد دمج البيانات الجديدة إلى مجرد إضافة ملف JSON واحد بدلاً من أيام من العمل البرمجي.",
+        "توحيد أذونات الوصول والتدقيق في طبقة واحدة لضمان الأمان عبر جميع التطبيقات والوكلاء.",
+        "استخدام بروتوكول Model Context Protocol (MCP) لتسهيل التوافق مع مختلف أدوات الذكاء الاصطناعي."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي الوصول الموزع إلى البيانات المؤسسية",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات التي تبني تطبيقات تعتمد على الذكاء الاصطناعي تحدياً متكرراً يتمثل في تمكين وكلاء النماذج اللغوية الكبيرة (LLM) من الوصول إلى بحيرات البيانات المؤسسية دون تكرار منطق التكامل عبر كل وكيل وتطبيق. غالباً ما تبدأ الفرق التقنية بربط الوكلاء مباشرةً بقواعد البيانات وواجهات برمجة التطبيقات (APIs)، دون وجود بوابة مشتركة في المنتصف. هذا النهج يؤدي إلى الحاجة لكتابة أكواد مخصصة لكل مجموعة بيانات جديدة، وإعادة تنفيذ آليات التحكم في الوصول لكل وكيل على حدة. ومع تزايد عدد مجموعات البيانات أو الوكلاء، تتشتت آليات تطبيق الصلاحيات، ويصبح دمج مصدر بيانات جديد جهداً هندسياً يستغرق عدة أيام.",
+              "links": []
+            },
+            {
+              "text": "لمعالجة هذه المشكلة، طورت فرق دعم شبكة مراكز الفرز في أمريكا الشمالية لدى أمازون (NASC) حلاً يعتمد على خادم سحابي لبروتوكول سياق النموذج (MCP) يعمل على خدمة الحاويات المرنة (Amazon ECS) مع تقنية Fargate. يعمل هذا الخادم كبوابة مركزية ومستقلة عن نوع الوكيل، تربط بين وكلاء الذكاء الاصطناعي وبحيرة البيانات المؤسسية. وفقاً للمصدر، فإن تمكين الوصول إلى مجموعة بيانات جديدة يتطلب فقط ملف بيانات وصفية (JSON) يكتشفه الخادم تلقائياً في مزامنة خط الأنابيب التالية، مما يلغي الحاجة إلى أكواد تكامل مخصصة لكل مجموعة بيانات.",
+              "links": [
+                {
+                  "text": "Amazon ECS",
+                  "url": "https://aws.amazon.com/fargate/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "معمارية متعددة الطبقات للتوسع والأمان",
+          "paragraphs": [
+            {
+              "text": "تقوم المعمارية المقترحة على فصل المهام إلى أربع طبقات رئيسية: طبقة العميل، طبقة خادم MCP، طبقة الأدوات، وطبقة تحديث قاعدة المعرفة. كل طبقة قابلة للتوسع والنشر بشكل مستقل. يعتمد النظام على كتالوج بيانات وصفية يحدد أوصاف المخططات والدلالات على مستوى الأعمدة والعلاقات بين الجداول، والتي يستند إليها وكيل الذكاء الاصطناعي عند توليد استعلامات SQL. وبما أن الوكيل يستمد معرفة المخطط من الكتالوج في وقت الاستعلام، لا حاجة لتثبيت بنية الجداول في الكود أو إعادة النشر عند حدوث تغييرات في المخطط.",
+              "links": []
+            },
+            {
+              "text": "تبدأ رحلة الطلب من تطبيق العميل (مثل الدردشة عبر الويب أو Slack) حيث يمر عبر خدمة DNS ثم يصل إلى موازن حمل تطبيقات (Application Load Balancer) في شبكة فرعية عامة، مُهيأ باستخدام HTTPS و AWS WAF. يقوم موازن الحمل بتوجيه الطلبات إلى Amazon Cognito للمصادقة وإثراء الطلب. بعد ذلك، تدخل الحركة المعتمدة إلى الشبكة الخاصة حيث تعمل طبقة العميل على Amazon ECS Fargate، والتي تدير حالة الجلسة في Amazon DynamoDB وتوجه الطلبات إلى طبقة خادم MCP عبر موازن حمل داخلي.",
+              "links": [
+                {
+                  "text": "AWS WAF",
+                  "url": "https://aws.amazon.com/waf/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الجلسات والمصادقة الآمنة",
+          "paragraphs": [
+            {
+              "text": "تعتمد طبقة العميل على تكامل مع Amazon Cognito للمصادقة باستخدام رموز JSON Web Token (JWT) وتخزين الجلسات في Amazon DynamoDB. تلعب إعدادات تعيين السياق (Context Mapping) دوراً حاسماً في تحديد نطاق كل استعلام ليقتصر على الجداول ذات الصلة فقط. وفقاً لاختبارات الفريق، يساهم هذا التقييد في الحفاظ على زمن الاستجابة الكلي للتفاعل ضمن نطاق 15 إلى 20 ثانية. عند تحديد جداول معينة في السياق، يضيق خادم MCP نطاق بحثه في كتالوج البيانات الوصفية لتلك الجداول فقط، مما يقلل من الضوضاء ويحسن دقة توليد استعلامات SQL. إضافة نطاق أعمال جديد تتطلب فقط إدخال عنصر في هذا التعيين دون تعديلات برمجية معقدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تنفيذ سحابي بدون حالة (Stateless)",
+          "paragraphs": [
+            {
+              "text": "يعمل خادم MCP على عناقيد Fargate منفصلة عن طبقة العميل، ويصل إليه الطلبات عبر شبكة فرعية خاصة. يتولى الخادم التنسيق الكامل بما في ذلك تحليل الاستعلام، واختيار الأدوات، وتنفيذها، وتوليد الاستجابة. من خلال نقطة نهاية بروتوكول MCP، يمكن للعملاء المتوافقين مع البروتوكول مثل Amazon Q Developer أو إضافات بيئات التطوير (IDE) اكتشاف الأدوات واستدعاؤها مباشرة. نظراً لأن مهام Fargate تعمل بدون حالة (Stateless) مع تخزين حالة المحادثة في DynamoDB، يمكن استبدال المهام أو توسيعها دون فقدان البيانات. عند وصول طلب، يسترجع الوكيل سجل الجلسة، ويحلل نية المستخدم باستخدام Amazon Bedrock، ويكتشف الأدوات المناسبة ويستدعيها، ثم ينقل النتائج للمستخدم.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الوصول المدفوع بالبيانات الوصفية إلى بحيرة البيانات",
+          "paragraphs": [
+            {
+              "text": "تُعد أدوات الاستعلام عبر Amazon Athena الواجهة الرئيسية للوصول إلى بحيرة البيانات. أولاً، يستعلم الوكيل عن كتالوج البيانات الوصفية لفهم المخططات المتاحة، ثم يولد استعلام SQL محسناً عبر Amazon Bedrock. بعد ذلك، يتحقق من صحة الاستعلام ويصححه تلقائياً لضمان التوافق مع Athena قبل تنفيذه. تعود النتائج إلى الوكيل المنسق لتوليد ردود طبيعية بلغة البشر. كما يتكامل النظام مع Amazon Bedrock Knowledge Bases، وهي ميزة RAG مُدارة بالكامل، للتعامل مع البحث الدلالي. يتم التعامل مع إدخال البيانات في Amazon S3 وقواعد المعرفة بواسطة AWS Lambda.",
+              "links": [
+                {
+                  "text": "Amazon Athena",
+                  "url": "https://aws.amazon.com/athena/"
+                }
+              ]
+            },
+            {
+              "text": "تضمن هذه البنية تطبيق حواجز أمان (Guardrails) من Amazon Bedrock على كل تفاعل مع النموذج، مما يعزز الأمان والامتثال. كما توفر البنية مرونة في التوسع لتلبية أنماط عمل الذكاء الاصطناعي المتقطعة (Bursty Workloads)، مما يجعلها مناسبة للبيئات متعددة المستأجرين حيث تتشارك عدة فرق في الوصول إلى نفس البنية التحتية دون تعارض في الموارد أو الصلاحيات.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "AWS",
+        "MCP",
+        "Serverless",
+        "بحيرات البيانات",
+        "Amazon ECS",
+        "Fargate"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon ECS",
+        "AWS Fargate",
+        "Model Context Protocol (MCP)",
+        "Amazon Bedrock",
+        "Amazon Athena",
+        "Amazon Cognito",
+        "Amazon DynamoDB"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "6 نوفمبر 2026",
+      "modifiedLabel": "6 نوفمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 791
+    },
+    "en": {
+      "title": "AWS Details Serverless MCP Server for AI Data Lake Access",
+      "description": "Learn how organizations can build a metadata-driven serverless Model Context Protocol server on Amazon ECS Fargate for secure enterprise data lakes.",
+      "deck": "A new architectural approach uses metadata configurations rather than custom code to connect AI agents with enterprise data lakes.",
+      "summaryBullets": [
+        "Organizations face challenges scaling AI agent data lake access without custom per-dataset integration code.",
+        "A serverless Model Context Protocol server on Amazon ECS Fargate provides a centralized, agent-agnostic gateway.",
+        "Exposing new datasets relies entirely on JSON metadata files discovered automatically during pipeline syncs.",
+        "The multi-layer architecture incorporates Amazon Bedrock, Amazon Athena, and robust AWS security features."
+      ],
+      "sections": [
+        {
+          "heading": "Addressing AI Data Lake Access Challenges",
+          "paragraphs": [
+            {
+              "text": "Organizations building applications powered by artificial intelligence face a recurring challenge when giving large language model agents access to enterprise data lakes without duplicating integration logic. Teams frequently wire agents directly to databases and APIs without a shared gateway like a Model Context Protocol (MCP) server. Each new dataset requires custom code, and individual agents reimplement separate access controls.",
+              "links": [
+                {
+                  "text": "Model Context Protocol (MCP)",
+                  "url": "https://modelcontextprotocol.io/"
+                }
+              ]
+            },
+            {
+              "text": "Support teams operating within Amazon's North America Sort Center network needed conversational data access to manage capacity, labor, and package flow. To resolve this, teams built a serverless Model Context Protocol (MCP) server on Amazon Elastic Container Service (Amazon ECS) using AWS Fargate, serving as a centralized and agent-agnostic gateway between AI agents and the enterprise data lake.",
+              "links": [
+                {
+                  "text": "Amazon Elastic Container Service (Amazon ECS)",
+                  "url": "https://aws.amazon.com/fargate/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Metadata-Driven Architecture and Design Goals",
+          "paragraphs": [
+            {
+              "text": "The design framework aims to eliminate per-dataset integration code, ensuring that onboarding a new dataset requires only a JSON metadata file rather than custom programming. The architecture supports agent-agnostic tool interfaces, allowing any compatible client to invoke the same tools, alongside centralized permission enforcement managed directly at the server layer.",
+              "links": []
+            },
+            {
+              "text": "The system separates concerns across client, server, tools, and knowledge-base refresh layers. A metadata catalog underpins the tools layer, storing schema descriptions, column-level semantics, and table relationships referenced by AI agents at query time to generate SQL without hardcoded table structures.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Request Flow and Client Layer Security",
+          "paragraphs": [
+            {
+              "text": "User queries originate from client applications such as web chat, Slack, or IDE plugins, passing through Amazon Route 53 for DNS resolution. Requests reach an Application Load Balancer equipped with HTTPS and AWS WAF before moving to Amazon Cognito for authentication and session management handled via Amazon DynamoDB.",
+              "links": [
+                {
+                  "text": "AWS WAF",
+                  "url": "https://aws.amazon.com/waf/"
+                }
+              ]
+            },
+            {
+              "text": "Authenticated traffic enters a private subnet where client services run on Amazon ECS on AWS Fargate. Context mapping configurations scope queries to relevant tables, maintaining typical end-to-end interaction latencies between 15 and 20 seconds during testing phases.",
+              "links": [
+                {
+                  "text": "Amazon ECS on AWS Fargate",
+                  "url": "https://aws.amazon.com/fargate/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Stateless Server Layer and Tool Execution",
+          "paragraphs": [
+            {
+              "text": "The MCP server operates on its own dedicated cluster, receiving requests through an internal Application Load Balancer located in a private subnet. The server orchestrates query analysis, tool selection, execution, and response generation, exposing a JSON-RPC interface via FastMCP endpoints.",
+              "links": []
+            },
+            {
+              "text": "Tasks remain stateless while conversation histories persist securely in DynamoDB. Orchestrating agents leverage Amazon Bedrock to analyze user intent, discover appropriate tools, and stream responses back to users while applying safety models throughout the process.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Data Layer Integration and Analytics",
+          "paragraphs": [
+            {
+              "text": "Athena query tools function as the primary interface to the enterprise data lake. The agent references metadata catalogs to understand schemas, builds optimized queries through Amazon Bedrock, validates the resulting code for compatibility, and executes requests seamlessly.",
+              "links": []
+            },
+            {
+              "text": "Additionally, managed Retrieval Augmented Generation capabilities via Amazon Bedrock Knowledge Bases handle advanced semantic search functions, completing an enterprise ecosystem designed for scalable multi-tenant AI deployments.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Knowledge Bases",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Artificial Intelligence",
+        "Model Context Protocol",
+        "Amazon ECS",
+        "Data Lake",
+        "Serverless",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon ECS",
+        "AWS Fargate",
+        "Amazon Bedrock",
+        "Amazon Athena",
+        "Model Context Protocol"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 6, 2026",
+      "modifiedLabel": "November 6, 2026",
+      "readMinutes": 3,
+      "wordCount": 534
+    }
+  },
+  "datePublished": "2026-11-06T20:41:38.180451+03:00",
+  "dateModified": "2026-11-06T20:41:38.180451+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/serverless-mcp-server-for-ai-agent-data-lake-access-on-amazon-ecs/hero.webp",
+    "card": "/forum/assets/posts/2026/11/serverless-mcp-server-for-ai-agent-data-lake-access-on-amazon-ecs/card.webp",
+    "social": "/forum/assets/posts/2026/11/serverless-mcp-server-for-ai-agent-data-lake-access-on-amazon-ecs/social.jpg",
+    "alt": {
+      "ar": "AWS تطلق خادم MCP سحابياً للوصول الآمن إلى بحيرات البيانات",
+      "en": "AWS Details Serverless MCP Server for AI Data Lake Access"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-20343-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/serverless-mcp-server-for-ai-agent-data-lake-access-on-amazon-ecs/inline-01.webp",
+        "width": 1400,
+        "height": 630,
+        "alt": {
+          "ar": "AWS تطلق خادم MCP سحابياً للوصول الآمن إلى بحيرات البيانات",
+          "en": "Architecture diagram of the serverless MCP server showing request flow from client applications through Route 53, AWS WAF, an Application Load Balancer, and Amazon Cognito into the client and MCP server layers on Amazon"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/serverless-mcp-server-for-ai-agent-data-lake-access-on-amazon-ecs-fargate/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-20343-1.jpeg"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/serverless-mcp-server-for-ai-agent-data-lake-access-on-amazon-ecs-fargate/",
+      "type": "official",
+      "title": "Serverless MCP server for AI agent data lake access on Amazon ECS Fargate"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/serverless-mcp-server-for-ai-agent-data-lake-access-on-amazon-ecs-fargate",
+  "sourceTitle": "Serverless MCP server for AI agent data lake access on Amazon ECS Fargate",
+  "trendScore": 113.91,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-06T17:41:38+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/serverless-mcp-server-for-ai-agent-data-lake-access-on-amazon-ecs.json"
+}
