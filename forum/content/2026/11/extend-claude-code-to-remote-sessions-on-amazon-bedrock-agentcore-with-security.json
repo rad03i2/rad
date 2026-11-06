@@ -1,0 +1,334 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "c09ed239791d8febad3d",
+  "slug": "extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security/",
+    "en": "/forum/en/ai/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون توسّع Claude Code لجلسات عن بُعد على Bedrock AgentCore",
+      "description": "تتيح أمازون تنفيذ مهام البرمجة عبر Claude Code في جلسات معزولة على Amazon Bedrock AgentCore، مع ضمانات أمنية صارمة وإرجاع النتائج كطلبات سحب على GitHub.",
+      "deck": "تقدم أمازون حلاً جديداً يسمح للمطورين بتفويض مهام البرمجة إلى وكلاء عن بُعد يعملون داخل حساباتهم الخاصة، مما يضمن العزل التام للبيانات وتكامل الأمان مع بنية أمازون السحابية.",
+      "summaryBullets": [
+        "تشغيل Claude Code كوكيل عن بُعد على Amazon Bedrock AgentCore مع عزل كل مهمة في جلسة مستقلة.",
+        "استخدام نماذج Claude Opus وSonnet عبر Amazon Bedrock لضمان عدم مشاركة البيانات مع أطراف ثالثة.",
+        "إرجاع النتائج كطلبات سحب (Pull Requests) على GitHub للمراجعة والدمج اليدوي.",
+        "تطبيق ضوابط أمنية صارمة تشمل الوصول الصفرية للمشغلين (ZOA) وإمكانية ضبط الاحتفاظ بالبيانات.",
+        "توفير مثال عملي (sample) يوضح كيفية دمج هذه البنية مع أدوات مثل Docker وPython."
+      ],
+      "sections": [
+        {
+          "heading": "الانتقال من التشغيل المحلي إلى الوكلاء عن بُعد",
+          "paragraphs": [
+            {
+              "text": "يستخدم العديد من المطورين حالياً أداة Claude Code محلياً على أجهزتهم الشخصية مدعومة بخدمات Amazon Bedrock. ومع ذلك، تقدم أمازون الآن خطوة متقدمة تتيح تشغيل هذه الأداة كوكيل عن بُعد على منصة Amazon Bedrock AgentCore، وهي مصممة لبناء الوكلاء وتوصيلهم وتحسينهم على نطاق واسع. من خلال استخدام ميزة AgentCore runtime، تُنفَّذ كل مهمة برمجة في جلسة معزولة تماماً داخل حساب العميل الخاص على AWS، مما يسمح للمستخدم بتفويض المهمة وإغلاق جهازه والعودة لاحقاً لاستلام النتيجة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security-controls/"
+                },
+                {
+                  "text": "Claude Code",
+                  "url": "https://code.claude.com/docs/en/setup"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "أساسيات الأمان في Amazon Bedrock",
+          "paragraphs": [
+            {
+              "text": "تختار الشركات Amazon Bedrock كمزود للنماذج لعدة أسباب، أبرزها الفوترة الموحدة عبر حساب AWS دون تراخيص لكل مقعد، وسجلات التدقيق في AWS CloudTrail، وملفات الاستدلال الجغرافية لإقامة البيانات. تشمل الخصائص الأمنية الرئيسية حماية البيانات، حيث لا تستخدم أمازون المحتوى لتدريب النماذج ولا تشاركه مع مزودي النماذج. كما أن الخدمة ضمن نطاق معايير SOC وISO وFedRAMP Moderate، وتوافق مع GDPR، ويمكن الاطلاع على تفاصيل التحقق من الامتثال عبر وثائق أمازون الرسمية.",
+              "links": []
+            },
+            {
+              "text": "تتحكم الشركات أيضاً في وصول المشغلين والاحتفاظ بالبيانات. يعتمد محرك الاستدلال Mantle، الجيل القادم من Amazon Bedrock، على تصميم الوصول الصفرية للمشغلين (ZOA)، مما يعني أن مشغلي أمازون لا يملكون أي وسيلة تقنية للوصول إلى بيانات العملاء مثل الأوامر أو المخرجات. كما يمكن للمستخدمين ضبط الاحتفاظ بالبيانات الصفرية (ZDR) لضمان عدم كتابة أي بيانات على التخزين الدائم من قبل أمازون أو مشاركتها مع مزود النموذج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بنية وكيل البرمجة عن بُعد",
+          "paragraphs": [
+            {
+              "text": "تتحول مهام البرمجة مع الوكلاء عن بُعد إلى عملية تسليم واضحة: يُسندت المهمة، ويُغلق الجهاز، وتعود النتيجة كطلب سحب (Pull Request) يمكن لزميل العمل مراجعته ودمجه. تتيح هذه البنية تنفيذ عدة مهام في وقت واحد دون تنافس على موارد جهاز واحد، حيث تعمل كل مهمة في بيئة قابلة للتخلص منها خارج جهاز المستخدم وبما يضمن عدم استخدام بيانات الاعتماد المحلية. ومع ذلك، تنطوي هذه الطريقة على مقايضات، منها تقليل القدرة على التوجيه أثناء التنفيذ، والحاجة إلى إعداد البيئة، وصعوبة التنبؤ بالتكاليف بدقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "سير العمل: من الإرسال إلى المراجعة",
+          "paragraphs": [
+            {
+              "text": "يبدأ سير العمل بإرسال المهمة من Claude Code عبر إضافة sample-rca التي تشغل خادم MCP محلياً، أو من وحدة تحكم ويب. يتم توقيع الطلبات باستخدام بيانات اعتماد AWS، ثم يمرر خادم Lambda المهمة عبر حواجز Amazon Bedrock Guardrails لتصفية الأوامر، قبل تسجيلها في DynamoDB ووضعها في طابور Amazon SQS. بعد ذلك، يبدأ مُوزِّع المهام جلسة AgentCore runtime معزولة للمهمة، حيث تعمل كل مستودع مسجل على صورة حاوية خاصة به تحتوي على أدوات مثل git وmake.",
+              "links": []
+            },
+            {
+              "text": "داخل الجلسة المعزولة، يحصل الوكيل على رمز وصول إلى GitHub من AgentCore Identity، وينسخ المستودع. يبحث الوكيل في ذاكرة AgentCore عن الدروس المستفادة من مهام سابقة على نفس المستودع. ثم يقوم Claude Code بتخطيط التغيير باستخدام نموذج Claude Opus عبر Amazon Bedrock، وكتابة الكود باستخدام Claude Sonnet. بعد ذلك، ينفذ الوكيل أوامر الإعداد والاختبار الخاصة بالمستودع في نفس الجلسة المعزولة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحقق وإدارة الدورات التكرارية",
+          "paragraphs": [
+            {
+              "text": "بعد كتابة الكود، يقوم Claude Code بمراجعة النتيجة باستخدام نموذج Claude Opus. إذا كانت هناك أخطاء، يمكن إرسال المهمة مجدداً إلى مرحلة التخطيط لمحاولة أخرى، بحد أقصى ثلاث محاولات. طوال فترة التنفيذ، تسجل كل خطوة ما حدث في ذاكرة AgentCore، مما يتيح استخراج الدروس (مثل خطوات البناء ذات المتطلبات الخفية) للمهام المستقبلية على نفس المستودع. هذا النظام يضمن تحسين الأداء مع مرور الوقت دون تدخل يدوي مستمر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النتيجة النهائية: طلبات السحب",
+          "paragraphs": [
+            {
+              "text": "عند اكتمال التنفيذ، يدفع الوكيل فرعاً جديداً باسم agent/<taskId> ويفتح طلب سحب (Pull Request) على GitHub. يسجل هذا الطلب أمر التحقق، ورمز الخرج (Exit Code)، وعدد المحاولات المستخدمة. يُفتح الطلب كمسودة (Draft) إلا إذا نجحت عملية التحقق بالكامل. يقوم المطور البشري بمراجعة الطلب ودمجه يدوياً، حيث لا يقوم الوكيل بالدمج أبداً. يوفر هذا النهج توازناً بين أتمتة التنفيذ والرقابة البشرية على الجودة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات والإعدادات",
+          "paragraphs": [
+            {
+              "text": "لتنفيذ هذا الحل، يحتاج المستخدمون إلى إعداد بيئة تحتوي على أدوات مثل Docker وPython، بالإضافة إلى واجهة سطر أوامر AWS (AWS CLI). توفر أمازون وثائق إرشادية مفصلة حول كيفية إعداد Claude Code مع Amazon Bedrock، بما في ذلك كيفية استخدام AWS PrivateLink لتوفير اتصال خاص بين Amazon VPC وAmazon Bedrock. يضمن هذا الإعداد أن تبقى الاتصالات الآمنة ضمن البنية التحتية الخاصة بالعميل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "Claude Code",
+        "AgentCore",
+        "الذكاء الاصطناعي",
+        "أمن المعلومات",
+        "AWS",
+        "تطوير البرمجيات"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز (AWS)",
+        "Amazon Bedrock",
+        "Amazon Bedrock AgentCore",
+        "Claude Code",
+        "GitHub",
+        "Mantle",
+        "Amazon VPC"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "6 نوفمبر 2026",
+      "modifiedLabel": "6 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 750
+    },
+    "en": {
+      "title": "Run Claude Code Remotely on Amazon Bedrock AgentCore",
+      "description": "Learn how to run Claude Code as a remote agent on Amazon Bedrock AgentCore, executing tasks in isolated sessions within your AWS account.",
+      "deck": "AWS highlights an architecture for running Claude Code remotely on Amazon Bedrock AgentCore, enabling isolated coding tasks and GitHub pull requests.",
+      "summaryBullets": [
+        "Run Claude Code as a remote agent using Amazon Bedrock AgentCore.",
+        "Each coding task executes within its own isolated microVM session inside your AWS account.",
+        "Tasks return completed work as GitHub pull requests for review and merging.",
+        "Model calls leverage Amazon Bedrock security characteristics, data protections, and IAM controls."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Remote Coding Agents on AWS",
+          "paragraphs": [
+            {
+              "text": "Developers who already run Claude Code locally on their laptops backed by Amazon Bedrock can now take advantage of a remote workflow. A published guide on the Artificial Intelligence blog details how to run the assistant as a remote agent on Amazon Bedrock AgentCore, a platform designed to build, connect, and optimize agents at scale using any framework or model.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            },
+            {
+              "text": "By utilizing the AgentCore runtime capability, teams can offload coding tasks to isolated environments inside their AWS accounts. This remote coding agent pattern allows users to submit a task, close their laptops, and return later to review the results.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Security Characteristics of Amazon Bedrock",
+          "paragraphs": [
+            {
+              "text": "Running Claude Code workloads on Amazon Bedrock provides several core security advantages. Billing and credits operate directly through existing AWS accounts without requiring per-seat licenses, while audit logging is handled via AWS CloudTrail, and data residency is managed through geographic inference profiles.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, Amazon Bedrock enforces strict data protection rules: user content is never utilized to train underlying models or shared with model providers. Comprehensive details on compliance frameworks, including SOC, ISO, FedRAMP Moderate, HIPAA eligibility, and GDPR alignment, are available in the documentation for Compliance validation for Amazon Bedrock.",
+              "links": [
+                {
+                  "text": "Compliance validation for Amazon Bedrock",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/compliance-validation.html"
+                }
+              ]
+            },
+            {
+              "text": "Access management relies on temporary AWS Identity and Access Management credentials, and teams can integrate identity providers such as Microsoft Entra ID or Okta. AWS PrivateLink also allows a private connection between an Amazon Virtual Private Cloud and Amazon Bedrock.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Data Retention and Operator Access Control",
+          "paragraphs": [
+            {
+              "text": "Inference requests on Amazon Bedrock utilize Mantle, a next-generation inference engine built for zero operator access. This design ensures that AWS operators have no technical means to access customer prompts or completions.",
+              "links": []
+            },
+            {
+              "text": "Users retain full control over data retention policies. Organizations can configure zero data retention to guarantee that request and response data are neither written to durable storage by AWS nor shared with model providers. Further insights can be found in the guides for Data retention and Exploring the zero operator access design of Mantle.",
+              "links": [
+                {
+                  "text": "Data retention",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/data-retention.html"
+                },
+                {
+                  "text": "Exploring the zero operator access design of Mantle",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/exploring-the-zero-operator-access-design-of-mantle/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Workflow of the Remote Sample",
+          "paragraphs": [
+            {
+              "text": "An accompanying repository, sample-remote-coding-agent, provides a reference implementation of the remote agent architecture. The system supports scoped features, bug fixes, and tests on trusted repositories, though it is not recommended for untrusted code or open-ended tasks.",
+              "links": [
+                {
+                  "text": "sample-remote-coding-agent",
+                  "url": "https://github.com/aws-samples/sample-remote-coding-agent"
+                }
+              ]
+            },
+            {
+              "text": "When a task is submitted via the Claude Code plugin or an Amazon CloudFront web console, an AWS Lambda function screens the prompt using Amazon Bedrock Guardrails. The task is then recorded in Amazon DynamoDB and placed on an Amazon Simple Queue Service queue before a dispatcher starts an AgentCore runtime session.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Execution, Verification, and Pull Request Delivery",
+          "paragraphs": [
+            {
+              "text": "Inside the isolated microVM session, the agent retrieves a GitHub access token using AgentCore Identity and clones the repository. It references AgentCore memory for past lessons, plans changes using Claude Opus, writes modifications via Claude Sonnet, and executes verification commands.",
+              "links": []
+            },
+            {
+              "text": "If verification succeeds, the agent pushes a branch and opens a pull request for team review. The automated agent never merges changes independently, leaving the final review and merge responsibilities to human developers.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon Bedrock",
+        "Claude Code",
+        "Artificial Intelligence",
+        "AgentCore",
+        "Cloud Security"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Anthropic",
+        "GitHub"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 6, 2026",
+      "modifiedLabel": "November 6, 2026",
+      "readMinutes": 3,
+      "wordCount": 577
+    }
+  },
+  "datePublished": "2026-11-06T20:01:37.818430+03:00",
+  "dateModified": "2026-11-06T20:01:37.818430+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security/hero.webp",
+    "card": "/forum/assets/posts/2026/11/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security/card.webp",
+    "social": "/forum/assets/posts/2026/11/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security/social.jpg",
+    "alt": {
+      "ar": "أمازون توسّع Claude Code لجلسات عن بُعد على Bedrock AgentCore",
+      "en": "Run Claude Code Remotely on Amazon Bedrock AgentCore"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-21719-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security/inline-01.webp",
+        "width": 1393,
+        "height": 1050,
+        "alt": {
+          "ar": "أمازون توسّع Claude Code لجلسات عن بُعد على Bedrock AgentCore",
+          "en": "Architecture of the sample. Claude Code, through a local MCP server, or a web console served by Amazon CloudFront with AWS WAF, submits tasks to Amazon API Gateway. AWS Lambda handlers screen each prompt with Amazon Bedr"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security-controls/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-21719-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security/inline-02.webp",
+        "width": 1400,
+        "height": 878,
+        "alt": {
+          "ar": "أمازون توسّع Claude Code لجلسات عن بُعد على Bedrock AgentCore",
+          "en": "A task flows from Claude Code through Amazon API Gateway, AWS Lambda and Amazon SQS to an AgentCore runtime session. The session checks out the repository, then plans, codes, verifies and reviews the change, calling Amaz"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security-controls/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-21719-2.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security-controls/",
+      "type": "official",
+      "title": "Extend Claude Code to remote sessions on Amazon Bedrock AgentCore with security controls"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security-controls",
+  "sourceTitle": "Extend Claude Code to remote sessions on Amazon Bedrock AgentCore with security controls",
+  "trendScore": 117.99,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-06T17:01:38+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security.json"
+}
