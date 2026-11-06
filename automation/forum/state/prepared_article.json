@@ -1,5 +1,345 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-06T18:01:39+00:00",
-  "last_published_story_id": "e22092f79218deeb3820"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-06T18:08:36+00:00",
+  "target_publish_at": "2026-11-06T21:21:38.310031+03:00",
+  "story": {
+    "title": "SageMaker Inference now supports Multi-Instance GPU to maximize GPU utilization for model endpoints",
+    "url": "https://aws.amazon.com/blogs/machine-learning/sagemaker-inference-now-supports-multi-instance-gpu-to-maximize-gpu-utilization-for-model-endpoints",
+    "domain": "aws.amazon.com",
+    "summary": "Amazon SageMaker Inference now supports GPU partitioning with NVIDIA Multi-Instance GPU (MIG), which divides one GPU into hardware-isolated partitions so you can run a different model in each or take a right-sized fraction of a newer accelerator. This post shows how two optional API fields place one model per partition, and what we measured against a whole older GPU.",
+    "published_at": "2026-11-06T18:01:00+00:00",
+    "discovered_at": "2026-11-06T18:07:35+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 69,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "819549b983fd9118af23",
+    "trend": {
+      "score": 110.95,
+      "age_hours": 0.12,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/sagemaker-inference-now-supports-multi-instance-gpu-to-maximize-gpu-utilization-for-model-endpoints/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "SageMaker Inference now supports Multi-Instance GPU to maximize GPU utilization for model endpoints",
+      "title": "SageMaker Inference now supports Multi-Instance GPU to maximize GPU utilization for model endpoints | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "SageMaker يدعم تقسيم GPU عبر تقنية NVIDIA MIG",
+      "description": "أطلقت AWS ميزة تقسيم وحدات معالجة الرسومات في SageMaker Inference باستخدام NVIDIA MIG، مما يتيح تشغيل نماذج متعددة معزولة على نفس العتاد لرفع الكفاءة وتقليل التكاليف.",
+      "deck": "تتيح ميزة جديدة في Amazon SageMaker Inference تقسيم وحدة معالجة الرسومات الواحدة إلى أقسام معزولة، مما يسمح للمؤسسات بتشغيل نماذج متعددة بكفاءة أعلى وتكلفة أقل.",
+      "summary_bullets": [
+        "دعم تقسيم GPU عبر تقنية NVIDIA Multi-Instance GPU (MIG) في SageMaker Inference.",
+        "إمكانية تشغيل نماذج متعددة معزولة على نفس العتاد دون الحاجة إلى Kubernetes ذاتي الإدارة.",
+        "تحسين كفاءة استخدام GPU وتقليل التكاليف من خلال تخصيص أجزاء مناسبة لكل نموذج.",
+        "إضافة حقول اختيارية في API لتوزيع النماذج على الأقسام دون تغييرات جذرية في البنية."
+      ],
+      "sections": [
+        {
+          "heading": "تجاوز قيود وحدات GPU الكاملة",
+          "paragraphs": [
+            {
+              "text": "عند نشر نموذج على نقطة نهاية GPU، كانت أصغر وحدة يمكن طلبها هي معالج رسومات كامل. هذا القيد كان يفرض تكاليف مزدوجة؛ أولاً، كان يحد من عدد النماذج التي يمكن استضافتها على جهاز واحد، وثانياً، كان يجبر المطورين على اختيار GPU كامل قد يكون أكبر أو أصغر من حاجة النموذج الفعلية، مما يؤدي إما إلى نقص في الأداء أو دفع مقابل قدرات غير مستخدمة.",
+              "links": []
+            },
+            {
+              "text": "للتغلب على هذه التحديات، أعلنت Amazon SageMaker Inference عن دعم تقسيم GPU باستخدام تقنية NVIDIA Multi-Instance GPU (MIG). هذه التقنية تقسم المعالج الفيزيائي إلى أقسام مستقلة، حيث يحصل كل قسم على حصة ثابتة من وحدات الحساب وذاكرة مخصصة، مع عزل يُنفذ على مستوى العتاد.",
+              "links": [
+                {
+                  "text": "NVIDIA Multi-Instance GPU",
+                  "url": "https://docs.nvidia.com/datacenter/tesla/mig-user-guide/latest/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مزايا العزل على مستوى العتاد",
+          "paragraphs": [
+            {
+              "text": "توفر تقنية MIG مستويات من العزل لا يمكن تحقيقها عبر طرق المشاركة البرمجية التقليدية. أولاً، تضمن التأخير المتنبأ به لأن كل قسم يتمتع بعرض نطاق ذاكرة مخصص، مما يمنع ذروة الطلب من نموذج واحد من التأثير على أداء نموذج آخر. ثانياً، توفر عزل الأعطال، حيث تبقى الأخطاء أو أعطال الذاكرة داخل قسمها دون التأثير على بقية النماذج على نفس المعالج.",
+              "links": []
+            },
+            {
+              "text": "كما تتيح التقنية تخصيص السعة بشكل دقيق، حيث يمكن للنماذج الصغيرة والمتوسطة الحصول على شريحة تناسب حجمها بدلاً من GPU كامل. يمكن أيضاً خلط أحجام الشرائح على نفس الجهاز، مما يوفر مرونة عالية في إدارة الموارد. بالإضافة إلى ذلك، لا توجد عمليات بدء باردة (Cold Starts) لأن كل نموذج يحتفظ بقسمه الخاص ويبقى محملاً باستمرار.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة مبسطة دون Kubernetes",
+          "paragraphs": [
+            {
+              "text": "حتى الآن، كان الحصول على تقسيم GPU يتطلب إدارة بنية Kubernetes ذاتية، مما يفرض على الفرق التعامل مع إصدارات السائقات، تكوين الأقسام، وإدارة الجدولة. تزيل ميزة تقسيم GPU في Amazon SageMaker AI هذا العبء، حيث يختار المستخدم ملف قسم (Partition Profile) لنموذه، ويتولى SageMaker AI إدارة التكوين والتوزيع والتوسع تلقائياً.",
+              "links": []
+            },
+            {
+              "text": "هذا يعني الحصول على مشاركة GPU معزولة على مستوى العتاد في نقطة نهاية مُدارة، دون الحاجة إلى تشغيل المنصة الأساسية ذاتياً. وقد شارك Salesforce في هذا العمل منذ البداية، حيث ساعد في تحديد المتطلبات والتحقق من التنفيذ الأولي، مشيراً إلى أن هذه الميزة ستساعد في توحيد الأحمال وتحسين استخدام GPU وتقليل تكاليف الاستدلال.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع مكونات الاستدلال",
+          "paragraphs": [
+            {
+              "text": "يعمل تقسيم GPU مع نقاط النهاية التي تستخدم inference components، وهي البنية المستخدمة لنشر عدة نماذج على نقطة نهاية واحدة وتحديد الحساب لكل نموذج. يُبنى التقسيم مباشرة على هذه البنية، حيث يُعد القسم مورداً يطلبه المكون في نفس المكان الذي يطلب فيه المعالج والذاكرة. لا يمكن تقسيم نقاط النهاية أحادية النموذج أو نقاط النهاية الخادمة (Serverless) أو مجموعات الأجهزة غير المتجانسة.",
+              "links": [
+                {
+                  "text": "inference components",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/reduce-model-deployment-costs-by-50-on-average-using-sagemakers-latest-features/"
+                }
+              ]
+            },
+            {
+              "text": "أضافت الميزة حقولاً اختيارية جديدة في استدعاءات API الحالية دون إضافة عمليات أو أنواع موارد جديدة. الحقل الأول هو AcceleratorPartitionLayouts، الذي يُحدد كيفية تقسيم كل معالج رسومات. الحقل الثاني هو AcceleratorPartitionType، الذي يختار القسم الذي سيعمل عليه النموذج. إذا تم تجاهل كلا الحقلين، ستعمل نقطة النهاية كما كانت في السابق تماماً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قيود وتفاصيل تقنية",
+          "paragraphs": [
+            {
+              "text": "تتضمن تقنية MIG قيوداً يجب مراعاتها؛ فالحد الأقصى لعدد الأقسام يعتمد على المعالج ولا يتجاوز سبعة أقسام. كما يسمح MIG بتغيير التوزيع فقط عندما تكون الأقسام خاملة، مما يعني في SageMaker AI اختيار التوزيع عند إنشاء نقطة النهاية. النماذج التي تتطلب أكثر من GPU لا تزال بحاجة إلى أجهزة كاملة. ضمن هذه الحدود، يوفر التقسيم عزل GPU منفصل دون تخصيص جهاز كامل لكل نموذج.",
+              "links": []
+            },
+            {
+              "text": "يتيح هذا النهج للمؤسسات تحسين تخطيط الأحمال والاحتساب (Chargeback) بشكل موثوق، حيث يؤدي القسم بنفس الطريقة بغض النظر عن جيرانه، مما يجعل اختبارات الحمل تنبأ بدقة بأداء الإنتاج. كما يمكن ربط تكلفة GPU بشكل واضح بنموذج أو فريق أو مستأجر معين، مما يعزز الشفافية في إدارة التكاليف.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "SageMaker",
+        "NVIDIA MIG",
+        "GPU Partitioning",
+        "AI Inference",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "Amazon SageMaker Inference",
+        "NVIDIA Multi-Instance GPU (MIG)",
+        "Salesforce",
+        "AWS"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال يعتمد حصرياً على المدونة الرسمية لـ AWS Machine Learning، مع التركيز على الجوانب التقنية والتجارية المذكورة في المصدر دون إضافة معلومات خارجية."
+    },
+    "en": {
+      "title": "SageMaker Inference Adds NVIDIA MIG GPU Partitioning",
+      "description": "Amazon SageMaker Inference now supports NVIDIA Multi-Instance GPU partitioning to improve GPU utilization and model endpoint efficiency.",
+      "deck": "Amazon SageMaker Inference has introduced support for GPU partitioning using NVIDIA Multi-Instance GPU technology, enabling developers to run multiple hardware-isolated models on a single accelerator.",
+      "summary_bullets": [
+        "Amazon SageMaker Inference introduces support for NVIDIA Multi-Instance GPU partitioning.",
+        "Hardware-isolated partitions divide compute units and dedicated memory per model.",
+        "Eliminates the constraint of assigning one whole accelerator per model endpoint.",
+        "Supports inference components to manage resource allocation on managed endpoints."
+      ],
+      "sections": [
+        {
+          "heading": "Overcoming Whole Accelerator Constraints",
+          "paragraphs": [
+            {
+              "text": "When deploying machine learning models to GPU endpoints, developers historically faced a strict hardware constraint where the minimum request unit was one whole accelerator. This limitation often forced teams into difficult choices regarding infrastructure sizing. For instance, an ml.p4d.24xlarge instance contains eight A100 GPUs, allowing it to hold precisely eight models regardless of whether an individual model required the full 40 GB of memory or just a fraction of it.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, as concurrency and prompt lengths grow over time, older full GPU instances can become insufficient, while newer accelerators often provide more capacity than a specific model requires. This dynamic frequently led to workloads being underserved or organizations paying for computational capabilities they never fully utilized. To resolve these challenges, Amazon SageMaker Inference now supports GPU partitioning.",
+              "links": [
+                {
+                  "text": "GPU partitioning",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/inference-components-accelerator-partitioning.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Hardware-Isolated Partitions with NVIDIA MIG",
+          "paragraphs": [
+            {
+              "text": "The newly introduced feature leverages NVIDIA Multi-Instance GPU (MIG) technology to divide a single physical GPU into multiple independent hardware-isolated partitions. Each created partition receives a fixed share of the accelerator's compute units along with a dedicated block of memory. This physical separation guarantees that resource allocation remains stable and secure.",
+              "links": [
+                {
+                  "text": "NVIDIA Multi-Instance GPU",
+                  "url": "https://docs.nvidia.com/datacenter/tesla/mig-user-guide/latest/"
+                }
+              ]
+            },
+            {
+              "text": "By utilizing hardware-level enforcement rather than software sharing, the integration delivers several operational advantages. These include predictable latency because dedicated memory bandwidth prevents traffic spikes in one model from affecting the p99 of another. Additionally, fault isolation ensures that a crash or memory error stays contained within its designated partition rather than impacting every model running on the device.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Integration with Inference Components",
+          "paragraphs": [
+            {
+              "text": "GPU partitioning builds directly upon inference components, which are the constructs used by developers to deploy multiple models to a single endpoint and assign specific compute resources to each model. Under this architecture, a partition operates as a requested resource within the component, similar to how CPU and memory allocations are requested.",
+              "links": [
+                {
+                  "text": "inference components",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/reduce-model-deployment-costs-by-50-on-average-using-sagemakers-latest-features/"
+                }
+              ]
+            },
+            {
+              "text": "It is important to note that single-model endpoints, serverless endpoints, and heterogeneous instance pools cannot be partitioned. Administrators looking to implement the feature must configure their deployments using specific API structures designed to accommodate the hardware slices.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Enterprise Validation and Industry Response",
+          "paragraphs": [
+            {
+              "text": "Major enterprise partners have collaborated closely with AWS during the development and initial validation of the feature. Salesforce has participated from the beginning to help define requirements and validate the initial implementation.",
+              "links": []
+            },
+            {
+              "text": "\"NVIDIA MIG partitions a single GPU into multiple isolated instances, each with dedicated compute and memory resources. Salesforce sees this as an important capability because many inference workloads do not require an entire GPU,\" said Richard Chang, Software Engineering Architect at Salesforce, emphasizing that the technology aids in consolidating workloads safely and improving overall utilization.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "API Updates and Configuration Parameters",
+          "paragraphs": [
+            {
+              "text": "Implementing GPU partitioning on Amazon SageMaker AI avoids the complexity of managing an external Kubernetes stack, removing the need for manual driver versioning, partition configuration, and device plugin maintenance. Instead, the update introduces two optional fields to existing API calls without requiring new API operations, resource types, or IAM actions.",
+              "links": []
+            },
+            {
+              "text": "The AcceleratorPartitionLayouts parameter is applied to a production variant in CreateEndpointConfig to declare how each accelerator is divided. Meanwhile, the AcceleratorPartitionType parameter is applied to an individual inference component to select the specific partition type on which a model will run, streamlining the deployment of right-sized models across production environments.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon SageMaker",
+        "NVIDIA MIG",
+        "GPU Partitioning",
+        "Machine Learning",
+        "Cloud Computing",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "AWS",
+        "NVIDIA",
+        "Salesforce"
+      ],
+      "article_type": "news",
+      "confidence_note": "Based strictly on the official AWS Machine Learning Blog post regarding SageMaker Inference support for NVIDIA MIG."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 648,
+      "word_count_en": 602
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "819549b983fd9118af23",
+      "title": "SageMaker Inference now supports Multi-Instance GPU to maximize GPU utilization for model endpoints",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 648,
+          "word_count_en": 602
+        }
+      ]
+    }
+  ],
+  "slug": "sagemaker-inference-now-supports-multi-instance-gpu-to-maximize-gpu-utilization-for-model",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/sagemaker-inference-now-supports-multi-instance-gpu-to-maximize-gpu-utilization-for-model/hero.webp",
+    "card": "/forum/assets/posts/2026/11/sagemaker-inference-now-supports-multi-instance-gpu-to-maximize-gpu-utilization-for-model/card.webp",
+    "social": "/forum/assets/posts/2026/11/sagemaker-inference-now-supports-multi-instance-gpu-to-maximize-gpu-utilization-for-model/social.jpg",
+    "alt": {
+      "ar": "SageMaker يدعم تقسيم GPU عبر تقنية NVIDIA MIG",
+      "en": "SageMaker Inference Adds NVIDIA MIG GPU Partitioning"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/05/ML-22216-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/sagemaker-inference-now-supports-multi-instance-gpu-to-maximize-gpu-utilization-for-model/inline-01.webp",
+        "width": 1400,
+        "height": 324,
+        "alt": {
+          "ar": "SageMaker يدعم تقسيم GPU عبر تقنية NVIDIA MIG",
+          "en": "Output tokens per second versus concurrency for an H100 mig-3g.40gb partition and a full A100-40GB across five traffic shapes"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/sagemaker-inference-now-supports-multi-instance-gpu-to-maximize-gpu-utilization-for-model-endpoints/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/05/ML-22216-1-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/sagemaker-inference-now-supports-multi-instance-gpu-to-maximize-gpu-utilization-for-model/inline-02.webp",
+        "width": 1400,
+        "height": 324,
+        "alt": {
+          "ar": "SageMaker يدعم تقسيم GPU عبر تقنية NVIDIA MIG",
+          "en": "Cost benefit per million output tokens versus concurrency for five traffic shapes, with the break-even crossover marked"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/sagemaker-inference-now-supports-multi-instance-gpu-to-maximize-gpu-utilization-for-model-endpoints/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/05/ML-22216-2-1.png"
+      }
+    ]
+  }
 }
