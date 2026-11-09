@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "53a098e2a4201413cf00",
+  "slug": "security-researcher-had-to-jailbreak-their-car-just-to-update-the-clock",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/security-researcher-had-to-jailbreak-their-car-just-to-update-the-clock/",
+    "en": "/forum/en/ai/security-researcher-had-to-jailbreak-their-car-just-to-update-the-clock/"
+  },
+  "locales": {
+    "ar": {
+      "title": "باحث أمني يخترق نظام سيارة رينو لتعديل الساعة",
+      "description": "اضطر باحث أمني إلى هندسة عكسية لنظام ترفيهي في سيارة رينو لاتيتود 2014 لتعديل التوقيت الصيفي بعد فقدان بطاقة SD، مستخدماً ثغرة في نظام لينكس.",
+      "deck": "عندما تعطلت ساعة السيارة، لم يجد راسم موراتس حلاً سوى اختراق نظام التشغيل المخصص.",
+      "summaryBullets": [
+        "فقدان بطاقة SD الأصلية قفل إعدادات الوقت في سيارة رينو لاتيتود 2014.",
+        "استخدم موراتس تقنيات الهندسة العكسية لتحليل نظام لينكس المخصص.",
+        "نجح في تنفيذ ثغرة على مستوى النواة للحصول على صلاحيات الجذر.",
+        "تعديل التوقيت تم عبر تغيير قيمة عددية في ملف إعدادات مخصص."
+      ],
+      "sections": [
+        {
+          "heading": "مشكلة بسيطة تتحول إلى تحدي تقني",
+          "paragraphs": [
+            {
+              "text": "واجه الباحث الأمني راسم موراتس مشكلة غير متوقعة مع سيارته من طراز رينو لاتيتود 2014، حيث تعذر عليه تعديل الساعة لتتوافق مع التوقيت الصيفي. كانت المشكلة الأساسية تكمن في غياب بطاقة الذاكرة SD الأصلية التي كانت تحتوي على خرائط الملاحة، والتي كانت شرطاً أساسياً للوصول إلى قائمة الإعدادات. على الرغم من تحذير البائع السابق بأن البطاقة مطلوبة لتغيير الوقت، لم يأخذ موراتس الأمر على محمل الجد، معتقداً أن الأمر مجرد نقص في مهارات المستخدم السابق، خاصة وأن الخرائط كانت قديمة أصلاً. ويمكن الرجوع إلى Tom's Hardware للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Tom's Hardware",
+                  "url": "https://www.tomshardware.com/tech-industry/cyber-security/security-researcher-had-to-jailbreak-their-car-just-to-update-the-clock-missing-tomtom-sd-card-locked-settings-menu-custom-linux-exploit-deployed-to-adjust-daylight-saving-time"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "قفل القائمة ورسالة الخطأ",
+          "paragraphs": [
+            {
+              "text": "عندما حان موعد تعديل الساعة، اكتشف موراتس أن النظام لا يتيح الوصول إلى الإعدادات المطلوبة. كان هناك قائمتا إعدادات متاحان عبر شاشة السيارة: الأولى تتعلق بإعدادات البلوتوث والدفتر الهاتفي، والثانية كانت مخصصة للإعدادات العامة. لكن عند محاولة فتح القائمة الثانية، ظهرت رسالة خطأ تقول \"لم يتم اكتشاف خرائط!\" بدلاً من القائمة الفرعية. هذا القفل البرمجي جعل من المستحيل تعديل الوقت بشكل تقليدي، مما دفع موراتس إلى اللجوء إلى أساليب غير تقليدية. ويمكن الرجوع إلى Terms & Conditions للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Terms & Conditions",
+                  "url": "https://futureplc.com/terms-conditions/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "هندسة عكسية لنظام لينكس مخصص",
+          "paragraphs": [
+            {
+              "text": "بصفته باحثاً أمنياً، قرر موراتس إجراء \"هندسة عكسية\" (Reverse Engineering) على النظام. اكتشف أن وحدة الرأس (Head Unit) تعمل بنظام تشغيل مخصص مبني على لينكس من شركة توم توم، ويعمل على معالج من سامسونج. شملت العملية استخراج وتحليل البرنامج الثابت (Firmware)، وبناء بيئة محاكاة باستخدام QEMU، وعكس محرك البرمجة (Scripting Engine). خلال هذه العملية، اكتشف عدة ثغرات أمنية تؤثر على النظام، مما مهد الطريق لحل المشكلة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ثغرة النواة والحصول على صلاحيات الجذر",
+          "paragraphs": [
+            {
+              "text": "جاءت نقطة التحول عندما فكر موراتس في استخدام خبرته في استغلال ثغرات النواة (Kernel Exploits) من عمله اليومي. بدلاً من محاولة إجبار بيئة المستخدم (Userland) على تنفيذ سكربت، قرر إجبار النواة نفسها على تنفيذ السكربت. نجحت هذه الطريقة في منح موراتس صلاحيات الجذر (Root Access) الكاملة على نظام الترفيه في السيارة، مما أزال جميع القيود البرمجية التي كانت تمنعه من الوصول إلى ملفات النظام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تعديل التوقيت عبر ملف مخصص",
+          "paragraphs": [
+            {
+              "text": "بعد الحصول على الصلاحيات، اكتشف موراتس أن إعدادات التاريخ والوقت مخزنة في مسار /mnt/flash/settings.dat بصيغة ثنائية مخصصة. لاحظ في مدونته أن النظام لا يحتوي على مفهوم مناطق زمنية (Time Zones) بالمعنى التقليدي. بدلاً من ذلك، يحصل النظام على الوقت من نظام تحديد المواقع العالمي (GPS) ويخزن الإزاحة المحلية كعدد من الدقائق. كانت إزاحته مضبوطة على 180 دقيقة، فقام بتغييرها إلى 120 دقيقة لتتوافق مع التوقيت الصيفي الجديد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دروس مستفادة من الحادثة",
+          "paragraphs": [
+            {
+              "text": "توضح هذه الحادثة مدى تعقيد الأنظمة المدمجة في السيارات الحديثة، وكيف يمكن أن تؤدي أخطاء بسيطة في التصميم البرمجي، مثل ربط إعدادات أساسية بملحقات اختيارية، إلى مشاكل للمستخدمين العاديين. كما تسلط الضوء على أهمية فهم البنية التحتية للأنظمة التشغيلية في المركبات، خاصة تلك التي تعتمد على أنظمة لينكس مخصصة. بالنسبة لموراتس، كانت التجربة فرصة لتطبيق مهاراته الأمنية في سياق غير تقليدي، مما أدى إلى حل مشكلة بسيطة بطرق معقدة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمن سيبراني",
+        "رينو لاتيتود",
+        "هندسة عكسية",
+        "لينكس",
+        "أنظمة ترفيه السيارات",
+        "ثغرات أمنية"
+      ],
+      "entities": [
+        "راسم موراتس",
+        "رينو لاتيتود",
+        "توم توم",
+        "سامسونج",
+        "لينكس"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "9 نوفمبر 2026",
+      "modifiedLabel": "9 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 526
+    },
+    "en": {
+      "title": "Security Researcher Jailbreaks Car Just to Update the Clock",
+      "description": "A security researcher had to reverse engineer their 2014 Renault Latitude infotainment system and deploy a custom exploit just to change the clock.",
+      "deck": "Basic routine tasks can occasionally turn into complex technical challenges when proprietary software and missing hardware block standard functionality.",
+      "summaryBullets": [
+        "A security researcher found themselves unable to change the clock on a 2014 Renault Latitude because the original navigation map SD card was missing.",
+        "Attempting to open the settings menu triggered a persistent 'No maps detected!' error message.",
+        "The head unit was discovered to run a customized Linux-based operating system on a Samsung SoC.",
+        "By reverse engineering the firmware and leveraging kernel exploit techniques, the researcher achieved root access to modify the time offset directly."
+      ],
+      "sections": [
+        {
+          "heading": "The Missing SD Card Dilemma",
+          "paragraphs": [
+            {
+              "text": "Routine maintenance tasks like adjusting car clocks for daylight saving time are normally straightforward, but one vehicle owner discovered that missing hardware could completely lock down system settings. As detailed in a report by <a href=\"https://www.tomshardware.com/tech-industry/cyber-security/security-researcher-had-to-jailbreak-their-car-just-to-update-the-clock-missing-tomtom-sd-card-locked-settings-menu-custom-linux-exploit-deployed-to-adjust-daylight-saving-time\">Tom's Hardware</a>, security researcher Rasmus Moorats faced an unusual hurdle with their 2014 Renault Latitude.",
+              "links": [
+                {
+                  "text": "Tom's Hardware",
+                  "url": "https://www.tomshardware.com/tech-industry/cyber-security/security-researcher-had-to-jailbreak-their-car-just-to-update-the-clock-missing-tomtom-sd-card-locked-settings-menu-custom-linux-exploit-deployed-to-adjust-daylight-saving-time"
+                }
+              ]
+            },
+            {
+              "text": "When purchasing the used car, Moorats was warned by the previous owner that the original navigation map SD card was required to change the time on the in-car display. Believing it was unnecessary since the map data was out of date, Moorats dismissed the warning until daylight saving time necessitated a time adjustment on the vehicle's dashboard.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Locked Menus and Error Messages",
+          "paragraphs": [
+            {
+              "text": "When the time came to update the in-car clock, which had fallen an hour out of sync, Moorats explored the available configuration menus on the dashboard display. While Bluetooth and phonebook settings remained accessible, attempting to open the primary settings submenu immediately failed.",
+              "links": []
+            },
+            {
+              "text": "Instead of opening configuration options, the system displayed an error message stating 'No maps detected!' every time the option was selected. Without the proprietary SD card containing the map files, standard user configuration menus were entirely inaccessible.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Reverse Engineering the Firmware",
+          "paragraphs": [
+            {
+              "text": "Faced with locked settings, Moorats decided to reverse engineer the infotainment system's software. Investigation into the vehicle's head unit revealed that it operated on a customized Linux-based system built for navigation hardware from <a href=\"https://www.tomtom.com/de_de/in-dash-navigation/renault-r-link/\">Renault, Tom Tom</a> running on a Samsung system-on-chip (SoC).",
+              "links": [
+                {
+                  "text": "Renault, Tom Tom",
+                  "url": "https://www.tomtom.com/de_de/in-dash-navigation/renault-r-link/"
+                }
+              ]
+            },
+            {
+              "text": "The investigative process involved extracting and analyzing the system firmware, setting up a QEMU emulation environment to test the software, and carefully examining the underlying scripting engine. This detailed analysis uncovered multiple vulnerabilities within the software architecture.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deploying a Kernel Exploit for Root Access",
+          "paragraphs": [
+            {
+              "text": "Rather than attempting to execute scripts through standard userland channels, Moorats drew upon professional kernel exploitation techniques from his day job. By shifting the execution layer to target the kernel directly, the approach successfully bypassed the software restrictions.",
+              "links": []
+            },
+            {
+              "text": "The successful exploit granted root-level access to the infotainment system, allowing the researcher to inspect the underlying file structure and locate the specific configuration files controlling system behavior.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Adjusting the Time Offset",
+          "paragraphs": [
+            {
+              "text": "Upon gaining root access, Moorats discovered that the date and time parameters were stored within a custom binary format located at /mnt/flash/settings.dat. Further inspection revealed that the infotainment software lacked a conventional time zone handling mechanism.",
+              "links": []
+            },
+            {
+              "text": "Instead of managing distinct time zones, the system synchronized its base time via GPS and stored the local offset as a numerical value representing minutes. By locating this parameter—which was initially set to 180—Moorats manually modified the value to 120, successfully correcting the clock mismatch.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "cybersecurity",
+        "automotive",
+        "linux",
+        "reverse engineering",
+        "firmware",
+        "exploits"
+      ],
+      "entities": [
+        "Renault",
+        "TomTom",
+        "Samsung",
+        "Linux",
+        "QEMU"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 9, 2026",
+      "modifiedLabel": "November 9, 2026",
+      "readMinutes": 3,
+      "wordCount": 533
+    }
+  },
+  "datePublished": "2026-11-09T14:05:35.481905+03:00",
+  "dateModified": "2026-11-09T14:05:35.481905+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/security-researcher-had-to-jailbreak-their-car-just-to-update-the-clock/hero.webp",
+    "card": "/forum/assets/posts/2026/11/security-researcher-had-to-jailbreak-their-car-just-to-update-the-clock/card.webp",
+    "social": "/forum/assets/posts/2026/11/security-researcher-had-to-jailbreak-their-car-just-to-update-the-clock/social.jpg",
+    "alt": {
+      "ar": "باحث أمني يخترق نظام سيارة رينو لتعديل الساعة",
+      "en": "Security Researcher Jailbreaks Car Just to Update the Clock"
+    },
+    "credit": "Tom's Hardware",
+    "sourceUrl": "https://cdn.mos.cms.futurecdn.net/uWPfVwnAzVfG87r5UBkxc5-1920-80.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/tech-industry/cyber-security/security-researcher-had-to-jailbreak-their-car-just-to-update-the-clock-missing-tomtom-sd-card-locked-settings-menu-custom-linux-exploit-deployed-to-adjust-daylight-saving-time",
+      "type": "journalism",
+      "title": "Security researcher had to jailbreak their car just to update the clock"
+    }
+  ],
+  "sourceUrl": "https://www.tomshardware.com/tech-industry/cyber-security/security-researcher-had-to-jailbreak-their-car-just-to-update-the-clock-missing-tomtom-sd-card-locked-settings-menu-custom-linux-exploit-deployed-to-adjust-daylight-saving-time",
+  "sourceTitle": "Security researcher had to jailbreak their car just to update the clock",
+  "trendScore": 97.76,
+  "verification": {
+    "confidence": 0.86,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-11-09T11:05:35+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/security-researcher-had-to-jailbreak-their-car-just-to-update-the-clock.json"
+}
