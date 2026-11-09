@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "a5a8b63aa261f43b9a75",
+  "slug": "pluggable-agentic-ai-framework-seven-layer-composable-enterprise-agentic-ai-reference-archit",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/pluggable-agentic-ai-framework-seven-layer-composable-enterprise-agentic-ai-reference-archit/",
+    "en": "/forum/en/ai/pluggable-agentic-ai-framework-seven-layer-composable-enterprise-agentic-ai-reference-archit/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تكشف عن إطار عمل من سبع طبقات للذكاء الاصطناعي الوكيل",
+      "description": "تقدّم أمازون ويب سيرفيسز إطاراً مرجعياً قابلاً للتخصيص على Amazon Bedrock AgentCore، يتيح للمؤسسات نقل تطبيقات الذكاء الاصطناعي الوكيل من النموذج التجريبي إلى بيئة الإنتاج بأمان وموثوقية.",
+      "deck": "أعلنت أمازون عن معمارية مرجعية من سبع طبقات مصممة لتجاوز الفجوة بين نماذج الذكاء الاصطناعي الوكيل التجريبية وأنظمة الإنتاج المستقرة.",
+      "summaryBullets": [
+        "تتيح المعمارية الجديدة استبدال التقنيات في أي طبقة دون الحاجة لإعادة تصميم النظام بالكامل بفضل العقود المستقرة.",
+        "تعتمد البنية على فصل طبقات البيانات، والاستدلال، والتنسيق، والأمان لضمان كفاءة التشغيل على نطاق واسع.",
+        "توفر أدوات مثل LiteLLM و Strands Agents مرونة في إدارة نماذج الذكاء الاصطناعي وتوزيع المهام بين الوكلاء المتخصصين.",
+        "تدمج طبقة الأمان آليات الحماية من حقن الأوامر والتحكم الدقيق في الوصول لضمان الامتثال والمساءلة."
+      ],
+      "sections": [
+        {
+          "heading": "تجاوز فجوة النموذج التجريبي",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات تحديات كبيرة عند محاولة تشغيل وكلاء الذكاء الاصطناعي في بيئات الإنتاج، حيث لا تكتفي النماذج التجريبية بإثبات قدرة النموذج على أداء المهمة، بل يجب أن تتحمل ضغط حركة المرور، وتكاليف التشغيل، ومراجعات الأمان الصارمة. غالباً ما تتعثر مبادرات الذكاء الاصطناعي الوكيل بسبب إعادة بناء البنية التحتية من الصفر، مما يؤدي إلى تعقيد غير ضروري. لسد هذه الفجوة، قدمت أمازون ويب سيرفيسز إطار العمل القابل للتوصيل للذكاء الاصطناعي الوكيل، وهو معمارية مرجعية من سبع طبقات تهدف إلى تسهيل الانتقال من مرحلة التطوير إلى النشر الفعلي.",
+              "links": [
+                {
+                  "text": "أمازون ويب سيرفيسز",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/pluggable-agentic-ai-framework-a-seven-layer-composable-enterprise-agentic-ai-reference-architecture-on-amazon-bedrock-agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "أساسيات البيانات والمعرفة",
+          "paragraphs": [
+            {
+              "text": "تعتبر طبقة البيانات والمعرفة حجر الزاوية في هذه المعمارية، حيث يعتمد أداء الوكيل بشكل مباشر على جودة البيانات التي يمكنه الوصول إليها. سواء كان الوكيل يتعامل مع وصفات طبية أو يتتبع المخزون أو يفسس قواعد الامتثال، فهو بحاجة إلى معلومات حديثة وذات صلة. توفر هذه الطبقة بروتوكولاً واضحاً لاستقبال الاستعلامات وإرجاع المعلومات الأكثر صلة كسياق للوكيل. تشمل المكونات المقترحة لهذه الطبقة Amazon Bedrock Knowledge Base، ومحرك المتجهات في Amazon OpenSearch Serverless، و Amazon S3 Vectors، و Amazon DynamoDB، مما يضمن وصولاً سلساً للبيانات المهيكلة وغير المهيكلة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Knowledge Base",
+                  "url": "https://aws.amazon.com/bedrock/knowledge-bases/"
+                },
+                {
+                  "text": "Amazon S3 Vectors",
+                  "url": "https://aws.amazon.com/s3/features/vectors/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مرونة النماذج والاستدلال",
+          "paragraphs": [
+            {
+              "text": "يجب أن تكون اختيارات نماذج الذكاء الاصطناعي والاستدلال مبنية على التكوين بدلاً من ربطها بشكل صارم بلوجيك التطبيق. يوصي الإطار باستخدام نماذج أصغر وأسرع للمهام البسيطة، ونماذج أكبر للمهام التي تتطلب استنتاجاً دقيقاً. للحفاظ على فصل الوكلاء عن بيئات استضافة النماذج، تعتمد المعمارية على طبقة توجيه تعتمد على عقد طلب واستجابة متسقة. يتيح استخدام وكيل مثل LiteLLM توفير واجهة موحدة عبر مزودي الخدمات المختلفين، مما يسمح للمؤسسات بتبديل النماذج بناءً على التقييمات دون الحاجة إلى إعادة كتابة لوجيك التطبيق.",
+              "links": [
+                {
+                  "text": "LiteLLM",
+                  "url": "https://www.litellm.ai/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التنسيق وتوزيع المهام",
+          "paragraphs": [
+            {
+              "text": "يلعب التنسيق دوراً حاسماً في تحديد كيفية توزيع العمل. للمهام المباشرة، يمكن استخدام وكيل واحد، بينما تتطلب سير العمل المعقدة وجود مشرف يندد الوكلاء المتخصصين. يجب تجنب بناء وكيل واحد يقوم بكل شيء، لأن تراكم الأدوات والسياقات يؤدي إلى زيادة زمن الاستجابة وانخفاض الدقة. من خلال فصل الوكلاء المتخصصين عن المشرفين، يمكن اكتشاف الوكلاء من سجل مركزي واستدعائهم عبر بروتوكولات قياسية. يوصي الإطار باستخدام Strands Agents للوكلاء المتخصصين، و Amazon Bedrock AgentCore harness للمنسق، مما يعزز قابلية التوسع ويقلل من التكاليف.",
+              "links": [
+                {
+                  "text": "Strands Agents",
+                  "url": "https://strandsagents.com/"
+                },
+                {
+                  "text": "Amazon Bedrock AgentCore harness",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الأمان والحماية من المخاطر",
+          "paragraphs": [
+            {
+              "text": "يعد الأمان والخطوط الدفاعية أولوية قصوى يجب دمجها في التصميم من اليوم الأول. يعرض الذكاء الاصطناعي الوكيل المؤسسات لمخاطر جديدة مثل حقن الأوامر وسوء استخدام الأدوات. تعامل المعمارية مع جميع المحتوى الخارجي كغير موثوق افتراضياً، وتطلب مصادقة كل طلب. كما توصي بمنح الوكلاء بيانات اعتماد مؤقتة بدلاً من الأسرار الدائمة، وإخفاء البيانات الحساسة مثل المعلومات الصحية الشخصية. لضمان المساءلة، تلتقط المعمارية كل قرار مهم في سجل تدقيق غير قابل للتلاعب، وتوجه الإجراءات عالية التأثير عبر بوابة موافقة بشرية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تجربة المستخدم والتطبيق",
+          "paragraphs": [
+            {
+              "text": "تتمثل طبقة التطبيق في واجهة المستخدم النهائية، سواء كانت واجهة دردشة أو واجهة برمجة تطبيقات. يجب الحفاظ على هذه الطبقة رقيقة قدر الإمكان، حيث تقتصر مسؤولياتها على عرض المحادثة وتحويل الطلبات إلى طبقة التنسيق. يجب تجنب تضمين لوجيك الأعمال هنا لضمان سهولة تطوير تجربة المستخدم دون التأثير على استقرار الخلفية. يمكن وضع نموذج قرار في هذه الحدود كتحقق سريع ورخيص لتقييم الطلبات قبل معالجتها بشكل أعمق.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "وكلاء الذكاء الاصطناعي",
+        "معمارية البرمجيات",
+        "أمن المعلومات",
+        "Amazon Bedrock"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز",
+        "Amazon Bedrock AgentCore",
+        "LiteLLM",
+        "Strands Agents",
+        "Amazon OpenSearch Serverless"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "9 نوفمبر 2026",
+      "modifiedLabel": "9 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 581
+    },
+    "en": {
+      "title": "AWS Introduces Pluggable Agentic AI Framework",
+      "description": "Discover the new seven-layer composable reference architecture on Amazon Bedrock AgentCore designed to scale enterprise agentic AI.",
+      "deck": "A new reference architecture aims to help organizations transition multi-agent AI applications from prototypes to production-ready systems at scale.",
+      "summaryBullets": [
+        "AWS introduces a seven-layer composable reference architecture for enterprise agentic AI on Amazon Bedrock AgentCore.",
+        "The framework features stable contracts at each layer, allowing teams to swap technologies without redesigning the entire stack.",
+        "It addresses common production hurdles such as routing logic, guardrails, data access, and model evaluation.",
+        "Organizations can substitute reference tools with alternatives that align with their existing enterprise infrastructure."
+      ],
+      "sections": [
+        {
+          "heading": "Bridging the Gap from Prototype to Production",
+          "paragraphs": [
+            {
+              "text": "Moving an artificial intelligence agent from a successful proof-of-concept to production traffic presents unique challenges for enterprise teams. While a prototype demonstrates that an agent model can execute a specific task, it rarely addresses how to handle thousands of concurrent user requests securely, maintain reliability under real traffic, or enforce strict quality and safety standards. Many initiatives stall because teams repeatedly rebuild custom routing logic and guardrails from scratch after the fact.",
+              "links": []
+            },
+            {
+              "text": "To solve this systemic challenge, the AWS Machine Learning Blog recently detailed a comprehensive blueprint to help organizations navigate these hurdles. The proposed framework provides a shared, production-ready foundation designed to support multi-agent AI applications effectively.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "The Seven-Layer Composable Reference Architecture",
+          "paragraphs": [
+            {
+              "text": "The newly introduced framework is organized into seven distinct layers, each carrying a specific responsibility governed by a stable contract. Because every layer operates independently through these contracts, organizations can swap individual technologies or services at any level of the stack without requiring a complete redesign of the surrounding infrastructure.",
+              "links": []
+            },
+            {
+              "text": "Together, these layers offer a standardized approach for building, securing, and operating agentic AI applications at production scale. While the reference implementation highlights specific technologies, they represent optional building blocks rather than mandatory choices.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Data Foundations and Model Inference",
+          "paragraphs": [
+            {
+              "text": "The architecture treats data and knowledge as the fundamental bedrock of agentic AI. Because agents rely heavily on accurate information to interpret compliance rules, track inventory, or verify details, this layer handles retrieval, embeddings, and structured or unstructured data access through a clear operational contract. Reference components for this foundation include the Amazon Bedrock Knowledge Base alongside specialized data engines.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Knowledge Base",
+                  "url": "https://aws.amazon.com/bedrock/knowledge-bases/"
+                }
+              ]
+            },
+            {
+              "text": "For model and inference choices, the framework advises that configuration should drive selection rather than hardcoding choices into application logic. Teams can deploy smaller, rapid models for straightforward tasks while reserving larger models for nuanced reasoning. Furthermore, utilizing a proxy layer such as LiteLLM enables a consistent request-and-response contract across different providers, allowing developers to switch models based on rigorous evaluations without modifying their underlying application code.",
+              "links": [
+                {
+                  "text": "LiteLLM",
+                  "url": "https://www.litellm.ai/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Orchestration, Specialization, and Governance",
+          "paragraphs": [
+            {
+              "text": "Task distribution is another critical area managed by the orchestration layer. Rather than building a single monolithic agent that handles every possible action—which can lead to bloated context windows, increased latency, and tool sprawl—the architecture encourages decomposing workflows. Complex, cross-domain projects utilize a supervisor agent that delegates duties to specialized agents, each bounded strictly to its designated tools and capabilities.",
+              "links": []
+            },
+            {
+              "text": "To maintain governance and visibility at scale, supervisor agents can discover specialists dynamically through centralized catalogs. Organizations can leverage tools like Strands Agents alongside centralized discovery mechanisms to streamline multi-agent development securely and efficiently.",
+              "links": [
+                {
+                  "text": "Strands Agents",
+                  "url": "https://strandsagents.com/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Security, Guardrails, and Application Layers",
+          "paragraphs": [
+            {
+              "text": "Security and guardrails are embedded as primary concerns from the design phase onward to counter risks like prompt injection, data poisoning, and tool misuse. The framework emphasizes treating external content as untrusted by default, authenticating every request, and applying fine-grained access control before permitting any tool execution. Additionally, sensitive data such as Personally Identifiable Information is masked in requests and responses to safeguard customer privacy.",
+              "links": []
+            },
+            {
+              "text": "At the top of the stack sits the application layer, which houses the end-user experience—whether structured as a chat interface, API surface, or embedded widget. By keeping this layer intentionally thin and separating it cleanly from business logic, teams can continuously iterate on user experiences without destabilizing the core backend systems.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Enterprise AI",
+        "Agentic AI",
+        "Reference Architecture"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock AgentCore",
+        "LiteLLM",
+        "Strands Agents"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 9, 2026",
+      "modifiedLabel": "November 9, 2026",
+      "readMinutes": 3,
+      "wordCount": 636
+    }
+  },
+  "datePublished": "2026-11-09T22:45:40.849038+03:00",
+  "dateModified": "2026-11-09T22:45:40.849038+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/pluggable-agentic-ai-framework-seven-layer-composable-enterprise-agentic-ai-reference-archit/hero.webp",
+    "card": "/forum/assets/posts/2026/11/pluggable-agentic-ai-framework-seven-layer-composable-enterprise-agentic-ai-reference-archit/card.webp",
+    "social": "/forum/assets/posts/2026/11/pluggable-agentic-ai-framework-seven-layer-composable-enterprise-agentic-ai-reference-archit/social.jpg",
+    "alt": {
+      "ar": "أمازون تكشف عن إطار عمل من سبع طبقات للذكاء الاصطناعي الوكيل",
+      "en": "AWS Introduces Pluggable Agentic AI Framework"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-22256-featured-image-1.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/pluggable-agentic-ai-framework-seven-layer-composable-enterprise-agentic-ai-reference-archit/inline-01.webp",
+        "width": 1400,
+        "height": 555,
+        "alt": {
+          "ar": "أمازون تكشف عن إطار عمل من سبع طبقات للذكاء الاصطناعي الوكيل",
+          "en": "The seven layers of the Pluggable Agentic AI Framework, from data and knowledge up through agentic operations"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/pluggable-agentic-ai-framework-a-seven-layer-composable-enterprise-agentic-ai-reference-architecture-on-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-22256-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/pluggable-agentic-ai-framework-seven-layer-composable-enterprise-agentic-ai-reference-archit/inline-02.webp",
+        "width": 1400,
+        "height": 691,
+        "alt": {
+          "ar": "أمازون تكشف عن إطار عمل من سبع طبقات للذكاء الاصطناعي الوكيل",
+          "en": "Functional flow of the retail customer support agent, from shopper request through supervisor routing to the order and refund specialist agents"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/pluggable-agentic-ai-framework-a-seven-layer-composable-enterprise-agentic-ai-reference-architecture-on-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-22256-2.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/pluggable-agentic-ai-framework-a-seven-layer-composable-enterprise-agentic-ai-reference-architecture-on-amazon-bedrock-agentcore/",
+      "type": "official",
+      "title": "Pluggable Agentic AI Framework: A seven-layer composable enterprise agentic AI reference architecture on Amazon Bedrock AgentCore"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/pluggable-agentic-ai-framework-a-seven-layer-composable-enterprise-agentic-ai-reference-architecture-on-amazon-bedrock-agentcore",
+  "sourceTitle": "Pluggable Agentic AI Framework: A seven-layer composable enterprise agentic AI reference architecture on Amazon Bedrock AgentCore",
+  "trendScore": 105.83,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-09T19:45:41+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/pluggable-agentic-ai-framework-seven-layer-composable-enterprise-agentic-ai-reference-archit.json"
+}
