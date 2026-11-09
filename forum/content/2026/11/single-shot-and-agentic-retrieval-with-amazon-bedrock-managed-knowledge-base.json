@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "b09ddd384e886e5e7c7c",
+  "slug": "single-shot-and-agentic-retrieval-with-amazon-bedrock-managed-knowledge-base",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/single-shot-and-agentic-retrieval-with-amazon-bedrock-managed-knowledge-base/",
+    "en": "/forum/en/ai/single-shot-and-agentic-retrieval-with-amazon-bedrock-managed-knowledge-base/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون بيدروك تدعم البحث الأحادي والوكيل في قواعد المعرفة",
+      "description": "أعلنت أمازون بيدروك عن دعم طلبات البحث الأحادي واسترجاع النصوص فقط، إلى جانب وضع الوكيل، لتلبي مختلف الاحتياجات بمرونة عبر واجهة برمجة التطبيقات.",
+      "deck": "تحديث جديد في خدمة قواعد المعرفة من أمازون بيدروك يتيح للمطورين مطابقة جهد الاسترجاع مع طبيعة كل طلب بدقة عالية.",
+      "summaryBullets": [
+        "دعم طلبات البحث الأحادي واسترجاع النصوص فقط عبر واجهة AgenticRetrieveStream.",
+        "استخدام معامل maxAgentIteration للتحكم في عدد التكرارات وموازنة الأداء.",
+        "دعم استعلامات متعددة والبحث المتقدم في وضع الوكيل للمقارنات المعقدة.",
+        "توفير خيارات تلغي استدعاء نماذج التأسيس لتسريع الاستجابة وخفض التكاليف."
+      ],
+      "sections": [
+        {
+          "heading": "تطور استرجاع المعلومات في الأنظمة الذكية",
+          "paragraphs": [
+            {
+              "text": "تواجه مساعدات الذكاء الاصطناعي المؤسسية تحديات متنوعة عند التعامل مع طلبات المستخدمين اليومية، حيث تتراوح الاستفسارات بين أسئلة مباشرة وبسيطة تتطلب إجابات سريعة ومباشرة، وأخرى معقدة تتطلب مقارنات مفصلة بين مستندات وسياسات متعددة. وغالباً ما تتطلب هذه الاحتياجات المتباينة آليات مختلفة لاسترجاع المعلومات دون الحاجة إلى بناء أنظمة منفصلة لكل نوع من الأسئلة.",
+              "links": []
+            },
+            {
+              "text": "في هذا السياق، أعلنت خدمة <a href=\"https://aws.amazon.com/bedrock/knowledge-bases/\">Amazon Bedrock Managed Knowledge Base</a> عن تقديم تحديثات مهمة تتيح للمطورين والتطبيقات مطابقة جهد الاسترجاع مع كل طلب على حدة، مما يوفر مرونة أكبر في التعامل مع شتى أنواع الاستعلامات المؤسسية بفعالية عالية.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Managed Knowledge Base",
+                  "url": "https://aws.amazon.com/bedrock/knowledge-bases/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الأنماط الجديدة المتاحة للاسترجاع والتوليد",
+          "paragraphs": [
+            {
+              "text": "يتيح التحديث الجديد للمستخدمين الاستفادة من آليات متعددة تشمل الاسترجاع والتوليد المعزز بالبحث الأحادي (Single-shot RAG)، إضافة إلى طلبات استرجاع النصوص فقط. وفي وضع البحث الأحادي، تقوم الخدمة بالبحث في قواعد المعرفة مرة واحدة، ثم تستخدم نموذج تأسيس لتوليد الإجابة بناءً على المقاطع المسترجعة بدقة.",
+              "links": []
+            },
+            {
+              "text": "أما في حالة طلبات استرجاع النصوص فقط، فتكتفي الخدمة بإرجاع المقاطع المتطابقة دون توليد أي إجابة نصية، مما يتيح للتطبيق أو للمستخدم التعامل مع النص المصدر مباشرة. وتأتي هذه الأنماط لتنضم إلى وضع <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-agentic-retrieve.html\">agentic mode</a> الموجود مسبقاً، والذي يقوم بالتخطيط وإجراء عمليات بحث متعددة قبل صياغة الإجابة النهائية.",
+              "links": [
+                {
+                  "text": "agentic mode",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-agentic-retrieve.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دور معامل التحكم في موازنة الجهد والأداء",
+          "paragraphs": [
+            {
+              "text": "يعتمد النظام الجديد على معامل التحكم في التكرارات لضمان سلوك متوقع وقابل للقياس، حيث يعادل كل تكرار عملية استدعاء لنموذج التأسيس. ويمكّن هذا المعامل المطورين من الاختيار بين ثلاثة أنماط رئيسية لكل طلب على حدة، وتشمل هذه الأنماط استرجاع النصوص فقط، والبحث الأحادي، والوضع المعتمد على الوكيل للأسئلة المعقدة.",
+              "links": []
+            },
+            {
+              "text": "يساهم تحديد عدد التكرارات بدقة في تقليص زمن الاستجابة وتقليل استهلاك النماذج في الاستعلامات البسيطة، بينما يمنح القدرة على إجراء جولات تخطيط إضافية للأسئلة المركبة التي تتطلب تحليلاً أعمق ومقارنات دقيقة عبر وثائق وسياسات متعددة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تفاصيل إعدادات التكرار وخيارات الاسترجاع",
+          "paragraphs": [
+            {
+              "text": "عند ضبط المعامل على القيمة واحد، يعمل النظام في نمط البحث الأحادي عبر إجراء عملية استرجاع واحدة تليها عملية توليد إجابة واحدة دون أي تخطيط إضافي. ويُعد هذا الخيار مثالياً للاستعلامات المباشرة والمحددة التي تمثل الجزء الأكبر من حركة الاستخدام اليومية في التطبيقات المؤسسية.",
+              "links": []
+            },
+            {
+              "text": "في المقابل، يؤدي ضبط المعامل على القيمة صفر إلى تنفيذ عملية استرجاع مضمونة واحدة دون استدعاء أي نموذج لغوي كبير ودون توليد إجابات، وهو ما يتطابق مع وظيفة واجهة الاسترجاع المباشرة. وتوفر هذه الميزة مرونة للمطورين المعتمدين على واجهة <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_AgenticRetrieveStream.html\">AgenticRetrieveStream API reference</a> لتعديل المعاملات دون الحاجة لتغيير الواجهات البرمجية بالكامل.",
+              "links": [
+                {
+                  "text": "AgenticRetrieveStream API reference",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_AgenticRetrieveStream.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مزايا البحث المتقدم للأسئلة المركبة",
+          "paragraphs": [
+            {
+              "text": "تظل القدرات المتقدمة للوكيل ذات قيمة عالية عند التعامل مع الاستفسارات المعقدة التي تتجاوز البحث البسيط. فعند ضبط المعامل بقيم تتراوح بين اثنين وخمسة، يقوم نموذج التأسيس بتفكيك الأسئلة المعقدة إلى استعلامات فرعية مركزة واسترجاع الأدلة عبر خطوات متعددة تشمل قواعد معرفية مختلفة.",
+              "links": []
+            },
+            {
+              "text": "تسمح هذه المنهجية المتقدمة بتقييم المعلومات المسترجعة وإعادة صياغة البحث عند وجود فجوات في البيانات، مما يعزز دقة النتائج في الأسئلة متعددة الأجزاء والمقارنات التنظيمية التي قد تعجز عمليات البحث الفردية عن الإحاطة بها بالكامل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون بيدروك",
+        "تعلم الآلة",
+        "قواعد المعرفة",
+        "الحوسبة السحابية"
+      ],
+      "entities": [
+        "Amazon Bedrock",
+        "AWS Machine Learning Blog"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "10 نوفمبر 2026",
+      "modifiedLabel": "10 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 530
+    },
+    "en": {
+      "title": "Amazon Bedrock Adds Single-Shot and Agentic Retrieval",
+      "description": "Amazon Bedrock Managed Knowledge Base expands capabilities to support single-shot RAG, retrieval-only requests, and agentic workflows.",
+      "deck": "Amazon Bedrock Managed Knowledge Base now supports single-shot Retrieval-Augmented Generation and retrieval-only requests via AgenticRetrieveStream, giving application builders flexible ways to match retrieval effort to user queries.",
+      "summaryBullets": [
+        "Amazon Bedrock Managed Knowledge Base expands with new single-shot RAG and retrieval-only request modes.",
+        "The updates are powered through the AgenticRetrieveStream API to support various request complexities.",
+        "A single parameter, maxAgentIteration, allows developers to control retrieval effort and latency.",
+        "Modes range from zero LLM calls for passages-only to multi-step agentic workflows for complex comparisons."
+      ],
+      "sections": [
+        {
+          "heading": "Expanding Flexibility in Managed Knowledge Bases",
+          "paragraphs": [
+            {
+              "text": "Managing distinct user queries requires systems to adapt quickly to different workloads without requiring entirely separate architectures. For instance, an internal banking operations employee might ask a straightforward question in the morning about account opening checklists, requiring a quick and direct answer. Later, the same employee might inquire about multi-owner partnership requirements that stretch across several policy guides, demanding a thorough, multi-step search. To address this challenge, Amazon Bedrock Managed Knowledge Base has updated its architecture to handle diverse query types through a unified interface.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Managed Knowledge Base",
+                  "url": "https://aws.amazon.com/bedrock/knowledge-bases/"
+                }
+              ]
+            },
+            {
+              "text": "The service now supports single-shot Retrieval-Augmented Generation (RAG) and retrieval-only requests alongside traditional agentic workflows. Developers can implement these features using the AgenticRetrieveStream API reference functionality to streamline application logic, reduce custom orchestration code, and balance speed against answer quality.",
+              "links": [
+                {
+                  "text": "AgenticRetrieveStream API reference",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_AgenticRetrieveStream.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Understanding the Three Operational Modes",
+          "paragraphs": [
+            {
+              "text": "Application builders can configure retrieval effort and behavior by adjusting a single parameter, maxAgentIteration. This parameter dictates how the system processes each request, allowing developers to choose among three distinct modes depending on the needs of the application.",
+              "links": []
+            },
+            {
+              "text": "The first mode involves setting maxAgentIteration to zero, which executes a retrieval-only request. This option returns matching passages directly without generating a synthesized answer and invokes no foundation model calls, making it ideal when applications need to work with source text directly. The second mode uses maxAgentIteration set to 1 for basic RAG. This performs a single retrieval followed by a single answer generation step without performing agentic planning or query rewriting.",
+              "links": []
+            },
+            {
+              "text": "For more complicated scenarios, developers can utilize agentic retrieval. In agentic mode, a foundation model breaks complex questions down into targeted sub-queries, evaluates retrieved evidence, and executes iterative searches across one or more knowledge bases to fill information gaps before generating a final response.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Technical Mechanics of Iteration Control",
+          "paragraphs": [
+            {
+              "text": "To ensure predictable behavior and latency, understanding how iterations are counted within the updated framework is critical. One iteration equals one foundation model call, and the execution loop always culminates in a single answer-generation call. Setting a value of n allows up to n minus 1 agentic planning rounds, with the final iteration reserved strictly for generating the response.",
+              "links": []
+            },
+            {
+              "text": "Each planning round consists of a query rewrite followed by a targeted retrieval step. Increasing the iteration count permits additional planning rounds, which improves results for difficult or multi-part questions at the cost of higher latency. Conversely, lower iteration counts reduce response times for straightforward queries.",
+              "links": []
+            },
+            {
+              "text": "It is important to note that speculative retrieval—the initial search executed ahead of the first planning step—does not count as an iteration against the maxAgentIteration limit. This foundational search runs independently to accelerate request processing times regardless of the configured iteration ceiling.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Benefits for Multi-Part and Comparative Queries",
+          "paragraphs": [
+            {
+              "text": "Complex queries often require searching multiple documents and evaluating evidence across different domains. Agentic mode helps address these challenges by enabling the system to plan and execute multiple searches before formulating an answer. When operating in agentic mode, the foundation model can recognize when initial search passages lack sufficient context and automatically trigger subsequent searches to pull full documents or specific guidelines.",
+              "links": [
+                {
+                  "text": "agentic mode",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-agentic-retrieve.html"
+                }
+              ]
+            },
+            {
+              "text": "This capability provides substantial advantages for developers building intelligent assistants. Applications gain better support for multi-part questions, automatic follow-up searches when information is missing, and comprehensive answers backed by explicit trace events and citations. By offloading planning, retrieval, evaluation, and response generation to the service API, engineering teams can eliminate the need to write custom orchestration loops for their AI applications.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Optimizing Performance and Latency",
+          "paragraphs": [
+            {
+              "text": "Matching retrieval effort to user queries allows organizations to optimize resource consumption across different usage patterns. Single-shot RAG relies on a single foundation model call to build an answer, minimizing latency and model overhead compared to fully iterative agentic workflows. Retrieval-only requests bypass large language model calls entirely, providing an efficient pathway for pipelines that handle raw text retrieval separately from generation.",
+              "links": []
+            },
+            {
+              "text": "By incorporating these capabilities into the AWS Machine Learning ecosystem, developers can fine-tune application responsiveness without maintaining separate code paths or integrating multiple disjointed APIs. Whether processing a simple checklist lookup or performing a cross-policy comparison, applications can dynamically scale their computational effort on a per-request basis.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "RAG",
+        "AWS",
+        "Machine Learning",
+        "Knowledge Base",
+        "API"
+      ],
+      "entities": [
+        "Amazon Bedrock",
+        "AWS"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 10, 2026",
+      "modifiedLabel": "November 10, 2026",
+      "readMinutes": 4,
+      "wordCount": 765
+    }
+  },
+  "datePublished": "2026-11-10T01:05:42.146182+03:00",
+  "dateModified": "2026-11-10T01:05:42.146182+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/single-shot-and-agentic-retrieval-with-amazon-bedrock-managed-knowledge-base/hero.webp",
+    "card": "/forum/assets/posts/2026/11/single-shot-and-agentic-retrieval-with-amazon-bedrock-managed-knowledge-base/card.webp",
+    "social": "/forum/assets/posts/2026/11/single-shot-and-agentic-retrieval-with-amazon-bedrock-managed-knowledge-base/social.jpg",
+    "alt": {
+      "ar": "أمازون بيدروك تدعم البحث الأحادي والوكيل في قواعد المعرفة",
+      "en": "Amazon Bedrock Adds Single-Shot and Agentic Retrieval"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-22223-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/single-shot-and-agentic-retrieval-with-amazon-bedrock-managed-knowledge-base/inline-01.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "أمازون بيدروك تدعم البحث الأحادي والوكيل في قواعد المعرفة",
+          "en": "The banking assistant routes each question to AgenticRetrieveStream in single-shot, agentic, or retrieval-only mode"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/single-shot-and-agentic-retrieval-with-amazon-bedrock-managed-knowledge-base/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-22223-1-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/single-shot-and-agentic-retrieval-with-amazon-bedrock-managed-knowledge-base/",
+      "type": "official",
+      "title": "Single-shot and agentic retrieval with Amazon Bedrock Managed Knowledge Base"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/single-shot-and-agentic-retrieval-with-amazon-bedrock-managed-knowledge-base",
+  "sourceTitle": "Single-shot and agentic retrieval with Amazon Bedrock Managed Knowledge Base",
+  "trendScore": 106.36,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-09T22:05:42+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 3
+  },
+  "contentFile": "forum/content/2026/11/single-shot-and-agentic-retrieval-with-amazon-bedrock-managed-knowledge-base.json"
+}
