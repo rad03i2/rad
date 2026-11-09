@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "ec467ccec248489af647",
+  "slug": "extending-lldb-to-debug-applications-that-span-cpus-and-gpus",
+  "categorySlug": "computers",
+  "urls": {
+    "ar": "/forum/ar/computers/extending-lldb-to-debug-applications-that-span-cpus-and-gpus/",
+    "en": "/forum/en/computers/extending-lldb-to-debug-applications-that-span-cpus-and-gpus/"
+  },
+  "locales": {
+    "ar": {
+      "title": "ميتا توسّع LLDB لتتبع الأخطاء عبر المعالجات والبطاقات الرسومية",
+      "description": "أطلقت ميتا بنية مكوّنات محايدة للموردين في lldb-server لتسهيل تصحيح الأخطاء في تطبيقات الذكاء الاصطناعي التي تعمل على المعالجات والبطاقات الرسومية معاً.",
+      "deck": "تجاوزت ميتا حدود أدوات التصحيح التقليدية من خلال دمج مراقبة المعالج والبطاقة الرسومية في جلسة واحدة موحدة.",
+      "summaryBullets": [
+        "تطوير بنية مكوّنات (Plugin Architecture) محايدة للموردين في lldb-server لفصل البنية التحتية المشتركة عن التحكم في الأجهزة.",
+        "تمثيل المعالج والبطاقة الرسومية كعمليتي تصحيح مستقلتين معاً ضمن جلسة واحدة لتسهيل العمل على تطبيقات الذكاء الاصطناعي.",
+        "تجنب فرض نموذج عملية موحدة على مساحات ذاكرة مختلفة، مما يحافظ على دقة قراءة السجلات والذاكرة لكل معالج على حدة.",
+        "إتاحة دعم تصحيح الأخطاء بعد وقوعها (Postmortem) عبر ملفات Core-dump باستخدام نفس البنية الموحدة."
+      ],
+      "sections": [
+        {
+          "heading": "تحدٍ جديد في عصر الذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة ميتا عن تطوير بنية مكوّنات (Plugin Architecture) محايدة للموردين داخل أداة lldb-server، وهي خطوة تهدف إلى تسهيل عملية تصحيح الأخطاء في التطبيقات الحديثة التي تمتد لتشمل المعالجات المركزية والبطاقات الرسومية معاً. في ظل تطور تطبيقات الذكاء الاصطناعي، لم يعد التنفيذ محصوراً في مكان واحد؛ بل يمكن أن تبدأ العملية في إطار عمل عالي المستوى ثم تنتقل بين أكواد المعالج المركزية والبرامج النووية (Kernels) التي تعمل على البطاقة الرسومية. عندما يحدث خطأ يعبر هذه الحدود، يحتاج المطورون إلى فهم التطبيق المضيف والأجهزة الطرفية معاً بشكل متكامل. ويمكن الرجوع إلى Meta Engineering للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "ميتا",
+                  "url": "https://engineering.fb.com/2026/11/09/developer-tools/extending-lldb-to-debug-applications-that-span-cpus-and-gpus/"
+                },
+                {
+                  "text": "Meta Engineering",
+                  "url": "https://engineering.fb.com/2026/11/09/developer-tools/extending-lldb-to-debug-applications-that-span-cpus-and-gpus/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "لماذا تفشل الأدوات التقليدية؟",
+          "paragraphs": [
+            {
+              "text": "تواجه أدوات التصحيح التقليدية صعوبة كبيرة في التعامل مع هذا النوع من التطبيقات، حيث تفترض عادةً أن العملية الواحدة تملك معمارية واحدة ونظراً متسقةاً للخيوط والسجلات والذاكرة. على العكس من ذلك، قد يعمل المعالج المركزي على معمارية x86-64 بينما تستخدم البرامج النووية على البطاقة الرسومية مجموعة تعليمات مختلفة تماماً. كما أن المعالج المركزي يملك سياق سجلات مألوف، بينما قد تنفذ البطاقة الرسومية مجموعات من المسارات (Lanes) بشكل متزامن. إضافة إلى ذلك، يمكن أن تشير المؤشرات في كل من الجهازين إلى مساحات عناوين مختلفة، مما يجعل دمج هذه الحالات في نموذج عملية واحد معقداً للغاية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "فصل البنية المشتركة عن التحكم في الأجهزة",
+          "paragraphs": [
+            {
+              "text": "اعتمدت ميتا على نهج مختلف في أداة LLDB من خلال تطوير بنية مكوّنات مشتركة في lldb-server. في هذا السياق، يشير مصطلح \"البطاقة الرسومية\" إلى الأجهزة المادية والأمثلة العملية، بينما يشير مصطلح \"المسرّع\" إلى التجريد الأوسع المحايد للموردين. تسمح هذه البنية للموردين بتنفيذ السلوكيات الخاصة بأجهزتهم دون التأثير على البنية التحتية المشتركة للمصحح. من خلال استخدام lldb-server كعملية مرافقة، يمكن تنسيق العمل مع وقت تشغيل المسرّع (Runtime) بشكل مباشر، حيث يقوم المكوّن الخاص بالمورّد بترجمة واجهة برمجة التطبيقات الخاصة بجهازه إلى مفاهيم يفهمها LLDB مسبقاً، مثل العمليات والخيوط والسجلات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "جلسة تصحيح موحدة لعمليتين مستقلتين",
+          "paragraphs": [
+            {
+              "text": "تمثل البنية الجديدة المعالج المركزي والمسرّع كهدفين مستقلين في LLDB، حيث يملك كل هدف معماريته الخاصة وعملية تصحيح تحافظ على خيوطه وسجلاته ومساحة عناوينه. على الرغم من استقلالهما التقني، يمكن أن يظهران للمطور في جلسة واحدة موحدة، مما يوفر تدفق عمل سلس دون إجبار مفاهيم غير متوافقة على الاندماج في عملية واحدة. تبدأ الجلسة عادةً بتوصيل LLDB بخادم lldb-server واكتشاف المكوّنات المتاحة، ثم يطلب المكوّن ضبط نقاط توقف داخلية في العملية المضيف لتحديد الأحداث المهمة، مثل بدء جلسة تصحيح البطاقة الرسومية. عند وصول المضيف إلى هذه النقطة، يقوم المكوّن بتهيئة واجهة التصحيح الخاصة بالمورّد وإنشاء اتصال ثانٍ للمسرّع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إطار عمل شامل عبر مختلف الموردين",
+          "paragraphs": [
+            {
+              "text": "صُممت حدود المكوّنات بناءً على عمليات التصحيح بدلاً من مفاهيم منصة محددة، مما يجعلها مفيدة عبر أجهزة ذات مجموعات تعليمات ونماذج تنفيذ مختلفة. تدعم البنية جلسات التصحيح الحية وكذلك تصحيح الأخطاء بعد وقوعها (Postmortem) من خلال ملفات Core-dump، حيث تستخدم مكوّنات البطاقات الرسومية فئة أساسية مشتركة للتكامل مع LLDB. كما طور الفريق مكوّناً وهمياً (Mock Plugin) لاختبار هذا التدفق دون الحاجة إلى أجهزة متخصصة، مما سمح لمجموعة اختبارات LLVM بالتحقق من الاكتشاف والتنسيق وإنشاء الاتصالات بشكل مستقل عن أي بطاقة رسومية محددة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تجربة ميدانية في أسطول ميتا",
+          "paragraphs": [
+            {
+              "text": "تستفيد جهود تصحيح الأخطاء على البطاقات الرسومية في ميتا بالفعل من هذه البنية، خاصة مع تشغيل الشركة لأسطول متنوع من البطاقات الرسومية. يتيح هذا النهج للمطورين العمل بكفاءة على بيئات معقدة دون الحاجة إلى إعادة بناء أدوات التصحيح لكل نوع من الأجهزة. من خلال فصل البنية المشتركة عن التفاصيل الخاصة بالمورّد، تضمن ميتا أن التحسينات في سطر الأوامر أو بروتوكول الاتصال عن بُعد أو التكامل مع بيئات التطوير تستفيد منها جميع المسرعات، بينما يبقى كل مورد مسؤولاً عن التفاصيل الفريدة لنظام تشغيله ومعالجته.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "LLDB",
+        "ميتا",
+        "تصحيح الأخطاء",
+        "الذكاء الاصطناعي",
+        "البطاقات الرسومية",
+        "تطوير البرمجيات"
+      ],
+      "entities": [
+        "ميتا",
+        "LLDB",
+        "lldb-server",
+        "البطاقات الرسومية",
+        "المعالجات المركزية"
+      ],
+      "category": "الحواسيب",
+      "dateLabel": "9 نوفمبر 2026",
+      "modifiedLabel": "9 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 660
+    },
+    "en": {
+      "title": "Meta Engineering Details Vendor-Neutral LLDB Accelerator Plugin Architecture",
+      "description": "Meta Engineering introduces a vendor-neutral accelerator plugin architecture in lldb-server to debug applications spanning both CPUs and GPUs.",
+      "deck": "Meta has detailed a new vendor-neutral accelerator plugin architecture within lldb-server designed to handle debugging challenges for applications spanning both CPUs and GPUs.",
+      "summaryBullets": [
+        "Meta developed a vendor-neutral accelerator plugin architecture inside lldb-server.",
+        "The system treats the CPU and GPU as separate debugger processes while unifying them into a single debugging session.",
+        "A mock accelerator plugin allows the LLVM test suite to verify behaviors without requiring specialized hardware.",
+        "The framework supports both live sessions and postmortem GPU debugging."
+      ],
+      "sections": [
+        {
+          "heading": "Bridging CPU and GPU Execution Boundaries",
+          "paragraphs": [
+            {
+              "text": "Modern artificial intelligence workloads rarely execute in a single place, frequently moving back and forth between native CPU code and execution kernels running on a GPU. When bugs cross these hardware boundaries, developers must examine the host application and device together. As detailed by Meta Engineering, this process is significantly more complex than attaching a conventional debugger to an ordinary process because CPUs and GPUs typically use different instruction sets, register sets, memory spaces, and execution models.",
+              "links": [
+                {
+                  "text": "Meta Engineering",
+                  "url": "https://engineering.fb.com/2026/11/09/developer-tools/extending-lldb-to-debug-applications-that-span-cpus-and-gpus/"
+                }
+              ]
+            },
+            {
+              "text": "Historically, individual hardware vendors have built specialized device-specific debuggers, including NVIDIA's CUDA-GDB and AMD's ROCgdb. While these platform-specific tools offer deep integration, common debugger capabilities often require separate implementation and maintenance. To address these hurdles, engineers at Meta have been working on a shared accelerator plugin architecture within LLDB to separate core debugging infrastructure from hardware-specific device control.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Overcoming Traditional Debugger Limitations",
+          "paragraphs": [
+            {
+              "text": "Conventional debuggers typically operate under the assumption that a single program process features a consistent architecture alongside a unified view of memory, registers, and threads. GPU applications inherently challenge these fundamental assumptions. For instance, a host application might execute on an x86-64 architecture while its GPU kernels execute using entirely distinct instruction sets and thousands of execution lanes that do not map neatly onto standard command-line or graphical thread models.",
+              "links": []
+            },
+            {
+              "text": "Attempting to force all of this heterogeneous state into a single artificial process model introduces severe software complexity. Operations must constantly determine whether they apply to the host CPU or the device accelerator, while register handling, memory reading, and breakpoint management all become conditional. Furthermore, a unified process model forces a single memory map onto the CPU and GPU, even though their respective address spaces remain independent.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Implementing the lldb-server Accelerator Architecture",
+          "paragraphs": [
+            {
+              "text": "LLDB utilizes a companion utility called lldb-server to attach to programs and manage low-level operations. Communication between the LLDB client and the server occurs via the GDB remote protocol for functions like inspecting registers, reading memory, and controlling execution. Because lldb-server already oversees the native process, it serves as an ideal coordination point for accelerator runtimes.",
+              "links": []
+            },
+            {
+              "text": "The new plugin interface empowers hardware-specific backends to operate in tandem with standard CPU debuggers. These backends translate vendor-specific device APIs into standard abstractions that LLDB already handles, including processes, threads, registers, memory modules, and stop reasons. This clean separation ensures the LLDB client remains vendor-neutral, allowing core enhancements to symbol handling, command lines, and IDE integration to benefit every accelerator seamlessly.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Managing Separate Targets in a Unified Session",
+          "paragraphs": [
+            {
+              "text": "Under the new architectural design, the CPU and accelerator are represented as distinct LLDB targets. Each target maintains its own unique architecture and is associated with a distinct debugger process that tracks its respective address space, threads, registers, and execution state. The host CPU continues utilizing LLDB's established native debugging pathways, while the plugin supplies a secondary connection once the accelerator becomes available.",
+              "links": []
+            },
+            {
+              "text": "While the two targets remain technically independent to the underlying debugger, developers can view them within a single IDE or LLDB debugging session. This approach avoids forcing incompatible CPU and GPU concepts into a single unified process model. A typical debugging workflow involves LLDB connecting to lldb-server, discovering active accelerator plugins, establishing runtime breakpoints, and subsequently creating a secondary target for the device.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Testing Framework and Future Application",
+          "paragraphs": [
+            {
+              "text": "To ensure reliable development without requiring specialized hardware environments, the team constructed a mock accelerator plugin. This mock implementation allows the LLVM test suite to successfully verify connection creation, breakpoint coordination, discovery, and basic device state. Developers can explore practical examples, such as the vector dot-product HIP sample, to better understand how these synchronized multi-target debugging workflows operate in practice.",
+              "links": [
+                {
+                  "text": "vector dot-product HIP sample",
+                  "url": "https://gist.github.com/satyajanga/3c629abbc05a9596195ac59820a12d16"
+                }
+              ]
+            },
+            {
+              "text": "Beyond live sessions, the framework also natively accommodates postmortem GPU debugging. GPU core-dump plugins rely on a shared base class for LLDB integration, while vendor implementations supply the underlying device-specific thread and register states. Meta notes that its internal GPU debugging initiatives are already leveraging this extensible architecture.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Meta",
+        "LLDB",
+        "Debugging",
+        "GPU",
+        "CPU",
+        "Developer Tools",
+        "LLVM"
+      ],
+      "entities": [
+        "Meta",
+        "LLDB",
+        "LLVM"
+      ],
+      "category": "Computing",
+      "dateLabel": "November 9, 2026",
+      "modifiedLabel": "November 9, 2026",
+      "readMinutes": 4,
+      "wordCount": 728
+    }
+  },
+  "datePublished": "2026-11-09T20:45:39.550320+03:00",
+  "dateModified": "2026-11-09T20:45:39.550320+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/extending-lldb-to-debug-applications-that-span-cpus-and-gpus/hero.webp",
+    "card": "/forum/assets/posts/2026/11/extending-lldb-to-debug-applications-that-span-cpus-and-gpus/card.webp",
+    "social": "/forum/assets/posts/2026/11/extending-lldb-to-debug-applications-that-span-cpus-and-gpus/social.jpg",
+    "alt": {
+      "ar": "ميتا توسّع LLDB لتتبع الأخطاء عبر المعالجات والبطاقات الرسومية",
+      "en": "Meta Engineering Details Vendor-Neutral LLDB Accelerator Plugin Architecture"
+    },
+    "credit": "Meta Engineering",
+    "sourceUrl": "https://engineering.fb.com/wp-content/uploads/2026/11/Extending-LLDB-Hero.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Meta Engineering",
+      "url": "https://engineering.fb.com/2026/11/09/developer-tools/extending-lldb-to-debug-applications-that-span-cpus-and-gpus/",
+      "type": "official",
+      "title": "Extending LLDB to Debug Applications That Span CPUs and GPUs"
+    }
+  ],
+  "sourceUrl": "https://engineering.fb.com/2026/11/09/developer-tools/extending-lldb-to-debug-applications-that-span-cpus-and-gpus",
+  "sourceTitle": "Extending LLDB to Debug Applications That Span CPUs and GPUs",
+  "trendScore": 112.79,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-09T17:45:39+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/extending-lldb-to-debug-applications-that-span-cpus-and-gpus.json"
+}
