@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "ce169ea5d1f169f19da4",
+  "slug": "language-server-now-auto-configures-msbuild-builds",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/language-server-now-auto-configures-msbuild-builds/",
+    "en": "/forum/en/ai/language-server-now-auto-configures-msbuild-builds/"
+  },
+  "locales": {
+    "ar": {
+      "title": "سيرفر لغة C++ يفعّل بناء MSBuild تلقائياً في Copilot CLI",
+      "description": "أطلقت مايكروسوفت تحديثاً لسيرفر لغة C++ في Copilot CLI يدمج مستخرج أوامر MSBuild، مما يلغي الحاجة لإعدادات يدوية ويوفر استهلاك الرموز.",
+      "deck": "أصبح سيرفر لغة C++ الخاص بـ GitHub Copilot CLI قادراً على توليد قاعدة بيانات الترجمة تلقائياً لمشاريع MSBuild دون تدخل المستخدم.",
+      "summaryBullets": [
+        "دمج مستخرج أوامر الترجمة (compile commands extractor) مباشرة داخل سيرفر اللغة.",
+        "إلغاء الحاجة إلى تشغيل مهارات الإعداد (configuration skills) يدوياً أو عبر الوكلاء.",
+        "تقليل استهلاك الرموز (tokens) أثناء الإعداد بفضل توليد قاعدة بيانات حتمي.",
+        "دعم مستمر لأنظمة البناء الأخرى مثل CMake عبر مهارات مخصصة.",
+        "الاشتراك النشط في GitHub Copilot شرط أساسي لاستخدام هذه الميزات."
+      ],
+      "sections": [
+        {
+          "heading": "إلغاء خطوة الاكتشاف اليدوي",
+          "paragraphs": [
+            {
+              "text": "أعلنت مايكروسوفت عن تحديث جوهري في سيرفر لغة C++ المخصص لـ GitHub Copilot CLI. التحديث الأبرز يتمثل في تضمين مستخرج أوامر الترجمة الخاصة بنظام MSBuild (MSBuild compile commands extractor) بشكل مباشر داخل حزمة السيرفر. هذا الدمج يعني أن الوكيل البرمجي (Agent) لم يعد بحاجة إلى اكتشاف وتشغيل مهارة إعداد منفصلة قبل أن يتمكن من تقديم معلومات دقيقة حول الكود. في السابق، كان الإعداد يتطلب من المستخدم تقديم ملف compile_commands.json يدوياً، أو انتظار Copilot لتحديد وتشغيل المهارة المناسبة لتوليد قاعدة بيانات الترجمة. هذه الخطوة الإضافية كانت تستهلك وقتاً في الإعداد وتستهلك من الرموز (tokens) قبل أن يبدأ Copilot في التعامل الفعلي مع الكود. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-11-10-c-language-server-now-auto-configures-msbuild-builds/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية التوليد التلقائي",
+          "paragraphs": [
+            {
+              "text": "بفضل التضمين المباشر، أصبح مستخرج أوامر الترجمة متاحاً دائماً مع سيرفر لغة C++. عند فتح المشروع وبدء تشغيل السيرفر، يقوم Copilot تلقائياً باستدعاء المستخرج لتوليد قاعدة بيانات الترجمة اللازمة. لا يتطلب هذا العملية أي إعداد يدوي أو مهارات تشغيلية من جانب الوكيل. كما أن توليد قاعدة بيانات الترجمة لمشاريع MSBuild أصبح حتمياً (deterministic)، مما يقلل بشكل كبير من استهلاك الرموز أثناء مرحلة الإعداد. هذا التحسن يضمن أن الموارد تُوجه نحو تحليل الكود وتقديم المعلومات اللغوية الدقيقة بدلاً من عمليات البحث والإعداد الأولية. ويمكن الرجوع إلى Back to changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات في تجربة المطور",
+          "paragraphs": [
+            {
+              "text": "تسهم هذه التغييرات في تسريع الوصول إلى ميزات سيرفر اللغة الأساسية، مثل الانتقال إلى التعريف (go-to-definition) وإيجاد المراجع (find references). بدلاً من انتظار اكتمال عمليات الاكتشاف، يمكن للمطورين البدء في العمل على الكود بشكل أسرع. يهدف هذا التحديث إلى تقليل الاحتكاك في بيئة التطوير، خاصة للمشاريع المعقدة التي تعتمد على MSBuild، حيث كان الإعداد اليدوي يمثل عائقاً زمنياً ومالياً (عبر استهلاك الرموز).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دعم أنظمة البناء الأخرى",
+          "paragraphs": [
+            {
+              "text": "على الرغم من التركيز على MSBuild، يظل سيرفر لغة C++ متوافقاً مع أنظمة البناء الأخرى. لمشاريع CMake، يمكن للمستخدمين استخدام مهارة توليد أوامر الترجمة (generate compile commands skill) التي أُدرجت في إصدار سابق من سيرفر اللغة، وذلك من خلال طلب Copilot CLI لتحميل المشروع. أما بالنسبة لأنظمة البناء المخصصة، فقد وفرت مايكروسوفت دليلاً لإنشاء مهارة مستخرج بناء مخصصة. كما يمكن للمستخدمين تقديم ملف compile_commands.json الخاص بهم يدوياً إذا تطلب الأمر ذلك. هذا المرونة تضمن تغطية شاملة لمختلف بيئات التطوير.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات التثبيت والاستخدام",
+          "paragraphs": [
+            {
+              "text": "للاستفادة من هذه الميزات، يجب على المطورين اتباع دليل البدء السريع (quick start) لتثبيت الإضافة وقبول اتفاقية ترخيص المستخدم النهائي (EULA). إذا كان المستودع يحتوي على مشروع C++ يعتمد على MSBuild، سيقوم Copilot تلقائياً بتوليد قاعدة بيانات الترجمة المطلوبة للحصول على معلومات كود دقيقة. من الجدير بالذكر أن اشتراك GitHub Copilot النشط هو شرط أساسي لاستخدام هذه الميزات. كما تشجع مايكروسوفت المستخدمين على المساهمة في تحسين سيرفر اللغة من خلال استكمال الاستبيان المتاح أو فتح مشكلة (issue) في المستودع الرئيسي للإبلاغ عن أي مشاكل أو اقتراح تحسينات.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "C++",
+        "GitHub Copilot",
+        "MSBuild",
+        "Language Server",
+        "DevTools",
+        "Microsoft",
+        "CLI"
+      ],
+      "entities": [
+        "Microsoft",
+        "GitHub Copilot CLI",
+        "C++ Language Server",
+        "MSBuild",
+        "CMake"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "10 نوفمبر 2026",
+      "modifiedLabel": "10 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 526
+    },
+    "en": {
+      "title": "C++ Language Server Auto-Configures MSBuild Builds",
+      "description": "The Microsoft C++ Language Server for GitHub Copilot CLI now automatically invokes a bundled MSBuild compile commands extractor for precise code intelligence.",
+      "deck": "The Microsoft C++ Language Server for GitHub Copilot CLI has introduced automated MSBuild compile commands extraction, removing the need for separate configuration steps.",
+      "summaryBullets": [
+        "The Microsoft C++ Language Server for GitHub Copilot CLI now bundles its MSBuild compile commands extractor.",
+        "The server invokes the extractor automatically, eliminating the need for an agent to discover and run a separate configuration skill.",
+        "Compilation database generation for MSBuild projects is now deterministic and reduces setup token usage.",
+        "CMake projects and custom build systems maintain alternative workflows using skills or custom extractors."
+      ],
+      "sections": [
+        {
+          "heading": "Automated MSBuild Integration",
+          "paragraphs": [
+            {
+              "text": "The Microsoft C++ Language Server for GitHub Copilot CLI now bundles its MSBuild compile commands extractor and invokes it automatically. According to the GitHub Changelog, an agent no longer needs to discover and run a separate configuration skill before it can get precise code intelligence for your project. For more information, including the installation instructions, see the main repository page.",
+              "links": [
+                {
+                  "text": "main repository page",
+                  "url": "https://github.com/microsoft/cpp-language-server"
+                },
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-11-10-c-language-server-now-auto-configures-msbuild-builds/"
+                }
+              ]
+            },
+            {
+              "text": "Previously, setting up go-to-definition, find references, and other language server features for an MSBuild-based C++ project required you to either provide your own compile_commands.json file or Copilot to locate and run a configuration skill before it could generate a compilation database. That extra discovery step added setup time and consumed tokens before Copilot could start working with your code.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Benefits and Architecture",
+          "paragraphs": [
+            {
+              "text": "The compile commands extractor is bundled directly with the C++ language server, ensuring it remains always available upon project initialization. Copilot invokes the extractor when starting the language server on project open, completely bypassing the need for any manual or agent-driven setup skill.",
+              "links": []
+            },
+            {
+              "text": "By making compilation database generation for MSBuild projects entirely deterministic, the update successfully reduces setup token usage. Developers wanting to get started can follow the Microsoft C++ Language Server quick start to install the plugin and accept the EULA. If your repository contains an MSBuild-based C++ project, Copilot will automatically generate the compilation database it needs for accurate code intelligence.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Other Build Systems and Workflows",
+          "paragraphs": [
+            {
+              "text": "While MSBuild projects benefit from this automated workflow, other build systems maintain dedicated configuration paths. For CMake projects, developers can use the generate compile commands skill introduced in the earlier C++ language server release by asking Copilot CLI to “load project.”",
+              "links": []
+            },
+            {
+              "text": "Meanwhile, teams working with custom build systems can follow the guide to create a custom build extractor skill, or manually provide their own compile_commands.json file to support accurate language server features across diverse repository structures.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Requirements and Community Feedback",
+          "paragraphs": [
+            {
+              "text": "Using these advanced capabilities requires an active GitHub Copilot subscription. Microsoft encourages developers to help improve the Microsoft C++ Language Server by completing the C++ language server survey.",
+              "links": []
+            },
+            {
+              "text": "For those encountering technical obstacles, users can open an issue in the Microsoft C++ Language Server repository to report a problem or suggest an improvement.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "C++",
+        "GitHub Copilot",
+        "MSBuild",
+        "Language Server",
+        "Microsoft",
+        "Code Intelligence"
+      ],
+      "entities": [
+        "Microsoft",
+        "GitHub",
+        "Copilot CLI",
+        "MSBuild"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 10, 2026",
+      "modifiedLabel": "November 10, 2026",
+      "readMinutes": 3,
+      "wordCount": 453
+    }
+  },
+  "datePublished": "2026-11-10T20:45:54.779491+03:00",
+  "dateModified": "2026-11-10T20:45:54.779491+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/language-server-now-auto-configures-msbuild-builds/hero.webp",
+    "card": "/forum/assets/posts/2026/11/language-server-now-auto-configures-msbuild-builds/card.webp",
+    "social": "/forum/assets/posts/2026/11/language-server-now-auto-configures-msbuild-builds/social.jpg",
+    "alt": {
+      "ar": "سيرفر لغة C++ يفعّل بناء MSBuild تلقائياً في Copilot CLI",
+      "en": "C++ Language Server Auto-Configures MSBuild Builds"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/themes/github-2021-child/dist/img/social-v3-improvements.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/language-server-now-auto-configures-msbuild-builds/inline-01.webp",
+        "width": 1020,
+        "height": 610,
+        "alt": {
+          "ar": "سيرفر لغة C++ يفعّل بناء MSBuild تلقائياً في Copilot CLI",
+          "en": "C++ language server automatically generating compile commands for an MSBuild project"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من GitHub Changelog",
+          "en": "Image related to the report from GitHub Changelog"
+        },
+        "credit": "GitHub Changelog",
+        "sourceUrl": "https://github.blog/changelog/2026-11-10-c-language-server-now-auto-configures-msbuild-builds/",
+        "originalUrl": "https://github.com/user-attachments/assets/56256011-8c02-4ef1-b572-b0af1007191b"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-11-10-c-language-server-now-auto-configures-msbuild-builds/",
+      "type": "official",
+      "title": "C++ language server now auto-configures MSBuild builds"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-11-10-c-language-server-now-auto-configures-msbuild-builds",
+  "sourceTitle": "C++ language server now auto-configures MSBuild builds",
+  "trendScore": 118.81,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-10T17:45:55+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/language-server-now-auto-configures-msbuild-builds.json"
+}
