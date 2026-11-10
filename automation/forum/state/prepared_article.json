@@ -1,5 +1,347 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-10T17:45:55+00:00",
-  "last_published_story_id": "ce169ea5d1f169f19da4"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-10T17:52:52+00:00",
+  "target_publish_at": "2026-11-10T21:05:54.779491+03:00",
+  "story": {
+    "title": "How TCS built an agentic test orchestrator with Amazon Bedrock AgentCore",
+    "url": "https://aws.amazon.com/blogs/machine-learning/how-tcs-built-an-agentic-test-orchestrator-with-amazon-bedrock-agentcore",
+    "domain": "aws.amazon.com",
+    "summary": "Tata Consultancy Services (TCS) built an agentic test orchestrator on Amazon Bedrock AgentCore that turns requirements into executable, governed tests for its Banking, Financial Services, and Insurance (BFSI) clients. Learn how specialized agents, per-tenant isolation, and workload-aware execution cut testing effort by 88% in an internal benchmark.",
+    "published_at": "2026-11-10T16:59:43+00:00",
+    "discovered_at": "2026-11-10T17:02:01+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "4895a9783a95645627ee",
+    "trend": {
+      "score": 118.66,
+      "age_hours": 0.87,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-tcs-built-an-agentic-test-orchestrator-with-amazon-bedrock-agentcore/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How TCS built an agentic test orchestrator with Amazon Bedrock AgentCore",
+      "title": "How TCS built an agentic test orchestrator with Amazon Bedrock AgentCore | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "TCS تبني منسق اختبارات ذكي على Amazon Bedrock AgentCore",
+      "description": "تعاونت TCS مع AWS لتطوير منصة ذكاء اصطناعي تدير دورة الاختبارات المالية، مما يقلل الجهد التشغيلي بنسبة 88% ويضمن عزل البيانات بين العملاء.",
+      "deck": "اعتمدت تاتا كونسلتنسي سيرفيسز (TCS) على تقنيات الذكاء الاصطناعي الوكيلية لتحويل متطلبات العملاء في قطاع الخدمات المالية إلى اختبارات قابلة للتنفيذ، مع الحفاظ على أعلى معايير الأمان.",
+      "summary_bullets": [
+        "تطوير منسق اختبارات وكيلي (Agentic Test Orchestrator) يعتمد على Amazon Bedrock AgentCore.",
+        "تحقيق خفض بنسبة 88% في جهد الاختبارات بناءً على اختبارات داخلية.",
+        "تطبيق عزل صارم لكل مستأجر (Tenant) لضمان أمان البيانات المالية.",
+        "استخدام وكلاء متخصصين بدلاً من أوامر ذكاء اصطناعي عامة لزيادة التحكم.",
+        "تكامل سلس مع أدوات مثل Jira وGitLab لتوليد اختبارات API وواجهة المستخدم."
+      ],
+      "sections": [
+        {
+          "heading": "تحويل التحدي التشغيلي إلى حل ذكي",
+          "paragraphs": [
+            {
+              "text": "تواجه شركات الخدمات المصرفية والمالية والتأمين (BFSI) تحدياً كبيراً في تسريع عمليات الإطلاق دون المساس بالتحكمات الأمنية الصارمة. كشفت TCS أن الجزء الأبطأ في دورة الإطلاق ليس كتابة الكود، بل سلسلة العمل اللاحقة التي تشمل تفسير المتطلبات، وتصميم السيناريوهات، وصيانة الأتمتة، وتحليل الأعطال. بدلاً من استبدال مهندسي الجودة، صممت الشركة حلاً يزيل الأعمال التكرارية والترجمة اليدوية، مما يتيح للمهندسين التركيز على تحليل المخاطر والاختبارات الاستكشافية واتخاذ قرارات الإطلاق. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-tcs-built-an-agentic-test-orchestrator-with-amazon-bedrock-agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "أدت هذه الحاجة إلى أربعة متطلبات أساسية: أولاً، يجب أن تستند كل اختبارات إلى سياق المشروع المحدد وليس أوامر عامة. ثانياً، يجب تغطية اختبارات واجهات برمجة التطبيقات (API) واختبارات واجهة المستخدم (UI). ثالثاً، يجب ضمان عزل تام لبيانات كل عميل. رابعاً، يجب توفير مسار قابل للتكرار من استهلاك المتطلبات حتى تقديم الأدلة والتقارير.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "لماذا لم تكن الأتمتة التقليدية كافية؟",
+          "paragraphs": [
+            {
+              "text": "رغم أن TCS تستخدم الأتمتة التقليدية لتحسين سرعة التنفيذ، إلا أنها تترك الجانب الأبطأ دون معالجة، حيث لا يزال على الفرق إنشاء السيناريوهات وتحويلها إلى نصوص برمجية ومراقبة الاعتماديات. عند تغيير قصة مستخدم مرتبطة، تصبح النصوص المولدة سابقاً قديمة بسرعة. كما أن استخدام أمر ذكاء اصطناعي واحد لا يوفر مستوى التحكم المطلوب في سير عمل هندسي متعدد المراحل.",
+              "links": []
+            },
+            {
+              "text": "للتغلب على ذلك، صممت TCS منسق الاختبارات الوكيلية (Agentic Test Orchestrator) الذي يفكك عملية الاختبار إلى مهام متخصصة. لكل مهمة وكيلها الخاص وأدواتها وقواعد التحقق وسياقها. يدير مشرف حتمي (Deterministic Supervisor) توجيه العمل، بينما تتحكم سير عمل التنفيذ في إعادة المحاولات وتصنيف الأخطاء والحفظ والإبلاغ.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اختيار Amazon Bedrock AgentCore كبنية تحتية",
+          "paragraphs": [
+            {
+              "text": "لتنفيذ هذه الوكلاء، اختارت TCS خدمة Amazon Bedrock AgentCore لبناء الوكلاء وربطهم وتحسينهم على نطاق واسع. جاء هذا الاختيار بناءً على ثلاث قدرات رئيسية: أولاً، توفر Amazon Bedrock مجموعة متنوعة من النماذج، مما يسمح لكل وكيل باستخدام النموذج الأنسب لمهمته، مثل تصميم السيناريوهات أو توليد الكود. ثانياً، يتوسع وقت التشغيل (Runtime) مع الطلب، مما يتيح للمختبرين في عدة مستأجرين تشغيل جلسات التوليد والتنفيذ في نفس الوقت دون الحاجة إلى تهيئة خوادم الوكلاء يدوياً.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "ثالثاً، يعمل وقت التشغيل لكل جلسة في آلة افتراضية دقيقة (microVM) معزولة، مما يوفر فصل مستوى الجلسة للمنصة متعددة المستأجرين دون بناء هذه الطبقة من الصفر. سمحت هذه القدرات لـ TCS بالتركيز على منطق الاختبار بدلاً من بنية الوكلاء التحتية، مما قلص الوقت اللازم لتقديم المنصة لعملائها في قطاع BFSI.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "عزل المستأجرين وأمن البيانات المالية",
+          "paragraphs": [
+            {
+              "text": "تتطلب المنصة عزل صارم للهوية والبيانات والمفاتيح لكل مستأجر. تستخدم المنصة حوسبة مجمعة مع بيانات وهويات معزولة. يوفر مستوى التحكم المشترك (Control Plane) عناقيد Amazon EKS، وسجل الحاويات، وبوابة الإدارة، وأتمتة الانضمام. يحصل كل مستأجر على مساحة Kubernetes خاصة، ومجموعة مستخدمين Amazon Cognito، ومفتاح AWS KMS، ودلو Amazon S3، وجداول Amazon DynamoDB، وقواعد معرفة Amazon Bedrock.",
+              "links": []
+            },
+            {
+              "text": "عملية انضمام المستأجرين مدعومة بالأحداث؛ حيث يكتب واجهة برمجة التطبيقات (API) الإدارية سجلاً معلقاً، ثم يطلق حدثاً عبر Amazon EventBridge لبدء مشروع AWS CodeBuild الذي ينشر بنية المستأجر باستخدام AWS CDK. يضمن هذا النمط قابلية التكرار مع الحفاظ على حدود الهوية والبيانات الخاصة بكل عميل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التأسيس على سياق المشروع والوكلاء المتخصصون",
+          "paragraphs": [
+            {
+              "text": "لضمان أن يعكس التوليد مجال كل مشروع، تم دمج التأسيس (Grounding) في المنصة. تُخزن المتطلبات والأدلة المولدة في Amazon S3، بينما تُخزن بيانات الجلسة الوصفية في Amazon DynamoDB. يتم فهرسة المستندات ومصادر الكود في قواعد معرفة Amazon Bedrock باستخدام التضمينات المتجهية. قبل وصول أي مادة إلى الوكيل، يتم تصفية الاسترجاع حسب المستأجر والمشروع والجلسة، مما يمنع تسرب سياق عميل واحد إلى اختبارات عميل آخر.",
+              "links": []
+            },
+            {
+              "text": "تدعم هذه الطبقة طرق التعبير المختلفة عن المتطلبات، مثل قصص Jira، ومخططات Swagger، ومجلدات GitLab. لأتمتة واجهة المستخدم، يستخدم خدمة التقاط منفصلة أداة Puppeteer لتحويل رابط URL وهدف بلغة طبيعية إلى مستند تدفق واجهة مستخدم ومستند محددات XPath. بدلاً من استخدام أمر واحد كبير، تستخدم المنصة وكلاء متخصصين لكل مرحلة، مما يوفر التحكم الدقيق المطلوب في سير العمل المنظم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النتائج والأثر على فرق الاختبار",
+          "paragraphs": [
+            {
+              "text": "أظهرت الاختبارات الداخلية أن المنصة قللت من جهد الاختبار بنسبة 88%. من خلال تحويل المتطلبات إلى اختبارات قابلة للتنفيذ ومضبوطة، تمكنت فرق TCS من تقليل الوقت المهدر في الأعمال التكرارية. يتيح هذا الحل لعملاء BFSI زيادة إنتاجية الاختبار مع الحفاظ على مستويات التحكم الأمنية المتوقعة في القطاع المالي.",
+              "links": []
+            },
+            {
+              "text": "يُظهر هذا المشروع كيف يمكن لتقنيات الذكاء الاصطناعي الوكيلية، عند دمجها مع بنية سحابية آمنة ومعزولة، أن تعيد تشكيل عمليات هندسة البرمجيات المعقدة، مع الحفاظ على الأولوية القصوى للأمان والامتثال.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "TCS",
+        "Amazon Web Services",
+        "اختبارات البرمجيات",
+        "الخدمات المالية",
+        "الأتمتة",
+        "الوكلاء الاصطناعيون"
+      ],
+      "entities": [
+        "Tata Consultancy Services (TCS)",
+        "Amazon Web Services (AWS)",
+        "Amazon Bedrock AgentCore",
+        "Amazon EKS",
+        "Amazon S3",
+        "Amazon DynamoDB",
+        "Amazon Cognito",
+        "Strands Agents SDK"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستندة حصرياً على المدونة الرسمية لـ AWS Machine Learning. تم التحقق من الأرقام المذكورة (88%) كنتائج لاختبارات داخلية كما وردت في المصدر."
+    },
+    "en": {
+      "title": "TCS builds agentic test orchestrator with Amazon Bedrock AgentCore",
+      "description": "Tata Consultancy Services deployed an agentic test orchestrator on Amazon Bedrock AgentCore, cutting BFSI testing effort by 88% while preserving strict tenant isolation and governance.",
+      "deck": "TCS has launched an agentic test orchestrator that transforms requirements into executable, governed tests for banking, financial services, and insurance clients. Built on Amazon Bedrock AgentCore, the solution reduces testing effort by 88% through specialized agents and per‑tenant isolation.",
+      "summary_bullets": [
+        "TCS cuts BFSI testing effort by 88% using Amazon Bedrock AgentCore.",
+        "The orchestrator supports both API and UI testing with tenant‑isolated data.",
+        "A repeatable pipeline from requirements to test evidence is enabled by specialized agents.",
+        "The architecture leverages Amazon EKS, Strands Agents SDK, Amazon ECS, S3, DynamoDB, and AWS security services."
+      ],
+      "sections": [
+        {
+          "heading": "Challenge of Conventional Testing",
+          "paragraphs": [
+            {
+              "text": "Banking, financial services, and insurance (BFSI) clients need to increase testing throughput while preserving the strict controls expected in financial services. TCS already uses traditional test automation, which speeds execution but leaves the slow, repetitive work untouched: teams must still create scenarios, convert them into scripts, maintain locators and dependencies, and diagnose failures. When a linked user story changes, earlier scripts quickly become stale, and a single generative AI prompt cannot provide the control required for a multi‑stage engineering workflow. This post explains how TCS addressed these gaps with an agentic test orchestrator built on Amazon Bedrock AgentCore.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Designing the Agentic Orchestrator",
+          "paragraphs": [
+            {
+              "text": "TCS designed the Agentic Test Orchestrator to decompose testing into specialized tasks, each with its own agent, tools, validation rules, and context. A deterministic supervisor routes work, while an execution workflow controls retries, error classification, persistence, and reporting. The platform is built with the Strands Agents SDK, allowing TCS to create agents that understand project‑specific domain knowledge rather than relying on generic prompts. This approach lets engineers focus on risk analysis, exploratory testing, and release decisions instead of repetitive translation and execution work.",
+              "links": [
+                {
+                  "text": "Strands Agents SDK",
+                  "url": "https://strandsagents.com/"
+                }
+              ]
+            },
+            {
+              "text": "The orchestrator meets four specific requirements set by TCS. First, every test must be grounded in project‑specific context, not generic prompts. Second, it must cover both API and browser‑based UI testing to match how BFSI applications are built. Third, security is paramount, so each tenant’s data and knowledge store must be isolated. Finally, it must provide a repeatable path from requirement ingestion to test evidence and reporting, ensuring gains hold across teams and releases.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Key Services",
+          "paragraphs": [
+            {
+              "text": "The end‑to‑end flow runs across five stages, with a per‑tenant security layer underneath. Inputs from Jira, business requirement documents (BRDs), and GitLab enter a tenant web application that runs on Amazon Elastic Kubernetes Service (Amazon EKS) behind Amazon CloudFront, with sign‑in through Amazon Cognito. TCS uses Amazon Bedrock AgentCore runtime to host the platform’s specialized agents, built with the Strands Agents SDK. These agents generate tests, refine them with the tester, and manage execution. Amazon Elastic Container Service (Amazon ECS) runs the generated tests, while Amazon Simple Storage Service (Amazon S3) and Amazon DynamoDB store results and metadata. Amazon CloudWatch captures logs, and AWS WAF, Amazon Cognito, AWS Key Management Service (AWS KMS), and AWS Secrets Manager enforce per‑tenant security and isolation.",
+              "links": []
+            },
+            {
+              "text": "The TCS Agentic Test Orchestrator is a multi‑tenant SaaS solution built on AWS. A tester provides requirements through Jira stories, BRDs, Swagger specifications, uploaded documents, GitLab source folders, or captured UI flows. From those inputs the platform generates test scenarios, Gherkin feature files, and executable Java or Python tests. It runs those tests on Amazon ECS, stores artifacts and results, and shows progress and reports in a per‑tenant web application. The architecture’s use of Amazon EKS, Strands Agents SDK, Amazon ECS, S3, and DynamoDB enables scalable, isolated testing for BFSI clients.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Benefits and Measurable Impact",
+          "paragraphs": [
+            {
+              "text": "TCS reports an 88% reduction in testing effort in an internal benchmark after deploying the agentic orchestrator. Engineers no longer spend time on repetitive translation and execution, allowing them to devote more cycles to risk analysis, exploratory testing, and release decisions. The per‑tenant isolation ensures that each BFSI client’s data and knowledge store remain separate, meeting financial‑services security controls. Because the platform provides a repeatable path from requirement ingestion to test evidence and reporting, the gains are consistent across teams and releases.",
+              "links": []
+            },
+            {
+              "text": "The solution also shortens time‑to‑market for new testing capabilities. By leveraging Amazon Bedrock AgentCore, TCS can adopt newer models as they become available, and the runtime scales with demand so testers across many tenants can run generation and execution sessions simultaneously without provisioning or tuning agent servers. This focus on testing logic rather than agent infrastructure accelerated the platform’s delivery to BFSI clients.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Future Outlook",
+          "paragraphs": [
+            {
+              "text": "Looking ahead, TCS plans to extend the agentic orchestrator beyond BFSI to other regulated industries. The platform’s design on Amazon Bedrock AgentCore allows easy integration of emerging models and tools, while the multi‑tenant SaaS model ensures each client retains strict data boundaries. As demand grows, the runtime’s ability to run each session in its own isolated microVM will continue to support scalability and security.",
+              "links": []
+            },
+            {
+              "text": "For more details, read the full story on the AWS Machine Learning Blog, which outlines the methodology, architecture, and measurable results of TCS’s agentic test orchestrator implementation.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "TCS",
+        "Amazon Bedrock AgentCore",
+        "agentic testing",
+        "AWS",
+        "Strands Agents SDK",
+        "BFSI",
+        "test automation"
+      ],
+      "entities": [
+        "Tata Consultancy Services",
+        "Amazon Bedrock AgentCore",
+        "Strands Agents SDK",
+        "Amazon EKS",
+        "Amazon CloudFront",
+        "Amazon Cognito",
+        "Amazon ECS",
+        "Amazon S3",
+        "Amazon DynamoDB",
+        "AWS WAF",
+        "AWS KMS",
+        "AWS Secrets Manager"
+      ],
+      "article_type": "news",
+      "confidence_note": "Content derived directly from the AWS Machine Learning Blog post; no external data added."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 778,
+      "word_count_en": 812
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "4895a9783a95645627ee",
+      "title": "How TCS built an agentic test orchestrator with Amazon Bedrock AgentCore",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 778,
+          "word_count_en": 812
+        }
+      ]
+    }
+  ],
+  "slug": "how-tcs-built-an-agentic-test-orchestrator-with-amazon-bedrock-agentcore",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-tcs-built-an-agentic-test-orchestrator-with-amazon-bedrock-agentcore/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-tcs-built-an-agentic-test-orchestrator-with-amazon-bedrock-agentcore/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-tcs-built-an-agentic-test-orchestrator-with-amazon-bedrock-agentcore/social.jpg",
+    "alt": {
+      "ar": "TCS تبني منسق اختبارات ذكي على Amazon Bedrock AgentCore",
+      "en": "TCS builds agentic test orchestrator with Amazon Bedrock AgentCore"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-20381-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-tcs-built-an-agentic-test-orchestrator-with-amazon-bedrock-agentcore/inline-01.webp",
+        "width": 1400,
+        "height": 477,
+        "alt": {
+          "ar": "TCS تبني منسق اختبارات ذكي على Amazon Bedrock AgentCore",
+          "en": "Architecture of the TCS Agentic Test Orchestrator showing the five-stage flow and per-tenant security layer on AWS"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-tcs-built-an-agentic-test-orchestrator-with-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-20381-1.png"
+      }
+    ]
+  }
 }
