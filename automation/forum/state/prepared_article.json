@@ -1,5 +1,408 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-10T23:45:59+00:00",
-  "last_published_story_id": "5f3963726dbe36e6ccf9"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-10T23:54:42+00:00",
+  "target_publish_at": "2026-11-11T03:05:58.651382+03:00",
+  "story": {
+    "title": "Build a daily dependency watcher with LangGraph and Amazon Bedrock AgentCore web search",
+    "url": "https://aws.amazon.com/blogs/machine-learning/build-a-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search",
+    "domain": "aws.amazon.com",
+    "summary": "The Web Search API in Amazon Bedrock AgentCore gives agents current, cited web results signed with the AWS credentials they already use. In this post, build a daily dependency watcher as a LangGraph graph that researches package ecosystems in parallel, keeps its rules in code, and checks every finding against its cited sources.",
+    "published_at": "2026-11-10T23:34:05+00:00",
+    "discovered_at": "2026-11-10T23:38:06+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 69,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "82be3972cee0a1dbca0d",
+    "trend": {
+      "score": 121.87,
+      "age_hours": 0.33,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-a-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Build a daily dependency watcher with LangGraph and Amazon Bedrock AgentCore web search",
+      "title": "Build a daily dependency watcher with LangGraph and Amazon Bedrock AgentCore web search | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "AWS تطلق أداة مراقبة الاعتماديات اليومية عبر LangGraph وBedrock",
+      "description": "تتيح واجهة بحث الويب في Amazon Bedrock AgentCore للوكلاء الذكيين الوصول لنتائج محدثة وموثقة. اكتشف كيف تبني فريقك نظام مراقبة أمنيًا باستخدام LangGraph.",
+      "deck": "أطلقت شركة Amazon Web Services واجهة برمجة تطبيقات بحث الويب ضمن Amazon Bedrock AgentCore، مما يتيح للوكلاء الاصطناعيين الوصول إلى معلومات محدثة وموثقة دون الحاجة لمفاتيح API خارجية.",
+      "summary_bullets": [
+        "تتيح الواجهة الجديدة للوكاء البحث في الويب مع الحفاظ على السرية داخل بيئة AWS دون إرسال الاستعلامات لمحرك بحث خارجي.",
+        "توفر النتائج معلومات موثقة تشمل العنوان والرابط وتاريخ النشر، مع إمكانية التحكم في النطاقات المسموحة والممنوعة.",
+        "تتكامل الأداة بسلاسة مع إطار عمل LangGraph، مما يسمح بتشغيل فروع بحث متوازية لتحسين سرعة المراقبة.",
+        "تضمن البنية المعمارية بقاء القواعد الأمنية مثل النافذة الزمنية وميزانية البحث تحت سيطرة الكود وليس النموذج اللغوي."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق واجهة بحث الويب في Bedrock AgentCore",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Amazon Web Services عن توفر واجهة برمجة تطبيقات بحث الويب (Web Search API) ضمن خدمة Amazon Bedrock AgentCore. تهدف هذه الأداة إلى تمكين الوكلاء الاصطناعيين من الوصول إلى معلومات الويب الحالية والمحدثة عبر استدعاء برمجي واحد، مع توقيع الطلبات باستخدام بيانات الاعتماد الخاصة بـ AWS التي يستخدمها المطورون بالفعل. تؤكد الشركة أن جميع الاستعلامات تُنفذ من فهرس ويب تديره Amazon، مما يمنع إرسال البيانات إلى محركات بحث تابعة لأطراف ثالثة، وهو ما يعزز خصوصية العمل الداخلي.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/web-search-api.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مزايا الأمان والتحكم في النتائج",
+          "paragraphs": [
+            {
+              "text": "تتميز هذه الواجهة بتقديم نتائج غنية بالمعلومات، حيث يتضمن كل نتيجة عنوان الصفحة، ورابطها، وتاريخ النشر، ومقتطفًا ذا صلة بالاستعلام. كما تتيح للمطورين التحكم الدقيق في النتائج من خلال تضمين أو استبعاد نطاقات محددة، أو تقييد النتائج بنطاق زمني معين. يمكن للوكلاء استدعاء هذه الواجهة من بيئات تشغيل متعددة مثل AWS Lambda أو Amazon Elastic Container Service (Amazon ECS) أو بيئة تشغيل Amazon Bedrock AgentCore runtime، دون الحاجة لتخزين أو تدوير مفاتيح بحث خارجية.",
+              "links": [
+                {
+                  "text": "AWS Lambda",
+                  "url": "https://aws.amazon.com/lambda/"
+                },
+                {
+                  "text": "Amazon Elastic Container Service (Amazon ECS)",
+                  "url": "https://aws.amazon.com/ecs/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع LangChain وإطار LangGraph",
+          "paragraphs": [
+            {
+              "text": "للمطورين الذين يعملون مع إطار LangChain، أصبحت أداة بحث الويب في تكامل AWS مع LangChain قادرة على استدعاء واجهة البحث الجديدة مباشرة. توفر هذه الأداة نتائج بحث موثقة عبر استدعاء دالة واحدة، وتسمح بتثبيت قواعد لا يمكن للنموذج اللغوي تعديلها، مثل النافذة الزمنية للبحث، وقائمة النطاقات المحظورة، وميزانية عدد عمليات البحث. تعمل هذه الأداة بشكل فعّال مع وكلاء LangChain، وإطار LangGraph للتنسيق، وDeep Agents الذي يضيف ميزات مثل الوكلاء الفرعيين وضغط السياق.",
+              "links": [
+                {
+                  "text": "LangChain",
+                  "url": "https://docs.langchain.com/oss/python/langchain/overview"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "بناء نظام مراقبة الاعتماديات اليومية",
+          "paragraphs": [
+            {
+              "text": "يوضح المقال كيفية بناء نظام مراقبة يومي للاعتماديات (Dependency Watcher) لفريق الأمن السيبراني باستخدام LangGraph. يقوم هذا النظام بفحص ما إذا كانت هناك تغييرات جديدة تؤثر على الحزم مفتوحة المصدر وصور الحاويات الأساسية التي يستخدمها الفريق. يتم ذلك من خلال بحث متوازي في ثلاث بيئات حزم مختلفة: npm وPyPI وصور الحاويات الأساسية. في الاختبارات التي أجرتها الشركة، أتمت الفروع الثلاثة البحث في 36 ثانية، مقارنة بـ 99 ثانية عند تنفيذها بشكل متسلسل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل والتحقق من الأدلة",
+          "paragraphs": [
+            {
+              "text": "تعتمد البنية المعمارية على مبدأ فصل الأدوار: النموذج اللغوي يقرر ما يجب البحث عنه ويكتب النتائج، بينما تبقى القواعد الصارمة في الكود البرمجي. يبدأ التنفيذ بإرسال قائمة المراقبة والنطاق الزمني، ثم تبدأ فروع البحث المتوازية. في كل فرع، يستدعي الوكيل نموذج Anthropic Claude المتوفر في Amazon Bedrock لتحديد الاستعلامات وإنتاج نتائج منظمة. يضيف أداة البحث النافذة الزمنية وقائمة الحظر لكل استعلام، ويكرر العملية حتى أربع مرات كحد أقصى لكل فرع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحقق من صحة النتائج وتجنب التكرار",
+          "paragraphs": [
+            {
+              "text": "قبل إرجاع النتائج، يقوم الكود بتطبيق أربعة فحوصات على كل نتيجة: التأكد من أن الرابط المذكور جاء من نتائج البحث الخاصة بالفرع، والتحقق من تطابق العنوان أو النص مع المصدر، والتأكد من أن النتيجة تقع ضمن النافذة الزمنية المحددة، والتحقق من وجود معرف استشارة أمني (CVE) إذا توفر. بعد اكتمال الفروع الثلاثة، يدمج LangGraph النتائج ويشغل دالة keep_new التي تتحقق من مخزن البيانات لتسجيل النتائج الجديدة فقط، مما يمنع تكرار التقارير. أخيرًا، يتم بناء جدول موثق بالنتائج الجديدة لفريق الأمن.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات التقنية والتكاليف",
+          "paragraphs": [
+            {
+              "text": "لتشغيل هذا النظام، يحتاج المستخدم إلى حساب AWS في منطقة تدعم واجهة البحث (مثل us-east-1)، وصلاحيات IAM محددة، بالإضافة إلى حزم Python مثل boto3 وbedrock-agentcore وlangchain-aws. تُفوتر عمليات البحث والنماذج اللغوية حسب الاستخدام، حيث يؤدي تشغيل المراقبة مرة واحدة إلى تنفيذ ما يصل إلى 12 عملية بحث كحد أقصى. يوفر المقال كودًا كاملًا في دفتر ملاحظات (Notebook) يغطي جميع الخطوات من الإعداد إلى التنفيذ النهائي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "AWS",
+        "LangGraph",
+        "Amazon Bedrock",
+        "أمن سيبراني",
+        "وكلاء ذكاء اصطناعي",
+        "بحث ويب"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock AgentCore",
+        "LangGraph",
+        "LangChain",
+        "AWS Lambda",
+        "Amazon ECS",
+        "Anthropic Claude"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصريًا من مدونة AWS الرسمية، مع التركيز على الميزات التقنية وآلية عمل النظام الموصوف في المقال."
+    },
+    "en": {
+      "title": "Build a Daily Dependency Watcher with LangGraph and Amazon Bedrock AgentCore",
+      "description": "Learn how to build a parallel daily dependency watcher using LangGraph and the Web Search API in Amazon Bedrock AgentCore for secure updates.",
+      "deck": "A new guide demonstrates how developers can utilize the Web Search API in Amazon Bedrock AgentCore alongside LangGraph to create automated daily dependency watches that run in parallel while enforcing rules in code.",
+      "summary_bullets": [
+        "Amazon Bedrock AgentCore introduces a Web Search API providing current, cited results signed with existing AWS credentials.",
+        "Developers can build a parallel dependency watcher using LangGraph to research multiple package ecosystems simultaneously.",
+        "Critical rules like date windows, search budgets, and source blocklists remain enforced directly in code rather than by the model.",
+        "Findings are automatically checked against cited sources to ensure accuracy before security teams receive reports."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Bedrock AgentCore Web Search",
+          "paragraphs": [
+            {
+              "text": "Modern AI agents frequently handle operational workflows that rely on real-time information such as security advisories, product releases, pricing changes, and regulatory updates. Because a model's training data cannot answer these dynamic questions, agents require reliable web search capabilities. For production environments, engineering teams also require verifiable citations and strict control over which sources are trusted. Maintaining data privacy is equally critical, as search queries can frequently expose internal corporate workflows.",
+              "links": []
+            },
+            {
+              "text": "The Web Search API in Amazon Bedrock AgentCore is designed to deliver current web results via a single API call signed using standard AWS credentials. AWS serves every query directly from an operational web index without routing requests through third-party search engines. Each returned result includes essential metadata such as the page title, publication date, URL, and a relevant text extract.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Integration and Infrastructure Flexibility",
+          "paragraphs": [
+            {
+              "text": "Applications running on infrastructure like AWS Lambda or Amazon Elastic Container Service (Amazon ECS) can invoke the search API directly using their assigned execution roles, eliminating the need to store or rotate external search API keys. Furthermore, the feature is accessible through the AgentCore Gateway, which allows a single administrator source policy to govern multiple agents and Model Context Protocol (MCP) clients.",
+              "links": [
+                {
+                  "text": "AWS Lambda",
+                  "url": "https://aws.amazon.com/lambda/"
+                },
+                {
+                  "text": "Amazon Elastic Container Service (Amazon ECS)",
+                  "url": "https://aws.amazon.com/ecs/"
+                }
+              ]
+            },
+            {
+              "text": "For developers working within the LangChain ecosystem, the integration provides streamlined access to current search data. The specialized tool can enforce unchangeable parameters such as search budgets, date restrictions, and source blocklists, ensuring that the foundational rules remain completely outside the control of the underlying LLM.",
+              "links": [
+                {
+                  "text": "LangChain",
+                  "url": "https://docs.langchain.com/oss/python/langchain/overview"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Building the Daily Dependency Watcher",
+          "paragraphs": [
+            {
+              "text": "A practical implementation detailed in the AWS Machine Learning Blog constructs a daily dependency watch for security teams. The architecture uses a LangGraph graph to check whether new advisories impact shipped open-source packages and container base images. By leveraging parallel processing, the system researches multiple package ecosystems simultaneously while strictly monitoring search budgets.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/build-a-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/"
+                },
+                {
+                  "text": "LangGraph",
+                  "url": "https://docs.langchain.com/oss/python/langchain/overview"
+                }
+              ]
+            },
+            {
+              "text": "During execution, the fan-out mechanism initializes separate research branches for specific targets like npm, PyPI, and container base images. Each branch utilizes an Anthropic Claude model hosted within Amazon Bedrock to evaluate queries and structure the final findings. Meanwhile, code-level safeguards ensure that date limits, blocklists, and evaluation checks are consistently applied.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Execution, Evidence Checking, and Runtime Deployment",
+          "paragraphs": [
+            {
+              "text": "Before any branch concludes its routine, automated validation logic performs rigorous checks on every generated finding. The system verifies that the cited URL originated from the branch's specific web searches and that the underlying text matches the reported data. Once all parallel branches finish processing, the findings are successfully merged and recorded to prevent duplicate reporting.",
+              "links": []
+            },
+            {
+              "text": "Engineers can then deploy the completed workflow onto the designated runtime and distribute its capabilities across multiple organizational units via the gateway interface. This comprehensive approach combines scalable cloud infrastructure with robust programmatic guardrails for modern AI agent development.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "LangGraph",
+        "Web Search API",
+        "AWS Lambda",
+        "Dependency Watcher",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "AWS",
+        "LangChain",
+        "Anthropic"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based strictly on the official AWS Machine Learning Blog post details."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 644,
+      "word_count_en": 561
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "0f0020abcf733229d29f",
+      "title": "Helping caregivers use AI in everyday life",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "82be3972cee0a1dbca0d",
+      "title": "Build a daily dependency watcher with LangGraph and Amazon Bedrock AgentCore web search",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 644,
+          "word_count_en": 561
+        }
+      ]
+    }
+  ],
+  "slug": "build-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/build-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/hero.webp",
+    "card": "/forum/assets/posts/2026/11/build-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/card.webp",
+    "social": "/forum/assets/posts/2026/11/build-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/social.jpg",
+    "alt": {
+      "ar": "AWS تطلق أداة مراقبة الاعتماديات اليومية عبر LangGraph وBedrock",
+      "en": "Build a Daily Dependency Watcher with LangGraph and Amazon Bedrock AgentCore"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-22037-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/build-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/inline-01.webp",
+        "width": 1400,
+        "height": 595,
+        "alt": {
+          "ar": "AWS تطلق أداة مراقبة الاعتماديات اليومية عبر LangGraph وBedrock",
+          "en": "Dependency watch architecture: one run fans out to three parallel research branches that each call a Claude model and the Web Search API, then merge to a cited report"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-a-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-22037-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/build-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/inline-02.webp",
+        "width": 1400,
+        "height": 688,
+        "alt": {
+          "ar": "AWS تطلق أداة مراقبة الاعتماديات اليومية عبر LangGraph وBedrock",
+          "en": "LangGraph Studio run showing three parallel research branches and a report of only new, evidence-checked findings, each linked to its source"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-a-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-22037-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/build-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/inline-03.webp",
+        "width": 1400,
+        "height": 805,
+        "alt": {
+          "ar": "AWS تطلق أداة مراقبة الاعتماديات اليومية عبر LangGraph وBedrock",
+          "en": "LangGraph Studio second run where keep_new finds all results already in the store, so the report shows no new findings"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-a-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-22037-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/build-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/inline-04.webp",
+        "width": 1400,
+        "height": 651,
+        "alt": {
+          "ar": "AWS تطلق أداة مراقبة الاعتماديات اليومية عبر LangGraph وBedrock",
+          "en": "Architecture of the dependency watch on AgentCore runtime, with each web search signed by the runtime execution role and the runtime returning the report"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-a-daily-dependency-watcher-with-langgraph-and-amazon-bedrock-agentcore-web-search/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-22037-4.png"
+      }
+    ]
+  }
 }
