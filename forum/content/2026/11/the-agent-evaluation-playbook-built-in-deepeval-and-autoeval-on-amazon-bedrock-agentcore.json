@@ -1,0 +1,342 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "6d77a575f579de9bddf0",
+  "slug": "the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-amazon-bedrock-agentcore",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-amazon-bedrock-agentcore/",
+    "en": "/forum/en/ai/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-amazon-bedrock-agentcore/"
+  },
+  "locales": {
+    "ar": {
+      "title": "دليل تقييم وكلاء الذكاء الاصطناعي على أمازون بيدروك",
+      "description": "تعرف على كيفية تقييم وكلاء الذكاء الاصطناعي على أمازون بيدروك باستخدام أدوات مدمجة ومنصات خارجية مثل ديب إيفال وأوتو إيفال لتحقيق نتائج الأعمال.",
+      "deck": "تقدم أمازون بيدروك إطار عمل متكاملاً لتقييم أداء وكلاء الذكاء الاصطناعي في بيئات الإنتاج، مع دعم لمكتبات التقييم الشهيرة وتصنيفات دقيقة للأداء.",
+      "summaryBullets": [
+        "التركيز على نتائج الأعمال الحقيقية بدلاً من الاكتفاء بالمقاييس السطحية وسرعة الاستجابة.",
+        "استخدام أدوات التقييم المدمجة في أمازون بيدروك إلى جانب مكتبات مفتوحة المصدر مثل DeepEval وAutoEval.",
+        "تقسيم المقاييس إلى مستويات تشمل التتبع الفردي وجلسات المحادثة الكاملة.",
+        "إمكانية تخصيص المُقيّمين لتلبية احتياجات الشركات والتحقق من جودة الاستجابات والأمان."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات تقييم وكلاء الذكاء الاصطناعي في الإنتاج",
+          "paragraphs": [
+            {
+              "text": "عند نشر وكيل ذكاء اصطناعي في بيئة العمل الفعلي، تواجه فرق التطوير صعوبة بالغة في الإجابة عن السؤال الجوهري حول ما إذا كان الوكيل يؤدي مهامه بكفاءة حقيقية. غالباً ما تقتصر المتابعة على الفحص العشوائي للمخرجات ومراقبة زمن الاستجابة، وهي مؤشرات سطحية لا تكفي لمعرفة ما إذا كان الوكيل قد أنهى المهمة بدقة، أو حافظ على ترابط الحوار، أو تسبب في تسريب بيانات حساسة، أو تجاهل عمداً خطوات أساسية كان عليه اتباعها. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "إن الحصول على تقييم دقيق يتطلب قياس السلوكيات التي تهم النشاط التجاري لكل وكيل على حدة، وبالقدر المناسب من التفاصيل. فعلى سبيل المثال، قد يحقق وكيل خدمة العملاء معدل إنجاز مرتفع للطلبات، لكنه في الوقت ذاته يسرب معلومات شخصية للعملاء، مما يجعل الاعتماد على مقياس واحد أمراً مضللاً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الانتقال من المقاييس التقليدية إلى نتائج الأعمال",
+          "paragraphs": [
+            {
+              "text": "من الأخطاء الشائعة اختيار مقاييس براقة لمجرد أن اسم يبدو مناسباً دون ربطها بالنجاح الفعلي للوكيل. للوصول إلى تقييم مفيد، يجب البدء بتعريف النجاح بمصطلحات تجارية واضحة؛ فوكيل خدمة العملاء يُقاس بنجاح حل المشكلة من الاتصال الأول، بينما يُقاس وكيل البحث بتقديم إجابات شاملة وموثقة بالكامل من المستندات المسترجعة، ويُقاس مساعد تعديل المحتوى بقدرته على رصد المحتوى المطلوب بدقة.",
+              "links": []
+            },
+            {
+              "text": "يتطلب هذا النهج تفكيك الهدف التجاري إلى سلوكيات قابلة للملاحظة، ثم مطابقة كل سلوك مع المقياس المناسب على مستوى تتبع الخطوات أو على مستوى جلسة المحادثة بأكملها، مما يضمن فهم أداء الوكيل بدقة في مختلف الظروف.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خيارات تقييم متنوعة عبر مكتبات متقدمة",
+          "paragraphs": [
+            {
+              "text": "تتيح المنصة كتالوجاً واسعاً من المقاييس التي تتوزع على عدة فئات رئيسية لتغطية مختلف جوانب الأداء، بدءاً من الأدوات الجاهزة وصولاً إلى الحلول المخصصة التي تلبي متطلبات الأعمال المعقدة بدقة عالية.",
+              "links": []
+            },
+            {
+              "text": "توفر مكتبة DeepEval مجموعة من المقاييس المدارة مفتوحة المصدر التي تغطي اكتمال المهام، وجودة المحادثة، واكتشاف الثغرات الأمنية ومحاولات حقن التعليمات، وهو ما يتيح لفرق العمل الاستفادة من هذه المكتبات مباشرة في بيئات الإنتاج ضمن البنية التحتية للمنصة.",
+              "links": [
+                {
+                  "text": "DeepEval",
+                  "url": "https://deepeval.com/"
+                }
+              ]
+            },
+            {
+              "text": "كما تتيح منصة AutoEval خيارات إضافية لإجراء تقييمات موثوقة تساعد الفرق على قياس سلوك الوكلاء وتتبع استجاباتهم بدقة خلال الجلسات التفاعلية الطويلة والمتعددة الخطوات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دليل المرجعية والتوثيق البرمجي",
+          "paragraphs": [
+            {
+              "text": "يمكن للمطورين الرجوع إلى وثائق النظام التفصيلية للاطلاع على التعريفات الدقيقة لكل مقياس، ونطاق الدرجات، ومتطلبات المدخلات، ومقاييس الأداء المرتبطة بقوالب الموجهات الأساسية.",
+              "links": []
+            },
+            {
+              "text": "تتيح هذه الوثائق والواجهات البرمجية للفرق استعراض كتالوج المقاييس بالكامل، وتخصيص أدوات التقييم لتتلاءم مع المعايير الخاصة بالشركة، مما يضمن مراقبة دقيقة وشاملة لسلوك وكلاء الذكاء الاصطناعي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون بيدروك",
+        "تقييم الوكلاء",
+        "تعلم الآلة",
+        "DeepEval",
+        "AutoEval"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Bedrock",
+        "DeepEval",
+        "AutoEval"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "11 نوفمبر 2026",
+      "modifiedLabel": "11 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 464
+    },
+    "en": {
+      "title": "AWS Details AgentCore Framework for AI Agent Evaluation",
+      "description": "AWS outlines a three-tier agent evaluation framework on Amazon Bedrock AgentCore using built-in metrics alongside DeepEval and AutoEval.",
+      "deck": "AWS has detailed a systematic evaluation framework for Amazon Bedrock AgentCore, helping engineering teams measure autonomous AI agent performance in production across business outcomes, tool execution, and security.",
+      "summaryBullets": [
+        "AWS outlines a structured playbook on Amazon Bedrock AgentCore to evaluate production AI agents beyond basic surface metrics.",
+        "The evaluation architecture categorizes metrics across built-in AWS evaluators, managed open-source libraries, and custom derived judges.",
+        "Built-in evaluators cover response quality, overall goal completion, tool usage accuracy, skill execution, and ground-truth trajectory matching.",
+        "Third-party managed options from DeepEval and AutoEval provide turn relevance, knowledge retention, and security checks without separate infrastructure.",
+        "Custom multi-dimension judges allow developers to assess complex business behaviors across individual criteria instead of single composite scores."
+      ],
+      "sections": [
+        {
+          "heading": "Resolving the AI Agent Production Visibility Gap",
+          "paragraphs": [
+            {
+              "text": "Deploying autonomous artificial intelligence agents into enterprise production environments presents significant operational challenges, as standard infrastructure metrics often fail to reveal whether an agent is truly accomplishing its intended business goals. According to a technical overview published on the AWS Machine Learning Blog, development teams frequently rely on surface signals such as execution latency, manual spot-checks, and sporadic user feedback. However, these surface metrics cannot reliably indicate whether an agent completed a multi-turn task, preserved context across an extended interaction, quietly bypassed mandatory steps, or unintentionally leaked personally identifiable information.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "AWS emphasizes that a high score on a single evaluation metric can easily obscure serious failures across other critical operational dimensions. For example, an automated customer support agent might achieve an impressive ticket resolution rate while simultaneously exposing sensitive user data within its replies. To establish genuine visibility, organizations must measure specific behaviors tailored to the agent's actual business domain at both fine-grained trace levels and broader session levels.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "A Three-Step Playbook Grounded in Business Outcomes",
+          "paragraphs": [
+            {
+              "text": "To help developers structure their testing pipelines, AWS outlined a three-step mental model that prioritizes tangible business goals over arbitrary metric selection. The guidance warns against simply choosing metrics based on appealing names, such as selecting general helpfulness scores without aligning them with what success actually means for the underlying deployment. For instance, success for a customer support bot centers on first-contact resolution, whereas a research agent requires complete, well-sourced answers grounded strictly in retrieved documents, and a moderation tool demands precise flagging without false positives.",
+              "links": []
+            },
+            {
+              "text": "Once business outcomes are clearly defined, teams are instructed to translate those objectives into observable behavioral traits. A successful customer service interaction typically requires the agent to reach the user's stated goal, maintain logical coherence across multi-turn clarification steps, adhere to strict compliance boundaries, and correctly invoke backend systems such as order lookups or ticket management tools. Finally, developers must map each observable behavior to an evaluator operating at the appropriate scope, distinguishing trace-level checks for individual turns or tool calls from session-level evaluations that assess entire extended conversations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "AWS Built-in Evaluators and Native Trajectory Tracking",
+          "paragraphs": [
+            {
+              "text": "Amazon Bedrock AgentCore provides a structured ecosystem comprising three evaluator tiers to execute this methodology. The first tier consists of built-in evaluators that are directly authored, benchmarked, and quality-tested by AWS. Developers reference these metrics using specific identifiers—such as Builtin.GoalSuccessRate or Builtin.Helpfulness alongside 13 additional evaluators—leaving infrastructure management and judge model inference entirely to the cloud service. Exact definitions, input requirements, and scoring scales are accessible through the ListEvaluators API or within the official AgentCore documentation.",
+              "links": [
+                {
+                  "text": "AgentCore documentation",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/prompt-templates-builtin.html"
+                }
+              ]
+            },
+            {
+              "text": "The native AWS evaluators fall into five distinct operational groups designed to assess core functional capabilities. Response quality includes metrics such as Correctness, Faithfulness, Helpfulness, ResponseRelevance, Conciseness, Coherence, InstructionFollowing, and Refusal. Overall goal completion is evaluated using GoalSuccessRate, which examines the full session outcome. Tool usage is assessed through ToolSelectionAccuracy and ToolParameterAccuracy, while skill-loading agents rely on SkillSelectionAccuracy and SkillInstructionFollowing. Additionally, AgentCore offers three trajectory evaluators—TrajectoryExactOrderMatch, TrajectoryInOrderMatch, and TrajectoryAnyOrderMatch—which compare the agent's actual tool execution path against expected ground-truth trajectories.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Managed Open-Source Integration via DeepEval and AutoEval",
+          "paragraphs": [
+            {
+              "text": "In addition to native metrics, AgentCore integrates third-party managed options directly from widely adopted open-source evaluation libraries, including DeepEval and AutoEval. When running in managed mode, AgentCore hosts the evaluation code, selects the judge model, and provisions compute capacity to execute inference seamlessly. This allows engineering teams that already leverage these open-source tools during early development to maintain identical evaluation criteria in production without setting up separate evaluation infrastructure.",
+              "links": [
+                {
+                  "text": "DeepEval",
+                  "url": "https://deepeval.com/"
+                },
+                {
+                  "text": "AutoEval",
+                  "url": "https://www.braintrust.dev/docs/evaluate/autoevals"
+                }
+              ]
+            },
+            {
+              "text": "The integrated DeepEval suite offers open-source metrics grouped across specialized capabilities, such as multi-turn task completion, conversational quality, security, and behavioral validation. Metrics like ConversationCompleteness prevent agents from fulfilling a single message while dropping previous user instructions, whereas KnowledgeRetention verifies that context remains intact across several conversational turns. The framework also incorporates security evaluators designed to detect malicious prompt injection or system prompt exposure, checks to identify over-cautious agents that prematurely declare valid tasks impossible, and metrics tailored for consumer-facing agent personalities.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Custom Judges and Multi-Dimension Evaluation Frameworks",
+          "paragraphs": [
+            {
+              "text": "When standard catalog options do not fully address unique enterprise requirements, developers can create custom large language model judges by building upon existing built-in or third-party evaluators. These custom derived evaluators permit teams to swap in alternative foundation models, customize evaluation prompts, or modify rubrics while remaining fully integrated into the AgentCore workflow. Once created, custom judges function seamlessly alongside standard catalog items across the platform.",
+              "links": []
+            },
+            {
+              "text": "To handle complex requirements where a single output must adhere to multiple business rules simultaneously, AgentCore supports multi-dimension evaluators. Instead of condensing multiple criteria into a single composite score—which can obscure which specific rule failed—a multi-dimension custom judge evaluates outputs across distinct named criteria. Each dimension applies its own explicit rubric and scoring guidance, allowing engineering teams to isolate specific failures in compliance, tone, or task accuracy without sacrificing overall visibility into agent behavior.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AgentCore",
+        "AWS",
+        "AI Agents",
+        "DeepEval",
+        "AutoEval",
+        "LLM Evaluation",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock AgentCore",
+        "DeepEval",
+        "AutoEval"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 11, 2026",
+      "modifiedLabel": "November 11, 2026",
+      "readMinutes": 5,
+      "wordCount": 930
+    }
+  },
+  "datePublished": "2026-11-11T02:05:58.168720+03:00",
+  "dateModified": "2026-11-11T02:05:58.168720+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-amazon-bedrock-agentcore/hero.webp",
+    "card": "/forum/assets/posts/2026/11/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-amazon-bedrock-agentcore/card.webp",
+    "social": "/forum/assets/posts/2026/11/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-amazon-bedrock-agentcore/social.jpg",
+    "alt": {
+      "ar": "دليل تقييم وكلاء الذكاء الاصطناعي على أمازون بيدروك",
+      "en": "AWS Details AgentCore Framework for AI Agent Evaluation"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21893-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-amazon-bedrock-agentcore/inline-01.webp",
+        "width": 1356,
+        "height": 910,
+        "alt": {
+          "ar": "دليل تقييم وكلاء الذكاء الاصطناعي على أمازون بيدروك",
+          "en": "Iceberg diagram contrasting the surface signals teams watch with the hidden agent behaviors that decide success below the waterline"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21893-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-amazon-bedrock-agentcore/inline-02.webp",
+        "width": 1360,
+        "height": 873,
+        "alt": {
+          "ar": "دليل تقييم وكلاء الذكاء الاصطناعي على أمازون بيدروك",
+          "en": "Three-step flow from business success to observable behaviors to evaluators, illustrated with a customer support mapping example"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21893-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-amazon-bedrock-agentcore/inline-03.webp",
+        "width": 1379,
+        "height": 645,
+        "alt": {
+          "ar": "دليل تقييم وكلاء الذكاء الاصطناعي على أمازون بيدروك",
+          "en": "Table comparing AgentCore built-in, third-party managed, and custom derived evaluator tiers by scoring logic, judge model, and AWS quality testing"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21893-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-amazon-bedrock-agentcore/inline-04.webp",
+        "width": 1378,
+        "height": 1019,
+        "alt": {
+          "ar": "دليل تقييم وكلاء الذكاء الاصطناعي على أمازون بيدروك",
+          "en": "Catalog of AgentCore evaluators by source: built-in AWS evaluators and trajectory checks, DeepEval, AutoEval, and custom LLM-as-a-judge"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21893-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-agentcore/",
+      "type": "official",
+      "title": "The agent evaluation playbook: Built-in, DeepEval, and AutoEval on Amazon Bedrock AgentCore Evaluations"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-agentcore",
+  "sourceTitle": "The agent evaluation playbook: Built-in, DeepEval, and AutoEval on Amazon Bedrock AgentCore Evaluations",
+  "trendScore": 123.88,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-10T23:05:58+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/11/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-amazon-bedrock-agentcore.json"
+}
