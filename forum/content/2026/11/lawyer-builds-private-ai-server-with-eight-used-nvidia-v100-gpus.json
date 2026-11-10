@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "f0fe8760df8ceefee4b0",
+  "slug": "lawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus",
+  "categorySlug": "computers",
+  "urls": {
+    "ar": "/forum/ar/computers/lawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus/",
+    "en": "/forum/en/computers/lawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus/"
+  },
+  "locales": {
+    "ar": {
+      "title": "محامٍ يبني خادماً ذكياً خاصاً ببطاقات رسوميات مستعملة",
+      "description": "صمم محامٍ خادم ذكاء اصطناعي خاصاً باستخدام ثماني بطاقات رسوميات مستعملة للحفاظ على سرية ملفات القضايا ودعم العمليات المكتبية محلياً.",
+      "deck": "لجأ محامٍ إلى بناء خادم ذكاء اصطناعي محلي ومغلق باستخدام مكونات مراكز بيانات مستعملة، بهدف معالجة ملفات القضايا وحفظ سريتها بعيداً عن السحابة.",
+      "summaryBullets": [
+        "بناء خادم ذكاء اصطناعي خاص يعتمد على ثماني بطاقات رسوميات مستعملة من طراز Nvidia V100.",
+        "تشغيل نموذج DeepSeek V4.1 Flash محلياً لتحقيق سرعات تصل إلى 215 رمزاً في الثانية.",
+        "الحفاظ على سرية ملفات القضايا القانونية ومعالجتها دون الحاجة لرفعها إلى خدمات السحابة.",
+        "الاعتماد على إعدادات تقنية متقدمة تشمل لوحات SXM2 وربط الكابلات لتقليل زمن الاستجابة."
+      ],
+      "sections": [
+        {
+          "heading": "دوافع الخادم المحلي وسريّة البيانات",
+          "paragraphs": [
+            {
+              "text": "نشر محامٍ تفاصيل مشروعه التقني عبر منصة Reddit، مشيراً إلى بنائه خادم ذكاء اصطناعي خاصاً يعمل بمعزل عن شبكة الإنترنت لتجنب إرسال ملفات القضايا الحساسة إلى النماذج الحدودية أو السحابية. ووفقاً لتقارير نشرتها منصة Tom's Hardware، فإن الخادم الجديد يعتمد على مكونات أجهزة مراكز البيانات لضمان معالجة البيانات بكفاءة عالية وأمان مطلق داخل المكتب، مما يغني عن استخدام النماذج الخارجية في معظم المهام الروتينية الأولى.",
+              "links": [
+                {
+                  "text": "Tom's Hardware",
+                  "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/lawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus-up-to-215-tokens-per-second-to-keep-legal-files-offline-costing-about-usd2-400-per-four-gpu-board"
+                },
+                {
+                  "text": "Reddit",
+                  "url": "https://www.reddit.com/submit?url=https%3A%2F%2Fwww.tomshardware.com%2Ftech-industry%2Fartificial-intelligence%2Flawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus-up-to-215-tokens-per-second-to-keep-legal-files-offline-costing-about-usd2-400-per-four-gpu-board&title=Lawyer+builds+private+AI+server+with+eight+used+Nvidia+V100+GPUs+%E2%80%94+up+to+215+tokens+per+second+to+keep+legal+files+offline%2C+costing+about+%242%2C400+per+four-GPU+board"
+                }
+              ]
+            },
+            {
+              "text": "يُعد هذا النهج خطوة عملية لحماية بيانات العملاء، حيث يتيح للمشغل استعراض المجلدات، استخراج التواريخ والأحداث، وتلخيص المستندات القانونية بسلاسة. ويستخدم النظام قاعدة بيانات استرجاع معززة (RAG) مع واجهة تشغيل مستوحاة من منصة Discord عبر بروتوكول SSH، مع الاحتفاظ بسياسة بشرية صارمة تقضي بعدم اعتماد أي نص نهائي دون مراجعة بشرية دقيقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية الهندسية وتكوين العتاد الصلب",
+          "paragraphs": [
+            {
+              "text": "يعتمد الخادم على ثماني بطاقات رسوميات مستعملة من طراز Nvidia Tesla V100 المخصصة لمراكز البيانات والصادرة في عام 2018، ومزودة بذاكرة وصول عشوائي للرسوميات (VRAM) بسعة 32 جيجابايت لكل بطاقة من نوع HBM2. وتتوزع البطاقات على لوحتين أساسيتين، حيث ترتبط كل أربع بطاقات معا عبر تقنية NVLink لضمان نقل بيانات فائق السرعة داخل اللوحة الواحدة، بينما تتبادل اللوحتان البيانات عبر قنوات PCIe.",
+              "links": []
+            },
+            {
+              "text": "إلى جانب البطاقات الرسومية، يضم النظام لوحة أم من نوع Gigabyte Threadripper Pro مع معالج مركزي بـ12 نواة من طراز 3945WX، وذاكرة وصول عشوائي للنظام بسعة إجمالية تبلغ 256 جيجابايت موزعة على ثماني شرائح DDR4 RDIMM، مدعومة بوحدتي إمداد طاقة توفران طاقة إجمالية تصل إلى 2800 واط على الدوائر الكهربائية المكتبية العادية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أداء النماذج وسرعة المعالجة",
+          "paragraphs": [
+            {
+              "text": "يشغل الخادم نموذج الذكاء الاصطناعي المفتوح DeepSeek V4.1 Flash، والذي تم ضغطه بمعامل ثنائي قدره بتين للتركيز على استغلال الذاكرة المتاحة. وتتولى البطاقات الرسومية معالجة الأجزاء الأساسية للنموذج، بينما تُخزن جداول البحث الضخمة في الذاكرة العشوائية العادية للنظام، مما يحافظ على سرعة استجابة عالية للغاية رغم حجم النموذج الهائل.",
+              "links": []
+            },
+            {
+              "text": "يحقق النظام أداءً لافتاً في معالجة النصوص، حيث تصل سرعة توليد الأكواد البرمجية إلى نحو 215 رمزاً في الثانية، بينما تستقر سرعة كتابة النصوص القانونية عند حوالي 118 رمزاً في الثانية. ويستطيع النموذج قراءة النصوص والمدخلات بسرعة تقارب 2200 رمز في الثانية، مما يمكنه من التعامل مع سياقات طويلة تصل إلى أكثر من 500 ألف رمز.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحديات التقنية وحلول الطاقة",
+          "paragraphs": [
+            {
+              "text": "لم يكن بناء هذا الخادم خالياً من العقبات التقنية؛ فقد واجه المصمم مشكلات تمثلت في إعادة تشغيل النظام ذاتياً بسبب أخطاء حرجة في قنوات PCIe عند رفع حدود استهلاك الطاقة للبطاقات. وقد تم التغلب على هذه المشكلات عبر خفض الحد الأقصى لاستهلاك الطاقة لكل بطاقة رسومية إلى 150 واط وتحديد ترددات التشغيل، فضلاً عن استبدال الوصلات التالفة والتحكم في استقرار الذاكرة العشوائية.",
+              "links": []
+            },
+            {
+              "text": "تؤكد هذه التجربة جدوى الاعتماد على الأجهزة المستعملة الخاصة بمراكز البيانات كبديل اقتصادي للحصول على سعات كبيرة من الذاكرة الرسومية السريعة في مكان واحد. ورغم التحديات التشغيلية واعتماد النظام على إصدارات تعريفية قديمة نسبياً من Nvidia، يرى المصمم أن هذه الخطوة توفر حماية حقيقية للبيانات وتغني عن الاعتماد الكلي على الخدمات السحابية المدفوعة في المهام المكتبية اليومية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "ذكاء اصطناعي",
+        "عراقة عتاد",
+        "حواسيب",
+        "أمن المعلومات",
+        "معالجة الرسوميات",
+        "تقنية محلية"
+      ],
+      "entities": [
+        "Nvidia",
+        "DeepSeek",
+        "Reddit",
+        "Tom's Hardware",
+        "Gigabyte"
+      ],
+      "category": "الحواسيب",
+      "dateLabel": "10 نوفمبر 2026",
+      "modifiedLabel": "10 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 551
+    },
+    "en": {
+      "title": "Lawyer Builds Private AI Server with Eight Nvidia V100 GPUs",
+      "description": "A lawyer has constructed a private offline AI server using eight used Nvidia V100 GPUs to keep confidential case files secure and handle routine tasks.",
+      "deck": "A legal professional has assembled a custom, offline AI server utilizing eight pre-owned Nvidia data center GPUs to safely process sensitive case files locally without relying on cloud frontier models.",
+      "summaryBullets": [
+        "The custom private server runs the open-source DeepSeek V4.1 Flash model on eight used 2018-era Nvidia Tesla V100 GPUs.",
+        "Hardware components include two 4-card SXM2 NVLink boards, four PEX switches, and SlimSAS cables, distributed across two regular office circuits.",
+        "The system achieves speeds up to 215 tokens per second for coding tasks and 118 tokens per second for legal writing.",
+        "The setup enables the lawyer to keep confidential case records completely offline while bypassing cloud API pricing for routine first-pass drafting and document review."
+      ],
+      "sections": [
+        {
+          "heading": "Building an Offline Legal AI Server",
+          "paragraphs": [
+            {
+              "text": "A lawyer recently detailed on Reddit the construction of a specialized private AI server designed to ensure confidential case files never have to leave the office network. According to coverage by Tom's Hardware, the system relies on eight used 2018-era Nvidia Tesla V100 data center GPUs to run open-source language models entirely offline.",
+              "links": [
+                {
+                  "text": "Tom's Hardware",
+                  "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/lawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus-up-to-215-tokens-per-second-to-keep-legal-files-offline-costing-about-usd2-400-per-four-gpu-board"
+                },
+                {
+                  "text": "Reddit",
+                  "url": "https://www.reddit.com/submit?url=https%3A%2F%2Fwww.tomshardware.com%2Ftech-industry%2Fartificial-intelligence%2Flawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus-up-to-215-tokens-per-second-to-keep-legal-files-offline-costing-about-usd2-400-per-four-gpu-board&title=Lawyer+builds+private+AI+server+with+eight+used+Nvidia+V100+GPUs+%E2%80%94+up+to+215+tokens+per+second+to+keep+legal+files+offline%2C+costing+about+%242%2C400+per+four-GPU+board"
+                }
+              ]
+            },
+            {
+              "text": "The custom workstation features two 4-card SXM2 NVLink boards, four PEX switches, and numerous SlimSAS cables. The builder originally acquired the four-GPU boards for approximately $2,400 apiece, though secondary market prices on platforms like eBay have since shifted. The entire configuration is powered by two power supply units totaling 2,800 watts, plugged into standard office electrical circuits.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Hardware Architecture and Specifications",
+          "paragraphs": [
+            {
+              "text": "Inside the server, the eight Tesla V100-SXM2-32GB cards each provide 32GB of HBM2 memory operating at 900 GB/s. Rather than standard PCIe slots, the cards utilize Nvidia's SXM2 mezzanine socket for data center hardware and are divided evenly across two separate baseboards. Within each individual board, all four cards are interconnected via Nvidia's direct GPU-to-GPU NVLink protocol to deliver 128GB of high-speed memory per board.",
+              "links": []
+            },
+            {
+              "text": "Communication between the two separate baseboards occurs over PCIe via four PEX switch cards connected through SlimSAS cables. The system host is built around a Gigabyte Threadripper Pro motherboard paired with a 12-core 3945WX CPU and 256GB of DDR4 RDIMM system memory distributed across eight sticks.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Model Optimization and Performance Metrics",
+          "paragraphs": [
+            {
+              "text": "The server runs a heavily compressed version of the DeepSeek V4.1 Flash model quantized down mostly to 2 bits, with model weights totaling 248.8GB. While the model's active experts reside entirely within the fast GPU memory, roughly 110GB of lookup tables are kept in the host system's standard RAM. The builder noted that fetching from system RAM takes about 0.12 milliseconds per step, causing minimal impact on overall execution speed.",
+              "links": []
+            },
+            {
+              "text": "Performance measurements show the system reaches up to 215 tokens per second for coding tasks, which benefit from built-in draft prediction features. For legal writing workflows, the server achieves up to 118 tokens per second. Long prompts with a context length up to 524K tokens are supported, though processing large documents requires a prefill phase before token generation commences.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Troubleshooting and Practical Legal Applications",
+          "paragraphs": [
+            {
+              "text": "Assembling a dense data center rig in an office environment brought several technical challenges. The host system experienced fatal PCIe reset errors under un-throttled power limits when individual cards exceeded their standard thresholds. To resolve these stability issues, the builder capped each GPU's graphics clock at 1522 MHz and limited power draw to 150 watts—half of the card's maximum 300W rating—while also removing a board that showed a burnt power connector.",
+              "links": []
+            },
+            {
+              "text": "In daily practice, the system is actively used for first-pass legal work such as scanning case folders, summarizing facts, and drafting routine documents. While the server currently processes a single request at a time, the builder estimates that between 50% and 60% of their daily LLM workflows can now run locally without utilizing external cloud services, successfully safeguarding sensitive client information.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Nvidia V100",
+        "Artificial Intelligence",
+        "Hardware",
+        "DeepSeek",
+        "Servers",
+        "GPUs"
+      ],
+      "entities": [
+        "Nvidia",
+        "DeepSeek",
+        "Tom's Hardware"
+      ],
+      "category": "Computing",
+      "dateLabel": "November 10, 2026",
+      "modifiedLabel": "November 10, 2026",
+      "readMinutes": 3,
+      "wordCount": 616
+    }
+  },
+  "datePublished": "2026-11-10T03:05:43.496838+03:00",
+  "dateModified": "2026-11-10T03:05:43.496838+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/lawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus/hero.webp",
+    "card": "/forum/assets/posts/2026/11/lawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus/card.webp",
+    "social": "/forum/assets/posts/2026/11/lawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus/social.jpg",
+    "alt": {
+      "ar": "محامٍ يبني خادماً ذكياً خاصاً ببطاقات رسوميات مستعملة",
+      "en": "Lawyer Builds Private AI Server with Eight Nvidia V100 GPUs"
+    },
+    "credit": "Tom's Hardware",
+    "sourceUrl": "https://cdn.mos.cms.futurecdn.net/rVsGebxqLHMe26dYgdPxF9-1080-80.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/lawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus-up-to-215-tokens-per-second-to-keep-legal-files-offline-costing-about-usd2-400-per-four-gpu-board",
+      "type": "journalism",
+      "title": "Lawyer builds private AI server with eight used Nvidia V100 GPUs"
+    }
+  ],
+  "sourceUrl": "https://www.tomshardware.com/tech-industry/artificial-intelligence/lawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus-up-to-215-tokens-per-second-to-keep-legal-files-offline-costing-about-usd2-400-per-four-gpu-board",
+  "sourceTitle": "Lawyer builds private AI server with eight used Nvidia V100 GPUs",
+  "trendScore": 98.9,
+  "verification": {
+    "confidence": 0.86,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-11-10T00:05:43+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/11/lawyer-builds-private-ai-server-with-eight-used-nvidia-v100-gpus.json"
+}
