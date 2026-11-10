@@ -1,0 +1,340 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "d3f687b6e93365cd9703",
+  "slug": "amazon-bedrock-tokenomics-data-lake",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/amazon-bedrock-tokenomics-data-lake/",
+    "en": "/forum/en/ai/amazon-bedrock-tokenomics-data-lake/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تطلق بحيرة بيانات لمراقبة تكاليف واستهلاك نماذج Bedrock",
+      "description": "تقدم أمازون حلاً مركزيًا يجمع سجلات استدعاء نماذج Bedrock من حسابات متعددة، مما يتيح للمهندسين مراقبة التكاليف والاستخدام بدقة عبر منطقياتهم السحابية.",
+      "deck": "تواجه فرق الهندسة تحديًا في تتبع تفاصيل استدعاءات الذكاء الاصطناعي عبر حسابات AWS المتعددة. توفر أمازون الآن بنية تحتية موحدة تجمع هذه السجلات في جدول قابل للاستعلام لتحليل الأداء والتكلفة.",
+      "summaryBullets": [
+        "حل مركزي يجمع سجلات استدعاء نماذج Bedrock من جميع الحسابات المرتبطة في جدول واحد.",
+        "يتيح تحليل شامل لعدد الرموز (Tokens)، والنماذج المستخدمة، وأدوار IAM، وأسباب التوقف.",
+        "يعتمد على خدمات AWS مثل CloudWatch وData Firehose وAthena لمعالجة البيانات وتخزينها.",
+        "متوفر كقوالب CloudFormation وأكواد Lambda في مستودع GitHub مفتوح المصدر.",
+        "يساعد في تحديد هدر التكاليف ومراقبة جودة الاستجابات عبر فرق العمل المختلفة."
+      ],
+      "sections": [
+        {
+          "heading": "التحدي في مراقبة استدعاءات الذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "عند تشغيل نماذج الذكاء الاصطناعي عبر آلاف الحسابات، تظهر الفواتير المجمعة دون تفاصيل عن ما يحدث داخل كل استدعاء. يواجه مهندسو المنصات صعوبة في تتبع الاستعلامات المرسلة، والرموز المستهلكة، والنماذج المستخدمة، مما يعيق تشخيص ارتفاع التكاليف أو تحديد هدر الموارد بين الفرق المختلفة.",
+              "links": []
+            },
+            {
+              "text": "لتجاوز هذه العقبة، طورت أمازون بحيرة بيانات مركزية للمراقبة تجمع سجلات استدعاء Amazon Bedrock من جميع الحسابات المرتبطة في جدول واحد قابل للاستعلام. هذا الحل يوفر رؤية شاملة عبر المنظمة بأكملها، مما يسمح للمهندسين بمراقبة الأداء والتكلفة بدقة دون الحاجة للتنقل بين حسابات متعددة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل بحيرة البيانات المركزية",
+          "paragraphs": [
+            {
+              "text": "يعتمد الحل على تجميع السجلات الخام من الحسابات المصدر ونقلها إلى حساب مركزي. تبدأ العملية بتفعيل تسجيل استدعاءات النموذج في كل حساب، حيث يتم إرسال السجلات إلى Amazon CloudWatch أو Amazon S3. ثم تقوم عوامل الاشتراك في CloudWatch بتوجيه هذه السجلات إلى وجهة موحدة في الحساب المركزي.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch",
+                  "url": "https://aws.amazon.com/cloudwatch/"
+                }
+              ]
+            },
+            {
+              "text": "في الحساب المركزي، تمر البيانات عبر عدة مراحل معالجة. تقوم دالة AWS Lambda بفك ضغط السجلات وإزالة البيانات غير المهمة، ثم يتم تحويلها إلى صيغة Parquet وتخزينها في Amazon S3. أخيرًا، يمكن استعلام البيانات باستخدام Amazon Athena، مما يوفر جدولًا نظيفًا يحتوي على جميع تفاصيل الاستدعاءات عبر المنظمة.",
+              "links": [
+                {
+                  "text": "AWS Lambda",
+                  "url": "https://aws.amazon.com/lambda/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التفاصيل الملتقطة لكل استدعاء",
+          "paragraphs": [
+            {
+              "text": "بعد معالجة السجلات، يوفر الجدول النهائي مجموعة شاملة من البيانات لكل استدعاء. تشمل هذه البيانات عدد رموز الإدخال والإخراج، والنموذج المستخدم، وسبب التوقف مثل بلوغ الحد الأقصى للرموز. كما تتضمن معلومات الحساب والتوقيت، ودور IAM الخاص بالمستخدم الذي أرسل الاستعلام، مما يتيح تتبع دقيق للمسؤولية والاستخدام.",
+              "links": []
+            },
+            {
+              "text": "تسمح هذه التفاصيل بالانتقال من مجرد معرفة إجمالي الرموز المستهلكة إلى فهم دقيق لكل استدعاء. يمكن للفرق تحديد الاستعلامات غير الفعالة، ومراقبة كفاءة النماذج، وفهم أنماط الاستخدام بين الفرق المختلفة. هذا المستوى من الشفافية كان مفقودًا سابقًا في بيئات متعددة الحسابات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بنية الحل ومكوناته التقنية",
+          "paragraphs": [
+            {
+              "text": "تتكون البنية من خمس مراحل رئيسية تبدأ من كتابة السجل من قبل Amazon Bedrock وحتى إمكانية استعلام البيانات. يتم تفعيل التسجيل عبر استدعاء API واحد لكل حساب، مع توجيه السجلات إلى مجموعة سجلات CloudWatch. ثم يتم نقل البيانات إلى الحساب المركزي حيث تتم معالجتها وتنظيفها.",
+              "links": []
+            },
+            {
+              "text": "تستخدم البنية خدمات AWS الأساسية مثل Data Firehose لتخزين البيانات في S3 بصيغة Parquet، وAthena للاستعلام باستخدام SQL. كما يمكن ربط البيانات بتقرير التكلفة والاستخدام (CUR) لتحليل الإنفاق اليومي حسب المستخدمين والاستعلامات. هذا التكامل يوفر رؤية مالية وتقنية شاملة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خطوات النشر والمتطلبات",
+          "paragraphs": [
+            {
+              "text": "يتوفر الحل كقوالب AWS CloudFormation وأكواد Lambda في مستودع GitHub مفتوح المصدر. يتطلب النشر إعداد واجهة سطر الأوامر (AWS CLI) مع بيانات اعتماد لكل حساب، ومنح صلاحيات IAM اللازمة. يجب أن يكون هناك حساب مركزي واحد لاستقبال السجلات، وحسابات مصدر متعددة لتشغيل أحمال العمل.",
+              "links": [
+                {
+                  "text": "AWS CloudFormation",
+                  "url": "https://docs.aws.amazon.com/cloudformation/"
+                }
+              ]
+            },
+            {
+              "text": "ترتيب النشر مهم؛ يجب نشر مجموعة الحساب المركزي أولاً للحصول على معرّف وجهة CloudWatch، ثم نشر مجموعة الحسابات المرتبطة باستخدام هذا المعرّف. يوفر المستودع سكربت اختبار شامل للتحقق من عمل الحل من البداية إلى النهاية، مما يسهل التوزيع المتكرر عبر المنظمة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AWS",
+        "ذكاء اصطناعي",
+        "مراقبة",
+        "تكلفة",
+        "بحيرة بيانات",
+        "CloudWatch",
+        "Athena"
+      ],
+      "entities": [
+        "Amazon",
+        "AWS",
+        "Amazon Bedrock",
+        "Amazon CloudWatch",
+        "Amazon S3",
+        "Amazon Athena",
+        "AWS Lambda",
+        "AWS CloudFormation"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "10 نوفمبر 2026",
+      "modifiedLabel": "10 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 550
+    },
+    "en": {
+      "title": "AWS Releases Amazon Bedrock Tokenomics Data Lake Solution",
+      "description": "Discover how the new centralized Amazon Bedrock observability data lake architecture helps engineers track prompts, token counts, and per-invocation costs.",
+      "deck": "A new architectural pattern and GitHub repository let platform and machine learning engineers aggregate Amazon Bedrock invocation logs into a single queryable table for centralized cost and tokenomics visibility.",
+      "summaryBullets": [
+        "Centralizes raw Amazon Bedrock model invocation logs from multiple linked accounts into a single observability data lake.",
+        "Utilizes AWS CloudFormation templates and an AWS Lambda function to unwrap, filter, and flatten nested log payloads.",
+        "Converts logs into Parquet format via Amazon Data Firehose before writing them to Amazon Simple Storage Service (Amazon S3).",
+        "Exposes invocation data through Amazon Athena to track input and output token counts, model choices, IAM roles, and per-invocation costs."
+      ],
+      "sections": [
+        {
+          "heading": "The Challenge of Multi-Account Bedrock Visibility",
+          "paragraphs": [
+            {
+              "text": "When running thousands of model invocations daily across multiple accounts, engineering teams often face a significant visibility gap. While organizations can view their aggregate monthly bill, understanding what happened inside each individual call remains difficult. Platform and machine learning engineers managing a fleet of workloads using <a href=\"https://aws.amazon.com/bedrock/\">Amazon Bedrock</a> across different teams frequently struggle to debug usage spikes, spot wasteful prompts, or separate token consumption between different departments.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "Although native model invocation logging exists, these records remain locked inside individual accounts. To address this limitation, a centralized observability data lake architecture aggregates logs from every linked account into one queryable table, giving organizations a comprehensive view of their prompts, token counts, model choices, and per-invocation costs.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Log Flow Design",
+          "paragraphs": [
+            {
+              "text": "The centralized observability data lake moves each invocation through five distinct stages, starting from native logging configuration. Administrators enable <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-invocation-logging.html\">model invocation logging</a> using the required <a href=\"https://us-east-1.console.aws.amazon.com/bedrock/home?region=us-east-1#/settings\">settings in each AWS account you are using Bedrock</a>. Each time an application invokes a model, Amazon Bedrock captures metadata such as the chosen model, account details, IAM identity, token usage, and prompt texts.",
+              "links": [
+                {
+                  "text": "model invocation logging",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-invocation-logging.html"
+                },
+                {
+                  "text": "settings in each AWS account you are using Bedrock",
+                  "url": "https://us-east-1.console.aws.amazon.com/bedrock/home?region=us-east-1#/settings"
+                }
+              ]
+            },
+            {
+              "text": "Source accounts utilize subscription filters on their local log groups to permanently forward events to an <a href=\"https://aws.amazon.com/cloudwatch/\">Amazon CloudWatch</a> logs destination residing in a central account. Because CloudWatch bundles and compresses events into batches, an <a href=\"https://aws.amazon.com/lambda/\">AWS Lambda</a> function unwraps the records, discards housekeeping notifications, and flattens nested caller identity fields to prepare the data for downstream processing.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch",
+                  "url": "https://aws.amazon.com/cloudwatch/"
+                },
+                {
+                  "text": "AWS Lambda",
+                  "url": "https://aws.amazon.com/lambda/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Processing Data and Querying with Athena",
+          "paragraphs": [
+            {
+              "text": "After the Lambda function cleans and flattens the log records, <a href=\"https://aws.amazon.com/pm/serv-s3/\">Amazon Simple Storage Service (Amazon S3)</a> stores the processed objects. During this transfer, Amazon Data Firehose buffers the streaming records, converts them from JSON to Parquet format, and organizes them under structured date paths such as year, month, and day.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/pm/serv-s3/"
+                }
+              ]
+            },
+            {
+              "text": "An AWS Glue table enables Amazon Athena to read these Parquet files using standard SQL queries. Organizations can evaluate input and output token counts, identify specific models utilized by different teams, track stop reasons like maximum token limits, and analyze IAM roles to determine who submitted specific prompts.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deployment via Infrastructure as Code",
+          "paragraphs": [
+            {
+              "text": "To ensure repeatable rollouts across entire organizational units, the complete solution is packaged as Infrastructure as Code. The necessary <a href=\"https://docs.aws.amazon.com/cloudformation/\">AWS CloudFormation</a> templates, along with supplementary Python scripts and SQL queries, are openly accessible via the <a href=\"https://github.com/aws-samples/sample-bedrock-token-cost-allocation\">AWS Sample Bedrock Invocation Data Lake GitHub repository</a>.",
+              "links": [
+                {
+                  "text": "AWS CloudFormation",
+                  "url": "https://docs.aws.amazon.com/cloudformation/"
+                },
+                {
+                  "text": "AWS Sample Bedrock Invocation Data Lake GitHub repository",
+                  "url": "https://github.com/aws-samples/sample-bedrock-token-cost-allocation"
+                }
+              ]
+            },
+            {
+              "text": "Deployment requires a specific sequence where the central account stack is established first to generate the necessary CloudWatch Logs destination ARN. Once the central pipeline is active, administrators deploy the lightweight logging stack into each source account running generative AI workloads, completing the multi-account observability architecture.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AWS",
+        "Data Lake",
+        "Tokenomics",
+        "CloudWatch",
+        "Artificial Intelligence",
+        "Observability"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Amazon CloudWatch",
+        "Amazon Athena",
+        "Amazon S3"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 10, 2026",
+      "modifiedLabel": "November 10, 2026",
+      "readMinutes": 3,
+      "wordCount": 549
+    }
+  },
+  "datePublished": "2026-11-10T23:25:56.469503+03:00",
+  "dateModified": "2026-11-10T23:25:56.469503+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/amazon-bedrock-tokenomics-data-lake/hero.webp",
+    "card": "/forum/assets/posts/2026/11/amazon-bedrock-tokenomics-data-lake/card.webp",
+    "social": "/forum/assets/posts/2026/11/amazon-bedrock-tokenomics-data-lake/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق بحيرة بيانات لمراقبة تكاليف واستهلاك نماذج Bedrock",
+      "en": "AWS Releases Amazon Bedrock Tokenomics Data Lake Solution"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-21645-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/amazon-bedrock-tokenomics-data-lake/inline-01.webp",
+        "width": 1400,
+        "height": 775,
+        "alt": {
+          "ar": "أمازون تطلق بحيرة بيانات لمراقبة تكاليف واستهلاك نماذج Bedrock",
+          "en": "Architecture of the Bedrock invocation data lake spanning linked source accounts and a central account"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-tokenomics-data-lake/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-21645-1.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/amazon-bedrock-tokenomics-data-lake/inline-02.webp",
+        "width": 1400,
+        "height": 769,
+        "alt": {
+          "ar": "أمازون تطلق بحيرة بيانات لمراقبة تكاليف واستهلاك نماذج Bedrock",
+          "en": "Amazon Quick Sight dashboard showing Bedrock token usage over time"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-tokenomics-data-lake/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-21645-2.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-tokenomics-data-lake/",
+      "type": "official",
+      "title": "Amazon Bedrock tokenomics data lake"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-tokenomics-data-lake",
+  "sourceTitle": "Amazon Bedrock tokenomics data lake",
+  "trendScore": 114.73,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-10T20:25:56+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/amazon-bedrock-tokenomics-data-lake.json"
+}
