@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "b1d0658c71f86d9aa531",
+  "slug": "microsoft-fixes-exchange-sign-ins-broken-by-windows-server-updates",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/microsoft-fixes-exchange-sign-ins-broken-by-windows-server-updates/",
+    "en": "/forum/en/ai/microsoft-fixes-exchange-sign-ins-broken-by-windows-server-updates/"
+  },
+  "locales": {
+    "ar": {
+      "title": "مايكروسوفت تصلح مشكلات تسجيل الدخول إلى Exchange",
+      "description": "تحديثات نوفمبر 2026 الأمنية من مايكروسوفت تعالج تعطل تسجيل الدخول وتسليم البريد في خوادم Exchange بعد تحديثات أكتوبر.",
+      "deck": "أعلنت مايكروسوفت معالجة مشكلات أثرت في تسجيل الدخول إلى Outlook وتسليم البريد على خوادم Exchange بعد تثبيت تحديثات أمان Windows Server لشهر أكتوبر 2026. وتوصي الشركة بتثبيت تحديثات نوفمبر على الأنظمة المتأثرة.",
+      "summaryBullets": [
+        "تحديثات أكتوبر 2026 سببت مشكلات في Outlook على الويب وتسليم الرسائل لبعض خوادم Exchange.",
+        "الخلل مرتبط بحد افتراضي جديد للذاكرة التي يستخدمها Endpoint Mapper.",
+        "تحديثا KB5131080 وKB5131090 يعالجان المشكلة وفق لوحة صحة إصدارات Windows.",
+        "توصي مايكروسوفت بعدم إزالة تحديثات أمان Exchange لشهر أكتوبر.",
+        "يتوفر حل مؤقت يعتمد على تعديل مفتاح في سجل النظام وإعادة تشغيل الخادم."
+      ],
+      "sections": [
+        {
+          "heading": "إصلاح الخلل في تحديثات نوفمبر",
+          "paragraphs": [
+            {
+              "text": "أعلنت مايكروسوفت أن تحديثات Patch Tuesday لشهر نوفمبر 2026 تعالج مشكلة معروفة عطّلت تسجيل الدخول إلى Outlook وتسليم البريد على بعض الأنظمة التي تشغّل Exchange Server بعد تثبيت تحديثات أمان Windows Server الصادرة في أكتوبر. وتشمل المعالجة التحديثين التراكميين KB5131080 وKB5131090، بحسب تحديث نشرته الشركة في لوحة صحة إصدارات Windows.",
+              "links": [
+                {
+                  "text": "KB5131080",
+                  "url": "https://support.microsoft.com/help/5131080"
+                },
+                {
+                  "text": "KB5131090",
+                  "url": "https://support.microsoft.com/help/5131090"
+                }
+              ]
+            },
+            {
+              "text": "وتوصي مايكروسوفت مسؤولي الأنظمة المتأثرة بتثبيت تحديثات نوفمبر على جميع الخوادم المعنية. ويأتي ذلك بعد إقرار الشركة في منتصف أكتوبر بوجود خلل يؤثر في بيئات Exchange التي تعمل على Windows Server 2019 والإصدارات الأحدث.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تأثيرات على تسجيل الدخول وتسليم الرسائل",
+          "paragraphs": [
+            {
+              "text": "تمثلت الأعراض الأساسية في تعذر وصول بعض المستخدمين إلى البريد أو تسجيل الدخول إلى Outlook على الويب، المعروف اختصاراً باسم OWA. كما قد تبقى الرسائل المرسلة من Outlook في مجلد Outbox من دون تسليم، وقد يواجه Exchange صعوبات في الوصول إلى صناديق البريد أثناء عملية تكرارها.",
+              "links": []
+            },
+            {
+              "text": "ولم تظهر المشكلة بالدرجة نفسها على كل الخوادم. أوضحت مايكروسوفت أن شدة التأثير وسرعة ظهوره تختلفان وفق الحمل الواقع على خادم Exchange؛ فقد تتأثر بعض الخوادم سريعاً، بينما لا تواجه خوادم أخرى المشكلة حتى بعد تثبيت التحديثات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "السبب التقني وراء العطل",
+          "paragraphs": [
+            {
+              "text": "يرتبط الخلل بحد افتراضي جديد لكمية الذاكرة التي يستخدمها Endpoint Mapper عند معالجة طلبات Endpoint Lookup، وقد أُدخل هذا التغيير مع تحديثات أمان Windows Server لشهر أكتوبر 2026. وعندما يتجاوز الحمل قدرة الحد الجديد، يمكن أن تتعطل عمليات مرتبطة بتسجيل الدخول وتدفق البريد على خوادم Exchange المحلية.",
+              "links": []
+            },
+            {
+              "text": "وكانت مايكروسوفت قد شرحت تفاصيل إضافية عن عدم استقرار خوادم Exchange في تدوينة تقنية، مشيرة إلى أن سلوك المشكلة يعتمد على حمل الخادم. ويساعد هذا التفاوت في تفسير سبب عدم ظهور الأعراض في كل بيئة تستخدم التحديثات نفسها.",
+              "links": [
+                {
+                  "text": "تدوينة تقنية",
+                  "url": "https://techcommunity.microsoft.com/blog/exchange/exchange-servers-may-become-unstable-after-installation-of-october-2026-windows-/4565382"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "عدم إزالة تحديثات Exchange الأمنية",
+          "paragraphs": [
+            {
+              "text": "أكدت مايكروسوفت أن مشكلة Outlook على الويب لا ترتبط بتحديثات الأمان الخاصة بخادم Exchange لشهر أكتوبر 2026. لذلك حثت العملاء على عدم إلغاء تثبيت تلك التحديثات، رغم الأعراض التي ظهرت في بعض البيئات بعد تطبيق تحديثات Windows Server.",
+              "links": []
+            },
+            {
+              "text": "وتعني توصية الشركة أن معالجة الخلل ينبغي أن تتم عبر تثبيت تحديثات Windows لشهر نوفمبر، لا عبر التراجع عن تحديثات الأمان السابقة. ويظل نطاق التأثير محصوراً في الأنظمة التي تظهر عليها الأعراض المرتبطة بهذا الخلل المعروف.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حل مؤقت للأنظمة التي لا يمكن تحديثها فوراً",
+          "paragraphs": [
+            {
+              "text": "قدمت مايكروسوفت حلاً مؤقتاً للمؤسسات التي لا تستطيع نشر التحديثات التراكمية لشهر نوفمبر مباشرة. ويتطلب الحل تعديل مفتاح في سجل النظام على خوادم Exchange المتأثرة، بهدف رفع الحد الأقصى لعدد طلبات Endpoint Lookup وزيادة مقدار الذاكرة المتاح لـEndpoint Mapper، ثم إعادة تشغيل الجهاز.",
+              "links": []
+            },
+            {
+              "text": "وبعد إعادة التشغيل، ينبغي لمسؤولي تقنية المعلومات مراقبة بيئة Exchange، ورفع حد ذاكرة Endpoint Mapper مجدداً إذا عادت المشكلة. ولم تورد المعلومات المتاحة هنا نص الأمر المطلوب تنفيذه أو قيمة التعديل، لذلك يجب الرجوع إلى إرشادات مايكروسوفت الرسمية عند تطبيق هذا الإجراء.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوصية للمسؤولين",
+          "paragraphs": [
+            {
+              "text": "تتمثل الخطوة الأساسية للأنظمة المتأثرة في تثبيت تحديثات نوفمبر 2026، ولا سيما KB5131080 وKB5131090، على الخوادم المعنية ثم متابعة تسجيل الدخول وتسليم البريد وتكرار صناديق البريد. أما المؤسسات التي تحتاج إلى تأجيل النشر، فيمكنها استخدام الحل المؤقت القائم على سجل النظام مع مراقبة الخادم بعد إعادة تشغيله.",
+              "links": []
+            },
+            {
+              "text": "وتؤكد المعالجة أن المشكلة ناتجة عن تفاعل تحديثات Windows Server مع طريقة استخدام Exchange لموارد Endpoint Mapper، وليس عن عطل عام في جميع خوادم Exchange. لذلك قد يختلف الإجراء العملي ودرجة الاستعجال من بيئة إلى أخرى بحسب الحمل والأعراض المرصودة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "مايكروسوفت",
+        "Exchange Server",
+        "Windows Server",
+        "Outlook",
+        "تحديثات أمنية",
+        "إدارة الأنظمة",
+        "الذكاء الاصطناعي"
+      ],
+      "entities": [
+        "Microsoft",
+        "Exchange Server",
+        "Windows Server",
+        "Outlook",
+        "Endpoint Mapper",
+        "KB5131080",
+        "KB5131090"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "11 نوفمبر 2026",
+      "modifiedLabel": "11 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 616
+    },
+    "en": {
+      "title": "Microsoft Fixes Exchange Sign-Ins After Server Updates",
+      "description": "Microsoft says November 2026 Windows Server updates fix Exchange sign-in, mail delivery and mailbox replication problems caused by October patches.",
+      "deck": "Microsoft has released fixes for Exchange Server sign-in and mail delivery problems linked to the October 2026 Windows Server security updates. A temporary registry workaround remains available for organizations that cannot immediately install the November patches.",
+      "summaryBullets": [
+        "November updates KB5131080 and KB5131090 address the Exchange issues.",
+        "Affected users reported Outlook on the web sign-in and mail delivery failures.",
+        "The October updates introduced a new Endpoint Mapper memory limit.",
+        "Microsoft advises customers not to remove the October Exchange security updates."
+      ],
+      "sections": [
+        {
+          "heading": "November updates address Exchange failures",
+          "paragraphs": [
+            {
+              "text": "Microsoft says the November 2026 Patch Tuesday updates resolve a known problem affecting some on-premises Exchange Server systems after installation of the October Windows Server security updates. The fixes are included in KB5131080 and KB5131090, which the company recommends deploying across affected systems.",
+              "links": [
+                {
+                  "text": "KB5131080",
+                  "url": "https://support.microsoft.com/help/5131080"
+                },
+                {
+                  "text": "KB5131090",
+                  "url": "https://support.microsoft.com/help/5131090"
+                }
+              ]
+            },
+            {
+              "text": "The issue could prevent users from accessing email or signing in to Outlook on the web, also known as OWA. In other cases, messages sent from Outlook remained in the Outbox instead of being delivered. Exchange could also experience problems accessing mailboxes during mailbox replication, creating additional disruption for organizations running their own mail infrastructure.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "October patches introduced a new limit",
+          "paragraphs": [
+            {
+              "text": "According to Microsoft’s explanation, the failures were caused by a new default limit introduced in the October 2026 Windows Server updates. The limit affects the amount of memory that Endpoint Mapper can use when processing Endpoint Lookup calls, a mechanism involved in communication between services.",
+              "links": []
+            },
+            {
+              "text": "Microsoft first acknowledged the problem in mid-October after reports from customers running Windows Server 2019 and later. The company said the impact was not uniform across Exchange environments. Server load influenced both the severity of the symptoms and how quickly they appeared, meaning some systems could continue operating without visible problems while others developed sign-in or mail-flow failures.",
+              "links": []
+            },
+            {
+              "text": "The company also clarified that the OWA issue was not connected to the October Exchange Server security updates themselves. Microsoft urged customers not to uninstall those Exchange updates, making installation of the Windows fixes the preferred path for addressing the underlying problem rather than removing security protections.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "What administrators should install",
+          "paragraphs": [
+            {
+              "text": "Microsoft updated its Windows release health dashboard with the resolution and advised affected administrators to install the November cumulative updates on all impacted systems. The guidance is aimed at Exchange Server environments where users have encountered any of the documented symptoms, including failed OWA authentication, undelivered Outlook messages or mailbox replication errors.",
+              "links": []
+            },
+            {
+              "text": "The recommended action applies to systems affected by the Endpoint Mapper behavior rather than to every Exchange deployment indiscriminately. Microsoft’s description indicates that exposure depended in part on server workload, so administrators may need to review Exchange health and mail-flow behavior even if a particular server has not yet shown obvious failures.",
+              "links": []
+            },
+            {
+              "text": "The original incident and Microsoft’s later resolution were reported by <a> BleepingComputer</a>, which described the relationship between the Windows Server patches and the Exchange problems. Microsoft’s own release-health guidance remains the basis for the recommendation to deploy the November updates.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-exchange-sign-ins-broken-by-october-windows-server-updates/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Temporary registry workaround available",
+          "paragraphs": [
+            {
+              "text": "Organizations that cannot immediately deploy the November cumulative updates can use a temporary workaround supplied by Microsoft. The procedure requires administrators to modify a registry key on affected Exchange Server systems so that Endpoint Mapper can handle more Endpoint Lookup calls and use more memory.",
+              "links": []
+            },
+            {
+              "text": "Microsoft’s instructions require the change to be made from an elevated Command Prompt on the Exchange Server, followed by a device restart. Because the workaround changes system behavior rather than replacing the cumulative updates, it is intended as an interim measure for environments that need additional time to schedule or complete patch deployment.",
+              "links": []
+            },
+            {
+              "text": "After the system reboots, administrators should monitor the Exchange environment. Microsoft says the Endpoint Mapper memory limit should be raised if the problem returns, indicating that the workaround may require further adjustment based on the server’s workload and observed behavior.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Mail flow and sign-in symptoms",
+          "paragraphs": [
+            {
+              "text": "The failure pattern described by Microsoft spans several parts of the Exchange experience. Users may be unable to sign in to OWA, while Outlook users may see outgoing messages remain in the Outbox. Administrators may also notice that Exchange cannot reliably access mailboxes during replication, which can affect the consistency of mailbox operations across servers.",
+              "links": []
+            },
+            {
+              "text": "These symptoms do not necessarily appear at the same time or with the same intensity. Microsoft said the speed and severity of the impact vary according to Exchange server load, and some servers might never encounter a problem after the October Windows updates. That variation can make monitoring important even where an organization has not received widespread user reports.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Microsoft recommends keeping security updates",
+          "paragraphs": [
+            {
+              "text": "Microsoft’s guidance separates the Exchange sign-in and mail-flow failure from the October Exchange Server security updates and advises customers not to uninstall those protections. The resolution is instead to apply the November Windows Server updates, or to use the temporary registry adjustment until those updates can be deployed.",
+              "links": []
+            },
+            {
+              "text": "For affected organizations, the immediate operational priority is to identify systems showing the documented symptoms, install KB5131080 or KB5131090 as appropriate, and verify sign-in, mail delivery and mailbox replication afterward. Environments using the workaround should continue watching Endpoint Mapper behavior and move to the November fixes when deployment is possible.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Microsoft",
+        "Exchange Server",
+        "Windows Server",
+        "Outlook",
+        "Patch Tuesday",
+        "Endpoint Mapper"
+      ],
+      "entities": [
+        "Microsoft",
+        "Exchange Server",
+        "Windows Server",
+        "Outlook on the web",
+        "Endpoint Mapper",
+        "KB5131080",
+        "KB5131090"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 11, 2026",
+      "modifiedLabel": "November 11, 2026",
+      "readMinutes": 4,
+      "wordCount": 849
+    }
+  },
+  "datePublished": "2026-11-11T13:08:45.755996+03:00",
+  "dateModified": "2026-11-11T13:08:45.755996+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/microsoft-fixes-exchange-sign-ins-broken-by-windows-server-updates/hero.webp",
+    "card": "/forum/assets/posts/2026/11/microsoft-fixes-exchange-sign-ins-broken-by-windows-server-updates/card.webp",
+    "social": "/forum/assets/posts/2026/11/microsoft-fixes-exchange-sign-ins-broken-by-windows-server-updates/social.jpg",
+    "alt": {
+      "ar": "مايكروسوفت تصلح مشكلات تسجيل الدخول إلى Exchange",
+      "en": "Microsoft Fixes Exchange Sign-Ins After Server Updates"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/10/22/Exchange_Online.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-exchange-sign-ins-broken-by-october-windows-server-updates/",
+      "type": "journalism",
+      "title": "Microsoft fixes Exchange sign-ins broken by Windows Server updates"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-exchange-sign-ins-broken-by-october-windows-server-updates",
+  "sourceTitle": "Microsoft fixes Exchange sign-ins broken by Windows Server updates",
+  "trendScore": 98.71,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-11-11T10:08:46+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/11/microsoft-fixes-exchange-sign-ins-broken-by-windows-server-updates.json"
+}
