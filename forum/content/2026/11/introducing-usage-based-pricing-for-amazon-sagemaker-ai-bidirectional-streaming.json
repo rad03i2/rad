@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "df1cb1cc87995a8e14c0",
+  "slug": "introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming/",
+    "en": "/forum/en/ai/introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming/"
+  },
+  "locales": {
+    "ar": {
+      "title": "AWS تتيح تسعيراً حسب الاستخدام لبث SageMaker AI",
+      "description": "تدعم AWS Marketplace قياس الاستخدام لبث Amazon SageMaker AI ثنائي الاتجاه، ما يتيح لشركات النماذج احتساب خدمات الصوت وفق الاستهلاك الفعلي.",
+      "deck": "أعلنت AWS إضافة قياس قائم على الاستخدام للاستدلال بالبث ثنائي الاتجاه في Amazon SageMaker AI. وتأتي Deepgram شريكاً أولياً لتقديم فوترة خدمات تحويل الكلام إلى نص ومن نص إلى كلام عبر AWS Marketplace.",
+      "summaryBullets": [
+        "قياس الاستخدام يتيح احتساب استهلاك البث المباشر بدلاً من الاعتماد على تسعير برمجي ساعي.",
+        "تُرسل بيانات الفوترة عبر اتصال WebSocket موازٍ لاتصال الاستدلال الأساسي.",
+        "تقدم Deepgram خدمات STT وTTS بنموذج فوترة قائم على الوحدات في AWS Marketplace.",
+        "تبقى رسوم البنية التحتية لنقاط نهاية SageMaker AI منفصلة وسارية.",
+        "يمكن لمزودي النماذج اختيار استمرار الاستدلال أو إيقافه عند تعطل قناة القياس."
+      ],
+      "sections": [
+        {
+          "heading": "قياس جديد للبث المباشر",
+          "paragraphs": [
+            {
+              "text": "أعلنت AWS دعماً لقياس الاستخدام في جلسات الاستدلال بالبث ثنائي الاتجاه على Amazon SageMaker AI، لمعالجة تحدٍ يخص فوترة تطبيقات الذكاء الاصطناعي الصوتية في الزمن الفعلي. وبموجب هذا التغيير، يستطيع مزودو النماذج الإبلاغ عن الكمية المستهلكة فعلياً خلال الجلسة، لتُستخدم في احتساب الرسوم البرمجية عبر AWS Marketplace.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker-ai/"
+                },
+                {
+                  "text": "AWS Marketplace",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming/"
+                }
+              ]
+            },
+            {
+              "text": "ويشمل ذلك حالات الاستخدام التي تبقى فيها قناة الاتصال مفتوحة لفترة طويلة، مثل التفريغ الصوتي ومراكز الاتصال والوكلاء الصوتيين والتسميات التوضيحية. ولا يلغي النموذج الجديد رسوم البنية التحتية الخاصة بنقطة نهاية SageMaker AI، إذ تظل هذه الرسوم منفصلة وتُطبق ما دامت نقطة النهاية مهيأة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "لماذا لا تكفي الفوترة التقليدية؟",
+          "paragraphs": [
+            {
+              "text": "في الاستدلال الفوري بنمط الطلب والاستجابة، يمكن لمزود النموذج وضع عدد الوحدات القابلة للفوترة في ترويسة استجابة HTTP. وتناسب هذه الآلية الحالات التي تكون فيها الكمية النهائية معروفة لحظة إرسال الاستجابة. أما في البث ثنائي الاتجاه، فيرسل العميل البيانات الصوتية ويستقبل النتائج عبر تدفق أحداث HTTP/2، بينما تتصل SageMaker AI بخادم النموذج باستخدام WebSockets.",
+              "links": []
+            },
+            {
+              "text": "قد تستمر جلسة البث 30 ثانية أو 30 دقيقة، وتتراكم الكمية القابلة للفوترة أثناء الجلسة، ولا يُعرف مجموعها النهائي إلا بعد انتهائها. لذلك لا تستطيع ترويسة استجابة واحدة نقل الاستخدام دورياً خلال اتصال حي. كما أن التسعير البرمجي بالساعة قد يفرض رسوماً خلال فترات الصمت، حتى عندما لا يعالج النموذج بيانات فعلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قناة موازية لإرسال بيانات الفوترة",
+          "paragraphs": [
+            {
+              "text": "يعتمد الحل على إضافة اتصال WebSocket ثانٍ إلى جانب تدفق الاستدلال القائم. ويحمل الاتصال الأول بيانات طلبات الاستدلال واستجاباته، بينما يخصص الاتصال الثاني لبيانات القياس. وعند بدء جلسة البث، تنشئ SageMaker AI الاتصالين مع خادم النموذج، على أن يعلن الخادم دعمه لهذه الآلية عبر الترويسة X-Amzn-SageMaker-Metadata-Stream-Supported: true في استجابة ترقية WebSocket.",
+              "links": []
+            },
+            {
+              "text": "بعد تفعيل الدعم، تفتح SageMaker AI اتصالاً مكملاً بالمسار /invocations-bidirectional-stream-metadata. ويحمل الاتصالان الترويسة نفسها X-Amzn-SageMaker-Request-Id، ما يسمح لخادم النموذج بربط سجلات القياس بجلسة الاستدلال النشطة. وتُرسل سجلات القياس على هيئة إطارات نصية بصيغة JSON، بحيث يحتوي كل إطار على سجل واحد فقط.",
+              "links": []
+            },
+            {
+              "text": "توصي AWS بإرسال السجلات تدريجياً مع تراكم الاستخدام، إما عند استهلاك كل وحدة أو على دفعات دورية منذ آخر سجل، ثم إرسال سجل نهائي فور انتهاء الجلسة. وتبلغ حصة القناة رسالة واحدة في الثانية لكل اتصال، مع حد أقصى لحجم الرسالة قدره 512 بايت. كما يدعم الحقل ClientToken منع التكرار؛ فإذا وصل الرمز نفسه مرتين على الاتصال ذاته، تُسقط SageMaker AI الرسالة المكررة بصمت.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الوحدات تحددها قواعد المنتج",
+          "paragraphs": [
+            {
+              "text": "تستخدم رسائل القياس بُعد inference.count، بينما يحدد الحقل ConsumedUnits الكمية المحتسبة. ولا يعني اسم البُعد أن كل طلب يساوي وحدة واحدة؛ فمزود النموذج هو الذي يحدد ما يدخل في نطاق الاستخدام المقاس، وتربط AWS Marketplace هذه الوحدة بسعر العرض. فإذا كان المنتج يحاسب على ثانية الصوت، فإن 12 دقيقة من الصوت المقاس تعادل 720 ثانية قابلة للفوترة، وتُرسل القيمة 720 في ConsumedUnits.",
+              "links": []
+            },
+            {
+              "text": "وبهذا، لا يحدد طول الاتصال المفتوح وحده كمية الصوت المستحقة. فالكمية تعتمد على قواعد العد التي يضعها المزود، في حين تظل رسوم تشغيل نقطة النهاية محسوبة بصورة مستقلة. وتعرض القائمة سعراً واحداً لكل وحدة، مع تسمية السعر بأنه لكل طلب وإتاحة ما يصل إلى ثلاثة منازل عشرية.",
+              "links": []
+            },
+            {
+              "text": "تتيح هذه الآلية للمشترين الاستفادة من الفوترة الموحدة داخل AWS، ومن الأسعار المتفاوض عليها عبر العروض الخاصة، من دون الحاجة إلى إدارة علاقة فوترة منفصلة مع مزود النموذج. ويمكن لمزودي النماذج أيضاً تقديم أسعار محسوبة لكل وحدة أو عقود بسعر ثابت من خلال عروض AWS Marketplace الخاصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deepgram شريك الإطلاق",
+          "paragraphs": [
+            {
+              "text": "تُعد Deepgram شريك الإطلاق لهذه الإمكانية، إذ تقدم فوترة قائمة على الاستخدام لخدمات تحويل الكلام إلى نص وتحويل النص إلى كلام عبر AWS Marketplace. وتأتي الخطوة ضمن سلسلة تعاون بين الشركة وAWS، بدأت بدعم البث ثنائي الاتجاه للاستدلال الفوري، ثم إضافة تفويض مؤقت عبر AWS IAM لتبسيط المصادقة الآمنة في deployments المؤسساتية، إلى جانب تحسين قابلية المراقبة عبر مقاييس موسعة.",
+              "links": [
+                {
+                  "text": "Deepgram",
+                  "url": "https://deepgram.com/"
+                }
+              ]
+            },
+            {
+              "text": "وتتوفر إحدى قوائم الشركة لخدمة التفريغ الصوتي المتدفق ضمن Amazon SageMaker AI Marketplace، بما يوضح تطبيق نموذج الفوترة على منتجات الصوت الفورية. وتؤكد AWS أن على المشترين التحقق من الوحدات المبلّغ عنها بمقارنتها بتقارير AWS Marketplace ورسوم المشتري، لأن تسليم البيانات عبر الاتصال لا يثبت وحده أن الاستخدام احتُسبت فوترته.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مرونة بين استمرارية الخدمة ودقة القياس",
+          "paragraphs": [
+            {
+              "text": "تعمل قناة البيانات الوصفية عبر TCP، ما يوفر تسليماً مرتباً وموثوقاً على مستوى النقل. وإذا تعذر إنشاء الاتصال أو انقطع أثناء الجلسة، يستمر الاستدلال افتراضياً لأن الترويسة X-Amzn-SageMaker-Metadata-Stream-Required تكون false. ويمكن للمزود ضبطها على true عندما يكون توقف الاستدلال ضرورياً لضمان استمرارية القياس، وهو خيار يوازن بين توافر الخدمة واستمرارية الفوترة، من دون ضمان احتساب السجلات المشوهة أو التي لم تصل.",
+              "links": []
+            },
+            {
+              "text": "ولتسريع إدراج النماذج، توفر AWS مهارة SageMaker Marketplace Onboarding Agent Skill مساراً اختيارياً لإضافة قياس الاستدلال. وتتضمن القوالب الأولية إعلان دعم تدفق البيانات الوصفية وإنشاء إطارات ConsumedUnits تدريجية ومتحققاً منها للاتصال المكمّل، مع توصية بمراجعة الشيفرة وتقويتها قبل تقديم المنتج.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "AWS",
+        "Amazon SageMaker AI",
+        "AWS Marketplace",
+        "Deepgram",
+        "البث ثنائي الاتجاه",
+        "الفوترة حسب الاستخدام"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon SageMaker AI",
+        "AWS Marketplace",
+        "Deepgram",
+        "Amazon SageMaker AI bidirectional streaming"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "11 نوفمبر 2026",
+      "modifiedLabel": "11 نوفمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 840
+    },
+    "en": {
+      "title": "Amazon SageMaker AI Adds Usage-Based Streaming Pricing",
+      "description": "AWS adds usage-based metering for SageMaker AI bidirectional streaming, enabling Marketplace billing for real-time speech and other live AI workloads.",
+      "deck": "AWS Marketplace now supports usage-based metering for Amazon SageMaker AI bidirectional streaming inference. Deepgram is the launch partner for speech-to-text and text-to-speech billing.",
+      "summaryBullets": [
+        "AWS Marketplace can now meter usage during live SageMaker AI streaming sessions.",
+        "Deepgram is using the capability for speech-to-text and text-to-speech billing.",
+        "A companion WebSocket carries metering records alongside inference data.",
+        "Endpoint infrastructure charges remain separate from the software charge."
+      ],
+      "sections": [
+        {
+          "heading": "AWS adds metering for live inference",
+          "paragraphs": [
+            {
+              "text": "AWS has introduced usage-based metering for bidirectional streaming inference on Amazon SageMaker AI, addressing a billing gap for real-time workloads. The capability allows model providers listed on AWS Marketplace to report the usage accumulated during a live stream and charge customers for the quantity they actually consume.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker-ai/"
+                }
+              ]
+            },
+            {
+              "text": "The new model applies to the AWS Marketplace software charge. Customers still pay the separate SageMaker AI endpoint infrastructure charges associated with hosting and running the model. AWS said the distinction allows providers to align software billing with streamed usage while infrastructure costs continue to apply when an endpoint is provisioned.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deepgram leads the launch",
+          "paragraphs": [
+            {
+              "text": "Deepgram, a real-time speech AI company, is the launch partner for the capability. The company is bringing usage-based Speech-to-Text and Text-to-Speech billing to AWS Marketplace, giving customers a way to connect marketplace charges with the audio processed by its models.",
+              "links": [
+                {
+                  "text": "Deepgram",
+                  "url": "https://deepgram.com/"
+                }
+              ]
+            },
+            {
+              "text": "The announcement builds on earlier work between Deepgram and AWS. AWS previously introduced bidirectional streaming for real-time inference on Amazon SageMaker AI, while Deepgram added support for temporary AWS Identity and Access Management delegation and expanded observability with enhanced metrics. The latest metering feature extends that foundation to the commercial side of production streaming deployments.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Why request-response billing fell short",
+          "paragraphs": [
+            {
+              "text": "Existing SageMaker AI real-time request-response metering relies on a unit count returned in an HTTP response header. That approach works when the billable quantity is known at the time a response is sent. Bidirectional streaming follows a different pattern: a client sends audio and receives results over an HTTP/2 event stream, while SageMaker AI connects to the model server through WebSockets.",
+              "links": []
+            },
+            {
+              "text": "A streaming session can last 30 seconds or 30 minutes, and its usage grows until the session ends. Because the final total is not known at the beginning—or necessarily when an individual response is delivered—a response header cannot provide periodic usage for the entire live session. AWS said hourly software pricing can also charge for quiet periods when a model is available but not actively processing customer data.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "A companion connection carries usage data",
+          "paragraphs": [
+            {
+              "text": "The solution adds a second WebSocket connection alongside the existing inference stream. The data connection continues to carry inference requests and responses, while a metadata connection is dedicated to metering information. A model server opts in by returning the X-Amzn-SageMaker-Metadata-Stream-Supported: true header during the WebSocket upgrade.",
+              "links": []
+            },
+            {
+              "text": "SageMaker AI then opens the companion connection at the /invocations-bidirectional-stream-metadata endpoint. Both connections carry the same X-Amzn-SageMaker-Request-Id header, allowing the model server to associate metering records with the active inference session. The server sends JSON text frames, with each frame containing one metering record rather than an array.",
+              "links": []
+            },
+            {
+              "text": "AWS recommends sending records incrementally as usage accrues, either for each consumed unit or in periodic batches. Providers should send a final record as soon as the session ends. The metadata stream allows one message per second per connection, and each message can be no larger than 512 bytes.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Providers define the billable unit",
+          "paragraphs": [
+            {
+              "text": "Metering messages use the inference.count dimension, while the ConsumedUnits field supplies the reported quantity. The dimension name does not require providers to charge one unit per request. Instead, the provider defines what counts as usage and maps that unit to a price in the AWS Marketplace offer.",
+              "links": []
+            },
+            {
+              "text": "For example, a product that charges by the second of audio could report 720 ConsumedUnits for 12 minutes of metered audio. The listing presents one price per unit, labeled per request, with up to three decimal places. An open connection lasting 12 minutes does not by itself establish that 12 minutes of audio is billable; the provider’s counting rules determine the metered amount.",
+              "links": []
+            },
+            {
+              "text": "The ClientToken field supports idempotency. If a duplicate token arrives on the same connection, SageMaker AI silently drops the duplicate. AWS recommends validating reported units against AWS Marketplace reports and buyer charges because successful transport delivery alone does not establish that usage has been billed.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Reliability and onboarding considerations",
+          "paragraphs": [
+            {
+              "text": "The metadata connection uses TCP for ordered, reliable delivery at the transport layer. If it cannot be established or drops during a session, inference continues by default because X-Amzn-SageMaker-Metadata-Stream-Required defaults to false. Providers that need metering continuity to take precedence can set the header to true, which makes the choice a trade-off between inference availability and usage reporting.",
+              "links": []
+            },
+            {
+              "text": "The setting does not guarantee that malformed or dropped records will be billed. Model providers can use the SageMaker Marketplace Onboarding Agent Skill to accelerate setup. AWS said its starter templates advertise metadata-stream support and create validated, incremental ConsumedUnits frames, while still requiring review and production hardening before submission.",
+              "links": []
+            },
+            {
+              "text": "For customers using transcription, contact-center, voice-agent, or captioning models, the change brings software billing closer to actual consumption. AWS Marketplace also supports consolidated AWS billing, negotiated rates through private offers, and fixed-price contracts, without requiring a separate billing relationship with the model provider.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker AI",
+        "AWS Marketplace",
+        "usage-based pricing",
+        "bidirectional streaming",
+        "Deepgram",
+        "speech AI"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker AI",
+        "AWS Marketplace",
+        "Deepgram",
+        "WebSocket"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 11, 2026",
+      "modifiedLabel": "November 11, 2026",
+      "readMinutes": 4,
+      "wordCount": 863
+    }
+  },
+  "datePublished": "2026-11-11T18:28:51.508114+03:00",
+  "dateModified": "2026-11-11T18:28:51.508114+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming/hero.webp",
+    "card": "/forum/assets/posts/2026/11/introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming/card.webp",
+    "social": "/forum/assets/posts/2026/11/introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming/social.jpg",
+    "alt": {
+      "ar": "AWS تتيح تسعيراً حسب الاستخدام لبث SageMaker AI",
+      "en": "Amazon SageMaker AI Adds Usage-Based Streaming Pricing"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-21045-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming/",
+      "type": "official",
+      "title": "Introducing usage-based pricing for Amazon SageMaker AI bidirectional streaming"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming",
+  "sourceTitle": "Introducing usage-based pricing for Amazon SageMaker AI bidirectional streaming",
+  "trendScore": 125.98,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-11T15:28:51+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming.json"
+}
