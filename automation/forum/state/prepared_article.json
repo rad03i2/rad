@@ -1,5 +1,356 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-11T21:28:49+00:00",
-  "last_published_story_id": "e3fb265c4a7f0c03e332"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-11T21:32:48+00:00",
+  "target_publish_at": "2026-11-12T00:48:48.257917+03:00",
+  "story": {
+    "title": "How DXC Technology built a multi-model AI substrate on Amazon Bedrock",
+    "url": "https://aws.amazon.com/blogs/machine-learning/how-dxc-technology-built-a-multi-model-ai-substrate-on-amazon-bedrock",
+    "domain": "aws.amazon.com",
+    "summary": "DXC Technology runs mission-critical managed IT services for regulated organizations across 70 countries. Learn how DXC built DCX OASIS, its Human+AI operating model, on a governed multi-model substrate in Amazon Bedrock, separating a resilient model substrate from a trusted harness that orchestrates, governs, and audits AI agents at scale.",
+    "published_at": "2026-11-11T20:45:45+00:00",
+    "discovered_at": "2026-11-11T21:08:21+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 72,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "8556616005ab5618b6a1",
+    "trend": {
+      "score": 128.7,
+      "age_hours": 0.78,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-dxc-technology-built-a-multi-model-ai-substrate-on-amazon-bedrock/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How DXC Technology built a multi-model AI substrate on Amazon Bedrock",
+      "title": "How DXC Technology built a multi-model AI substrate on Amazon Bedrock | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "DXC تبني بنية ذكاء اصطناعي متعددة النماذج على Amazon Bedrock",
+      "description": "تستعرض DXC Technology كيف بنّت نموذج تشغيل Human+AI على Amazon Bedrock، مفصّلةً فصل البنية التحتية للنماذج عن طبقة الإشراف لضمان الحوكمة والأمان.",
+      "deck": "أطلقت DXC Technology نموذج تشغيلها الجديد DXC OASIS، الذي يعتمد على بنية تحتية متعددة النماذج مبنية على Amazon Bedrock، لفصل إدارة النماذج عن الإشراف على وكلاء الذكاء الاصطناعي.",
+      "summary_bullets": [
+        "اعتمدت DXC على Amazon Bedrock للوصول الموحّد إلى نماذج مثل Anthropic Claude وAmazon Nova وMeta Llama.",
+        "فصلت الشركة بين طبقة النماذج (Substrate) وطبقة الإشراف (Harness) لضمان الحوكمة والرقابة على الوكلاء.",
+        "استخدمت AWS PrivateLink لإبقاء حركة بيانات الاستدلال داخل سحابة العميل الخاصة دون المرور بالإنترنت العام.",
+        "حققت DXC OASIS منذ إطلاقها العام في مارس 2026 خفضاً بنسبة 95% في متوسط وقت حل المشكلات عبر 56 حالة استخدام."
+      ],
+      "sections": [
+        {
+          "heading": "فصل البنية التحتية عن طبقة الإشراف",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات التي تدير أنظمة حرجة تحدياً جوهرياً عند دمج وكلاء الذكاء الاصطناعي: المخاطر لا تكمن في النموذج وحده، بل في الصلاحيات الزائدة التي قد يمتلكها الوكيل دون ضوابط كافية. لمواجهة ذلك، اعتمدت شركة DXC Technology على Amazon Bedrock لبناء ما أسمته بنية تحتية (Substrate) محكومة، تفصل بين الوصول إلى النماذج الأساسية وطبقة الإشراف (Harness) التي تنسق وتراقب وتراجع أداء الوكلاء. هذا الفصل يسمح للشركة بتوفير أساس آمن للعمليات المؤسسية دون الاعتماد على طبقة نموذجية واحدة.",
+              "links": [
+                {
+                  "text": "DXC Technology",
+                  "url": "https://dxc.com/"
+                },
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "وصول موحّد إلى النماذج الأساسية",
+          "paragraphs": [
+            {
+              "text": "تتيح DXC OASIS الوصول إلى مجموعة واسعة من النماذج الأساسية، بما في ذلك Anthropic Claude وAmazon Nova وMeta Llama وعائلات النماذج مفتوحة الأوزان، من خلال واجهة موحدة واحدة. هذا التصميم يضمن أن أي انقطاع أو تغيير في مزود النموذج يصبح قراراً توجيهياً (Routing) وليس إعادة بناء للنظام بالكامل. كما تفرض Amazon Bedrock Guardrails سياسات موحدة عبر جميع النماذج، تشمل تصفية المحتوى، وإخفاء المعلومات الشخصية (PII)، ومنع المواضيع المحظورة، مما يعزز الأمان على مستوى النظام.",
+              "links": [
+                {
+                  "text": "Amazon Nova",
+                  "url": "https://aws.amazon.com/ai/generative-ai/nova/"
+                },
+                {
+                  "text": "Amazon Bedrock Guardrails",
+                  "url": "https://aws.amazon.com/bedrock/guardrails/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الأمان والسيادة على البيانات",
+          "paragraphs": [
+            {
+              "text": "لتلبية متطلبات الجهات الخاضعة للتنظيم الصارم، مثل البنوك والمستشفيات، صممت DXC معماريتها بحيث تبقى بيانات العملاء داخل حدود بيانات AWS. يتم استخدام AWS PrivateLink للحفاظ على حركة بيانات الاستدلال (Inference) داخل الشبكة الخاصة الافتراضية (VPC) للعميل، مما يمنع مرورها عبر الإنترنت العام. هذا النهج يضمن الامتثال لتوقعات معالجة البيانات ويوفر سيادة إقليمية للبيانات، مع الحفاظ على قابلية التوسع الخادمية (Serverless) دون الحاجة لإدارة بنية تحتية مخصصة للوحدات المعالجة الرسومية (GPU).",
+              "links": [
+                {
+                  "text": "AWS PrivateLink",
+                  "url": "https://aws.amazon.com/privatelink/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مرونة وتوجيه ذكي للأحمال",
+          "paragraphs": [
+            {
+              "text": "السبب الاستراتيجي وراء اختيار Amazon Bedrock هو المرونة في اختيار النموذج الأنسب لكل مهمة بناءً على التكلفة، وزمن الاستجابة، والقدرات. يتيح هذا التصميم لـ DXC توجيه كل عملية إلى النموذج الأمثل، وتبني النماذج الجديدة فور توفرها دون الحاجة إلى إعادة هندسة النظام. كما يضمن هذا الفصل أن استبدال نموذج بآخر يخضع لتقييم دقيق من قبل طبقة الإشراف (Harness) وليس مجرد تغيير برمجي، مما يحافظ على جودة المخرجات وموثوقية العمليات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية التقنية والتشغيلية",
+          "paragraphs": [
+            {
+              "text": "يعمل وقت تشغيل وكلاء DXC OASIS على Amazon Elastic Kubernetes Service (Amazon EKS) داخل شبكة فرعية خاصة. يتولى وكيل مشرف (Supervisor Agent) تفويض المهام لوكلاء متخصصين (Capability Agents) يستندون إلى قاعدة معرفة وأدوات مثل AWS Secrets Manager وAmazon S3. تخرج جميع استدعاءات النماذج عبر نقاط نهاية VPC وAWS PrivateLink للوصول إلى Amazon Bedrock، مع توفير أمان ومراقبة شاملة عبر خدمات مثل AWS IAM وAWS KMS وOpenTelemetry.",
+              "links": [
+                {
+                  "text": "Amazon Elastic Kubernetes Service (Amazon EKS)",
+                  "url": "https://aws.amazon.com/eks/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "النتائج التشغيلية",
+          "paragraphs": [
+            {
+              "text": "بدأت DXC تطوير DXC OASIS كنموذج أولي في أوائل 2025، ووصلت إلى التوفر العام في مارس 2026. منذ ذلك الحين، توسع النظام ليخدم 130 بيئة عميل على Amazon EKS. وتفيد الشركة بأن النظام حقق خفضاً بنسبة 95% في متوسط وقت حل المشكلات عبر 56 حالة استخدام مقاسة، مما يعكس فعالية فصل طبقة الإشراف عن البنية التحتية للنماذج في تحسين كفاءة العمليات المؤسسية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "DXC Technology",
+        "Amazon Bedrock",
+        "الذكاء الاصطناعي",
+        "وكلاء الذكاء الاصطناعي",
+        "الحوكمة التقنية",
+        "AWS",
+        "بنية تحتية سحابية"
+      ],
+      "entities": [
+        "DXC Technology",
+        "Amazon Bedrock",
+        "DXC OASIS",
+        "AWS PrivateLink",
+        "Amazon EKS",
+        "Anthropic Claude",
+        "Amazon Nova",
+        "Meta Llama"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال يعتمد حصرياً على المدونة الرسمية لـ AWS Machine Learning Blog. تم التأكد من تطابق الروابط مع القائمة المسموحة. الأرقام والإحصائيات (مثل 95% و56 حالة) مأخوذة مباشرة من النص المصدر دون استقراء."
+    },
+    "en": {
+      "title": "DXC Technology Builds Multi-Model AI on Amazon Bedrock",
+      "description": "Discover how DXC Technology utilized Amazon Bedrock to build a governed multi-model AI substrate for mission-critical IT operations.",
+      "deck": "DXC Technology has detailed how it established a governed multi-model AI substrate using Amazon Bedrock to support its Human+AI operating model, DXC OASIS.",
+      "summary_bullets": [
+        "DXC Technology delivers mission-critical managed IT services across 70 countries to highly regulated organizations.",
+        "The DXC OASIS Human+AI operating model separates a resilient model substrate from a trusted orchestration and governance harness.",
+        "Amazon Bedrock provides uniform access to Anthropic Claude, Amazon Nova, Meta Llama, and open-weight model families.",
+        "AWS PrivateLink and regional inference controls keep all enterprise inference traffic within the AWS data boundary."
+      ],
+      "sections": [
+        {
+          "heading": "Architecting a Resilient Model Substrate",
+          "paragraphs": [
+            {
+              "text": "When autonomous AI agents interact with production servers in critical environments like banks and hospitals, the primary risk is rarely the foundation model in isolation. Instead, the risk typically arises when an agent holds more authority than its assigned task requires without proper infrastructure-level governance. To counter this, <a href=\"https://dxc.com/\">DXC Technology</a> established a secure multi-model foundation using <a href=\"https://aws.amazon.com/bedrock/\">Amazon Bedrock</a> to govern model access and protect enterprise IT operations.",
+              "links": [
+                {
+                  "text": "DXC Technology",
+                  "url": "https://dxc.com/"
+                },
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "DXC operates mission-critical systems for regulated organizations across 70 countries through its workforce of over 115,000 employees. When designing DXC OASIS, the company separated the architecture into two distinct layers: a governed model substrate and a trusted harness built on top to handle orchestration, governance, and auditing. Since achieving general availability in March 2026, DXC OASIS has successfully reduced resolution time by an average of 95% across 56 measured use cases.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Unified Access and Multi-Model Optionality",
+          "paragraphs": [
+            {
+              "text": "The integration via <a href=\"https://aws.amazon.com/bedrock/\">Amazon Bedrock</a> gives DXC OASIS uniform access to a diverse array of foundation models through a single managed interface. These options include <a href=\"https://aws.amazon.com/ai/generative-ai/nova/\">Amazon Nova</a>, Anthropic Claude, Meta Llama, and various open-weight model families. This architectural choice prevents vendor lock-in, enabling engineers to route specific tasks based on cost, latency, and capability requirements without performing complex system rebuilds.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "Amazon Nova",
+                  "url": "https://aws.amazon.com/ai/generative-ai/nova/"
+                }
+              ]
+            },
+            {
+              "text": "According to DXC representatives, operating within complex enterprise environments requires both resilience and choice. By utilizing a shared API gateway, the architecture allows teams to adapt smoothly as frontier technologies continue to evolve over time.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Infrastructure Security and Data Sovereignty",
+          "paragraphs": [
+            {
+              "text": "Maintaining strict data security and regulatory sovereignty was a core requirement for DXC's financial, healthcare, and government tenants. By integrating <a href=\"https://aws.amazon.com/privatelink/\">AWS PrivateLink</a>, all inference traffic remains safely inside the customer's virtual private cloud, bypassing the public internet entirely. Furthermore, customer prompts and completions remain strictly within the established AWS data boundary and are never shared with third-party model providers or used to train underlying models.",
+              "links": [
+                {
+                  "text": "AWS PrivateLink",
+                  "url": "https://aws.amazon.com/privatelink/"
+                }
+              ]
+            },
+            {
+              "text": "To enforce stringent content safety policies uniformly across all underlying models, the architecture implements <a href=\"https://aws.amazon.com/bedrock/guardrails/\">Amazon Bedrock Guardrails</a>. These system-level controls handle automatic content filtering, personally identifiable information redaction, and denied-topic enforcement consistently across the entire multi-model ecosystem.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Guardrails",
+                  "url": "https://aws.amazon.com/bedrock/guardrails/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Cloud-Native Infrastructure and Deployment",
+          "paragraphs": [
+            {
+              "text": "The technical implementation of the DXC OASIS agent runtime relies heavily on modern cloud-native components. Requests enter through Route 53 and an Application LoadBalancer deployed inside an <a href=\"https://aws.amazon.com/vpc/\">Amazon Virtual Private Cloud (Amazon VPC)</a>. From there, the agent workloads execute on <a href=\"https://aws.amazon.com/eks/\">Amazon Elastic Kubernetes Service (Amazon EKS)</a> running within private subnets, utilizing per-tenant namespaces and GitOps rollouts.",
+              "links": [
+                {
+                  "text": "Amazon Virtual Private Cloud (Amazon VPC)",
+                  "url": "https://aws.amazon.com/vpc/"
+                },
+                {
+                  "text": "Amazon Elastic Kubernetes Service (Amazon EKS)",
+                  "url": "https://aws.amazon.com/eks/"
+                }
+              ]
+            },
+            {
+              "text": "Additional operational context and knowledge retrieval draw upon services like <a href=\"https://aws.amazon.com/s3/\">Amazon Simple Storage Service (Amazon S3)</a>, AWS Secrets Manager, and Amazon EventBridge. Comprehensive monitoring and logging are maintained across every layer using AWS CloudTrail, Amazon CloudWatch, and OpenTelemetry to ensure absolute auditability for enterprise operators.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "DXC Technology",
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "Cloud Computing",
+        "Enterprise IT",
+        "AWS PrivateLink"
+      ],
+      "entities": [
+        "DXC Technology",
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Amazon Nova",
+        "Anthropic Claude",
+        "Meta Llama"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is written strictly based on the official AWS Machine Learning Blog post detailing DXC Technology's implementation of Amazon Bedrock."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 535,
+      "word_count_en": 551
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "8556616005ab5618b6a1",
+      "title": "How DXC Technology built a multi-model AI substrate on Amazon Bedrock",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 535,
+          "word_count_en": 551
+        }
+      ]
+    }
+  ],
+  "slug": "how-dxc-technology-built-multi-model-ai-substrate-on-amazon-bedrock",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-dxc-technology-built-multi-model-ai-substrate-on-amazon-bedrock/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-dxc-technology-built-multi-model-ai-substrate-on-amazon-bedrock/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-dxc-technology-built-multi-model-ai-substrate-on-amazon-bedrock/social.jpg",
+    "alt": {
+      "ar": "DXC تبني بنية ذكاء اصطناعي متعددة النماذج على Amazon Bedrock",
+      "en": "DXC Technology Builds Multi-Model AI on Amazon Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-21702-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-dxc-technology-built-multi-model-ai-substrate-on-amazon-bedrock/inline-01.webp",
+        "width": 904,
+        "height": 572,
+        "alt": {
+          "ar": "DXC تبني بنية ذكاء اصطناعي متعددة النماذج على Amazon Bedrock",
+          "en": "DXC OASIS architecture: an Amazon EKS agent runtime in a private VPC reaching Amazon Bedrock through AWS PrivateLink"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-dxc-technology-built-a-multi-model-ai-substrate-on-amazon-bedrock/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ml-21702-arch.png"
+      }
+    ]
+  }
 }
