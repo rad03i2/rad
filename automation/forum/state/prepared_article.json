@@ -1,5 +1,397 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-11T18:08:54+00:00",
-  "last_published_story_id": "67907131c6ead6a0f214"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-11T18:14:09+00:00",
+  "target_publish_at": "2026-11-11T21:28:53.268061+03:00",
+  "story": {
+    "title": "How SmileID Scaled Identity Verification to 18,000+ Android Device Types with CameraX",
+    "url": "https://developer.android.com/blog/posts/smileid-camerax-android-identity-verification",
+    "domain": "developer.android.com",
+    "summary": "Identity verification apps for banking and SIM registration require clear, high-resolution face captures to detect spoofing and deepfakes. Capturing frames sharp enough for liveness and anti-spoofing checks, without crashing low-memory devices, is a common challenge for Android camera develope",
+    "published_at": "2026-11-11T00:00:00+00:00",
+    "discovered_at": "2026-11-11T18:07:17+00:00",
+    "source": {
+      "name": "Android Developers",
+      "feed": "https://android-developers.googleblog.com/feeds/posts/default",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 28,
+      "defaultCategory": "mobile"
+    },
+    "category": "apps",
+    "category_label": "التطبيقات والبرامج",
+    "score": 61,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "ca0244e3d958a93360cc",
+    "trend": {
+      "score": 108.91,
+      "age_hours": 18.22,
+      "corroboration_count": 0,
+      "entity_momentum": 12.0,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://developer.android.com/blog/posts/smileid-camerax-android-identity-verification",
+      "name": "Android Developers",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How SmileID Scaled Identity Verification to 18,000+ Android Device Types with CameraX",
+      "title": "How SmileID Scaled Identity Verification to 18,000+ Android Device Types with CameraX | Android Developers' Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "SmileID توسّع التحقق من الهوية عبر CameraX على 18 ألف جهاز أندرويد",
+      "description": "تجاوزت شركة SmileID تحديات تجزئة أجهزة أندرويد عبر اعتماد إطار CameraX، مما رفع دقة التحقق من الهوية بنسبة 20% وسهّل التكامل على أكثر من 18 ألف نوع جهاز في أفريقيا.",
+      "deck": "اعتمدت شركة SmileID على تقنية CameraX لتوحيد تجربة التقاط الصور عبر آلاف الأجهزة المتنوعة، مما حوّل التحديات التقنية إلى ميزة تنافسية قوية في سوق التحقق من الهوية.",
+      "summary_bullets": [
+        "حلّت تقنية CameraX مشاكل التواء الصور وانقطاعات الذاكرة التي كانت تعيق عمل الـ SDK على الأجهزة منخفضة المواصفات.",
+        "ارتفعت نسبة نجاح عمليات التحقق بنسبة 20% بفضل تحسين جودة الصور المستخرجة دون زيادة حجم البيانات المرسلة.",
+        "شهدت اعتمادية الـ SDK نمواً هائلاً بلغ 15 ضعفاً في السنة الأولى و20 ضعفاً في السنة الثانية بعد التحديث.",
+        "تمت معالجة أكثر من 160 مليون عملية تحقق من الهوية بنجاح باستخدام البنية الجديدة المعتمدة على CameraX."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي تجزئة الأجهزة في أفريقيا",
+          "paragraphs": [
+            {
+              "text": "تواجه تطبيقات التحقق من الهوية، خاصة تلك المستخدمة في البنوك وتسجيل خطوط الهاتف، تحدياً كبيراً يتمثل في الحاجة إلى صور واضحة وعالية الدقة للوجه لكشف محاولات الاحتيال والصور العميقة (Deepfakes). وفي أفريقيا، حيث تمثل أجهزة أندرويد 85% من حصة سوق الأجهزة المستهدفة لدى شركة SmileID، يتضاعف هذا التحدي بسبب تنوع الأجهزة، بدءاً من الهواتف الاقتصادية ذات المعالجات المحدودة وصولاً إلى أجهزة نقاط البيع المخصصة.",
+              "links": [
+                {
+                  "text": "SmileID",
+                  "url": "https://usesmileid.com/"
+                }
+              ]
+            },
+            {
+              "text": "قبل الانتقال إلى إطار CameraX، واجه فريق التطوير في SmileID عقبات هندسية شائعة لكنها معقدة، مثل إطارات المعاينة الممتدة، واتجاهات مستشعرات الكاميرا الخاطئة، وأخطاء تخصيصات الشركات المصنعة (OEM). هذه المشاكل كانت تقيد نمو اعتماد الـ SDK سنوياً إلى ما بين ضعف وثلاثة أضعاف فقط، مما اضطر المستخدمين في كثير من الحالات إلى رفع صور ثابتة عبر واجهات برمجية بطيئة بدلاً من إجراء فحوصات حيوية فورية على الجهاز.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "عقبات الواجهات البرمجية القديمة",
+          "paragraphs": [
+            {
+              "text": "تعتمد تقنية التحقق لدى SmileID على التقاط صور سيلفي عالية الدقة لإجراء فحوصات الحيوية على الجهاز وكشف الصور العميقة عبر السحابة. ومع ذلك، كانت الواجهات البرمجية القديمة مثل Camera1 و Camera2 تجعل تحقيق اتساق في جودة الصور أمراً صعباً. فعلى سبيل المثال، كانت أجهزة مختلفة من مصنّعين مختلفين تقرأ اتجاه المستشعر الفيزيائي بشكل متباين، مما يؤدي إلى ظهور صور مائلة أو غير صحيحة التوجيه.",
+              "links": []
+            },
+            {
+              "text": "إضافة إلى مشاكل التوجيه، كانت الأجهزة الاقتصادية تعاني من تشوهات في نسبة العرض إلى الارتفاع، حيث كان طلب حجم إطار معين يؤدي إلى تمدد الصورة رأسياً أو أفقياً، مما يشوه ملامح الوجه ويجعل التحقق البيومتري بلا جدوى. كما كانت معالجة الصور الخام عالية الدقة على أجهزة ذاكرتها 1 غيغابايت أو أقل تسبب في انهيارات قاتلة بسبب نفاد الذاكرة (OOM)، مما كان يهدد استقرار التطبيق بالكامل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إعادة هندسة البنية عبر CameraX",
+          "paragraphs": [
+            {
+              "text": "للتغلب على هذه التحديات، أعادت SmileID هندسة واجهات برمجياتها المحمولة من الصفر باستخدام CameraX، وهو إطار مصمم خصيصاً لتجريد تعقيدات النظام الأساسي وتوفير واجهة مطور متسقة وواعية بدورة حياة التطبيق. اعتمد الفريق على حالتين أساسيتين من حالات استخدام CameraX لبناء خط أنابيب كاميرا مزدوج الغرض: حالة Preview لعرض معاينة حية ومتناسقة الأبعاد لتوجيه المستخدم، وحالة ImageAnalysis لمعالجة الإطارات محلياً في الوقت الفعلي.",
+              "links": [
+                {
+                  "text": "CameraX",
+                  "url": "https://developer.android.com/training/camerax"
+                }
+              ]
+            },
+            {
+              "text": "تسمح حالة ImageAnalysis بإجراء فحوصات الحيوية واكتشاف وجود الوجه في الإطار تلقائياً، مع استخراج إطار السيلفي النهائي بعد التحقق. ولتحقيق تفاصيل حادة ضرورية لكشف الصور العميقة دون التسبب في انهيارات الذاكرة، أضافت الشركة واجهة ResolutionSelector الحديثة إلى إعدادات التحليل. تتيح هذه الواجهة للمطورين طلب دقة مستهدفة وتحديد قاعدة بديلة في حال عدم دعم الجهاز لذلك الحجم، مما يضمن توازناً مثالياً بين جودة الصورة واستهلاك الموارد.",
+              "links": [
+                {
+                  "text": "ImageAnalysis",
+                  "url": "https://developer.android.com/media/camera/camerax/analyze"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحسين جودة الصور وكفاءة البيانات",
+          "paragraphs": [
+            {
+              "text": "من خلال طلب إطارات بكثافة بكسل عالية ومعالجتها محلياً على الجهاز، حققت SmileID زيادة رباعية (4x) في دقة صور السيلفي الملتقطة. ولم يكتفِ الفريق بذلك، بل قام أيضاً بضغط منطقة الوجه المقصوصة على الجهاز نفسه، مما حافظ على حجم الرفع الشبكي مطابقاً تماماً للنظام السابق. هذا التصميم المعماري يضمن توفير بيانات أكثر حدة لنماذج التعلم الآلي دون زيادة تكاليف البيانات الخلوية على المستخدمين، وهو عامل حاسم في الأسواق الناشئة.",
+              "links": []
+            },
+            {
+              "text": "يعتمد هذا النهج على طبقتين من هندسة التوافق للحفاظ على استقرار الـ SDK عبر الأجهزة المختلفة. أولاً، تدعم Google توافق CameraX من خلال اختبارات عتادية فيزيائية مستمرة في مختبر الكاميرا والإعلام الخاص بها، حيث تعمل مجموعة اختبارات آلية يومياً على أكثر من 190 نموذجاً فيزيائياً من أجهزة أندرويد، تغطي شرائح معالجة وأنظمة تشغيل وقدرات عتادية متنوعة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معالجة أخطاء الأجهزة تلقائياً",
+          "paragraphs": [
+            {
+              "text": "ثانياً، تتعامل CameraX مع القيود الفيزيائية المختلفة للأجهزة من خلال فئات داخلية مخصصة لأخطاء الأجهزة (Device Quirks). عندما يكتشف الإطار جهازاً يعاني من مشكلة معروفة، مثل عجز عن ضبط التعريض الضوئي أو بيانات صورة معكوسة، يقوم تلقائياً بحقن حل بديل مخصص. بالنسبة لـ SmileID، meant هذا أن الـ SDK يعمل بشكل موثوق عبر أكثر من 18,000 نوع من أجهزة أندرويد دون الحاجة إلى تضمين تصحيحات مخصصة لكل جهاز في قاعدة الكود الخاصة بهم.",
+              "links": []
+            },
+            {
+              "text": "هذا المستوى من التوحيد القياسي خفف العبء عن مطوري التطبيقات الخارجية الذين يدمجون الـ SDK. فبإزالة تشوهات نسبة العرض إلى الارتفاع، وتأخيرات المعاينة، وانهيارات الذاكرة المفاجئة، ارتفعت نسبة نجاح عمليات التحقق بنسبة 20% للخدمات التي تستخدم الـ SDK. بالنسبة للمؤسسات المالية وتطبيقات الأموال المتنقلة في أفريقيا، يمثل هذا الارتفاع مئات الآلاف من المستخدمين الشرعيين الذين يتم تفعيل حساباتهم بنجاح بدلاً من انسحابهم بسبب أخطاء تقنية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نمو الاعتمادية والأدوات الجديدة",
+          "paragraphs": [
+            {
+              "text": "لاحظ المطورون سهولة دمج الـ SDK المعتمد على CameraX، مما أطلق موجة اعتماد هائلة بلغت 15 ضعفاً في السنة الأولى، وارتفعت إلى 20 ضعفاً في السنة الثانية. وحتى الآن، نجحت SmileID في معالجة أكثر من 160 مليون عملية تحقق من الهوية باستخدام هذه البنية الجديدة. وفي خطوة لدعم مجتمع المطورين، أطلقت Android مهارة CameraX لوكلاء البرمجة بالذكاء الاصطناعي، والتي تساعد في تطبيق أنماط CameraX الحديثة للترحيل وإدارة دورة الحياة والتحليل الآلي، مما يسهل توليد كود جاهز للإنتاج.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "SmileID",
+        "CameraX",
+        "أندرويد",
+        "التحقق من الهوية",
+        "التطوير",
+        "الذكاء الاصطناعي",
+        "أفريقيا"
+      ],
+      "entities": [
+        "SmileID",
+        "Google",
+        "Android",
+        "CameraX",
+        "Camera1",
+        "ImageAnalysis"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال يعتمد حصرياً على البيانات والتقارير الرسمية المقدمة في المصدر، مع التركيز على الجوانب التقنية والأثر التجاري المعلن."
+    },
+    "en": {
+      "title": "How SmileID Scaled Identity Verification with CameraX",
+      "description": "Discover how identity verification provider SmileID scaled its Android SDK across 18,000+ device types and boosted adoption using CameraX.",
+      "deck": "Identity verification provider SmileID has successfully scaled its mobile SDK across a fragmented hardware ecosystem by migrating to modern Android camera tools.",
+      "summary_bullets": [
+        "SmileID migrated its core Android SDKs to CameraX to handle severe device fragmentation across Africa.",
+        "The transition helped the company support over 18,000 distinct Android device types without writing custom patches.",
+        "Using CameraX tools like ImageAnalysis and ResolutionSelector increased selfie resolution by 4x without causing out-of-memory crashes.",
+        "The engineering upgrade resulted in a 20% increase in verification pass rates and a significant surge in SDK adoption."
+      ],
+      "sections": [
+        {
+          "heading": "Tackling Fragmentation in African Markets",
+          "paragraphs": [
+            {
+              "text": "Identity verification applications utilized for digital banking and mobile SIM registrations must capture clear, high-resolution face images to accurately detect deepfakes and spoofing attempts. For SmileID, a leading identity verification software development kit provider in Africa, this challenge is significantly compounded by a diverse and fragmented hardware ecosystem. Android accounts for 85% of SmileID’s target device market share, encompassing budget smartphones with constrained processors, obscure regional hardware, and ruggedized custom point-of-sale terminals. Before turning to modern development libraries, the engineering team faced severe hurdles that limited their year-over-year growth.",
+              "links": [
+                {
+                  "text": "SmileID",
+                  "url": "https://usesmileid.com/"
+                }
+              ]
+            },
+            {
+              "text": "Under legacy Camera1 and low-level camera APIs, maintaining consistent performance across various manufacturers proved difficult. Issues included stretched preview feeds, rotated physical sensor orientations, out-of-memory crashes on low-RAM hardware, and unexpected original equipment manufacturer bugs. Because of these persistent technical barriers, verification flows often had to fall back to uploading static photos over a high-latency REST API instead of conducting real-time on-device liveness checks.",
+              "links": [
+                {
+                  "text": "legacy Camera1",
+                  "url": "https://developer.android.com/media/camera/camerax/camera1-to-camerax"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Re-engineering Pipelines with CameraX",
+          "paragraphs": [
+            {
+              "text": "To overcome these persistent hardware challenges, SmileID re-engineered its mobile SDKs from the ground up using CameraX, which is specifically designed to abstract away underlying device complexities and provide a consistent, natively lifecycle-aware developer interface. By standardizing their development workflow, the team built a robust dual-purpose camera pipeline capable of handling both user guidance and automated frame analysis simultaneously.",
+              "links": [
+                {
+                  "text": "CameraX",
+                  "url": "https://developer.android.com/training/camerax"
+                },
+                {
+                  "text": "natively lifecycle-aware",
+                  "url": "https://developer.android.com/media/camera/camerax/architecture#lifecycles"
+                }
+              ]
+            },
+            {
+              "text": "The architecture leverages core library use cases to streamline operations. The Preview component renders a perfectly proportioned real-time feed to guide users through the selfie capture process, while the ImageAnalysis component continuously processes local frames in real time. This setup allows the SDK to execute automated liveness checks, perform face-in-frame detection, and extract a verified selfie frame efficiently on the device.",
+              "links": [
+                {
+                  "text": "Preview",
+                  "url": "https://developer.android.com/media/camera/camerax/preview"
+                },
+                {
+                  "text": "ImageAnalysis",
+                  "url": "https://developer.android.com/media/camera/camerax/analyze"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Achieving Stability Across 18,000+ Device Types",
+          "paragraphs": [
+            {
+              "text": "To capture ultra-sharp details for deepfake detection without triggering fatal memory allocation crashes on entry-level hardware, SmileID integrated the ResolutionSelector API directly into its ImageAnalysis configuration. This addition allowed the development team to request high-density pixel frames and process them locally, resulting in a fourfold increase in captured selfie resolution. Simultaneously, the SDK compresses the cropped face region on the device, ensuring that network upload sizes remain identical to previous system iterations.",
+              "links": []
+            },
+            {
+              "text": "Standardizing on the library allowed SmileID to benefit from continuous physical hardware verification performed inside Google's dedicated Camera and Media Test Lab. Furthermore, the framework maintains internal device quirk classes that automatically inject tailored workarounds when encountering known hardware issues. According to company reports, this automated compatibility engineering enabled their SDK to operate reliably across more than 18,000 Android device types without requiring device-specific code modifications.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Business Impact and Adoption Surge",
+          "paragraphs": [
+            {
+              "text": "The technical overhaul delivered immediate, tangible benefits for financial institutions and mobile money applications operating across the African continent. By eliminating aspect ratio distortions, laggy previews, and sudden out-of-memory crashes, SmileID achieved a 20% increase in verification pass rates. For everyday platforms, this improvement translates to hundreds of thousands of legitimate users successfully completing digital onboarding rather than abandoning the process due to technical errors.",
+              "links": [
+                {
+                  "text": "SmileID",
+                  "url": "https://usesmileid.com/"
+                }
+              ]
+            },
+            {
+              "text": "External application developers quickly noticed the improvements in stability and integration ease. The streamlined developer experience triggered a dramatic surge in SDK adoption, climbing significantly within the first two years following the migration. To date, SmileID has successfully processed over 160 million identity verifications using the upgraded camera architecture.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "SmileID",
+        "CameraX",
+        "Android",
+        "Identity Verification",
+        "SDK",
+        "Mobile Development"
+      ],
+      "entities": [
+        "SmileID",
+        "Google",
+        "Android"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence in source facts, direct coverage of the official Android Developers blog post detailing SmileID's migration to CameraX."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 852,
+      "word_count_en": 633
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "ca0244e3d958a93360cc",
+      "title": "How SmileID Scaled Identity Verification to 18,000+ Android Device Types with CameraX",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 852,
+          "word_count_en": 633
+        }
+      ]
+    }
+  ],
+  "slug": "how-smileid-scaled-identity-verification-to-18-000-android-device-types-with",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-smileid-scaled-identity-verification-to-18-000-android-device-types-with/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-smileid-scaled-identity-verification-to-18-000-android-device-types-with/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-smileid-scaled-identity-verification-to-18-000-android-device-types-with/social.jpg",
+    "alt": {
+      "ar": "SmileID توسّع التحقق من الهوية عبر CameraX على 18 ألف جهاز أندرويد",
+      "en": "How SmileID Scaled Identity Verification with CameraX"
+    },
+    "credit": "Android Developers",
+    "sourceUrl": "https://developer.android.com/static/blog/assets/ANDDM_Grab_Strapi_2000x1000_STATIC_1_dbb884ce74_22df0m.webp",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-smileid-scaled-identity-verification-to-18-000-android-device-types-with/inline-01.webp",
+        "width": 631,
+        "height": 1050,
+        "alt": {
+          "ar": "SmileID توسّع التحقق من الهوية عبر CameraX على 18 ألف جهاز أندرويد",
+          "en": "resolution_selector_diagram_vertical.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/smileid-camerax-android-identity-verification",
+        "originalUrl": "https://developer.android.com/static/blog/assets/resolution_selector_diagram_vertical_374522856f_Z2n3DVI.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/how-smileid-scaled-identity-verification-to-18-000-android-device-types-with/inline-02.webp",
+        "width": 1050,
+        "height": 1050,
+        "alt": {
+          "ar": "SmileID توسّع التحقق من الهوية عبر CameraX على 18 ألف جهاز أندرويد",
+          "en": "View Pavlo Stavytskyi's profile"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/smileid-camerax-android-identity-verification",
+        "originalUrl": "https://developer.android.com/static/blog/assets/pavlo_a4e2ec12e9_v4xs2.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/how-smileid-scaled-identity-verification-to-18-000-android-device-types-with/inline-03.webp",
+        "width": 1200,
+        "height": 600,
+        "alt": {
+          "ar": "SmileID توسّع التحقق من الهوية عبر CameraX على 18 ألف جهاز أندرويد",
+          "en": "How SmileID Scaled Identity Verification to 18,000+ Android Device Types with CameraX"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/smileid-camerax-android-identity-verification",
+        "originalUrl": "https://developer.android.com/static/blog/assets/1007_ABL_134_How_Smile_ID_Scaled_Identity_Verification_with_Camera_X_Strapi_788bf73f23_1eG2SV.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/how-smileid-scaled-identity-verification-to-18-000-android-device-types-with/inline-04.webp",
+        "width": 1280,
+        "height": 720,
+        "alt": {
+          "ar": "SmileID توسّع التحقق من الهوية عبر CameraX على 18 ألف جهاز أندرويد",
+          "en": "harun_quote_card_green.png"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/smileid-camerax-android-identity-verification",
+        "originalUrl": "https://developer.android.com/static/blog/assets/harun_quote_card_green_57e4940f8b_1aEyED.webp"
+      }
+    ]
+  }
 }
