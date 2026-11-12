@@ -1,0 +1,312 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "cefd01faa3b987a43682",
+  "slug": "microsoft-recent-windows-updates-cause-sql-server-performance-issues",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/microsoft-recent-windows-updates-cause-sql-server-performance-issues/",
+    "en": "/forum/en/apps/microsoft-recent-windows-updates-cause-sql-server-performance-issues/"
+  },
+  "locales": {
+    "ar": {
+      "title": "مايكروسوفت: تحديثات ويندوز تعطل أداء SQL Server",
+      "description": "أكدت مايكروسوفت أن تحديثات ويندوز الأخيرة تسبب تراجع أداء SQL Server ومشكلات استقرار، وتعمل على طرح تحديث إصلاح خارج الجدول المعتاد.",
+      "deck": "أكدت مايكروسوفت أن تحديثات ويندوز التي صدرت منذ تحديثات أكتوبر الأمنية تؤثر في أداء SQL Server واستقراره. وترتبط المشكلة باتصالات لا تُغلق بعد انتهاء الاستعلامات.",
+      "summaryBullets": [
+        "الخلل يؤثر في استعلامات الخوادم المرتبطة التي تستخدم موفري OLE DB.",
+        "الاتصالات المتراكمة قد تؤدي إلى تراجع الأداء ومشكلات في الاستقرار بمرور الوقت.",
+        "تتأثر إصدارات ويندوز العميل والخادم، بما فيها Windows 10 وWindows 11.",
+        "تعمل مايكروسوفت على تحديث إصلاح خارج الجدول المعتاد خلال الأيام المقبلة.",
+        "يمكن للمسؤولين التواصل مع دعم مايكروسوفت للحصول على إجراء تخفيف مؤقت."
+      ],
+      "sections": [
+        {
+          "heading": "خلل في الاتصالات يضغط على الخوادم",
+          "paragraphs": [
+            {
+              "text": "أعلنت مايكروسوفت أن تحديثات ويندوز المنشورة منذ تحديثات أكتوبر الأمنية تسببت في مشكلات أداء واستقرار لدى SQL Server. ووفق ما أوضحته الشركة في تحديث على لوحة حالة إصدارات ويندوز، يظهر الخلل عندما تنفذ خوادم SQL استعلامات تترك الاتصالات مفتوحة بعد اكتمالها، بدل إغلاقها كما هو متوقع.",
+              "links": [
+                {
+                  "text": "مايكروسوفت",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-recent-windows-updates-cause-sql-server-performance-issues/"
+                }
+              ]
+            },
+            {
+              "text": "تتراكم هذه الاتصالات بمرور الوقت، ما يستهلك موارد الخادم ويؤدي تدريجيًا إلى تراجع الأداء. وقد يلاحظ مسؤولو الأنظمة ارتفاع عدد الاتصالات المفتوحة مع قواعد بيانات خارجية، حتى بعد توقف استعلامات SQL Server المرتبطة التي أنشأتها. ولا يعني توقف الاستعلام أن الاتصالات التابعة له أُغلقت بالفعل، وهو ما يجعل أثر المشكلة يتزايد مع استمرار تشغيل الخدمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاستعلامات المتأثرة ونطاق المشكلة",
+          "paragraphs": [
+            {
+              "text": "بحسب مايكروسوفت، يطال الخلل استعلامات SQL Server المرتبطة التي تستخدم موفري OLE DB للاتصال بقواعد بيانات خارجية. وتشمل الاتصالات المعروفة بتأثرها تلك المتجهة إلى قواعد بيانات Oracle وPostgreSQL، مع احتمال ظهور السلوك نفسه في بيئات تعتمد تكاملات خارجية مشابهة. لذلك يرتبط الأثر بطريقة إعداد الخوادم والاستعلامات، وليس بمجرد تشغيل SQL Server وحده.",
+              "links": []
+            },
+            {
+              "text": "يمتد نطاق التأثير إلى أنظمة ويندوز العميل والخادم. وتشمل الأنظمة العميلة Windows 10 وWindows 11، بينما تمتد أنظمة الخوادم المتأثرة إلى Windows Server 2012 والإصدارات اللاحقة، وفق البيان المنشور عن المشكلة. وقد تختلف حدة الأثر بين البيئات بحسب عدد الاستعلامات المرتبطة ومعدل إنشاء الاتصالات الخارجية والمدة التي تبقى فيها الخدمة قيد التشغيل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إجراءات مؤقتة لكنها ليست حلاً نهائيًا",
+          "paragraphs": [
+            {
+              "text": "قالت الشركة إن مسؤولي الأنظمة قد يتمكنون من إغلاق الاتصالات التي تركها الخلل مفتوحة يدويًا، أو إعادة تشغيل خدمة SQL Server لمعالجة مشكلات الأداء والاستقرار بصورة مؤقتة. إلا أن إعادة تشغيل الخدمة قد تنهي استعلامات نشطة، كما أن الإجراء لا يضمن اختفاء المشكلة؛ إذ يمكن أن تعود الاتصالات إلى التراكم بعد مرور بعض الوقت.",
+              "links": []
+            },
+            {
+              "text": "لهذا السبب، ينبغي التعامل مع هذه الخطوات باعتبارها إجراءات احتواء مؤقتة لا معالجة كاملة للسبب الجذري. وقد تحتاج الفرق التقنية إلى مراقبة عدد الاتصالات المفتوحة وأداء قواعد البيانات بعد تنفيذها، مع الانتباه إلى أثر إغلاق الاتصالات أو إعادة تشغيل الخدمة في العمليات الجارية. ولم تقدم مايكروسوفت في المعلومات المتاحة موعدًا محددًا لكل بيئة، لكنها أقرت بأن المعالجة الحالية قد لا تمنع تكرار الخلل.",
+              "links": []
+            },
+            {
+              "text": "ويمكن لمسؤولي تقنية المعلومات التواصل مع [Microsoft Support for Business](https://support.microsoft.com/contactus) للحصول على إجراء تخفيف يساعد في الحد من الأثر إلى حين توفر الإصلاح. ويعتمد هذا المسار على دعم الشركة للبيئات المتضررة، بدل تطبيق تغييرات غير موثقة على إعدادات قواعد البيانات أو إيقاف الخدمات بصورة عشوائية.",
+              "links": [
+                {
+                  "text": "Microsoft Support for Business",
+                  "url": "https://support.microsoft.com/contactus"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إصلاح خارج الجدول المعتاد قيد الإعداد",
+          "paragraphs": [
+            {
+              "text": "أعلنت مايكروسوفت أنها تعمل على إصدار تحديث ويندوز خارج الجدول المعتاد لمعالجة الخلل، وقالت إن طرحه متوقع خلال الأيام المقبلة. ويعني ذلك أن الإصلاح سيصدر بصورة منفصلة عن دورة التحديث الشهرية المعتادة، بعد اكتمال اختبارات الشركة وتجهيز الحزم الخاصة بالأنظمة المتأثرة.",
+              "links": []
+            },
+            {
+              "text": "حتى وصول التحديث، تحتاج المؤسسات إلى تحديد الخوادم التي تستخدم استعلامات مرتبطة بموفري OLE DB، ومراجعة مؤشرات الاتصالات المفتوحة والأداء والاستقرار. ولا تشير المعلومات المتاحة إلى أن جميع عمليات SQL Server تتأثر بالطريقة نفسها؛ فالمشكلة مرتبطة بالاتصالات الخارجية التي لا تُغلق بعد انتهاء الاستعلامات، ما يجعل اكتشاف البيئات المعنية خطوة مهمة قبل اتخاذ إجراءات تشغيلية واسعة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مشكلات أخرى حديثة تخص SQL Server وويندوز",
+          "paragraphs": [
+            {
+              "text": "تأتي هذه الحادثة بعد مشكلة أخرى كشفت عنها مايكروسوفت في سبتمبر على بعض أجهزة Windows Server 2025. وكانت الشركة قد [shared a temporary workaround](https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-server-2025-changes-may-cause-app-crashes/) لمشكلة مرتبطة بتغييرات حديثة في إدارة الذاكرة عند تفعيل سياسة Windows المسماة Lock Pages in Memory، وقد تؤدي في بعض الحالات إلى إنشاء ملفات تفريغ أعطال لـ SQL Server أو توقف خدمة SQL Server أو إعادة تشغيلها بصورة غير متوقعة.",
+              "links": [
+                {
+                  "text": "shared a temporary workaround",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-server-2025-changes-may-cause-app-crashes/"
+                }
+              ]
+            },
+            {
+              "text": "وشملت الأعراض المذكورة للمشكلة السابقة فشل عمليات صيانة قواعد البيانات، وأخطاء فساد في الذاكرة، واستثناءات انتهاك وصول تحمل رمز الخطأ 0xC0000005. كما أكدت الشركة أخيرًا تقارير عن فشل تثبيت تحديثات الأمان لشهر نوفمبر 2026 على أجهزة Windows 11 التي سبق أن ثُبّت عليها التحديث التجريبي لشهر أكتوبر، مع ظهور رموز أخطاء مثل 0x80070306 و0x800f0989 و0x800f0993. وتظل هذه الوقائع منفصلة عن خلل الاتصالات الحالي، لكنها تعكس تعدد المشكلات التي تتابعها مايكروسوفت في تحديثات ويندوز الأخيرة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "مايكروسوفت",
+        "ويندوز",
+        "SQL Server",
+        "تحديثات الأمان",
+        "قواعد البيانات",
+        "إدارة الأنظمة"
+      ],
+      "entities": [
+        "Microsoft",
+        "SQL Server",
+        "Windows 10",
+        "Windows 11",
+        "Windows Server",
+        "Oracle",
+        "PostgreSQL",
+        "OLE DB"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "12 نوفمبر 2026",
+      "modifiedLabel": "12 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 712
+    },
+    "en": {
+      "title": "Microsoft warns Windows updates hurt SQL Server performance",
+      "description": "Microsoft says Windows updates since October’s Patch Tuesday can leave SQL Server connections open, degrading performance and stability.",
+      "deck": "Microsoft has confirmed that Windows updates released since the October 2026 Patch Tuesday are causing SQL Server performance and stability problems. The company says an out-of-band update is planned within the next few days.",
+      "summaryBullets": [
+        "The bug leaves some linked-server database connections open after queries finish.",
+        "Oracle and PostgreSQL connections using OLE DB providers are among those affected.",
+        "The issue affects Windows client and server systems, including Windows 10, Windows 11 and Windows Server 2012 or later.",
+        "Administrators can contact Microsoft Support for Business for a temporary mitigation."
+      ],
+      "sections": [
+        {
+          "heading": "Open connections degrade SQL Server over time",
+          "paragraphs": [
+            {
+              "text": "Microsoft says recent Windows updates can cause SQL Server linked-server queries to leave connections open after the queries have completed. Instead of closing normally, the connections accumulate and gradually reduce server performance and stability.",
+              "links": []
+            },
+            {
+              "text": "The company described the problem in a Windows release health dashboard update on Wednesday. It said the issue affects linked-server queries that use OLE DB providers to connect SQL Server to external databases, with Oracle and PostgreSQL connections among those known to be affected.",
+              "links": [
+                {
+                  "text": "Windows release health dashboard",
+                  "url": "https://support.microsoft.com/contactus"
+                }
+              ]
+            },
+            {
+              "text": "In affected environments, administrators may see an increasing number of open connections to external databases even when the related SQL Server linked-server queries are no longer running. The growing connection count can eventually affect the performance and stability of the server.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Restarting the service is only temporary",
+          "paragraphs": [
+            {
+              "text": "Microsoft said administrators may be able to close connections left open by the bug manually or restart the SQL service to address performance and stability problems temporarily. However, either approach can terminate active queries, and restarting the service may not provide a lasting solution because the issue can return after some time.",
+              "links": []
+            },
+            {
+              "text": "The company has not yet released the permanent fix. Microsoft said the affected behavior will be addressed through an out-of-band Windows update expected to be released over the next few days. Until then, IT administrators can contact Microsoft Support for Business to request a mitigation for the issue.",
+              "links": [
+                {
+                  "text": "Microsoft Support for Business",
+                  "url": "https://support.microsoft.com/contactus"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Client and server editions are affected",
+          "paragraphs": [
+            {
+              "text": "Microsoft said the SQL Server problem affects both client and server operating systems. The listed client systems are Windows 10 and Windows 11, while the affected server range includes Windows Server 2012 and later.",
+              "links": []
+            },
+            {
+              "text": "The issue follows other recent Windows update problems involving Microsoft server software. In September, Microsoft shared a temporary workaround for SQL Server crashes on some Windows Server 2025 systems after memory management changes.",
+              "links": [
+                {
+                  "text": "temporary workaround",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-server-2025-changes-may-cause-app-crashes/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Earlier Server 2025 bug had different symptoms",
+          "paragraphs": [
+            {
+              "text": "That earlier problem affects SQL Server when the Lock Pages in Memory Windows policy is enabled. Microsoft said it can produce SQL Server crash dumps, cause SQL Server services to stop or restart unexpectedly, and trigger failures during database maintenance operations.",
+              "links": []
+            },
+            {
+              "text": "The same bug may also result in memory corruption errors and access violation exceptions carrying 0xC0000005 error codes. Microsoft’s latest warning concerns a separate connection-management problem affecting linked-server queries after newer Windows updates.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "November updates also face installation failures",
+          "paragraphs": [
+            {
+              "text": "Microsoft also confirmed reports that the November 2026 security updates are failing to deploy on Windows 11 systems where the October preview update has already been installed. Affected users may see error codes 0x80070306, 0x800f0989 or 0x800f0993 during installation.",
+              "links": [
+                {
+                  "text": "November 2026 security updates are failing to deploy",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-confirms-kb5132061-installation-issues-0x80070306-0x800f0989-0x800f0993-errors/"
+                }
+              ]
+            },
+            {
+              "text": "The SQL Server performance issue and the Windows 11 installation failures affect different parts of the update experience, but both were confirmed by Microsoft in the same period. Administrators managing SQL Server environments should monitor open external-database connections and follow Microsoft’s guidance while waiting for the out-of-band update.",
+              "links": [
+                {
+                  "text": "Microsoft",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-recent-windows-updates-cause-sql-server-performance-issues/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Microsoft",
+        "Windows",
+        "SQL Server",
+        "Windows updates",
+        "Windows Server",
+        "Oracle",
+        "PostgreSQL"
+      ],
+      "entities": [
+        "Microsoft",
+        "SQL Server",
+        "Windows 10",
+        "Windows 11",
+        "Windows Server",
+        "Oracle",
+        "PostgreSQL",
+        "OLE DB"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "November 12, 2026",
+      "modifiedLabel": "November 12, 2026",
+      "readMinutes": 3,
+      "wordCount": 566
+    }
+  },
+  "datePublished": "2026-11-12T15:49:37.596483+03:00",
+  "dateModified": "2026-11-12T15:49:37.596483+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/microsoft-recent-windows-updates-cause-sql-server-performance-issues/hero.webp",
+    "card": "/forum/assets/posts/2026/11/microsoft-recent-windows-updates-cause-sql-server-performance-issues/card.webp",
+    "social": "/forum/assets/posts/2026/11/microsoft-recent-windows-updates-cause-sql-server-performance-issues/social.jpg",
+    "alt": {
+      "ar": "مايكروسوفت: تحديثات ويندوز تعطل أداء SQL Server",
+      "en": "Microsoft warns Windows updates hurt SQL Server performance"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/10/21/Windows_headpic.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-recent-windows-updates-cause-sql-server-performance-issues/",
+      "type": "journalism",
+      "title": "Microsoft: Recent Windows updates cause SQL Server performance issues"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/microsoft/microsoft-recent-windows-updates-cause-sql-server-performance-issues",
+  "sourceTitle": "Microsoft: Recent Windows updates cause SQL Server performance issues",
+  "trendScore": 100.82,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-11-12T12:49:37+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/11/microsoft-recent-windows-updates-cause-sql-server-performance-issues.json"
+}
