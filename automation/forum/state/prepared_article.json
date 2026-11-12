@@ -1,5 +1,357 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-12T22:10:40+00:00",
-  "last_published_story_id": "0ca05117dff37c920736"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-12T22:17:48+00:00",
+  "target_publish_at": "2026-11-13T01:30:39.163959+03:00",
+  "story": {
+    "title": "Deploy frontier AI models on AWS Trainium with SGLang-Neuron",
+    "url": "https://aws.amazon.com/blogs/machine-learning/deploy-frontier-ai-models-on-aws-trainium-with-sglang-neuron",
+    "domain": "aws.amazon.com",
+    "summary": "SGLang-Neuron is now publicly available through an AWS Deep Learning Container. With SGLang-Neuron, you can serve models and generate reinforcement learning rollouts with SGLang on AWS Trainium using the same SGLang interface you already know, all running on native PyTorch.",
+    "published_at": "2026-11-12T22:03:34+00:00",
+    "discovered_at": "2026-11-12T22:07:40+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 69,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "87d176270cb26539c898",
+    "trend": {
+      "score": 123.42,
+      "age_hours": 0.23,
+      "corroboration_count": 0,
+      "entity_momentum": 15.51,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/deploy-frontier-ai-models-on-aws-trainium-with-sglang-neuron/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Deploy frontier AI models on AWS Trainium with SGLang-Neuron",
+      "title": "Deploy frontier AI models on AWS Trainium with SGLang-Neuron | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تطلق SGLang-Neuron لتشغيل نماذج الذكاء الاصطناعي على AWS Trainium",
+      "description": "أعلنت أمازون عن إتاحة SGLang-Neuron علنياً عبر حاوية تعلم عميق، مما يتيح تقديم نماذج الذكاء الاصطناعي وتوليد بيانات التعلم المعزز على شرائح AWS Trainium باستخدام واجهة مألوفة.",
+      "deck": "أصبحت أداة SGLang-Neuron متاحة للجمهور، مما يسهّل نشر نماذج الذكاء الاصطناعي المتقدمة على بنية أمازون السحابية.",
+      "summary_bullets": [
+        "إتاحة SGLang-Neuron علنياً عبر حاوية AWS Deep Learning Container.",
+        "تعمل الأداة على PyTorch الأصلي مع دعم خاص لشريحة AWS Trainium.",
+        "تدعم تقنية فصل المعالجة (PD Disaggregation) لتحسين كفاءة تقديم النماذج.",
+        "تتيح توليد بيانات التعلم المعزز (RL Rollouts) باستخدام نفس واجهة SGLang المعروفة."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق رسمي لتقنية جديدة",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة أمازون رسمياً عن إتاحة أداة SGLang-Neuron للجمهور، وهي حل برمجي يهدف إلى تسهيل تشغيل نماذج الذكاء الاصطناعي المتقدمة على شرائح AWS Trainium. تأتي هذه الخطوة بالتعاون بين RadixArk ومختبرات Annapurna Labs التابعة لأمازون، حيث أصبحت الأداة متاحة عبر حاوية تعلم عميق (Deep Learning Container) مخصصة. تتيح هذه التقنية للمطورين تقديم النماذج وتوليد بيانات التعلم المعزز باستخدام نفس واجهة SGLang التي اعتادوا عليها، مما يقلل من منحنى التعلم ويضمن استمرارية العمليات البرمجية الحالية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية التحتية والتقنية",
+          "paragraphs": [
+            {
+              "text": "تعتمد SGLang-Neuron على تصميم إضافي خارج الشجرة الرئيسية (Out-of-tree plugin) يربط بين إطار عمل SGLang وشريحة AWS Trainium. عند تثبيت هذا الإضافة، يتم تسجيل منصة Neuron كنقطة دخول عبر نقاط دخول الإضافة في SGLang، مما يسمح للمستخدمين باختيارها عند بدء تشغيل الخادم. يواصل نواة SGLang تقديم خدمات خادم الواجهة البرمجية (API Server) وإدارة دورة حياة الطلبات، بينما يتولى الإضافة تنفيذ العمليات الخاصة بشريحة Trainium، بما في ذلك نماذج الانتباه (Attention) وخلاطات الخبراء (MoE).",
+              "links": [
+                {
+                  "text": "SGLang-Neuron",
+                  "url": "http://github.com/sgl-project/sglang-neuron"
+                }
+              ]
+            },
+            {
+              "text": "من الناحية التقنية، يعتمد النظام على PyTorch الأصلي حيث يقوم TorchNeuron بتسجيل Trainium كجهاز PyTorch أصلي. يستخدم الإضافة عمليات PyTorch القياسية لمسار تنفيذ النموذج، مع دمج نوى (Kernels) مكتوبة باستخدام واجهة نواة Neuron (NKI) لتعزيز الأداء. يتم تجميع هذه العمليات والنوى إلى برامج قابلة للتنفيذ باستخدام torch.compile، مما يسمح لمدير الرسم البياني (Graph Runner) بإعدادها وتنفيذها بكفاءة أثناء تقديم الخدمة.",
+              "links": [
+                {
+                  "text": "TorchNeuron",
+                  "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/torch/index.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات في تقديم النماذج",
+          "paragraphs": [
+            {
+              "text": "تدعم SGLang-Neuron ميزة فصل المعالجة (PD Disaggregation)، وهي تقنية متقدمة لتحسين كفاءة تقديم النماذج الكبيرة. في هذا الإعداد، يقوم خادم المعالجة الأولية (Prefill Server) بحساب ذاكرة KV للموجز (Prompt) ونقلها إلى خادم فك الترميز (Decode Server) باستخدام بروتوكول NIXL عبر مهايئ الألياف المرنة (EFA). بعد ذلك، يتولى خادم فك الترميز توليد الرموز المتبقية. يضمن هذا الفصل أن يستخدم كل خادم مجدول SGLang الخاص به، بينما يدير الإضافة مسار تنفيذ Trainium ونقل ذاكرة KV بشكل مستقل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خطوات التنفيذ العملي",
+          "paragraphs": [
+            {
+              "text": "لبدء استخدام هذه التقنية، يتطلب الأمر تشغيل حاوية SGLang-Neuron على جهاز Amazon EC2 من طراز Trainium3. يتضمن ذلك تشغيل حاوية Docker مخصصة تحتوي على بيئة PyTorch inference-sglang-neuron. بعد بدء الحاوية، يمكن للمستخدمين إطلاق خادم نموذج SGLang داخلها باستخدام أوامر محددة تحدد حجم التوازي (TP) وحجم الخبراء (EP) ونوع ذاكرة KV. توفر هذه العملية بيئة متكاملة لتجربة أداء النماذج على العتاد الجديد دون الحاجة إلى إعادة كتابة الكود البرمجي الأساسي.",
+              "links": []
+            },
+            {
+              "text": "بعد بدء تشغيل الخادم، يمكن إرسال الطلبات إلى نقطة النهاية باستخدام واجهة HTTP القياسية. على سبيل المثال، يمكن إرسال طلب إلى نموذج openai/gpt-oss-120b عبر مسار /v1/chat/completions مع تحديد المعلمات المناسبة مثل درجة الحرارة وعدد الرموز القصوى. توفر هذه البنية السحابية مرونة عالية في إدارة الموارد، مما يسمح للمطورين بتجربة إعدادات مختلفة بسهولة عبر واجهة برمجية موحدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الموارد والدعم",
+          "paragraphs": [
+            {
+              "text": "توفر أمازون ومجتمع SGLang مجموعة من الموارد للمساعدة في بدء الاستخدام. يمكن للمطورين الرجوع إلى دليل البدء السريع (Quickstart) للحصول على تعليمات الإعداد التفصيلية، واستكشاف مستودع المشروع للتعرف على النماذج المدعومة والميزات المتاحة والإعدادات الموثقة. كما تشجع الفرق المعنية على المساهمة في مستودع المشروع ومشاركة الملاحظات، مما يساعد في تشكيل دعم النماذج والميزات المستقبلية بشكل أفضل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "AWS Trainium",
+        "SGLang",
+        "PyTorch",
+        "تقديم النماذج",
+        "الحوسبة السحابية"
+      ],
+      "entities": [
+        "Amazon",
+        "AWS",
+        "SGLang-Neuron",
+        "RadixArk",
+        "Annapurna Labs",
+        "PyTorch",
+        "TorchNeuron"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من المدونة الرسمية لأمازون، مع التركيز على التفاصيل التقنية والإجراءات العملية المذكورة في المصدر."
+    },
+    "en": {
+      "title": "SGLang-Neuron Publicly Available on AWS Trainium",
+      "description": "SGLang-Neuron is now publicly available in an AWS Deep Learning Container, allowing users to serve frontier AI models and generate RL rollouts on AWS Trainium.",
+      "deck": "Amazon has announced the public availability of SGLang-Neuron via an AWS Deep Learning Container, enabling users to serve frontier AI models and generate reinforcement learning rollouts on AWS Trainium using native PyTorch.",
+      "summary_bullets": [
+        "SGLang-Neuron is publicly available through an AWS Deep Learning Container released by RadixArk in collaboration with Annapurna Labs.",
+        "Users can serve models and generate reinforcement learning rollouts on AWS Trainium using the familiar SGLang interface running on native PyTorch.",
+        "The out-of-tree plugin design allows Trainium support and SGLang core to develop independently and iterate faster.",
+        "The platform supports advanced features like PD disaggregation, utilizing NIXL over Elastic Fabric Adapter (EFA) for prompt KV cache transfers."
+      ],
+      "sections": [
+        {
+          "heading": "Public Availability of SGLang-Neuron",
+          "paragraphs": [
+            {
+              "text": "Amazon announced that SGLang-Neuron is publicly available and accessible through an AWS Deep Learning Container. The container was released by RadixArk in collaboration with Annapurna Labs to provide streamlined deployment options for machine learning workloads.",
+              "links": []
+            },
+            {
+              "text": "With SGLang-Neuron, developers can serve models and generate reinforcement learning (RL) rollouts directly on AWS Trainium using the same SGLang interface they already know. AWS Trainium is a portfolio of AWS AI chips designed to deliver strong economic value for large-scale AI training and inference operations.",
+              "links": [
+                {
+                  "text": "AWS Trainium",
+                  "url": "https://aws.amazon.com/ai/machine-learning/trainium/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Native PyTorch Integration",
+          "paragraphs": [
+            {
+              "text": "Running SGLang on Trainium adheres to established SGLang workflows, where users launch models through the server interface and invoke endpoints using standard generation APIs. Underneath this user-facing layer, SGLang-Neuron operates entirely on native PyTorch. Its out-of-tree plugin design ensures that Trainium support and SGLang core can evolve and iterate independently.",
+              "links": []
+            },
+            {
+              "text": "The out-of-tree plugin connects SGLang with AWS Trainium by registering the neuron platform through standard plugin entry points. Setting the environment variable SGLANG_PLATFORM=neuron ensures it is selected upon server startup. While SGLang core handles the API server, request lifecycle, RadixAttention, and prefix-cache bookkeeping, the plugin implements Trainium-specific models, attention mechanisms, mixture of experts (MoE) configurations, and graph runners.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Execution Path and Kernel Optimization",
+          "paragraphs": [
+            {
+              "text": "TorchNeuron registers Trainium as a native PyTorch device, allowing SGLang-Neuron to leverage standard PyTorch operations during model execution. To maximize hardware efficiency, the framework incorporates custom kernels written with the Neuron Kernel Interface (NKI) for enhanced performance.",
+              "links": [
+                {
+                  "text": "Neuron Kernel Interface",
+                  "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/nki/index.html"
+                }
+              ]
+            },
+            {
+              "text": "These operations and optimized kernels are compiled into executable programs utilizing torch.compile. The graph runner then prepares and executes these compiled programs seamlessly throughout the model serving lifecycle.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Advanced Features and PD Disaggregation",
+          "paragraphs": [
+            {
+              "text": "In addition to standard serving workflows, SGLang-Neuron supports PD disaggregation configurations. Within this setup, a designated prefill server computes the prompt KV cache and transfers it over to a separate decode server.",
+              "links": [
+                {
+                  "text": "PD disaggregation",
+                  "url": "https://docs.sglang.io/docs/advanced_features/pd_disaggregation"
+                }
+              ]
+            },
+            {
+              "text": "The KV cache transfer relies on NIXL operating across an Elastic Fabric Adapter (EFA). Following the transfer, the decode server finishes generating the remaining tokens. Each server maintains SGLang’s native scheduler and request lifecycle, while the plugin efficiently manages the underlying Trainium execution and cache transfer pathway.",
+              "links": [
+                {
+                  "text": "Elastic Fabric Adapter (EFA)",
+                  "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa-start-nixl.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Getting Started and Deployment Steps",
+          "paragraphs": [
+            {
+              "text": "Deploying models on AWS Trainium using the new framework involves utilizing a Trainium3 Amazon EC2 instance equipped with the appropriate container image. Developers can start the container via a privileged Docker runtime command pointing to the SGLang-Neuron container repository.",
+              "links": [
+                {
+                  "text": "SGLang-Neuron container",
+                  "url": "https://gallery.ecr.aws/neuron/pytorch-inference-sglang-neuron"
+                }
+              ]
+            },
+            {
+              "text": "Once inside the container environment, operators can launch the SGLang model server by specifying the neuron platform environment variable and configuring parameters such as tensor parallel size, expert parallel size, and context lengths. Requests can subsequently be sent to the local server endpoint using standard HTTP utilities like curl for text generation tasks.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS Trainium",
+        "SGLang-Neuron",
+        "PyTorch",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Amazon Web Services"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon",
+        "RadixArk",
+        "Annapurna Labs",
+        "PyTorch"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly based on the official AWS Machine Learning Blog source text regarding the public availability of SGLang-Neuron on AWS Trainium."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 537,
+      "word_count_en": 556
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "a491aa90d650ab2bf91e",
+      "title": "How Amplitude ships product improvements in 1–2 days with OpenAI",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "87d176270cb26539c898",
+      "title": "Deploy frontier AI models on AWS Trainium with SGLang-Neuron",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 537,
+          "word_count_en": 556
+        }
+      ]
+    }
+  ],
+  "slug": "deploy-frontier-ai-models-on-aws-trainium-with-sglang-neuron",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/deploy-frontier-ai-models-on-aws-trainium-with-sglang-neuron/hero.webp",
+    "card": "/forum/assets/posts/2026/11/deploy-frontier-ai-models-on-aws-trainium-with-sglang-neuron/card.webp",
+    "social": "/forum/assets/posts/2026/11/deploy-frontier-ai-models-on-aws-trainium-with-sglang-neuron/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق SGLang-Neuron لتشغيل نماذج الذكاء الاصطناعي على AWS Trainium",
+      "en": "SGLang-Neuron Publicly Available on AWS Trainium"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22453-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/deploy-frontier-ai-models-on-aws-trainium-with-sglang-neuron/inline-01.webp",
+        "width": 1400,
+        "height": 735,
+        "alt": {
+          "ar": "أمازون تطلق SGLang-Neuron لتشغيل نماذج الذكاء الاصطناعي على AWS Trainium",
+          "en": "Architecture of SGLang-Neuron on AWS Trainium, showing SGLang core and the Trainium plugin components"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/deploy-frontier-ai-models-on-aws-trainium-with-sglang-neuron/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22453-1.png"
+      }
+    ]
+  }
 }
