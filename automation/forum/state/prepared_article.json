@@ -1,5 +1,434 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-12T09:49:36+00:00",
-  "last_published_story_id": "c714e30db2986d496e0a"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-12T09:55:49+00:00",
+  "target_publish_at": "2026-11-12T13:09:35.706163+03:00",
+  "story": {
+    "title": "Hackers plant GSocket on Linux servers for persistent access",
+    "url": "https://www.bleepingcomputer.com/news/security/hackers-plant-gsocket-on-linux-servers-for-persistent-access",
+    "domain": "bleepingcomputer.com",
+    "summary": "Multiple threat actors are abusing GSocket, a legitimate open-source remote access tool, to maintain access to Linux servers even after patching the vulnerabilities exploited to gain initial access. [...]",
+    "published_at": "2026-11-12T09:38:00+00:00",
+    "discovered_at": "2026-11-12T09:42:53+00:00",
+    "source": {
+      "name": "BleepingComputer",
+      "feed": "https://www.bleepingcomputer.com/feed/",
+      "type": "journalism",
+      "trust": 0.88,
+      "priority": 22,
+      "defaultCategory": "security"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 43,
+    "verification": {
+      "confidence": 0.88,
+      "reason": "trusted_journalism_single_source",
+      "official": false,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "120f5dd5fa9bf3c43182",
+    "trend": {
+      "score": 88.9,
+      "age_hours": 0.26,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-plant-gsocket-on-linux-servers-for-persistent-access/",
+      "name": "BleepingComputer",
+      "domain": null,
+      "kind": "journalism",
+      "type": "journalism",
+      "feed_title": "Hackers plant GSocket on Linux servers for persistent access",
+      "title": "Hackers plant GSocket on Linux servers for persistent access",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "مهاجمون يستغلون أداة GSocket للبقاء داخل خوادم لينكس",
+      "description": "تشهد خوادم لينكس هجمات متزايدة لزرع أداة GSocket بهدف الحفاظ على الوصول المستدام وتجاوز الجدران النارية والتحكم عن بعد.",
+      "deck": "يعمد مخترقون إلى إساءة استخدام أداة مفتوحة المصدر للوصول عن بُعد لضمان استمرار السيطرة على خوادم لينكس المتضررة حتى بعد ردم الثغرات الأمنية الأساسية.",
+      "summary_bullets": [
+        "تصاعد ملحوظ في نشاط أداة GSocket الخبيثة بنسبة 356.2% بين شهري مارس وأغسطس بحسب بيانات مايكروسوفت.",
+        "تعتمد الهجمات على اتصالات صادرة نحو شبكة الترحيل لتجاوز الجدران النارية وعناوين آي بي وتجنب استخدام خوادم تحكم مركزية.",
+        "استهداف مكثف لتطبيقات الويب وبيئات الاستضافة، وتحديداً تطبيقات بي إتش بي وخوادم سي بانل وأباتشي.",
+        "يلجأ المهاجمون إلى التنكر في شكل خيوط نواة واستخدام مهام كرون لتأمين بقائهم، مع محاولات لاستغلال ثغرة ديرتي فراغ."
+      ],
+      "sections": [
+        {
+          "heading": "استمرار السيطرة عبر أداة GSocket",
+          "paragraphs": [
+            {
+              "text": "تستغل عدة جهات تهديد أداة الوصول عن بُعد المشروعة ومفتوحة المصدر المعروفة باسم GSocket، وذلك بغرض الحفاظ على منفذ وصول دائم داخل خوادم لينكس، حتى بعد أن يقوم المسؤولون بسد الثغرات الأصلية التي استُخدمت للوصول الأولي إلى الأنظمة المستهدفة، وفقاً لما أوردته تقارير تقنية حديثة نُشرت عبر منصة BleepingComputer.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/hackers-plant-gsocket-on-linux-servers-for-persistent-access/"
+                }
+              ]
+            },
+            {
+              "text": "منذ شهر مارس الماضي، لاحظ الباحثون ارتفاعاً ملحوظاً في معدلات رصد الأنشطة الخبيثة المرتبطة بأداة GSocket، وخصوصاً ضمن الهجمات التي تستهدف تطبيقات الويب وبيئات الاستضافة المختلفة، مما دفع الفرق الأمنية إلى مراقبة هذه المؤشرات عن كثب لمواجهة مخاطر التسلل المستدام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية التخفي وتجاوز الجدران النارية",
+          "paragraphs": [
+            {
+              "text": "تتيح أداة GSocket للمهاجمين الوصول إلى الأنظمة الواقعة خلف الجدران النارية أو تقنيات ترجمة عناوين الشبكة، وذلك عبر اعتراض الاتصالات الشبكية واستبدال الاتصال التقليدي بطبقة نقل خاصة تمرر حركة المرور عبر شبكة ترحيل المقابس العالمية المتاحة في مشروع GSocket.",
+              "links": [
+                {
+                  "text": "GSocket",
+                  "url": "http://github.com/hackerschoice/gsocket"
+                }
+              ]
+            },
+            {
+              "text": "بما أن كلا الطرفين يبادران بإجراء اتصالات صادرة نحو شبكة الترحيل، فإن الشبكة تقوم بمطابقتهما وإنشاء جلسة مشفرة من النهاية إلى النهاية. ونتيجة لذلك، يتمكن المهاجم من إعادة الاتصال من دون الحاجة إلى معرفة عنوان آي بي الخاص بالخادم المخترق أو اسم مضيفه، مما يصعب على المدافعين تعطيل الهجمات باستخدام قوائم التحكم في الوصول المستندة إلى النطاقات أو العناوين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مؤشرات رصد مايكروسوفت ومستويات الارتفاع",
+          "paragraphs": [
+            {
+              "text": "أوضحت شركة مايكروسوفت عبر بيانات القياس عن بُعد الخاصة بـ Microsoft Defender for Endpoint أن عمليات الرصد المتعلقة بأداة GSocket قد قفزت بنسبة بلغت 356.2% خلال الفترة الواقعة بين شهري مارس وأغسطس.",
+              "links": []
+            },
+            {
+              "text": "ذكرت تحليلات تفصيلية نشرتها مايكروسوفت أن الخادم المخترق والمشغل يقومان كلاهما بإجراء اتصالات صادرة، مما ألغى الحاجة إلى وجود زارعات تنصت واردة على الخادم، وهو ما يجعل الهجوم أكثر خفاءً وصعوبة في الاكتشاف عبر القواعد التقليدية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قطاعات الاستهداف وطبيعة البيئات المصابة",
+          "paragraphs": [
+            {
+              "text": "أظهرت البيانات المرصودة أن نسبة 87.1% من الحوادث المكتشفة ترتبط ارتباطاً مباشراً بتطبيقات الويب وخدمات الاستضافة. وحازت تطبيقات بي إتش بي وخوادم سي بانل للاستضافة على نصيب الأسد بنسبة بلغت 63.9%، بينما استحوذت خوادم أباتشي على نسبة 24.3% من إجمالي الحالات.",
+              "links": []
+            },
+            {
+              "text": "علاوة على ذلك، تركزت أغلب الأهداف المعرضة لهذا النشاط الخبيث في قطاعات التعليم والبحث العلمي، تليها قطاعات التكنولوجيا والاتصالات، ثم قطاعات التصنيع والجهات الحكومية المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أساليب البقاء وثغرات النواة المرتبطة",
+          "paragraphs": [
+            {
+              "text": "لاحظ الباحثون الأمنيون أن المخترقين يعمدون إلى تمويه أداة GSocket عبر إظهارها على هيئة خيوط نواة، فضلاً عن توظيف مهام كرون وخدمات نظام التشغيل وملفات بدء تشغيل الصدفة بغرض ضمان استمرار البقاء وثبات السيطرة.",
+              "links": []
+            },
+            {
+              "text": "وفي بعض الحالات المرصودة، حاول المهاجمون استغلال الثغرة الأمنية المعروفة باسم ثغرة نواة لينكس في هجوم ديرتي فراغ للحصول على صلاحيات الجذر على المضيف المستهدف.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوصيات الإدارية والوقاية الأمنية",
+          "paragraphs": [
+            {
+              "text": "يوصي الخبراء مسؤولي الأنظمة بضرورة إزالة أداة GSocket والملفات المرتبطة بها من الخوادم التي يُحتمل تعرضها للاختراق، مع التحقق من توقف الاتصالات الصادرة نحو شبكة الترحيل الخاصة بها تماماً.",
+              "links": []
+            },
+            {
+              "text": "كما تنصح الجهات الأمنية بتقييد حركة المرور الصادرة وحصرها في وجهات محددة مسبقاً، وإجراء عمليات تدقيق دورية لمهام كرون وخدمات نظام التشغيل وملفات بدء تشغيل الصدفة للكشف عن أي إضافات مشبوهة، مع الالتزام بتحديث نظام التشغيل والتطبيقات وتثبيت التصحيحات الأمنية اللازمة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "لينكس",
+        "أمن المعلومات",
+        "برمجيات خبيثة",
+        "مايكروسوفت",
+        "ثغرات أمنية"
+      ],
+      "entities": [
+        "GSocket",
+        "Microsoft",
+        "BleepingComputer"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر استناداً حصراً إلى تفاصيل المصادر المعتمدة دون إضافة أي معلومات خارجية أو افتراضات غير موثقة."
+    },
+    "en": {
+      "title": "Hackers Plant GSocket on Linux Servers for Persistent Access",
+      "description": "Multiple threat actors are abusing the legitimate open-source tool GSocket to maintain persistent access to Linux servers, according to recent Microsoft telemetry.",
+      "deck": "Threat actors are increasingly weaponizing a legitimate remote access tool to maintain stealthy, long-term control over compromise environments even after initial vulnerabilities are patched.",
+      "summary_bullets": [
+        "Multiple threat actors are abusing GSocket, a legitimate open-source tool, to maintain persistent access to Linux servers.",
+        "Microsoft Defender for Endpoint telemetry shows GSocket-related detections increased by 356.2% between March and August.",
+        "The tool routes traffic through the Global Socket Relay Network, removing the need for a dedicated command-and-control server.",
+        "Web applications and hosting environments represent 87.1% of detected incidents, with PHP apps, cPanel, and Apache accounting for the vast majority."
+      ],
+      "sections": [
+        {
+          "heading": "Exploiting Legitimate Tools for Persistence",
+          "paragraphs": [
+            {
+              "text": "Multiple threat actors are actively abusing GSocket, a legitimate open-source remote access utility, to maintain persistent access to Linux servers. According to reports detailed by BleepingComputer, this malicious tactic allows unauthorized operators to retain control over target infrastructure even after system administrators patch the underlying vulnerabilities that were originally exploited to gain initial access.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/hackers-plant-gsocket-on-linux-servers-for-persistent-access/"
+                }
+              ]
+            },
+            {
+              "text": "Since March, security analysts have observed a notable increase in malicious GSocket activity. These attacks primarily target web applications and web hosting environments, circumventing traditional perimeter defenses by leveraging the tool's design to bypass standard network hurdles.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "How GSocket Bypasses Traditional Network Defenses",
+          "paragraphs": [
+            {
+              "text": "The GSocket utility is designed to help administrators reach systems that reside securely behind firewalls or Network Address Translation (NAT). It achieves this by intercepting conventional network connections and replacing a program's standard IP-layer communication with its own custom transport layer, which routes all traffic through the Global Socket Relay Network.",
+              "links": []
+            },
+            {
+              "text": "Because both endpoints initiate outbound connections to the relay—which then matches them and brokers an end-to-end encrypted session—an attacker can seamlessly reconnect without needing to know the compromised server's precise IP address or hostname. This clever mechanism severely complicates the work of defenders who rely on IP- or domain-based access control lists to disrupt ongoing intrusions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Surge in Detections and Microsoft Telemetry Insights",
+          "paragraphs": [
+            {
+              "text": "Comprehensive data provided in a report by Microsoft explains how threat actors are weaponizing GSocket to establish stealthy command-and-control channels without requiring dedicated external infrastructure or inbound listener implants.",
+              "links": [
+                {
+                  "text": "Microsoft explains",
+                  "url": "https://www.microsoft.com/en-us/security/blog/2026/11/11/global-socket-how-threat-actors-weaponizing-gsocket-stealthy-c2/"
+                }
+              ]
+            },
+            {
+              "text": "According to Microsoft Defender for Endpoint telemetry, GSocket-related detections surged by an astonishing 356.2% between the months of March and August. Microsoft notes that because both the compromised server and the operator make outbound connections to the relay, inbound firewall rules fail to catch the malicious traffic, though egress filtering and strict outbound monitoring remain effective countermeasures.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Target Industries and Web Hosting Environments",
+          "paragraphs": [
+            {
+              "text": "The telemetry data reveals that web applications and hosting platforms are overwhelmingly targeted, accounting for 87.1% of all detected GSocket incidents. Specifically, PHP web applications and cPanel hosting environments make up 63.9% of these detections, while Apache servers account for an additional 24.3%.",
+              "links": []
+            },
+            {
+              "text": "Regarding target sectors, Microsoft reports that the education and research sector bears the brunt of the malicious GSocket activity. This industry is closely followed by technology and communications firms, manufacturing companies, and various government entities.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Tactics, Techniques, and Privilege Escalation",
+          "paragraphs": [
+            {
+              "text": "During investigations into these persistence mechanisms, security researchers observed attackers disguising GSocket processes as ordinary kernel threads. To ensure the tool survives reboots and system restarts, operators frequently leverage standard administrative utilities such as cron jobs, systemd services, and shell startup files.",
+              "links": []
+            },
+            {
+              "text": "In certain instances, malicious actors went a step further by attempting to exploit the Dirty Frag Linux kernel flaw, tracked as CVE-2026-43284, in an effort to acquire elevated root privileges on the compromised host machine.",
+              "links": [
+                {
+                  "text": "Dirty Frag",
+                  "url": "https://www.bleepingcomputer.com/news/security/new-linux-dirty-frag-zero-day-with-poc-exploit-gives-root-privileges/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Mitigation and Recommended Remediation Steps",
+          "paragraphs": [
+            {
+              "text": "To protect environments from unauthorized GSocket persistence, security experts recommend that system administrators thoroughly inspect their Linux servers. Teams should immediately remove GSocket along with any associated rogue files, and verify that unexpected outbound connections to the relay network have completely ceased.",
+              "links": []
+            },
+            {
+              "text": "Additional defensive measures include restricting outbound network traffic to strictly predetermined destinations, rigorously auditing cron jobs, systemd services, and shell startup files for unauthorized modifications, and ensuring that operating systems and applications are kept fully up to date with the latest security patches.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GSocket",
+        "Linux Security",
+        "Cybersecurity",
+        "Microsoft Defender",
+        "Malware Persistence",
+        "Web Hosting"
+      ],
+      "entities": [
+        "Microsoft",
+        "GSocket",
+        "BleepingComputer"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly based on the provided BleepingComputer source text, incorporating exact details regarding Microsoft telemetry, GSocket mechanics, and mitigation recommendations."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "en:article_too_short"
+      ],
+      "word_count_ar": 584,
+      "word_count_en": 422
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 572,
+      "word_count_en": 653
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "952d2516af2e905436ad",
+      "title": "Control Room: A central system to track and stop model workloads across our research infrastructure",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "f2c9646eac9d4c1ab580",
+      "title": "Congress to call Jensen Huang in to answer for alleged Chinese spy affair",
+      "status": "quality_rejected",
+      "errors": [
+        "en:article_too_short"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "en:sections",
+            "en:article_too_short"
+          ],
+          "word_count_ar": 532,
+          "word_count_en": 378
+        },
+        {
+          "attempt": 2,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 434,
+          "word_count_en": 583
+        },
+        {
+          "attempt": 3,
+          "status": "quality_rejected",
+          "errors": [
+            "en:article_too_short"
+          ],
+          "word_count_ar": 624,
+          "word_count_en": 389
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "story_id": "120f5dd5fa9bf3c43182",
+      "title": "Hackers plant GSocket on Linux servers for persistent access",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "en:article_too_short"
+          ],
+          "word_count_ar": 584,
+          "word_count_en": 422
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 572,
+          "word_count_en": 653
+        }
+      ]
+    }
+  ],
+  "slug": "hackers-plant-gsocket-on-linux-servers-for-persistent-access",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/hackers-plant-gsocket-on-linux-servers-for-persistent-access/hero.webp",
+    "card": "/forum/assets/posts/2026/11/hackers-plant-gsocket-on-linux-servers-for-persistent-access/card.webp",
+    "social": "/forum/assets/posts/2026/11/hackers-plant-gsocket-on-linux-servers-for-persistent-access/social.jpg",
+    "alt": {
+      "ar": "مهاجمون يستغلون أداة GSocket للبقاء داخل خوادم لينكس",
+      "en": "Hackers Plant GSocket on Linux Servers for Persistent Access"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2024/03/05/hand.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/hackers-plant-gsocket-on-linux-servers-for-persistent-access/inline-01.webp",
+        "width": 869,
+        "height": 381,
+        "alt": {
+          "ar": "مهاجمون يستغلون أداة GSocket للبقاء داخل خوادم لينكس",
+          "en": "Attack chain"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "General attack chain Source: Microsoft"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/hackers-plant-gsocket-on-linux-servers-for-persistent-access/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/u/1220909/2026/November/attackchain.jpg"
+      }
+    ]
+  }
 }
