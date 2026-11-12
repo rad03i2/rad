@@ -1,0 +1,332 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "df6566d4fc91840890de",
+  "slug": "build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/",
+    "en": "/forum/en/ai/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تتيح بناء وكلاء ذكاء اصطناعي مستقلين عبر Spring AI",
+      "description": "توفر أمازون ويب سيرفيسز مع Spring AI أدوات لبناء وكلاء ذكاء اصطناعي إنتاجيين في Java، مع دعم استدعاء الأدوات، الذاكرة، والتنسيق متعدد الوكلاء عبر Amazon Bedrock AgentCore.",
+      "deck": "تسعى فرق تطوير Java إلى تجاوز مرحلة النماذج الأولية لبناء أنظمة ذكاء اصطناعي مستقلة وقابلة للتوسع، حيث توفر المنصات الجديدة بنية تحتية جاهزة للإنتاج.",
+      "summaryBullets": [
+        "دمج قدرات Spring AI مع Amazon Bedrock لتسهيل بناء الوكلاء المستقلين بلغة Java.",
+        "دعم أنماط المرونة، الذاكرة طويلة وقصيرة المدى، والتنسيق بين وكلاء متخصصين.",
+        "استخدام Amazon Bedrock AgentCore للنشر والإدارة على نطاق واسع مع بنية تحتية مُدارة.",
+        "تغطية سيناريوهات عملية تشمل مساعد سفر فردي ونظام معالجة مستندات متعدد الوكلاء."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الانتقال من النموذج التجريبي إلى الإنتاج",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق تطوير Java تحديات كبيرة عند نقل وكلاء الذكاء الاصطناعي من مرحلة النموذج التجريبي إلى بيئة الإنتاج. على الرغم من وجود أدوات JVM المتقدمة وأنابيب التكامل المستمر، فإن أطر العمل التقليدية لا تعالج تلقائياً قضايا التوسع، والحوكمة، والأمان، والعمليات التشغيلية. هنا يأتي دور Amazon Bedrock و Spring AI لسد هذه الفجوات، مما يتيح للفرق بناء وكلاء مستقلين قادرين على التخطيط، واستدعاء الأدوات والواجهات البرمجية، والحفاظ على السياق عبر محادثات متعددة الأدوار.",
+              "links": [
+                {
+                  "text": "Spring AI",
+                  "url": "https://spring.io/projects/spring-ai"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مفهوم الوكيل المستقل وقدراته الأساسية",
+          "paragraphs": [
+            {
+              "text": "يتجاوز الذكاء الاصطناعي التوليدي التقليدي تفاعلات الاستجابة المباشرة نحو أنظمة مستقلة تنفذ مهاماً معقدة متعددة الخطوات. يعتمد الوكيل المستقل على ثلاث قدرات رئيسية: التخطيط، حيث يكسر النموذج الهدف إلى خطوات ويعدّلها بناءً على المعلومات الجديدة؛ واستخدام الأدوات، الذي يتيح للنموذج استدعاء دوال خارجية مثل قواعد البيانات والواجهات البرمجية؛ والذاكرة، التي تحافظ على السياق عبر الأدوار والجلسات. على عكس تطبيقات RAG التي تفتقر لحلقة التخطيط، يعمل الوكيل في حلقة موجّهة بالهدف حتى اكتمال المهمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بنية Amazon Bedrock AgentCore",
+          "paragraphs": [
+            {
+              "text": "تقدم أمازون ويب سيرفيسز منصة Amazon Bedrock AgentCore لبناء الوكلاء وتوصيلهم وتحسينهم على نطاق واسع. تتميز هذه المنصة بأنها غير مرتبطة بإطار عمل أو نموذج محدد، مما يسمح للمطورين باستخدام إطار العمل والنموذج الأساسي المفضل لديهم. توفر AgentCore بنية تحتية إنتاجية مُدارة تشمل وقت التشغيل، والذاكرة، وأتمتة المتصفح، وتنفيذ الكود، وإدارة الهوية، مما يسهل نشر الوكلاء وتشغيلهم بكفاءة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مساعد السفر: وكيل فردي متكامل",
+          "paragraphs": [
+            {
+              "text": "يُعد مساعد السفر نقطة البداية الموصى بها لفهم الأنماط الأساسية. يعتمد هذا النظام على تطبيق Spring Boot واحد يوفر نقطتي دخول: عقد AgentCore runtime للتحقق من صحة الطلبات، ونقاط نهاية REST لواجهة المستخدم. ينسق Spring AI المكالمات مع Amazon Bedrock عبر واجهة Converse API، بينما يتم حل استدعاء الأدوات محلياً داخل نفس العملية. يستخدم النظام أحداث الخادم المرسلة (SSE) لبث الرموز إلى العميل، وتوفر ذاكرة AgentCore سياقاً قصير المدى داخل الجلسة وطويل المدى عبر الجلسات، مما يحافظ على تاريخ المحادثة دون حاجة لإدارة حالة خارجية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نظام معالجة المستندات متعدد الوكلاء",
+          "paragraphs": [
+            {
+              "text": "يُظهر نظام معالجة المستندات الذكي (IDP) أنماط الإنتاج على نطاق أوسع من خلال توجيه المستندات عبر خمسة وكلاء متخصصين: محامٍ، رهن عقاري، تأمين، ضرائب، وعام. يقرأ وكيل المصنف كل مستند ويوجهه إلى المختص المناسب، الذي يستخرج بيانات JSON منظمة مع درجات ثقة باستخدام واجهة Converse متعددة الوسائط. تقيّم محرك القواعد تعبيرات SpEL من ملف الإعدادات، وتوجه النتائج ذات الثقة المنخفضة أو تلك التي تتجاوز حدود الأمان إلى مراجعة بشرية، مع إرسال تنبيهات عبر خدمات مثل Amazon Simple Notification Service عند الحاجة.",
+              "links": [
+                {
+                  "text": "Amazon Simple Notification Service",
+                  "url": "https://aws.amazon.com/sns/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات التقنية والبنية التحتية",
+          "paragraphs": [
+            {
+              "text": "يتطلب بناء هذه الأنظمة استخدام Spring Boot 4.1 مع Spring AI 2.0، بالإضافة إلى Docker مع Buildx لبناء صور متعددة المعماريات، وواجهة AWS CLI v2. تعتمد البنية على حاويات ARM64 مُحسنة لمعالجات AWS Graviton، مع استخدام Terraform لتوفير البنية التحتية بشكل معياري. تضمن هذه المكونات أن تكون الوكلاء جاهزين للإنتاج، مع مراعاة أنماط المرونة، والمراقبة، وتسجيلات الأحداث، وصلاحيات IAM بأقل امتيازات ممكنة عبر جميع مراحل المعالجة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Amazon Bedrock",
+        "Spring AI",
+        "Java",
+        "وكلاء AI",
+        "تطوير البرمجيات",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Spring AI",
+        "Amazon Bedrock",
+        "AgentCore",
+        "Java",
+        "AWS Graviton"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "12 نوفمبر 2026",
+      "modifiedLabel": "12 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 538
+    },
+    "en": {
+      "title": "Build Autonomous AI Agents with Amazon Bedrock and Spring AI",
+      "description": "Learn how Java developers can build production-ready autonomous AI agents using Amazon Bedrock and Spring AI with tool calling and memory.",
+      "deck": "Java developers can now leverage Amazon Bedrock and Spring AI to bridge the gap between AI prototypes and production-ready enterprise agentic systems.",
+      "summaryBullets": [
+        "Amazon Bedrock and Spring AI address scalability, governance, security, and operational concerns for JVM-based AI applications.",
+        "Amazon Bedrock AgentCore provides a model-agnostic and framework-agnostic managed infrastructure for deploying and scaling AI agents.",
+        "The official implementation highlights two architectures: a single-agent travel assistant and a multi-agent intelligent document processing system.",
+        "Spring AI integrates AI capabilities using familiar idioms including auto-configuration, dependency injection, and composable advisors."
+      ],
+      "sections": [
+        {
+          "heading": "Bringing Autonomous AI Agents to the JVM",
+          "paragraphs": [
+            {
+              "text": "Enterprise software development heavily relies on Java, with engineering teams utilizing established JVM tooling, operational patterns, and continuous integration pipelines. However, moving AI agents from prototype to production has historically presented challenges because standard agent frameworks often fail to address scalability, security, governance, and operational requirements by default. To solve these hurdles, developers can now combine Amazon Bedrock and Spring AI to build autonomous AI agents capable of planning, executing tool and API calls, and retaining context across multi-turn interactions, as detailed on the AWS Machine Learning Blog.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/"
+                }
+              ]
+            },
+            {
+              "text": "Spring AI brings modern artificial intelligence capabilities directly to the Java Virtual Machine by utilizing familiar enterprise programming patterns. Developers can take advantage of auto-configuration, dependency injection, and composable advisors to construct AI agents using the exact same idioms they already apply when building REST APIs, security layers, and data access components.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Scaling and Managing Agents with Amazon Bedrock AgentCore",
+          "paragraphs": [
+            {
+              "text": "Amazon Bedrock AgentCore serves as a comprehensive platform designed to build, connect, and optimize AI agents at scale regardless of the chosen underlying framework or foundation model. By using AgentCore, engineering teams gain access to essential production infrastructure including managed runtimes, conversation memory, browser automation, secure code execution, and enterprise identity management.",
+              "links": []
+            },
+            {
+              "text": "This framework-agnostic architecture enables developers to integrate specialized components seamlessly. The platform supports robust capabilities that help organizations bridge the gap between experimental prompt-response applications and fully autonomous systems that execute complex multi-step tasks.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Core Capabilities: Planning, Tool Use, and Memory",
+          "paragraphs": [
+            {
+              "text": "While standard chat completion calls can generate natural text, they lack the ability to independently decide subsequent steps, reach out into external enterprise systems, or remember past historical context. Autonomous agents solve this limitation by uniting three distinct pillars: planning, tool use, and memory.",
+              "links": []
+            },
+            {
+              "text": "Through a structured goal-directed loop, an agent evaluates a requested objective, breaks it down into prioritized steps, and continuously updates its execution plan as new information arrives. Beyond text generation, models can select and invoke external tools such as databases, APIs, and code interpreters, while conversation memory preserves short-term session context and long-term history.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architectural Reference and Implementation Patterns",
+          "paragraphs": [
+            {
+              "text": "An end-to-end agentic pipeline encompasses multiple stages ranging from client requests and runtime gateways to input guardrails, classification, specialist routing, tool invocation, and foundation model interaction. Comprehensive resources and example implementations are readily accessible via the official GitHub repository provided by AWS samples.",
+              "links": [
+                {
+                  "text": "GitHub repository",
+                  "url": "https://github.com/aws-samples/sample-build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai.git"
+                }
+              ]
+            },
+            {
+              "text": "The reference architecture relies on modular Terraform for infrastructure provisioning, utilizes ARM64 container images optimized for AWS Graviton, and leverages the Spring AI ChatClient alongside the Amazon Bedrock Converse API to handle high-throughput enterprise workloads.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deployable Systems: Travel Assistant and IDP Multi-Agent Platform",
+          "paragraphs": [
+            {
+              "text": "The implementation framework outlines two distinct deployable systems that demonstrate these concepts in practice. The first is a single-agent travel assistant featuring built-in tool execution for weather lookups and itinerary searches, real-time streaming responses via Server-Sent Events, conversation memory, and resilience patterns.",
+              "links": []
+            },
+            {
+              "text": "The second architecture introduces an intelligent document processing multi-agent platform comprising five specialist agents covering legal, mortgage, insurance, tax, and general workflows. This system routes documents through a classifier, extracts structured JSON data with confidence scores using multimodal capabilities, and applies rules engines to handle alerts and human review queues effectively.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "Spring AI",
+        "Java",
+        "AI Agents",
+        "AWS",
+        "Machine Learning",
+        "Enterprise Software"
+      ],
+      "entities": [
+        "Amazon Bedrock",
+        "Spring AI",
+        "AWS",
+        "Spring Boot"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 12, 2026",
+      "modifiedLabel": "November 12, 2026",
+      "readMinutes": 3,
+      "wordCount": 616
+    }
+  },
+  "datePublished": "2026-11-12T04:49:12.467134+03:00",
+  "dateModified": "2026-11-12T04:49:12.467134+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/hero.webp",
+    "card": "/forum/assets/posts/2026/11/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/card.webp",
+    "social": "/forum/assets/posts/2026/11/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح بناء وكلاء ذكاء اصطناعي مستقلين عبر Spring AI",
+      "en": "Build Autonomous AI Agents with Amazon Bedrock and Spring AI"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-20629-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/inline-01.webp",
+        "width": 1400,
+        "height": 954,
+        "alt": {
+          "ar": "أمازون تتيح بناء وكلاء ذكاء اصطناعي مستقلين عبر Spring AI",
+          "en": "Reference architecture of an agentic pipeline from client request to grounded answer"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-20629-1.jpeg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/inline-02.webp",
+        "width": 1400,
+        "height": 900,
+        "alt": {
+          "ar": "أمازون تتيح بناء وكلاء ذكاء اصطناعي مستقلين عبر Spring AI",
+          "en": "Single-agent travel assistant connecting a Spring Boot application to AgentCore runtime and Amazon Bedrock"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-20629-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/inline-03.webp",
+        "width": 1400,
+        "height": 823,
+        "alt": {
+          "ar": "أمازون تتيح بناء وكلاء ذكاء اصطناعي مستقلين عبر Spring AI",
+          "en": "IDP multi-agent architecture routing documents through specialist agents, a rules engine, and an alert service"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-20629-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/inline-04.webp",
+        "width": 1400,
+        "height": 789,
+        "alt": {
+          "ar": "أمازون تتيح بناء وكلاء ذكاء اصطناعي مستقلين عبر Spring AI",
+          "en": "Three agent collaboration patterns shown side by side: router, evaluator, and parallel fan-out"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-20629-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai/",
+      "type": "official",
+      "title": "Build autonomous AI agents with Amazon Bedrock and Spring AI"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai",
+  "sourceTitle": "Build autonomous AI agents with Amazon Bedrock and Spring AI",
+  "trendScore": 120.89,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-12T01:49:12+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/build-autonomous-ai-agents-with-amazon-bedrock-and-spring-ai.json"
+}
