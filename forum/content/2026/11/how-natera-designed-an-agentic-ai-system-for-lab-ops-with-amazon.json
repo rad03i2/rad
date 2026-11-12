@@ -1,0 +1,340 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "0ca05117dff37c920736",
+  "slug": "how-natera-designed-an-agentic-ai-system-for-lab-ops-with-amazon",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/how-natera-designed-an-agentic-ai-system-for-lab-ops-with-amazon/",
+    "en": "/forum/en/ai/how-natera-designed-an-agentic-ai-system-for-lab-ops-with-amazon/"
+  },
+  "locales": {
+    "ar": {
+      "title": "نظام SWARM الذكي من Natera لعمليات المختبرات",
+      "description": "طورت شركة Natera نظام ذكاء اصطناعي تفاعلي باسم SWARM باستخدام Amazon Bedrock AgentCore لتحسين صيانة الأجهزة الطبية.",
+      "deck": "أعلنت شركة Natera عن تطوير نظام ذكاء اصطناعي تفاعلي باسم SWARM لإدارة وتحسين عمليات المختبرات، محققةً سرعة استجابة فائقة لتذاكر الدعم الفني.",
+      "summaryBullets": [
+        "بناء نظام SWARM الذكي لتقليل أعطال الأجهزة الطبية في مختبرات Natera.",
+        "الاعتماد على Amazon Bedrock AgentCore لإدارة وكلاء الذكاء الاصطناعي الأوتوماتيكي.",
+        "تحقيق سرعة استجابة أسرع بنحو 130 مرة لتذاكر الدعم الفني وتغطية آلية بنسبة 96.2%.",
+        "تطبيق معايير أمان صارمة ومتوافقة مع قانون HIPAA للبيانات السريرية."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الصيانة في المختبرات الطبية",
+          "paragraphs": [
+            {
+              "text": "في شركة Natera، الرائدة في اختبارات الحمض النووي الخلوي، يُعد الحفاظ على عمل أجهزة المختبرات دون انقطاع أمراً بالغ الأهمية لتجنب تعطل معالجة العينات. واجه فريق هندسة المختبرات في الشركة تحديات كبيرة تمثلت في تنوع الأجهزة الدقيقة واختلاف أنماط الأعطال ووثائق الشركات المصنعة، مما جعل الاعتماد على الخبرات الفردية أمراً غير مستدام بعد مغادرة بعض الكفاءات القديمة.",
+              "links": [
+                {
+                  "text": "Natera",
+                  "url": "https://www.natera.com/"
+                }
+              ]
+            },
+            {
+              "text": "مع تلقي أكثر من 65 تذكرة يومياً عبر ثلاثة مسارات في Jira وبمتوسط وقت استجابة أولية بلغ 17.4 ساعة، كانت أعطال الأجهزة تؤخر عينات المختبرات وتقارير المرضى. ولم تكن زيادة عدد المهندسين كافية لمواكبة هذا الحجم، مما استطلب إيجاد حل تقني متقدم للاستجابة السريعة والدقيقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تطوير نظام SWARM الذكي",
+          "paragraphs": [
+            {
+              "text": "لبناء هذا الحل، عمل فريق هندسة المختبرات بقيادة أرييل جيراو مع خدمات أمازون وبهاش لتطوير نظام (SWARM)، وهو نظام ذكاء اصطناعي تفاعلي مصمم لعمليات المختبرات. اختار الفريق منصة Amazon Bedrock AgentCore نظراً لقدراتها المدارة في بناء وتشغيل وكلاء الذكاء الاصطناعي على نطاق واسع.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "حقق نظام SWARM نتائج بارزة تمثلت في سرعة استجابة أولية أسرع بنحو 130 مرة، وتغطية آلية بلغت 96.2 بالمئة عبر تذاكر الدعم الفني، ممامنح المهندسين وصولاً فورياً إلى المعرفة المؤسسية فور وصول التذكرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل النظام والمهام الموزعة",
+          "paragraphs": [
+            {
+              "text": "يعتمد نظام SWARM على تشغيل بيئتين متكاملتين تتشاركان مكتبة مهارات واحدة. يعمل وكيل (swarm-agent) على توليد تقارير تشخيصية منظمة تلقائياً قبل فتح المهندس للتذكرة، بينما يتيح نظام (swarm-hive) للمهندسين التفاعل الفوري، رفع الصور، واستكشاف مسارات تحري الخلل وإصلاحه.",
+              "links": []
+            },
+            {
+              "text": "تتكامل البنية التحتية للنظام مع خدمات إضافية مثل قاعدة بيانات NoSQL المدارة بالكامل Amazon DynamoDB وخدمة طوابير الرسائل Amazon Simple Queue Service (Amazon SQS)، إلى جانب أدوات التتبع والمراقبة لضمان كفاءة الأداء وسرعة المعالجة.",
+              "links": [
+                {
+                  "text": "Amazon DynamoDB",
+                  "url": "https://aws.amazon.com/dynamodb/"
+                },
+                {
+                  "text": "Amazon Simple Queue Service (Amazon SQS)",
+                  "url": "https://aws.amazon.com/sqs/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "البنية الأمنية والامتثال السريري",
+          "paragraphs": [
+            {
+              "text": "نظراً لطبيعة البيئة السريرية الحساسة، اعتمد فريق العمل نموذج نشر خالٍ من المفاتيح الدائمة لتجنب مخاطر تسرب بيانات الاعتماد. تُستخدم بروتوكولات المصادقة المفتوحة وخدمة رموز الأمان لتوليد بيانات اعتماد مؤقتة لكل عملية نشر. كما تم تطبيق سياسات الصلاحيات عبر خدمة AWS Identity and Access Management (IAM) مع عزل الشبكة عبر Amazon Virtual Private Cloud (Amazon VPC).",
+              "links": [
+                {
+                  "text": "AWS Identity and Access Management (IAM)",
+                  "url": "https://aws.amazon.com/iam/"
+                },
+                {
+                  "text": "Amazon Virtual Private Cloud (Amazon VPC)",
+                  "url": "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+                }
+              ]
+            },
+            {
+              "text": "يعمل النظام على خدمات AWS المتوافقة مع قانون قابلية نقل التأمين الصحي والمساءلة (HIPAA)، مع تسجيل عمليات التدقيق واستبعاد أي معلومات تعريف خاصة بالمريض من نماذج اللغة، مما يضمن الامتثال التنظيمي الكامل للمعمل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خط أنابيب المعرفة والتقييم المستمر",
+          "paragraphs": [
+            {
+              "text": "تطلب بناء قاعدة المعرفة الخاصة بالنظام تطوير خط أنابيب مخصص لمعالجة وثائق المعدات التقنية بدلاً من الاعتماد على عمليات الاسترجاع العامة البسيطة. يتم توليد التمثيلات المتجهة للبحث الدلالي، مع استخدام آليات التوليد المعزز بالاسترجاع (RAG) لضمان دقة التشخيص وتقليل الأخطاء التشغيلية.",
+              "links": []
+            },
+            {
+              "text": "من خلال هذه الهندسة المتكاملة، نجحت Natera في سد الفجوة المعرفية الناتجة عن تناوب طاقم العمل، ورفع كفاءة صيانة الأجهزة الطبية الحيوية بشكل مستدام.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Natera",
+        "Amazon Bedrock",
+        "التقنيات الحيوية",
+        "الحوسبة السحابية"
+      ],
+      "entities": [
+        "Natera",
+        "AWS",
+        "Amazon Bedrock AgentCore",
+        "SWARM"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "13 نوفمبر 2026",
+      "modifiedLabel": "13 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 494
+    },
+    "en": {
+      "title": "Natera Builds Agentic AI System for Lab Ops with Bedrock",
+      "description": "Discover how Natera developed SWARM, an agentic AI lab-ops system using Amazon Bedrock AgentCore, achieving faster responses and high ticket coverage.",
+      "deck": "Natera has designed and deployed SWARM, an agentic AI system for lab operations built on Amazon Bedrock AgentCore, dramatically improving support ticket response times and operational coverage.",
+      "summaryBullets": [
+        "Natera built SWARM to capture and deploy institutional lab-operations knowledge at scale.",
+        "The agentic AI system achieved about 130x faster first response times and 96.2% automated coverage.",
+        "SWARM utilizes Amazon Bedrock AgentCore to manage autonomous ticket processing and Jira integration.",
+        "Clinical data security is maintained via HIPAA-eligible AWS services, private subnets, and OIDC authentication."
+      ],
+      "sections": [
+        {
+          "heading": "Transforming Lab Operations with SWARM",
+          "paragraphs": [
+            {
+              "text": "At Natera, a leader in cell-free DNA (cfDNA) testing, equipment downtime directly disrupts critical sample processing. To mitigate this challenge, the lab engineering team worked with AWS to build SWARM (Systematic Workflow Analytics and Resolutions Manager), an agentic AI system designed specifically for lab operations.",
+              "links": [
+                {
+                  "text": "Natera",
+                  "url": "https://www.natera.com/"
+                }
+              ]
+            },
+            {
+              "text": "Prior to implementing the new architecture, Natera handled over 65 support tickets per day across three Jira queues with an average first response time of 17.4 hours. Equipment maintenance relied heavily on the deep individual expertise of senior technicians rather than standardized playbooks, creating operational vulnerabilities when experienced personnel departed.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Leveraging Amazon Bedrock AgentCore",
+          "paragraphs": [
+            {
+              "text": "To address these challenges without continuously expanding headcount, the engineering team turned to Amazon Bedrock AgentCore to autonomously process high-volume support tickets, deeply integrate with existing operational tools like Jira and Confluence, and provide built-in security and observability features.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "According to Ariel Jirau, who led the lab engineering team at Natera, the managed service allowed engineers to focus on diagnostic accuracy rather than infrastructure plumbing, while delivering built-in identity management and the flexibility to swap underlying models.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Dual-Runtime Capabilities",
+          "paragraphs": [
+            {
+              "text": "SWARM relies on two complementary runtimes that share a single unified skill library. The swarm-agent component autonomously generates structured diagnostic reports before a human engineer opens a ticket, whereas engineers use swarm-hive for real-time interactions, image uploads, and troubleshooting exploration.",
+              "links": []
+            },
+            {
+              "text": "The underlying architecture integrates natively with Amazon DynamoDB for managed NoSQL data handling, Amazon Simple Queue Service (Amazon SQS) for message queuing, and AWS X-Ray for distributed tracing and observability.",
+              "links": [
+                {
+                  "text": "Amazon DynamoDB",
+                  "url": "https://aws.amazon.com/dynamodb/"
+                },
+                {
+                  "text": "Amazon Simple Queue Service (Amazon SQS)",
+                  "url": "https://aws.amazon.com/sqs/"
+                },
+                {
+                  "text": "AWS X-Ray",
+                  "url": "https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Security and Clinical Compliance Posture",
+          "paragraphs": [
+            {
+              "text": "Operating within a regulated clinical laboratory environment requires rigorous data governance and security controls. The deployment model utilizes OpenID Connect (OIDC) and AWS Security Token Service (AWS STS) to generate temporary, deployment-scoped credentials, eliminating long-lived access keys in the GitLab CI pipeline.",
+              "links": [
+                {
+                  "text": "AWS Security Token Service (AWS STS)",
+                  "url": "https://docs.aws.amazon.com/STS/latest/APIReference/Welcome.html"
+                }
+              ]
+            },
+            {
+              "text": "Furthermore, infrastructure security is enforced through AWS Identity and Access Management (IAM) for least-privilege permissions, Amazon Virtual Private Cloud (Amazon VPC) with private subnets to isolate network traffic from the public internet, and AWS Secrets Manager for automated 30-day credential rotation.",
+              "links": [
+                {
+                  "text": "AWS Identity and Access Management (IAM)",
+                  "url": "https://aws.amazon.com/iam/"
+                },
+                {
+                  "text": "Amazon Virtual Private Cloud (Amazon VPC)",
+                  "url": "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+                },
+                {
+                  "text": "AWS Secrets Manager",
+                  "url": "https://aws.amazon.com/secrets-manager/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Results and Operational Impact",
+          "paragraphs": [
+            {
+              "text": "The implementation of SWARM has transformed Natera's internal support workflows by capturing institutional lab-operations knowledge and deploying it effectively at scale. The system delivers about 130x faster first response times and achieves 96.2% automated coverage across incoming support tickets.",
+              "links": []
+            },
+            {
+              "text": "Operating on HIPAA-eligible AWS services under a Business Associate Agreement, SWARM ensures that no patient-identifiable information touches the vector index or language model, restricting processed tickets strictly to equipment and workflow metadata.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial Intelligence",
+        "Amazon Bedrock",
+        "Natera",
+        "AWS",
+        "Lab Operations",
+        "Agentic AI",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "Natera",
+        "Amazon Web Services",
+        "AWS",
+        "Amazon Bedrock AgentCore"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 13, 2026",
+      "modifiedLabel": "November 13, 2026",
+      "readMinutes": 3,
+      "wordCount": 499
+    }
+  },
+  "datePublished": "2026-11-13T01:10:39.163959+03:00",
+  "dateModified": "2026-11-13T01:10:39.163959+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-natera-designed-an-agentic-ai-system-for-lab-ops-with-amazon/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-natera-designed-an-agentic-ai-system-for-lab-ops-with-amazon/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-natera-designed-an-agentic-ai-system-for-lab-ops-with-amazon/social.jpg",
+    "alt": {
+      "ar": "نظام SWARM الذكي من Natera لعمليات المختبرات",
+      "en": "Natera Builds Agentic AI System for Lab Ops with Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21653-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-natera-designed-an-agentic-ai-system-for-lab-ops-with-amazon/inline-01.webp",
+        "width": 1400,
+        "height": 781,
+        "alt": {
+          "ar": "نظام SWARM الذكي من Natera لعمليات المختبرات",
+          "en": "SWARM architecture on Amazon Bedrock AgentCore showing the event, agent, context, and observability and delivery layers"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-natera-designed-an-agentic-ai-system-for-lab-ops-with-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21653-1-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-natera-designed-an-agentic-ai-system-for-lab-ops-with-amazon-bedrock-agentcore/",
+      "type": "official",
+      "title": "How Natera designed an agentic AI system for lab ops with Amazon Bedrock AgentCore"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-natera-designed-an-agentic-ai-system-for-lab-ops-with-amazon-bedrock-agentcore",
+  "sourceTitle": "How Natera designed an agentic AI system for lab ops with Amazon Bedrock AgentCore",
+  "trendScore": 127.92,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-12T22:10:39+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/how-natera-designed-an-agentic-ai-system-for-lab-ops-with-amazon.json"
+}
