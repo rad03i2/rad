@@ -1,5 +1,353 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-12T22:30:40+00:00",
-  "last_published_story_id": "87d176270cb26539c898"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-12T22:38:50+00:00",
+  "target_publish_at": "2026-11-13T01:50:39.323370+03:00",
+  "story": {
+    "title": "Migrate to Amazon Bedrock Managed Knowledge Base with your coding agent",
+    "url": "https://aws.amazon.com/blogs/machine-learning/migrate-to-amazon-bedrock-managed-knowledge-base-with-your-coding-agent",
+    "domain": "aws.amazon.com",
+    "summary": "The migration guide in the amazon-bedrock skill helps you migrate a customer-managed Amazon Bedrock knowledge base to a Managed Knowledge Base. Your coding agent plans the move with read-only discovery, creates the new knowledge base or an infrastructure-as-code template alongside the original, and validates retrieval before you cut over.",
+    "published_at": "2026-11-12T16:16:45+00:00",
+    "discovered_at": "2026-11-12T16:23:08+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "91ced6a9bd4fec161932",
+    "trend": {
+      "score": 108.53,
+      "age_hours": 6.36,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/migrate-to-amazon-bedrock-managed-knowledge-base-with-your-coding-agent/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Migrate to Amazon Bedrock Managed Knowledge Base with your coding agent",
+      "title": "Migrate to Amazon Bedrock Managed Knowledge Base with your coding agent | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تتيح هجرة قواعد المعرفة إلى Bedrock عبر وكلاء البرمجة",
+      "description": "توفر أمازون ويب سيرفيسز أداة جديدة في Agent Toolkit تتيح لوكلاء البرمجة تخطيط وتنفيذ هجرة قواعد المعرفة إلى Amazon Bedrock Managed Knowledge Base مع التحقق من الاسترجاع.",
+      "deck": "أعلنت أمازون عن إضافة دليل هجرة جديد يسهّل انتقال فرق التطوير من إدارة قواعد المعرفة يدوياً إلى النموذج المُدار، مع الحفاظ على التحكم في المحتوى والتطبيق.",
+      "summary_bullets": [
+        "أضافت أمازون دليلاً للهجرة في amazon-bedrock skill ضمن Agent Toolkit لمساعدة وكلاء البرمجة على تخطيط الانتقال.",
+        "يتولى النموذج المُدار مهام التخزين والفهرسة والاسترجاع، مما يقلل العبء التشغيلي على الفرق التقنية.",
+        "يوفر النظام ميزات متقدمة مثل الاسترجاع الوكيل (Agentic Retrieval) والتكامل مع AgentCore Gateway.",
+        "تعمل العملية على إنشاء قاعدة معرفة جديدة بجانب الأصلية دون تعديلها، مع التحقق من الأداء قبل تحويل الطلبات."
+      ],
+      "sections": [
+        {
+          "heading": "تسهيل إدارة قواعد المعرفة عبر الوكيل",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق التطوير تحديات كبيرة عند إدارة قواعد المعرفة التقليدية على Amazon Bedrock، حيث يتعين عليهم تخصيص وتخزين متجهات البيانات وضبط نماذج التضمين. لتسهيل هذا العبء، أضافت أمازون دليلاً للهجرة ضمن أداة Agent Toolkit for AWS، مما يتيح لوكلاء البرمجة المساعدة في التخطيط والتنفيذ. يهدف هذا التحديث إلى نقل الفرق من الإدارة اليدوية إلى Amazon Bedrock Managed Knowledge Base، حيث تتولى المنصة مهام التشغيل الأساسية بينما يحتفظ الفريق بالتحكم الكامل في المحتوى والتطبيق المستخدم.",
+              "links": [
+                {
+                  "text": "Agent Toolkit for AWS",
+                  "url": "https://docs.aws.amazon.com/agent-toolkit/latest/userguide/skills.html"
+                },
+                {
+                  "text": "Amazon Bedrock Managed Knowledge Base",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-build-managed.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل دليل الهجرة الآمن",
+          "paragraphs": [
+            {
+              "text": "يعتمد دليل الهجرة على نهج آمن يبدأ بالاكتشاف غير القابل للكتابة (Read-only Discovery)، حيث يخطط الوكيل للتحرك بناءً على إعداداتك الحالية. بعد مراجعة الخطة والموافقة عليها، يقوم الوكيل بإنشاء قاعدة معرفة جديدة أو قالب بنية تحتية كرمز (IaC) بجانب الأصلية دون تعديلها. يضمن هذا النهج استمرار الخدمة الأصلية في معالجة الطلبات أثناء عملية الترحيل والتحقق، مما يقلل المخاطر التشغيلية المرتبطة بتحويل الإنتاج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مزايا النموذج المُدار والاسترجاع المتقدم",
+          "paragraphs": [
+            {
+              "text": "يوفر Amazon Bedrock Managed Knowledge Base ميزات استرجاع متقدمة غير متوفرة في النماذج المُدارة ذاتياً. تشمل هذه الميزات البحث الهجين الذي يجمع بين الكلمات المفتاحية والمطابقة الدلالية، ونموذج إعادة ترتيب مُدار (Managed Reranker) لتحسين دقة النتائج. كما يدعم النظام الاسترجاع الوكيل (Agentic Retrieval) الذي يتعامل مع الأسئلة متعددة الأجزاء ويجري عمليات استرجاع تكرارية، مما يتيح البحث في أكثر من قاعدة معرفة في طلب واحد. هذه الميزات تعزز دقة الإجابات في أنظمة الأسئلة والأجوبة المعقدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع مصادر البيانات والتحكم بالوصول",
+          "paragraphs": [
+            {
+              "text": "يتضمن النظام موصلات أصلية (Native Connectors) لاستيراد المحتوى مباشرة من مصادر مثل Amazon S3 وMicrosoft SharePoint وAtlassian Confluence. بعد المزامنة الكاملة الأولى، تلتقط المزامنات اللاحقة التغييرات فقط، مع وجود حارس حذف يحمي من الإزالة الجماعية العرضية. كما يدعم النظام الوعي بقوائم التحكم في الوصول (ACL)، مما يضمن عودة الاسترجاع فقط لما يمكن للمستخدم المسجل الوصول إليه، مع فحص لحظي للتغييرات في الأذونات عبر بعض الموصلات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع بوابات الوكلاء والسياسات",
+          "paragraphs": [
+            {
+              "text": "يتيح النظام التكامل مع AgentCore Gateway، وهو جزء من Amazon Bedrock AgentCore، مما يعرض قاعدة المعرفة كهدف يمكن لأي عميل يدعم بروتوكول سياق النموذج (MCP) الاستعلام عنه، مع معالجة المصادقة عبر البوابة. بالإضافة إلى ذلك، تتيح السياسات القائمة على الموارد (Resource-based policies) للتطبيقات في حسابات AWS أخرى استخدام قاعدة معرفة فريق واحد، مع تحديد النطاق لكل دور بشكل دقيق. هذه الميزات تعزز قابلية التشغيل البيني وتسهل التعاون بين الفرق المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "اعتبارات التكلفة والبنية التحتية",
+          "paragraphs": [
+            {
+              "text": "توازن أمازون بين سهولة الاستخدام ودقة الاسترجاع والتكلفة في النموذج المُدار. في حين يتطلب النموذج المُدار ذاتياً دفع تكاليف البنية التحتية بشكل منفصل وإدارة كل مرحلة كموارد مستقلة، يجمع النموذج المُدار هذه المراحل في مورد واحد مع تسعير بناءً على الاستخدام الفعلي للتخزين والاسترجاع. هذا النموذج التسعيري قد يناسب قواعد المعرفة المؤسسية التي تعمل بكفاءة منخفضة، حيث يقلل من تكاليف التشغيل الثابتة ويعكس الاستخدام الفعلي فقط.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "Managed Knowledge Base",
+        "AI Agents",
+        "AWS",
+        "Data Migration",
+        "RAG",
+        "Cloud Infrastructure"
+      ],
+      "entities": [
+        "Amazon Web Services (AWS)",
+        "Amazon Bedrock",
+        "Agent Toolkit for AWS",
+        "Amazon S3",
+        "Microsoft SharePoint",
+        "Atlassian Confluence"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستخرجة حصرياً من مدونة أمازون الرسمية، مع التركيز على الميزات التقنية وآلية الهجرة دون إضافة آراء شخصية."
+    },
+    "en": {
+      "title": "Migrate to Amazon Bedrock Managed Knowledge Base",
+      "description": "Learn how to use your coding agent and the Agent Toolkit for AWS to migrate a customer-managed knowledge base to Amazon Bedrock Managed Knowledge Base.",
+      "deck": "A new migration guide in the Agent Toolkit for AWS helps development teams transition customer-managed setups to an Amazon Bedrock Managed Knowledge Base using a coding agent.",
+      "summary_bullets": [
+        "A new migration guide within the amazon-bedrock skill helps teams move customer-managed configurations to an Amazon Bedrock Managed Knowledge Base.",
+        "Coding agents can perform read-only discovery, create new resources or infrastructure-as-code templates alongside originals, and validate retrieval prior to production cutover.",
+        "Managed Knowledge Base automatically handles ingestion, storage, indexing, and retrieval while offering always-on hybrid search.",
+        "Advanced capabilities like agentic retrieval, AgentCore Gateway integration, and resource-based policies become available upon migration."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Managed Knowledge Base Migration",
+          "paragraphs": [
+            {
+              "text": "When utilizing a customer-managed setup on Amazon Bedrock, teams must independently provision and scale vector stores, tune embedding models and index settings, and plan ongoing capacity. To streamline this process, AWS introduced a dedicated migration guide within the Agent Toolkit for AWS to help engineering teams migrate smoothly to an Amazon Bedrock Managed Knowledge Base.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Managed Knowledge Base",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-build-managed.html"
+                }
+              ]
+            },
+            {
+              "text": "The migration guide equips your coding agent with the necessary context to plan the transition step-by-step. Starting with read-only discovery, the agent maps existing configurations and generates a comprehensive plan that teams can review line by line before making any adjustments.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Planning and Execution with Your Coding Agent",
+          "paragraphs": [
+            {
+              "text": "Moving a production knowledge base requires mapping current configurations, creating a replacement, ingesting content, updating retrieval calls, and validating results before switching traffic. The migration guide, found inside the amazon-bedrock skill of the Agent Toolkit for AWS, separates planning from full implementation.",
+              "links": [
+                {
+                  "text": "Agent Toolkit for AWS",
+                  "url": "https://docs.aws.amazon.com/agent-toolkit/latest/userguide/skills.html"
+                }
+              ]
+            },
+            {
+              "text": "Upon receiving approval, the coding agent can create the new knowledge base and its associated data sources directly alongside the original system. Alternatively, the agent can write a migrated infrastructure-as-code template for the pipeline. Content ingestion and application retrieval updates remain under team control, with the agent available to walk developers through each phase.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Advantages of Managed Infrastructure",
+          "paragraphs": [
+            {
+              "text": "AWS recommends utilizing a Managed Knowledge Base to balance ease of use, retrieval accuracy, and operating costs. Under this managed model, Amazon Bedrock handles ingestion, storage, indexing, and retrieval automatically as content volumes grow, and hybrid search combining keyword and semantic matching remains active by default.",
+              "links": []
+            },
+            {
+              "text": "Native connectors allow direct content ingestion from popular platforms. For a comprehensive breakdown of compatible data sources, developers can reference the supported connectors documentation. Furthermore, features like deletion safeguards protect indexed content from accidental bulk removal.",
+              "links": [
+                {
+                  "text": "supported connectors",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-create.html#kb-managed-connectors"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Advanced Security and Retrieval Features",
+          "paragraphs": [
+            {
+              "text": "Migrating opens access to advanced features previously unavailable on customer-managed configurations. Access control list (ACL) awareness ensures that document permissions are respected during retrieval so users only see authorized files, while real-time permission checks catch modifications made since the last sync.",
+              "links": [
+                {
+                  "text": "Access control list (ACL) awareness",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-acl.html"
+                }
+              ]
+            },
+            {
+              "text": "Additional modern capabilities include agentic retrieval for handling multi-part complex questions iteratively across multiple knowledge bases, and seamless integration with AgentCore Gateway to expose the knowledge base as a Model Context Protocol target.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Cross-Account Access and Regional Availability",
+          "paragraphs": [
+            {
+              "text": "Resource-based policies allow applications residing in separate AWS accounts to securely utilize another team's knowledge base by scoping down permissions to specific roles and required actions like retrieval. Teams should verify regional availability to confirm that all required service endpoints support the managed structure.",
+              "links": [
+                {
+                  "text": "Resource-based policies",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-cross-account.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Cost Structures and Cutover Validation",
+          "paragraphs": [
+            {
+              "text": "When evaluating the move, organizations weigh customizability against total cost of ownership. Customer-managed setups require separate provisioning, scaling, and updating for vector and text stores. Conversely, Managed Knowledge Bases meter storage and retrieval directly, making usage-based pricing ideal for low-utilization support or enterprise Q&A systems.",
+              "links": []
+            },
+            {
+              "text": "During the migration process, the original knowledge base continues servicing all live traffic uninterrupted. Teams can validate retrieval accuracy and performance against the new managed resource before executing the final production cutover.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AWS",
+        "Artificial Intelligence",
+        "Knowledge Base",
+        "Coding Agent",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "Amazon Bedrock",
+        "AWS",
+        "Agent Toolkit for AWS"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly reflects the provided AWS Machine Learning Blog source material without introducing outside information."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 529,
+      "word_count_en": 599
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "91ced6a9bd4fec161932",
+      "title": "Migrate to Amazon Bedrock Managed Knowledge Base with your coding agent",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 529,
+          "word_count_en": 599
+        }
+      ]
+    }
+  ],
+  "slug": "migrate-to-amazon-bedrock-managed-knowledge-base-with-your-coding-agent",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/migrate-to-amazon-bedrock-managed-knowledge-base-with-your-coding-agent/hero.webp",
+    "card": "/forum/assets/posts/2026/11/migrate-to-amazon-bedrock-managed-knowledge-base-with-your-coding-agent/card.webp",
+    "social": "/forum/assets/posts/2026/11/migrate-to-amazon-bedrock-managed-knowledge-base-with-your-coding-agent/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح هجرة قواعد المعرفة إلى Bedrock عبر وكلاء البرمجة",
+      "en": "Migrate to Amazon Bedrock Managed Knowledge Base"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-22176-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/migrate-to-amazon-bedrock-managed-knowledge-base-with-your-coding-agent/inline-01.webp",
+        "width": 928,
+        "height": 1050,
+        "alt": {
+          "ar": "أمازون تتيح هجرة قواعد المعرفة إلى Bedrock عبر وكلاء البرمجة",
+          "en": "Flow diagram of a coding agent creating a MANAGED knowledge base alongside the original VECTOR knowledge base, which keeps serving the application until the team validates retrieval and cuts over."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/migrate-to-amazon-bedrock-managed-knowledge-base-with-your-coding-agent/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-22176-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/migrate-to-amazon-bedrock-managed-knowledge-base-with-your-coding-agent/inline-02.webp",
+        "width": 1400,
+        "height": 729,
+        "alt": {
+          "ar": "أمازون تتيح هجرة قواعد المعرفة إلى Bedrock عبر وكلاء البرمجة",
+          "en": "Diagram of migration checkpoints flowing through introduce, identify, discover, and plan, then either directly to handoff or through an optional approved implementation, with Explore mode read-only and the team handling"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/migrate-to-amazon-bedrock-managed-knowledge-base-with-your-coding-agent/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-22176-2.png"
+      }
+    ]
+  }
 }
