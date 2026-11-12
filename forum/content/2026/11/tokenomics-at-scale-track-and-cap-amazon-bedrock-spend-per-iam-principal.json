@@ -1,0 +1,349 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "b8142a42ae71ac2069bd",
+  "slug": "tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal/",
+    "en": "/forum/en/apps/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تتيح تتبع وتقييد إنفاق Bedrock لكل مستخدم عبر CUR 2.0",
+      "description": "تقدم أمازون ويب حلولاً أصلية لتتبع تكاليف الذكاء الاصطناعي في Amazon Bedrock لكل هوية IAM، مع تطبيق حدود إنفاق تلقائية باستخدام AWS Budgets دون الحاجة لكتابة أكواد تطبيقية.",
+      "deck": "توفر أمازون ويب أدوات أصلية لمراقبة وتقييد تكاليف نماذج الذكاء الاصطناعي لكل مستخدم أو فريق، مما يمنح المؤسسات تحكماً دقيقاً في الميزانيات دون تعقيد تقني.",
+      "summaryBullets": [
+        "استخدام وسوم IAM Principal لتخصيص التكاليف لكل مستخدم أو دور بشكل تلقائي.",
+        "تفعيل تقارير CUR 2.0 أو Cost Explorer لعرض بيانات التكلفة التفصيلية.",
+        "تطبيق سياسات رفض تلقائية عبر AWS Budgets عند تجاوز حد الإنفاق المحدد.",
+        "الحل يعتمد على ميزات أمازون الأصلية دون الحاجة لتطوير أكواد مخصصة للحالات الشائعة."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي تتبع تكاليف الذكاء الاصطناعي التوليدي",
+          "paragraphs": [
+            {
+              "text": "يواجه المسؤولون الماليون والتقنيون تحدياً كبيراً في تتبع تكاليف الذكاء الاصطناعي التوليدي، حيث يطلبون عادةً معرفة الإنفاق لكل شخص أو فريق، وإمكانية وضع سقف لهذا الإنفاق، والتكلفة التشغيلية لتحقيق ذلك. في منشور سابق، شرحنا نهجاً مخصصاً يعتمد على AWS IAM Identity Center وAmazon Athena وAWS Lambda، لكنه يتطلب كتابة وإدارة أكواد. يهدف هذا النهج الجديد إلى تقديم رؤية واضحة لتكاليف Amazon Bedrock لكل هوية، مع حدود إنفاق قابلة للتطبيق، باستخدام ميزات أمازون الأصلية فقط دون الحاجة لكتابة أكواد تطبيقية للحالات الشائعة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل: تخصيص، تقرير، وإنفاذ",
+          "paragraphs": [
+            {
+              "text": "يعتمد الحل على ثلاثة مكونات رئيسية: التخصيص، التقرير، والإنفاذ. أولاً، يقوم Amazon Bedrock تلقائياً بتسجيل هوية IAM Principal (المستخدم أو الدور) لكل طلب استدعاء نموذج، دون الحاجة لتعديل استدعاءات النموذج. إذا كان عدة أشخاص يشاركون دوراً واحداً، يمكن إضافة تفاصيل لكل مستخدم باستخدام وسوم الجلسة (Session Tags) عند افتراض الدور. ثانياً، يتم تفعيل هذه الوسوم كوسوم تخصيص تكلفة، ثم قراءة البيانات عبر Cost Explorer للعرض السريع، أو عبر تصدير CUR 2.0 للتحليلات التفصيلية والاستعلامات SQL. ثالثاً، يتم إنشاء ميزانية AWS Budgets مخصصة لـ Amazon Bedrock، مع ربط إجراء يعطل الوصول عبر سياسة رفض (Deny Policy) عند تجاوز العتبة المحددة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات التنفيذ الأولية",
+          "paragraphs": [
+            {
+              "text": "قبل البدء، يجب التأكد من توفر حساب AWS مفعّل فيه وصول نماذج Amazon Bedrock، والصلاحيات اللازمة لوسم IAM Principal، وتفعيل وسوم تخصيص التكلفة، وإنشاء الميزانيات والإجراءات. كما يجب أن يتم الوصول إلى Amazon Bedrock عبر أدوار IAM أو مستخدمين IAM. يُنصح بتكوين واجهة سطر الأوامر AWS CLI، وإنشاء تصدير بيانات CUR 2.0 مع دلو Amazon S3 لاستقبال البيانات، بالإضافة إلى Amazon Athena للاستعلام عن البيانات، وإن كان ذلك اختيارياً للتحليلات المتقدمة. يجب أيضاً التحقق من الوصول إلى وحدة تحكم الفوترة، حيث تُدار هذه الصلاحيات بشكل منفصل عن معظم صلاحيات IAM.",
+              "links": [
+                {
+                  "text": "Amazon Athena",
+                  "url": "https://aws.amazon.com/athena/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الهوية والوسوم",
+          "paragraphs": [
+            {
+              "text": "يعتمد أسلوب الوسوم على تنظيم IAM Principals. إذا كان لكل شخص أو تطبيق دور مستقل، يتم إرفاق وسوم Principal مباشرة بالدور أو المستخدم، وهي وسوم ثابتة. أما إذا كان هناك دور مشترك بين عدة أشخاص، فلا يمكن لوسوم Principal التمييز بينهم، لذا يجب استخدام وسوم الجلسة (Session Tags) التي تُمرر عند افتراض الدور. هذه الوسوم ديناميكية ويمكن أن تختلف بين الجلسات. إذا تشارك وسما الجلسة ووسم Principal نفس المفتاح، فإن وسم الجلسة هو السائد. يجب أن تسمح سياسة الثقة للدور بإجراء sts:TagSession، ويمكن تمرير وسوم الجلسة عبر sts:AssumeRole أو AssumeRoleWithWebIdentity أو AssumeRoleWithSAML، مع ملاحظة أن مزود الهوية يجب أن يربط سمات SAML بسمات PrincipalTag بشكل مستقل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تفعيل وسوم تخصيص التكلفة",
+          "paragraphs": [
+            {
+              "text": "لا تظهر الوسوم في بيانات الفوترة إلا بعد تفعيلها. يجب فتح وحدة تحكم الفوترة وإدارة التكاليف، وتفعيل وسوم تخصيص التكلفة الخاصة بـ IAM Principal في حساب الإدارة (Payer) إذا كان الحساب جزءاً من AWS Organization، حيث لا يمكن لحسابات الأعضاء تفعيلها بشكل مستقل. يظهر مفتاح الوسم في القائمة فقط بعد أن يقوم المبدأ (Principal) بإجراء استدعاء واحد على الأقل لـ Amazon Bedrock، لذا يُنصح بإجراء استدعاء تجريبي إذا كانت القائمة فارغة. قد يستغرق ظهور مفتاح الوسم الجديد للتفعيل حتى 24 ساعة، ثم 24 ساعة أخرى بعد التفعيل قبل أن يبدأ بملء بيانات الفوترة. التفعيل لا يسري بأثر رجعي، لذا يجب تفعيل الوسوم قبل الحاجة للبيانات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إنشاء تصدير بيانات CUR 2.0",
+          "paragraphs": [
+            {
+              "text": "إذا كان Cost Explorer كافياً للتقارير، يمكن تخطي هذه الخطوة. وإلا، يجب إنشاء تصدير CUR 2.0 (Standard) من وحدة تحكم الفوترة، مع اختيار تضمين بيانات تخصيص هوية المتصل (IAM Principal). يجب اختيار Amazon Athena لتكامل بيانات التقرير، مما يحدد صيغة الملف Parquet ويوفر سكربت إعداد في دلو S3. يجب تشغيل سكربت الإعداد مرة واحدة لإنشاء جدول Glue Data Catalog للاستعلام عنه. إذا كان هناك تصدير CUR 2.0 قديم، فلن يتضمن بيانات الهوية بأثر رجعي، لذا يجب إنشاء تصدير جديد. تظهر وسوم Principal والجلسة كأعمدة مسبقة ببادئة iamPrincipal/، والوسوم الموارد ببادئة resourceTags/. توفر أمازون مجموعة استعلامات جاهزة لهذا النمط في مستودع aws-samples.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الإنفاذ التلقائي للميزانيات",
+          "paragraphs": [
+            {
+              "text": "بعد إعداد التقارير، يتم إنشاء ميزانية AWS Budgets موجهة لخدمة Amazon Bedrock، مع تصفية النتائج بناءً على هوية محددة أو قيمة وسم. يتم ربط إجراء الميزانية بسياسة IAM ترفض الوصول (Deny Policy) عند تجاوز العتبة المحددة. هذا يوفر حاجزاً أوتوماتيكياً يقيّد استخدام Amazon Bedrock عند تجاوز حدود الإنفاق المسموح بها، مما يضمن التحكم في التكاليف دون تدخل يدوي مستمر. هذا النهج يجمع بين الرؤية الشاملة للتكاليف لكل هوية والإنفاذ التلقائي، مما يجعل إدارة تكاليف الذكاء الاصطناعي أكثر كفاءة وأقل تعقيداً تقنياً.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون ويب",
+        "Amazon Bedrock",
+        "إدارة التكاليف",
+        "الذكاء الاصطناعي",
+        "AWS Budgets",
+        "CUR 2.0",
+        "أمن السحابة"
+      ],
+      "entities": [
+        "أمازون ويب",
+        "Amazon Bedrock",
+        "AWS Budgets",
+        "CUR 2.0",
+        "IAM Principal",
+        "Cost Explorer",
+        "Amazon Athena"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "12 نوفمبر 2026",
+      "modifiedLabel": "12 نوفمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 765
+    },
+    "en": {
+      "title": "AWS adds per-user Bedrock spending controls",
+      "description": "AWS outlines a native way to track Amazon Bedrock costs by IAM principal and automatically restrict access when spending thresholds are crossed.",
+      "deck": "AWS says organizations can now combine IAM principal attribution, CUR 2.0 or Cost Explorer, and AWS Budgets to monitor and limit Amazon Bedrock spending. The approach is designed to provide identity-level visibility without application code in common cases.",
+      "summaryBullets": [
+        "Amazon Bedrock records the IAM user or role behind each inference request automatically.",
+        "Principal or session tags can add user, team, department, or cost-center detail.",
+        "Cost Explorer provides console reporting, while CUR 2.0 supports detailed SQL analysis.",
+        "AWS Budgets can apply a Deny IAM policy after a configured spending threshold is reached."
+      ],
+      "sections": [
+        {
+          "heading": "AWS targets a core generative AI cost problem",
+          "paragraphs": [
+            {
+              "text": "AWS has outlined a native method for attributing Amazon Bedrock spending to individual IAM principals and enforcing spending limits. The company says the setup can answer three operational questions for organizations expanding generative AI access: how much each person or team spends, whether that spending can be capped, and how much implementation work is required.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "The method combines three AWS capabilities: IAM principal attribution, reporting through AWS Cost Explorer or AWS Cost and Usage Reports (CUR) 2.0, and AWS Budgets with budget actions. Once configured, an organization can produce per-identity cost reports and automatically restrict Amazon Bedrock access when a defined threshold is crossed.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Identity attribution requires no inference-code changes",
+          "paragraphs": [
+            {
+              "text": "Amazon Bedrock records the IAM principal behind every inference request automatically, according to AWS. The principal can be an IAM user or role, and the attribution does not require changes to model inference calls. For organizations that already assign a separate role to each person or application, the existing identity information may provide sufficient visibility in Cost Explorer.",
+              "links": []
+            },
+            {
+              "text": "Organizations using a shared role can add more detail with session tags passed when the role is assumed. These tags can vary by session, allowing a gateway or identity system to identify a user or tenant even when requests use the same role. If a session tag and a principal tag use the same key, the session tag takes precedence for that session.",
+              "links": []
+            },
+            {
+              "text": "The role trust policy must allow sts:TagSession for session tags. AWS lists three supported paths: tags passed with sts:AssumeRole, tags supplied through the https://aws.amazon.com/tags claim in an OpenID Connect token, or PrincipalTag:* attributes mapped into a SAML assertion. Common keys include user, team, Department, CostCenter, and Environment, with up to 50 principal or session tags per IAM user or role.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Tags must be activated for billing data",
+          "paragraphs": [
+            {
+              "text": "Principal and session tags do not appear in billing data until the relevant tag keys are activated as cost allocation tags in the AWS Billing and Cost Management Console. In an AWS Organization, AWS says this activation must be performed in the management account, also known as the payer account; member accounts cannot activate the tags independently.",
+              "links": []
+            },
+            {
+              "text": "A tag key becomes available for activation only after the principal has made at least one Amazon Bedrock call. AWS says a newly applied key may take up to 24 hours to appear in the activation list, followed by up to another 24 hours after activation before it begins populating billing data. Activation is not retroactive by default, so organizations need to enable tags before they require the associated cost history.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Cost Explorer and CUR 2.0 provide reporting options",
+          "paragraphs": [
+            {
+              "text": "For a console-only view, organizations can open AWS Cost Explorer, filter the service to Amazon Bedrock, and group results by an available identity or tag dimension. AWS presents this as the simpler reporting path when the organization does not need detailed line-item analysis or SQL queries.",
+              "links": [
+                {
+                  "text": "AWS Cost Explorer",
+                  "url": "https://aws.amazon.com/aws-cost-management/aws-cost-explorer/"
+                }
+              ]
+            },
+            {
+              "text": "Organizations that need deeper analysis can create a CUR 2.0 Standard export in the Billing and Cost Management console. The export must include caller identity, described by AWS as IAM principal allocation data, and can be integrated with Amazon Athena. With that option selected, the export uses Parquet and delivers a setup script to the designated Amazon S3 bucket.",
+              "links": []
+            },
+            {
+              "text": "The delivered setup script, or the Glue crawler and data-definition language instructions it provides, must be run once to create the Glue Data Catalog table used for queries. AWS notes that the console flow does not create that table automatically. In the export, principal and session tags use columns prefixed with iamPrincipal/, while resource tags use the resourceTags/ prefix.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Budgets can apply an access-deny action",
+          "paragraphs": [
+            {
+              "text": "The enforcement stage uses AWS Budgets. An organization can create a budget scoped to Amazon Bedrock and filter it to a particular identity or tag value. A budget action can then apply a Deny IAM policy after the configured threshold is crossed, creating an automatic guardrail around that principal's Bedrock access.",
+              "links": []
+            },
+            {
+              "text": "This approach differs from a custom enforcement loop because the reporting and restriction mechanism uses AWS-native billing and identity features rather than application code. AWS previously described a custom design built with AWS IAM Identity Center, Amazon Athena over Amazon Bedrock model invocation logs, and AWS Lambda, which provides near-real-time control but requires code that the organization owns and operates.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "What organizations need before setup",
+          "paragraphs": [
+            {
+              "text": "The prerequisites include an AWS account with Amazon Bedrock model access enabled, permission to tag IAM principals, activate cost allocation tags, create data exports, and create budgets and budget actions. Bedrock must be accessed through IAM roles or users, and the AWS Command Line Interface must be configured with appropriate credentials.",
+              "links": []
+            },
+            {
+              "text": "A CUR 2.0 export and an Amazon S3 bucket are optional for organizations that only need Cost Explorer, but they are required for detailed line-item analysis through the export path. Amazon Athena is also optional for querying that export. AWS separately cautions that access to the Billing and Cost Management Console is managed independently from most IAM permissions, so administrators should confirm they have the necessary billing access before starting.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon Bedrock",
+        "AWS Budgets",
+        "CUR 2.0",
+        "IAM",
+        "Cloud costs",
+        "Generative AI"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "AWS Budgets",
+        "AWS Cost and Usage Reports",
+        "AWS Cost Explorer",
+        "IAM"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "November 12, 2026",
+      "modifiedLabel": "November 12, 2026",
+      "readMinutes": 5,
+      "wordCount": 939
+    }
+  },
+  "datePublished": "2026-11-12T23:10:37.855489+03:00",
+  "dateModified": "2026-11-12T23:10:37.855489+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal/hero.webp",
+    "card": "/forum/assets/posts/2026/11/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal/card.webp",
+    "social": "/forum/assets/posts/2026/11/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح تتبع وتقييد إنفاق Bedrock لكل مستخدم عبر CUR 2.0",
+      "en": "AWS adds per-user Bedrock spending controls"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-21962-featured-image-2.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal/inline-01.webp",
+        "width": 1210,
+        "height": 698,
+        "alt": {
+          "ar": "أمازون تتيح تتبع وتقييد إنفاق Bedrock لكل مستخدم عبر CUR 2.0",
+          "en": "Principal tags attached to an IAM role compared with session tags passed at role assumption"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal-with-cur-2-0-and-aws-budgets/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/21962-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal/inline-02.webp",
+        "width": 1286,
+        "height": 698,
+        "alt": {
+          "ar": "أمازون تتيح تتبع وتقييد إنفاق Bedrock لكل مستخدم عبر CUR 2.0",
+          "en": "Two reporting paths, the Cost Explorer console view and a SQL query over the CUR 2.0 export in Amazon Athena"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal-with-cur-2-0-and-aws-budgets/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/21962-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal/inline-03.webp",
+        "width": 1400,
+        "height": 354,
+        "alt": {
+          "ar": "أمازون تتيح تتبع وتقييد إنفاق Bedrock لكل مستخدم عبر CUR 2.0",
+          "en": "AWS Budgets threshold triggering a budget action that attaches a Deny IAM policy"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal-with-cur-2-0-and-aws-budgets/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/21962-3.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal-with-cur-2-0-and-aws-budgets/",
+      "type": "official",
+      "title": "Tokenomics at scale: Track and cap Amazon Bedrock spend per IAM principal with CUR 2.0 and AWS Budgets"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal-with-cur-2-0-and-aws-budgets",
+  "sourceTitle": "Tokenomics at scale: Track and cap Amazon Bedrock spend per IAM principal with CUR 2.0 and AWS Budgets",
+  "trendScore": 127.81,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-12T20:10:38+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/tokenomics-at-scale-track-and-cap-amazon-bedrock-spend-per-iam-principal.json"
+}
