@@ -1,5 +1,354 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-12T02:49:14+00:00",
-  "last_published_story_id": "1340eca528bf94ae2324"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-12T02:53:35+00:00",
+  "target_publish_at": "2026-11-12T06:09:13.127406+03:00",
+  "story": {
+    "title": "Choosing QuePaxa, an unusual consensus algorithm",
+    "url": "https://blog.cloudflare.com/choosing-quepaxa1",
+    "domain": "blog.cloudflare.com",
+    "summary": "Cloudflare is building an experimental consensus service using a never-before-deployed consensus algorithm, QuePaxa. In this post we explain how QuePaxa works and why we chose it.",
+    "published_at": "2026-11-11T14:24:46+00:00",
+    "discovered_at": "2026-11-11T14:28:01+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 61,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "63f2a5048dc79d48cde0",
+    "trend": {
+      "score": 96.15,
+      "age_hours": 12.47,
+      "corroboration_count": 0,
+      "entity_momentum": 0,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/choosing-quepaxa",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Choosing QuePaxa, an unusual consensus algorithm",
+      "title": "Choosing QuePaxa, an unusualÂ consensus algorithm | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "Cloudflare تختار خوارزمية QuePaxa لتجاوز قيود الإجماع التقليدي",
+      "description": "تتبنى Cloudflare خوارزمية الإجماع التجريبية QuePaxa لبناء خدمة Meerkat على نطاق عالمي، لتجنب أعطال الشبكة وتجاوز قيود الخوارزميات التقليدية.",
+      "deck": "تواجه أنظمة الإجماع التقليدية تحديات كبيرة في الشبكات واسعة النطاق، لذا لجأت Cloudflare إلى خوارزمية مبتكرة لا تعتمد على قائد مركزي لضمان الاستقرار.",
+      "summary_bullets": [
+        "أعلنت Cloudflare عن بناء خدمة إجماع تجريبية تسمى Meerkat باستخدام خوارزمية QuePaxa.",
+        "تتجنب الخوارزمية الجديدة الاعتماد على قائد مركزي، مما يجعلها أكثر استقراراً في الشبكات المتقلبة.",
+        "تواجه الخوارزميات التقليدية مثل Raft وPaxos مشاكل في الشبكات واسعة النطاق بسبب تأخر الشبكة.",
+        "توفر QuePaxa استقراراً أفضل في البيئات العالمية حيث تكون الأعطال الشبكية أكثر شيوعاً من أعطال الخوادم."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق خدمة Meerkات وخوارزمية QuePaxa",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Cloudflare مؤخراً عن تطويرها لخدمة إجماع موزعة تجريبية تسمى Meerkat، مصممة لإدارة مستوى التحكم الداخلي العالمي للشركة. تعتمد هذه الخدمة على خوارزمية إجماع جديدة نشرها الباحثون Tennage وBăescu وآخرون في عام 2023، وتُعرف باسم QuePaxa. يمثل هذا الاختيار تحولاً ملحوظاً في استراتيجيات البنية التحتية للشركة، حيث تتجه نحو اعتماد تقنيات غير تقليدية لمواجهة تحديات التوسع العالمي.",
+              "links": [
+                {
+                  "text": "Meerkat",
+                  "url": "https://blog.cloudflare.com/meerkat-introduction/"
+                },
+                {
+                  "text": "QuePaxa",
+                  "url": "https://dl.acm.org/doi/10.1145/3600006.3613150"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "قيود الخوارزميات التقليدية في الشبكات العالمية",
+          "paragraphs": [
+            {
+              "text": "تعتمد معظم أنظمة الإجماع الحالية على خوارزميات راسخة مثل Raft و(Multi-)Paxos أو Viewstamped Replication. بينما تتميز هذه الخوارزميات بفهمها الواسع وتنفيذاتها الناضجة، فإنها تعاني غالباً في الشبكات واسعة النطاق ذات الاتصال المتقلب والتأخير العالي، مثل الإنترنت. تعتمد هذه الأنظمة بشكل حاسم على عملية قائد واحدة متاحة ولاتأخير قابل للتنبؤ. إذا توقف القائد أو واجه تأخيراً غير معتاد أو انقطع اتصاله، فإن النظام بأكمله يتباطأ أو يصبح غير متاح حتى يتم استبدال القائد، وهو سيناريو لا يمكن قبوله في بيئة Meerkat.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحدي: الإجماع على نطاق عالمي",
+          "paragraphs": [
+            {
+              "text": "تُعد Meerkat نظاماً موزعاً تتفق فيه النسخ على سجل مرتب للأحداث، حيث يقرر خوارزمية الإجماع كل حدث. توفر خوارزميات الإجماع ضماناً مهماً بأن الآلات لا تقرر أبداً قيماً متضاربة، مما يضمن عدم انحراف سجلات نسخ Meerkat. تستخدم Meerkat هذا السجل المدعوم بالإجماع لعرض التطبيقات كمخزن مفاتيح-قيم، حيث يمثل كل إدخال في السجل عملية get أو put. على الرغم من أن أنظمة مشابهة مثل Consul وetcd وApache ZooKeeper تعمل بشكل جيد في الشبكات المحلية، إلا أن Meerkat صُمم خصيصاً للنطاق العالمي، حيث قد تكون العناقيد موزعة عبر القارات ومترابطة بروابط تعرض تأخيراً عالياً ومتغيراً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دروس مستفادة من الأعطال السابقة",
+          "paragraphs": [
+            {
+              "text": "شهدت Cloudflare تحديات عملية في عام 2020، حيث تسببت العطل الجزئي في مبدل شبكة أساسي في تدهور أداء نظام مدعوم بالإجماع، مما أدى إلى عمل لوحة التحكم ببطء 80 ضعفاً عن المعتاد لمدة ست ساعات. على الرغم من عدم فقدان أي بيانات، أصبح النظام غير متاح للكتابة حتى تم حل المشكلة. يوضح هذا الحادث أن خوارزمية الإجماع المثالية يجب أن تكون قادرة على تحقيق التقدم رغم ذروات التأخير والاتصالات المكسورة، وليس فقط في حالات تعطل النسخ. في النطاق العالمي، من المرجح أن تنبع الأعطال من الشبكة نفسها وليس من الخوادم الخاصة بالشركة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التدخل التدميري وكشف الأعطال",
+          "paragraphs": [
+            {
+              "text": "تتضمن خوارزميات الإجماع الشائعة، مثل Paxos، آليات يمكن أن تؤدي إلى التدهور في ظروف الشبكة المعادية. في Paxos، عندما يقدم مقترحان أو أكثر مقترحات في نفس الوقت، يمكن أن يتداخل رقم اقتراع أعلى بين المرحلتين، مما يعطل الاقتراحات الأدنى. يُعرف هذا بالتدخل التدميري، حيث تتنافس المقترحات وتتوقف عن التقدم. لتجنب هذا، تضيف الخوارزميات الموزعة مثل Raft وMulti-Paxos مقترحاً خاصاً يسمى القائد، وهو الوحيد الذي يمكنه تقديم المقترحات. هذا يركز القوة في نسخة واحدة، مما يجبر النظام على ترتيب الطلبات المتزامنة وتجنب المنافسة، مع تحقيق القرارات في دورة شبكة واحدة بدلاً من دورتين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مقايضات القيادة واستعادة النظام",
+          "paragraphs": [
+            {
+              "text": "المقايضة في بروتوكولات القيادة هي أن القائد يجب أن يبقى تشغيلياً وقابلاً للوصول. عند فشله أو بطئه أو انقطاعه، يتوقف النظام. يجب على النسخ المتبقية اكتشاف فشل القائد وانتخاب بديل. في Raft، يتم انتخاب قائد جديد من خلال تصويت الأغلبية. إذا شكّت نسخة في فشل القائد، تعلن نفسها مرشحة وتطلب أصواتاً من النسخ الأخرى. إذا وافقت أكثر من نصف النسخ، تصبح المرشحة قائدة جديدة. إذا لم يحدث ذلك، يُعقد انتخاب جديد. يمكن أن تصبح عدة نسخ مرشحة في نفس الوقت، مما يعيد التدخل التدميري إلى النظام عند محاولة المرشحين الحصول على أغلبية الأصوات في نفس الوقت.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "QuePaxa",
+        "Meerkat",
+        "الإجماع الموزع",
+        "البنية التحتية",
+        "الشبكات العالمية"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Meerkat",
+        "QuePaxa",
+        "Raft",
+        "Paxos",
+        "Tennage",
+        "Băescu"
+      ],
+      "article_type": "news",
+      "confidence_note": "النص يعتمد حصرياً على المصدر الرسمي من Cloudflare Blog. تم التأكد من تطابق الروابط المضمنة مع القائمة المسموح بها حرفياً. تم الحفاظ على الدقة التقنية دون إضافة معلومات خارجية."
+    },
+    "en": {
+      "title": "Cloudflare Explains Why It Chose QuePaxa for Meerkat",
+      "description": "Cloudflare details its choice of the experimental QuePaxa algorithm to power its global distributed consensus service, Meerkat.",
+      "deck": "Cloudflare is building an experimental consensus service called Meerkat, utilizing the novel QuePaxa algorithm to handle global network volatility.",
+      "summary_bullets": [
+        "Cloudflare recently announced an experimental distributed consensus service named Meerkat to manage its internal global control plane.",
+        "Meerkat relies on QuePaxa, a never-before-deployed consensus algorithm published by researchers Tennage & Băsescu et al. in 2023.",
+        "Traditional consensus algorithms like Raft and Multi-Paxos often degrade over wide-area networks due to their reliance on a single leader.",
+        "QuePaxa avoids relying on a single leader to make progress, offering better stability despite volatile network connectivity and latency."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Meerkat and QuePaxa",
+          "paragraphs": [
+            {
+              "text": "Cloudflare recently announced Meerkat, an experimental distributed consensus service designed to manage its internal global control plane. According to the team, the service is powered by a new consensus algorithm published by researchers Tennage & Băsescu et al. called QuePaxa (2023).",
+              "links": [
+                {
+                  "text": "Meerkat",
+                  "url": "https://blog.cloudflare.com/meerkat-introduction/"
+                },
+                {
+                  "text": "QuePaxa",
+                  "url": "https://dl.acm.org/doi/10.1145/3600006.3613150"
+                }
+              ]
+            },
+            {
+              "text": "QuePaxa represents an unusual choice for the infrastructure team. While most consensus systems rely on well-established algorithms like Raft, Multi-Paxos, or Viewstamped Replication, these traditional options often struggle in wide-area networks with volatile connectivity and latency, such as the global Internet where Meerkat operates.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The Global Scale Challenge",
+          "paragraphs": [
+            {
+              "text": "Traditional consensus algorithms rely heavily on a single leader process being available and operating with predictable latency. If that leader goes down, experiences higher latency than usual, or gets disconnected, the entire consensus system slows down or becomes unavailable until a replacement is elected. For Meerkat's global deployment, this behavior is unacceptable.",
+              "links": []
+            },
+            {
+              "text": "Distributed systems like Meerkat allow groups of machines to agree on a single shared truth, ensuring that replicas never diverge in their ordered logs of events. Comparable consensus-powered systems include Consul, etcd, and Apache ZooKeeper. However, unlike traditional deployments in smaller local networks, a Meerkat cluster can span multiple continents with high and variable link latency.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Network Volatility and Destructive Interference",
+          "paragraphs": [
+            {
+              "text": "When network conditions degrade without machines actually crashing, many consensus algorithms become disproportionately slow or unavailable. Cloudflare experienced this first-hand during a 2020 incident where the partial failure of a core network switch caused a consensus-powered system to degrade significantly, making the dashboard operate eighty times slower than usual for six hours while remaining unavailable for writes.",
+              "links": [
+                {
+                  "text": "failure",
+                  "url": "https://blog.cloudflare.com/a-byzantine-failure-in-the-real-world/"
+                }
+              ]
+            },
+            {
+              "text": "Ideally, a consensus algorithm should maintain progress despite latency spikes and broken connections. Traditional protocols like Paxos suffer from destructive interference when multiple proposers submit proposals concurrently, as they can repeatedly block each other from progressing and fail to guarantee liveness under hostile network conditions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Leader-Based Systems and Recovery",
+          "paragraphs": [
+            {
+              "text": "To prevent multiple proposers from constantly competing, most deployed systems use a designated leader replica to centralize proposing power and enforce order on concurrent requests. While leader-based protocols are fast when the network is healthy, the trade-off is that the system stalls if the leader fails, becomes too slow, or gets disconnected.",
+              "links": []
+            },
+            {
+              "text": "When a leader does fail, the system must recover by electing a new one, a process that can accidentally reintroduce destructive interference through competing candidates trying to acquire majority votes simultaneously.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "QuePaxa",
+        "Meerkat",
+        "Consensus Algorithm",
+        "Distributed Systems",
+        "Cloudflare Blog"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Meerkat",
+        "QuePaxa",
+        "Raft",
+        "Paxos"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly derived from the provided Cloudflare Blog source text without adding external context or unverified facts."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 619,
+      "word_count_en": 489
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "63f2a5048dc79d48cde0",
+      "title": "Choosing QuePaxa, an unusual consensus algorithm",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 619,
+          "word_count_en": 489
+        }
+      ]
+    }
+  ],
+  "slug": "choosing-quepaxa-an-unusual-consensus-algorithm",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/choosing-quepaxa-an-unusual-consensus-algorithm/hero.webp",
+    "card": "/forum/assets/posts/2026/11/choosing-quepaxa-an-unusual-consensus-algorithm/card.webp",
+    "social": "/forum/assets/posts/2026/11/choosing-quepaxa-an-unusual-consensus-algorithm/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تختار خوارزمية QuePaxa لتجاوز قيود الإجماع التقليدي",
+      "en": "Cloudflare Explains Why It Chose QuePaxa for Meerkat"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M73MMXB6M86NA1F97GH7Q8TG.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/choosing-quepaxa-an-unusual-consensus-algorithm/inline-01.webp",
+        "width": 1200,
+        "height": 630,
+        "alt": {
+          "ar": "Cloudflare تختار خوارزمية QuePaxa لتجاوز قيود الإجماع التقليدي",
+          "en": "Choosing QuePaxa, an unusual consensus algorithm"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/choosing-quepaxa",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M73MN9T0TE3R0PZMJKPKVAPP.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/choosing-quepaxa-an-unusual-consensus-algorithm/inline-02.webp",
+        "width": 1172,
+        "height": 1000,
+        "alt": {
+          "ar": "Cloudflare تختار خوارزمية QuePaxa لتجاوز قيود الإجماع التقليدي",
+          "en": "In the Prepare phase, a proposer sends a ballot numbered â1â to three acceptors. The three acceptors reply. Then, in the Accept phase, the proposer broadcasts its proposal to the three acceptors. The acceptors have n"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/choosing-quepaxa",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M742V6S0NQX62HFS0RFYV0SN.png&w=1172&h=1000&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/choosing-quepaxa-an-unusual-consensus-algorithm/inline-03.webp",
+        "width": 1140,
+        "height": 1050,
+        "alt": {
+          "ar": "Cloudflare تختار خوارزمية QuePaxa لتجاوز قيود الإجماع التقليدي",
+          "en": "There are two proposers: one red, and one blue. In the Prepare phase, the blue proposer sends a ballot numbered â1â to three acceptors. The three acceptors reply. Then, the red proposer, in its own Prepare phase, sen"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/choosing-quepaxa",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M742V18ADGMJDHBXQ0KJ249G.png&w=1302&h=1200&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/choosing-quepaxa-an-unusual-consensus-algorithm/inline-04.webp",
+        "width": 1200,
+        "height": 999,
+        "alt": {
+          "ar": "Cloudflare تختار خوارزمية QuePaxa لتجاوز قيود الإجماع التقليدي",
+          "en": "There is a single leader replica, wearing a crown, that is the only one allowed to send proposals to other servers, called âreplicasâ. All they do is accept the leaderâs proposal."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/choosing-quepaxa",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M742V8KHK5Y2Q17PJ8FWF5B4.png&w=1200&h=1000&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
