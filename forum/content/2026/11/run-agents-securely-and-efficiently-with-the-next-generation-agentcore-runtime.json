@@ -1,0 +1,331 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "b603ae3c0fc621542d67",
+  "slug": "run-agents-securely-and-efficiently-with-the-next-generation-agentcore-runtime",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/run-agents-securely-and-efficiently-with-the-next-generation-agentcore-runtime/",
+    "en": "/forum/en/ai/run-agents-securely-and-efficiently-with-the-next-generation-agentcore-runtime/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تكشف الجيل الجديد من بيئة تشغيل AgentCore للوكلاء",
+      "description": "أعلنت أمازون عن تحديثات كبرى لمنصة Bedrock AgentCore، حيث توفر جلسات معزولة آمنة تبدأ أسرع وتستهلك موارد أقل، مع نموذج تسعير يعتمد على الاستخدام الفعلي.",
+      "deck": "مع تزايد اعتماد الشركات على وكلاء الذكاء الاصطناعي لتنفيذ مهام معقدة، كشفت أمازون عن الجيل الجديد من بيئة تشغيل AgentCore، الذي يجمع بين العزل الأمني الصارم وكفاءة التشغيل العالية.",
+      "summaryBullets": [
+        "تسريع بدء تشغيل الجلسات حتى 15 مرة مقارنة بالإصدار السابق، مع تقليل زمن الاستجابة إلى أقل من ثانيتين.",
+        "زيادة سعة المعالجة والذاكرة حتى 4 أضعاف، لدعم أحمال العمل الثقيلة مثل تجميع الأكواد والاستدلال المحلي.",
+        "إدخال نموذج تسعير مرن يعيد تخصيص الموارد فوراً، مما يقلل استهلاك الذاكرة بنسبة تصل إلى 68% للوكلاء المتوقفين مؤقتاً.",
+        "الحفاظ على العزل التام عبر ماكينات افتراضية مجهرية (MicroVM) لكل جلسة، مع توثيق كامل للهوية والسياسات."
+      ],
+      "sections": [
+        {
+          "heading": "تحول جذري في بنية تحتية وكلاء الذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "لم تعد وكلاء الذكاء الاصطناعي مجرد أدوات تستجيب لأوامر قصيرة، بل أصبحت أنظمة قادرة على تنفيذ مهام متعددة الخطوات تستمر لساعات. تشير بيانات من METR إلى أن طول المهام التي يمكن للوكلاء التنفيذ المستقل لها يتضاعف كل أربعة أشهر تقريباً، بينما أفاد تقرير من McKinsey بأن 40% من الشركات الكبرى توسع حالياً في استخدام هذه الوكلاء، مقارنة بـ 27% في العام الماضي. هذا التحول يرفع سقف التوقعات من حيث الأمان والقابلية للتوسع، حيث لم يعد السؤال حول ما يمكن للوكلاء فعله، بل كيف يمكنهم العمل بأمان وكفاءة اقتصادية على نطاق واسع.",
+              "links": [
+                {
+                  "text": "METR",
+                  "url": "https://metr.org/time-horizons/"
+                },
+                {
+                  "text": "McKinsey",
+                  "url": "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai"
+                }
+              ]
+            },
+            {
+              "text": "تتجاوز قدرات الوكلاء التقليدية حدود البرمجيات العادية؛ فهم ينفذون الأكواد، ويتصفحون المتصفحات، ويصلون إلى بيانات حساسة، ويتصرفون نيابة عن المستخدمين. هذه القدرات تفرض متطلبات أمنية وبنية تحتية جديدة، مما يجعل العزل القوي شرطاً أساسياً للنشر في بيئات الإنتاج. ومع ذلك، يواجه المطورون تحدياً جوهرياً في التوفيق بين الأداء والتكلفة والكفاءة، حيث تستهلك البيئات المسبقة الموارد حتى في أوقات الخمول، بينما تضيف البيئات عند الطلب زمن تأخير للبدء البارد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحديات الأمنية والاقتصادية في توسيع النطاق",
+          "paragraphs": [
+            {
+              "text": "يوضح مسح أجرته Deloitte أن 15% فقط من المؤسسات توسعت في أنظمة الوكلاء المتعددة المنسقة، ويعتبر 70% منها أنهم لا يثقون بعد في إدارة وكلاءهم بشكل كامل. هذا الوضع يؤكد أن توسيع نطاق الوكلاء يجب ألا يعني الاختيار بين الأمان والسرعة والتكلفة. يجب أن توفر بنية الوكلاء الجديدة عزلاً قوياً مع أوقات بدء تشغيل سريعة، وتوسعاً مرناً، واقتصاديات تعتمد على الاستخدام الفعلي. عندما تنتقل وكلاء الذكاء الاصطناعي إلى بيئات الإنتاج، يجب أن يكون التنفيذ الآمن هو الأساس الذي يتيح التوسع، وليس العائق أمامه.",
+              "links": [
+                {
+                  "text": "Deloitte",
+                  "url": "https://www.deloitte.com/us/en/about/press-room/deloitte-survey-examines-ai-readiness-agentic-ai-success.html"
+                }
+              ]
+            },
+            {
+              "text": "بُنيت منصة Amazon Bedrock AgentCore لمساعدة المطورين على بناء الوكلاء وتوصيلهم وتحسينهم بأمان على نطاق واسع. وتُعد بيئة التشغيل (Runtime) جزءاً أساسياً من هذه المنصة، حيث توفر طبقة معالجة مُدارة بالكامل، تتيح للمطورين نشر الوكلاء وتشغيلهم دون الحاجة لبناء أو صيانة البنية التحتية بأنفسهم. ومع نمو تعقيد أحمال العمل لدى العملاء، زادت المتطلبات على بيئة التنفيذ، بما في ذلك الحاجة إلى مزيد من الموارد الحاسوبية، ومرونة أكبر في الفوترة، وحدود ثقة تمتد إلى البيانات وليس فقط إلى الموارد الحاسوبية.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "قدرات محسنة للجيل الجديد من بيئة التشغيل",
+          "paragraphs": [
+            {
+              "text": "أعلنت أمازون عن تحديثات جوهرية لبيئة تشغيل AgentCore تستجيب لهذه المتطلبات المتزايدة. تبقى الضمان الأساسي قائماً: كل جلسة تعمل في ماكينتها الافتراضية المجهرية (MicroVM) المعزولة آلياً، مع هوية وسياسة ومسار تدقيق خاص بها. توسع هذه التحديثات ما هو ممكن ضمن هذا الضمان، حيث تبدأ الجلسات الآن أسرع حتى 15 مرة، وتتمدد لتدعم 4 أضعاف الموارد الحاسوبية السابقة، وتعمل بكفاءة أعلى بنسبة تصل إلى 68%، مع بقاء حدود العزل سليمة تماماً.",
+              "links": []
+            },
+            {
+              "text": "استجابة لطلبات الفرق التي تبني وكلاء متقدمين، أصبحت الجلسات قادرة على توسيع الذاكرة والمعالجة لتتناسب مع متطلبات أحمال العمل المختلفة، بدءاً من تجميع قواعد الأكواد الكبيرة، مروراً بتدفقات العمل المبنية على المتصفح، وصولاً إلى الاستدلال على النماذج المحلية. تتمدد الجلسات الآن حتى 8 وحدات معالجة مركزية (vCPUs) و32 جيجابايت من الذاكرة، مع دعم صور الحاويات التي تصل إلى 10 جيجابايت. كما تبدأ الجلسات في أقل من ثانيتين، بغض النظر عن حجم الصورة أو مستوى التزامن، مما يلغي الحاجة إلى مسابح الدفء (Warm Pools) أو العناقيد المسبقة لإدارة عمليات البدء الباردة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "شهادات عملاء حول الأداء والتكلفة",
+          "paragraphs": [
+            {
+              "text": "أشار الدكتور ريان ريس، كبير علماء الذكاء الاصطناعي والبيانات في Mission Cloud، إلى أن الانتقال إلى الجيل الجديد من بيئة تشغيل AgentCore قلل من زمن بدء تشغيل الجلسات الباردة من دقيقة تقريباً إلى أقل من 5 ثوانٍ، حتى أثناء ذروة حركة المرور. وأضاف أن هذا التحديث قضى على تأخيرات البدء التي تتجاوز 30 ثانية، في حين تضاعفت كمية الوكلاء الأسبوعية لديهم أكثر من مرة. كما حققوا تسريعاً بنسبة 35% في طلبات الاستدلال و77% في عمليات الفحص الصحي، مع تقليل تكلفة التشغيل لكل استدعاء بنسبة 17%.",
+              "links": []
+            },
+            {
+              "text": "من جانبه، أوضح براد روبرت، نائب الرئيس للسحابة والأمان في Zuora، أن نهجهم يعتمد على تشغيل سحابة Zuora عبر الأتمتة ووكلاء الذكاء الاصطناعي، وهو ما يتطلب بيئة تشغيل فعالة وموثوقة. وأضاف أن الجيل الجديد من AgentCore قلل من بصمة الذاكرة لكل استدعاء بنسبة 60% تقريباً في العديد من حالات الاستخدام، مع التعامل مع المزيد من الحركة بكمون ثابت، مما يوفر ملف تكلفة أقوى مع توسيع أحمال العمل الوكيلة عبر منصتهم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نموذج تسعير مرن يعكس الاستخدام الفعلي",
+          "paragraphs": [
+            {
+              "text": "مع اقتراب الفرق من نشر الوكلاء في الإنتاج، طرحت طلبات واضحة لفوترة تعكس كيفية عمل الوكلاء فعلياً. يقضي الوكلاء جزءاً كبيراً من وقتهم في انتظار استجابة النموذج، أو استدعاء أداة، أو قرار بشري. لذلك، يجب أن تكون الفوترة مبنية على العمل المنجز وليس على الوقت المستغرق في الانتظار. تستعيد بيئة التشغيل الذاكرة خلال دقائق من تحرير الوكيل لها، ويتقلص الوكيل الخامل إلى الصفر. بالنسبة للوكلاء متعدد الأدوار الذين يعانون من فترات توقف طبيعية بين التفاعلات، يعني هذا استهلاكاً أقل للذاكرة بنسبة تصل إلى 68% لكل جلسة.",
+              "links": []
+            },
+            {
+              "text": "للوكلاء الذين يعملون باستمرار، يحدد التسعير الأساسي الملتزم خط أساس للذاكرة لكل جلسة، يُفوت كحد أدنى، مع إمكانية التوسع حتى 4 أضعاف هذا الأساس عند الطلب. هذا يوفر معدلًا قابلاً للتنبؤ للأحمال المستقرة بمعدلات AWS Lambda MicroVM. بفضل استخدام الموارد الحاسوبية بكفاءة أعلى، يدفع العملاء أقل مقابل نفس الكمية من العمل، مما يسهل إتمام المحادثات المالية التي غالباً ما تعيق عمليات النشر في الإنتاج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تأكيدات على الثقة والتوسع المستقبلي",
+          "paragraphs": [
+            {
+              "text": "أكد أشوين باتيل، الشريك الرئيسي في قسم الذكاء الاصطناعي والبيانات لدى Deloitte Consulting، أن الجيل الجديد من بيئة تشغيل Amazon Bedrock AgentCore يساعد في تقديم تجارب ذكاء اصطناعي أكثر استجابة من خلال بدء تشغيل الوكلاء بشكل أسرع واستخدام الذاكرة بكفاءة أعلى. وأضاف أن محاذاة الاستهلاك مع الاستخدام الفعلي يمنح العملاء ثقة كبيرة في توسيع حلول الوكلاء مع الحفاظ على ارتباط التكاليف بالطلب الحقيقي.",
+              "links": [
+                {
+                  "text": "Deloitte",
+                  "url": "https://www.deloitte.com/us/en/about/press-room/deloitte-survey-examines-ai-readiness-agentic-ai-success.html"
+                }
+              ]
+            },
+            {
+              "text": "توفر بيئة تشغيل AgentCore أساساً مُداراً لبناء منتجات ومنصات الوكلاء، مما يتيح للشركات التركيز على تطوير منطق أعمالها بدلاً من إدارة البنية التحتية. مع استمرار تطور تقنيات الذكاء الاصطناعي التوليدي، تظل الأولوية القصوى هي ضمان أن تكون بيئة التنفيذ آمنة وقابلة للتوسع، مما يمهد الطريق لاعتماد أوسع للوكلاء في العمليات الحرجة للشركات.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "وكلاء الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "بنية تحتية سحابية",
+        "أمن المعلومات",
+        "Bedrock AgentCore"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز",
+        "Amazon Bedrock AgentCore",
+        "Mission Cloud",
+        "Zuora",
+        "Deloitte",
+        "METR",
+        "McKinsey"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "12 نوفمبر 2026",
+      "modifiedLabel": "12 نوفمبر 2026",
+      "readMinutes": 6,
+      "wordCount": 1036
+    },
+    "en": {
+      "title": "AWS upgrades AgentCore runtime for faster, safer AI",
+      "description": "AWS says its next-generation AgentCore runtime delivers faster starts, more compute, stronger isolation and usage-based efficiency for AI agents.",
+      "deck": "AWS has announced updates to Amazon Bedrock AgentCore runtime aimed at helping organizations run increasingly autonomous AI agents securely and efficiently. The managed runtime adds faster startup, greater compute capacity and billing that more closely follows actual usage.",
+      "summaryBullets": [
+        "Agent sessions now start in under two seconds, regardless of image size and concurrency.",
+        "The runtime supports up to 8 vCPUs, 32 GB of memory and 10 GB container images.",
+        "Each session remains isolated in its own Firecracker micro virtual machine.",
+        "Memory can be reclaimed within minutes, while idle agents scale to zero.",
+        "AWS says the updated runtime can use up to 68% less memory per session."
+      ],
+      "sections": [
+        {
+          "heading": "AWS targets the infrastructure bottleneck",
+          "paragraphs": [
+            {
+              "text": "AWS says AI agents are moving beyond one-off prompts to multi-step workloads that can run for hours and act on behalf of users. The company’s announcement in the AWS Machine Learning Blog argues that this shift changes the infrastructure challenge: agents may execute code, navigate browsers, access sensitive information and make decisions across extended workflows. As a result, production deployments need more than model access; they require secure, reliable and economical execution environments.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/run-agents-securely-and-efficiently-with-the-next-generation-agentcore-runtime/"
+                }
+              ]
+            },
+            {
+              "text": "The announcement cites research from METR indicating that the length of task frontier agents can complete independently doubles about every four months. It also points to McKinsey data showing that 40 percent of large enterprises are scaling AI agents, compared with 27 percent a year earlier. AWS says the longer and more autonomous these systems become, the more important it is to balance isolation, speed, scalability and cost.",
+              "links": [
+                {
+                  "text": "METR",
+                  "url": "https://metr.org/time-horizons/"
+                },
+                {
+                  "text": "McKinsey",
+                  "url": "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Hardware-isolated sessions",
+          "paragraphs": [
+            {
+              "text": "Amazon Bedrock AgentCore runtime is the managed compute layer within Amazon Bedrock AgentCore. AWS says it lets developers deploy and run agents without building or maintaining the underlying infrastructure. The core security model remains unchanged in the update: every agent session runs in its own hardware-isolated Firecracker micro virtual machine, with a separate identity, policy and audit trail.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "AWS describes the isolation boundary as extending beyond compute to the data used by agents. That design is intended to address the risks created when agents interact with code, browsers, enterprise systems and sensitive information. The company says developers can scale agent workloads without giving up the session-level separation required for production use.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "More compute with faster starts",
+          "paragraphs": [
+            {
+              "text": "The next-generation runtime increases the available capacity for each isolated session by up to four times, reaching 8 virtual CPUs and 32 GB of memory. It also supports container images up to 10 GB. AWS says sessions start in under two seconds, independently of image size and concurrency, removing the need for warm pools and pre-provisioned clusters to manage cold-start delays.",
+              "links": []
+            },
+            {
+              "text": "The additional capacity is aimed at workloads such as large codebase compilations, browser-driven processes and local model inference. AWS says sessions can start up to 15 times faster, scale to four times more compute and run up to 68 percent more efficiently than the previous version, while maintaining the same hardware-isolation guarantee.",
+              "links": []
+            },
+            {
+              "text": "Several customers cited by AWS reported improvements after migrating. Mission Cloud said cold starts fell from nearly a minute to under five seconds during peak traffic, while its weekly agent volume more than doubled. The company also reported faster starts for inference requests and health checks, as well as a lower measured runtime cost per call. Zuora said its memory footprint per invocation fell by around 60 percent in many use cases while maintaining steady latency under higher traffic.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Billing follows active resource use",
+          "paragraphs": [
+            {
+              "text": "AWS is also changing how the runtime handles resources between agent actions. Agents often pause while waiting for a model response, a tool call or a human decision, and the updated runtime can reclaim memory within minutes after it is released. Idle agents scale to zero, which AWS says can reduce memory consumed per session by up to 68 percent for multi-turn agents with natural pauses.",
+              "links": []
+            },
+            {
+              "text": "For always-on agents, committed baseline pricing establishes a minimum memory level per session while allowing the workload to burst to as much as four times that baseline when needed. AWS says this approach provides a predictable rate for steady workloads while aligning consumption more closely with actual demand. The company compares the baseline economics with AWS Lambda MicroVM rates.",
+              "links": []
+            },
+            {
+              "text": "Deloitte Consulting said the updated runtime helped it deliver more responsive AI experiences through faster starts and more efficient memory use. AWS also cited Rescale, whose engineering agents validate simulation inputs, troubleshoot jobs, select hardware and generate reports. Rescale said AgentCore runtime lets it deploy and scale those agents in production without operating the underlying agent infrastructure.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Aiming to make production easier",
+          "paragraphs": [
+            {
+              "text": "AWS frames the changes as a response to the operational gap between experimenting with agents and running them at enterprise scale. The company cites Deloitte data showing that only 15 percent of organizations have scaled orchestrated, multi-agent systems, while 70 percent say they cannot yet trust and govern their agents. In that context, AWS argues that secure execution, elastic capacity and usage-based economics must be built into the runtime rather than added as separate infrastructure projects.",
+              "links": [
+                {
+                  "text": "Deloitte",
+                  "url": "https://www.deloitte.com/us/en/about/press-room/deloitte-survey-examines-ai-readiness-agentic-ai-success.html"
+                }
+              ]
+            },
+            {
+              "text": "The updated AgentCore runtime is presented as a way to let developers focus on agent behavior and application logic while AWS manages the isolated execution layer. Customers can access Amazon Bedrock services through the AWS console, while the runtime handles startup, scaling, memory reclamation and session-level isolation. AWS says the goal is to make the fastest path to production also the safest one.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon Bedrock",
+        "AgentCore",
+        "AI agents",
+        "cloud computing",
+        "cybersecurity",
+        "serverless"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock AgentCore",
+        "AgentCore runtime",
+        "Firecracker micro virtual machine",
+        "Mission Cloud",
+        "Zuora",
+        "Rescale"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 12, 2026",
+      "modifiedLabel": "November 12, 2026",
+      "readMinutes": 5,
+      "wordCount": 892
+    }
+  },
+  "datePublished": "2026-11-12T23:50:38.278216+03:00",
+  "dateModified": "2026-11-12T23:50:38.278216+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/run-agents-securely-and-efficiently-with-the-next-generation-agentcore-runtime/hero.webp",
+    "card": "/forum/assets/posts/2026/11/run-agents-securely-and-efficiently-with-the-next-generation-agentcore-runtime/card.webp",
+    "social": "/forum/assets/posts/2026/11/run-agents-securely-and-efficiently-with-the-next-generation-agentcore-runtime/social.jpg",
+    "alt": {
+      "ar": "أمازون تكشف الجيل الجديد من بيئة تشغيل AgentCore للوكلاء",
+      "en": "AWS upgrades AgentCore runtime for faster, safer AI"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-22215-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/run-agents-securely-and-efficiently-with-the-next-generation-agentcore-runtime/",
+      "type": "official",
+      "title": "Run agents securely and efficiently with the next generation AgentCore runtime"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/run-agents-securely-and-efficiently-with-the-next-generation-agentcore-runtime",
+  "sourceTitle": "Run agents securely and efficiently with the next generation AgentCore runtime",
+  "trendScore": 120.98,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-12T20:50:38+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/run-agents-securely-and-efficiently-with-the-next-generation-agentcore-runtime.json"
+}
