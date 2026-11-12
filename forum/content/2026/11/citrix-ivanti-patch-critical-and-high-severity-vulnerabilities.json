@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "08c0804e213f1a6eaa67",
+  "slug": "citrix-ivanti-patch-critical-and-high-severity-vulnerabilities",
+  "categorySlug": "security",
+  "urls": {
+    "ar": "/forum/ar/security/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities/",
+    "en": "/forum/en/security/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إيفانتي وسيتريكس يصدران تصحيحات لأخطار أمنية حرجة",
+      "description": "أصدرت شركتا إيفانتي وسيتريكس تصحيحات لـ 19 ثغرة أمنية، منها ثغرات حرجة تتيح تنفيذ أكواد عن بُعد والتلاعب بشهادات النظام دون مصادقة.",
+      "deck": "أعلنت شركتا إيفانتي وسيتريكس عن إصدار تصحيحات أمنية عاجلة لسد 19 ثغرة في منتجاتهما، تشمل ثغرات حرجة تتيح للمهاجمين تنفيذ أكواد عن بُعد والتلاعب بشهادات النظام دون مصادقة.",
+      "summaryBullets": [
+        "إيفانتي أصلحت 13 ثغرة في 5 منتجات، منها ثغرتان حرجتان في CSA وEPM.",
+        "سيتريكس أصدرت تصحيحات لست ثغرات في XenServer، منها ثغرة عالية الخطورة تتيح استغلال سرية Pool.",
+        "لا توجد أدلة على استغلال أي من هذه الثغرات في هجمات فعلية حتى الآن.",
+        "التصحيحات تشمل أيضاً معالجة ثغرات في معالجات AMD تؤثر على أنظمة XenServer."
+      ],
+      "sections": [
+        {
+          "heading": "إيفانتي تعالج ثغرات حرجة في منتجاتها",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة إيفانتي عن إصدار تصحيحات لـ 13 ثغرة أمنية موزعة على خمسة من منتجاتها، من بينها ثغرتان مصنفتان على أنهما حرجتان. الثغرة الأولى، المسجلة برقم CVE-2026-121683، موجودة في تطبيق خدمات السحابة (CSA) وتحمل درجة خطورة CVSS تبلغ 9.4. وتتمثل هذه الثغرة في غياب المصادقة، مما يسمح للمهاجمين عن بُعد وغير الموثقين بإضافة أو حذف إدخالات شهادات EPM Core الموثوقة بشكل تعسفي. وقد تم إصلاح هذا العيب في الإصدار 5.0.8.1 من CSA. وتوضح إيفانتي أن النسخ التي تعمل بتكوين NIC مزدوج لا يمكن استغلالها من الخارج.",
+              "links": [
+                {
+                  "text": "إيفانتي",
+                  "url": "https://www.ivanti.com/blog/november-2026-security-update"
+                }
+              ]
+            },
+            {
+              "text": "أما الثغرة الحرجة الثانية، المسجلة برقم CVE-2026-121653، فتوجد في مدير نقاط النهاية (EPM) وتحمل درجة خطورة CVSS تبلغ 9.8. وهي ثغرة حقن SQL تتيح تنفيذ أكواد عن بُعد (RCE) دون الحاجة إلى مصادقة. وتم حل هذه الثغرة في الإصدار 2024 SU8 من EPM، الذي يعالج أيضاً ثغرة متوسطة الخطورة تتعلق بنقل معلومات حساسة كنص عادي، والتي يمكن استغلالها عبر هجمات Man-in-the-Middle.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ثغرات في Sentry وEndpoint Manager Mobile",
+          "paragraphs": [
+            {
+              "text": "إلى جانب ذلك، أصدرت إيفانتي تصحيحات لأربع ثغرات في منتج Sentry، من بينها ثغرة عالية الخطورة تتيح تنفيذ أكواد عن بُعد (RCE). وقد تم إصلاح هذه الثغرة، المسجلة برقم CVE-2026-105425، أيضاً في Endpoint Manager Mobile (EPMM)، إلى جانب خمس ثغرات متوسطة الخطورة. كما عالج فريق إيفانتي ثغرة متوسطة الخطورة في مدير مساحة العمل للمستخدم (UWM) في نفس اليوم. وتشير الشركة إلى أنها لا تملك أي دليل على استغلال أي من هذه الثغرات في هجمات فعلية حتى الآن.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "سيتريكس تعالج ثغرات في XenServer",
+          "paragraphs": [
+            {
+              "text": "من جانبها، أصدرت شركة سيتريكس تصحيحات لست ثغرات أمنية في نظام XenServer. من بين هذه الثغرات، CVE-2026-102705، وهي ثغرة عالية الخطورة تتيح للمهاجمين استنتاج سرية Pool (Pool Secret) مما قد يؤدي إلى اختراق المضيف. أما الثغرات الخمس المتبقية، فقد تؤدي إلى تصعيد الصلاحيات أو تتيح للمديرين بأي دور إنهاء المهام الجارية للأدوار الأخرى.",
+              "links": [
+                {
+                  "text": "سيتريكس",
+                  "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697316&articleURL=XenServer_Security_Update_for_Multiple_Issues"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "معالجة ثغرات معالجات AMD",
+          "paragraphs": [
+            {
+              "text": "إضافة إلى ذلك، أصدرت سيتريكس تحديثات لنظام XenServer تهدف إلى التخفيف من عدة ثغرات في معالجات AMD. هذه الثغرات قد تتيح لأجهزة الظل الضيف (Guest VMs) اختراق المضيف أو استنتاج محتوى الذاكرة النشط لجهاز ظل آخر. وتأتي هذه التحديثات في إطار جهود سيتريكس المستمرة لتعزيز أمان بنيتها التحتية الافتراضية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توصيات أمنية للمستخدمين",
+          "paragraphs": [
+            {
+              "text": "ننصح جميع المستخدمين والمؤسسات التي تعتمد على منتجات إيفانتي وسيتريكس بتطبيق هذه التصحيحات في أقرب وقت ممكن. على الرغم من عدم وجود أدلة على استغلال هذه الثغرات في هجمات فعلية، إلا أن خطورتها العالية تتيح للمهاجمين تنفيذ أكواد عن بُعد والتلاعب بشهادات النظام دون مصادقة، مما قد يؤدي إلى اختراق شامل للأنظمة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "إيفانتي",
+        "سيتريكس",
+        "ثغرات أمنية",
+        "تنفيذ أكواد عن بُعد",
+        "XenServer",
+        "EPM",
+        "CSA",
+        "أمن تقني"
+      ],
+      "entities": [
+        "إيفانتي",
+        "سيتريكس",
+        "XenServer",
+        "EPM",
+        "CSA",
+        "Sentry",
+        "Endpoint Manager Mobile",
+        "User Workspace Manager"
+      ],
+      "category": "الأمن التقني",
+      "dateLabel": "12 نوفمبر 2026",
+      "modifiedLabel": "12 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 484
+    },
+    "en": {
+      "title": "Citrix and Ivanti Release Patches for 19 Vulnerabilities",
+      "description": "Citrix and Ivanti have issued patches for 19 critical and high-severity vulnerabilities across multiple products, addressing RCE risks.",
+      "deck": "Major software vendors Citrix and Ivanti have rolled out security updates addressing 19 vulnerabilities, including critical remote code execution flaws and high-severity defects that could compromise host systems.",
+      "summaryBullets": [
+        "Citrix and Ivanti released patches for a combined total of 19 vulnerabilities affecting various products.",
+        "Ivanti resolved 13 vulnerabilities across five products, featuring critical flaws in its Cloud Services Application and Endpoint Manager.",
+        "Citrix introduced fixes for six security defects in XenServer, alongside mitigations for specific AMD CPU issues.",
+        "Both companies have reported no evidence of active exploitation in the wild for the addressed vulnerabilities."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of the Security Updates",
+          "paragraphs": [
+            {
+              "text": "Software manufacturers Citrix and Ivanti have announced a comprehensive set of patches addressing a combined 19 vulnerabilities across their respective product ecosystems. The newly released updates target multiple critical- and high-severity flaws that could otherwise allow malicious actors to tamper with certificate entries, achieve remote code execution, or compromise host systems. According to details shared by [SecurityWeek](https://www.securityweek.com/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities/), the software updates aim to secure enterprise environments against potential escalation and compromise risks.",
+              "links": [
+                {
+                  "text": "SecurityWeek",
+                  "url": "https://www.securityweek.com/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities/"
+                }
+              ]
+            },
+            {
+              "text": "Enterprise administrators are encouraged to review the official advisories and apply the necessary patches promptly. While the vendors have moved quickly to issue the fixes, understanding the specific technical vectors involved helps organizations prioritize their deployment schedules effectively.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Ivanti Fixes Critical Flaws in CSA and EPM",
+          "paragraphs": [
+            {
+              "text": "Ivanti addressed 13 vulnerabilities distributed across five distinct products. Among these are two critical-severity defects located within the Cloud Services Application (CSA) and the Endpoint Manager (EPM). The CSA flaw, tracked as CVE-2026-121683 with a CVSS score of 9.4, is classified as a missing authentication issue. This vulnerability could theoretically enable remote, unauthenticated attackers to add and delete arbitrary trusted EPM Core certificate entries.",
+              "links": []
+            },
+            {
+              "text": "To resolve the CSA issue, users must update to CSA version 5.0.8.1. Additionally, [Ivanti says](https://www.ivanti.com/blog/november-2026-security-update) that deployments currently operating with a Dual NIC configuration cannot be exploited externally, providing a temporary operational mitigation for certain network setups.",
+              "links": [
+                {
+                  "text": "Ivanti says",
+                  "url": "https://www.ivanti.com/blog/november-2026-security-update"
+                }
+              ]
+            },
+            {
+              "text": "The critical EPM issue carries an even higher CVSS score of 9.8 and is tracked as CVE-2026-121653. It involves an SQL injection bug capable of driving remote code execution without requiring authentication. Ivanti resolved this critical defect in EPM version 2024 SU8. This version also handles a medium-severity cleartext transmission of sensitive information that could otherwise be exploited via man-in-the-middle (MitM) attacks.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Additional Ivanti Product Mitigations",
+          "paragraphs": [
+            {
+              "text": "Beyond the CSA and EPM fixes, Ivanti rolled out patches targeting four separate vulnerabilities found in Sentry, which includes a high-severity remote code execution flaw tracked as CVE-2026-105425. This specific bug was also remediated in Endpoint Manager Mobile (EPMM) alongside five additional medium-severity issues.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, the company addressed a medium-severity defect affecting the User Workspace Manager (UWM) on Tuesday. Despite the severity of several of these uncovered flaws, Ivanti confirmed that it currently has no evidence indicating that any of these vulnerabilities have been exploited in the wild.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Citrix XenServer Updates and CPU Mitigations",
+          "paragraphs": [
+            {
+              "text": "On the Citrix front, the company rolled out fixes addressing six security defects specifically impacting XenServer. Among these is CVE-2026-102705, a high-severity bug that could permit attackers to infer the Pool Secret and ultimately compromise the host environment.",
+              "links": []
+            },
+            {
+              "text": "The remaining five issues patched by [Citrix rolled out](https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697316&articleURL=XenServer_Security_Update_for_Multiple_Issues) updates that prevent potential privilege escalation scenarios. They also fix a logic error that could allow administrators holding any role to improperly terminate the running tasks of other roles.",
+              "links": [
+                {
+                  "text": "Citrix rolled out",
+                  "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697316&articleURL=XenServer_Security_Update_for_Multiple_Issues"
+                }
+              ]
+            },
+            {
+              "text": "In addition to the software-specific bugs, Citrix introduced XenServer updates designed to mitigate several AMD CPU vulnerabilities. These specific hardware-related weaknesses could otherwise allow guest virtual machines to compromise the underlying host or infer active memory content belonging to another virtual machine.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Broader Enterprise Software Security Context",
+          "paragraphs": [
+            {
+              "text": "The coordinated patching efforts by Citrix and Ivanti highlight a broader industry trend where major technology providers continuously identify and remediate complex infrastructure flaws. Enterprise IT and security teams must maintain rigorous patch management routines to defend against potential secondary exploitation chains.",
+              "links": []
+            },
+            {
+              "text": "Organizations managing large-scale server virtualization platforms, mobile device deployments, and endpoint management consoles are advised to apply these latest updates immediately to preserve network integrity and secure administrative privileges against evolving threat vectors.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Citrix",
+        "Ivanti",
+        "Cybersecurity",
+        "Vulnerabilities",
+        "RCE",
+        "XenServer",
+        "Endpoint Manager"
+      ],
+      "entities": [
+        "Citrix",
+        "Ivanti",
+        "XenServer",
+        "Endpoint Manager",
+        "Cloud Services Application",
+        "Sentry",
+        "AMD"
+      ],
+      "category": "Cybersecurity",
+      "dateLabel": "November 12, 2026",
+      "modifiedLabel": "November 12, 2026",
+      "readMinutes": 4,
+      "wordCount": 674
+    }
+  },
+  "datePublished": "2026-11-12T11:29:26.000955+03:00",
+  "dateModified": "2026-11-12T11:29:26.000955+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities/hero.webp",
+    "card": "/forum/assets/posts/2026/11/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities/card.webp",
+    "social": "/forum/assets/posts/2026/11/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities/social.jpg",
+    "alt": {
+      "ar": "إيفانتي وسيتريكس يصدران تصحيحات لأخطار أمنية حرجة",
+      "en": "Citrix and Ivanti Release Patches for 19 Vulnerabilities"
+    },
+    "credit": "SecurityWeek",
+    "sourceUrl": "https://www.securityweek.com/wp-content/uploads/2026/08/Citrix-vulnerability.jpeg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "SecurityWeek",
+      "url": "https://www.securityweek.com/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities/",
+      "type": "journalism",
+      "title": "Citrix, Ivanti Patch Critical and High-Severity Vulnerabilities"
+    }
+  ],
+  "sourceUrl": "https://www.securityweek.com/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities",
+  "sourceTitle": "Citrix, Ivanti Patch Critical and High-Severity Vulnerabilities",
+  "trendScore": 89.74,
+  "verification": {
+    "confidence": 0.87,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-11-12T08:29:26+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/citrix-ivanti-patch-critical-and-high-severity-vulnerabilities.json"
+}
