@@ -1,0 +1,294 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "eb3a22dd21641de82869",
+  "slug": "building-self-service-llm-gateway-with-amazon-bedrock-and-litellm",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/building-self-service-llm-gateway-with-amazon-bedrock-and-litellm/",
+    "en": "/forum/en/ai/building-self-service-llm-gateway-with-amazon-bedrock-and-litellm/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تتيح بوابة ذكاء اصطناعي ذاتية الخدمة عبر LiteLLM",
+      "description": "تتيح أمازون ويب سيرفيسز بناء بوابة ذكاء اصطناعي ذاتية الخدمة باستخدام LiteLLM وAmazon Bedrock، مما يوفر للفرق تطويراً أسرع وتحكماً دقيقاً في التكاليف والأداء.",
+      "deck": "تقدم أمازون ويب سيرفيسز حلاً جديداً يجمع بين Amazon Bedrock وLiteLLM لإنشاء بوابة ذكاء اصطناعي تسهّل وصول المطورين إلى نماذج اللغة الكبيرة مع ضمان الرقابة المالية والأمنية.",
+      "summaryBullets": [
+        "تتيح البوابة للمطورين الوصول إلى نماذج Amazon Bedrock عبر واجهة موحدة متوافقة مع OpenAI.",
+        "توفر الحل تحكماً دقيقاً في التكاليف لكل مستخدم وعزلًا للحصص (Quotas) بين الفرق.",
+        "يعمل النظام على AWS Fargate مع تكامل كامل مع أدوات المراقبة مثل Langfuse وCloudWatch.",
+        "يتطلب إصدار LiteLLM Enterprise لإصدار مفاتيح API ذاتية الخدمة، بينما يدعم الإصدار المجاني حتى 5 مستخدمين."
+      ],
+      "sections": [
+        {
+          "heading": "تلبية احتياجات المطورين وفرق المنصات",
+          "paragraphs": [
+            {
+              "text": "تستجيب أمازون ويب سيرفيسز لمتطلبات المطورين الذين يبحثون عن مساعدين برمجيين بالذكاء الاصطناعي مع إعدادات بسيطة. من خلال بوابة نماذج اللغة الكبيرة (LLM Gateway) المبنية على LiteLLM، يمكن للمطورين الوصول بسرعة إلى النماذج الأساسية المتاحة على Amazon Bedrock. في المقابل، تحصل فرق المنصات على رؤية شاملة وتحكم في الاستخدام، حيث تحتاج فرق المراقبة إلى تتبع الكمون والأخطاء، وفرق المالية إلى إسناد تكاليف الاستدلال إلى المشاريع، وفرق الأمن إلى تطبيق ضوابط وصول متسقة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "البنية المعمارية للبوابة",
+          "paragraphs": [
+            {
+              "text": "يعتمد الحل على نمط طلبات مباشر يبدأ من المطور، ويمر عبر طبقة LiteLLM، وصولاً إلى Amazon Bedrock والنموذج الأساسي. تصل طلبات العملاء المتوافقة مع OpenAI إلى البوابة عبر Amazon Route 53 وCloudFront وموازن التحميل التطبيقي (ALB). يتم المصادقة على LiteLLM الذي يعمل على AWS Fargate باستخدام مفتاح API مخصص لكل مستخدم. خلف هذا الواجهة، يعتمد النظام على Amazon RDS (PostgreSQL) لحالة المفاتيح الافتراضية والتكاليف، وAmazon ElastiCache for Valkey للتخزين المؤقت، وAWS Secrets Manager لإدارة الأسرار.",
+              "links": []
+            },
+            {
+              "text": "تتضمن البنية مكونات أساسية، منها LiteLLM على AWS Fargate الذي يوفر وكيلًا يعرض واجهة OpenAI المتوافقة، مع توسع تلقائي بناءً على استخدام المعالج. كما يتضمن النظام بوابة ذاتية الخدمة خفيفة الوزن تتيح للمهندسين التشغيليين تحديد سياسات الإنفاق، بينما يقوم المطورون بإنشاء مفاتيح API بأنفسهم ضمن هذه المعايير. يتم استخدام Amazon Bedrock Application Inference Profiles لعزل الحصص لكل نموذج، مما يوفر طبقة تجريد نظيفة بين إعدادات LiteLLM وإصدارات النماذج.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Application Inference Profiles",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إعدادات المطور والمرونة التقنية",
+          "paragraphs": [
+            {
+              "text": "بفضل استخدام بروتوكول متوافق مع OpenAI، يمكن للمطورين ضبط أدواتهم مثل Claude Code وCursor باستخدام عنوان أساسي واحد ومفتاح API واحد. هذا يتيح للمطورين العمل على مستوى أعلى من الخلفية التقنية، مما يسمح لهم بتبديل النماذج أو إضافة بدائل أو هجرة مزودي النماذج دون الحاجة إلى تعديل إعدادات أدواتهم. في هذا السياق، يستخدم المقال نماذج Claude Sonnet وClaude Haiku كمثال توضيحي، مع الإشارة إلى أن توفر النماذج يختلف حسب منطقة AWS.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات النشر والإصدارات",
+          "paragraphs": [
+            {
+              "text": "يتطلب نشر هذا المشروع حساب AWS، ووصولاً إلى نماذج Amazon Bedrock، والصلاحيات المناسبة لهيئة إدارة الهوية والوصول (IAM). كما يتطلب استخدام LiteLLM، حيث أن مكوّن بوابة الذكاء الاصطناعي مفتوح المصدر ومناسب للتجارب الصغيرة مع بعض القيود. توثيق LiteLLM يوضح أن البوابة مجانية حتى 5 مستخدمين، بينما يتطلب إصدار LiteLLM Enterprise، وهو نسخة مرخصة قابلة للتوسع للإنتاج، لإصدار مفاتيح API ذاتية الخدمة كما هو موصوف في هذا الحل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة التكاليف والمراقبة",
+          "paragraphs": [
+            {
+              "text": "توفر البنية أدوات متقدمة لتتبع التكاليف والأداء. يستخدم النظام Amazon CloudWatch لالتقاط مقاييس الطلبات في الدقيقة (RPM) والرموز في الدقيقة (TPM) وتنبيهات الحصص. بالإضافة إلى ذلك، يدمج الحل مع Langfuse، وهو نظام مراقبة مفتوح المصدر لنماذج اللغة الكبيرة، لتوفير تيليميتري على مستوى الأوامر (Prompts) وتتبع الكمون وتصحيح الأخطاء. يكمل Langfuse مقاييس البنية التحتية من CloudWatch بتقديم رؤى على مستوى التطبيق، مما يتيح للفرق فهم سلوك النماذج بدقة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "LiteLLM",
+        "Amazon Bedrock",
+        "نماذج اللغة الكبيرة",
+        "بنية تحتية سحابية",
+        "تحكم في التكاليف"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز",
+        "LiteLLM",
+        "Amazon Bedrock",
+        "AWS Fargate",
+        "Langfuse",
+        "Claude Sonnet",
+        "Claude Haiku"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "12 نوفمبر 2026",
+      "modifiedLabel": "12 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 522
+    },
+    "en": {
+      "title": "AWS Details Self-Service LLM Gateway Using Bedrock and LiteLLM",
+      "description": "AWS Machine Learning Blog publishes architecture for OpenAI-compatible gateway with per-user cost controls and quota isolation on Fargate.",
+      "deck": "Amazon Web Services has published a reference architecture for a self-service LLM gateway that places Amazon Bedrock foundation models behind an OpenAI-compatible API using LiteLLM on AWS Fargate. The pattern gives developers instant access via a single API key while providing platform teams with cost controls and observability.",
+      "summaryBullets": [
+        "Gateway exposes Bedrock models through OpenAI-compatible endpoints using LiteLLM proxy on Fargate",
+        "Per-user API keys, spend limits, and quota isolation managed via LiteLLM self-service portal",
+        "Architecture uses Bedrock Application Inference Profiles for model-level quota and IAM control",
+        "Langfuse and CloudWatch provide application and infrastructure observability",
+        "LiteLLM Enterprise required for self-service key issuance beyond five-user free tier"
+      ],
+      "sections": [
+        {
+          "heading": "Gateway abstracts Bedrock behind familiar API",
+          "paragraphs": [
+            {
+              "text": "Amazon Web Services has detailed a reference implementation for a self-service LLM gateway that puts Amazon Bedrock foundation models behind an OpenAI-compatible API, allowing developers to configure coding assistants such as Claude Code, Continue, and Cursor with a single base URL and API key. The pattern, published on the AWS Machine Learning Blog, uses LiteLLM running on AWS Fargate as the proxy layer, with Amazon Bedrock Application Inference Profiles providing per-model quota isolation and a clean abstraction from Bedrock model versioning.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/building-a-self-service-llm-gateway-with-amazon-bedrock-and-litellm/"
+                },
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "LiteLLM",
+                  "url": "https://github.com/BerriAI/litellm"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Production topology spans Fargate, RDS, ElastiCache, and Bedrock",
+          "paragraphs": [
+            {
+              "text": "The production architecture routes developer requests through Amazon Route 53, Amazon CloudFront, and an Application Load Balancer to LiteLLM containers on Fargate with target-tracking auto-scaling on CPU utilization. LiteLLM authenticates each request with a per-user API key, stores virtual-key and spend state in Amazon RDS for PostgreSQL, coordinates rate-limiting across tasks via Amazon ElastiCache for Valkey, and retrieves secrets from AWS Secrets Manager. The Fargate task role then invokes Amazon Bedrock Application Inference Profiles using scoped IAM permissions.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Application Inference Profiles",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Self-service portal and cost controls target platform-team requirements",
+          "paragraphs": [
+            {
+              "text": "LiteLLM includes a lightweight self-service portal that can integrate with corporate single sign-on, enabling operations engineers to set spend policies while developers provision their own API keys within those parameters. The portal surfaces per-user cost tracking through endpoints such as GET /user/daily/activity for daily spend breakdown and GET /user/info?user_id=… for total spend per user, while an Admin UI provides broader administrative visibility. The post notes that virtual keys are available in the open-source tier, but the self-service key issuance described requires LiteLLM Enterprise, which adds single sign-on, audit logs, delegated admin roles, and support.",
+              "links": [
+                {
+                  "text": "GET /user/daily/activity",
+                  "url": "https://docs.litellm.ai/docs/proxy/cost_tracking#daily-spend-breakdown-api"
+                },
+                {
+                  "text": "GET /user/info?user_id=…",
+                  "url": "https://docs.litellm.ai/docs/proxy/cost_tracking#total-spend-per-user"
+                },
+                {
+                  "text": "Admin UI",
+                  "url": "https://docs.litellm.ai/docs/proxy/ui"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Observability combines infrastructure and application-level telemetry",
+          "paragraphs": [
+            {
+              "text": "For observability, the architecture pairs Amazon CloudWatch metrics — capturing requests per minute and tokens per minute with quota alarms — with Langfuse, an open-source LLM observability layer that provides prompt-level telemetry, latency tracking, and debugging. The post emphasizes that Langfuse complements infrastructure-level metrics with application-level insight, giving platform teams a fuller picture of model performance and usage patterns.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deployment uses CDK and environment-driven configuration",
+          "paragraphs": [
+            {
+              "text": "The reference implementation is expressed in AWS Cloud Development Kit (AWS CDK) constructs, with LiteLLM configuration mapping model names to Bedrock inference profile ARNs and enforcing per-key spend limits. Sensitive values such as the master key, database credentials, and Langfuse credentials are injected as environment variables on the Fargate task sourced from AWS Secrets Manager rather than hardcoded in config.yaml. The post recommends Global cross-Region inference via Bedrock Cross-Region Inference Service (CRIS) when models and organizational policies permit, providing access to broader regional capacity and automatic routing to regions with available capacity.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Licensing and scope considerations for adopters",
+          "paragraphs": [
+            {
+              "text": "AWS positions the pattern as illustrative, with snippets and CDK constructs intended as a starting point for teams building their own gateway. The LiteLLM AI Gateway component is open source and free for up to five users, with a license required beyond that threshold. LiteLLM Enterprise is described as a scalable, production-minded licensed version that includes the open-source gateway plus the additional enterprise features. The post also notes that responsible AI controls such as Amazon Bedrock Guardrails for content filtering and grounding are not covered in the example but would normally be included before production deployment.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "LiteLLM",
+        "LLM gateway",
+        "AWS Fargate",
+        "Generative AI",
+        "Developer tools",
+        "Cloud infrastructure"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "LiteLLM",
+        "AWS Fargate",
+        "Langfuse",
+        "AWS CDK"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 12, 2026",
+      "modifiedLabel": "November 12, 2026",
+      "readMinutes": 3,
+      "wordCount": 644
+    }
+  },
+  "datePublished": "2026-11-12T22:09:50.492661+03:00",
+  "dateModified": "2026-11-12T22:09:50.492661+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/building-self-service-llm-gateway-with-amazon-bedrock-and-litellm/hero.webp",
+    "card": "/forum/assets/posts/2026/11/building-self-service-llm-gateway-with-amazon-bedrock-and-litellm/card.webp",
+    "social": "/forum/assets/posts/2026/11/building-self-service-llm-gateway-with-amazon-bedrock-and-litellm/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح بوابة ذكاء اصطناعي ذاتية الخدمة عبر LiteLLM",
+      "en": "AWS Details Self-Service LLM Gateway Using Bedrock and LiteLLM"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-20816-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/building-self-service-llm-gateway-with-amazon-bedrock-and-litellm/inline-01.webp",
+        "width": 1400,
+        "height": 862,
+        "alt": {
+          "ar": "أمازون تتيح بوابة ذكاء اصطناعي ذاتية الخدمة عبر LiteLLM",
+          "en": "Self-Service LLM Gateway for Amazon Bedrock production topology"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/building-a-self-service-llm-gateway-with-amazon-bedrock-and-litellm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-20816-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/building-a-self-service-llm-gateway-with-amazon-bedrock-and-litellm/",
+      "type": "official",
+      "title": "Building a self-service LLM gateway with Amazon Bedrock and LiteLLM"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/building-a-self-service-llm-gateway-with-amazon-bedrock-and-litellm",
+  "sourceTitle": "Building a self-service LLM gateway with Amazon Bedrock and LiteLLM",
+  "trendScore": 122.88,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-12T19:09:50+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/building-self-service-llm-gateway-with-amazon-bedrock-and-litellm.json"
+}
