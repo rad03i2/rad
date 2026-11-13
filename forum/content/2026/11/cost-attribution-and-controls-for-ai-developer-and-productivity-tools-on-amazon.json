@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "5fc66b49260043b9fbe2",
+  "slug": "cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon/",
+    "en": "/forum/en/ai/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون: أدوات جديدة لتتبع تكاليف الذكاء الاصطناعي في Bedrock",
+      "description": "توفر أمازون ويب خدمات آلية مدمجة في Amazon Bedrock لتتبع تكاليف استدعاءات الذكاء الاصطناعي لكل مستخدم بدقة، مما يساعد فرق FinOps على إدارة الميزانيات وتحسين الكفاءة التشغيلية.",
+      "deck": "أطلقت أمازون ويب خدمات آلية مدمجة في Amazon Bedrock لتتبع تكاليف استدعاءات الذكاء الاصطناعي لكل مستخدم بدقة، مما يساعد فرق FinOps على إدارة الميزانيات وتحسين الكفاءة التشغيلية.",
+      "summaryBullets": [
+        "تتبع آلي لتكاليف كل استدعاء نموذج ذكاء اصطناعي مرتبط بهوية المستخدم دون تعديل الكود.",
+        "تكامل مع IAM Identity Center وCUR 2.0 لإضافة أبعاد تنظيمية مثل الفرق ومراكز التكلفة.",
+        "دعم شامل لأدوات التطوير والإنتاجية مثل Claude Code وChatGPT Work عبر نقاط نهاية موحدة.",
+        "إمكانية فرض حدود إنفاق لكل مستخدم بناءً على بيانات الاستخدام الفعلية."
+      ],
+      "sections": [
+        {
+          "heading": "آلية التتبع الآلي للتكاليف",
+          "paragraphs": [
+            {
+              "text": "توفر أمازون ويب خدمات في منصة Amazon Bedrock آلية مدمجة لتتبع التكاليف دون الحاجة إلى أي أدوات قياس خارجية. تعتمد هذه الآلية على تتبع كل استدعاء استنتاجي (Inference Call) وربطه مباشرة بالكيان المسؤول (IAM Principal) الذي قام به. تتدفق هذه البيانات مع الوسوم التنظيمية إلى تقارير التكلفة والاستخدام (CUR 2.0) ومستكشف التكاليف (Cost Explorer)، مع بقاء البيانات ضمن حدود الأمان الخاصة بأمازون. تتيح هذه الميزة للإداريين الإجابة عن أسئلة جوهرية حول التكلفة الفعلية لكل مستخدم، والفرق الأكثر إنفاقاً، وكيفية توسيع الميزانية المستقبلية بناءً على معدل التبني.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon-bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دعم أدوات التطوير والإنتاجية",
+          "paragraphs": [
+            {
+              "text": "تعمل هذه الآلية بشكل موحد بغض النظر عن أداة الذكاء الاصطناعي المستخدمة، سواء كانت أدوات برمجة مثل Claude Code أو Codex، أو أدوات إنتاجية مثل ChatGPT Work. تستدعي هذه الأدوات Amazon Bedrock عبر أحد نقطتي النهاية: bedrock-runtime أو bedrock-mantle. بما أن آلية التتبع تعمل على مستوى نقطة النهاية، فإن أي أداة تمر عبر Bedrock ترث تلقائياً إمكانية رؤية التكلفة لكل مستخدم. يتطلب الأمر فقط تكوين انتشار الهوية مرة واحدة، مما يضمن شفافية كاملة في التكاليف دون تعقيد تقني إضافي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع هويات IAM Identity Center",
+          "paragraphs": [
+            {
+              "text": "لتحقيق تتبع دقيق لكل مستخدم، يوصي المصدر بتفعيل IAM Identity Center وربطه بمزود هوية خارجي مثل Okta أو Microsoft Entra ID. عند استخدام هذا النظام، يصبح اسم الجلسة هو اسم تسجيل دخول المستخدم، مما يمنح كل مستخدم كياناً فريداً في بيانات الفوترة. يمكن إثراء هذه البيانات بوسوم جلسة (Session Tags) مثل الفريق أو مركز التكلفة، والتي تظهر في تقارير CUR 2.0 مع بادئة iamPrincipal/، مما يجعل استعلام التكاليف حسب المستخدم أمراً سهلاً ودقيقاً دون أي تغييرات على استدعاءات واجهة برمجة التطبيقات (API).",
+              "links": [
+                {
+                  "text": "IAM Identity Center",
+                  "url": "https://docs.aws.amazon.com/singlesignon/latest/userguide/enable-identity-center.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إعدادات التقارير والتحليل",
+          "paragraphs": [
+            {
+              "text": "لبدء عملية التتبع، يجب تفعيل تقرير التكلفة والاستخدام (CUR 2.0) مع تضمين بيانات كيانات IAM، وتفعيل وسوم تخصيص التكلفة من حساب الإدارة. تُجمع بيانات الاستخدام لكل كيان ونوع استخدام خلال فترة تصدير محددة، سواء كانت ساعة أو يوم. للحصول على تفاصيل أدق على مستوى كل موجه (Prompt)، يمكن استخدام سجلات استدعاء النموذج أو وسوم البيانات الوصفية لكل طلب. توفر أمازون أيضاً خيارات لوحات معلومات باستخدام Amazon Athena لتحليل هذه البيانات بشكل مستمر ورؤية اتجاهات الإنفاق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آليات التحكم في الإنفاق",
+          "paragraphs": [
+            {
+              "text": "بجانب التتبع، تتيح المنصة فرض حدود استخدام لكل مستخدم. يمكن دمج آليات التتبع المختلفة، مثل استخدام هوية IAM للتتبع المالي العام، مع وسوم البيانات الوصفية لكل طلب للحصول على تفاصيل تقنية دقيقة. توفر هذه المرونة للفرق التقنية والمالية القدرة على بناء سياسات إنفاق ذكية تتكيف مع حجم الفريق ونوع العمل المنجز، مما يساهم في تحسين كفاءة الإنفاق على حلول الذكاء الاصطناعي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون ويب خدمات",
+        "Amazon Bedrock",
+        "الذكاء الاصطناعي",
+        "إدارة التكاليف",
+        "FinOps",
+        "IAM",
+        "أدوات التطوير"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "IAM Identity Center",
+        "Claude Code",
+        "ChatGPT Work",
+        "AWS Cost and Usage Report"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "13 نوفمبر 2026",
+      "modifiedLabel": "13 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 484
+    },
+    "en": {
+      "title": "Amazon Bedrock Details Cost Attribution for AI Developer Tools",
+      "description": "Learn how Amazon Bedrock provides zero-instrumentation cost attribution and controls for AI developer and productivity tools using IAM and CUR 2.0.",
+      "deck": "Amazon Bedrock offers built-in, zero-instrumentation cost attribution that traces every inference call back to the IAM principal that made it, helping FinOps teams track per-user spending.",
+      "summaryBullets": [
+        "Amazon Bedrock traces every inference call back to the originating IAM principal without requiring instrumented code changes.",
+        "Per-user cost visibility is achieved by combining IAM Identity Center, session tags, and AWS Cost and Usage Reports (CUR 2.0).",
+        "The attribution mechanism functions identically across tools like Claude Code, Claude Desktop, OpenAI Codex, ChatGPT Work, and OpenCode.",
+        "Organizations can configure external identity providers, set up permission sets, and analyze billing data using Amazon Athena."
+      ],
+      "sections": [
+        {
+          "heading": "Tracking Per-User Costs on Amazon Bedrock",
+          "paragraphs": [
+            {
+              "text": "As adoption of AI coding and productivity tools scales across enterprises, FinOps and AI Platform leaders face growing challenges regarding cost attribution and budgeting. Amazon Bedrock provides built-in, zero-instrumentation cost attribution that traces every inference call back to the IAM principal that made it. This identity flows along with organizational tags into AWS Cost and Usage Reports (CUR 2.0) and AWS Cost Explorer while ensuring data remains inside the secure AWS security boundary.",
+              "links": [
+                {
+                  "text": "AWS Cost and Usage Report",
+                  "url": "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/iam-principal-cost-allocation.html"
+                }
+              ]
+            },
+            {
+              "text": "Organizations looking to implement these capabilities can reference detailed guidance on how to Track usage and costs in Amazon Bedrock to understand the available options for managing and monitoring inference expenses effectively.",
+              "links": [
+                {
+                  "text": "Track usage and costs in Amazon Bedrock",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/cost-management.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Unified Inference Endpoint Architecture",
+          "paragraphs": [
+            {
+              "text": "The tracking approach operates identically regardless of which AI coding or productivity tool initiates the call. Tools like Claude Code, Claude Desktop, OpenAI Codex, ChatGPT Work, and OpenCode invoke Amazon Bedrock through either the bedrock-runtime or bedrock-mantle endpoints. Because Bedrock's attribution mechanism operates directly at the endpoint layer beneath any tool-specific logic, administrators only need to configure identity propagation once.",
+              "links": []
+            },
+            {
+              "text": "Once configured, every tool routing inference through Bedrock automatically inherits per-user cost visibility. Developers and knowledge workers authenticate individually, allowing management teams to correlate team spending directly with the value generated by their AI tooling.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Capturing IAM Principals and Session Tags",
+          "paragraphs": [
+            {
+              "text": "When a user invokes a model through either supported endpoint, Amazon Bedrock captures the caller's full IAM Amazon Resource Name (ARN), including the session name for federated users, and publishes it to CUR 2.0 in the line_item_iam_principal column. In billing data, usage is aggregated per principal and per usage type during each export interval. Organizations can further enrich this data by attaching organizational dimensions using Cost allocation tags.",
+              "links": [
+                {
+                  "text": "Cost allocation tags",
+                  "url": "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html"
+                }
+              ]
+            },
+            {
+              "text": "While CUR 2.0 provides aggregated billing metrics per export interval, organizations requiring finer granularity can leverage model invocation logs and request metadata tagging for per-prompt detail. Teams can also utilize the CUDOS dashboard alongside Amazon Athena queries for ongoing, detailed cost visibility.",
+              "links": [
+                {
+                  "text": "CUDOS dashboard",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-cost-attribution-with-amazon-athena-and-cudos/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and Identity Center Setup",
+          "paragraphs": [
+            {
+              "text": "Implementing per-user attribution requires a properly configured AWS account alongside IAM permissions to access the desired Bedrock models. Administrators must also ensure they have an IAM Identity Center enabled environment connected to an external identity provider such as Okta, Microsoft Entra ID, or Ping Identity with System for Cross-domain Identity Management (SCIM) provisioning enabled.",
+              "links": [
+                {
+                  "text": "AWS account",
+                  "url": "https://aws.amazon.com/resources/create-account/"
+                }
+              ]
+            },
+            {
+              "text": "After establishing the external identity provider connection, administrators should verify that AWS IAM Identity Center enabled settings are correctly configured. This enables automatic user synchronization and attribute mapping for session tags, ensuring that organizational identifiers flow seamlessly into CUR 2.0.",
+              "links": [
+                {
+                  "text": "IAM Identity Center enabled",
+                  "url": "https://docs.aws.amazon.com/singlesignon/latest/userguide/enable-identity-center.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Configuring Permission Sets for Endpoints",
+          "paragraphs": [
+            {
+              "text": "To complete the setup, administrators create a specific permission set in Identity Center that grants Bedrock invocation access. Tools interacting with the bedrock-mantle endpoint require specific actions scoped to a Project resource, while tools calling the bedrock-runtime endpoint require foundational model invocation permissions.",
+              "links": []
+            },
+            {
+              "text": "By deploying AWS CLI v2 and configuring Athena tables using available deployment frameworks, engineering and FinOps teams can easily monitor, attribute, and control expenses associated with enterprise AI developer tools.",
+              "links": [
+                {
+                  "text": "AWS CLI v2",
+                  "url": "https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AWS",
+        "FinOps",
+        "IAM Identity Center",
+        "Artificial Intelligence",
+        "Cost Attribution",
+        "CUR 2.0"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Anthropic",
+        "OpenAI"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 13, 2026",
+      "modifiedLabel": "November 13, 2026",
+      "readMinutes": 3,
+      "wordCount": 601
+    }
+  },
+  "datePublished": "2026-11-13T22:19:08.417283+03:00",
+  "dateModified": "2026-11-13T22:19:08.417283+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon/hero.webp",
+    "card": "/forum/assets/posts/2026/11/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon/card.webp",
+    "social": "/forum/assets/posts/2026/11/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon/social.jpg",
+    "alt": {
+      "ar": "أمازون: أدوات جديدة لتتبع تكاليف الذكاء الاصطناعي في Bedrock",
+      "en": "Amazon Bedrock Details Cost Attribution for AI Developer Tools"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-21035-featured-image-2.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon-bedrock/",
+      "type": "official",
+      "title": "Cost attribution and controls for AI developer and productivity tools on Amazon Bedrock"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon-bedrock",
+  "sourceTitle": "Cost attribution and controls for AI developer and productivity tools on Amazon Bedrock",
+  "trendScore": 123.8,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-13T19:19:08+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon.json"
+}
