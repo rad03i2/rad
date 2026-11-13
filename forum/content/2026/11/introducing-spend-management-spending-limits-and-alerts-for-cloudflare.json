@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "b7eabbe823d95a9d2a0f",
+  "slug": "introducing-spend-management-spending-limits-and-alerts-for-cloudflare",
+  "categorySlug": "web",
+  "urls": {
+    "ar": "/forum/ar/web/introducing-spend-management-spending-limits-and-alerts-for-cloudflare/",
+    "en": "/forum/en/web/introducing-spend-management-spending-limits-and-alerts-for-cloudflare/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cloudflare تطلق إدارة الإنفاق: حدود صارمة وتنبيهات فورية للمطورين",
+      "description": "أطلقت Cloudflare ميزة Spend Management في وضع تجريبي، تتيح للمطورين ضبط حدود إنفاق صارمة لخدمات Workers وDurable Objects، مع آلية إيقاف تلقائية لمنع الفواتير غير المتوقعة.",
+      "deck": "تستجيب Cloudflare لمتطلبات أكثر من 10 ملايين مطور بتوفير أدوات تحكم فعالة في التكاليف، تتجاوز مجرد التنبيهات لتصل إلى إيقاف الخدمات تلقائياً عند تجاوز الحدود المحددة.",
+      "summaryBullets": [
+        "إطلاق ميزة Spend Management في وضع Beta لعملاء الدفع حسب الاستخدام (PayGo).",
+        "تطبيق حدود إنفاق صارمة على خدمات Workers وDurable Objects مع إمكانية التوسع مستقبلاً.",
+        "بنية تحتية جديدة تعتمد على خط قياس ثنائي المراحل لتجميع البيانات وتقليل الحمل على الأنظمة.",
+        "توفر خيارات التحكم عبر لوحة التحكم، وأسطر الأوامر (CLI)، وواجهات برمجة التطبيقات (API).",
+        "آلية إيقاف تلقائية للعمليات التي تستهلك الموارد عند بلوغ الحد الأقصى، مع استمرار تقديم الأصول الثابتة."
+      ],
+      "sections": [
+        {
+          "heading": "من التنبيهات إلى التحكم الفعّال",
+          "paragraphs": [
+            {
+              "text": "لطالما كانت أدوات التحكم في الإنفاق في صدارة الطلبات من المطورين الذين يبنون تطبيقاتهم على منصة Cloudflare. ومع تجاوز عدد المطورين على المنصة حاجز الـ 10 ملايين مطور، أصبحت الحاجة إلى إدارة دقيقة للتكاليف أمراً حيوياً. وعلى الرغم من توفر إشعارات الاستخدام وتنبيهات الميزانية سابقاً للمشتركين المدفوعين، إلا أن هذه الأدوات كانت تقتصر على الإخطار دون تقديم آلية للتحكم الفعلي في النفقات. ويمكن الرجوع إلى Cloudflare Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/spend-management"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل حدود الإنفاق الجديدة",
+          "paragraphs": [
+            {
+              "text": "تتيح ميزة Spend Management الجديدة، المتوفرة حالياً في وضع تجريبي (Beta) لجميع عملاء الدفع حسب الاستخدام، تحديد عتبات إنفاق محددة. عند بلوغ هذه العتبات، يمكن لـ Cloudflare إيقاف النشاط تلقائياً، مما يمنع تراكم فواتير غير متوقعة نتيجة الاستخدام غير المخطط له. وتعمل هذه الميزة بشكل تكاملي مع حدود الإنفاق الخاصة بـ AI Gateway، مما يسمح للمطورين بإدارة تكاليف الحوسبة والاستدلال الاصطناعي عبر تطبيقاتهم بشكل شامل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خيارات متعددة لإدارة التكاليف",
+          "paragraphs": [
+            {
+              "text": "يمكن للمستخدمين بدء استخدام هذه الميزة عبر ثلاث قنوات رئيسية: لوحة التحكم، وأسطر الأوامر (CLI)، وواجهات برمجة التطبيقات (REST API). في لوحة التحكم، يتوجه المستخدمون إلى قسم إدارة الحساب ثم الفوترة وحدود الإنفاق، حيث يمكنهم تفعيل المنتجات المراد التحكم بها. عند التفعيل، يُطلب من المستخدم تحديد حد الإنفاق، وإدخال بريد إلكتروني لاستقبال الإشعارات، وتعيين عتبات تنبيه متعددة. عند بلوغ أي من هذه العتبات، تُرسل الإشعارات، وعند بلوغ الحد الأقصى، يُطبق سياسة الحظر ويُوقف المنتج تلقائياً.",
+              "links": [
+                {
+                  "text": "REST API",
+                  "url": "https://developers.cloudflare.com/api/resources/billing/subresources/spend_policies/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الرؤية الشاملة وسجل التدقيق",
+          "paragraphs": [
+            {
+              "text": "توفر لوحة التحكم عرضاً شبه فوري (أقل من 10 دقائق) لتكاليف دورة الفوترة الحالية لكل منتج مدعوم. كما تعرض اللوحة لوحة ملخص توضح المنتجات التي تم تكوين عتبات وحدود لها، بالإضافة إلى سجل تدقيق (Audit Log) يوثق من قام بتغيير الحدود ومتى، ومتى تم بلوغ السقف. من المهم ملاحظة أن دورة الفوترة تبدأ عند بدء الاشتراك المدفوع وليس عند نشر Worker أو إنشاء سقف إنفاق، مما يعني أن الدورات قد لا تتطابق مع الأشهر التقويمية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "البنية التحتية: خط قياس ثنائي المراحل",
+          "paragraphs": [
+            {
+              "text": "بناء نظام بهذا الحجم على نطاق Cloudflare لم يكن أمراً سهلاً، حيث تطلب الأمر التعاون بين فرق متعددة وإنشاء أنظمة جديدة من الصفر. يعتمد النظام على خط قياس ثنائي المراحل لجمع وتجميع القياسات بالقرب من المصدر. في المرحلة الأولى، تُقلل حجم الأحداث الخام إلى نوافذ زمنية مدتها دقيقة واحدة، حيث تحول محللات القياس الأحداث الخام إلى قياسات استخدام وتجمعها. في المرحلة الثانية، تدمج خدمة منفصلة هذه المجموعات الجزئية باستخدام قواعد تجميع مماثلة ولكن عبر نوافذ مدتها خمس دقائق، مما يقلل الحجم بشكل أكبر قبل المعالجة النهائية. كما يتم أرشفة هذه المجموعات الموحدة لتوفير مجموعة بيانات دائمة للتحليلات والمطابقة اللاحقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "محرك الاستخدام والتقييم",
+          "paragraphs": [
+            {
+              "text": "يترجم محرك الاستخدام (Usage Engine) القياسات المجمعة إلى سجلات استخدام قياسية تحتوي على الحساب، ونافذة الاستخدام، والمقياس، والكمية، والأبعاد ذات الصلة. يتم تقسيم المعالجة حسب الحساب لضمان بقاء معلومات الاستخدام والاشتراك معاً، مما يسمح بالحفاظ على الاستخدام المتراكم وتطبيق الحصص المضمنة دون تنسيق معقد. يعتمد النظام على معالجة متوازية حيث تحتفظ كل شريحة بحالة محلية للوصول السريع وسجل كتابة مسبق (WAL) دائم على القرص، مما يوفر قابلية استرداد عالية في حال حدوث أعطال.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "محرك التقييم: من الاستخدام إلى القيمة المالية",
+          "paragraphs": [
+            {
+              "text": "يُعد محرك التقييم (Rating Engine) المكون الأهم في نظام إدارة الإنفاق، حيث يحوّل الاستخدام إلى قيمة مالية ويجيب عن سؤال: \"كم أنفق هذا الحساب حتى الآن؟\". يجمع المحرك بين ثلاثة عناصر رئيسية: سجلات الاستخدام (مثل عدد الطلبات وميلي ثوانٍ المعالج)، معلومات الاشتراك (فترة الفوترة وتغييرات الخطة)، وقواعد التسعير (المعدلات، الحصص المضمنة، والتقريب). عند تطبيق سقف الإنفاق، تُرفض الاستدعاءات الجديدة للمنتج، مع ملاحظة أن الإيقاف ينطبق فقط على استدعاءات كود العميل التي تتسبب في تكاليف، بينما تستمر الأصول الثابتة في التقديم.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "إدارة الإنفاق",
+        "Workers",
+        "Durable Objects",
+        "بنية تحتية سحابية",
+        "تكاليف الحوسبة",
+        "API"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Workers",
+        "Durable Objects",
+        "AI Gateway",
+        "Spend Management",
+        "Usage Engine",
+        "Rating Engine"
+      ],
+      "category": "الويب",
+      "dateLabel": "13 نوفمبر 2026",
+      "modifiedLabel": "13 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 668
+    },
+    "en": {
+      "title": "Cloudflare Introduces Spend Management in Beta",
+      "description": "Cloudflare has launched Spend Management in beta, giving pay-as-you-go customers spending limits and alerts for Workers and Durable Objects.",
+      "deck": "Cloudflare has introduced Spend Management in beta for pay-as-you-go customers, addressing a long-standing request for spending controls and automated activity pausing to prevent unexpected bills.",
+      "summaryBullets": [
+        "Spend Management is available in beta for pay-as-you-go customers starting with Workers and Durable Objects.",
+        "Users can configure spending thresholds, alert notifications, and hard caps that automatically pause activity when limits are reached.",
+        "The system can be managed through the Cloudflare dashboard, the cf CLI, or the REST API.",
+        "A custom two-stage metering pipeline collects and aggregates usage measurements near the source to support global decisions at scale."
+      ],
+      "sections": [
+        {
+          "heading": "New Spend Controls for Developers",
+          "paragraphs": [
+            {
+              "text": "Spend controls have consistently ranked among the most requested features from developers building on Cloudflare's developer platform. With more than 10 million developers building on Cloudflare, implementing effective financial guardrails has become more important than ever for teams managing application costs.",
+              "links": [
+                {
+                  "text": "more than 10 million developers",
+                  "url": "https://cloudflare.net/news/news-details/2026/More-than-10-Million-Developers-Are-Building-on-Cloudflare/"
+                }
+              ]
+            },
+            {
+              "text": "Although Cloudflare has previously provided usage notifications and budget alerts for paid plans, informing users about expenses does not completely solve the problem of managing unexpected costs. To bridge this gap, the company is introducing Spend Management in beta for any pay-as-you-go customer, beginning with Workers and Durable Objects before expanding to additional products.",
+              "links": [
+                {
+                  "text": "Spend Management",
+                  "url": "https://blog.cloudflare.com/spend-management"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Configuring Limits and Alerts",
+          "paragraphs": [
+            {
+              "text": "When enabling controls for a supported product, administrators can define a spending limit, designate a recipient email for notifications, and establish one or more alert thresholds. If a recipient email is configured, notifications are dispatched when evaluated spending reaches specified thresholds or the hard spending limit.",
+              "links": []
+            },
+            {
+              "text": "Once a spending limit is reached, a blocking policy is enforced, and the product is automatically paused to prevent further unplanned charges. Customers can view near-real-time billing cycle costs, manage settings, and review an audit log directly within the dashboard under the billing and spend management section.",
+              "links": [
+                {
+                  "text": "dashboard",
+                  "url": "https://dash.cloudflare.com/?to=/:account/billing/spend-management/hard-caps"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Management via Dashboard, CLI, and API",
+          "paragraphs": [
+            {
+              "text": "Developers can interact with Spend Management using multiple interfaces, including the web dashboard, the REST API, or the cf CLI tool designed for the entire Cloudflare API. Programmatic management details are outlined in the official Developer Documentation.",
+              "links": [
+                {
+                  "text": "REST API",
+                  "url": "https://developers.cloudflare.com/api/resources/billing/subresources/spend_policies/"
+                }
+              ]
+            },
+            {
+              "text": "When a spending cap is enforced, new customer-code invocations that incur costs are rejected. For Workers specifically, invocations such as Cron Triggers and Queue consumer invocations are paused, while static assets continue to be served normally. To restore service, users can either raise the limit above the accumulated spend for the current cycle or wait until the next billing cycle begins.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecting a Scalable Metering Pipeline",
+          "paragraphs": [
+            {
+              "text": "Building a spend control system capable of operating across Cloudflare's distributed network required significant architectural engineering. Transporting and processing raw usage data all the way from global sources to a central rating engine would be inefficient at scale, prompting the development of a specialized two-stage metering pipeline.",
+              "links": []
+            },
+            {
+              "text": "The first stage utilizes metering parsers close to the source to convert raw events into usage measurements, combining matching records into one-minute windows. A second service then merges these partial aggregates over five-minute windows, archiving consolidated data to create a durable dataset for future analytics and reconciliation before downstream engines process the information.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Usage Processing and the Rating Engine",
+          "paragraphs": [
+            {
+              "text": "After aggregation, the Usage Engine translates measurements into standardized usage records containing account details, usage windows, metrics, and quantities. Cloudflare partitions processing by account so that usage and subscription information intersect in the same location, allowing the system to maintain accumulated usage and apply allowances without extensive cross-partition coordination.",
+              "links": []
+            },
+            {
+              "text": "Finally, usage metrics feed into the Rating Engine, which converts consumption data into monetary value by combining usage records, subscription billing periods, and pricing rules. This engine provides the core runtime decision mechanism that determines whether an account has reached its configured threshold and whether blocking policies must be applied.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Spend Management",
+        "Cloudflare Workers",
+        "Durable Objects",
+        "Cloud Computing",
+        "Billing"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Workers",
+        "Durable Objects",
+        "Spend Management"
+      ],
+      "category": "Web",
+      "dateLabel": "November 13, 2026",
+      "modifiedLabel": "November 13, 2026",
+      "readMinutes": 3,
+      "wordCount": 604
+    }
+  },
+  "datePublished": "2026-11-13T17:59:01.673584+03:00",
+  "dateModified": "2026-11-13T17:59:01.673584+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/introducing-spend-management-spending-limits-and-alerts-for-cloudflare/hero.webp",
+    "card": "/forum/assets/posts/2026/11/introducing-spend-management-spending-limits-and-alerts-for-cloudflare/card.webp",
+    "social": "/forum/assets/posts/2026/11/introducing-spend-management-spending-limits-and-alerts-for-cloudflare/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تطلق إدارة الإنفاق: حدود صارمة وتنبيهات فورية للمطورين",
+      "en": "Cloudflare Introduces Spend Management in Beta"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M79507GNA08VSCSPAXM0NCC3.png&w=3998&h=2250&f=webp&fit=cover&position=center",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-spend-management-spending-limits-and-alerts-for-cloudflare/inline-01.webp",
+        "width": 1200,
+        "height": 630,
+        "alt": {
+          "ar": "Cloudflare تطلق إدارة الإنفاق: حدود صارمة وتنبيهات فورية للمطورين",
+          "en": "Introducing Spend Management: Spending limits and alerts for Cloudflare"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/spend-management",
+        "originalUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M7950E9QJM0EW9MAQ8P0M0ME.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-spend-management-spending-limits-and-alerts-for-cloudflare/inline-02.webp",
+        "width": 965,
+        "height": 1050,
+        "alt": {
+          "ar": "Cloudflare تطلق إدارة الإنفاق: حدود صارمة وتنبيهات فورية للمطورين",
+          "en": "Cloudflare Introduces Spend Management in Beta"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Enabling Spend management for Durable Objects"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/spend-management",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M7950CQ720KJ55VXG6B28ZFY.png&w=1430&h=1556&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-spend-management-spending-limits-and-alerts-for-cloudflare/inline-03.webp",
+        "width": 1331,
+        "height": 1050,
+        "alt": {
+          "ar": "Cloudflare تطلق إدارة الإنفاق: حدود صارمة وتنبيهات فورية للمطورين",
+          "en": "Cloudflare Introduces Spend Management in Beta"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Email notification when the spending limit is reached"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/spend-management",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M794ZXGZM7R7BN5MQBVRQJM8.png&w=1430&h=1128&f=webp&fit=cover&position=center"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-spend-management-spending-limits-and-alerts-for-cloudflare/inline-04.webp",
+        "width": 1400,
+        "height": 730,
+        "alt": {
+          "ar": "Cloudflare تطلق إدارة الإنفاق: حدود صارمة وتنبيهات فورية للمطورين",
+          "en": "Cloudflare Introduces Spend Management in Beta"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/spend-management",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M79500Q2W11H8JG83RZGD0VK.png&w=1430&h=746&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/spend-management",
+      "type": "official",
+      "title": "Introducing Spend Management: Spending limits and alerts for Cloudflare"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/spend-management",
+  "sourceTitle": "Introducing Spend Management: Spending limits and alerts for Cloudflare",
+  "trendScore": 111.72,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-13T14:59:02+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/introducing-spend-management-spending-limits-and-alerts-for-cloudflare.json"
+}
