@@ -1,0 +1,332 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "cbda9238a3684b28e47a",
+  "slug": "the-definitive-fine-tuning-guide-for-3d-generation-models",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/the-definitive-fine-tuning-guide-for-3d-generation-models/",
+    "en": "/forum/en/ai/the-definitive-fine-tuning-guide-for-3d-generation-models/"
+  },
+  "locales": {
+    "ar": {
+      "title": "هافينج فيس تطلق أدوات لتدريب نماذج توليد ثلاثية الأبعاد بدقة",
+      "description": "توفر هافينج فيس سكربتات وحاويات لتدريب نموذج TRELLIS.2 باستخدام تقنية LoRA، مما يتيح تخصيص النماذج ثلاثية الأبعاد بدقة عالية وتقليل التكاليف الحسابية.",
+      "deck": "أطلقت هافينج فيس دليلاً شاملاً وأدوات برمجية لتدريب نموذج TRELLIS.2، بهدف تحسين دقة النماذج المولدة ثلاثية الأبعاد لتطبيقات محددة.",
+      "summaryBullets": [
+        "توفير سكربتات وحاويات Docker لتدريب النموذج محلياً أو عبر خدمات السحابة.",
+        "استخدام تقنية LoRA لتقليل حجم المعلمات القابلة للتدريب وتجنب نسيان المعلومات الأصلية.",
+        "تركيز التدريب على مكوّنات الهيكل والشكل فقط، مع تجميد مكوّنات المواد للحفاظ على الجودة.",
+        "تجربة عملية على 188 حذاءً من مجموعة GSO لتحسين دقة النعلات والشكل العام."
+      ],
+      "sections": [
+        {
+          "heading": "أدوات جديدة لتخصيص النماذج ثلاثية الأبعاد",
+          "paragraphs": [
+            {
+              "text": "أعلنت هافينج فيس عن إصدار دليل شامل وأدوات برمجية لتدريب نموذج TRELLIS.2، وهو نموذج شهير لتوليد النماذج ثلاثية الأبعاد. تهدف هذه الأدوات إلى تمكين المطورين من تخصيص النموذج بناءً على أصولهم الخاصة، مع إمكانية التشغيل محلياً أو عبر خدمات Hugging Face Jobs السحابية. يوفر الدليل سكربتات جاهزة يمكن تعديلها بسهولة، بالإضافة إلى شرح تفصيلي لكيفية عمل هذه العمليات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحدي تنسيق البيانات والتمثيلات",
+          "paragraphs": [
+            {
+              "text": "تواجه تطبيقات توليد النماذج ثلاثية الأبعاد، المستخدمة في الروبوتات والمحاكاة والترفيه، صعوبة في توحيد القواعد والتمثيلات. تتنوع صيغ الملفات مثل GLB و PLY، كما تختلف التمثيلات العصبية مثل حقول الإشعاع العصبية (NeRFs) وتقنية 3D Gaussian splatting. كل منها له مزايا وعيوب مختلفة. قدم نموذج TRELLIS تمثيلاً كامناً موحداً، حيث تقوم فواكه الترميز بتحويله إلى نماذج ثلاثية الأبعاد بالصيغة المطلوبة، مما يلغي الحاجة إلى استخدام نماذج مختلفة لكل صيغة.",
+              "links": [
+                {
+                  "text": "GLB",
+                  "url": "https://en.wikipedia.org/wiki/GlTF"
+                },
+                {
+                  "text": "PLY",
+                  "url": "https://en.wikipedia.org/wiki/PLY_(file_format)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "لماذا نحتاج إلى التدريب الدقيق؟",
+          "paragraphs": [
+            {
+              "text": "على الرغم من تحسينات TRELLIS.2 في تمثيل البنية ثلاثية الأبعاد، إلا أن النماذج العامة قد ترتكب أخطاء في التفاصيل الدقيقة المهمة للتطبيقات المتخصصة. على سبيل المثال، قد يحتاج المستخدم إلى هندسة دقيقة لنماذج الأثاث. في تجاربهم الأولية، استخدم الفريق مجموعة فرعية من 188 حذاءً من مجموعة Google Scanned Objects (GSO). أظهر النموذج المدرب مسبقاً أحذية تبدو صحيحة شكلياً، لكن نعلاتها كانت غير دقيقة. الهدف من التدريب الدقيق هو تحسين أداء النموذج على فئة محددة من الكائنات، مع تحديد المكونات التي يجب تدريبها وتلك التي يجب تجميدها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل تقنية LoRA",
+          "paragraphs": [
+            {
+              "text": "تعتمد التقنية المستخدمة على LoRA (التكيف منخفض الرتبة)، التي تقوم بتدريب مصفوفات مهايئة صغيرة مع إبقاء الأوزان الأصلية للنموذج مجمدة. يقلل هذا النهج من عدد المعلمات القابلة للتدريب والذاكرة المطلوبة للتدرجات وحالة المُحسّن. استخدم الفريق مكتبة PEFT من هافينج فيس لإضافة هذه المهايئات وتدريبها. كما تم استخدام Hugging Face Jobs لتشغيل أحمال العمل المعبأة في حاويات على أجهزة سحابية، مع توفر أوامر Docker للتشغيل المحلي على أجهزة GPU خاصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مراحل توليد النموذج ثلاثي الأبعاد",
+          "paragraphs": [
+            {
+              "text": "يتكون خط أنابيب TRELLIS.2 من خمس مراحل رئيسية: إزالة الخلفية، ترميز الصورة، التنبؤ بالهيكل الخشن، توليد الهندسة الدقيقة، وتوليد المواد. أولاً، يقوم BiRefNet بإزالة الخلفية، ثم يرمز DINOv3-L الصورة إلى رموز ميزات. يتنبأ نموذج Sparse Structure Flow DiT بالشكل الخشن للكائن، حيث ينتج كائناً كامناً صغيراً يتم تحويله إلى شبكة إشغال (Occupancy Grid) بدقة 64×64×64. تضاف مهايئات LoRA إلى هذا النموذج لأن مخرجاته توجه مرحلة الهندسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة التمثيلات والهندسة الدقيقة",
+          "paragraphs": [
+            {
+              "text": "يستخدم TRELLIS.2 صيغة O-Voxel، وهي شبكة مكعبات (Voxels) متناثرة تحتفظ فقط بالمكعبات على سطح الكائن، مع الحفاظ على الهندسة المحلية وخصائص المواد. بفضل طبيعتها الصغيرة، يمكن تحويل الشبكة إلى O-Voxel في ثوانٍ على المعالج المركزي (CPU)، والعكس على المعالج الرسومي (GPU). في المرحلة التالية، يستخدم Shape Flow DiT شبكة الإشغال ورموز DINOv3 لإنشاء كائن كامن، يتم تحويله إلى هندسة O-Voxel بدقة 512×512×512. تضاف مهايئات LoRA إلى DiT في هذه المرحلة لأنه يتحكم في شكل الكائن.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "لماذا تم تجميد مرحلة المواد؟",
+          "paragraphs": [
+            {
+              "text": "في المرحلة الأخيرة، يستخدم Texture Flow DiT الكائن الكامن للشكل وخصائص DINOv3 لتعريف المواد والألوان. لم يضيف الفريق مهايئات LoRA لهذه المرحلة لأن مجموعة البيانات تحتوي على خرائط ألوان مشتتة (Diffuse Color Maps) تتضمن تأثيرات إضاءة مخبوزة، بينما تتطلب هذه المرحلة خرائط مواد منفصلة للتدريب. تدريب النموذج على خرائط الألوان المخلوطة بالإضاءة قد يؤدي إلى تعلم النموذج عرض الإضاءة كخاصية سطحية، أو نسيان ما تعلمه سابقاً (النسيان الكارثي). كما أن المشكلة الأساسية في التجربة كانت شكل الحذاء، والنموذج الأساسي ينتج ألواناً جيدة بالفعل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "توليد ثلاثي الأبعاد",
+        "TRELLIS.2",
+        "LoRA",
+        "هافينج فيس",
+        "تدريب النماذج"
+      ],
+      "entities": [
+        "Hugging Face",
+        "TRELLIS.2",
+        "LoRA",
+        "Google Scanned Objects (GSO)",
+        "DINOv3",
+        "BiRefNet"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "13 نوفمبر 2026",
+      "modifiedLabel": "13 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 607
+    },
+    "en": {
+      "title": "Hugging Face Releases Fine-Tuning Guide for TRELLIS.2",
+      "description": "Discover the definitive fine-tuning guide for TRELLIS.2 3D generation models, featuring custom scripts and containers for targeted asset training.",
+      "deck": "A new technical guide and containerized setup provides developers with scripts and configurations to fine-tune the TRELLIS.2 3D generation model using custom datasets.",
+      "summaryBullets": [
+        "Hugging Face published a definitive guide and scripts for fine-tuning the TRELLIS.2 3D generation model.",
+        "The guide focuses on improving specific details like shoe geometry using a subset of the Google Scanned Objects dataset.",
+        "Low-Rank Adaptation (LoRA) is utilized via Hugging Face's PEFT library to train lightweight adapter matrices while keeping original weights frozen.",
+        "Adapters are applied selectively to the sparse-structure flow DiT and the shape flow DiT, while texture generation components remain frozen.",
+        "Containerized workloads can run locally using Docker or cloud-based hardware via Hugging Face Jobs."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to TRELLIS.2 Fine-Tuning",
+          "paragraphs": [
+            {
+              "text": "The Hugging Face team has published a comprehensive guide detailing how to adapt 3D generation models to specific tasks using custom datasets. Published on the Hugging Face Blog, the resource supplies fine-tuning scripts and containerized environments designed to work with TRELLIS.2, a popular model used across robotics, simulation, media, and entertainment.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/3d-lora-finetuning"
+                }
+              ]
+            },
+            {
+              "text": "General-purpose 3D models can sometimes produce errors or lack accuracy in fine details required for specialized applications, such as precise geometry for furniture or footwear models. To address this, the guide demonstrates how to apply Low-Rank Adaptation (LoRA) techniques using community repositories and dedicated tooling.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Understanding 3D Representations and Pipeline Stages",
+          "paragraphs": [
+            {
+              "text": "Working with 3D generation involves navigating diverse file formats and internal model representations, which historically made standardization difficult. While formats like GLB and PLY present unique characteristics, modern frameworks like TRELLIS utilize a unified latent representation with specialized decoders.",
+              "links": [
+                {
+                  "text": "GLB",
+                  "url": "https://en.wikipedia.org/wiki/GlTF"
+                },
+                {
+                  "text": "PLY",
+                  "url": "https://en.wikipedia.org/wiki/PLY_(file_format)"
+                }
+              ]
+            },
+            {
+              "text": "The TRELLIS.2 pipeline consists of five primary stages: background removal via BiRefNet, image encoding through DINOv3-L, coarse structure prediction, detailed geometry generation, and material creation. The output is ultimately exported as a textured mesh file.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Targeting Components with LoRA and PEFT",
+          "paragraphs": [
+            {
+              "text": "To effectively adapt the model without heavy computational overhead, the guide relies on Hugging Face’s PEFT library. LoRA reduces the number of trainable parameters and memory requirements by training small adapter matrices while leaving the original base weights frozen during the training process.",
+              "links": []
+            },
+            {
+              "text": "Choosing which pipeline components to freeze is highlighted as a critical step in the training strategy. For instance, the texture flow DiT is intentionally frozen because the experimental dataset contains diffuse color maps with baked-in lighting effects rather than the independent material maps required for proper training.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Configuration and Execution via Containers",
+          "paragraphs": [
+            {
+              "text": "For the experiment, researchers used a subset of 188 footwear objects from the Google Scanned Objects (GSO) dataset to refine sole geometry. The configuration trains approximately 9.3 million total adapter parameters across the targeted diffusion transformers using rank 8 and rank 16 configurations.",
+              "links": []
+            },
+            {
+              "text": "Developers can execute these containerized workloads either locally via Docker or in the cloud using Hugging Face Jobs. Prerequisites include ensuring user accounts have access to gated models like DINOv3 and uploading custom asset meshes to the Hub before initiating training.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "TRELLIS.2",
+        "3D Generation",
+        "LoRA",
+        "Hugging Face",
+        "Fine-Tuning",
+        "PEFT",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Hugging Face",
+        "TRELLIS.2",
+        "Google Scanned Objects",
+        "DiT",
+        "PEFT"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 13, 2026",
+      "modifiedLabel": "November 13, 2026",
+      "readMinutes": 3,
+      "wordCount": 476
+    }
+  },
+  "datePublished": "2026-11-13T04:53:42.480925+03:00",
+  "dateModified": "2026-11-13T04:53:42.480925+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/the-definitive-fine-tuning-guide-for-3d-generation-models/hero.webp",
+    "card": "/forum/assets/posts/2026/11/the-definitive-fine-tuning-guide-for-3d-generation-models/card.webp",
+    "social": "/forum/assets/posts/2026/11/the-definitive-fine-tuning-guide-for-3d-generation-models/social.jpg",
+    "alt": {
+      "ar": "هافينج فيس تطلق أدوات لتدريب نماذج توليد ثلاثية الأبعاد بدقة",
+      "en": "Hugging Face Releases Fine-Tuning Guide for TRELLIS.2"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/3d-lora-finetuning/thumbnail.gif",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/the-definitive-fine-tuning-guide-for-3d-generation-models/inline-01.webp",
+        "width": 960,
+        "height": 420,
+        "alt": {
+          "ar": "هافينج فيس تطلق أدوات لتدريب نماذج توليد ثلاثية الأبعاد بدقة",
+          "en": "Hero GIF"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/3d-lora-finetuning",
+        "originalUrl": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/3d-lora-finetuning/sole_orbit_base_vs_lora.gif"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/the-definitive-fine-tuning-guide-for-3d-generation-models/inline-02.webp",
+        "width": 1400,
+        "height": 665,
+        "alt": {
+          "ar": "هافينج فيس تطلق أدوات لتدريب نماذج توليد ثلاثية الأبعاد بدقة",
+          "en": "TRELLIS.2 Pipeline"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/3d-lora-finetuning",
+        "originalUrl": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/3d-lora-finetuning/pipeline_lr.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/the-definitive-fine-tuning-guide-for-3d-generation-models/inline-03.webp",
+        "width": 1400,
+        "height": 446,
+        "alt": {
+          "ar": "هافينج فيس تطلق أدوات لتدريب نماذج توليد ثلاثية الأبعاد بدقة",
+          "en": "Pixels to feature tokens"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/3d-lora-finetuning",
+        "originalUrl": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/3d-lora-finetuning/image_to_tokens.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/the-definitive-fine-tuning-guide-for-3d-generation-models/inline-04.webp",
+        "width": 1400,
+        "height": 560,
+        "alt": {
+          "ar": "هافينج فيس تطلق أدوات لتدريب نماذج توليد ثلاثية الأبعاد بدقة",
+          "en": "Stage 1"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/3d-lora-finetuning",
+        "originalUrl": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/3d-lora-finetuning/stage1_sparse_structure.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/3d-lora-finetuning",
+      "type": "official",
+      "title": "The Definitive Fine-Tuning Guide for 3D Generation Models"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/3d-lora-finetuning",
+  "sourceTitle": "The Definitive Fine-Tuning Guide for 3D Generation Models",
+  "trendScore": 102.96,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-13T01:53:42+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/the-definitive-fine-tuning-guide-for-3d-generation-models.json"
+}
