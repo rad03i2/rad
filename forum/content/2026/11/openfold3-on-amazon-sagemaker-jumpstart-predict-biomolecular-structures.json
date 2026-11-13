@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "b47584a6c89b58232610",
+  "slug": "openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/",
+    "en": "/forum/en/ai/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تتيح نشر OpenFold3 على SageMaker JumpStart للتنبؤ بالبنية الجزيئية",
+      "description": "أطلقت أمازون ويب سيرفيسز إمكانية نشر نموذج OpenFold3 عبر SageMaker JumpStart، مما يتيح للباحثين التنبؤ بالبنى ثلاثية الأبعاد للبروتينات والأحماض النووية بسلاسة.",
+      "deck": "توفر أمازون ويب سيرفيسز الآن إمكانية نشر نموذج OpenFold3 عبر منصة SageMaker JumpStart، مما يسهّل على الباحثين التنبؤ بالبنى ثلاثية الأبعاد للبروتينات والأحماض النووية والمركبات الكيميائية.",
+      "summaryBullets": [
+        "يتيح النشر عبر SageMaker JumpStart التنبؤ بالبنى ثلاثية الأبعاد للبروتينات، DNA، RNA، والمركبات الكيميائية بسلاسة.",
+        "يعتمد النظام على الاستدلال غير المتزامن (Asynchronous Inference) لمعالجة الطلبات التي تستغرق دقائق بدلاً من ثوانٍ.",
+        "يدعم النظام التوازي على وحدات معالجة رسومية متعددة (Multi-GPU) لتسريع عمليات التنبؤ.",
+        "يتيح للمستخدمين تقديم محاذاة تسلسلات متعددة (MSAs) خاصة بهم لتحسين الدقة والحفاظ على الخصوصية.",
+        "يوفر النظام خيار التوسع إلى صفر (Scale-to-Zero) لتقليل التكاليف عندما يكون النظام خاملًا."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق OpenFold3 على منصة أمازون",
+          "paragraphs": [
+            {
+              "text": "أعلنت أمازون ويب سيرفيسز عن إتاحة نموذج OpenFold3-preview للنشر عبر منصة Amazon SageMaker JumpStart. تم تطوير هذا النموذج من قبل تحالف OpenFold Consortium ومختبر AlQuraishi في جامعة كولومبيا، وهو مصمم للتنبؤ بالبنى ثلاثية الأبعاد للبروتينات، DNA، RNA، والجزيئات الصغيرة. يتيح هذا النشر للباحثين والفرق العلمية الوصول إلى قدرات متقدمة في التنبؤ بالبنية الجزيئية داخل حساباتهم الخاصة على أمازون.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker JumpStart",
+                  "url": "https://aws.amazon.com/sagemaker/jumpstart/"
+                },
+                {
+                  "text": "OpenFold3",
+                  "url": "https://github.com/aqlaboratory/openfold-3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تجاوز التحديات الحسابية",
+          "paragraphs": [
+            {
+              "text": "واجهت فرق اكتشاف الأدوية تحديات كبيرة في تشغيل نماذج التنبؤ بالبنية بسبب الحاجة إلى بنية تحتية قوية لوحدة معالجة الرسومات (GPU)، وأدوات برمجية معقدة، ومعالجة طلبات تستغرق دقائق. تحل منصة SageMaker JumpStart هذه المشكلة من خلال توفير حاوية مدارة من أمازون تعمل على نقاط نهاية (Endpoints) مدارة. هذه النقاط مصممة للتعامل مع طوابير الطلبات وتسخين وحدات معالجة الرسومات، مما يزيل العبء التقني عن الباحثين ويسمح لهم بالتركيز على البحث العلمي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاستدلال غير المتزامن للعمليات الطويلة",
+          "paragraphs": [
+            {
+              "text": "تختلف عملية التنبؤ بالبنية عن النماذج اللغوية الكبيرة التي تستجيب خلال ثوانٍ، حيث تستغرق عمليات الطي الجزيئي دقائق حسب طول التسلسلات. لذلك، يعمل OpenFold3 على SageMaker JumpStart باستخدام تقنية الاستدلال غير المتزامن (Asynchronous Inference). يقوم المستخدم برفع الطلب إلى Amazon S3، ثم يعالج النظام الطلب في الخلفية مع مهلة زمنية تصل إلى ساعة. تُكتب النتائج أو أخطاء التنفيذ في موقع S3 محدد، ويمكن للمستخدم استلام إشعارات عبر Amazon SNS أو الاستعلام عن الحالة يدويًا.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مزايا علمية وتقنية متقدمة",
+          "paragraphs": [
+            {
+              "text": "يوفر النظام مزايا مصممة خصيصًا للأعباء العلمية، مثل القدرة على طابور الطلبات الداخلية التي تتيح إرسال دفعات كبيرة من التسلسلات دون الحاجة لبناء أنظمة طابور خارجية. كما يدعم النظام التوسع إلى صفر (Scale-to-Zero) عندما يكون طابور الطلبات فارغًا، مما يساعد في تجنب دفع تكاليف وحدات معالجة رسومات خاملة بين التجارب. بالإضافة إلى ذلك، يمكن للمستخدمين تقديم محاذاة تسلسلات متعددة (MSAs) خاصة بهم لتحسين دقة التنبؤ والحفاظ على سرية بياناتهم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تطبيقات في اكتشاف الأدوية والهندسة البروتينية",
+          "paragraphs": [
+            {
+              "text": "يستخدم الباحثون OpenFold3 في تطبيقات متنوعة تشمل تحديد الأهداف الدوائية، هندسة الأجسام المضادة والبروتينات، والفحص الافتراضي القائم على البنية. يمكن للنموذج طي البروتينات مع جزيئات صغيرة (تُقدم بصيغة SMILES) لتوليد فرضيات عن أوضاع الارتباط. كما يتيح الفحص عالي الإنتاجية (High-throughput screening) عبر طابور طلبات كبير ضد نقطة نهاية ذاتية التوسع، مع معالجة النتائج مباشرة من Amazon S3.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات والأمان والتكاليف",
+          "paragraphs": [
+            {
+              "text": "يتطلب النشر حسابًا على أمازون ويب سيرفيسز ودور تنفيذي (Execution Role) لـ SageMaker AI مع صلاحيات محددة لقراءة وكتابة في Amazon S3. يجب على المستخدمين التأكد من توفر حصة (Quota) كافية لنقاط النهاية مثل ml.g6.4xlarge. من حيث الأمان، تعمل نقطة النهاية بعزل شبكي لمساعدة المستخدمين على إبقاء تسلسلاتهم داخل حساباتهم. كما يُنصح بتشفير النتائج باستخدام مفاتيح AWS KMS الخاصة بالمستخدمين لحماية البيانات الحساسة. يجب الانتباه إلى أن نقاط النهاية تُفوت حسب ساعة التشغيل، لذا يُنصح بتفعيل التوسع إلى صفر لتقليل التكاليف.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "SageMaker",
+        "OpenFold3",
+        "البنية الجزيئية",
+        "اكتشاف الأدوية",
+        "الحوسبة السحابية"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز",
+        "OpenFold3",
+        "SageMaker JumpStart",
+        "جامعة كولومبيا",
+        "OpenFold Consortium"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "14 نوفمبر 2026",
+      "modifiedLabel": "14 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 531
+    },
+    "en": {
+      "title": "OpenFold3 Launches on Amazon SageMaker JumpStart",
+      "description": "Deploy OpenFold3-preview from Amazon SageMaker JumpStart to predict 3D structures of proteins, DNA, RNA, and ligand complexes in your AWS account.",
+      "deck": "The OpenFold Consortium and AlQuraishi Lab model is now available on Amazon SageMaker JumpStart, enabling biomolecular structure prediction with asynchronous inference and multi-GPU parallelism.",
+      "summaryBullets": [
+        "OpenFold3-preview can now be deployed from Amazon SageMaker JumpStart within user AWS accounts.",
+        "The model predicts joint 3D structures for proteins, DNA, RNA, small-molecule ligands, and complex assemblies.",
+        "Utilizes SageMaker Asynchronous Inference to handle workloads taking several minutes with invocations up to 1 hour.",
+        "Supports multi-GPU parallelism, custom multiple sequence alignments (MSAs), and autoscaling down to zero to reduce idle costs."
+      ],
+      "sections": [
+        {
+          "heading": "Deploying OpenFold3 on Amazon SageMaker JumpStart",
+          "paragraphs": [
+            {
+              "text": "The OpenFold Consortium and the AlQuraishi Lab at Columbia University have developed OpenFold3 as an open-source biomolecular structure prediction model. Users can now deploy OpenFold3-preview directly from Amazon SageMaker JumpStart into their own AWS accounts with a few lines of code. This deployment allows researchers to predict the three-dimensional structures of proteins, DNA, RNA, small-molecule ligands, and the complex assemblies they form.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker JumpStart",
+                  "url": "https://aws.amazon.com/sagemaker/jumpstart/"
+                }
+              ]
+            },
+            {
+              "text": "Computational drug discovery teams rely heavily on structure prediction for target identification, antibody and protein engineering, and structure-based virtual screening. However, running these advanced models typically demands robust GPU infrastructure, a properly configured CUDA and PyTorch stack, large model checkpoints, and a specialized serving layer capable of processing long-running requests. SageMaker JumpStart manages much of this heavy lifting by running OpenFold3 within an AWS-maintained container on a managed endpoint that supports request queuing, GPU warmup, and autoscaling.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Capabilities of the All-Atom Structure Prediction Model",
+          "paragraphs": [
+            {
+              "text": "OpenFold3 operates as an all-atom structure prediction model that determines the joint three-dimensional structure of a set of molecules straight from their sequences. Rather than being restricted to single protein chains, the model handles multi-chain protein complexes, protein-nucleic acid assemblies, and protein-ligand complexes in a single prediction task. Developers have released the source code and model weights under the Apache 2.0 license alongside training data and methods.",
+              "links": [
+                {
+                  "text": "OpenFold3",
+                  "url": "https://github.com/aqlaboratory/openfold-3"
+                }
+              ]
+            },
+            {
+              "text": "Because the developers designate OpenFold3-preview as a research preview, pharmaceutical companies and research organizations can inspect, fine-tune, and build upon the model according to the license terms. Key use cases span target and complex structure prediction, protein-ligand co-folding with SMILES strings, antibody and protein engineering, and high-throughput screening pipelines that process large batches of jobs against autoscaling endpoints linked to Amazon Simple Storage Service (Amazon S3).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Asynchronous Inference for Scientific Workloads",
+          "paragraphs": [
+            {
+              "text": "Unlike standard large language models that utilize real-time endpoints capped at 60-second responses, biomolecular folding time increases with the number and length of sequence chains, frequently requiring several minutes. To accommodate these extended processing times, OpenFold3 on JumpStart runs on SageMaker Asynchronous Inference.",
+              "links": [
+                {
+                  "text": "SageMaker Asynchronous Inference",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/async-inference.html"
+                }
+              ]
+            },
+            {
+              "text": "In this workflow, users upload requests to Amazon S3 and call an asynchronous invocation method that returns immediately. The endpoint queues the request internally, processes jobs with an invocation timeout of up to one hour, and writes the resulting structure files or error details back to a designated S3 location. Furthermore, scientific workloads benefit from the ability of asynchronous endpoints to queue request bursts internally and scale down to zero instances during idle periods to prevent unnecessary costs.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and Configuration",
+          "paragraphs": [
+            {
+              "text": "Deploying the model requires an AWS account along with an appropriate execution role configured with least-privilege permissions for the S3 prefix handling requests and results. Teams can review guidance on execution roles via official documentation covering how to use SageMaker AI execution roles, alongside instructions to complete prerequisites for asynchronous endpoints.",
+              "links": []
+            },
+            {
+              "text": "Environments can be managed through Amazon SageMaker Studio, a notebook instance, or a local IDE using the SageMaker Python SDK and visualization libraries. Operators must verify that their region has sufficient service quotas for the recommended instance types, such as ml.g6.4xlarge or ml.g6.12xlarge for multi-GPU parallelism, by checking the Service Quotas console and reviewing Amazon SageMaker AI pricing before launching large production pipelines.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker Studio",
+                  "url": "https://aws.amazon.com/sagemaker/studio/"
+                },
+                {
+                  "text": "SageMaker Python SDK",
+                  "url": "https://sagemaker.readthedocs.io/"
+                },
+                {
+                  "text": "Service Quotas console",
+                  "url": "https://console.aws.amazon.com/servicequotas/"
+                },
+                {
+                  "text": "Amazon SageMaker AI pricing",
+                  "url": "https://aws.amazon.com/sagemaker/pricing/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon SageMaker",
+        "OpenFold3",
+        "Biomolecular Structure",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Drug Discovery"
+      ],
+      "entities": [
+        "OpenFold Consortium",
+        "AlQuraishi Lab",
+        "Columbia University",
+        "Amazon Web Services"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 14, 2026",
+      "modifiedLabel": "November 14, 2026",
+      "readMinutes": 3,
+      "wordCount": 613
+    }
+  },
+  "datePublished": "2026-11-14T02:19:11.172454+03:00",
+  "dateModified": "2026-11-14T02:19:11.172454+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/hero.webp",
+    "card": "/forum/assets/posts/2026/11/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/card.webp",
+    "social": "/forum/assets/posts/2026/11/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح نشر OpenFold3 على SageMaker JumpStart للتنبؤ بالبنية الجزيئية",
+      "en": "OpenFold3 Launches on Amazon SageMaker JumpStart"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22226-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/inline-01.webp",
+        "width": 974,
+        "height": 620,
+        "alt": {
+          "ar": "أمازون تتيح نشر OpenFold3 على SageMaker JumpStart للتنبؤ بالبنية الجزيئية",
+          "en": "OpenFold3 predicted structure of ubiquitin colored by per-atom pLDDT confidence, from red for low to blue for high"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22226-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/inline-02.webp",
+        "width": 1400,
+        "height": 527,
+        "alt": {
+          "ar": "أمازون تتيح نشر OpenFold3 على SageMaker JumpStart للتنبؤ بالبنية الجزيئية",
+          "en": "Carbonic anhydrase II predictions without an MSA on the left and with an MSA on the right, each overlaid on the gray PDB 3HS4 crystal structure"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22226-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/inline-03.webp",
+        "width": 1121,
+        "height": 857,
+        "alt": {
+          "ar": "أمازون تتيح نشر OpenFold3 على SageMaker JumpStart للتنبؤ بالبنية الجزيئية",
+          "en": "Close-up of the predicted binding site showing the zinc ion coordinated by His94, His96, His119, and the acetazolamide sulfonamide nitrogen"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22226-3.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/",
+      "type": "official",
+      "title": "OpenFold3 on Amazon SageMaker JumpStart: Predict biomolecular structures"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures",
+  "sourceTitle": "OpenFold3 on Amazon SageMaker JumpStart: Predict biomolecular structures",
+  "trendScore": 108.55,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-13T23:19:11+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures.json"
+}
