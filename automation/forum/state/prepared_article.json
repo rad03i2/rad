@@ -1,5 +1,321 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-13T23:19:12+00:00",
-  "last_published_story_id": "b47584a6c89b58232610"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-13T23:24:03+00:00",
+  "target_publish_at": "2026-11-14T02:39:11.172454+03:00",
+  "story": {
+    "title": "Production MLOps at GS Caltex with Amazon SageMaker Canvas, part 1",
+    "url": "https://aws.amazon.com/blogs/machine-learning/production-mlops-at-gs-caltex-with-amazon-sagemaker-canvas-part-1",
+    "domain": "aws.amazon.com",
+    "summary": "GS Caltex connects Amazon SageMaker Canvas to Amazon SageMaker Pipelines so process engineers' no-code models run in production. This post shows how ML engineers reuse validated preprocessing flows and models, cutting deployment from about a week to a few hours and running batch inference every 30 minutes.",
+    "published_at": "2026-11-13T23:22:09+00:00",
+    "discovered_at": "2026-11-13T23:23:07+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 69,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "4536e10993f7030af8c2",
+    "trend": {
+      "score": 109.99,
+      "age_hours": 0.02,
+      "corroboration_count": 0,
+      "entity_momentum": 6.0,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/production-mlops-at-gs-caltex-with-amazon-sagemaker-canvas-part-1/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Production MLOps at GS Caltex with Amazon SageMaker Canvas, part 1",
+      "title": "Production MLOps at GS Caltex with Amazon SageMaker Canvas, part 1 | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "GS Caltex تختصر زمن نشر نماذج الذكاء الاصطناعي إلى ساعات",
+      "description": "تشرح GS Caltex كيف تربط Amazon SageMaker Canvas مع Pipelines لتحويل نماذج المهندسين إلى إنتاجية، ما يخفض التكاليف ويختصر النشر من أسبوع إلى ساعات.",
+      "deck": "اعتمدت شركة GS Caltex الكورية الجنوبية على تكامل أدوات Amazon SageMaker لتسهيل انتقال نماذج الذكاء الاصطناعي من مرحلة التطوير إلى بيئة الإنتاج، مما قلل زمن النشر والتكاليف التشغيلية بشكل ملحوظ.",
+      "summary_bullets": [
+        "ربطت الشركة بين SageMaker Canvas وSageMaker Pipelines لتحويل نماذج المهندسين غير البرمجيين إلى خطوط إنتاجية.",
+        "انخفض زمن نشر النماذج من أسبوع تقريباً إلى بضع ساعات فقط بفضل إعادة استخدام مسارات المعالجة المعتمدة.",
+        "اعتمدت الشركة على الاستدلال الدفعي (Batch Inference) كل 30 دقيقة بدلاً من نقاط النهاية المستمرة، مما خفض التكاليف.",
+        "أصبح مهندسو التعلم الآلي مسؤولين عن تهيئة خطوط الأنابيب وإدارة الإصدارات، بينما يركز مهندسو العمليات على بناء النماذج."
+      ],
+      "sections": [
+        {
+          "heading": "تقسيم الأدوار بين مهندسي العمليات والتعلم الآلي",
+          "paragraphs": [
+            {
+              "text": "تعمل شركة GS Caltex، وهي شركة كورية جنوبية للطاقة والكيماويات، على فصل مهام تطوير النماذج عن مهام تشغيلها. يعتمد مهندسو العمليات على منصة Amazon SageMaker Canvas لبناء النماذج وتقييمها دون الحاجة إلى كتابة أكواد برمجية، مستفيدين من معرفتهم العميقة بمتغيرات العمليات الصناعية. في المقابل، يتولى مهندسو التعلم الآلي (ML Engineers) مسؤولية تهيئة خطوط Amazon SageMaker Pipelines للنشر والاستدلال المجدول، مما يضمن انتقالاً سلساً للأصول التقنية من مرحلة التطوير إلى الإنتاج.",
+              "links": [
+                {
+                  "text": "GS Caltex",
+                  "url": "https://www.gscaltex.com/en"
+                },
+                {
+                  "text": "Amazon SageMaker Canvas",
+                  "url": "https://aws.amazon.com/sagemaker/canvas/"
+                },
+                {
+                  "text": "Amazon SageMaker Pipelines",
+                  "url": "https://aws.amazon.com/sagemaker/ai/pipelines/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "أتمتة عملية التسليم وإعادة استخدام الأصول",
+          "paragraphs": [
+            {
+              "text": "كان التحدي الرئيسي يكمن في العمل المتكامل المطلوب لنقل الأصول من Canvas إلى Pipelines، حيث كان على مهندسي التعلم الآلي ضبط مسارات البيانات وتكوينات النماذج يدوياً. من خلال أتمتة هذه العملية وإعادة استخدام مسارات المعالجة المسبقة (Preprocessing) والنماذج المعتمدة التي أنشأها مهندسو العمليات، نجحت الشركة في تقليل زمن النشر من حوالي أسبوع إلى بضع ساعات فقط. كما تتيح هذه البنية التشغيلية تنفيذ الاستدلال الدفعي (Batch Inference) كل 30 دقيقة، وهو ما يقلل الحاجة إلى تشغيل نقاط نهاية (Endpoints) بشكل مستمر، مما أدى إلى انخفاض ملموس في تكاليف الاستدلال كما توضح الشركة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل خط الإنتاج المزدوج",
+          "paragraphs": [
+            {
+              "text": "يعتمد سير عمل MLOps في GS Caltex على مسارين رئيسيين: إعداد إصدار جديد من النموذج للنشر، وتشغيل الاستدلال الدفعي باستخدام النموذج المنشور. يبدأ المسار الأول عندما يستلم مهندسو التعلم الآلي مسار المعالجة والنموذج من Canvas، حيث يقومون بمراجعة تنسيقات البيانات ونتائج التنبؤ. بعد الاعتماد، يتم تسجيل النموذج في سجل النماذج (Model Registry) ونشره. أما المسار الثاني فيبدأ عبر Amazon EventBridge الذي يطلق التشغيلات المجدولة، حيث تستعد خطوط الأنابيب لتهيئة البيانات من Amazon S3، وتنفيذ المعالجة والاستدلال، وتخزين النتائج النهائية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات التنفيذ والبنية التحتية",
+          "paragraphs": [
+            {
+              "text": "يتطلب تنفيذ هذا الحل توفر نموذج مبني ومُقيَّم في SageMaker Canvas مع مسار معالجة بيانات (Data Wrangler)، بالإضافة إلى بيانات CSV للاستدلال ودلو S3 لتخزين الملفات. كما يجب إعداد دور تنفيذي (Execution Role) لـ SageMaker ودور لـ EventBridge بصلاحية بدء خط الأنابيب، فضلاً عن بيئة Python تحتوي على مكتبات Boto3 وSageMaker Python SDK. تتوفر نسخة مرجعية كاملة لهذا الحل في مستودع GitHub، حيث يستخدم نموذج تصنيف قروض كمثال، مما يتطلب من المستخدمين تعديل التكوينات لتناسب تنسيقات مدخلات ومخرجات نماذجهم الخاصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إعادة استخدام مسارات المعالجة المسبقة",
+          "paragraphs": [
+            {
+              "text": "لضمان اتساق البيانات، يتم تصدير البيانات إلى Amazon S3 باستخدام SageMaker Processing، ثم استرجاع إعدادات المهمة وملف .flow المستخدم. يجب على المهندسين تسجيل URI لصورة الحاوية (Container Image) ومسارات الإدخال والإخراج من واجهة Amazon SageMaker AI. يتطلب دور التنفيذ الصلاحيات اللازمة لقراءة البيانات من S3 وكتابة النتائج والوصول إلى صورة الحاوية. من المهم التحقق من توفر صورة الحاوية في منطقة AWS المحددة، خاصة عند نقل سير العمل، وملاحظة أن بعض ملفات .flow قد تحتوي على بيانات وصفية داخلية تتطلب التحقق الفعلي من إعدادات المهمة بدلاً من افتراض وجودها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معالجة الفروقات بين التدريب والاستدلال",
+          "paragraphs": [
+            {
+              "text": "تتضمن البيانات المستخدمة في الاستدلال عادةً أعمدة مختلفة عن تلك المستخدمة في التدريب، حيث تفتقر إلى عمود الهدف (Target Column) المعروف مسبقاً. لإدارة هذا الاختلاف، تضيف النسخة المرجعية خطوة PrepareInput قبل المعالجة لإضافة عمود الهدف بقيمة مؤقتة (Placeholder) إذا كان مفقوداً، ثم تزيله بعد المعالجة عبر خطوة DropTargetColumn. يجب أن تتطابق نوع البيانات وموضع العمود المؤقت مع مخطط التدريب، مع تمرير الميزات المتوقعة فقط للنموذج بالترتيب الأصلي. يُنصح باستخدام هذه الطريقة فقط عندما لا يؤثر العمود المؤقت على قيم الميزات، بينما تتطلب الحالات التي تعتمد فيها التحويلات على الهدف معالجة منفصلة لعزل التحويلات المطلوبة للاستدلال.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "MLOps",
+        "Amazon SageMaker",
+        "GS Caltex",
+        "الذكاء الاصطناعي",
+        "Batch Inference",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "GS Caltex",
+        "Amazon SageMaker Canvas",
+        "Amazon SageMaker Pipelines",
+        "Amazon S3",
+        "Amazon EventBridge",
+        "SageMaker Batch Transform"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من المدونة الرسمية لـ AWS Machine Learning، مع التركيز على الحقائق التقنية والإحصائيات المذكورة في النص المصدر دون إضافة تقديرات خارجية."
+    },
+    "en": {
+      "title": "GS Caltex Automates MLOps With Amazon SageMaker",
+      "description": "Discover how GS Caltex connects Amazon SageMaker Canvas to Amazon SageMaker Pipelines to run no-code models in production with faster deployments.",
+      "deck": "South Korean energy and chemical company GS Caltex has streamlined its machine learning operations by connecting visual development tools to production pipelines.",
+      "summary_bullets": [
+        "GS Caltex connects Amazon SageMaker Canvas to Amazon SageMaker Pipelines for production workflows.",
+        "Process engineers build and validate no-code models, while ML engineers configure deployment infrastructure.",
+        "Model deployment times decreased from about a week down to a few hours.",
+        "Batch inference runs every 30 minutes, lowering continuous endpoint costs."
+      ],
+      "sections": [
+        {
+          "heading": "Bridging No-Code Models and Production Workflows",
+          "paragraphs": [
+            {
+              "text": "GS Caltex uses Amazon SageMaker Canvas and Amazon SageMaker Pipelines to connect process engineers’ models to production workflows. The South Korean energy and chemical company divides model development and operations between engineers with complementary skills.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker Canvas",
+                  "url": "https://aws.amazon.com/sagemaker/canvas/"
+                },
+                {
+                  "text": "Amazon SageMaker Pipelines",
+                  "url": "https://aws.amazon.com/sagemaker/ai/pipelines/"
+                }
+              ]
+            },
+            {
+              "text": "Process engineers build and validate models in SageMaker Canvas without writing code, drawing on their process knowledge. Machine learning engineers configure SageMaker Pipelines workflows for deployment and scheduled inference.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Automating the Handoff Between Engineering Teams",
+          "paragraphs": [
+            {
+              "text": "Moving assets from SageMaker Canvas into SageMaker Pipelines still required integration work. Machine learning engineers had to set data paths for production, supply the model configuration, and connect preprocessing and inference jobs. GS Caltex automated this handoff while reusing the assets created in SageMaker Canvas.",
+              "links": []
+            },
+            {
+              "text": "GS Caltex reports that its machine learning engineers now deploy models within a few hours, compared with about a week before. The company runs batch inference every 30 minutes, reducing the need for continuously running endpoints and lowering its inference costs.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "From Validated Models to Repeatable Workflows",
+          "paragraphs": [
+            {
+              "text": "You can use SageMaker Canvas to prepare data visually, build models, and generate batch predictions. You can also register validated models in Amazon SageMaker Model Registry from SageMaker Canvas. GS Caltex built a separate handoff process to turn these assets into executable SageMaker Pipelines steps.",
+              "links": []
+            },
+            {
+              "text": "Process engineers understand the variables and data behind a process and assess whether a model’s predictions are useful. Machine learning engineers turn the resulting assets into production jobs and manage model versions and execution history.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Executing Scheduled Batch Inference",
+          "paragraphs": [
+            {
+              "text": "Machine learning engineers receive the preprocessing flow and model from SageMaker Canvas and review the data formats and prediction results. After that review, they approve the model in Model Registry and deploy it. This preparation takes place when a new model version is deployed, while subsequent inference runs reuse the deployed model.",
+              "links": []
+            },
+            {
+              "text": "Amazon EventBridge starts each scheduled run. SageMaker Pipelines prepares the input data from Amazon Simple Storage Service, runs preprocessing and SageMaker Batch Transform, and stores the results in storage buckets.",
+              "links": [
+                {
+                  "text": "SageMaker Batch Transform",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/batch-transform.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Reference Implementation and Preprocessing Reuse",
+          "paragraphs": [
+            {
+              "text": "The production pipeline reuses the preprocessing logic and trained model created in SageMaker Canvas. Machine learning engineers configure the input and output paths, set the order of execution, and write the code that connects approval and scheduling to the workflow.",
+              "links": []
+            },
+            {
+              "text": "A preprocessing flow created with Data Wrangler in SageMaker Canvas records the data sources and transformation steps. To set up the reference implementation, developers export data to storage using SageMaker Processing, then retrieve the job settings and the flow file used by that job.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Machine Learning",
+        "MLOps",
+        "Amazon SageMaker",
+        "AWS",
+        "GS Caltex",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "GS Caltex",
+        "Amazon Web Services",
+        "Amazon SageMaker Canvas",
+        "Amazon SageMaker Pipelines"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly reflects the facts and details provided in the official AWS Machine Learning Blog source text regarding GS Caltex's MLOps workflow."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 633,
+      "word_count_en": 494
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "4536e10993f7030af8c2",
+      "title": "Production MLOps at GS Caltex with Amazon SageMaker Canvas, part 1",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 633,
+          "word_count_en": 494
+        }
+      ]
+    }
+  ],
+  "slug": "production-mlops-at-gs-caltex-with-amazon-sagemaker-canvas-part",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/production-mlops-at-gs-caltex-with-amazon-sagemaker-canvas-part/hero.webp",
+    "card": "/forum/assets/posts/2026/11/production-mlops-at-gs-caltex-with-amazon-sagemaker-canvas-part/card.webp",
+    "social": "/forum/assets/posts/2026/11/production-mlops-at-gs-caltex-with-amazon-sagemaker-canvas-part/social.jpg",
+    "alt": {
+      "ar": "GS Caltex تختصر زمن نشر نماذج الذكاء الاصطناعي إلى ساعات",
+      "en": "GS Caltex Automates MLOps With Amazon SageMaker"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21878-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/production-mlops-at-gs-caltex-with-amazon-sagemaker-canvas-part/inline-01.webp",
+        "width": 1235,
+        "height": 1050,
+        "alt": {
+          "ar": "GS Caltex تختصر زمن نشر نماذج الذكاء الاصطناعي إلى ساعات",
+          "en": "Process engineers build models in SageMaker Canvas. ML engineers connect preprocessing flows in S3 and models in Model Registry to SageMaker Pipelines, with Amazon EventBridge triggering batch inference."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/production-mlops-at-gs-caltex-with-amazon-sagemaker-canvas-part-1/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21878-1.png"
+      }
+    ]
+  }
 }
