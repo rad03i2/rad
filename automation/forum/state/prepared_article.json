@@ -1,5 +1,329 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-13T21:59:11+00:00",
-  "last_published_story_id": "9ffbd1bd8224833420ca"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-13T22:04:20+00:00",
+  "target_publish_at": "2026-11-14T01:19:10.209837+03:00",
+  "story": {
+    "title": "Architecture patterns for fast session startup on Amazon Bedrock AgentCore runtime",
+    "url": "https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime",
+    "domain": "aws.amazon.com",
+    "summary": "Amazon Bedrock AgentCore runtime V2 snapshots your initialized environment and restores it for each new session, so session start no longer grows with image size. This post explains how V2 starts a session, how to measure session start time, and four patterns to keep work off the first request.",
+    "published_at": "2026-11-13T22:02:39+00:00",
+    "discovered_at": "2026-11-13T22:03:26+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "2f429c1a2fc201bc6e9a",
+    "trend": {
+      "score": 118.99,
+      "age_hours": 0.02,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Architecture patterns for fast session startup on Amazon Bedrock AgentCore runtime",
+      "title": "Architecture patterns for fast session startup on Amazon Bedrock AgentCore runtime | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "AWS تطلق أنماط معمارية لتسريع بدء الجلسات في Bedrock AgentCore V2",
+      "description": "تشرح AWS أنماطاً معمارية جديدة تعتمد على التقاطات الحالة (Snapshots) لتقليل زمن بدء الجلسات في Amazon Bedrock AgentCore V2، مما يحسّن أداء تطبيقات الذكاء الاصطناعي التفاعلية.",
+      "deck": "اعتمدت AWS على تقنية التقاطات البيئة (Snapshots) في الإصدار الثاني من AgentCore runtime لتجاوز تحديات البدء البارد، مما يضمن استجابة أسرع للجلسات الجديدة.",
+      "summary_bullets": [
+        "يعمل الإصدار V2 على التقاط بيئة العمل بعد تهيئتها واستعادتها لكل جلسة جديدة، مما يجعل زمن البدء ثابتاً ومستقلاً عن حجم الصورة.",
+        "توفر AWS أربع أنماط معمارية لنقل المهام الثقيلة من أول طلب مستخدم إلى مرحلة التهيئة الأولية.",
+        "تتيح المنصة مراقبة دقيقة عبر Amazon CloudWatch لفصل زمن المنصة عن زمن تنفيذ الكود.",
+        "يُنصح بتحويل الاستيرادات (Imports) وتحميل البيانات الثابتة إلى مرحلة التهيئة لتفادي إعادة تحميلها في كل جلسة."
+      ],
+      "sections": [
+        {
+          "heading": "تغيير جذري في آلية بدء الجلسات",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة Amazon عن تحديثات جوهرية في بيئة التشغيل الخاصة بـ Amazon Bedrock AgentCore runtime، حيث يعتمد الإصدار الثاني (V2) على استراتيجية التقاطات الحالة (Snapshots) لتسريع بدء الجلسات. بدلاً من سحب صورة الحاوية (Container Image) وتحميلها من جديد في كل جلسة، تقوم المنصة بتجهيز البيئة مرة واحدة، ثم تلتقط حالة الذاكرة والقرص، وتعيد استعادة هذه الحالة عند وصول أي طلب جديد. هذا التغيير يقلل بشكل كبير من زمن الاستجابة الأولي، خاصة في التطبيقات التفاعلية التي تتطلب سرعة فائقة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore runtime",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agents-tools-runtime.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "كيف تعمل تقنية التقاط الحالة؟",
+          "paragraphs": [
+            {
+              "text": "في الإصدار الأول (V1)، كان زمن البدء البارد (Cold Start) يتناسب طردياً مع حجم صورة الحاوية، مما كان يسبب تأخراً ملحوظاً. أما في V2، فيقوم النظام بتشغيل الحاوية في آلة افتراضية صغيرة (MicroVM) جديدة، وينتظر إشارة صحية (Healthy Ping) خلال 120 ثانية. بعد ذلك، يتم مسح ذاكرة التخزين المؤقت للنظام، وتجميد الـ MicroVM، وحفظ الذاكرة والقرص كتقاطة. عند بدء جلسة جديدة، تُستعاد هذه التقاطة، مما يعني أن العمليات التي كانت نشطة وقت التجميد تستأنف عملها فوراً دون الحاجة لإعادة تحميل المكتبات أو تهيئة العملاء (Clients).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قياس الأداء ومراقبة الكمون",
+          "paragraphs": [
+            {
+              "text": "لتقييم فعالية هذه الأنماط، توفر AWS مقاييس دقيقة عبر Amazon CloudWatch metrics ضمن مساحة الاسم AWS/Bedrock-AgentCore. يُمكّن هذا المطورين من تمييز بين زمن الكمون الكلي (Latency) وزمن المنصة (OverheadLatency) الذي يشمل بدء الـ MicroVM واستعادة التقاطة. كما يُنصح بمراقبة النسب المئوية مثل P90 و P99 بدلاً من المتوسط الحسابي، حيث يكشف هذا النهج عن الطلبات البطيئة التي قد تخفيها المتوسطات. يجب أيضاً اختبار الأداء بمعدل جلسات جديدة يتطابق مع سيناريوهات الإنتاج الفعلية لضمان دقة القياسات.",
+              "links": [
+                {
+                  "text": "Amazon CloudWatch metrics",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability-runtime-metrics.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "استراتيجيات نقل العمل من أول طلب",
+          "paragraphs": [
+            {
+              "text": "تحدد AWS أربع أنماط معمارية أساسية لتحسين الأداء، أبرزها نقل المهام الثابتة إلى مرحلة التهيئة (Init). على عكس نصائح الأداء التقليدية التي تقترح التأجيل (Lazy Loading)، ينصح الإصدار V2 بإجراء الاستيرادات (Imports) وإنشاء الكائنات وتحميل البيانات الثابتة (مثل الأوزان أو مجموعات البيانات) قبل التقاط الحالة. هذا يضمن وجود هذه الموارد في الذاكرة عند استعادة الجلسة، مما يمنع إعادة جلبها من التخزين عند أول قراءة. أما البيانات الديناميكية التي تتغير باستمرار، فلا يمكن التقاطها، لذا يجب معالجتها بشكل مختلف.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دعم خطافات البناء (Build Hooks)",
+          "paragraphs": [
+            {
+              "text": "أضافت المنصة دعماً لخطافات البناء (Build Hooks) التي تتيح تنفيذ أوامر محددة أثناء بناء التقاطة، وليس أثناء تشغيل الجلسة. هذا مفيد بشكل خاص للأدوات التي تتطلب تثبيتاً أو إعداداً مسبقاً، مثل أدوات سطر الأوامر (CLI) أو متصفحات الويب التي تُستخدم في أتمتة المهام. من خلال استخدام هذه الخطافات، يمكن للمطورين ضمان جاهزية هذه الأدوات في التقاطة، مما يوفر وقت التحميل الأولي للجلسات الجديدة. تتوفر أمثلة شيفرة توضيحية لهذه الأنماط في مستودعات GitHub الرسمية المرتبطة بالمقال.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AgentCore",
+        "Serverless",
+        "AI Infrastructure",
+        "Performance Optimization",
+        "Cold Start",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Web Services (AWS)",
+        "Amazon Bedrock AgentCore",
+        "Amazon CloudWatch",
+        "Amazon ECR"
+      ],
+      "article_type": "news",
+      "confidence_note": "المحتوى مستند حصرياً على المدونة الرسمية لـ AWS Machine Learning، مع التركيز على الجوانب المعمارية والتقنية المذكورة في النص المصدر دون استنتاجات خارجية."
+    },
+    "en": {
+      "title": "Fast Session Startup on Amazon Bedrock AgentCore V2",
+      "description": "Explore architecture patterns and runtime strategies for achieving fast session startups on the Amazon Bedrock AgentCore runtime V2.",
+      "deck": "The Amazon Bedrock AgentCore runtime V2 introduces a snapshot-based architecture designed to eliminate container image size penalties during session initialization.",
+      "summary_bullets": [
+        "Amazon Bedrock AgentCore runtime V2 snapshots initialized environments to streamline new sessions.",
+        "Platform version V2 operates by preparing the environment once, freezing it, and restoring the snapshot.",
+        "Memory held at snapshot time is made available at memory speed from the first access.",
+        "Developers can measure performance using Amazon CloudWatch metrics and optimize agent responsiveness."
+      ],
+      "sections": [
+        {
+          "heading": "Understanding the V2 Runtime Architecture",
+          "paragraphs": [
+            {
+              "text": "Autonomous agents review code, process claims, and operate for extended periods while supporting interactive experiences where users expect immediate responses. The [Amazon Bedrock AgentCore runtime](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agents-tools-runtime.html) supplies these workloads with a fully managed, serverless environment, allocating an isolated microVM for each individual session. The platform automatically scales down to zero when idle, ensuring users are billed only for resources consumed during active execution.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore runtime",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agents-tools-runtime.html"
+                }
+              ]
+            },
+            {
+              "text": "Deploying workloads with the platformVersion configured to V2 fundamentally alters how sessions initiate. Rather than initializing containers for every incoming request, the infrastructure prepares the environment once, snapshots it, and restores that exact snapshot for subsequent new sessions. This mechanism yields faster and more reliable startup times while reclaiming unused memory to match billing directly to agent usage.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "How Snapshot Creation and Restoration Work",
+          "paragraphs": [
+            {
+              "text": "In previous V1 configurations, the platform pulled container images from Amazon Elastic Container Registry, launched the container, and executed initialization code before handling the initial request. Because image fetching dominated this workflow, cold start latency correlated directly with container image size. The [AgentCore runtime](https://aws.amazon.com/blogs/machine-learning/the-new-agentcore-runtime-elastic-optimized-and-consistently-fast-starts/) V2 approach executes this preparation phase exactly once during deployment updates.",
+              "links": [
+                {
+                  "text": "AgentCore runtime",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/the-new-agentcore-runtime-elastic-optimized-and-consistently-fast-starts/"
+                }
+              ]
+            },
+            {
+              "text": "When creating or updating a runtime instance, the platform initiates the container within a dedicated microVM and awaits a healthy ping signal within a 120-second window. It subsequently clears operating system file caches to minimize snapshot size, freezes the microVM, and captures its memory and disk state. Subsequent session creations instantly restore this snapshot, resuming processes with imports, objects, and clients fully intact.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Measuring Performance and Latency Metrics",
+          "paragraphs": [
+            {
+              "text": "Application latency in agentic frameworks encompasses both platform initialization overhead and internal execution logic, such as model calls and tool invocations. Developers can analyze performance using [Amazon CloudWatch metrics](https://docs.aws.amazon.com/bedrock-agentcore/latest/observability-runtime-metrics.html) published within the designated AWS namespace. Tracking overhead metrics helps isolate platform startup delays from application-level processing bottlenecks.",
+              "links": []
+            },
+            {
+              "text": "To accurately evaluate runtime efficiency, technical teams should measure performance at expected production session rates rather than limited post-deployment tests. Monitoring client-side invocation durations alongside server-side responses provides a comprehensive view of end-to-end user experience, accounting for streaming behaviors and network transit times.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Optimization Strategies and Build Hooks",
+          "paragraphs": [
+            {
+              "text": "While standard runtime upgrades require minimal code changes, maximizing V2 performance often involves shifting initialization tasks away from request handlers. Because snapshot restoration preserves active memory states, structuring agents to complete static workloads—such as library imports, client initializations, and static data loading—during the initial build phase significantly accelerates session response times.",
+              "links": []
+            },
+            {
+              "text": "For complex configurations involving external binaries or specialized subprocesses, developers can implement customized initialization procedures. Official guidelines and [sample code](https://github.com/evandrofranco/agentcore-samples/tree/main/01-features/02-host-your-agent/01-runtime/03-advanced/17-strands-decider-hooks) provide architectural patterns for configuring advanced lifecycle behaviors and optimizing workloads on the V2 runtime infrastructure.",
+              "links": [
+                {
+                  "text": "sample code",
+                  "url": "https://github.com/evandrofranco/agentcore-samples/tree/main/01-features/02-host-your-agent/01-runtime/03-advanced/17-strands-decider-hooks"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AgentCore",
+        "Serverless",
+        "Cloud Computing",
+        "Machine Learning",
+        "AWS",
+        "Runtime Architecture"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Amazon CloudWatch",
+        "Amazon Elastic Container Registry"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly derived from the provided AWS Machine Learning Blog post regarding Amazon Bedrock AgentCore runtime V2 architecture patterns."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 508,
+      "word_count_en": 510
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "2f429c1a2fc201bc6e9a",
+      "title": "Architecture patterns for fast session startup on Amazon Bedrock AgentCore runtime",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 508,
+          "word_count_en": 510
+        }
+      ]
+    }
+  ],
+  "slug": "architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/hero.webp",
+    "card": "/forum/assets/posts/2026/11/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/card.webp",
+    "social": "/forum/assets/posts/2026/11/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/social.jpg",
+    "alt": {
+      "ar": "AWS تطلق أنماط معمارية لتسريع بدء الجلسات في Bedrock AgentCore V2",
+      "en": "Fast Session Startup on Amazon Bedrock AgentCore V2"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22099-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/inline-01.webp",
+        "width": 1400,
+        "height": 988,
+        "alt": {
+          "ar": "AWS تطلق أنماط معمارية لتسريع بدء الجلسات في Bedrock AgentCore V2",
+          "en": "Build flow where the container starts once, reports healthy, then AgentCore clears the file cache, freezes the microVM, and stores a snapshot"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22099-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/inline-02.webp",
+        "width": 1358,
+        "height": 1050,
+        "alt": {
+          "ar": "AWS تطلق أنماط معمارية لتسريع بدء الجلسات في Bedrock AgentCore V2",
+          "en": "Invoke flow where each new session restores the snapshot into a fresh microVM, the process resumes, and image files are fetched on first read"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22099-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/inline-03.webp",
+        "width": 922,
+        "height": 1050,
+        "alt": {
+          "ar": "AWS تطلق أنماط معمارية لتسريع بدء الجلسات في Bedrock AgentCore V2",
+          "en": "Build and invoke flow with hooks, where a memory warmup call runs before the snapshot and a disk warmup call runs after a test restore"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22099-3.png"
+      }
+    ]
+  }
 }
