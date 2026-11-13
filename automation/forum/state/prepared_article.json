@@ -1,5 +1,446 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-13T02:13:43+00:00",
-  "last_published_story_id": "1d5b8357daae2db5078b"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-13T02:18:40+00:00",
+  "target_publish_at": "2026-11-13T05:33:42.742378+03:00",
+  "story": {
+    "title": "New Windows SignDrop zero-day gives hackers SYSTEM privileges",
+    "url": "https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges",
+    "domain": "bleepingcomputer.com",
+    "summary": "Security researcher Abdelhamid Naceri (also known as Nightmare Eclipse) has released a new Windows zero-day exploit that can let attackers gain SYSTEM privileges. [...]",
+    "published_at": "2026-11-12T16:04:00+00:00",
+    "discovered_at": "2026-11-12T16:07:10+00:00",
+    "source": {
+      "name": "BleepingComputer",
+      "feed": "https://www.bleepingcomputer.com/feed/",
+      "type": "journalism",
+      "trust": 0.88,
+      "priority": 22,
+      "defaultCategory": "security"
+    },
+    "category": "security",
+    "category_label": "الأمن التقني",
+    "score": 49,
+    "verification": {
+      "confidence": 0.88,
+      "reason": "trusted_journalism_single_source",
+      "official": false,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "65f3f63f46e66dd3b467",
+    "trend": {
+      "score": 101.02,
+      "age_hours": 10.23,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 6
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges/",
+      "name": "BleepingComputer",
+      "domain": null,
+      "kind": "journalism",
+      "type": "journalism",
+      "feed_title": "New Windows SignDrop zero-day gives hackers SYSTEM privileges",
+      "title": "New Windows SignDrop zero-day gives hackers SYSTEM privileges",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "ثغرة SignDrop الصفرية في ويندوز تمنح المهاجمين صلاحيات SYSTEM",
+      "description": "أصدر الباحث الأمني عبد الحميد ناصري ثغرة SignDrop الصفرية في نظام ويندوز، والتي تتيح للمهاجمين رفع الصلاحيات إلى مستوى SYSTEM وتجاوز حماية مضادات الفيروسات.",
+      "deck": "أطلق الباحث الأمني عبد الحميد ناصري ثغرة استغلال صفتها صفرية (Zero-day) في نظام التشغيل ويندوز تُعرف باسم SignDrop، وهي تمكن المهاجمين من الحصول على صلاحيات SYSTEM عبر استغلال آلية حماية أضافتها مايكروسوفت مؤخراً.",
+      "summary_bullets": [
+        "الثغرة الجديدة تُسمى SignDrop وقد تم تطويرها بواسطة الباحث الأمني عبد الحميد ناصري المعروف أيضاً باسم Nightmare Eclipse.",
+        "تستغل الثغرة التخفيفات الأمنية التي أُدخلت في أكتوبر 2025 للدفاع ضد هجمات المصادقة التي تستهدف عيوب برنامج تشغيل Common Log File System.",
+        "تتيح الثغرة للمهاجمين إجبار العمليات المتميزة مثل ويندوز ديفندر على فتح الملفات، مما ينشئ ملف المصادقة بصلاحيات SYSTEM.",
+        "يُقدّر أن نحو 80% من تثبيتات ويندوز معرضة للخطر، مع عدم توفر تصحيح رسمي حالياً من مايكروسوفت سوى الانتظار."
+      ],
+      "sections": [
+        {
+          "heading": "تفاصيل الثغرة الصفرية SignDrop الجديدة",
+          "paragraphs": [
+            {
+              "text": "أصدر الباحث الأمني عبد الحميد ناصري، الذي يُعرف أيضاً باسم Nightmare Eclipse، استغلالاً ثغرياً جديداً من نوع اليوم الصفر (Zero-day) في نظام ويندوز، والذي يُعرف باسم SignDrop، حيث يتيح للمهاجمين اكتساب صلاحيات SYSTEM والتحكم الكامل بالنظام المستهدف، بحسب ما أورده موقع BleepingComputer.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges/"
+                }
+              ]
+            },
+            {
+              "text": "تستغل ثغرة SignDrop إجراءات التخفيف التي أدخلتها شركة مايكروسوفت في شهر أكتوبر من عام 2025 بهدف الدفاع ضد هجمات المصادقة التي تستهدف الثغرات الأمنية في برنامج تشغيل Common Log File System المعروف اختصاراً باسم CLFS.",
+              "links": [
+                {
+                  "text": "Common Log File System",
+                  "url": "https://learn.microsoft.com/windows-hardware/drivers/kernel/introduction-to-the-common-log-file-system"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل الثغرة واستغلال المنطق الأمني",
+          "paragraphs": [
+            {
+              "text": "أوضح الباحث الأمني المعروف أيضاً بلقب Nightmare Eclipse أن الخلل يكمن في الطريقة التي يعامل بها برنامج التشغيل CLFS عملية إنشاء ملف المصادقة الذي يحمل اللاحقة .cnpf عند إنشاء ملف سجل جديد.",
+              "links": []
+            },
+            {
+              "text": "يشير التحليل إلى أن برنامج CLFS يفرض عمليات التحقق من الوصول بشكل صحيح في البداية، إلا أنه يمكن إساءة استخدام المنطق إذا قامت عملية أخرى تتمتع بصلاحيات أعلى بفتح ملف السجل في وقت لاحق، مما يؤدي إلى إنشاء ملف المصادقة بصلاحيات SYSTEM الكاملة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تجاوز آليات الدفاع الذاتي لمضادات الفيروسات",
+          "paragraphs": [
+            {
+              "text": "أكد ناصري أن هذه التقنية تعمل بكفاءة ضد أي محرك مضاد للبرمجيات الضارة وآليات الحماية الذاتيّة الخاصة به أو ما يُعرف بـ tamper protection، وذلك لأن طلب إنشاء الملف يبدو وكأنه صادر عن العملية الشرعية للمحرك نفسه.",
+              "links": []
+            },
+            {
+              "text": "يُذكر أن الباحث كان قد أصدر سابقاً سلسلة من الثغرات الصفرية المشابهة مثل ShieldCrash و ShieldBreak التي استهدفت مكونات حماية أمان ويندوز وأتاحت صلاحيات نظام مشابهة.",
+              "links": [
+                {
+                  "text": "ShieldCrash",
+                  "url": "https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldcrash-zero-day-grants-system-access/"
+                },
+                {
+                  "text": "ShieldBreak",
+                  "url": "https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldbreak-zero-day-grants-system-privileges/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "النطاق المتأثر والإصدارات المعرضة للخطر",
+          "paragraphs": [
+            {
+              "text": "على الرغم من أن ثغرة SignDrop لا يمكن استخدامها ضد جميع أجهزة ويندوز بلا استثناء، فقد اختبر الباحث الاستغلال بنجاح على أنظمة ويندوز 11 الإصدار 26H2، وويندوز 11 الإصدار 26H2 التجريبي، إضافة إلى نظام ويندوز سيرفر 2025 التجريبي.",
+              "links": []
+            },
+            {
+              "text": "ويُقدر الباحث الأمني أن حوالي 80% من إجمالي تثبيتات ويندوز الحالية لا تزال معرضة للخطر، ويوصي بتشغيل أداة إثبات المفهوم أو التحقق من وضع مصادقة CLFS عبر مفتاح السجل الخاص بالنظام لتحديد مدى التأثر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "غياب التصحيحات الرسمية وتوصيات الخبراء",
+          "paragraphs": [
+            {
+              "text": "أشار ناصري إلى أنه لا يوجد حل فوري حالياً سوى انتظار تصحيح رسمي من شركة مايكروسوفت، نظراً لأن تعطيل التخفيفات الخاصة ببرنامج CLFS من شأنه أن يعرض الأجهزة لهجمات أخرى تستغل ثغرات فساد الذاكرة.",
+              "links": []
+            },
+            {
+              "text": "يُذكر أن الباحث كشف في وقت سابق عن ثغرات عديدة أخرى ضمن سلسلته التي ضمت أيضاً ثغرات مثل LegacyHive و RoguePlanet و BlueHammer و RedSun دون تنسيق مسبق مع الشركة، مما أثار جدلاً واسعاً في أوساط الأمن السيبراني.",
+              "links": [
+                {
+                  "text": "RoguePlanet",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-defender-rogueplanet-zero-day-grants-system-privileges/"
+                },
+                {
+                  "text": "BlueHammer",
+                  "url": "https://www.bleepingcomputer.com/news/security/disgruntled-researcher-leaks-bluehammer-windows-zero-day-exploit/"
+                },
+                {
+                  "text": "RedSun",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/new-microsoft-defender-redsun-zero-day-poc-grants-system-privileges/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الأمن التقني",
+        "ويندوز",
+        "ثغرات صفرية",
+        "مايكروسوفت",
+        "صلاحيات النظام",
+        "أمن المعلومات"
+      ],
+      "entities": [
+        "عبد الحميد ناصري",
+        "Nightmare Eclipse",
+        "مايكروسوفت",
+        "ويندوز",
+        "Common Log File System",
+        "SignDrop"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر بناءً حصرياً على تفاصيل تقرير BleepingComputer ومنشورات الباحث الأمني حول ثغرة SignDrop الصفرية مع الالتزام بالروابط المسموحة ومطابقة النص حرفياً."
+    },
+    "en": {
+      "title": "New Windows SignDrop Zero-Day Grants SYSTEM Privileges",
+      "description": "Security researcher Abdelhamid Naceri has released a new Windows zero-day exploit named SignDrop that allows attackers to gain SYSTEM privileges.",
+      "deck": "A newly released Windows zero-day exploit called SignDrop targets Microsoft's mitigations for Common Log File System vulnerabilities, allowing attackers to gain SYSTEM privileges.",
+      "summary_bullets": [
+        "Security researcher Abdelhamid Naceri released the SignDrop Windows zero-day exploit.",
+        "The flaw stems from Microsoft's October 2025 mitigations for the Common Log File System driver.",
+        "Attackers can leverage the logic flaw to force privileged processes to create authentication files.",
+        "Naceri estimates that about 80% of Windows installations are currently vulnerable.",
+        "There is currently no fix available other than waiting for an official patch from Microsoft."
+      ],
+      "sections": [
+        {
+          "heading": "SignDrop Zero-Day Details",
+          "paragraphs": [
+            {
+              "text": "Security researcher Abdelhamid Naceri, also known as Nightmare Eclipse, has released a new Windows zero-day exploit named SignDrop that can allow attackers to gain SYSTEM privileges. Detailed extensively by BleepingComputer, the exploit specifically targets mitigations that Microsoft introduced in October 2025 to defend against authentication attacks aimed at vulnerabilities in the Common Log File System driver.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges/"
+                },
+                {
+                  "text": "SignDrop",
+                  "url": "https://github.com/MSNightmare/SignDrop"
+                },
+                {
+                  "text": "Common Log File System",
+                  "url": "https://learn.microsoft.com/windows-hardware/drivers/kernel/introduction-to-the-common-log-file-system"
+                }
+              ]
+            },
+            {
+              "text": "According to the researcher, attacks exploiting the driver dropped sharply after the mitigation was put in place. However, Naceri discovered that Microsoft's mitigation itself inadvertently introduced a brand-new vulnerability regarding how log files handle authentication file creation.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "How the Exploit Operates",
+          "paragraphs": [
+            {
+              "text": "Naceri explained that the core flaw lies in how the driver handles creating the authentication file, known as '.cnpf', when generating a new log file. While access checks are enforced correctly at the start, the logic can be abused if a different, privileged process later opens the log file.",
+              "links": []
+            },
+            {
+              "text": "Privileged processes—such as Windows Defender—can be forced to open these files. As a result, the authentication file is created with SYSTEM privileges, and the driver creates it using the original file's access permissions. Naceri noted that while Microsoft implemented the mitigation properly, the logic still allows for abuse.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Bypassing Antimalware Self-Defense",
+          "paragraphs": [
+            {
+              "text": "The security researcher emphasized a unique aspect of SignDrop: it can be used against any antimalware engine's self-defense or tamper protection mechanism. Because the file-creation request appears to originate from the engine's own legitimate process, it easily passes kernel driver checks.",
+              "links": []
+            },
+            {
+              "text": "Naceri stated that if everything is chained correctly, this legitimate security mitigation can be used against itself to elevate privileges and effectively turn off any antivirus or EDR solution.",
+              "links": []
+            },
+            {
+              "text": "Naceri has a history of discovering and disclosing Windows flaws, having previously released details on other vulnerabilities like ShieldCrash and LegacyHive.",
+              "links": [
+                {
+                  "text": "ShieldCrash",
+                  "url": "https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldcrash-zero-day-grants-system-access/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Affected Systems and Detection",
+          "paragraphs": [
+            {
+              "text": "While SignDrop cannot be leveraged against every Windows machine, Naceri successfully tested the exploit on Windows 11 26H2, Windows 11 26H2 Experimental, and Windows Server 2025 Experimental. The researcher estimates that roughly 80% of Windows installations are vulnerable.",
+              "links": []
+            },
+            {
+              "text": "To check if a device is susceptible, administrators can run the proof-of-concept exploit or check the authentication mode under the registry path HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\CLFS\\Authentication\\Mode. If the exploit spawns a SYSTEM shell, or if the registry value is set to 0 or 1, the machine is vulnerable.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Mitigation Status and Outlook",
+          "paragraphs": [
+            {
+              "text": "There is currently no immediate solution available to secure systems other than waiting for an official patch from Microsoft. Naceri noted that disabling the driver mitigation would expose devices back to memory corruption attacks.",
+              "links": []
+            },
+            {
+              "text": "Naceri, a former Microsoft employee, has publicly disclosed several other zero-day bugs this year across components like BitLocker and Microsoft Defender. While Microsoft has addressed some of these disclosures—such as ShieldBreak and RoguePlanet—many other zero-day vulnerabilities still lack official patches.",
+              "links": [
+                {
+                  "text": "ShieldBreak",
+                  "url": "https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldbreak-zero-day-grants-system-privileges/"
+                },
+                {
+                  "text": "RoguePlanet",
+                  "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-defender-rogueplanet-zero-day-grants-system-privileges/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "SignDrop",
+        "Zero-day",
+        "Windows",
+        "Privilege Escalation",
+        "Security",
+        "Abdelhamid Naceri"
+      ],
+      "entities": [
+        "Microsoft",
+        "Windows Defender",
+        "Abdelhamid Naceri"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based directly on the provided BleepingComputer source text detailing the SignDrop zero-day."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 496,
+      "word_count_en": 544
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "a491aa90d650ab2bf91e",
+      "title": "How Amplitude ships product improvements in 1–2 days with OpenAI",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "ac94b61a25ade5edbf71",
+      "title": "ChatGPT Plus for veterans and servicemembers",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "story_id": "9092d5eb66f29547408d",
+      "title": "Singapore Airlines elevates travel & work with OpenAI technology",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "story_id": "65f3f63f46e66dd3b467",
+      "title": "New Windows SignDrop zero-day gives hackers SYSTEM privileges",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 496,
+          "word_count_en": 544
+        }
+      ]
+    }
+  ],
+  "slug": "new-windows-signdrop-zero-day-gives-hackers-system-privileges",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/new-windows-signdrop-zero-day-gives-hackers-system-privileges/hero.webp",
+    "card": "/forum/assets/posts/2026/11/new-windows-signdrop-zero-day-gives-hackers-system-privileges/card.webp",
+    "social": "/forum/assets/posts/2026/11/new-windows-signdrop-zero-day-gives-hackers-system-privileges/social.jpg",
+    "alt": {
+      "ar": "ثغرة SignDrop الصفرية في ويندوز تمنح المهاجمين صلاحيات SYSTEM",
+      "en": "New Windows SignDrop Zero-Day Grants SYSTEM Privileges"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/11/12/0_Windows-headpic.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/new-windows-signdrop-zero-day-gives-hackers-system-privileges/inline-01.webp",
+        "width": 1400,
+        "height": 632,
+        "alt": {
+          "ar": "ثغرة SignDrop الصفرية في ويندوز تمنح المهاجمين صلاحيات SYSTEM",
+          "en": "SignDrop PoC exploit"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "SignDrop PoC exploit (Abdelhamid Naceri)"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/u/1109292/2026/SignDrop%20PoC%20exploit.jpg"
+      }
+    ]
+  }
 }
