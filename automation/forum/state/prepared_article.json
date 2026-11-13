@@ -1,5 +1,343 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-13T17:59:04+00:00",
-  "last_published_story_id": "fac03411e86f28e47bbb"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-13T18:04:11+00:00",
+  "target_publish_at": "2026-11-13T21:19:03.723003+03:00",
+  "story": {
+    "title": "Build a model improvement flywheel with Amazon SageMaker HyperPod Data Capture",
+    "url": "https://aws.amazon.com/blogs/machine-learning/build-a-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture",
+    "domain": "aws.amazon.com",
+    "summary": "Amazon SageMaker HyperPod Data Capture records live inference inputs and outputs to Amazon S3. This post walks through one end-to-end example: capturing a support router's production traffic, surfacing a new-product blind spot with Amazon Athena, fine-tuning on the captured data with the HyperPod training operator, and measuring the before-and-after lift.",
+    "published_at": "2026-11-13T18:01:15+00:00",
+    "discovered_at": "2026-11-13T18:03:22+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 69,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "5e58f673d3a366d25ac9",
+    "trend": {
+      "score": 126.98,
+      "age_hours": 0.04,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-a-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Build a model improvement flywheel with Amazon SageMaker HyperPod Data Capture",
+      "title": "Build a model improvement flywheel with Amazon SageMaker HyperPod Data Capture | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تطلق ميزة التقاط البيانات في SageMaker HyperPod لتحسين نماذج الذكاء الاصطناعي",
+      "description": "أطلقت أمازون ميزة التقاط البيانات في SageMaker HyperPod لتسجيل مدخلات ومخرجات الاستدلال الحية، مما يتيح للمؤسسات بناء حلقات تحسين مستمرة لنماذج الذكاء الاصطناعي بناءً على بيانات الإنتاج الفعلية.",
+      "deck": "تتيح ميزة التقاط البيانات الجديدة في SageMaker HyperPod للمؤسسات توثيق تفاعلات المستخدمين مع نماذج الذكاء الاصطناعي في بيئة الإنتاج، لتحويل هذه البيانات إلى موارد تدريبية دقيقة.",
+      "summary_bullets": [
+        "تسجيل مدخلات ومخرجات الاستدلال الحية في Amazon S3 بثلاث مستويات مستقلة.",
+        "تحليل البيانات باستخدام Amazon Athena لاكتشاف فجوات الأداء والنمط الجديد.",
+        "إعادة تدريب النماذج باستخدام مشغل التدريب HyperPod على بيانات الإنتاج.",
+        "قياس التحسن في دقة النماذج قبل وبعد إعادة التدريب باستخدام بيانات حقيقية."
+      ],
+      "sections": [
+        {
+          "heading": "توثيق تفاعلات الإنتاج",
+          "paragraphs": [
+            {
+              "text": "تواجه نماذج الذكاء الاصطناعي التأسيسية عند نشرها على Amazon SageMaker HyperPod تحديات تتعلق ببيانات الإنتاج التي لا تغطيها مجموعات البيانات المسبقة، مثل المصطلحات المتخصصة، الصيغ غير المتوقعة، المنتجات الجديدة، وتغير سلوك المستخدمين. بدون سجل لبيانات الاستدلال في بيئة الإنتاج، تعجز الفرق التقنية عن اكتشاف الانحرافات، تحديد أنماط الفشل، أو استخدام التفاعلات الحقيقية لتحسين أداء النموذج. في هذا السياق، أعلنت أمازون عن توفير ميزة التقاط البيانات (Data Capture) المدمجة في SageMaker HyperPod، والتي تقوم بتسجيل مدخلات ومخرجات الاستدلال الحية في Amazon Simple Storage Service (Amazon S3) عبر ثلاثة مستويات مستقلة، مع تأثير ضئيل على زمن الاستجابة وبدون أي تأثير على توفر النموذج. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/build-a-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مستويات التقاط البيانات",
+          "paragraphs": [
+            {
+              "text": "توفر ميزة التقاط البيانات في HyperPod ثلاثة مستويات مستقلة، يقع كل منها في نقطة مختلفة من مسار الطلب. يمكن تفعيل أي مجموعة من هذه المستويات ضمن كتلة dataCapture نفسها. كلا المستويين الأول والثالث يخزنان حمولات البيانات الكاملة، لذا فإن تفعيل كلاهما يؤدي إلى تخزين كل سجل مرتين. يُنصح باستخدام المستوى الأول للامتثال ومراقب النموذج، والمستوى الثاني عند الحاجة فقط إلى بيانات حركة المرور الوصفية، والمستوى الثالث عند النية لاستخدام حمولات البيانات. في هذا المقال، تم استخدام المستوى الثالث فقط. نظرًا لأن المستوى الثالث يسجل الحمولات الكاملة، والتي قد تتضمن أسماء وعناوين وأرقام طلبات، يجب حماية هذه البيانات قبل أن تصبح بيانات تدريب. يمكن استخدام العينة العشوائية، تشفير AWS Key Management Service (AWS KMS)، قواعد دورة حياة S3، وإخفاء المعلومات الشخصية (PII) باستخدام أدوات مثل Amazon Comprehend. ويمكن الرجوع إلى Artificial Intelligence للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "البنية التحتية المطلوبة",
+          "paragraphs": [
+            {
+              "text": "يتطلب هذا السيناريو عناقيد SageMaker HyperPod مُدارة بواسطة Amazon Elastic Kubernetes Service (Amazon EKS)، مع تثبيت مشغل الاستدلال (Inference Operator) ومشغل التدريب (Training Operator) الخاص بـ EKS. يجب توفر وحدتي معالجة رسومية (GPU) من NVIDIA، واحدة للتقديم (Serving) وأخرى للتدريب. في هذا المثال، تم استخدام ml.g6e.8xlarge للتقديم و ml.g6e.xlarge للتدريب، حيث يحتوي كل منهما على وحدة NVIDIA L40S بسعة 48 جيجابايت. نظرًا لأن حاوية التقديم تحتفظ بوحدة GPU طوال عمر نقطة النهاية، فإن وجود وحدة GPU واحدة فقط سيؤدي إلى بقاء حاوية التدريب في حالة معلقة (Pending). يجب التأكد من تثبيت كلا المشغلين، حيث ستعيد الأوامر سطرًا واحدًا لكل مشغل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل التقاط البيانات",
+          "paragraphs": [
+            {
+              "text": "يضيف مشغل الاستدلال ثلاثة حاويات جانبية (Sidecars) إلى حاوية النموذج. يتم نسخ كل طلب يمر عبر وكيل NGINX إلى جامع OpenTelemetry، ثم يُجمَّع ويُكتب إلى Amazon S3 عبر وحدة Mountpoint-S3. تقرأ Amazon Athena هذه الملفات في مكانها. يعمل مشغل التدريب على تنفيذ إعادة التدريب كـ HyperPodPyTorchJob على وحدة GPU ثانية، ويتم تقديم النموذج الجديد بواسطة نقطة نهاية ثانية مع تفعيل التقاط البيانات عليها. تتطلب هذه العملية أربعة هويات للوصول: دور Mountpoint-S3 CSI driver، دور تنفيذ مشغل الاستدلال، حساب الخدمة الخاص بحاوية التدريب، وحساب Amazon Athena. يجب منح هذه الهويات صلاحيات القراءة والكتابة المناسبة على دلاء Amazon S3 ومفاتيح KMS.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "سيناريو عملي: توجيه تذاكر الدعم",
+          "paragraphs": [
+            {
+              "text": "في هذا المثال، تم استخدام نموذج توجيه تذاكر الدعم لمتجر أجهزة منزلية. يستخدم النموذج فك الترميز الموجَّه (Guided JSON decoding) من vLLM لتصنيف كل تذكرة في إحدى الفئات الست: ثلاجة، غسالة، فرن، غسالة أطباق، ميكروويف، أو أخرى. بعد نشر النموذج، أطلق المتجر خطًا جديدًا من مكيفات الهواء. التقطت ميزة Data Capture حركة المرور الإنتاجية، واستخدمت استعلامات Amazon Athena لإظهار نقطة عمياء تتعلق بالمنتج الجديد. تم تسمية السجلات الملتقطة باستخدام سياسة SQL، ثم تم إعادة تدريب النموذج على هذه البيانات لتعليمه المنتج الجديد. تم قياس الدقة قبل وبعد إعادة التدريب على بيانات لم تكن لتوجد قبل نشر النموذج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحقق من السجلات",
+          "paragraphs": [
+            {
+              "text": "بعد تفعيل التقاط البيانات، تعمل الحاوية بأربعة حاويات: النموذج، وكيل العكس (NGINX)، جامع OpenTelemetry، ومرفوع S3. في هذا التنفيذ، أصبحت الحاوية جاهزة بعد حوالي خمس دقائق من تطبيق الأمر، حيث استغرق معظم الوقت في تنزيل الأوزان. لإرسال طلب والتحقق من وصول السجلات إلى Amazon S3، يجب إرسال طلب استدلال عبر وكيل التقاط البيانات على المنفذ 8081. بعد فترة الفلاش (Flush interval)، يمكن سرد بادئة التقاط. ستظهر ملفات .jsonl واحدة أو أكثر تحت المسار المحدد. يتم تخزين أجسام الطلب والاستجابة بتشفير base64، مما يتطلب فك الترميز ثم تحليل JSON لقراءتها.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "SageMaker",
+        "HyperPod",
+        "التعلم الآلي",
+        "بيانات الإنتاج",
+        "إعادة التدريب"
+      ],
+      "entities": [
+        "Amazon SageMaker HyperPod",
+        "Amazon S3",
+        "Amazon Athena",
+        "Amazon EKS",
+        "NVIDIA GPUs",
+        "AWS KMS",
+        "Amazon Comprehend"
+      ],
+      "article_type": "news",
+      "confidence_note": "تم الاعتماد حصرياً على النص المرفق من مدونة أمازون الرسمية، مع الحفاظ على الدقة التقنية وعدم إضافة معلومات خارجية."
+    },
+    "en": {
+      "title": "Amazon SageMaker HyperPod Data Capture Enables Flywheels",
+      "description": "Amazon SageMaker HyperPod Data Capture records live inference inputs and outputs to Amazon S3 to build model improvement flywheels.",
+      "deck": "Amazon SageMaker HyperPod has introduced Data Capture, allowing teams to record live inference inputs and outputs directly to Amazon S3 without impacting model availability.",
+      "summary_bullets": [
+        "SageMaker HyperPod Data Capture records live inference data to Amazon S3 at three independent tiers.",
+        "A walkthrough example demonstrates capturing support router traffic, analyzing it with Amazon Athena, and fine-tuning models.",
+        "The inference operator runs on one node while the training operator manages fine-tuning on a second GPU.",
+        "Data capture provides minimal latency impact and zero impact on model availability during production traffic."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to HyperPod Data Capture",
+          "paragraphs": [
+            {
+              "text": "Foundation models deployed on Amazon SageMaker HyperPod frequently encounter inputs that fall outside pre-curated datasets, such as domain-specific jargon, unexpected formats, new products, and evolving user behavior. Without a reliable record of production inference data, development teams face challenges detecting drift, identifying failure patterns, or leveraging real interactions to enhance model performance. To address this, AWS introduced Data Capture as a built-in capability that records live inference inputs and outputs to Amazon Simple Storage Service (Amazon S3) across three independent tiers. This functionality operates with minimal latency impact and zero effect on model availability, as detailed in the [AWS Machine Learning Blog](https://aws.amazon.com/blogs/machine-learning/build-a-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/).",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/build-a-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Independent Capture Tiers",
+          "paragraphs": [
+            {
+              "text": "The data capture system provides three independent tiers located at different points along the request path, allowing administrators to activate any combination within the same configuration block. Because Tiers 1 and 3 both store full payloads, enabling both results in duplicate records. Teams typically use Tier 1 for compliance and Model Monitor requirements, Tier 2 when capturing only traffic metadata is necessary, and Tier 3 when planning to utilize the captured payloads for downstream tasks. Because Tier 3 records complete payloads that may contain sensitive details like names, addresses, or order numbers, proper safeguards must be implemented. Operators can protect this data using sampling, AWS Key Management Service encryption, S3 lifecycle rules, and personally identifiable information redaction techniques. Further architectural configuration guidelines are available in the [SageMaker HyperPod inference documentation](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-model-deployment.html).",
+              "links": [
+                {
+                  "text": "SageMaker HyperPod inference documentation",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-model-deployment.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "End-to-End Implementation Workflow",
+          "paragraphs": [
+            {
+              "text": "An end-to-end example walks through capturing production traffic from a home-appliance support router, querying the logs to uncover new-product blind spots using Amazon Athena, applying a SQL labeling policy, and executing a fine-tuning run using the training operator. The complete scripts, manifests, SQL statements, and synthetic datasets required to replicate this walkthrough are hosted in the [accompanying GitHub repository](https://github.com/awslabs/awsome-distributed-ai/tree/main/examples/use-cases/sagemaker-hyperpod-data-capture-flywheel). Developers can measure model accuracy before and after fine-tuning to evaluate performance lifts on real production data.",
+              "links": [
+                {
+                  "text": "accompanying GitHub repository",
+                  "url": "https://github.com/awslabs/awsome-distributed-ai/tree/main/examples/use-cases/sagemaker-hyperpod-data-capture-flywheel"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Cluster Prerequisites and Setup",
+          "paragraphs": [
+            {
+              "text": "Setting up the environment requires a SageMaker HyperPod cluster orchestrated by Amazon Elastic Kubernetes Service, along with the inference operator and training operator installed. Deploying models requires appropriate cluster configurations as outlined in [Setting up your HyperPod clusters for model deployment](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-model-deployment-setup.html). Additionally, teams must configure the necessary EKS add-ons by referencing the documentation for [Installing the training operator](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-eks-operator-install.html).",
+              "links": [
+                {
+                  "text": "Setting up your HyperPod clusters for model deployment",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-model-deployment-setup.html"
+                },
+                {
+                  "text": "Installing the training operator",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-eks-operator-install.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker",
+        "HyperPod",
+        "Data Capture",
+        "Machine Learning",
+        "AWS",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker HyperPod",
+        "Amazon S3",
+        "Amazon Athena"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based directly on the provided official AWS Machine Learning Blog post and documentation links."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 724,
+      "word_count_en": 470
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "a491aa90d650ab2bf91e",
+      "title": "How Amplitude ships product improvements in 1–2 days with OpenAI",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "5e58f673d3a366d25ac9",
+      "title": "Build a model improvement flywheel with Amazon SageMaker HyperPod Data Capture",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 724,
+          "word_count_en": 470
+        }
+      ]
+    }
+  ],
+  "slug": "build-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/build-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/hero.webp",
+    "card": "/forum/assets/posts/2026/11/build-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/card.webp",
+    "social": "/forum/assets/posts/2026/11/build-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق ميزة التقاط البيانات في SageMaker HyperPod لتحسين نماذج الذكاء الاصطناعي",
+      "en": "Amazon SageMaker HyperPod Data Capture Enables Flywheels"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22239-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/build-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/inline-01.webp",
+        "width": 1400,
+        "height": 795,
+        "alt": {
+          "ar": "أمازون تطلق ميزة التقاط البيانات في SageMaker HyperPod لتحسين نماذج الذكاء الاصطناعي",
+          "en": "Architecture of one SageMaker HyperPod cluster: a capture proxy in the serving pod copies requests to Amazon S3, Athena analyzes and labels them, a training job fine-tunes on a second GPU, and a second endpoint serves th"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-a-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22239-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/build-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/inline-02.webp",
+        "width": 1366,
+        "height": 677,
+        "alt": {
+          "ar": "أمازون تطلق ميزة التقاط البيانات في SageMaker HyperPod لتحسين نماذج الذكاء الاصطناعي",
+          "en": "Chart of the share of tickets routed to Other. Before the Arctis launch the per-minute share stays under 7%. After it the bars climb to 65%, while the cumulative line reaches only 22.6%."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-a-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22239-2.png"
+      }
+    ]
+  }
 }
