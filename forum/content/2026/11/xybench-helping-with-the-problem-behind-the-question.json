@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "96c7f67bef86f8316048",
+  "slug": "xybench-helping-with-the-problem-behind-the-question",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/xybench-helping-with-the-problem-behind-the-question/",
+    "en": "/forum/en/ai/xybench-helping-with-the-problem-behind-the-question/"
+  },
+  "locales": {
+    "ar": {
+      "title": "XYBench يكشف فجوة الذكاء الاصطناعي في فهم نوايا المستخدم",
+      "description": "أطلقت مؤسسة Ai2 معياراً جديداً يقيس قدرة نماذج اللغة الكبيرة على اكتشاف المفاهيم الخاطئة في أسئلة المستخدمين، محققاً جائزة أفضل ورقة موارد في مؤتمر EMNLP 2026.",
+      "deck": "تواجه أنظمة الذكاء الاصطناعي تحدياً حقيقياً عندما يسأل المستخدم عن حل خاطئ لمشكلة حقيقية، وهو ما يهدف معيار XYBench الجديد إلى قياسه بدقة.",
+      "summaryBullets": [
+        "أطلقت مؤسسة Ai2 معيار XYBench المكون من أكثر من 8000 سؤال لاختبار قدرة النماذج على تمييز المشكلة الحقيقية خلف السؤال المطروح.",
+        "حصد المعيار جائزة أفضل ورقة موارد في مؤتمر EMNLP 2026، بعد تطويره بالتعاون مع باحثين من جامعات وشركات كبرى.",
+        "أظهرت الاختبارات أن النماذج الكبرى مثل Claude وGPT-5 تركز غالباً على حل السؤال الحرفي بدلاً من توجيه المستخدم نحو الهدف الأساسي.",
+        "يقيس المعيار ثلاثة جوانب رئيسية: تقديم الحل العملي، التركيز على النية الحقيقية، والتعرف على المفاهيم الخاطئة."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق معيار جديد لتحدي المفاهيم الخاطئة",
+          "paragraphs": [
+            {
+              "text": "أعلنت مؤسسة Ai2 عن إطلاق معيار تقييم جديد يحمل اسم XYBench، وهو مصمم خصيصاً لاختبار قدرة مساعدي الذكاء الاصطناعي على التعامل مع الأسئلة التي تنبع من مفاهيم خاطئة لدى المستخدمين. لا يقتصر التحدي على إجابة السؤال المطروح، بل يمتد إلى فهم المشكلة الحقيقية التي يحاول المستخدم حلها، وهو ما يعرف بمشكلة XY، حيث يريد المستخدم تحقيق هدف X لكنه يسأل عن طريقة Y خاطئة. وقد فاز هذا المعيار بجائزة أفضل ورقة موارد في مؤتمر EMNLP 2026، مما يعكس أهمية هذا المجال في تطوير نماذج اللغة الكبيرة. ويمكن الرجوع إلى Hugging Face Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "XYBench",
+                  "url": "https://github.com/allenai/XYBench"
+                },
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/allenai/xybench"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "منهجية بناء قاعدة البيانات",
+          "paragraphs": [
+            {
+              "text": "تم تطوير المعيار بالتعاون مع باحثين من جامعات كارنيجي ميلون، وجونز هوبكنز، وشركة NVIDIA. تعتمد قاعدة البيانات على 8,115 سؤالاً حقيقياً موزعة على أربعة مصادر رئيسية: 1,557 سؤالاً من Stack Overflow، و184 من Stack Exchange، بالإضافة إلى 102 مثالاً منسقاً يدوياً، و6,272 سؤالاً تم توليدها من إرشادات WikiHow. لكل سؤال، حدد الباحثون الطلب الصريح (Y) والطلب المقصود (X) الذي يمكن استنتاجه من السياق، مع استبعاد الحالات التي يكون فيها حل الطلب الحرفي كافياً لحل المشكلة بالكامل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية التقييم والمقاييس الثلاثة",
+          "paragraphs": [
+            {
+              "text": "يعتمد XYBench على ثلاثة مقاييس رئيسية لتقييم استجابات النماذج. أولاً، الحل البراغماتي، الذي يسجل ما إذا كانت الاستجابة تتضمن حلولاً لكل من الطلب الصريح والهدف المقصود. ثانياً، التأكيد البراغماتي، الذي يقيس ما إذا كان النموذج يركز على الطلب الحرفي، أو الهدف الحقيقي، أو يوازن بينهما. ثالثاً، تحديد المفهوم الخاطئ، الذي يقيس قدرة النموذج على توجيه المستخدم نحو الهدف الأساسي مع تثبيطه عن اتباع الطريقة الخاطئة. يستخدم المعيار نموذج Claude Sonnet 4.5 كحكم آلي لتصنيف الاقتراحات وتقييم التركيز، وقد تم التحقق من دقته من خلال مراجعة بشرية مستقلة لـ 500 استجابة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج تقييم النماذج الكبرى",
+          "paragraphs": [
+            {
+              "text": "اختبر الباحثون خمسة نماذج رئيسية هي Claude Sonnet 4.6، وGPT-5، وGemini 3.1 Pro، وQwen3.5-9B، وDeepSeek-V4 Pro. أظهرت النتائج أن جميع النماذج كانت أكثر ميلاً لتقديم حل للطلب الصريح (Y) مقارنة بالهدف الأساسي (X). على سبيل المثال، في أسئلة Stack Overflow، ظهرت حلول للطلب الصريح في 75 إلى 86% من الاستجابات، بينما ظهرت حلول للهدف الأساسي في 59 إلى 71% فقط. كما أظهرت القياسات أن النماذج ركزت بشكل أساسي على الهدف الأساسي في 35 إلى 41% من الاستجابات فقط، بينما ركزت على الطلب الصريح في 47 إلى 57% منها، مما يشير إلى فجوة واضحة في فهم النوايا الحقيقية للمستخدمين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تجارب إضافية وحدود الأداء",
+          "paragraphs": [
+            {
+              "text": "جرى إجراء تجربة إضافية لتقييم ما إذا كان توضيح نية المستخدم صراحةً يساعد النماذج. عند تزويد النماذج بالطلب الصريح والهدف المقصود معاً، ارتفعت نسبة تقديم حل للهدف الأساسي قليلاً، لكن انخفضت نسبة تحديد المفهوم الخاطئ، مما يدل على أن كشف النية ليس كافياً دون القدرة على التصرف بناءً عليها. كما اختبر الباحثون قدرة النماذج على التمييز بين إجابات جيدة وسيئة، حيث فضلت النماذج الإجابات التي تركز على الهدف الأساسي في 71 إلى 84% من الحالات، مقارنة بنسبة أقل بكثير عندما كانت تكتب الإجابات بنفسها. يؤكد هذا الفارق على الحاجة إلى تحسينات جوهرية في كيفية تعامل النماذج مع السياق والنية التواصلية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "XYBench",
+        "Ai2",
+        "نماذج اللغة الكبيرة",
+        "تقييم النماذج",
+        "EMNLP 2026"
+      ],
+      "entities": [
+        "Ai2",
+        "XYBench",
+        "Claude Sonnet 4.6",
+        "GPT-5",
+        "Gemini 3.1 Pro",
+        "Qwen3.5-9B",
+        "DeepSeek-V4 Pro",
+        "EMNLP 2026"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "13 نوفمبر 2026",
+      "modifiedLabel": "13 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 583
+    },
+    "en": {
+      "title": "XYBench Wins Award for Testing AI Troubleshooting",
+      "description": "Discover XYBench, an award-winning benchmark evaluating how AI assistants handle implicit user misconceptions and the XY problem in troubleshooting.",
+      "deck": "A new benchmark developed by researchers exposes a critical gap in large language models when addressing the real goals behind misguided user questions.",
+      "summaryBullets": [
+        "XYBench features over 8,000 real-world questions spanning programming, cooking, and home repair.",
+        "The benchmark won the Best Resource Paper Award at EMNLP 2026.",
+        "Evaluated models consistently struggled to steer users away from mistaken approaches compared to human responses.",
+        "Researchers from Carnegie Mellon, NVIDIA, and Johns Hopkins collaborated on developing the benchmark."
+      ],
+      "sections": [
+        {
+          "heading": "Understanding the XY Problem in AI",
+          "paragraphs": [
+            {
+              "text": "Truly useful AI assistants need to be able to help users who ask misguided questions, rather than just assisting those who ask the right question with precise details. To address this challenge, researchers have introduced XYBench, a comprehensive benchmark designed to test how AI models respond to requests based on implicit misconceptions. This framework focuses on the 'XY problem,' a common communication mismatch where a user wants to achieve a specific goal X, assumes a particular approach Y will work, and asks for help exclusively with Y. Further details are available from Hugging Face Blog in the original source material.",
+              "links": [
+                {
+                  "text": "XYBench",
+                  "url": "https://github.com/allenai/XYBench"
+                },
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/allenai/xybench"
+                }
+              ]
+            },
+            {
+              "text": "A classic everyday example involves someone asking how to thicken frosting that keeps sliding off warm cupcakes, when the actual underlying problem is that the cupcakes are still too warm to frost. Developed in collaboration with researchers at Carnegie Mellon, NVIDIA, and Johns Hopkins, XYBench exposes a critical gap in large language models' ability to troubleshoot effectively: recognizing when a user request stems from a hidden misconception and appropriately redirecting them toward a solution that addresses their true goal.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Benchmark Composition and Evaluation Metrics",
+          "paragraphs": [
+            {
+              "text": "The benchmark draws on 8,115 real-world questions covering both technical programming tasks and everyday activities like cooking and home repair. The dataset was built from four distinct sources: 1,557 questions from Stack Overflow, 184 from Stack Exchange, 102 manually curated examples, and 6,272 questions generated from WikiHow guides. For every single question, the creators identified both the stated request Y and the intended request X inferred from context.",
+              "links": []
+            },
+            {
+              "text": "To evaluate model performance, XYBench measures three distinct aspects of each response: pragmatic solution inclusion, pragmatic emphasis, and misconception identification. These metrics assess whether a model includes solutions to both the stated and intended requests, where the primary focus of the answer lies, and whether the model successfully steers the user toward the underlying goal while discouraging the mistaken approach.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Model Evaluation Results and Findings",
+          "paragraphs": [
+            {
+              "text": "Recent evaluations tested several prominent models on XYBench, including Claude Sonnet 4.6, GPT-5, Gemini 3.1 Pro, Qwen3.5-9B, and DeepSeek-V4 Pro. Across the board, the evaluated models were consistently more likely to include a solution to the user's stated literal request than to the underlying goal. For instance, on Stack Overflow questions, stated-request solutions appeared in 75% to 86% of responses, compared to only 59% to 71% for underlying-goal solutions.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, even when models mentioned a solution to the underlying goal, they often kept their answers focused on the original, mistaken approach. Unlike human reference answers, all five tested models were less likely to steer users away from the flawed methodology and toward a solution truly suited to their actual objective.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Additional Experiments and Automated Judging",
+          "paragraphs": [
+            {
+              "text": "Claude Sonnet 4.5 served as the automated judge during the benchmarking process, classifying individual suggestions and assessing pragmatic emphasis. To validate these automated judgments, human reviewers independently assessed 500 model responses, showing high agreement rates with the automated judge across various evaluation metrics.",
+              "links": []
+            },
+            {
+              "text": "Additional oracle experiments tested whether explicitly supplying the user's intended request alongside the question would improve model performance. While providing explicit intent slightly increased the rate of including underlying-goal solutions for some models, it did not consistently close the performance gap with human reference responses in misconception identification, indicating that models also need better mechanisms to act on conflicting intent.",
+              "links": []
+            },
+            {
+              "text": "For researchers interested in exploring the methodology further, the corresponding research paper and open-source code provide comprehensive details on the experiments, evaluation metrics, and dataset construction.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "XYBench",
+        "Artificial Intelligence",
+        "Large Language Models",
+        "NLP",
+        "Benchmarking",
+        "Allen Institute for AI"
+      ],
+      "entities": [
+        "Carnegie Mellon",
+        "NVIDIA",
+        "Johns Hopkins",
+        "Hugging Face",
+        "Anthropic",
+        "OpenAI",
+        "Google",
+        "Alibaba",
+        "DeepSeek"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 13, 2026",
+      "modifiedLabel": "November 13, 2026",
+      "readMinutes": 3,
+      "wordCount": 651
+    }
+  },
+  "datePublished": "2026-11-13T20:39:03.558250+03:00",
+  "dateModified": "2026-11-13T20:39:03.558250+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/xybench-helping-with-the-problem-behind-the-question/hero.webp",
+    "card": "/forum/assets/posts/2026/11/xybench-helping-with-the-problem-behind-the-question/card.webp",
+    "social": "/forum/assets/posts/2026/11/xybench-helping-with-the-problem-behind-the-question/social.jpg",
+    "alt": {
+      "ar": "XYBench يكشف فجوة الذكاء الاصطناعي في فهم نوايا المستخدم",
+      "en": "XYBench Wins Award for Testing AI Troubleshooting"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/aOWdQgZ8ioJcx9Eii4iob.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/xybench-helping-with-the-problem-behind-the-question/inline-01.webp",
+        "width": 1400,
+        "height": 1000,
+        "alt": {
+          "ar": "XYBench يكشف فجوة الذكاء الاصطناعي في فهم نوايا المستخدم",
+          "en": "Diagram of the XY problem showing a user asking about approach Y while thinking of underlying goal X, and an AI model redirecting to goal X."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/xybench",
+        "originalUrl": "https://www.datocms-assets.com/64837/1794335088-xybench-featured.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/xybench-helping-with-the-problem-behind-the-question/inline-02.webp",
+        "width": 1400,
+        "height": 839,
+        "alt": {
+          "ar": "XYBench يكشف فجوة الذكاء الاصطناعي في فهم نوايا المستخدم",
+          "en": "Bar chart titled “Five models and top human answers on XYBench’s Stack Overflow questions” comparing GPT-5, DeepSeek-V4 Pro, Qwen3.5-9B, Gemini 3.1 Pro, Claude Sonnet 4.6, and top human answers across mentioning a fix fo"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/xybench",
+        "originalUrl": "https://www.datocms-assets.com/64837/1794335992-xybench-stackoverflow-results.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/xybench-helping-with-the-problem-behind-the-question/inline-03.webp",
+        "width": 1400,
+        "height": 935,
+        "alt": {
+          "ar": "XYBench يكشف فجوة الذكاء الاصطناعي في فهم نوايا المستخدم",
+          "en": "Bar chart titled “Picking and writing goal-focused answers on XYBench’s Stack Overflow questions” comparing multiple-choice selection rates (71–84%) with free-form goal-focused response rates (35–41%) across five frontie"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/xybench",
+        "originalUrl": "https://www.datocms-assets.com/64837/1794336134-xybench-picking-vs-writing.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/allenai/xybench",
+      "type": "official",
+      "title": "XYBench: Helping with the problem behind the question"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/allenai/xybench",
+  "sourceTitle": "XYBench: Helping with the problem behind the question",
+  "trendScore": 110.87,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-13T17:39:03+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/xybench-helping-with-the-problem-behind-the-question.json"
+}
