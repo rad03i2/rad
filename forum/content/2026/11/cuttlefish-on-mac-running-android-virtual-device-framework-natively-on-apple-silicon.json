@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "7503d11cce773debf8ea",
+  "slug": "cuttlefish-on-mac-running-android-virtual-device-framework-natively-on-apple-silicon",
+  "categorySlug": "mobile",
+  "urls": {
+    "ar": "/forum/ar/mobile/cuttlefish-on-mac-running-android-virtual-device-framework-natively-on-apple-silicon/",
+    "en": "/forum/en/mobile/cuttlefish-on-mac-running-android-virtual-device-framework-natively-on-apple-silicon/"
+  },
+  "locales": {
+    "ar": {
+      "title": "ميتا تتيح إطار عمل Cuttlefish لنظام أندرويد على أجهزة ماك",
+      "description": "أعلنت مختبرات الواقع في ميتا عن جلب إطار عمل الأجهزة الافتراضية لأندرويد Cuttlefish للعمل محلياً على أجهزة ماك المزودة بشريحة أبل سيليكون.",
+      "deck": "نجحت مختبرات الواقع في شركة ميتا في تطوير ودعم تشغيل إطار عمل الأجهزة الافتراضية لأندرويد Cuttlefish محلياً على أجهزة ماك ذات معمارية أبل سيليكون.",
+      "summaryBullets": [
+        "إتاحة إطار عمل Cuttlefish للعمل محلياً على حواسيب ماك المزودة بمعمارية أبل سيليكون.",
+        "تجاوز قيود نظام لينكس السابقة واعتماد دعم برنامج QEMU كمدير للجهاز الافتراضي.",
+        "تخفيف العبء التشغيلي وتوحيد بيئة التطوير عبر التخلص من ازدواجية المحاكيات.",
+        "مشاركة التعديلات مع المجتمع التقني عبر مستودعات مخصصة في انتظار دمجها بالكامل."
+      ],
+      "sections": [
+        {
+          "heading": "دوافع الانتقال وتحديات بيئة التطوير",
+          "paragraphs": [
+            {
+              "text": "تعمل مختبرات الواقع في شركة ميتا على تطوير منتجات متقدمة مثل نظارات الذكاء الاصطناعي، وتعتمد في ذلك على المحاكيات لتوسيع نطاق التطوير والاختبار دون الحاجة إلى الاعتماد الحصري على الأجهزة الفيزيائية النادرة. وكان اختبار البرمجيات لأجهزة أندرويد غير الهواتف يواجه تحديات تتعلق بمدى دقة المحاكي في محاكاة السلوك البرمجي للمنتج الحقيقي. ورغم أن المحاكيات خفيفة الوزن مثل Goldfish تقدم حلاً جزئياً، إلا أن الفروق بينها وبين الأجهزة الحقيقية قد تخفي بعض الأخطاء حتى مراحل متأخرة من التطوير.",
+              "links": []
+            },
+            {
+              "text": "في المقابل، يُعد Cuttlefish إطار العمل الافتراضي الخاص بمشروع أندرويد مفتوح المصدر لاختبار برمجيات النظام مقابل أجهزة افتراضية دقيقة. ويقوم هذا الإطار بإقلاع نفس صور النظام الخاصة بالأجهزة الحقيقية وتشغيل حزمة برمجية واقعية، مما يجعله أقرب بكثير لسلوك الأجهزة الفعلية. ورغم هذه المزايا، اقتصر دعم الإطار سابقاً على نظام لينكس، بينما يعمل مطورو التطبيقات والمكتبات في الشركة على أجهزة ماك بشريحة أبل سيليكون، مما فرض عليهم سابقاً دعم منصتي Goldfish وCuttlefish جنباً إلى جنب.",
+              "links": [
+                {
+                  "text": "Cuttlefish",
+                  "url": "https://source.android.com/docs/devices/cuttlefish"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "العبء التشغيلي وازدواجية المنصات",
+          "paragraphs": [
+            {
+              "text": "أدى الحفاظ على منصتي محاكاة مزدوجتين إلى فرض عبء تشغيلي ثقيل استهلك الموارد الحوسبية وأحدث ارتباكاً لدى المطورين وأبطأ عمل فريق المحاكاة. وكلفت هذه الثنائية تطلب دعم أدوات منفصلة، بينما انقسمت القدرات الهندسية وموارد البنية التحتية بين النظامين. وعلاوة على ذلك، اضطر المطورون لاختيار هدف المحاكي بناءً على طبيعة عملهم؛ إذ عمل Goldfish في كل مكان لكن بدقة أقل، بينما تطلب Cuttlefish وجود نظام لينكس.",
+              "links": []
+            },
+            {
+              "text": "تعكس هذه الانقسامية البنية الأساسية لمشروع أندرويد مفتوح المصدر نفسه، حيث يستهدف Goldfish مطوري التطبيقات، بينما يخدم Cuttlefish مطوري منصة أندرويد. وطالما استمر هذا التقسيم، ظلت الفرق تعاني من آثار التجزئة وتداعياتها على سرعة وكفاءة دورة التطوير والاختبار.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إحياء دعم QEMU ومعالجة التحديات البرمجية",
+          "paragraphs": [
+            {
+              "text": "يعمل Cuttlefish كطبقة تنظيم وتوجيه، بينما يتولى مراقب الجهاز الافتراضي مهمة تشغيل نظام التشغيل الضيف. وفي السابق، استخدم الإطار عادة أداة crosvm على نظام لينكس، مع وجود دعم سابق لبرنامج QEMU كبديل، إلا أن هذا التكامل توقف وأصبح غير نشط بمرور الوقت. ومن أجل تمكين الدعم المحلي على أجهزة أبل سيليكون في نظام ماك، قامت مختبرات ميتا بإحياء هذا الدعم عبر QEMU.",
+              "links": [
+                {
+                  "text": "crosvm",
+                  "url": "https://crosvm.dev/book/"
+                }
+              ]
+            },
+            {
+              "text": "اعتمدت العديد من الأجهزة الافتراضية في Cuttlefish على خلفيات vhost-user، وهي عمليات منفصلة توفر أجهزة virtio لبرنامج QEMU عبر مقبس برمجي. ورغم نظافة هذه الهندسة المعمارية، إلا أن أجزاء واسعة منها كتبت بافتراضات ترتبط حصرياً بنظام لينكس. وقد تعامل الفريق الهندسي مع ثلاثة قيود رئيسية تتعلق بتقييد آليات vhost-user بلينكس، وفرض أبل هايبرفايزور لحدود في الموارد لم يتوقعها برنامج QEMU، فضلاً عن غياب مسارات العرض والتوقيع والإنشاء المحلية.",
+              "links": [
+                {
+                  "text": "QEMU",
+                  "url": "https://www.qemu.org/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التعديلات الهندسية على واجهات العرض والذاكرة",
+          "paragraphs": [
+            {
+              "text": "تمثلت التغييرات الأكثر أهمية من الناحية الهندسية في مسار vhost-user التابع لبرنامج QEMU، حيث رُفعت القيود التي كانت تحصر الواجهات والمكتبات الخلفية بنظام لينكس لتصبح قادرة على البناء والتشغيل على ماك أيضاً. وبدون هذا التعديل، لم يكن نموذج الأجهزة عالي الدقة الذي يميز Cuttlefish متاحاً خارج بيئة لينكس.",
+              "links": []
+            },
+            {
+              "text": "وعلى أجهزة أبل سيليكون، يسرع برنامج QEMU عمله عبر إطار العمل الخاص بالمشرف Hypervisor.framework بدلاً من KVM. ولأن النظام لم يتتبع ما يكفي من مناطق الذاكرة للتكوينات الأكبر، قام الفريق بزيادة عداد فتحات التتبع لضمان تشغيل الإعدادات المعقدة بسلاسة. ولتمكين التفاعل المحلي وتجاوز الاعتماد على واجهة الويب WebRTC، جرى الانتقال إلى شاشة Cocoa الأصلية لبرنامج QEMU، مما شمل دعم تنسيق وحدات البكسل BGRA وتنسيق نقرات الماوس كأداة لمس، بالإضافة إلى خيارات هندسية مخصصة للتحكم في العرض.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النتائج ومشاركة التعديلات مع المجتمع التقني",
+          "paragraphs": [
+            {
+              "text": "أثمر الانتقال إلى منصة موحدة عن تقليص متطلبات الصيانة، وخفض احتياجات البنية التحتية، والقضاء على الأدوات الزائدة، فضلاً عن ضمان تشغيل المطورين لنفس الأجهزة الافتراضية المستخدمة في عمليات التكامل المستمر. كما أصبح دعم ميزات إضافية مثل اختبارات التحديثات عبر الهواء وإدارة اللقطات أسهل وأكثر كفاءة على البيئة المشتركة.",
+              "links": []
+            },
+            {
+              "text": "وفي خطوة لدعم المطورين الخارجيين، قررت مختبرات الواقع مشاركة هذه الأعمال مع المجتمع التقني عبر توفير مستودعات تتضمن تعديلات QEMU وسلسلة تصحيحات Cuttlefish، مع توجيهات مفصلة للتطبيق والبناء. وتأتي هذه الجهود استناداً إلى الأسس التي وضعتها مجتمعات المصادر المفتوحة، لتمكين فرق التطوير من الاستفادة من هذه البيئة عالية الدقة في ابتكاراتهم المستقبلية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cuttlefish",
+        "أندرويد",
+        "أبل سيليكون",
+        "ماك",
+        "مختبرات الواقع",
+        "QEMU",
+        "محاكي",
+        "ميتا"
+      ],
+      "entities": [
+        "ميتا",
+        "مختبرات الواقع",
+        "أبل سيليكون",
+        "Cuttlefish",
+        "QEMU",
+        "أندرويد"
+      ],
+      "category": "الهواتف",
+      "dateLabel": "13 نوفمبر 2026",
+      "modifiedLabel": "13 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 707
+    },
+    "en": {
+      "title": "Meta Brings Cuttlefish Android Emulator to macOS and Apple Silicon",
+      "description": "Meta’s Reality Labs has successfully ported the Android Open Source Project's Cuttlefish virtual device framework to run natively on macOS and Apple silicon.",
+      "deck": "Meta engineers have updated the QEMU-backed Android virtual device framework to operate natively on Apple silicon, eliminating the need for dual-emulator workflows.",
+      "summaryBullets": [
+        "Reality Labs ported the AOSP Cuttlefish framework to macOS and Apple silicon.",
+        "The integration revitalized and expanded inactive QEMU support as an alternative virtual machine monitor.",
+        "Engineers resolved Linux-only assumptions across vhost-user components, Hypervisor.framework limits, and Cocoa display paths.",
+        "The unified platform supports continuous integration flows, over-the-air updates, and snapshots.",
+        "Meta has released a QEMU fork and AOSP patch series for the community."
+      ],
+      "sections": [
+        {
+          "heading": "The Challenge of Dual Emulator Platforms",
+          "paragraphs": [
+            {
+              "text": "Meta’s Reality Labs, which builds hardware products such as AI glasses, relies heavily on emulators to scale development and testing without depending entirely on scarce physical hardware. Testing software for non-phone Android devices requires a virtual device that accurately reproduces physical product behaviors. While lightweight emulators like Goldfish offer a partial solution, behavioral discrepancies can conceal bugs until later stages in the development lifecycle.",
+              "links": [
+                {
+                  "text": "AI glasses",
+                  "url": "https://www.meta.com/smart-glasses/"
+                }
+              ]
+            },
+            {
+              "text": "To address fidelity concerns, the Android Open Source Project provides Cuttlefish, a virtual-device framework designed for testing Android software against virtual hardware by booting the same system images as real devices. However, because Cuttlefish traditionally supported only Linux while application and library developers primarily used Macs with Apple silicon, teams were forced to run Goldfish and Cuttlefish side by side. Maintaining this dual-emulator structure created operational friction, drained computing resources, and divided engineering capacity across distinct platforms.",
+              "links": [
+                {
+                  "text": "Cuttlefish",
+                  "url": "https://source.android.com/docs/devices/cuttlefish"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Reviving QEMU Support for macOS",
+          "paragraphs": [
+            {
+              "text": "Cuttlefish functions as an orchestration layer that relies on a virtual machine monitor to run the guest operating system. Although Linux deployments normally utilize crosvm, historical support for QEMU had previously existed before becoming inactive over time. To achieve native Apple silicon support on macOS, the Meta engineering team revived the QEMU integration.",
+              "links": [
+                {
+                  "text": "crosvm",
+                  "url": "https://crosvm.dev/book/"
+                },
+                {
+                  "text": "QEMU",
+                  "url": "https://www.qemu.org/"
+                }
+              ]
+            },
+            {
+              "text": "Running the stack natively required overcoming several hard-coded Linux assumptions within Cuttlefish's vhost-user architecture, where separate processes supply virtio devices to the monitor over a socket. The development team had to adapt components that were strictly gated to Linux, handle Apple hypervisor resource limits, and establish native display, build, and code-signing paths.",
+              "links": [
+                {
+                  "text": "vhost-user",
+                  "url": "https://qemu-project.gitlab.io/qemu/interop/vhost-user.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Architectural Adjustments for Apple Silicon",
+          "paragraphs": [
+            {
+              "text": "The most vital structural modifications occurred within QEMU’s vhost-user path. Frontends, libvhost-user, and contribution backends like vhost-user-blk were originally restricted to Linux environments. By relaxing these build restrictions, the team enabled vhost-user frontends and libraries to compile on macOS, allowing Cuttlefish device backends to interface with QEMU in the same manner as they do on Linux.",
+              "links": []
+            },
+            {
+              "text": "Additionally, rather than utilizing KVM, QEMU on Apple silicon accelerates through Hypervisor.framework. Because the default configuration did not track sufficient memory regions for larger Cuttlefish setups, engineers increased the tracking-slot count to ensure stable operation. The build workflow also required adjustments for arm64 on macOS, along with appropriate JIT entitlements, code signing, and notarization.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Native Display Integration and Interaction",
+          "paragraphs": [
+            {
+              "text": "Local application development demands an interactive display that allows developers to engage directly with the virtual device without relying solely on a WebRTC interface. To solve this, the team transitioned to QEMU’s native Cocoa display. This transition included adding BGRA pixel format support to eliminate visual artifacts on Apple silicon, translating pointer actions into touch inputs for touchscreen devices, and introducing custom geometry configuration flags.",
+              "links": []
+            },
+            {
+              "text": "Unstable Rutabaga structs were also enabled to match the Rust-side graphics ABI configuration requirements. On the orchestration side, macOS host support was added so that the Cuttlefish framework builds and runs directly on a Mac rather than automatically assuming a Linux host environment.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Benefits of a Unified Platform",
+          "paragraphs": [
+            {
+              "text": "Consolidating onto a single Cuttlefish-based platform allows Meta to eliminate redundant tooling, reduce infrastructure requirements, and cut ongoing maintenance overhead. Furthermore, it ensures that developers across the organization run the exact same virtual device specifications utilized throughout continuous integration testing. This unified setup simplifies advanced capabilities such as over-the-air update testing and state snapshotting.",
+              "links": []
+            },
+            {
+              "text": "Meta is sharing these resources with the broader developer community by releasing a Meta-maintained QEMU fork along with an Android Open Source Project patch series. Detailed documentation and implementation guides are available via Meta Engineering, offering external teams the ability to integrate high-fidelity Cuttlefish emulation into their own macOS development environments.",
+              "links": [
+                {
+                  "text": "Meta Engineering",
+                  "url": "https://engineering.fb.com/2026/11/13/android/cuttlefish-on-mac/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Meta",
+        "Apple Silicon",
+        "macOS",
+        "Android",
+        "Cuttlefish",
+        "QEMU",
+        "Virtualization"
+      ],
+      "entities": [
+        "Meta",
+        "Reality Labs",
+        "Apple",
+        "AOSP",
+        "QEMU"
+      ],
+      "category": "Mobile",
+      "dateLabel": "November 13, 2026",
+      "modifiedLabel": "November 13, 2026",
+      "readMinutes": 4,
+      "wordCount": 680
+    }
+  },
+  "datePublished": "2026-11-13T20:19:03.350457+03:00",
+  "dateModified": "2026-11-13T20:19:03.350457+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/cuttlefish-on-mac-running-android-virtual-device-framework-natively-on-apple-silicon/hero.webp",
+    "card": "/forum/assets/posts/2026/11/cuttlefish-on-mac-running-android-virtual-device-framework-natively-on-apple-silicon/card.webp",
+    "social": "/forum/assets/posts/2026/11/cuttlefish-on-mac-running-android-virtual-device-framework-natively-on-apple-silicon/social.jpg",
+    "alt": {
+      "ar": "ميتا تتيح إطار عمل Cuttlefish لنظام أندرويد على أجهزة ماك",
+      "en": "Meta Brings Cuttlefish Android Emulator to macOS and Apple Silicon"
+    },
+    "credit": "Meta Engineering",
+    "sourceUrl": "https://engineering.fb.com/wp-content/uploads/2026/11/Cuttlefish-on-Mac-lead.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Meta Engineering",
+      "url": "https://engineering.fb.com/2026/11/13/android/cuttlefish-on-mac/",
+      "type": "official",
+      "title": "Cuttlefish on Mac: Running Android’s Virtual Device Framework Natively on Apple Silicon"
+    }
+  ],
+  "sourceUrl": "https://engineering.fb.com/2026/11/13/android/cuttlefish-on-mac",
+  "sourceTitle": "Cuttlefish on Mac: Running Android’s Virtual Device Framework Natively on Apple Silicon",
+  "trendScore": 125.97,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-13T17:19:03+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/cuttlefish-on-mac-running-android-virtual-device-framework-natively-on-apple-silicon.json"
+}
