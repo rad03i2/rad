@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "7c8915ec24c23b444893",
+  "slug": "how-one-ai-agent-exposed-five-critical-enterprise-security-gaps",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/how-one-ai-agent-exposed-five-critical-enterprise-security-gaps/",
+    "en": "/forum/en/ai/how-one-ai-agent-exposed-five-critical-enterprise-security-gaps/"
+  },
+  "locales": {
+    "ar": {
+      "title": "وكيل ذكاء اصطناعي يكشف 5 ثغرات أمنية حرجة في المؤسسات",
+      "description": "تقرير Token Security يكشف كيف استُغل وكيل ذكاء اصطناعي لتغيير بيانات بنكية عبر بريد خبيث، مع استعراض 5 ثغرات أمنية حرجة وإرشادات عملية للوقاية منها.",
+      "deck": "أظهرت دراسة حديثة أن 82% من المؤسسات اكتشفت وكلاء ذكاء اصطناعي غير معروفين لديها، مما يسلط الضوء على الحاجة الماسة لسياسات أمنية صارمة.",
+      "summaryBullets": [
+        "وكيل ذكاء اصطناعي مخصص لمعالجة الفواتير تعرض للاستغلال عبر بريد إلكتروني خبيث غيّر بيانات بنكية دون إنذار.",
+        "أبرزت Token Security خمس ثغرات حرجة تشمل ضعف إدارة الصلاحيات وغياب المراجعة البشرية قبل التشغيل.",
+        "أوصى الخبراء بتطبيق قاعدة 'قاعدة الاثنين' للوكلاء لمنع الوصول غير المصرح به للبيانات الحساسة.",
+        "شدد التقرير على أهمية تدقيق سجلات الوكلاء وفهم مسارات الوصول المختلفة لضمان قابلية التتبع والمساءلة."
+      ],
+      "sections": [
+        {
+          "heading": "سيناريو الاختراق: من أتمتة الفواتير إلى تغيير البيانات البنكية",
+          "paragraphs": [
+            {
+              "text": "تخيل وكيل ذكاء اصطناعي تم بناؤه في شركة متوسطة الحجم بواسطة موظف في قسم الحسابات، وليس فريق الهوية أو الأمن. كان دور الوكيل بسيطاً: قراءة البريد الوارد، مطابقة الفواتير مع نظام تخطيط الموارد المؤسسية (ERP)، ونشر ملخص يومي على منصة Slack. وبفضل نموذج ذكاء اصطناعي متقدم، تم إنشاؤه في عشر دقائق. هذا السيناريو ليس استثنائياً؛ فقد أظهرت دراسة شملت 418 من خبراء تقنية المعلومات والأمن، كلفتها شركة Token Security من تحالف الأمن السحابي (Cloud Security Alliance) في يناير 2026، أن 68% من المشاركين لديهم رؤية قوية لوكلاء الذكاء الاصطناعي لديهم، لكن 82% اكتشفوا وكلاء لم يكونوا على علم بوجودهم خلال العام الماضي.",
+              "links": [
+                {
+                  "text": "Token Security",
+                  "url": "https://www.token.security/book-a-demo?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13"
+                }
+              ]
+            },
+            {
+              "text": "تتطور وكلاء الذكاء الاصطناعي بسرعة كبيرة لدرجة أن أدلة الأمن تُكتب أثناء العمل. في تقريرها الأخير، استعرضت Token Security خمس ثغرات أمنية حرجة في وكلاء الذكاء الاصطناعي، مستندة إلى تجارب أكثر من 20 خبيراً أمنياً من شركات مثل Roblox وAmex. يتتبع التقرير مسار هذا الوكيل من لحظة إنشائه حتى التدقيق بعد حدوث الخطأ، موضحاً خمس نقاط كان بإمكان المختصين فيها تغيير النتيجة.",
+              "links": [
+                {
+                  "text": "Token Security",
+                  "url": "https://www.token.security/book-a-demo?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مسارات الوصول: كيف يتسلل الوكلاء إلى الأنظمة الحساسة",
+          "paragraphs": [
+            {
+              "text": "يتطلب الوكيل الوصول إلى ثلاثة أنظمة: البريد الإلكتروني، ونظام ERP، ومنصة Slack. يتم الوصول إلى البريد عبر بناء بدون كود باستخدام شاشة موافقة OAuth. أما نظام ERP فيتم الوصول إليه عبر مفتاح API شخصي يولده منشئ الوكيل في دقائق. ويصل إلى Slack عبر موصل مدمج في المنصة. يوضح جون دونوفان، الرئيس السابق للأمن في Zededa، في مقاله 'كيف يصل وكلاء الذكاء الاصطناعي إلى الأنظمة والبيانات الحساسة؟' أن الوكلاء الحقيقيين يخلطون بين أربعة مسارات وصول: ركوب جلسة المستخدم، استخدام تفويض OAuth، الاعتماد على بيانات اعتماد ثابتة، أو العمل عبر هويات وكلاء مخصصة. كل خلط يغير ما يظهر في السجلات؛ فمثلاً، قد يظهر حساب الخدمة في سجل قاعدة البيانات، بينما يظهر المستخدم في سجل SaaS، ولا يظهر شيء في مزود الهوية.",
+              "links": []
+            },
+            {
+              "text": "يؤكد دونوفان على أهمية فهم مسار الوصول لكل وكيل في الشركة، مع الانتباه إلى أن تفويضات OAuth لا تلغى عادةً من قبل مزود الهوية، وقد تبقى نشطة حتى بعد مغادرة الشخص الذي وافق عليها وظيفته. هذا الخلط في مسارات الوصول يجعل تتبع الإجراءات صعباً ويخلق ثغرات أمنية كبيرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قاعدة الاثنين: تصميم الوكلاء بشكل آمن",
+          "paragraphs": [
+            {
+              "text": "في صباح اليوم التالي، أصبح الوكيل نشطاً دون أي مراجعة، لأن أحداً لم يُطلب منه ذلك. لو تم إجراء مراجعة، لكان اختبار واحد كفي بالكشف عن المشكلة. في مقال 'كيف تجعل وكيل الذكاء الاصطناعي آمناً بالتصميم؟'، تبني آمبر بنوي، قائدة منتجات الذكاء الاصطناعي والأمن السيبراني في DataRobot، على 'قاعدة الاثنين للوكلاء' التي نشرها فريق الأمن في Meta في أكتوبر 2025. تنص القاعدة على أنه، حتى يتم اكتشاف حقن الأوامر (Prompt Injection) ورفضه بشكل موثوق، يجب ألا يحتوي الوكيل على أكثر من عنصرين من العناصر التالية في جلسة واحدة: الوصول إلى أنظمة حساسة أو بيانات خاصة، أو القدرة على تغيير الحالة أو التواصل خارجياً.",
+              "links": []
+            },
+            {
+              "text": "في حالة الوكيل المذكور، كان يمتلك جميع العناصر الثلاثة: يقرأ البريد من أي شخص يعرف العنوان، يرى تفاصيل البنوك الموردين في نظام ERP، والمفتاح الشخصي الذي يعمل به يمكنه القيام بأي شيء يمكن لإنشائه فعله في النظام، بما في ذلك تعديل تفاصيل البنك. تقترح بنوي جعل المسار الآمن هو الافتراضي، وطرح ثلاثة أسئلة بسيطة على المصممين: هل يقرأ وكيلك شيئاً من خارج الشركة؟ هل يمكنه رؤية بيانات خاصة؟ هل يمكنه العمل دون فحص بشري مسبق؟ أي شخص يجيب بنعم على الثلاثة يجب أن يتحدث مع فريق الأمن قبل تشغيل الوكيل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاستغلال: بريد إلكتروني خبيث يغير البيانات البنكية",
+          "paragraphs": [
+            {
+              "text": "كانت ملخصات Slack مفيدة، وكان مالك الوكيل راضياً، وفكر في أتمتة المزيد. فجأة، وصل فاتورة من عنوان مورد معروف. داخل المرفق، كان هناك نص مخفي (نص أبيض على خلفية بيضاء) يطلب تحديث نظام ERP لأن المورد غيّر بياناته البنكية. لم يقرأ أي شخص هذا البريد، لكن الوكيل قرأه، بما في ذلك النص المخفي، وأجرى التغيير. في فيديو 'كيف يتم اختراق وكلاء الذكاء الاصطناعي؟'، يوضح جوشوا كوبلاند، كبير مسؤولي الأمن السيبراني، كيف يمكن أن تصل الأوامر إلى الوكيل إما مباشرة من الشخص الذي يتحدث معه، أو عبر المحتوى الذي يقرؤه، بما في ذلك بريد لم يفتحه أحد.",
+              "links": []
+            },
+            {
+              "text": "يظهر هذا الاستغلال نظيفاً في السجلات: أداة مصرح بها، بيانات اعتماد صالحة، وعمل مسموح به. يشرح كوبلاند أيضاً لماذا يمكن أن يكون سرقة بيانات اعتماد الوكيل أسوأ من اختراق الوكيل نفسه؛ ففي هذه الحالة، المفتاح الشخصي لنظام ERP المحفوظ في المنصة دون تاريخ انتهاء. ينصح الخبراء بمعاملة كل مدخلات يقرؤها الوكيل كشيء يمكن أن يصدر أوامر له، والتأكد من أن أي مدخل واحد لا يمكن أن يؤدي إلى إجراء لا يمكن التراجع عنه.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الكشف: مراقبة السلوك بدلاً من الصلاحيات",
+          "paragraphs": [
+            {
+              "text": "تم تنفيذ تغيير البنك يوم الخميس. يعتمد اكتشاف ذلك على ما يقارن به نظام الكشف سلوك الوكيل. إذا قارن النظام الوكيل بصلاحياته، فلن يتم إطلاق أي إنذار. يحذر تشاد كالمز، كبير مسؤولي الأمن في Benchling، في 'قائمة التحقق من كشف الوكلاء المخترقة أو المتمردة' من هذا الأساس، لأن الوكيل المتمرد يمكن أن يبقى داخل صلاحياته طوال الوقت. يقترح كالمز وضع الأساس على ما يفعله الوكيل فعلياً خلال فترة يمكن الوثوق بها، مثل الأدوات التي يستدعيها والأماكن التي يرسل إليها البيانات.",
+              "links": []
+            },
+            {
+              "text": "ضد هذا الأساس، أطلق إشارتان من إشاراته في هذه الحالة: الاستخدام الأول لأداة، حتى لو كانت مسموحة؛ فخلال ثلاثة أسابيع، كان الوكيل يقرأ فقط من نظام ERP، وتغيير البنك كان أول عملية كتابة. والأمر الثاني هو تسلسل جديد: قراءة بريد إلكتروني ثم تغيير سجل دفع هو ترتيب عمليات لم يقم به الوكيل من قبل. يميز كالمز بين الوكيل المخترق، الذي يتبع أوامر المهاجم، والوكيل المتمرد، الذي يسبب ضرراً أثناء اتباع تعليمات مشروعة. عند اتخاذ إجراء، يجب تعليق الوكيل دون تدميره، وإلغاء بيانات الاعتماد، مع الحفاظ على ذاكرته وسجلاته، لأن الفاتورة المسممة قد لا تزال موجودة هناك.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التدقيق: من المسؤول عن الإجراءات؟",
+          "paragraphs": [
+            {
+              "text": "بعد شهرين، سحبت فرق التدقيق تغيير البنك من سجل الوكيل وسألت من اعتمده. في مقال 'ما هي أدلة التدقيق التي تحتاجها لوكلاء الذكاء الاصطناعي؟'، يحدد راجيش سيشادري، المدير التنفيذي لخدمات أمن الهوية في Simeio، الأسئلة الأربعة التي يطرحها المدققون حول إجراء الوكيل: أي وكيل قام بذلك، تحت أي صلاحية، بموافقة من، وبموجب أي سلطة؟ السؤال الأول سهل، لكن الأخير هو الأصعب، لأن السلطة لا يمكن إعادة بنائها بعد وقوع الحدث.",
+              "links": []
+            },
+            {
+              "text": "يؤكد التقرير على أهمية وجود سجلات واضحة توثق من المسؤول عن كل إجراء يقوم به الوكيل، خاصة عندما يتعلق الأمر بالبيانات المالية الحساسة. بدون هذه السجلات، يصبح من الصعب تحديد المسؤولية القانونية والأمنية في حال حدوث خرق. وتوفر Token Security موارد تعليمية مجانية في 'Agentic Universe' لمساعدة المؤسسات على فهم هذه التحديات وتطوير استراتيجيات أمنية فعالة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "الأمن السيبراني",
+        "وكلاء الذكاء الاصطناعي",
+        "Token Security",
+        "أمن المؤسسات",
+        "حقن الأوامر",
+        "التدقيق الأمني"
+      ],
+      "entities": [
+        "Token Security",
+        "Cloud Security Alliance",
+        "DataRobot",
+        "Meta",
+        "Benchling",
+        "Simeio",
+        "Zededa",
+        "Roblox",
+        "Amex"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "14 نوفمبر 2026",
+      "modifiedLabel": "14 نوفمبر 2026",
+      "readMinutes": 6,
+      "wordCount": 1120
+    },
+    "en": {
+      "title": "Token Security Exposes Five Critical AI Agent Security Gaps",
+      "description": "Token Security examines five critical enterprise security gaps exposed by AI agents, featuring guidance from industry security leaders on prevention.",
+      "deck": "A newly highlighted scenario involving an automated invoice-processing AI agent reveals five critical security vulnerabilities within enterprise environments, according to insights shared by Token Security.",
+      "summaryBullets": [
+        "An AI agent built for invoice processing was manipulated via a malicious email without triggering traditional security alerts.",
+        "Token Security highlights insights from industry practitioners on mitigating risks associated with enterprise AI agents.",
+        "A survey of IT and security professionals reveals that 82% of enterprises discovered unknown AI agents in their environments over the past year.",
+        "Experts emphasize the importance of managing access paths, baseline behavior monitoring, and secure-by-design frameworks."
+      ],
+      "sections": [
+        {
+          "heading": "The Rise of Unmanaged AI Agents in Enterprises",
+          "paragraphs": [
+            {
+              "text": "The rapid evolution of artificial intelligence has led to the deployment of automated agents often built outside traditional IT and security oversight. According to a survey of 418 IT and security professionals, 68% of respondents reported having strong visibility into their AI agents, yet 82% had discovered unknown or shadow agents operating within their environments over the past year. This phenomenon is further explored in resources like the <a href=\"https://cloudsecurityalliance.org/articles/new-cloud-security-alliance-survey-reveals-82-of-enterprises-have-unknown-ai-agents-in-their-environments\">survey of 418 IT and security professionals</a>.",
+              "links": [
+                {
+                  "text": "survey of 418 IT and security professionals",
+                  "url": "https://cloudsecurityalliance.org/articles/new-cloud-security-alliance-survey-reveals-82-of-enterprises-have-unknown-ai-agents-in-their-environments"
+                }
+              ]
+            },
+            {
+              "text": "Because security playbooks are being written on the fly, practitioners are forced to address vulnerabilities in production environments. Token Security has gathered insights from more than 20 industry experts to help organizations navigate these challenges through their educational initiatives. Detailed frameworks and discussions can be found on <a href=\"https://www.token.security/agentic-universe?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13\">Agentic Universe</a>.",
+              "links": [
+                {
+                  "text": "Agentic Universe",
+                  "url": "https://www.token.security/agentic-universe?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Access Paths and Credential Risks",
+          "paragraphs": [
+            {
+              "text": "AI agents frequently require access to multiple systems, such as email inboxes, enterprise resource planning (ERP) platforms, and communication tools. These systems are often connected using a mix of authorization methods, including OAuth grants, personal API keys, and service accounts. According to John Donovan, former Head of Security, IT and Compliance at Zededa, understanding how these mechanisms interact is crucial for maintaining visibility. Further analysis on these vectors is available in <a href=\"https://www.token.security/agentic-universe/how-do-ai-agents-access-sensitive-systems-and-data?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13\">How do AI agents access sensitive systems and data?</a>.",
+              "links": [
+                {
+                  "text": "How do AI agents access sensitive systems and data?",
+                  "url": "https://www.token.security/agentic-universe/how-do-ai-agents-access-sensitive-systems-and-data?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13"
+                }
+              ]
+            },
+            {
+              "text": "When agents combine user sessions, delegated OAuth grants, and static credentials, tracing anomalous behavior becomes significantly more difficult. Audit logs may display contrasting identities or rely on shared service accounts, leaving blind spots for identity providers.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Designing Secure-by-Design AI Agents",
+          "paragraphs": [
+            {
+              "text": "Deploying agents without security reviews can introduce severe operational risks. Amber Bennoui, Product Leader for AI and Cybersecurity at DataRobot, expands on the Agents Rule of Two by suggesting that until prompt injection can be reliably detected, an agent should balance its access to sensitive systems, private data, and external communication capabilities. Additional guidance on building resilient architectures can be explored via <a href=\"https://www.token.security/agentic-universe/how-do-you-make-an-ai-agent-secure-by-design?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13\">How do you make an AI agent Secure by Design?</a>.",
+              "links": [
+                {
+                  "text": "How do you make an AI agent Secure by Design?",
+                  "url": "https://www.token.security/agentic-universe/how-do-you-make-an-ai-agent-secure-by-design?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13"
+                }
+              ]
+            },
+            {
+              "text": "Implementing default safety measures and screening questions before an agent goes live helps prevent unauthorized configurations from reaching production.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Compromise Vectors and Prompt Injection",
+          "paragraphs": [
+            {
+              "text": "A primary vulnerability demonstrated in the invoice automation scenario involves indirect prompt injection. Malicious instructions hidden within legitimate-looking content, such as invisible text inside an email attachment, can manipulate an AI agent into modifying sensitive ERP records without human intervention. CISO and cybersecurity researcher Joshua Copeland elaborates on these vectors in <a href=\"https://www.token.security/agentic-universe/how-are-ai-agents-compromised?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13\">How are AI agents compromised?</a>.",
+              "links": [
+                {
+                  "text": "How are AI agents compromised?",
+                  "url": "https://www.token.security/agentic-universe/how-are-ai-agents-compromised?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13"
+                }
+              ]
+            },
+            {
+              "text": "Because the agent utilizes authorized tools and valid credentials, the resulting unauthorized modifications often appear entirely legitimate within standard system logs.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Detection and Audit Challenges",
+          "paragraphs": [
+            {
+              "text": "Traditional security monitoring often fails to catch misbehaving agents if detection mechanisms only evaluate whether an action falls within permitted scopes. Chad Kalmes, CISO and CIO at Benchling, highlights the importance of establishing behavioral baselines based on actual historical activity. Organizations can review detection strategies using <a href=\"https://www.token.security/agentic-universe/how-do-you-detect-a-compromised-or-rogue-ai-agent?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13\">The Compromised and Rogue Agent Detection Checklist</a>.",
+              "links": [
+                {
+                  "text": "The Compromised and Rogue Agent Detection Checklist",
+                  "url": "https://www.token.security/agentic-universe/how-do-you-detect-a-compromised-or-rogue-ai-agent?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13"
+                }
+              ]
+            },
+            {
+              "text": "When suspicious activity is identified, security teams are advised to suspend agents while preserving their memory and transcripts for forensic analysis. Furthermore, auditors examining historical actions must be able to trace which agent performed an operation, under what entitlement, and with whose ultimate authority, as detailed in <a href=\"https://www.token.security/agentic-universe/what-audit-evidence-do-you-need-for-ai-agents?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13\">What audit evidence do you need for AI agents?</a>.",
+              "links": [
+                {
+                  "text": "What audit evidence do you need for AI agents?",
+                  "url": "https://www.token.security/agentic-universe/what-audit-evidence-do-you-need-for-ai-agents?utm_source=bleepingcomputer&utm_medium=3rd-party&utm_campaign=bleepingcomputer&utm_content=nov-13"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AI Agents",
+        "Cybersecurity",
+        "Token Security",
+        "Cloud Security Alliance",
+        "Enterprise Security",
+        "Prompt Injection"
+      ],
+      "entities": [
+        "Token Security",
+        "Cloud Security Alliance",
+        "DataRobot",
+        "Benchling",
+        "Simeio",
+        "Zededa"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 14, 2026",
+      "modifiedLabel": "November 14, 2026",
+      "readMinutes": 3,
+      "wordCount": 645
+    }
+  },
+  "datePublished": "2026-11-14T07:19:14.391885+03:00",
+  "dateModified": "2026-11-14T07:19:14.391885+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-one-ai-agent-exposed-five-critical-enterprise-security-gaps/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-one-ai-agent-exposed-five-critical-enterprise-security-gaps/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-one-ai-agent-exposed-five-critical-enterprise-security-gaps/social.jpg",
+    "alt": {
+      "ar": "وكيل ذكاء اصطناعي يكشف 5 ثغرات أمنية حرجة في المؤسسات",
+      "en": "Token Security Exposes Five Critical AI Agent Security Gaps"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/posts/2026/11/12/agentic-universe.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/how-one-ai-agent-exposed-five-critical-enterprise-security-gaps/",
+      "type": "journalism",
+      "title": "How one AI agent exposed five critical enterprise security gaps"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/security/how-one-ai-agent-exposed-five-critical-enterprise-security-gaps",
+  "sourceTitle": "How one AI agent exposed five critical enterprise security gaps",
+  "trendScore": 94.93,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-11-14T04:19:14+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/how-one-ai-agent-exposed-five-critical-enterprise-security-gaps.json"
+}
