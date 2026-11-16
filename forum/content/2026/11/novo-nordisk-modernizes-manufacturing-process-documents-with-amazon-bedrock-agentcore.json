@@ -1,0 +1,334 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "385d3d55298d3c7fabf6",
+  "slug": "novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore/",
+    "en": "/forum/en/ai/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore/"
+  },
+  "locales": {
+    "ar": {
+      "title": "نوفو نورديسك تعيد هيكلة مستندات التصنيع بالذكاء الاصطناعي",
+      "description": "اعتمدت نوفو نورديسك على بنية GraphRAG و Amazon Bedrock AgentCore لتحويل ملايين المستندات الصناعية إلى إجابات دقيقة وموثقة، مما يسرّع عمليات المراجعة ويقلل الأخطاء.",
+      "deck": "تسعى شركة الأدوية العالمية نوفو نورديسك إلى التغلب على تعقيدات إدارة ملايين المستندات التنظيمية من خلال دمج الذكاء الاصطناعي الوكيل (Agentic AI) مع تقنيات البحث الهجين.",
+      "summaryBullets": [
+        "تطوير مساعد ذكي يعتمد على بنية GraphRAG يجمع بين رسم بياني معرفي وبحث هجين لاستخراج المعلومات الدقيقة من ملايين المستندات.",
+        "استخدام منصة Amazon Bedrock AgentCore لإدارة الوكلاء مع نماذج Anthropic Claude لضمان العزل والأمان وقابلية التتبع.",
+        "تقليل زمن استجابة خبراء المجال من أيام إلى دقائق عبر إجابات مدعومة بمصادر موثقة، مما يعزز الامتثال التنظيمي.",
+        "تجاوز قيود البحث التقليدي عن طريق معالجة العلاقات بين المستندات وتحديد النطاق الدقيق لكل عملية تصنيع."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي إدارة ملايين المستندات التنظيمية",
+          "paragraphs": [
+            {
+              "text": "تواجه شركة نوفو نورديسك، الرائدة عالمياً في تصنيع أدوية الأمراض المزمنة، تحدياً هيكلياً كبيراً في إدارة شبكتها الصناعية. تتطلب كل خطوة في عمليات التصنيع توثيقاً رسمياً دقيقاً يشمل إجراءات التشغيل القياسية، وتعليمات العمل، والنماذج، ومواد التدريب. مع وجود آلاف المستندات النشطة الموزعة على عدة أقسام ومواقع عالمية، أصبحت عملية تتبع التحديثات والمراجعات معقدة للغاية، خاصة مع التغيرات المستمرة في اللوائح التنظيمية وتحسينات العمليات.",
+              "links": [
+                {
+                  "text": "نوفو نورديسك",
+                  "url": "https://www.novonordisk.com/"
+                }
+              ]
+            },
+            {
+              "text": "كانت الأساليب اليدوية والأدوات المجزأة مثل جداول البيانات تفتقر إلى الموثوقية، مما أدى إلى مخاطر بقاء مستندات قديمة في التداول وتأخر التحديثات. بالإضافة إلى ذلك، كانت المعرفة الصناعية القيمة موزعة بشكل غير منظم، مما جعل الاعتماد على الخبرة الفردية للعاملين (المعرفة القبلية) عنصراً حاسماً لكن بطيئاً في اتخاذ القرارات، مما يؤثر في النهاية على سرعة وصول الأدوية المنقذة للحياة إلى المرضى.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بنية GraphRAG للبحث الدقيق والموثوق",
+          "paragraphs": [
+            {
+              "text": "لمعالجة هذه التحديات، طور فريق التكنولوجيا الصناعية في قسم الأقراص نظاماً ذكياً يعتمد على بنية GraphRAG (البحث المعزز بالرسوم البيانية). تعتمد هذه البنية على فصل مخزنين للبيانات: رسم بياني معرفي في Amazon Neptune لالتقاط الهيكل والعلاقات بين المستندات، وفهرس بحث هجين في Amazon OpenSearch Serverless لتوفير استرجاع دلالي ودقيق للمحتوى. هذا الفصل المتعمد يسمح للنظام بمعالجة النطاق، والإصدارات، والعلاقات بشكل مستقل، وهو ما يعجز عنه أنظمة البحث التقليدية أو أنظمة RAG القياسية.",
+              "links": [
+                {
+                  "text": "Amazon Neptune",
+                  "url": "https://aws.amazon.com/neptune/"
+                },
+                {
+                  "text": "Amazon OpenSearch Serverless",
+                  "url": "https://aws.amazon.com/opensearch-service/serverless/"
+                }
+              ]
+            },
+            {
+              "text": "تتضمن البنية طبقتين من التصنيف: طبقة هيكلية تمثل شجرة العمليات الرسمية للشركة، وطبقة تفصيلية تركز على المحتوى الدقيق. هذا التصميم يتيح للمساعد الذكي فهم أين يقع المستند في الهيكل التنظيمي وماذا يحتوي عليه، مما يضمن أن الإجابات المقدمة تكون ضمن النطاق الصحيح للموقع، وجيل المنتج، والمعدات المستخدمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور Amazon Bedrock AgentCore في إدارة الوكلاء",
+          "paragraphs": [
+            {
+              "text": "يعمل النظام على منصة Amazon Bedrock AgentCore، وهي إطار عمل مخصص لبناء الوكلاء وتوصيلهم وتحسينهم على نطاق واسع. اختار فريق التطوير هذه المنصة بفضل قدرتها على توفير بيئة تشغيل مدارة للوكلاء مع عزل الجلسات، وتنسيق الأدوات الأصلي، والتكامل مع خدمات الهوية والمراقبة. هذا سمح للفريق بالتركيز على منطق المجال الصناعي بدلاً من التعامل مع البنية التحتية الأساسية، مما زاد من كفاءة التطوير والاعتماد.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "تعمل وكلاء النظام باستخدام SDK الخاص بـ Strands Agents، مدعومة بنماذج Anthropic Claude المتوفرة عبر Amazon Bedrock. تتضمن البنية خط أنابيب معالجة مستندات يستخدم Amazon Bedrock Data Automation لتحليل المحتوى متعدد الوسائط، مع تنسيق العمليات عبر AWS Step Functions و AWS Lambda. كما تم تعريف البنية التحتية بالكامل ككود باستخدام AWS CDK لضمان قابلية التوسع والصيانة.",
+              "links": [
+                {
+                  "text": "Anthropic Claude",
+                  "url": "https://aws.amazon.com/bedrock/claude/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل المساعد الذكي والإجابات الموثقة",
+          "paragraphs": [
+            {
+              "text": "عند طرح سؤال، يستقبل وكيل الاستعلام السؤال ويحدد في الوضع الموجّه ما إذا كان النطاق واضحاً بما يكفي للإجابة. إذا كان السؤال غامضاً، يطرح الوكيل أسئلة توضيحية قصيرة مبنية على الرسم البياني، مثل تحديد الموقع أو جيل المنتج، قبل بدء البحث. بعد تحديد النطاق، يجلب البحث الهجين المقاطع المرشحة، ثم يوسع الرسم البياني النتائج لإضافة الهيكل والعلاقات، وتقوم خطوة إعادة الترتيب (Reranking) بتحسين الدقة النهائية.",
+              "links": []
+            },
+            {
+              "text": "يجمع الوكيل الإجابة النهائية بناءً على المستندات المعتمدة فقط، مع توثيق المصادر بوضوح. الأهم من ذلك، أن النظام صُمم ليكون صريحاً عند عدم توفر المحتوى المطلوب، بدلاً من التخمين أو توليد إجابات غير مدعومة. هذا النهج يضمن الامتثال للمعايير الصارمة في صناعة الأدوية، حيث يجب أن تكون كل معلومة قابلة للتتبع إلى مصدر موثوق ومعتمد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الأثر التشغيلي وتحسين كفاءة العمل",
+          "paragraphs": [
+            {
+              "text": "أدى تطبيق هذا النظام إلى تحويل جذري في طريقة عمل خبراء المجال (SMEs). بدلاً من قضاء ساعات أو أيام في البحث يدوياً عبر آلاف المستندات المتفرقة، أصبح بإمكانهم الحصول على إجابات دقيقة وموثقة في دقائق معدودة. هذا التحول لا يقلل فقط من زمن الاستجابة، بل يحسن أيضاً من شفافية العمليات ويقلل من مخاطر عدم الامتثال الناتج عن استخدام مستندات غير محدثة أو غير صحيحة.",
+              "links": []
+            },
+            {
+              "text": "يظهر هذا المشروع كيف يمكن لتقنيات الذكاء الاصطناعي الوكيل أن تعالج تحديات محددة في الصناعات المنظمة، حيث تكون الدقة والتتبع أهم من السرعة المجردة. من خلال دمج الهيكل البياني مع البحث الدلالي، نجحت نوفو نورديسك في بناء نظام يفهم السياق الصناعي العميق، مما يمهد الطريق لتبني أوسع للذكاء الاصطناعي في العمليات الحيوية الأخرى.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "نوفو نورديسك",
+        "Amazon Bedrock",
+        "GraphRAG",
+        "صناعة الأدوية",
+        "إدارة المستندات",
+        "AWS"
+      ],
+      "entities": [
+        "Novo Nordisk",
+        "Amazon Web Services (AWS)",
+        "Amazon Bedrock AgentCore",
+        "Amazon Neptune",
+        "Amazon OpenSearch Serverless",
+        "Anthropic Claude",
+        "Strands Agents SDK"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "16 نوفمبر 2026",
+      "modifiedLabel": "16 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 723
+    },
+    "en": {
+      "title": "Novo Nordisk builds cited manufacturing AI on AWS",
+      "description": "Novo Nordisk's Tablet manufacturing technology team built a process-intelligence assistant on Amazon Bedrock AgentCore using GraphRAG for cited answers.",
+      "deck": "Novo Nordisk's Manufacturing Technology team within the Tablet area has built a process-intelligence assistant on Amazon Bedrock AgentCore. The system uses a GraphRAG architecture to return grounded, cited answers from controlled manufacturing documents.",
+      "summaryBullets": [
+        "Novo Nordisk's Tablet manufacturing technology team built a process-intelligence assistant on Amazon Bedrock AgentCore.",
+        "The assistant combines a knowledge graph in Amazon Neptune with hybrid search in Amazon OpenSearch Serverless.",
+        "A guided mode asks clarifying questions before retrieval, and responses cite approved source documents.",
+        "The design targets version control, scope, document relationships and cases where relevant content is unavailable."
+      ],
+      "sections": [
+        {
+          "heading": "A documentation burden in a regulated setting",
+          "paragraphs": [
+            {
+              "text": "Novo Nordisk, a global pharmaceutical company that makes medicines for chronic diseases such as diabetes and obesity, operates a manufacturing network with strict quality requirements. Every quality-relevant process step must be described, controlled and validated through formal documentation, according to an account published on the AWS Machine Learning Blog. The Manufacturing Technology team within the Tablet area is responsible for a large portfolio of controlled documents, including standard operating procedures, work instructions, forms and training materials.",
+              "links": [
+                {
+                  "text": "Novo Nordisk",
+                  "url": "https://www.novonordisk.com/"
+                },
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "That portfolio is difficult to keep current. Updates are frequent and can be driven by regulatory changes, process improvements, equipment modifications and audit findings. Each change requires review, structured approval workflows and communication with affected stakeholders. With thousands of active documents spread across divisions, departments and product programs, tracking revisions, approvals and urgent items becomes complex. The source material says much of this oversight still relies on manual processes and fragmented tools such as spreadsheets or disconnected systems, creating risks of outdated documentation, delayed updates and gaps in compliance visibility.",
+              "links": []
+            },
+            {
+              "text": "The knowledge problem goes beyond document management. Manufacturing knowledge is distributed across controlled documents, versions, sites and product programs, and finding the right answer can depend on experienced employees knowing where to look. That reliance on tribal knowledge creates bottlenecks, slows decisions and can affect how quickly medicines reach patients, according to the account.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "GraphRAG combines a knowledge graph and hybrid search",
+          "paragraphs": [
+            {
+              "text": "To address those issues, the Tablet area's Manufacturing Technology team developed an AI process-intelligence assistant designed to answer complex process questions with grounded, cited responses. The system uses a GraphRAG architecture: a knowledge graph in Amazon Neptune captures structure and relationships, while a hybrid search index in Amazon OpenSearch Serverless provides semantic and exact-match recall over document contents.",
+              "links": [
+                {
+                  "text": "Amazon Neptune",
+                  "url": "https://aws.amazon.com/neptune/"
+                },
+                {
+                  "text": "Amazon OpenSearch Serverless",
+                  "url": "https://aws.amazon.com/opensearch-service/serverless/"
+                }
+              ]
+            },
+            {
+              "text": "The two stores are kept separate and bridged at query time rather than merged into a single engine. The source describes this as a common production GraphRAG pattern. The team needed more than keyword search, which returns documents rather than answers and has no concept of scope, version or relationships. Plain vector-based retrieval augmented generation improves recall on natural-language questions, but the source says it still struggles with exact identifiers such as document numbers and equipment codes, multi-hop relationship questions and identifying when relevant content is not available.",
+              "links": []
+            },
+            {
+              "text": "The assistant is designed to account for four requirements at once: the right version and lifecycle state, meaning approved and effective rather than draft or obsolete; the right scope for a site, product generation and equipment; the relationships between documents and the impact of a change; and an explicit signal when relevant content is unavailable. The source says the team wanted a system that treats structure and relationships as first-class, stays grounded in approved sources and clarifies instead of guessing.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "AgentCore provides the managed agent layer",
+          "paragraphs": [
+            {
+              "text": "The reasoning layer runs on Amazon Bedrock AgentCore, which AWS describes as a platform to build, connect and optimize agents at scale with any framework or model. The source says AgentCore was chosen for its managed agent runtime with built-in session isolation, native tool orchestration, and integrated AWS Identity and Access Management and observability. Those capabilities remove undifferentiated infrastructure work so the team can focus on domain logic.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "The agent runtimes are built with the Strands Agents SDK and powered by Anthropic Claude models on Amazon Bedrock. Documents pass through an ingestion pipeline that uses Amazon Bedrock Data Automation for multimodal parsing, orchestrated with AWS Step Functions and AWS Lambda. The stack is defined as infrastructure as code with the AWS Cloud Development Kit. The source does not disclose deployment timelines, document volumes beyond its general description, or performance metrics beyond the statement that the solution helped subject-matter experts complete work that used to take hours or days in minutes.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Guided mode asks before it answers",
+          "paragraphs": [
+            {
+              "text": "In operation, a query agent receives the question and, in guided mode, decides whether the scope is clear enough to answer well. If the question is ambiguous, the agent asks a short, graph-grounded clarifying question, such as which site or product generation applies, before starting a search. After scope is clear, hybrid search retrieves candidate passages, the graph expands from those results to add structure and relationships, and a reranking step sharpens precision.",
+              "links": []
+            },
+            {
+              "text": "The agent then composes an answer grounded in and cited to approved source documents. The source says the assistant is explicit when content is not available, a design choice aimed at avoiding unsupported answers in a regulated pharmaceutical environment. The architecture also includes memory, observability and evaluations to support personalization, monitoring and quality assessment, according to the source's description of the end-to-end system.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The goal: faster access to manufacturing knowledge",
+          "paragraphs": [
+            {
+              "text": "The team's stated goal is to reduce lead times, improve documentation visibility and make critical manufacturing knowledge more accessible. The source says the solution helped subject-matter experts complete work that used to take hours or days in minutes. It also says the assistant can answer complex process questions with grounded, cited responses, while a guided mode helps clarify ambiguous questions before a search begins.",
+              "links": []
+            },
+            {
+              "text": "The account positions the assistant as a way to reduce dependence on fragmented tracking and tribal knowledge without treating retrieval as a simple search problem. By combining graph structure, hybrid search and a managed agent runtime, the system is intended to keep answers tied to approved documents and to make gaps visible when approved content is unavailable. The source does not provide independent validation of the system's accuracy or compliance outcomes.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Novo Nordisk",
+        "Amazon Bedrock AgentCore",
+        "GraphRAG",
+        "Amazon Neptune",
+        "Amazon OpenSearch Serverless",
+        "Manufacturing AI",
+        "AWS"
+      ],
+      "entities": [
+        "Novo Nordisk",
+        "Amazon Bedrock AgentCore",
+        "Amazon Neptune",
+        "Amazon OpenSearch Serverless",
+        "AWS",
+        "Strands Agents SDK",
+        "Anthropic Claude"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 16, 2026",
+      "modifiedLabel": "November 16, 2026",
+      "readMinutes": 5,
+      "wordCount": 1003
+    }
+  },
+  "datePublished": "2026-11-16T22:29:08.822850+03:00",
+  "dateModified": "2026-11-16T22:29:08.822850+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore/hero.webp",
+    "card": "/forum/assets/posts/2026/11/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore/card.webp",
+    "social": "/forum/assets/posts/2026/11/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore/social.jpg",
+    "alt": {
+      "ar": "نوفو نورديسك تعيد هيكلة مستندات التصنيع بالذكاء الاصطناعي",
+      "en": "Novo Nordisk builds cited manufacturing AI on AWS"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21325-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore/inline-01.webp",
+        "width": 1400,
+        "height": 1003,
+        "alt": {
+          "ar": "نوفو نورديسك تعيد هيكلة مستندات التصنيع بالذكاء الاصطناعي",
+          "en": "End-to-end architecture of the process-intelligence assistant on Amazon Bedrock AgentCore, with hybrid retrieval across Amazon OpenSearch Serverless and Amazon Neptune"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21325-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore/",
+      "type": "official",
+      "title": "Novo Nordisk modernizes manufacturing process documents with Amazon Bedrock AgentCore"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore",
+  "sourceTitle": "Novo Nordisk modernizes manufacturing process documents with Amazon Bedrock AgentCore",
+  "trendScore": 123.16,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-16T19:29:09+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore.json"
+}
