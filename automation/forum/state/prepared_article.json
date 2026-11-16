@@ -1,5 +1,420 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-16T17:09:08+00:00",
-  "last_published_story_id": "742a0adaef2e254494df"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-16T17:20:29+00:00",
+  "target_publish_at": "2026-11-16T20:29:07.349935+03:00",
+  "story": {
+    "title": "Customize answers per tenant in Amazon Bedrock Managed Knowledge Base",
+    "url": "https://aws.amazon.com/blogs/machine-learning/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base",
+    "domain": "aws.amazon.com",
+    "summary": "Retrieval instructions in Amazon Bedrock Managed Knowledge Base set the voice, format, retrieval guidance, and answer policy for each tenant on shared knowledge bases. This post shows how to give each tenant its own answers, keep tenant data apart with metadata filters, scope access with IAM tags, and roll out changes one tenant at a time.",
+    "published_at": "2026-11-16T15:46:28+00:00",
+    "discovered_at": "2026-11-16T15:48:57+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "web",
+    "category_label": "الويب",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "13068fccecc1e20bf27e",
+    "trend": {
+      "score": 124.44,
+      "age_hours": 1.45,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 4
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Customize answers per tenant in Amazon Bedrock Managed Knowledge Base",
+      "title": "Customize answers per tenant in Amazon Bedrock Managed Knowledge Base | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تخصّص إجابات Bedrock لكل مستأجر",
+      "description": "تتيح أمازون تعليمات استرجاع مُدارة لتخصيص نبرة الإجابات وتنسيقها وسياساتِها لكل مستأجر، مع عزل البيانات عبر المرشحات.",
+      "deck": "أعلنت أمازون نمطاً لتخصيص إجابات قواعد المعرفة المُدارة في Amazon Bedrock بحسب كل مستأجر. ويجمع النمط بين تعليمات الاسترجاع ومرشحات البيانات الوصفية، مع إبقاء المستندات المشتركة في قاعدة معرفة واحدة.",
+      "summary_bullets": [
+        "تعليمات الاسترجاع تحدد شخصية المساعد وتنسيق الإجابة وإرشادات البحث وسياسة الرد.",
+        "التعليمات لا تُعدّ حدّاً للصلاحيات أو لعزل البيانات؛ وتؤدي مرشحات البيانات الوصفية هذا الدور.",
+        "يمكن تثبيت نسخة من التعليمات وتطبيقها على مستأجر واحد دون تغيير إعدادات بقية المستأجرين.",
+        "يدعم الاسترجاع الوكيلي البحث في ما يصل إلى خمس قواعد معرفة ضمن الطلب الواحد."
+      ],
+      "sections": [
+        {
+          "heading": "تخصيص الإجابة من خلال تعليمات مُدارة",
+          "paragraphs": [
+            {
+              "text": "توضح AWS Machine Learning Blog أن ميزة تعليمات الاسترجاع في Amazon Bedrock Managed Knowledge Base تتيح ضبط الطريقة التي يجيب بها المساعد عن الطلبات بحسب المستأجر. فالمستندات نفسها قد تخدم عملاء في مناطق مختلفة أو فرقاً داخلية متعددة، لكن كل جمهور قد يحتاج لغة أو نبرة أو تنسيقاً مختلفاً.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/"
+                },
+                {
+                  "text": "Amazon Bedrock Managed Knowledge Base",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-build-managed.html"
+                }
+              ]
+            },
+            {
+              "text": "وتُحفظ هذه التوجيهات مرة واحدة كمورد مُدار ذي إصدارات داخل الحساب والمنطقة، ثم يشير كل طلب إلى التعليمات المناسبة. وقبل إتاحة هذه الوظيفة، كان ضبط أسلوب ثابت يتطلب إيقاف توليد الاستجابة واستدعاء نموذج بصورة منفصلة، مع تكرار الموجّه داخل كل تطبيق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أربعة حقول تحدد سلوك المساعد",
+          "paragraphs": [
+            {
+              "text": "تتكون تعليمات الاسترجاع من أربعة حقول رئيسية. يحدد persona هوية المساعد ونبرته ولغته، بينما يصف answerFormat بنية الإجابة وطريقة الاستشهاد بالمصادر. أما retrievalGuidance فيوضح كيفية تفسير السؤال وما الذي ينبغي إعطاؤه الأولوية أثناء البحث، في حين يحدد answerPolicy ما إذا كان يجب الرد وكيفية التعامل مع الأسئلة الخارجة عن النطاق.",
+              "links": []
+            },
+            {
+              "text": "تسري حقول الشخصية والتنسيق والسياسة عندما تكون قيمة generateResponse مفعّلة، وهي القيمة الافتراضية، بينما يعمل حقل إرشادات الاسترجاع في الحالتين. وبذلك يمكن مثلاً فرض إخراج JSON منظم للأنظمة اللاحقة، أو تضمين إخلاء مسؤولية ثابت في كل إجابة، من دون إضافة مرحلة توليد منفصلة في التطبيق.",
+              "links": []
+            },
+            {
+              "text": "في المثال الذي تعرضه أمازون، تستخدم شركة AnyCompany Smart Home الوهمية مستندات منتجات وسياسات مشتركة لخدمة ثلاث مناطق مبيعات وفرق الدعم والمبيعات الميدانية والشؤون القانونية. يحصل عميل في المنطقة الوسطى على إجابة بالإسبانية وتواريخ بصيغة اليوم والشهر والسنة، بينما يتلقى موظف الدعم ملاحظة قصيرة مناسبة لتذكرة خدمة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التخصيص لا يعزل بيانات المستأجرين",
+          "paragraphs": [
+            {
+              "text": "تشدد أمازون على أن تعليمات الاسترجاع تغيّر طريقة صياغة الإجابة، لكنها لا تمثل حدّاً للتفويض أو لعزل البيانات. لذلك ينبغي استخدام مرشحات البيانات الوصفية أو قواعد معرفة منفصلة للتحكم في المستندات التي يستطيع كل مستأجر استرجاعها.",
+              "links": [
+                {
+                  "text": "مرشحات البيانات الوصفية",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-test-config.html"
+                }
+              ]
+            },
+            {
+              "text": "في النمط المقترح، يربط النظام الخلفي هوية المستأجر الموثّقة بنسخة تعليمات وبمرشح بيانات وصفية، ثم يضيف سطراً قصيراً يحدد المستأجر إلى الرسالة قبل استدعاء AgenticRetrieveStream على قاعدة معرفة مُدارة مشتركة. وتبقى مسؤولية اختيار التعليمات والمرشح لدى النظام الخلفي، لا لدى نص التعليمات نفسه.",
+              "links": []
+            },
+            {
+              "text": "يمكن تطبيق النمط أيضاً عند تخصيص قاعدة معرفة لكل مستأجر. كما يستطيع الطلب الواحد الاستعلام من قاعدة معرفة عالمية مشتركة وقاعدة معرفة خاصة بالمستأجر، مع تعيين مرشح مستقل لكل منهما.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إصدارات قابلة للمراجعة والتدرّج",
+          "paragraphs": [
+            {
+              "text": "تمر التعليمات بدورة واضحة. تنشئ عملية CreateRetrievalInstruction المورد وتعيد حالة HTTP 202، ثم تراجع Amazon Bedrock الحقول بصورة غير متزامنة ويجري النظام استطلاع النتيجة. وإذا فشلت المراجعة، يوضح الحقل lastTransitionStatusReasons سبب الفشل. وبعد اجتيازها تصبح التعليمات ACTIVE، بينما يشير DRAFT إلى المحتوى الحالي.",
+              "links": []
+            },
+            {
+              "text": "بعد ذلك تحفظ عملية CreateRetrievalInstructionVersion نسخة غير قابلة للتغيير برقم محدد. ويمكن للطلب تسمية التعليمات والنسخة المطلوبة، أو استخدام DRAFT افتراضياً. كما يظهر الحقل appliedInstruction في أول حدث تخطيط ضمن أثر التنفيذ، ما يتيح التحقق من النسخة التي أجابت عن كل طلب.",
+              "links": []
+            },
+            {
+              "text": "يسمح هذا المسار بتغيير تعليمات مستأجر واحد تدريجياً، ثم تثبيت النسخة الجديدة عند الجاهزية، من دون تبديل سلوك جميع التطبيقات أو الجماهير في وقت واحد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات المثال وتوافره",
+          "paragraphs": [
+            {
+              "text": "يعتمد المثال على 32 مستنداً قصيراً ووهمياً لسياسات ومنتجات وحدة التحكم المنزلية AnySmartProduct-5 وحساسات الغرف AnySmartProduct-6. تُخزّن الملفات في حاوية Amazon Simple Storage Service (Amazon S3)، وتحمل بيانات وصفية تشمل المنطقة والفريق المستهدف ومستوى الحساسية.",
+              "links": []
+            },
+            {
+              "text": "يملك كل مستأجر من المستأجرين الستة، وهم ثلاث مناطق وثلاثة فرق، تعليماته الخاصة المثبتة على النسخة الأولى. كما توجد مذكرتان هندسيتان مقيّدتان لا تنتميان إلى أي مستأجر، ولذلك يفترض ألا يعيدهما أي مرشح خاص بالمستأجرين.",
+              "links": []
+            },
+            {
+              "text": "يتوفر الكود بلغة Python وTypeScript في GitHub repo، ويعمل افتراضياً في منطقة الولايات المتحدة الشرقية (شمال فرجينيا) us-east-1. ويتطلب التشغيل حساب AWS بصلاحيات إنشاء تعليمات الاسترجاع وأدوار IAM وحاوية S3، إضافة إلى Python 3.10 أو أحدث وإصدار حديث من Boto3 وAWS CLI. ولا يوفر AgenticRetrieveStream أمراً في CLI، لذا يُستدعى عبر SDK.",
+              "links": [
+                {
+                  "text": "GitHub repo",
+                  "url": "https://github.com/aws-samples/sample-managed-knowledge-base-patterns/tree/main/retrieval-instructions"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون",
+        "AWS",
+        "Amazon Bedrock",
+        "قواعد المعرفة",
+        "الذكاء الاصطناعي",
+        "الاسترجاع الوكيلي"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Amazon Bedrock Managed Knowledge Base",
+        "AnyCompany Smart Home",
+        "Amazon S3",
+        "AWS IAM"
+      ],
+      "article_type": "news",
+      "confidence_note": "المحتوى مبني حصراً على النص المستخرج من مصدر AWS الرسمي."
+    },
+    "en": {
+      "title": "AWS Bedrock Adds Per-Tenant Knowledge Base Rules",
+      "description": "AWS has introduced per-tenant retrieval instructions in Amazon Bedrock Managed Knowledge Base to customize generative AI outputs across shared documents.",
+      "deck": "Amazon Web Services has introduced retrieval instructions for Amazon Bedrock Managed Knowledge Base, enabling organizations to deliver customized generative AI answers to distinct audiences using shared repository documents.",
+      "summary_bullets": [
+        "Retrieval instructions allow Amazon Bedrock Managed Knowledge Base to tailor tone, format, search guidance, and policies for each tenant.",
+        "The new feature consists of four configurable fields: persona, answerFormat, retrievalGuidance, and answerPolicy.",
+        "Data isolation remains separate from instructions and requires metadata filters or dedicated knowledge bases.",
+        "Agentic retrieval can search up to five knowledge bases simultaneously while applying a single tenant instruction across all of them."
+      ],
+      "sections": [
+        {
+          "heading": "Customizing Responses Across Shared Documentation",
+          "paragraphs": [
+            {
+              "text": "Organizations using generative artificial intelligence often rely on shared document repositories to serve diverse audiences, including customers across multiple geographic regions and internal operations teams. According to a technical post on the AWS Machine Learning Blog, developers can now customize answers per tenant using retrieval instructions in Amazon Bedrock Managed Knowledge Base.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/"
+                },
+                {
+                  "text": "Amazon Bedrock Managed Knowledge Base",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-build-managed.html"
+                }
+              ]
+            },
+            {
+              "text": "Prior to this capability within Amazon Bedrock, developers could not set a fixed answer style during retrieval operations, causing agentic retrieval to produce inconsistent output formatting between requests. To maintain a strict brand voice or structured output, engineering teams were forced to turn off response generation, manually call a foundation model, and manage custom prompt templates across every application calling the service.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "With the new functionality, instructions are authored once as managed, versioned AWS resources that individual requests reference. When an instruction is updated, applications can pin specific version numbers to ensure controlled, tenant-by-tenant rollouts without disrupting existing production workflows.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Structuring Answer Tone, Format, and Policy",
+          "paragraphs": [
+            {
+              "text": "Retrieval instructions establish the rules that guide how responses are constructed from retrieved context. As detailed in AWS guidance on how to Create and manage retrieval instructions, each instruction resource provides four primary configuration fields.",
+              "links": [
+                {
+                  "text": "Create and manage retrieval instructions",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-agentic-retrieve-instruction.html"
+                }
+              ]
+            },
+            {
+              "text": "The persona field defines the assistant's identity, tone, and language settings, such as instructing the system to answer in Spanish with day/month/year date formats for specific regional customers. The answerFormat field specifies the structure of the output, enabling responses formatted as concise ticket notes for support agents or strict JSON structures meant for direct consumption by downstream code.",
+              "links": []
+            },
+            {
+              "text": "The remaining fields include retrievalGuidance, which dictates how the search agent interprets incoming questions and prioritizes documents, and answerPolicy, which dictates whether and how the model should respond to out-of-scope queries or include fixed regulatory disclaimers. The persona, answerFormat, and answerPolicy fields apply when the generateResponse parameter is set to true, which is the default setting, while retrievalGuidance applies regardless of whether response generation is active.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Lifecycle Management and Multi-Knowledge Search",
+          "paragraphs": [
+            {
+              "text": "Retrieval instructions are created as regional resources tied to an AWS account rather than directly to a single knowledge base repository. Creation begins when a CreateRetrievalInstruction API call returns an HTTP 202 response. Amazon Bedrock then performs an asynchronous review of the submitted instruction fields.",
+              "links": []
+            },
+            {
+              "text": "Once an instruction passes review, it enters an ACTIVE status with DRAFT pointing to its current text. Developers can freeze functional states by creating immutable numbered versions using CreateRetrievalInstructionVersion. During execution, backend requests name the target instruction and optional version tag.",
+              "links": []
+            },
+            {
+              "text": "When executing agentic retrieval, the service can evaluate up to five knowledge bases in a single request. The tenant's specified retrieval instruction automatically applies across all targeted knowledge bases, and the system confirms which version answered the prompt within the appliedInstruction field of the initial Planning trace event.",
+              "links": [
+                {
+                  "text": "agentic retrieval",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-agentic-retrieve.html"
+                },
+                {
+                  "text": "five knowledge bases",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-agentic-retrieve.html#kb-agentic-retrieve-api"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Enforcing Data Security and Metadata Filtering",
+          "paragraphs": [
+            {
+              "text": "AWS highlights that while retrieval instructions modify how answers are formatted and framed, they do not serve as access authorization or data-isolation boundaries. To restrict what content a specific tenant can access, administrators must apply metadata filters or separate knowledge base deployments.",
+              "links": [
+                {
+                  "text": "metadata filters",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-test-config.html"
+                }
+              ]
+            },
+            {
+              "text": "In a multi-tenant implementation, an application backend authenticates the calling user, selects the corresponding instruction version and metadata filter, and passes both to the AgenticRetrieveStream API. Shared documents stored in Amazon Simple Storage Service (Amazon S3) can include metadata tags such as region, internal team, or sensitivity level, ensuring that tenant filters explicitly block access to restricted records.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Deployment Requirements and SDK Setup",
+          "paragraphs": [
+            {
+              "text": "Reference implementation code for Python and TypeScript is published in an official GitHub repo, illustrating setups for fictitious enterprise environments with multiple regional and internal team tenants.",
+              "links": [
+                {
+                  "text": "GitHub repo",
+                  "url": "https://github.com/aws-samples/sample-managed-knowledge-base-patterns/tree/main/retrieval-instructions"
+                }
+              ]
+            },
+            {
+              "text": "Deploying the solution requires an active AWS account with identity and access management permissions, an S3 bucket containing document metadata files, Python 3.10 or later, and a compatible version of the AWS SDK for Python (Boto3) that includes retrieval instruction operations. Control-plane management can be executed via the AWS Command Line Interface, though stream calls require SDK integration.",
+              "links": []
+            },
+            {
+              "text": "The pattern runs by default in the US East (N. Virginia) Region (`us-east-1`), with alternative deployment locations detailed under Supported AWS Regions. Organizations requiring enhanced encryption compliance can also manage instruction resources using customer managed keys through AWS Key Management Service.",
+              "links": [
+                {
+                  "text": "Supported AWS Regions",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-regions.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AWS",
+        "Generative AI",
+        "Knowledge Base",
+        "Machine Learning",
+        "Cloud Computing"
+      ],
+      "entities": [
+        "Amazon Bedrock",
+        "Amazon Bedrock Managed Knowledge Base",
+        "AWS",
+        "Amazon S3"
+      ],
+      "article_type": "news",
+      "confidence_note": "Based strictly on the official AWS Machine Learning Blog post regarding per-tenant retrieval instructions in Amazon Bedrock Managed Knowledge Base."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 679,
+      "word_count_en": 792
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "13068fccecc1e20bf27e",
+      "title": "Customize answers per tenant in Amazon Bedrock Managed Knowledge Base",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 679,
+          "word_count_en": 792
+        }
+      ]
+    }
+  ],
+  "slug": "customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/hero.webp",
+    "card": "/forum/assets/posts/2026/11/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/card.webp",
+    "social": "/forum/assets/posts/2026/11/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/social.jpg",
+    "alt": {
+      "ar": "أمازون تخصّص إجابات Bedrock لكل مستأجر",
+      "en": "AWS Bedrock Adds Per-Tenant Knowledge Base Rules"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-22295-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/inline-01.webp",
+        "width": 1033,
+        "height": 1050,
+        "alt": {
+          "ar": "أمازون تخصّص إجابات Bedrock لكل مستأجر",
+          "en": "Backend maps each authenticated tenant to a per-tenant instruction version and metadata filter, then calls AgenticRetrieveStream on one shared managed knowledge base"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-22295-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/inline-02.webp",
+        "width": 1400,
+        "height": 676,
+        "alt": {
+          "ar": "أمازون تخصّص إجابات Bedrock لكل مستأجر",
+          "en": "Three tenant-isolation options: instruction only, instruction plus a tenant metadata filter, and a separate knowledge base per tenant"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-22295-2.png"
+      }
+    ]
+  }
 }
