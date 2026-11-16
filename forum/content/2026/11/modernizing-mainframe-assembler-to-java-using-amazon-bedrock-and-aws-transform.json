@@ -1,0 +1,372 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "d89fddf149fe8e05c834",
+  "slug": "modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/",
+    "en": "/forum/en/apps/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/"
+  },
+  "locales": {
+    "ar": {
+      "title": "منهجية من AWS لتحديث تطبيقات أسمبلي إلى جافا عبر Bedrock",
+      "description": "استعرضت AWS منهجية عملية لتحويل تطبيقات أسمبلي القديمة في الأجهزة الرئيسية إلى خدمات جافا سبرينغ بوت سحابية باستخدام الذكاء الاصطناعي.",
+      "deck": "نشرت مدونة AWS تفاصيل منهجية متعددة المراحل تعتمد على الذكاء الاصطناعي لتحديث برامج أسمبلي القديمة على الأجهزة الرئيسية وتحويلها إلى تطبيقات جافا سحابية.",
+      "summaryBullets": [
+        "تطوير منهجية منظمة من 5 مراحل لتحويل كود أسمبلي المكتوب للأجهزة الرئيسية إلى تطبيقات Java Spring Boot على السحابة.",
+        "اعتماد مرحلة لغة COBOL كخطوة وسيطة تتيح لخبراء المجال مراجعة قواعد العمل والتحقق من سلامتها قبل التحويل النهائي.",
+        "استخدام نماذج الذكاء الاصطناعي عبر Amazon Bedrock وKiro IDE لاستخراج قواعد العمل وتوليد مواصفات البرامج.",
+        "أتمتة عملية تحويل كود COBOL إلى جافا بواسطة خدمة AWS Transform مع إخضاع المخرجات لاختبارات التكافؤ الوظيفي."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الأنظمة القديمة في بيئات الأجهزة الرئيسية",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات الكبرى في قطاعات المصارف والتأمين وخطوط الطيران تحدياً مستمراً يتمثل في اعتماد عملياتها الحيوية على تطبيقات لغة أسمبلي (Assembler) المكتوبة منذ عقود على الأجهزة الرئيسية (Mainframe). وتعمل هذه التطبيقات غالباً ضمن وظائف المعالجة الدفعة (Batch jobs) التي تُنفذ يومياً دون إخفاق، إلا أن إدارتها وصيانتها أصبحت مكلفة وصعبة للغاية بسبب تقاعد الخبراء الذين يمتلكون الفهم الكامل لكودها المصدرية. وفي مقال نشرته مدونة AWS Machine Learning Blog، أوضح الفريق التقني أن إعادة كتابة هذه البرامج يدوياً تتطلب سنوات طويلة، وتطرح مخاطر كبرى تتمثل في احتمال كسر قواعد الأعمال الدقيقة التي لم تُوثق بوضوح من قبل.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد البنية التحتية التقليدية للأجهزة الرئيسية على نظام التشغيل IBM z/OS، حيث تتولى مهام JCL تشغيل برامج أسمبلي في أوقات مجدولة. وتتفاعل هذه البرامج مع ملفات VSAM وقواعد بيانات IBM Db2 for z/OS، وتنفذ عملياتها باستخدام تعليمات منخفضة المستوى تتعامل مباشرة مع مسجلات المعالج وإدارة الذاكرة. ونتيجة لتداخل هذه البرامج مع لغة COBOL والأنظمة المحيطة، تصبح عملية التحويل المباشر إلى لغات حديثة ينطوي على نسبة عالية من المخاطر التشغيلية، ما يبرز الحاجة إلى آلية منهجية تضمن الحفاظ على المنطق التجريبي والوظائف الحيوية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "منهجية التحول الخماسي عبر لغة COBOL الوسيطة",
+          "paragraphs": [
+            {
+              "text": "لتجاوز هذه العقبات، قدمت آمازون منهجية تحول منظمة تتألف من خمس مراحل رئيسية تحول تطبيقات أسمبلي المرتبطة بلغة COBOL إلى خدمات قائمة على إطار عمل Java Spring Boot ومعدة للعمل على سحابة AWS. وتكمن الميزة الأساسية لهذه المنهجية في اعتماد لغة COBOL كمرحلة وسيطة قبل الانتقال النهائي إلى لغة جافا، بدلاً من التحويل المباشر المعرض للأخطاء من أسمبلي إلى جافا.",
+              "links": []
+            },
+            {
+              "text": "تساعد هذه المرحلة الوسيطة في توفير صيغة هيكلية قابلة للقراءة البشرية يسهل على خبراء المجال الفني والأعمال تدقيقها والتحقق منها قبل تنفيذ التحويل النهائي عبر خدمة AWS Transform. وتساهم نقاط التدقيق والتثبت هذه في الحد من المخاطر الضخمة وضمان بقاء قواعد العمل سليمة ودقيقة طوال رحلة التحديث السحابية، مع تقليل الوقت والجهد المقارن بالأساليب اليدوية التقليدية.",
+              "links": [
+                {
+                  "text": "AWS Transform",
+                  "url": "https://aws.amazon.com/transform/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "استخراج قواعد العمل وتوليد المواصفات بالذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "تبدأ أولى مراحل التحول بتحليل كود أسمبلي المصدر لاستخراج وثائق قواعد العمل (BRE) وإنشاء المواصفات الوظيفية التفصيلية. ويتم استخدام منشأة الذكاء الاصطناعي Amazon Bedrock بالكامل ضمن المراحل الأربع الأولى، والتي تشمل استخراج قواعد العمل، وتوليد المواصفات، والتحويل إلى COBOL، وعمليات التثبت الوظيفي. وتُدار هذه العمليات عبر بيئة التطوير المتكاملة Kiro IDE المدعومة بالذكاء الاصطناعي أو من خلال واجهات التحكم السحابية.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "Kiro IDE",
+                  "url": "https://kiro.dev/"
+                }
+              ]
+            },
+            {
+              "text": "يمكن للمطورين تشغيل الأوامر التوجيهية المخصصة إما مباشرة في واجهة Chat Playground الخاصة بالمنصة السحابية، أو استخدام بيئة العمل عبر لوحة AI chat and Spec panel المدمجة في البيئة التطويرية. ويُنصح باختيار نماذج تأسيسية ذات قدرات عالية في استنتاج الكود ونافذة سياق واسعة، نظراً لطول برامج أسمبلي وكثافتها. كما يتوجب ضبط درجة الحرارة (Temperature) عند الصفر لضمان الحصول على مخرجات متسقة ومنتظمة في جميع عمليات التشغيل.",
+              "links": [
+                {
+                  "text": "Chat Playground",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/playgrounds.html"
+                },
+                {
+                  "text": "AI chat and Spec panel",
+                  "url": "https://kiro.dev/docs"
+                }
+              ]
+            },
+            {
+              "text": "ولمعالجة أعداد كبيرة من البرامج، يمكن استدعاء الأوامر نفسها عبر واجهة برمجة التطبيقات Amazon Bedrock Converse API، وتخزين المخرجات بصيغة JSON في دلو ضمن خدمة Amazon S3 لتشغيل المرحلة التالية أوتوماتيكياً. وأكدت الشركة أن المنصة لا تستخدم بيانات الإدخال أو مخرجات النماذج لتدريب نماذج AWS أو مشاركتها مع أطراف خارجية، مع التوصية باستخدام بيانات اختبار معالجة خالياً من البيانات الشخصية أو بيانات الإنتاج الفعلية.",
+              "links": [
+                {
+                  "text": "Amazon S3",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات الأساسية لإنجاح عملية التحديث",
+          "paragraphs": [
+            {
+              "text": "تتطلب المباشرة في تطبيق هذه المنهجية توفر مجموعة من المتطلبات التقنية والتنظيمية مسبقاً. يأتي في مقدمتها وجود حساب نشط على AWS account يمتلك أدنى صلاحيات IAM الممكنة للوصول إلى الخدمات المطلوبة، بما في ذلك أدوات التخزين والتحليل والتحويل السحابي.",
+              "links": [
+                {
+                  "text": "AWS account",
+                  "url": "https://aws.amazon.com/account/"
+                }
+              ]
+            },
+            {
+              "text": "كما يلزم توفر الوصول إلى أدوات التحليل المعتمدة على الذكاء الاصطناعي مثل Amazon Q Developer أو Kiro لتقييم الكود المصدر، إضافة إلى توفير ملفات الكود المصدرية لأسمبلي مع التوثيق المتاح، ومجموعات بيانات اختبار تحتوي على المخرجات المتوقعة لإجراء اختبارات التكافؤ الوظيفي. كما تشترط المنهجية وجود خبراء في مجال الأعمال والدعم التقني لمراجعة النتائج في جلسات التحقق، وإعداد مستودعات التخزين بحماية كاملة وتشفير مسبق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحويل النهائي واختبار التكافؤ الوظيفي",
+          "paragraphs": [
+            {
+              "text": "بعد اعتماد المواصفات الوظيفية المُدققة، يُحول كود أسمبلي إلى كود COBOL وسيط يربط بين التعليمات البرمجية منخفضة المستوى وبين البنيات الموجهة لخدمة الأعمال. وتخضع هذه الشفرة الوسيطة لاختبارات تكافؤ وظيفي دقيقة لتأكيد صحتها قبل الانتقال إلى المرحلة الأخيرة.",
+              "links": []
+            },
+            {
+              "text": "في المرحلة النهائية، تتولى خدمة التحويل السحابية تحويل كود COBOL المؤكد إلى تطبيقات جافا حديثة تعتمد على إطار عمل Spring Boot. وإذا كانت المؤسسة تمتلك بالفعل كود COBOL جاهزاً للأنظمة القديمة، فيمكنها تخطي المراحل الأولى وتقديم الكود مباشرة لخدمات التحويل، مما يتيح التحديث الفعال مع ضمان التكافؤ الوظيفي الكامل وتقليل مخاطر توقف الخدمات الحيوية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon Bedrock",
+        "AWS Transform",
+        "Kiro IDE",
+        "Java",
+        "Mainframe",
+        "الذكاء الاصطناعي"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Bedrock",
+        "AWS Transform",
+        "Kiro IDE",
+        "IBM z/OS",
+        "Java Spring Boot"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "16 نوفمبر 2026",
+      "modifiedLabel": "16 نوفمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 801
+    },
+    "en": {
+      "title": "AWS outlines Assembler-to-Java modernization with Bedrock",
+      "description": "AWS details a five-phase, AI-assisted method for moving mainframe Assembler to Java Spring Boot, using Amazon Bedrock, Kiro IDE and AWS Transform.",
+      "deck": "AWS has published a multi-stage methodology for modernizing mainframe Assembler applications into Java Spring Boot services on its cloud. The approach uses Amazon Bedrock, Kiro IDE and AWS Transform, with an intermediate COBOL stage and validation checkpoints.",
+      "summaryBullets": [
+        "AWS published a five-phase methodology to convert mainframe Assembler into Java Spring Boot on AWS.",
+        "The workflow uses Amazon Bedrock and Kiro IDE for business-rule extraction and AWS Transform for COBOL-to-Java conversion.",
+        "Assembler is first converted to COBOL as an intermediate, human-readable stage for subject-matter-expert validation.",
+        "AWS lists prerequisites including IAM permissions, S3 storage, foundation-model access and test data.",
+        "The post says validation checkpoints and functional-equivalence testing are intended to preserve business logic."
+      ],
+      "sections": [
+        {
+          "heading": "AWS addresses a retiring-mainframe skills gap",
+          "paragraphs": [
+            {
+              "text": "AWS has published a methodology for modernizing mainframe Assembler applications that still run critical batch operations but are increasingly difficult to maintain and staff. In a post published Nov. 16, 2026, on the AWS Machine Learning Blog, the company describes a multi-stage, AI-powered workflow for extracting business rules, converting Assembler through an intermediate COBOL stage and deploying Java Spring Boot applications on AWS. The post frames the problem around banking, insurance and airline customers whose Assembler programs continue to support nightly batch jobs even as the engineers who understand them retire.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/"
+                }
+              ]
+            },
+            {
+              "text": "According to AWS, hand rewriting such systems can take years, risks breaking business rules that were never documented and still relies on subject-matter experts who may be leaving. The proposed approach is intended to reduce modernization time compared with manual approaches while maintaining business-logic integrity through validation checkpoints. AWS positions the method as a way to combine AI-assisted analysis with human review rather than a fully automatic rewrite.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "A five-phase path with COBOL as a bridge",
+          "paragraphs": [
+            {
+              "text": "The workflow has five main phases: business-rules extraction, spec-driven data flow, Assembler-to-COBOL conversion, validation, and COBOL-to-Java transformation. AWS says converting Assembler to COBOL first, before Java, reduces risk compared with a direct Assembler-to-Java conversion. The intermediate COBOL stage gives subject-matter experts a structured, human-readable format they can validate before the final transformation, which AWS says helps keep business rules intact.",
+              "links": []
+            },
+            {
+              "text": "The post describes the starting environment as a traditional mainframe setup in which JCL jobs trigger Assembler programs on a schedule. Those programs read VSAM and sequential files, perform operations against IBM Db2 for z/OS, use low-level register operations and memory management, and write output back to files or database tables. Job status is reported through JCL return codes, and the entire workload runs on IBM z/OS infrastructure.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Bedrock and Kiro support rule extraction",
+          "paragraphs": [
+            {
+              "text": "AWS says Amazon Bedrock is the inference platform behind the first four phases: business-rules extraction, specification creation, Assembler-to-COBOL conversion and validation. The post recommends choosing a foundation model with strong code reasoning and a large context window because Assembler programs are long and dense, and setting the temperature to zero for consistent output across runs. It also suggests using the same prompts through the Amazon Bedrock Converse API for many programs and storing each output in an Amazon S3 bucket to feed the next phase.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "The post says teams can use prompts in Amazon Bedrock through the Chat Playground or within Kiro IDE using its built-in AI chat and Spec panel. It advises replacing placeholder values with actual Assembler code and context before running prompts. AWS also says Amazon Bedrock does not use prompts or model outputs to train AWS models or share them with third parties, and it recommends sanitized test data instead of production data or personally identifiable information.",
+              "links": [
+                {
+                  "text": "Kiro IDE",
+                  "url": "https://kiro.dev/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Validation checkpoints and functional testing",
+          "paragraphs": [
+            {
+              "text": "The methodology places human-in-the-loop validation at critical stages. AWS says the quality of business-rules extraction directly affects transformation accuracy, so that phase deserves particular attention. The post also calls for functional-equivalence testing of the intermediate COBOL before AWS Transform converts it to Java, with validation checkpoints at each phase to reduce risk and verify business continuity.",
+              "links": [
+                {
+                  "text": "AWS Transform",
+                  "url": "https://aws.amazon.com/transform/"
+                }
+              ]
+            },
+            {
+              "text": "If COBOL source code is already available, AWS says teams can follow a conventional path and provide it directly to AWS Transform for conversion to Java Spring Boot applications. The broader Assembler workflow is aimed at applications tightly bounded with COBOL, where the intermediate stage can bridge low-level hardware instructions and business-oriented constructs. AWS describes the target as Java Spring Boot services built for the AWS cloud.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Prerequisites and data-handling cautions",
+          "paragraphs": [
+            {
+              "text": "AWS lists several prerequisites before modernization begins. These include an active AWS account with least-privilege IAM permissions for Amazon Bedrock, AWS Transform and Amazon Simple Storage Service, as well as access to Amazon Q Developer or Kiro for AI-assisted code analysis. Teams also need access to AWS Transform for COBOL-to-Java conversion, access to Amazon Bedrock with appropriate foundation models, and an Amazon S3 bucket configured for source code and artifact storage with encryption and Block Public Access enabled.",
+              "links": []
+            },
+            {
+              "text": "The post also calls for knowledge of the target business domain and application functionality, availability of business and technical subject-matter experts for validation sessions, an inventory of source Assembler code with available documentation, and test data sets with expected outputs for functional-equivalence testing. It recommends providing relevant documentation, data dictionaries and business context alongside the Assembler code when prompting the AI, because more context can improve understanding of business intent.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "What the architecture changes",
+          "paragraphs": [
+            {
+              "text": "In the target architecture, Amazon Bedrock and Kiro IDE support AI-assisted code analysis and business-rule extraction, while AWS Transform handles automated COBOL-to-Java conversion. The post says the approach offers reduced transformation time compared with manual approaches, systematic business-logic preservation through validation checkpoints, human-in-the-loop validation at critical stages, and automated code conversion with functional-equivalence testing. Those are AWS's stated benefits, not independently verified results.",
+              "links": []
+            },
+            {
+              "text": "The post is aimed at organizations that still depend on Assembler for critical operations but face shrinking expertise. It does not present a fixed timeline or cost estimate for modernization, and it emphasizes that business and technical experts remain part of the process. The methodology is presented as a way to make legacy code more readable and testable at intermediate stages before deploying modernized Java services on AWS.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon Bedrock",
+        "AWS Transform",
+        "Kiro IDE",
+        "Mainframe modernization",
+        "Java Spring Boot",
+        "COBOL",
+        "Assembler"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Bedrock",
+        "AWS Transform",
+        "Kiro IDE",
+        "Amazon S3",
+        "Amazon Q Developer",
+        "IBM Db2 for z/OS",
+        "Java Spring Boot"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "November 16, 2026",
+      "modifiedLabel": "November 16, 2026",
+      "readMinutes": 5,
+      "wordCount": 993
+    }
+  },
+  "datePublished": "2026-11-16T21:09:08.026798+03:00",
+  "dateModified": "2026-11-16T21:09:08.026798+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/hero.webp",
+    "card": "/forum/assets/posts/2026/11/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/card.webp",
+    "social": "/forum/assets/posts/2026/11/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/social.jpg",
+    "alt": {
+      "ar": "منهجية من AWS لتحديث تطبيقات أسمبلي إلى جافا عبر Bedrock",
+      "en": "AWS outlines Assembler-to-Java modernization with Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-20283-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/inline-01.webp",
+        "width": 772,
+        "height": 785,
+        "alt": {
+          "ar": "منهجية من AWS لتحديث تطبيقات أسمبلي إلى جافا عبر Bedrock",
+          "en": "Mainframe architecture with JCL-triggered Assembler batch programs accessing VSAM files and IBM Db2 for z/OS"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-20283-1-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/inline-02.webp",
+        "width": 1194,
+        "height": 681,
+        "alt": {
+          "ar": "منهجية من AWS لتحديث تطبيقات أسمبلي إلى جافا عبر Bedrock",
+          "en": "End-to-end AWS workflow transforming Assembler to Java through five phases, from business rules extraction to COBOL-to-Java"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-20283-2-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/",
+      "type": "official",
+      "title": "Modernizing mainframe Assembler to Java using Amazon Bedrock and AWS Transform"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform",
+  "sourceTitle": "Modernizing mainframe Assembler to Java using Amazon Bedrock and AWS Transform",
+  "trendScore": 127.85,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-16T18:09:08+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform.json"
+}
