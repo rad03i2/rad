@@ -1,0 +1,333 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "b3a867faa51ab497299b",
+  "slug": "get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge/",
+    "en": "/forum/en/ai/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge/"
+  },
+  "locales": {
+    "ar": {
+      "title": "ميزة البحث في الجداول تصل إلى Amazon Bedrock",
+      "description": "أعلنت AWS عن توفير ميزة البحث في الجداول في Amazon Bedrock، مما يسمح بمعالجة البيانات المجدولة وربطها بالمستندات عبر الاسترداد الوكيل.",
+      "deck": "أطلقت أجهزة AWS التابعة لأمازون ميزة البحث في الجداول، ممكّنة الأنظمة الذكية من إجراء عمليات حسابية واستخراج البيانات من ملفات الجداول ودمجها مع الوثائق النصية.",
+      "summaryBullets": [
+        "إضافة ميزة البحث في الجداول (tabular search) إلى الخدمة المدارة Amazon Bedrock Managed Knowledge Base.",
+        "دعم معالجة ملفات CSV وXLSX وXLS وإجراء الحسابات عبر كافة الصفوف في بيئة معزولة برمجياً.",
+        "حل مشكلات تقنية RAG التقليدية التي تفقد سياق الجداول العريضة والطويلة أثناء تجزئة النصوص.",
+        "الدمج الذكي بين البيانات المجدولة والوثائق غير المهيكلة مثل ملفات PDF وWord للإجابة عن الاستفسارات التحليلية."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق ميزة البحث في الجداول لقواعد المعرفة",
+          "paragraphs": [
+            {
+              "text": "أعلنت منصة أمازون لخدمات الويب (AWS) عن إتاحة ميزة البحث في الجداول (tabular search) بشكل مدمج ضمن خدمة Amazon Bedrock Managed Knowledge Base. وتستهدف التحديثات الجديدة تمكين النماذج الذكية من الإجابة عن الاستفسارات التحليلية المعقدة التي تتطلب معالجة البيانات المجدولة المأخوذة من صيغ مثل CSV وXLSX وXLS، ثم مطابقتها مع الحقائق والسياسات الواردة في المستندات غير المهيكلة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Managed Knowledge Base",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-build-managed.html"
+                }
+              ]
+            },
+            {
+              "text": "وتستند هذه التقنية إلى مسار العمل المعتمد على agentic retrieval لتقديم إجابات على أسئلة تتألف من عدة خطوات تحليلية. فعلى سبيل المثال، عند استفسار قسم المالية عن الإدارات الملزمة بتقديم شرح لتباين الميزانية، تتجاوز الأداة البحث النصي التقليدي لتقوم بإجراء مطابقات وحسابات رياضية عبر جميع الصفوف ذات الصلة في جداول الأرباح والخسائر، وربط النتائج بالشروط الواردة في مذكرات وسياسات الشركة.",
+              "links": [
+                {
+                  "text": "agentic retrieval",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-agentic-retrieve.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التغلب على قيود تقنية RAG التقليدية",
+          "paragraphs": [
+            {
+              "text": "تواجه أنظمة توليد الاسترداد المعزز التقليدية (RAG) تحديات هيكلية عند التعامل مع الجداول، نظرًا لأنها تعتمد على تقسيم النصوص إلى مقتطعات محددة الحجم. وفي حالة الجداول الطويلة التي تضم آلاف الصفوف، يقتصر البحث التقليدي على استرجاع عدد محدود من الصفوف المطابقة، ما يترتب عليه إغفال أجزاء واسعة من البيانات وجعل الحسابات الإجمالية أو المقارنات الشرطية غير مكتملة.",
+              "links": []
+            },
+            {
+              "text": "أما في الجداول العريضة التي تحتوي على مئات الأعمدة، فقد يتجاوز الصف الواحد القدرة الاستيعابية لمقتطع البحث، مما يجعل القيم في الأعمدة المتأخرة صعبة المطابقة. كما قد تتسبب المقتطعات الطويلة في تزاحم النتائج وإبعاد المعلومات الأكثر أهمية. فضلاً عن ذلك، تصعب التقنيات التقليدية عملية الربط بين المصطلحات التجارية مثل \"الإنفاق القابل للتحكم\" وبين رموز مراكز التكلفة المحفوظة داخل الجداول، حيث تتواجد القواعد التفسيرية عادة في وثائق منفصلة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل وتنفيذ البرمجيات في بيئة معزولة",
+          "paragraphs": [
+            {
+              "text": "تنفذ ميزة البحث المجدول عملياتها عبر مراحل منظمة؛ حيث تبدأ باسترجاع المقتطعات الأولية من ملف الجداول، ثم يضع الوكيل الذكي خطة عمل لتحديد مدى الحاجة لتشغيل كود برمجي على البيانات. وفي الخطوة التالية، يتم نسخ الملف الأصلي إلى بيئة معزولة (sandbox) غير متصلة بالشبكة الخارجية لضمان أعلى مستويات الأمان أثناء المعالجة.",
+              "links": []
+            },
+            {
+              "text": "داخل البيئة المعزولة، يعمل كود برمجي يكتبه النموذج الآلي عبر كامل ورقة العمل أو الجدول، مخرجاً نتائج محددة مثل الإجماليات أو الصفوف المتطابقة دون إعادة نقل الملف كاملاً. في النهاية، يتولى الوكيل صياغة الإجابة النهائية بناءً على نتائج الكود والمقتطعات النصية، مع تزويد المستخدم بالمراجع والمصادر الدقيقة والملفات التي تم قراءتها ضمن مسار الاستجابة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع مصادر البيانات والملفات المتنوعة",
+          "paragraphs": [
+            {
+              "text": "تتكامل ميزة البحث المجدول بسلاسة بغض النظر عن موصل البيانات (connector) المستخدم لربط الملفات بقاعدة المعرفة، سواء تم جلبها من خوادم Amazon Simple Storage Service (Amazon S3) أو منصات مشاركة الملفات مثل Microsoft SharePoint وAtlassian Confluence. وتتيح هذه المرونة تنظيم ملفات البيانات المجدولة جنباً إلى جنب مع المستندات النصية كملفات PDF وWord في مستودع واحد.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            },
+            {
+              "text": "ولتقديم نموذج تطبيقي للخدمة، استعرضت الشركة سيناريو مالي يشمل ملف أرباح وخسائر بصيغة Excel، ومذكرة إغلاق ربع سنوية بصيغة Word، وسياسة تباين مالية بصيغة PDF. ويمكن للمطورين الوصول إلى ملفات هذا المثال البرمجي عبر زيارة tabular-search folder المتاح في مستودع النماذج المدارة التابع لـ AWS على منصة GitHub.",
+              "links": [
+                {
+                  "text": "tabular-search folder",
+                  "url": "https://github.com/aws-samples/sample-managed-knowledge-base-patterns/tree/main/tabular-search"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "حدود الاستخدام والفرق عن أدوات ذكاء الأعمال",
+          "paragraphs": [
+            {
+              "text": "أوضحت AWS أن ميزة البحث المجدول صُممت خصيصاً للاستفسارات التي تتطلب إجراء عمليات بحث أو حسابات مباشرة فوق ملفات الجداول المخزنة دون الحاجة لمخطط بيانات (schema) مسبق التعريف. ومع ذلك، ينبغي الأخذ بعين الاعتبار أن تشغيل الكود يضيف خطوة معالجة إضافية قد تجعل زمن الاستجابة أطول مقارنة بالأسئلة النصية البحتة.",
+              "links": []
+            },
+            {
+              "text": "وأكدت الشركة أن المهام التحليلية الضخمة، كلوحات القيادة الدورية والمقاييس المحوكمة وعمليات الربط المعقدة على مستوى مستودعات البيانات الكبيرة، تظل من اختصاص أدوات ذكاء الأعمال (BI) التقليدية. بينما تعمل الميزة الجديدة كحل مكمل يتيح استخراج الإجابات الفورية من الجداول المخزنة في قواعد المعرفة إلى جانب المستندات غير المهيكلة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Amazon Bedrock",
+        "AWS",
+        "قواعد المعرفة",
+        "البحث في الجداول",
+        "توليد الاسترداد المعزز"
+      ],
+      "entities": [
+        "Amazon Bedrock",
+        "AWS",
+        "Amazon S3",
+        "Microsoft SharePoint",
+        "Atlassian Confluence",
+        "GitHub"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "16 نوفمبر 2026",
+      "modifiedLabel": "16 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 665
+    },
+    "en": {
+      "title": "AWS Adds Tabular Search to Amazon Bedrock Knowledge Base",
+      "description": "AWS has launched tabular search for Amazon Bedrock Managed Knowledge Base, enabling agentic retrieval to run code over full spreadsheet files.",
+      "deck": "Amazon Bedrock Managed Knowledge Base now supports tabular search through agentic retrieval. The feature enables automated lookups and calculations across spreadsheet formats alongside unstructured enterprise documents.",
+      "summaryBullets": [
+        "Amazon Bedrock Managed Knowledge Base introduces tabular search for CSV, XLSX, and XLS spreadsheet formats.",
+        "The system executes model-generated code inside an isolated sandbox to perform row-by-row computations over complete tables.",
+        "Tabular search combines quantitative outputs from tables with narrative context from PDFs and text documents to solve multi-step queries.",
+        "The capabilities work across standard data connectors, including Amazon S3, Microsoft SharePoint, and Atlassian Confluence."
+      ],
+      "sections": [
+        {
+          "heading": "New Capability for Multi-Step Data Retrieval",
+          "paragraphs": [
+            {
+              "text": "Amazon Web Services (AWS) has introduced tabular search within Amazon Bedrock Managed Knowledge Base, expanding how generative artificial intelligence applications query structured spreadsheet data. According to a post on the AWS Machine Learning Blog, the new functionality enables agentic retrieval to look up values and perform computations directly across CSV, XLSX, and XLS files.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Managed Knowledge Base",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-build-managed.html"
+                },
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge-base/"
+                },
+                {
+                  "text": "agentic retrieval",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-agentic-retrieve.html"
+                }
+              ]
+            },
+            {
+              "text": "When addressing analytical questions that depend on tabular information, the system conducts calculations across every relevant row in one or more spreadsheets or sheets. It then combines those calculated results with factual details extracted from related documents, providing answers to complex analytical queries that require multiple processing steps.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Overcoming the Limits of Standard Passage Retrieval",
+          "paragraphs": [
+            {
+              "text": "Standard Retrieval Augmented Generation (RAG) frameworks split incoming documents into fixed-length text passages to find relevant information. While effective for prose, AWS notes that breaking spreadsheets into text passages often leads to lost information due to the physical layout of tables.",
+              "links": []
+            },
+            {
+              "text": "Long tables spanning thousands of rows are typically distributed across many separate passages. Because standard retrieval only returns the top matching passages, answers built using plain RAG rely on an incomplete sample of rows. As a result, operations such as calculating totals, running comparisons, or verifying policy thresholds can yield incomplete outcomes.",
+              "links": []
+            },
+            {
+              "text": "Wide tables containing hundreds of columns present similar hurdles. A single row in a broad spreadsheet can exceed the character context limits of standard search models, causing values in later columns to be omitted from retrieval matching. Tabular search addresses this by dividing the workload: passage retrieval identifies the relevant spreadsheet file, after which program code evaluates the full document structure.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The Execution Workflow Behind Tabular Search",
+          "paragraphs": [
+            {
+              "text": "The tabular search capability is integrated into agentic retrieval workflows and functions automatically when a query requires data contained inside spreadsheet files. The processing pipeline follows a structured sequence: retrieve, plan, stage, compute, return, and answer.",
+              "links": []
+            },
+            {
+              "text": "During the retrieve phase, the system returns relevant passages, including those associated with a spreadsheet file. In the planning phase, the agent evaluates the query and table layout to determine whether code needs to run over the retrieved files. Once planned, tabular search stages the original file by copying it into an isolated code sandbox that operates without network access.",
+              "links": []
+            },
+            {
+              "text": "Inside the sandbox, model-written code executes over the full spreadsheet or sheet to calculate values or extract matching rows. Only the printed output of the executed code is returned to the agent, which synthesizes the computational findings with document passages to deliver a final answer accompanied by citations and execution traces.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Combining Spreadsheet Calculations with Narrative Documents",
+          "paragraphs": [
+            {
+              "text": "In enterprise workflows, organizations frequently store raw quantitative data alongside qualitative policy documentation. For example, a finance team closing a financial quarter may maintain profit and loss (P&L) workbooks in the same repository as variance policy documents and narrative close memos.",
+              "links": []
+            },
+            {
+              "text": "Determining which departments are required to submit variance commentary often depends on threshold rules defined in a policy PDF, budget modifications listed in a memo, and row-by-row math across departmental workbooks. Tabular search accepts queries through the standard AgenticRetrieveStream API request to resolve these dependencies across disparate file formats.",
+              "links": []
+            },
+            {
+              "text": "By running code over the complete spreadsheet rather than text fragments, the generated response cites the governing policy and narrative memo while naming the precise workbook read during execution.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Integration Options and Operational Considerations",
+          "paragraphs": [
+            {
+              "text": "Tabular search operates uniformly regardless of which connector brings data into the system. Supported data sources include Amazon Simple Storage Service (Amazon S3), Microsoft SharePoint, and Atlassian Confluence. AWS has also made reference templates available in a tabular-search folder within its sample repository to help developers build and deploy the architecture.",
+              "links": [
+                {
+                  "text": "connector",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-create.html#kb-managed-connectors"
+                },
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                },
+                {
+                  "text": "tabular-search folder",
+                  "url": "https://github.com/aws-samples/sample-managed-knowledge-base-patterns/tree/main/tabular-search"
+                }
+              ]
+            },
+            {
+              "text": "AWS notes that tabular search is intended for calculations and lookups over retrieved table files rather than replacing enterprise business intelligence (BI) systems. Governed metrics, recurring dashboards, warehouse-scale database joins, and formal reporting controls remain best suited for dedicated BI tools. Additionally, executing sandbox code introduces an extra agent processing step, resulting in longer response times compared to standard text-only retrieval.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AWS",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Generative AI",
+        "RAG",
+        "Data Analytics"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "Amazon S3",
+        "Microsoft SharePoint",
+        "Atlassian Confluence"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 16, 2026",
+      "modifiedLabel": "November 16, 2026",
+      "readMinutes": 4,
+      "wordCount": 755
+    }
+  },
+  "datePublished": "2026-11-16T23:09:09.356686+03:00",
+  "dateModified": "2026-11-16T23:09:09.356686+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge/hero.webp",
+    "card": "/forum/assets/posts/2026/11/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge/card.webp",
+    "social": "/forum/assets/posts/2026/11/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge/social.jpg",
+    "alt": {
+      "ar": "ميزة البحث في الجداول تصل إلى Amazon Bedrock",
+      "en": "AWS Adds Tabular Search to Amazon Bedrock Knowledge Base"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-22293-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge/inline-01.webp",
+        "width": 1400,
+        "height": 980,
+        "alt": {
+          "ar": "ميزة البحث في الجداول تصل إلى Amazon Bedrock",
+          "en": "Your application, outside the AWS Cloud, sends a question to agentic retrieval and receives an answer with citations and trace events. Inside the AWS Cloud, agentic retrieval contains Retrieval, Planning, and an isolated"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge-base/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-22293-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge-base/",
+      "type": "official",
+      "title": "Get answers from tables with tabular search in Amazon Bedrock Managed Knowledge Base"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge-base",
+  "sourceTitle": "Get answers from tables with tabular search in Amazon Bedrock Managed Knowledge Base",
+  "trendScore": 114.57,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-16T20:09:09+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge.json"
+}
