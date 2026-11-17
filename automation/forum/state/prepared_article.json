@@ -1,5 +1,420 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-17T18:14:21+00:00",
-  "last_published_story_id": "830da74434e8505c737e"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-17T18:20:01+00:00",
+  "target_publish_at": "2026-11-17T21:34:20.431818+03:00",
+  "story": {
+    "title": "Reason over time-series data with OpenTSLM on Amazon SageMaker JumpStart",
+    "url": "https://aws.amazon.com/blogs/machine-learning/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart",
+    "domain": "aws.amazon.com",
+    "summary": "OpenTSLM, an open source family of time-series language models, is now available in Amazon SageMaker JumpStart. See how Nexthink and Aionic Labs apply it to proactive IT support, then deploy OpenTSLM to a real-time endpoint and fine-tune it on your own data with TimeNet and a SageMaker training job.",
+    "published_at": "2026-11-17T18:06:44+00:00",
+    "discovered_at": "2026-11-17T18:07:59+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 69,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "18c399a19d6b4bb8f52c",
+    "trend": {
+      "score": 121.93,
+      "age_hours": 0.18,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Reason over time-series data with OpenTSLM on Amazon SageMaker JumpStart",
+      "title": "Reason over time-series data with OpenTSLM on Amazon SageMaker JumpStart | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تتيح نموذج OpenTSLM لتحليل البيانات الزمنية على SageMaker",
+      "description": "أطلقت أمازون سيجماكر جومبستارت دعم نموذج OpenTSLM مفتوح المصدر لتحليل البيانات الزمنية، مما يتيح للشركات تحسين اتخاذ القرارات التشغيلية عبر دمج القياسات الرقمية مع السياق النصي.",
+      "deck": "أصبح نموذج OpenTSLM، وهو عائلة من نماذج اللغة للبيانات الزمنية، متاحاً رسمياً في منصة Amazon SageMaker JumpStart، مما يفتح آفاقاً جديدة لتحليل البيانات التشغيلية المعقدة.",
+      "summary_bullets": [
+        "تتيح أمازون نشر نموذج OpenTSLM-Flamingo على نقاط نهاية الاستدلال في SageMaker.",
+        "تعاونت Nexthink مع Aionic Labs لتطبيق النموذج في دعم تقني استباقي عبر وكيل Spark.",
+        "يجمع النموذج بين القياسات الرقمية والسياق النصي لفهم التغيرات في الأنظمة.",
+        "يتطلب النموذج حوالي 10.5 جيجابايت من ذاكرة GPU ويعمل بدقة bfloat16."
+      ],
+      "sections": [
+        {
+          "heading": "توفر OpenTSLM على منصة أمازون",
+          "paragraphs": [
+            {
+              "text": "أعلنت أمازون ويب سيرفيسز عن إتاحة OpenTSLM، وهو مجموعة نماذج لغة مفتوحة المصدر مخصصة للبيانات الزمنية، ضمن مكتبة Amazon SageMaker JumpStart. يتيح هذا التحديث للمطورين والشركات نشر النموذج في بيئات AWS الخاصة بهم، مما يسهل عملية دمج الذكاء الاصطناعي في الأنظمة التشغيلية المعقدة التي تعتمد على تدفقات بيانات مستمرة.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker JumpStart",
+                  "url": "https://aws.amazon.com/sagemaker/ai/jumpstart/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحديات تحليل البيانات التشغيلية",
+          "paragraphs": [
+            {
+              "text": "تعتمد المؤسسات الصناعية على كميات هائلة من البيانات لاتخاذ قرارات تتعلق بالمعدات والأسعار والأداء. ومع ذلك، فإن تفسير هذه البيانات لا يزال يتطلب وقتاً طويلاً من المتخصصين، ولا يعني جمع المزيد من البيانات بالضرورة القدرة على اتخاذ إجراء فوري. كما أن استخدام نماذج اللغة العامة مثل ChatGPT لتحليل السجلات الطويلة عبر مئات المؤشرات قد يستهلك عدداً كبيراً من الرموز (Tokens)، مما يرفع التكاليف التشغيلية بشكل ملحوظ.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تقنية نماذج اللغة الزمنية",
+          "paragraphs": [
+            {
+              "text": "تعمل شركة Aionic Labs على تطوير نماذج أساسية زمنية، حيث يركز OpenTSLM على تفسير القياسات التشغيلية، بدءاً من بيانات أجهزة الاستشعار وحتى مؤشرات العرض والطلب، جنباً إلى جنب مع السياق النصي مثل سجلات الصيانة والأخبار السوقية. يعتمد النظام على بنية TimeNet المشتركة للبيانات الزمنية، التي توفر تنسيقاً واحداً وواجهة API موحدة للعثور على مجموعات البيانات وبناءها وتحميلها، مما يساعد في تدريب وتقييم هذه النماذج بكفاءة.",
+              "links": [
+                {
+                  "text": "TimeNet",
+                  "url": "https://docs.timenet.ai/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تطبيق عملي في دعم تقنية المعلومات",
+          "paragraphs": [
+            {
+              "text": "تعمل شركة Nexthink بالتعاون مع Aionic Labs على بناء بيئة عمل رقمية توفر المساعدة قبل طلب الموظف. يعتمد هذا النظام على وكيل Spark الشخصي، المعزز بنماذج اللغة الزمنية التي تربط بين بيانات أجهزة الاستشعار (مثل نشاط المعالج والذاكرة) والسياق الزمني للأحداث. يهدف هذا التكامل إلى تحويل الفهم التحليلي إلى إجراءات عملية، حيث يتحقق الوكيل من المشكلة المحتملة ويوجه الموظف نحو الحل المناسب.",
+              "links": [
+                {
+                  "text": "Nexthink",
+                  "url": "https://nexthink.com/platform"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل الوكيل الاستباقي",
+          "paragraphs": [
+            {
+              "text": "في سيناريو نقص مساحة القرص، يربط النموذج بين انخفاض المساحة المتاحة وازدحام طابور القرص وتكرار تجمد التطبيقات، مستنتجاً الأعراض التي قد يواجهها الموظف. يقوم وكيل Spark بالتحقق من المساحة المتبقية، ويقترح إجراء تنظيف معتمد من إدارة تقنية المعلومات. بعد تأكيد الموظف، ينفذ الوكيل العملية ويتابع النتيجة، مع إمكانية تحويل المشكلة لفريق الدعم الفني إذا استمرت، مما يضمن استجابة ذكية وسريعة للمشاكل التقنية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المواصفات التقنية للنموذج",
+          "paragraphs": [
+            {
+              "text": "يتوفر في مكتبة JumpStart نموذج OpenTSLM-Flamingo، الذي يجمع بين نموذج اللغة Gemma 3 4B ومشفر للبيانات الزمنية مع طبقات انتباه متقاطع. يبلغ إجمالي عدد معاملات النموذج 5.24 مليار معاملة، وتخزن الأوزان بدقة bfloat16، مما يتطلب حوالي 10.5 جيجابايت من ذاكرة GPU. يوفر هذا التصميم توازناً بين الدقة التحليلية وكفاءة المعالجة على البنية التحتية السحابية.",
+              "links": [
+                {
+                  "text": "OpenTSLM",
+                  "url": "https://github.com/OpenTSLM/OpenTSLM"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مزايا النشر على سيجماكر",
+          "paragraphs": [
+            {
+              "text": "تقدم Amazon SageMaker JumpStart حلاً متكاملاً لتسريع رحلة التعلم الآلي، حيث توفر حاويات استدلال جاهزة مع تسريع GPU، ونقاط نهاية قابلة للتوسع تلقائياً بناءً على حجم الطلبات. كما تشمل المزايا واجهة API موحدة للاستدلال الفوري، ومراقبة مدمجة عبر CloudWatch، وأمان مؤسسي يعتمد على عزل الشبكات في VPC، مما يجعلها بديلاً قوياً ومكملاً لخدمات مثل Amazon Bedrock.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "SageMaker",
+        "OpenTSLM",
+        "البيانات الزمنية",
+        "Nexthink",
+        "Aionic Labs",
+        "تقنية المعلومات"
+      ],
+      "entities": [
+        "Amazon SageMaker JumpStart",
+        "OpenTSLM",
+        "Aionic Labs",
+        "Nexthink",
+        "TimeNet",
+        "OpenTSLM-Flamingo",
+        "Gemma 3 4B"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من مدونة أمازون الرسمية، مع التركيز على المواصفات التقنية المذكورة في النص المصدر دون استنتاجات خارجية."
+    },
+    "en": {
+      "title": "OpenTSLM Launches on Amazon SageMaker JumpStart",
+      "description": "AWS adds OpenTSLM to SageMaker JumpStart, giving organizations a way to analyze time-series data with operational context and questions.",
+      "deck": "OpenTSLM, an open-source family of time-series language models, is now available through Amazon SageMaker JumpStart. AWS says the models can combine numerical measurements with text context to help organizations identify emerging problems and decide how to respond.",
+      "summary_bullets": [
+        "OpenTSLM combines time-series measurements with context such as maintenance records and observations.",
+        "Nexthink and Aionic Labs are applying the technology to proactive IT support through Nexthink’s Spark agent.",
+        "The OpenTSLM-Flamingo model combines Gemma 3 4B with a time-series encoder and cross-attention layers.",
+        "Organizations can deploy the model through SageMaker JumpStart and adapt it using TimeNet and a SageMaker training job."
+      ],
+      "sections": [
+        {
+          "heading": "OpenTSLM comes to SageMaker JumpStart",
+          "paragraphs": [
+            {
+              "text": "AWS has made OpenTSLM available in Amazon SageMaker JumpStart, a machine-learning model hub for evaluating, comparing, and deploying pretrained foundation models. The move gives organizations a path to deploy the open-source time-series language model family in their own AWS environments and use it with operational data.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker JumpStart",
+                  "url": "https://aws.amazon.com/sagemaker/ai/jumpstart/"
+                }
+              ]
+            },
+            {
+              "text": "The announcement addresses a challenge facing industrial and digital organizations: collecting measurements is easier than interpreting what is changing and why. Operational data can help teams prevent production stoppages, diagnose vehicle faults, explain data-center performance declines, or adjust pricing as supply and demand shift. Yet reviewing long histories across hundreds of metrics as text or images can consume large numbers of language-model tokens, increasing cost and leaving specialist teams to interpret the results.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Combining measurements and context",
+          "paragraphs": [
+            {
+              "text": "Aionic Labs is developing temporal foundation models, including OpenTSLM, to interpret operational measurements alongside information such as maintenance records, market news, and engineers’ observations. The models are designed to recognize emerging problems in recent measurements and support follow-up questions about what changed and how teams might respond.",
+              "links": [
+                {
+                  "text": "Aionic Labs",
+                  "url": "https://www.aioniclabs.ai/"
+                },
+                {
+                  "text": "OpenTSLM",
+                  "url": "https://github.com/OpenTSLM/OpenTSLM"
+                }
+              ]
+            },
+            {
+              "text": "The accompanying TimeNet infrastructure provides a shared format and application programming interface for finding, building, and loading datasets used to train and evaluate time-series language models. AWS describes the combination of OpenTSLM and TimeNet as a way to connect system changes with explanations and decisions, while leaving adaptation and evaluation to the requirements of each task.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Nexthink targets proactive IT support",
+          "paragraphs": [
+            {
+              "text": "Nexthink and Aionic Labs are applying the approach to proactive digital workplace assistance. Their work centers on Spark, Nexthink’s personal IT agent, which uses device telemetry and contextual information to help identify problems before employees need to request support.",
+              "links": [
+                {
+                  "text": "Nexthink",
+                  "url": "https://nexthink.com/platform"
+                },
+                {
+                  "text": "Spark",
+                  "url": "https://nexthink.com/platform/spark"
+                }
+              ]
+            },
+            {
+              "text": "The workflow combines recent device time series, including CPU activity, memory use, available disk space, application stability, and connectivity, with timestamped events and device and software context. The time-series language model interprets how those signals change over an observation window and produces three forms of guidance: a state summary explaining the likely issue, a recommended action with checks to confirm it, and an expected outcome describing how improvement should be assessed.",
+              "links": []
+            },
+            {
+              "text": "In an illustrative low-disk scenario, declining free space, a rising disk queue, and more frequent application hangs are connected with symptoms such as a slow computer or difficulty saving files. Spark checks remaining space and whether temporary files can be removed through an IT-approved cleanup. It shows the proposed removal and asks for confirmation before proceeding, then checks the available space and asks whether the problem has improved. If the issue remains, Spark can offer to pass the findings to IT support.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Model architecture and deployment",
+          "paragraphs": [
+            {
+              "text": "The model offered through SageMaker JumpStart is OpenTSLM-Flamingo. It combines the Gemma 3 4B language model with a time-series encoder and cross-attention layers, allowing the language model to attend to the encoded series. The model has 5.24 billion parameters stored in bfloat16, with weights requiring about 10.5 GB of GPU memory.",
+              "links": []
+            },
+            {
+              "text": "AWS says SageMaker JumpStart provides pre-built inference containers with GPU acceleration, automatic scaling endpoints, standardized inference APIs, integrated monitoring, and enterprise security options. Deployments can use Amazon SageMaker AI inference endpoints within an organization’s AWS infrastructure, with metrics for throughput, latency, and resource utilization available through Amazon CloudWatch.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI inference endpoints",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/deploy-model.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Adapting the model to organizational data",
+          "paragraphs": [
+            {
+              "text": "The AWS post presents SageMaker JumpStart as a deployment path for applications that need time-series reasoning in a managed AWS environment. Organizations can deploy OpenTSLM to a real-time endpoint and adapt it to their own data using TimeNet and a SageMaker training job.",
+              "links": [
+                {
+                  "text": "TimeNet",
+                  "url": "https://docs.timenet.ai/"
+                }
+              ]
+            },
+            {
+              "text": "SageMaker JumpStart complements Amazon Bedrock, which provides serverless foundation-model inference along with features including customizations, knowledge bases, agents, and guardrails. AWS positions the two services as different options for organizations building applications around foundation models, with JumpStart providing a model discovery and deployment route inside SageMaker.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial intelligence",
+        "Time-series models",
+        "OpenTSLM",
+        "Amazon SageMaker",
+        "Nexthink",
+        "Aionic Labs"
+      ],
+      "entities": [
+        "OpenTSLM",
+        "OpenTSLM-Flamingo",
+        "Amazon SageMaker JumpStart",
+        "Aionic Labs",
+        "Nexthink",
+        "Spark",
+        "TimeNet",
+        "Gemma 3 4B"
+      ],
+      "article_type": "news",
+      "confidence_note": "Based solely on the supplied AWS Machine Learning Blog source and extracted text."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 516,
+      "word_count_en": 723
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "18c399a19d6b4bb8f52c",
+      "title": "Reason over time-series data with OpenTSLM on Amazon SageMaker JumpStart",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 516,
+          "word_count_en": 723
+        }
+      ]
+    }
+  ],
+  "slug": "reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/hero.webp",
+    "card": "/forum/assets/posts/2026/11/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/card.webp",
+    "social": "/forum/assets/posts/2026/11/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح نموذج OpenTSLM لتحليل البيانات الزمنية على SageMaker",
+      "en": "OpenTSLM Launches on Amazon SageMaker JumpStart"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21774-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/inline-01.webp",
+        "width": 1400,
+        "height": 728,
+        "alt": {
+          "ar": "أمازون تتيح نموذج OpenTSLM لتحليل البيانات الزمنية على SageMaker",
+          "en": "Diagram: numerical time series and a question with context go into OpenTSLM, where a time-series encoder feeds a language model. OpenTSLM returns natural-language output that describes patterns, answers questions, and su"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21774-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/inline-02.webp",
+        "width": 1223,
+        "height": 1050,
+        "alt": {
+          "ar": "أمازون تتيح نموذج OpenTSLM لتحليل البيانات الزمنية على SageMaker",
+          "en": "Diagram of the low-disk-space scenario: the prompt, the laptop context, and the device history of falling free storage, a rising disk queue, and more application hangs go into OpenTSLM. OpenTSLM returns a state summary,"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21774-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/inline-03.webp",
+        "width": 1391,
+        "height": 1050,
+        "alt": {
+          "ar": "أمازون تتيح نموذج OpenTSLM لتحليل البيانات الزمنية على SageMaker",
+          "en": "Reference architecture: an application sends a request with a question and a CPU utilization series to an OpenTSLM real-time endpoint that was deployed from SageMaker JumpStart, and receives the generated answer."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21774-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/inline-04.webp",
+        "width": 1280,
+        "height": 560,
+        "alt": {
+          "ar": "أمازون تتيح نموذج OpenTSLM لتحليل البيانات الزمنية على SageMaker",
+          "en": "SageMaker Studio model page of OpenTSLM-Flamingo Gemma 3 4B with the Evaluate, Optimize, and Deploy buttons and the model information, including the JumpStart model ID, the gemma license, and open weights access."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21774-4.png"
+      }
+    ]
+  }
 }
