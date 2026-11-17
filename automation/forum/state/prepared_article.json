@@ -1,5 +1,326 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-17T00:09:13+00:00",
-  "last_published_story_id": "8ee67a7019fe23e5ab82"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-17T00:13:30+00:00",
+  "target_publish_at": "2026-11-17T03:29:12.387362+03:00",
+  "story": {
+    "title": "Best practices for writing Denied Topics in Amazon Bedrock Guardrails",
+    "url": "https://aws.amazon.com/blogs/machine-learning/best-practices-for-writing-denied-topics-in-amazon-bedrock-guardrails",
+    "domain": "aws.amazon.com",
+    "summary": "With Denied Topics in Amazon Bedrock Guardrails, you block a content category by describing it in plain language, and the guardrail matches by meaning rather than keyword, which can block more than you intend. This post presents eight best practices for writing a topic precisely enough that the guardrail blocks what you mean and passes what you don't.",
+    "published_at": "2026-11-16T15:48:01+00:00",
+    "discovered_at": "2026-11-16T15:48:57+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "bc35581f3528ae2fbf10",
+    "trend": {
+      "score": 107.73,
+      "age_hours": 8.42,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/best-practices-for-writing-denied-topics-in-amazon-bedrock-guardrails/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Best practices for writing Denied Topics in Amazon Bedrock Guardrails",
+      "title": "Best practices for writing Denied Topics in Amazon Bedrock Guardrails | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أفضل ممارسات صياغة الموضوعات المحظورة في Amazon Bedrock Guardrails",
+      "description": "تعرف على أفضل الممارسات لصياغة الموضوعات المحظورة في حراسات أمازون بيدروك بدقة، لتجنب حظر الاستفسارات المشروعة وتحسين كفاءة المساعد الذكي.",
+      "deck": "نشرت مدونة تعلم الآلة من أكيوجن دليلًا عملياً يتضمن ثماني أفضل ممارسات لتحديد الموضوعات المحظورة في أدوات الحراسة بدقة عالية.",
+      "summary_bullets": [
+        "التركيز على نية المستخدم بدلاً من نطاق الموضوع العام.",
+        "تجنب استخدام قوائم الكلمات المفردة لتجنب المطابقات الخاطئة.",
+        "صياغة التعريفات بعبارات تعبر عن الإجراء أو الفعل المطلوب حجبه.",
+        "التقليل من التداخل بين الموضوعات المحظورة لضمان أداء مستقر."
+      ],
+      "sections": [
+        {
+          "heading": "مقدمة حول الموضوعات المحظورة وتحدياتها",
+          "paragraphs": [
+            {
+              "text": "تتيح ميزة الموضوعات المحظورة في خدمة Amazon Bedrock Guardrails للمطورين حظر فئات محددة من المحتوى من خلال وصفها بلغة بسيطة وواضحة. تعتمد أداة الحراسة في عملها على مطابقة المعنى بدلاً من الكلمات المفتاحية وحدها، وهو ما قد يؤدي أحياناً إلى حظر استفسارات مشروعة لم تكن مقصودة من الأساس.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Guardrails",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html"
+                }
+              ]
+            },
+            {
+              "text": "على سبيل المثال، قد يؤدي إنشاء موضوع محظور تحت اسم المهارات المالية بهدف منع تقديم نصائح استثمارية إلى حظر أسئلة بسيطة ومشروعة مثل موعد إيداع الراتب. تشير التقارير الصادرة عن AWS Machine Learning Blog إلى أن معظم مشكلات الحظر الزائد أو القاصر تعود إلى أأنماط صياغة محددة.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/best-practices-for-writing-denied-topics-in-amazon-bedrock-guardrails/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الأأنماط الأربعة الشائعة لأخطاء الصياغة",
+          "paragraphs": [
+            {
+              "text": "عندما تقوم أدوات الحراسة بحظر نطاقات أوسع أو أضيق من المطلوب، فإن السبب يرجع غالباً إلى واحد من أربعة أأنماط رئيسية تعيق دقة النظام. النمط الأول يتمثل في الموضوعات المصممة حول نطاقات مواضيعية عامة كالمالية أو الشؤون القانونية بدلاً من التركيز على نية المستخدم الحقيقية.",
+              "links": []
+            },
+            {
+              "text": "أما النمط الثاني فيتضمن الموضوعات التي تعجز عن رصد الطلبات المستهدفة نتيجة الاعتماد المفرط على قوائم الكلمات المفتاحية المجردة. وتتسبب هذه القوائم في إغفال التعبيرات المرادفة بينما تؤدي إلى تفعيل الحظر على مدخلات غير مرتبطة تتشابه في استخدام بعض الألفاظ فقط.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تأثير الأمثلة والتداخل بين الموضوعات",
+          "paragraphs": [
+            {
+              "text": "تؤثر الأمثلة المصاحبة للسياسات بشكل مباشر على أداء النظام، حيث تترك صياغات الأفكار المكررة حدود الموضوع مكشوفة وغير محمية، بينما تساهم الأمثلة التي تذكر كيانات أو منتجات معينة في جذب تلك الكيانات إلى سياق الحظر دون قصد.",
+              "links": []
+            },
+            {
+              "text": "علاوة على ذلك، يتسبب النمط الرابع في تداخل الموضوعات المحظورة مع بعضها البعض؛ إذ تتنافس التعريفات المتباينة على تقييم المدخلات ذاتها، مما ينتج عنه تقارير مطابقة متضاربة وحظر جماعي لمدخلات لم تكن لتُحظر لو وُجد كل موضوع بمعزل عن الآخر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "سيناريو تطبيقي ومثال عملي",
+          "paragraphs": [
+            {
+              "text": "لتوضيح كيفية معالجة هذه الأخطاء، يمكننا النظر في سيناريو افتراضي لمساعد عملاء ينتمي إلى مؤسسة بنكية تدعى AnyCompany Bank. يستعد البنك لإطلاق مساعده الذكي المخصص للعملاء للإجابة عن الاستفسارات المتعلقة بالحسابات والكشوفات والتحويلات والبطاقات والرهون العقارية.",
+              "links": []
+            },
+            {
+              "text": "تتطلب سياسات الأمان في البنك حظر تقديم التوصيات الاستثمارية المخصصة، والإرشادات القانونية الخاصة بالنزاعات، وتوصيات التداول بناءً على معلومات داخلية، إلى جانب محاولات اختراق التعليمات البرمجية وتجاوز توجيهات المساعد الذكي الأساسية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الممارسات الأساسية للتركيز على نية المستخدم",
+          "paragraphs": [
+            {
+              "text": "تتمثل الممارسة الأولى والأساسية في صياغة الموضوع بناءً على نية المستخدم وليس النطاق الموضوعي البحت. يمكن للمستخدمين طرح استفسارات تقع ضمن نفس المجال العام ولكن بنوايا مختلفة تماماً، مثل الاستفسار عن موعد توفر الراتب مقابل مقارنة رواتب الموظفين.",
+              "links": []
+            },
+            {
+              "text": "لتحقيق دقة أعلى في إعداد السياسات، يوصى بالرجوع إلى وثائق Amazon Bedrock Guardrails documentation لمعرفة الهيكل التنظيمي للموضوعات والتعريفات والأمثلة المتاحة داخل الطبقات القياسية للنظام وضمان تطبيق الإرشادات بالشكل الأمثل.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Guardrails documentation",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون بيدروك",
+        "الأمن السيبراني",
+        "تعلّم الآلة",
+        "التقنية المالية"
+      ],
+      "entities": [
+        "Amazon Bedrock Guardrails",
+        "AWS Machine Learning Blog",
+        "AnyCompany Bank"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر استناداً حصراً إلى المقال التقني المنشور في مدونة تعلم الآلة التابعة لأمازون، مع الالتزام بالروابط المسموح بها وتجنب أي معلومات خارجية."
+    },
+    "en": {
+      "title": "Best Practices for Writing Denied Topics in Amazon Bedrock",
+      "description": "Learn eight essential best practices for writing precise Denied Topics in Amazon Bedrock Guardrails to prevent blocking legitimate user queries.",
+      "deck": "The AWS Machine Learning Blog has published a comprehensive guide outlining best practices for defining Denied Topics within Amazon Bedrock Guardrails to improve accuracy and reduce over-blocking.",
+      "summary_bullets": [
+        "Amazon Bedrock Guardrails evaluates Denied Topics by meaning rather than simple keyword matching.",
+        "Over-blocking often occurs when topics are framed around broad subject domains instead of user intentions.",
+        "A standard Denied Topic structure consists of a name, a definition, and up to five examples.",
+        "AWS outlines eight best practices to ensure guardrails block only intended content while allowing legitimate queries."
+      ],
+      "sections": [
+        {
+          "heading": "Understanding Denied Topics and Over-Blocking",
+          "paragraphs": [
+            {
+              "text": "When configuring Amazon Bedrock Guardrails, developers can block specific content categories by describing them in plain language. Because the system matches requests by semantic meaning rather than strict keywords, broad definitions can unintentionally restrict legitimate user inputs. For example, a generic topic named Finance intended to block investment advice might also inadvertently block routine queries such as asking when a direct deposit clears.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Guardrails",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html"
+                }
+              ]
+            },
+            {
+              "text": "According to insights shared on the AWS Machine Learning Blog, authorization and authoring patterns often dictate whether a guardrail functions correctly. Common pitfalls include topics that block legitimate queries due to domain-framing, definitions built entirely from keyword lists that miss alternative phrasings, examples that fail to establish proper boundaries, and overlapping definitions that interfere with one another.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Anatomy of a Denied Topic in Standard Tier",
+          "paragraphs": [
+            {
+              "text": "In the Standard tier of Amazon Bedrock Guardrails, each denied topic comprises three distinct components: a name, a definition, and a collection of up to five examples. The guardrail evaluates all three elements together as a single unified unit rather than analyzing the definition in isolation. The name can contain up to 100 characters, the definition can span up to 1,000 characters—with a practical sweet spot ranging between 100 and 300 characters—and each individual example is limited to 100 characters, with a maximum of 30 topics supported per guardrail.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Framing Topics Around User Intentions",
+          "paragraphs": [
+            {
+              "text": "The primary recommendation highlights framing topics around the user's specific intention rather than a broad subject domain. Two distinct queries within the exact same domain can carry entirely different underlying goals. For instance, questions regarding pay might involve a routine administrative check or a salary comparison. Domain-framed topics collapse these vital distinctions, whereas intention-framed topics evaluate queries based on the precise objective present in the user request.",
+              "links": []
+            },
+            {
+              "text": "To operationalize intention, authors should name topics after the specific action or content type that surfaces the intention, such as requests, claims, or generated content. Developers can utilize the Amazon Bedrock Guardrails console to test and refine these configurations effectively.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Guardrails console",
+                  "url": "https://console.aws.amazon.com/bedrock/home#/guardrails"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Practical Application and Limitations",
+          "paragraphs": [
+            {
+              "text": "Using a fictional banking assistant scenario, AWS demonstrates how teams can transition from domain-focused categories—like Finance, Legal, or Compensation—to precise, action-oriented definitions. By adopting these guidelines during API implementations using functions like CreateGuardrail or ApplyGuardrail, development teams can significantly minimize false positives.",
+              "links": [
+                {
+                  "text": "CreateGuardrail",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateGuardrail.html"
+                }
+              ]
+            },
+            {
+              "text": "Regardless of how closely these authoring best practices are followed, organizations must still plan for inherent system limitations. Specifically, evaluation results in semantic guardrails are not fully deterministic, meaning developers should continuously monitor performance and refine definitions as application usage evolves.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AWS",
+        "Guardrails",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "NLP"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly reflects the provided AWS Machine Learning Blog source text regarding best practices for Amazon Bedrock Guardrails Denied Topics."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 474,
+      "word_count_en": 508
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "2d7a5d6b20fff3cd431e",
+      "title": "Broadening access to AI for scientists",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "bc35581f3528ae2fbf10",
+      "title": "Best practices for writing Denied Topics in Amazon Bedrock Guardrails",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 474,
+          "word_count_en": 508
+        }
+      ]
+    }
+  ],
+  "slug": "best-practices-for-writing-denied-topics-in-amazon-bedrock-guardrails",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/best-practices-for-writing-denied-topics-in-amazon-bedrock-guardrails/hero.webp",
+    "card": "/forum/assets/posts/2026/11/best-practices-for-writing-denied-topics-in-amazon-bedrock-guardrails/card.webp",
+    "social": "/forum/assets/posts/2026/11/best-practices-for-writing-denied-topics-in-amazon-bedrock-guardrails/social.jpg",
+    "alt": {
+      "ar": "أفضل ممارسات صياغة الموضوعات المحظورة في Amazon Bedrock Guardrails",
+      "en": "Best Practices for Writing Denied Topics in Amazon Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21785-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
