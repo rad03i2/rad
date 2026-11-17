@@ -1,0 +1,365 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "1673851a5d77ce2c5516",
+  "slug": "secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/",
+    "en": "/forum/en/ai/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أنماط مصادقة OAuth الآمنة لـ Snowflake Cortex AI عبر Bedrock",
+      "description": "تعرف على أبرز أنماط مصادقة OAuth الآمنة لتكامل Snowflake Cortex AI مع عملاء الذكاء الاصطناعي عبر منصة Amazon Bedrock AgentCore ومتطلبات المؤسسات.",
+      "deck": "تستعرض منصة أمازون أحدث الحلول والأنماط التجريبية لتأمين عمليات المصادقة والربط بين أنظمة الذكاء الاصطناعي التوليدي ومنصات البيانات السحابية عبر بروتوكولات متقدمة.",
+      "summaryBullets": [
+        "استعراض ثلاثة أنماط مصادقة أساسية عبر OAuth لربط عوامل الذكاء الاصطناعي.",
+        "دور مكونات الهوية والأمان في إدارة خزائن الرموز وتحديثها تلقائياً.",
+        "دعم تكامل منصات الهوية الخارجية ومزودي الخدمات السحابية بسهولة.",
+        "توجيه المؤسسات نحو النمط الأنسب لمتطلبات التدقيق والامتثال الأمني."
+      ],
+      "sections": [
+        {
+          "heading": "مقدمة حول تحديات المصادقة في طبقة الوكلاء الذكيين",
+          "paragraphs": [
+            {
+              "text": "تسعى المؤسسات والشركات الكبرى دائماً إلى إيجاد طرق واضحة وموثوقة لتوسيع نطاق ضوابط المصادقة والتحقق والتحكم في الصلاحيات نحو طبقة الوكلاء الذكيين. وغالباً ما تتطلب هذه العمليات في السابق إما منح صلاحيات واسعة لحسابات الخدمات أو بناء تكاملات أمان مخصصة ومصممة خصيصاً لهذا الغرض، وهو ما يضيف عبئاً تشغيلياً كبيراً على الفرق التقنية والهندسية. وعندما يحتاج وكيل ذكاء اصطناعي يعمل على منصة Amazon Bedrock AgentCore إلى استدعاء خادم الإدارة والتحكم عبر بروتوكول Model Context Protocol، تطرح المؤسسات تساؤلات ملحة حول آلية التحقق والتحقق من الهوية الآمنة.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                },
+                {
+                  "text": "Model Context Protocol",
+                  "url": "https://modelcontextprotocol.io/"
+                }
+              ]
+            },
+            {
+              "text": "في هذا السياق، استعرضت المدونة التقنية لـ AWS مجموعة من تكوينات وتكوينات Open Authorization التي جرى اختبارها بشكل عملي على نظام الهوية، مما يتيح للمؤسسات مواءمة متطلبات الهوية والتدقيق والامتثال الخاصة بها بدقة عالية. ويعمل النظام كوسيط موثوق للمصادقة وتخزين الرموز وتجديدها أوتوماتيكياً دون تدخل بشري معقد في كل خطوة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور بوابة التواصل ووظائف الوساطة الأمنية",
+          "paragraphs": [
+            {
+              "text": "تعمل البوابة المخصصة لتوصيل الوكلاء الذكيين بمزودي الأدوات الخارجية عبر معايير بروتوكول السياق والاتصال، حيث تستهدف البوابة الخوادم المدارة لعرض أدوات البحث والتحليل كخيارات متاحة ومكتشفة للعملاء. ولا تعمل البوابة ك مجرد غلاف تقليدي فحسب، بل تقوم بتجميع قدرات الأهداف المكونة في كتالوج موحد وشامل يتم تقديمه للوكيل كاستجابة واحدة ومباشرة لقوائم الأدوات المتاحة للاستخدام.",
+              "links": []
+            },
+            {
+              "text": "ويتمثل التركيز الأساسي لهذه الهيكلية في المصادقة الصادرة وكيفية حصول البوابة على رموز الوصول وتقديمها للخادم المستهدف، حيث يعمل وسيط الاعتمادات على جلب الرموز المطلوبة وإدارتها عبر تخزينها مؤقتاً ومراقبة صلاحيتها وتجديدها تلقائياً عند انتهاء صلاحيتها أو اقتراب موعد ذلك، لضمان استمرارية العمل دون انقطاع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النمط الأول: مصادقة OAuth المباشرة",
+          "paragraphs": [
+            {
+              "text": "يعتمد النمط الأول على قيام المنصة بدور خادم تفويض خاص بها، حيث يقوم كل مستخدم بالمصادقة مباشرة عبر تدفق تفويض الرمز دون الحاجة إلى موفر هوية خارجي. وتعد هذه الطريقة ملائمة للبيئات التي ترغب في فصل الاعتماد على مزودين خارجيين وتفضيل المعالجة الداخلية البسيطة مع ضمان تتبع دقيق للعمليات والنشاطات داخل النظام.",
+              "links": []
+            },
+            {
+              "text": "وتتضمن العناصر المرتبطة بهذا النمط معايير محددة لإدارة الجلسات والحد من الأدوار غير المسموح بها وتعيين أسماء الدخول بدقة، مما يسهل عمليات المراجعة اللاحقة لسجلات الاستعلام والأداء العام للنظام البيئي للذكاء الاصطناعي والتخزين السحابي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النمط الثاني: المصادقة الثلاثية مع موفر هوية خارجي",
+          "paragraphs": [
+            {
+              "text": "في النمط الثاني، تتم عملية المصادقة عبر موفر هوية خارجي باستخدام تدفق رمز التفويض التقليدي، حيث يثق النظام في الرموز الصادرة عن مزود الهوية المؤسسي الموحد عبر تكامل الأمان الخارجي. ويسمح هذا النمط للشركات بالاستفادة من البنية التحتية الحالية لإدارة الهويات والوصول الموحد SSO الخاص بالمؤسسة دون الحاجة لإعادة اختراع آلية مصادقة جديدة.",
+              "links": []
+            },
+            {
+              "text": "وقد تم اختبار هذه الأنماط بنجاح مع خوادم المنصة المدارة باستخدام مزودات الهوية الكبرى في قطاع التقنية، مما يثبت مرونة البروتوكول وقدرته على التوسع والامتداد لتغطية مختلف احتياجات المؤسسات الكبرى في بيئات العمل الهجينة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "النمط الثالث: المصادقة الثنائية لبيئات التشغيل الآلي",
+          "paragraphs": [
+            {
+              "text": "يستهدف النمط الثالث أحمال العمل الآلية التي تديرها الأجهزة والأنظمة فيما بينها، حيث يقوم مستخدم خدمة مشترك بالمصادقة عبر بيانات الاعتماد الخاصة بموفر الهوية دون الحاجة لأي تفاعل بشري أو موافقة مسبقة.",
+              "links": []
+            },
+            {
+              "text": "ويُعد هذا الخيار مثالياً للأعمال التلقائية والمهام المجدولة التي تعمل في الخلفية دون مراقبة مستمرة، حيث يتيح تكاملاً سلساً وآمناً للغاية مع الحفاظ على معايير الحماية الصارمة للمؤسسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مقارنة المفاضلة واختيار النمط المناسب للمؤسسات",
+          "paragraphs": [
+            {
+              "text": "تساعد الفروق الدقيقة بين هذه الأنماط الثلاثة المؤسسات على اتخاذ القرار التقني والهندسي الصحيح بناءً على متطلبات الأمان والتدقيق الخاصة بكل بيئة عمل. فبينما يعتمد النمط الأول على خادم داخلي، تعتمد الأنماط الأخرى على مزودي هوية خارجيين لتلبية معايير الدخول الموحد والتحكم الشامل في الصلاحيات.",
+              "links": []
+            },
+            {
+              "text": "وفي نهاية المطاف، توفر المنصة فهماً شاملاً ومفصلاً لتدفقات التشغيل ومقارنات واضحة تساعد مهندسي النظم على تصميم حلول ذكاء اصطناعي تتسم بالكفاءة والأمان المتقدم وقابلية التوسع المستدام عبر البنى السحابية المختلفة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "الأمن السيبراني",
+        "الحوسبة السحابية",
+        "AWS",
+        "OAuth"
+      ],
+      "entities": [
+        "Amazon Bedrock AgentCore",
+        "Snowflake Cortex AI",
+        "AWS",
+        "Model Context Protocol"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "18 نوفمبر 2026",
+      "modifiedLabel": "18 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 646
+    },
+    "en": {
+      "title": "Secure OAuth Patterns for Snowflake Cortex AI on Amazon Bedrock",
+      "description": "Explore three tested OAuth authentication patterns for connecting Amazon Bedrock AgentCore to Snowflake Cortex AI using the Model Context Protocol.",
+      "deck": "A new technical guide highlights three distinct OAuth patterns for authenticating AI agents on Amazon Bedrock AgentCore when calling Snowflake Cortex AI tools over the Model Context Protocol.",
+      "summaryBullets": [
+        "AWS details three OAuth configurations tested for Amazon Bedrock AgentCore Identity and Snowflake Cortex AI integrations.",
+        "Configurations cover native Snowflake OAuth, three-legged OAuth via corporate single sign-on, and two-legged OAuth for shared service users.",
+        "Amazon Bedrock AgentCore Gateway handles credential brokering, token caching, and automated token refreshes.",
+        "Enterprises can tailor authentication patterns to match specific compliance, user attribution, and audit requirements."
+      ],
+      "sections": [
+        {
+          "heading": "Extending Enterprise Controls to Agentic Workloads",
+          "paragraphs": [
+            {
+              "text": "As enterprises increasingly deploy intelligent agents, extending robust authentication and authorization controls into the agentic layer remains a primary operational challenge. Organizations frequently face the choice of relying on broad service account permissions or constructing custom authentication integrations that introduce significant operational overhead. When an AI agent running on Amazon Bedrock AgentCore needs to invoke tools exposed by a Snowflake-managed MCP server, architects must establish a reliable mechanism for verifying agent identity and permissions.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                },
+                {
+                  "text": "Snowflake-managed MCP server",
+                  "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-mcp"
+                }
+              ]
+            },
+            {
+              "text": "To address these requirements, engineering teams have tested three Open Authorization configurations on Amazon Bedrock AgentCore Identity. These patterns give organizations the flexibility to choose the right balance of user attribution, auditability, and compliance controls without sacrificing execution speed or introducing unnecessary custom development.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Identity",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/identity.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Gateway Integration and Credential Brokering",
+          "paragraphs": [
+            {
+              "text": "The integration relies on Amazon Bedrock AgentCore Gateway to securely connect AI agents to external tool providers using the Model Context Protocol. Rather than acting as a simple wrapper, the Gateway aggregates capabilities from configured targets into a single unified catalog presented to the agent in a single tools/list response. This setup allows seamless interaction with capabilities such as Snowflake Cortex Agents.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                },
+                {
+                  "text": "Snowflake Cortex Agents",
+                  "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents"
+                },
+                {
+                  "text": "Model Context Protocol",
+                  "url": "https://modelcontextprotocol.io/"
+                }
+              ]
+            },
+            {
+              "text": "Outbound authentication for the Gateway is managed through specific platform capabilities. The system obtains workload tokens via inbound JSON Web Tokens and subsequently requests resource OAuth tokens from the configured identity provider. The credential broker handles token vaults, refresh cycles, and user-to-token bindings automatically behind the scenes.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Exploring the Three Tested OAuth Patterns",
+          "paragraphs": [
+            {
+              "text": "The first evaluated configuration utilizes Snowflake OAuth, where Snowflake functions directly as its own authorization server. In this per-user approach, individual users authenticate straight to Snowflake utilizing the authorization code grant without requiring an external Identity Provider. This method keeps the authorization topology contained directly within the data cloud environment.",
+              "links": [
+                {
+                  "text": "Snowflake OAuth",
+                  "url": "https://docs.snowflake.com/en/user-guide/oauth-snowflake-overview"
+                }
+              ]
+            },
+            {
+              "text": "The second and third configurations leverage third-party Identity Providers alongside External OAuth security integrations. The second pattern employs a three-legged OAuth configuration via corporate single sign-on, allowing Snowflake to trust identity provider-issued JSON Web Tokens. Meanwhile, the third pattern applies a two-legged OAuth approach utilizing client credentials for unattended, machine-to-machine workloads relying on a shared service user.",
+              "links": [
+                {
+                  "text": "External OAuth",
+                  "url": "https://docs.snowflake.com/en/user-guide/oauth-ext-overview"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Implementation Considerations and Solution Architecture",
+          "paragraphs": [
+            {
+              "text": "Testing demonstrated that external identity provider patterns can readily extend to other SaaS tools that support standard OAuth flows, provided administrators carefully validate token claims, audience settings, and required scopes. Conversely, native Snowflake OAuth relies on specific database parameters, role grammars, and session mapping rules unique to the platform's native authorization server.",
+              "links": []
+            },
+            {
+              "text": "The overarching architecture combines user-facing applications, reasoning models, guardrails for redacting personally identifiable information, and retrieval-augmented generation capabilities over policy documents stored in Amazon S3. By selecting the appropriate OAuth pattern from the tested configurations, enterprises can securely unite advanced AI services with governed corporate data.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Snowflake",
+        "OAuth",
+        "AI Agents",
+        "Model Context Protocol",
+        "Identity Management",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Snowflake",
+        "Amazon Bedrock AgentCore",
+        "Snowflake Cortex AI"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 18, 2026",
+      "modifiedLabel": "November 18, 2026",
+      "readMinutes": 3,
+      "wordCount": 543
+    }
+  },
+  "datePublished": "2026-11-18T02:35:48.089045+03:00",
+  "dateModified": "2026-11-18T02:35:48.089045+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/hero.webp",
+    "card": "/forum/assets/posts/2026/11/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/card.webp",
+    "social": "/forum/assets/posts/2026/11/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/social.jpg",
+    "alt": {
+      "ar": "أنماط مصادقة OAuth الآمنة لـ Snowflake Cortex AI عبر Bedrock",
+      "en": "Secure OAuth Patterns for Snowflake Cortex AI on Amazon Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21095-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/inline-01.webp",
+        "width": 1400,
+        "height": 719,
+        "alt": {
+          "ar": "أنماط مصادقة OAuth الآمنة لـ Snowflake Cortex AI عبر Bedrock",
+          "en": "Architecture diagram: users reach an AI application that invokes a Strands agent on Amazon Bedrock AgentCore runtime, which uses Amazon Bedrock with Guardrails and Amazon Bedrock Knowledge Bases and calls Snowflake Corte"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21095-1-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/inline-02.webp",
+        "width": 1400,
+        "height": 433,
+        "alt": {
+          "ar": "أنماط مصادقة OAuth الآمنة لـ Snowflake Cortex AI عبر Bedrock",
+          "en": "AgentCore console showing a Custom OAuth2 credential provider for Snowflake, with its callback URL, client ID, and Snowflake authorization and token endpoints."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21095-2-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/inline-03.webp",
+        "width": 1400,
+        "height": 573,
+        "alt": {
+          "ar": "أنماط مصادقة OAuth الآمنة لـ Snowflake Cortex AI عبر Bedrock",
+          "en": "AgentCore console showing the Snowflake MCP server gateway target in Ready status, with outbound auth using the Snowflake OAuth provider and the session:role:ANALYST_ROLE scope."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21095-3-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/inline-04.webp",
+        "width": 1175,
+        "height": 1050,
+        "alt": {
+          "ar": "أنماط مصادقة OAuth الآمنة لـ Snowflake Cortex AI عبر Bedrock",
+          "en": "Sequence diagram of the Snowflake OAuth 3LO runtime flow: the Gateway returns a -32042 elicitation, the user signs in at Snowflake, the app calls CompleteResourceTokenAuth, and the retried tool call runs as the user."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21095-4-2.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/",
+      "type": "official",
+      "title": "Secure OAuth patterns for Snowflake Cortex AI through Amazon Bedrock AgentCore"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore",
+  "sourceTitle": "Secure OAuth patterns for Snowflake Cortex AI through Amazon Bedrock AgentCore",
+  "trendScore": 116.84,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-17T23:35:48+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 3
+  },
+  "contentFile": "forum/content/2026/11/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore.json"
+}
