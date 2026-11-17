@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "63b2d9f9a60dad3ce920",
+  "slug": "announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-/",
+    "en": "/forum/en/ai/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون توسّع سيجميكير بأدوات ذكاء اصطناعي لتحضير البيانات",
+      "description": "أعلنت أمازون عن أدوات جديدة في سيجميكير لتحضير بيانات التدريب والتقييم، تتيح توليد بيانات اصطناعية وتقييم الجودة وتوسيع نطاق التسمية الآلية عبر واجهات برمجية.",
+      "deck": "أطلقت أمازون ويب سيرفيسز (AWS) قدرات جديدة لتحضير البيانات بالذكاء الاصطناعي في منصة سيجميكير، بهدف تسريع بناء مجموعات بيانات عالية الجودة لعمليات تطوير النماذج.",
+      "summaryBullets": [
+        "تتيح الأدوات توليد أمثلة اصطناعية مبنية على بيانات ومصادر مستخدمين محددة.",
+        "توفر نظام تسمية آلية على نطاق واسع مع إمكانية المراجعة البشرية عبر استوديو سيجميكير.",
+        "تضمن تقييم جودة البيانات واكتشاف التكرارات وتسرب الإجابات قبل بدء التدريب.",
+        "تعمل الأدوات عبر واجهات SDK بلغة بايثون ومهارات وكيل (Agent Skill) داخل بيئات التطوير."
+      ],
+      "sections": [
+        {
+          "heading": "توسيع قدرات سيجميكير لتحضير البيانات",
+          "paragraphs": [
+            {
+              "text": "أعلنت أمازون ويب سيرفيسز عن توسيع قدرات منصة سيجميكير للذكاء الاصطناعي (Amazon SageMaker AI) بإضافة أدوات مخصصة لتحضير البيانات. تهدف هذه الإضافات إلى معالجة التحدي الأكبر في مشاريع الذكاء الاصطناعي التوليدي، وهو ضمان جودة بيانات التدريب والتقييم. تعتمد هذه الأدوات على واجهات برمجية (SDK) بلغة بايثون ومهارات وكيل ذكي، مما يتيح للمطورين العمل مباشرة من داخل دفاترهم (Notebooks) أو بيئات تطويرهم المفضلة دون الحاجة إلى ربط عدة أدوات منفصلة. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/ai-data-preparation.html"
+                },
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-for-model-development-workflows/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "التسمية الآلية والمراجعة البشرية",
+          "paragraphs": [
+            {
+              "text": "توفر المنصة ميزة التسمية الآلية التي تتيح تسمية كميات كبيرة من البيانات غير المسمّاة أو المسمّاة جزئياً. تشمل الأنواع المدمجة التصنيف، والتعرف على الكيانات الاسمية، والإجابة الاستخراجية على الأسئلة، والتلخيص. تعتمد العملية على وصف المهمة عبر مواصفات قصيرة، ثم يتم التحقق من صحة هذه المواصفات باستخدام أمثلة المستخدم قبل تطبيقها على كامل المجموعة. للمهام ذات الإجابات المحددة، يعمل مجموعة من النماذج (Jury) على تسمية كل صف، حيث يعكس مستوى الاتفاق بين النماذج درجة الثقة في النتيجة.",
+              "links": []
+            },
+            {
+              "text": "للصفوف التي تكون درجة ثقتها أقل من حد معين، يتم توجيهها إلى طابور مراجعة في استوديو سيجميكير باستخدام إصدار المجتمع من Label Studio. يمكن للخبراء الخارجيين الوصول إلى تطبيق المراجعة عبر رابط مخصص، وتُعاد تصحيحاتهم لتحسين عملية التسمية الآلية في المرات اللاحقة، مع إمكانية توليد تقارير إجماع ومقاييس التسمية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توليد البيانات الاصطناعية وتحويلها",
+          "paragraphs": [
+            {
+              "text": "تتيح ميزة توليد البيانات الاصطناعية إنشاء بيانات تدريب وتقييم واختبار بناءً على مواصفات محددة. يمكن للمستخدمين ربط المخرجات ببياناتهم البذرية (Seed data) ومستنداتهم الخاصة. تولد الخدمة خط أنابيب برمجي (Pipeline) يمكن للمطورين مراجعته وتعديله وإعادة استخدامه وتوسيع نطاقه. كما توفر أداة تحويل البيانات لتنظيفها وإعادة تشكيلها لتناسب تقنيات التدريب المستهدفة، مثل التدريب الدقيق الإشرافي (SFT) أو التعلم المعزز، مع إمكانية وصف التغييرات بلغة طبيعية لتوليد الكود تلقائياً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تقييم جودة البيانات",
+          "paragraphs": [
+            {
+              "text": "تضمن أداة تقييم جودة البيانات فحص مجموعات البيانات مقابل قواعد العمل الخاصة بالمستخدم، والمقاييس المدمجة، ومقاييس \"النموذج اللغوي كحكم\" (LLM-as-a-judge). تساعد هذه الأداة في اكتشاف التكرارات والتكرارات القريبة، وكشف المشكلات الخفية مثل ضجيج التسميات أو تسرب الإجابات (Answer Leakage) التي قد تؤثر سلباً على أداء النموذج النهائي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع بيئات التطوير",
+          "paragraphs": [
+            {
+              "text": "تعمل هذه القدرات في بيئات العمل التي يستخدمها المطورون بالفعل. يمكن استخدام SDK الخاص بسيجميكير مباشرة، أو تزويد وكيل البرمجة بمهارة AI-ML من مجموعة أدوات الوكيل (Agent Toolkit). يتيح هذا للوكيل استدعاء الواجهات البرمجية تلقائياً وفقاً لأفضل ممارسات علوم البيانات، مما يسمح للمستخدمين بوصف احتياجاتهم واختيار الأداة المناسبة وتنفيذها في بيئات مثل JupyterLab أو Kiro أو أي بيئة تطوير محلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تجارب الشركات والشراكات",
+          "paragraphs": [
+            {
+              "text": "أشار ياش شيث، مدير الهندسة في منتج Splunk Agent Observability التابع لشركة سيسكو، إلى أن القدرة على تدريب نماذج تقييم قوية للذكاء الاصطناعي التوليدي تعتمد على الوصول إلى مجموعات بيانات عالية الجودة ومتنوعة. وأوضح أن أدوات التحضير في سيجميكير ساعدت فريقهم في توليد مجموعات بيانات اصطناعية تمثيلية إحصائياً بسرعة وموثوقية، مع الحفاظ على الأنماط الأساسية التي تعتمد عليها النماذج، مما قلل من الوقت المخصص لمعالجة البيانات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "سيناريوهات الاستخدام المتكامل",
+          "paragraphs": [
+            {
+              "text": "تزداد القيمة عند دمج هذه القدرات في سير عمل واحد. على سبيل المثال، يمكن بناء مجموعة بيانات تقييم \"ذهبية\" من خلال التسمية الآلية للبيانات الخام، وقبول الصفوف عالية الثقة تلقائياً، وإحالة الصفوف منخفضة الثقة للمراجعة البشرية، ثم استخدام التصحيحات لتحسين الدقة. كما يمكن تحويل المستندات الخام إلى نموذج مدرّب عبر توليد أمثلة مبنية على المستندات، وتحويلها إلى الصيغة المطلوبة، وتقييم جودتها قبل بدء التدريب باستخدام أدوات تخصيص النماذج في سيجميكير.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "سيجميكير",
+        "تحضير البيانات",
+        "البيانات الاصطناعية",
+        "تعلم الآلة"
+      ],
+      "entities": [
+        "Amazon Web Services (AWS)",
+        "Amazon SageMaker AI",
+        "Splunk",
+        "Cisco",
+        "Label Studio"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "18 نوفمبر 2026",
+      "modifiedLabel": "18 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 616
+    },
+    "en": {
+      "title": "Amazon SageMaker AI Adds New Data Preparation Capabilities",
+      "description": "Amazon SageMaker AI introduces new data preparation features for model development workflows, enabling synthetic data generation and auto-labeling.",
+      "deck": "Amazon SageMaker AI has expanded its platform with new data preparation capabilities designed to help developers build high-quality training and evaluation datasets directly from their notebooks or IDEs.",
+      "summaryBullets": [
+        "Amazon SageMaker AI introduces new tools for generating synthetic examples, assessing datasets, and auto-labeling.",
+        "Features include data quality evaluation, data transformation, and human review integration via Amazon SageMaker Studio.",
+        "Developers can utilize Python SDK APIs or the AWS AI-ML agent skill within their preferred environment.",
+        "Companies like Splunk are utilizing the synthetic data generation features to scale dataset curation for specialized tasks."
+      ],
+      "sections": [
+        {
+          "heading": "Expanding Model Development Workflows",
+          "paragraphs": [
+            {
+              "text": "Teams that ship generative AI to production understand that a model's performance relies heavily on its underlying data. Preparing accurate, well-labeled, and representative training and evaluation datasets often serves as the most time-consuming phase of a project. To address these bottlenecks, Amazon has announced new data preparation capabilities within Amazon SageMaker AI, aiming to streamline how developers build high-quality datasets for model development workflows.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/ai-data-preparation.html"
+                }
+              ]
+            },
+            {
+              "text": "Rather than forcing data scientists to stitch together disparate labeling tools, generation scripts, and validation jobs, the updated platform offers standalone building blocks. Developers can deploy these capabilities individually or chain them together using Python SDK APIs and the AWS AI-ML agent skill directly from their own notebooks or integrated development environments.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Core Features for Data Management",
+          "paragraphs": [
+            {
+              "text": "The updated feature set addresses multiple stages of the data preparation lifecycle. Auto-labeling allows teams to label data at scale from unlabeled datasets, small seed sets, or even without initial labels. Supported task types include classification, named entity recognition, extractive question answering, ordinal rating, and summarization, alongside custom task definitions. For tasks featuring fixed answers, a jury of multiple models labels each row to determine a confidence score.",
+              "links": []
+            },
+            {
+              "text": "When rows fall below a designated confidence threshold, they are routed to a review queue in Amazon SageMaker Studio, which leverages the open-source Label Studio Community Edition. Furthermore, synthetic data generation lets teams produce training, evaluation, and test data from a specification grounded in their own seed data and documents, creating a code-based pipeline that can be inspected, modified, and scaled.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Evaluation and Transformation Capabilities",
+          "paragraphs": [
+            {
+              "text": "In addition to generation and labeling, the platform incorporates data quality evaluation to check datasets against business rules, built-in metrics, and LLM-as-a-judge metrics. This evaluation helps surface duplicates, near-duplicates, label noise, and answer leakage before committing compute resources to training runs. Complementing this, data transformation features allow developers to clean and reshape data for target training techniques by describing changes in plain language or running custom Python code at scale.",
+              "links": []
+            },
+            {
+              "text": "Developers can execute these processes wherever they normally work. By utilizing the SageMaker Python SDK directly or providing coding agents with data preparation skills from the agent toolkit, practitioners can invoke APIs according to established data science best practices within environments like SageMaker Studio JupyterLab, Kiro, or local IDEs.",
+              "links": [
+                {
+                  "text": "data preparation skills",
+                  "url": "https://github.com/aws/agent-toolkit-for-aws/tree/main/skills/core-skills/aws-ai-ml/references"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Enterprise Application and Workflows",
+          "paragraphs": [
+            {
+              "text": "Organizations building specialized models often struggle to find adequate task-specific data. Splunk, a Cisco company, encountered this challenge while developing evaluation models for its Agent Observability product. Yash Sheth, Director of Engineering for Splunk Agent Observability, noted that Amazon SageMaker AI data preparation capabilities for synthetic data generation have meaningfully helped scale their dataset curation, allowing them to reliably generate statistically representative synthetic datasets while preserving underlying model patterns.",
+              "links": []
+            },
+            {
+              "text": "By combining these standalone building blocks, teams can execute end-to-end workflows, such as moving from raw documents to a trained model. Developers can generate task-specific examples, transform data formats for supervised fine-tuning or reinforcement learning, evaluate dataset quality to prevent errors, and proceed directly to model customization within SageMaker AI.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Official Insights and Availability",
+          "paragraphs": [
+            {
+              "text": "The release of these tools is documented via the AWS Machine Learning Blog, highlighting how the integration of automated data preparation into existing workflows helps data scientists spend less time on data wrangling and more time building models that deliver real enterprise value. Additional details regarding implementation and API usage can be found directly through official developer channels.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-for-model-development-workflows/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker AI",
+        "Synthetic Data",
+        "Machine Learning",
+        "Data Preparation",
+        "Artificial Intelligence",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker AI",
+        "Splunk",
+        "Cisco"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 18, 2026",
+      "modifiedLabel": "November 18, 2026",
+      "readMinutes": 3,
+      "wordCount": 652
+    }
+  },
+  "datePublished": "2026-11-18T00:15:46.410632+03:00",
+  "dateModified": "2026-11-18T00:15:46.410632+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-/hero.webp",
+    "card": "/forum/assets/posts/2026/11/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-/card.webp",
+    "social": "/forum/assets/posts/2026/11/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-/social.jpg",
+    "alt": {
+      "ar": "أمازون توسّع سيجميكير بأدوات ذكاء اصطناعي لتحضير البيانات",
+      "en": "Amazon SageMaker AI Adds New Data Preparation Capabilities"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22355-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-for-model-development-workflows/",
+      "type": "official",
+      "title": "Announcing AI data preparation capabilities in Amazon SageMaker: Build high-quality datasets for model development workflows"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-for-model-development-workflows",
+  "sourceTitle": "Announcing AI data preparation capabilities in Amazon SageMaker: Build high-quality datasets for model development workflows",
+  "trendScore": 120.45,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-17T21:15:46+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-.json"
+}
