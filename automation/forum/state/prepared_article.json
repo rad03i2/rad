@@ -1,5 +1,530 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-17T02:29:14+00:00",
-  "last_published_story_id": "f99732f8e3ed8ef0e9c9"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-17T02:34:52+00:00",
+  "target_publish_at": "2026-11-17T05:49:14.017843+03:00",
+  "story": {
+    "title": "Taxonomy of multi-agent design patterns, anti-patterns, and lessons from manufacturing",
+    "url": "https://aws.amazon.com/blogs/machine-learning/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing",
+    "domain": "aws.amazon.com",
+    "summary": "Multi-agent coordination is a distributed systems problem, not a model problem. This post gives a field-tested taxonomy of multi-agent design patterns and anti-patterns, a framework for deciding when multiple agents are warranted, and how to build cost-efficient, reliable systems on AWS.",
+    "published_at": "2026-11-16T21:53:46+00:00",
+    "discovered_at": "2026-11-16T21:57:56+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 69,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "86f7c7c99bd2479f548c",
+    "trend": {
+      "score": 102.18,
+      "age_hours": 4.67,
+      "corroboration_count": 0,
+      "entity_momentum": 0,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Taxonomy of multi-agent design patterns, anti-patterns, and lessons from manufacturing",
+      "title": "Taxonomy of multi-agent design patterns, anti-patterns, and lessons from manufacturing | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "دليل تصاميم النظم متعددة الوكلاء والدروس المستفادة",
+      "description": "استكشف تصاميم النظم متعددة الوكلاء والأنماط المضادة المستفادة من قطاع التصنيع، وكيفية بناء أنظمة موثوقة وفعالة من حيث التكلفة.",
+      "deck": "تقدم مدونة تعلم الآلة من أمازون تحليلاً شاملاً لأنماط النظم متعددة الوكلاء والأنماط المضادة المستوحاة من قطاع التصنيع لتجاوز تحديات الأنظمة الموزعة.",
+      "summary_bullets": [
+        "تنسيق الوكلاء المتعددين يمثل مشكلة أنظمة موزعة وليست مشكلة نموذج ذكاء اصطناعي.",
+        "نحو 88 بالمئة من مشاريع الذكاء الاصطناعي التجريبية تفشل في الوصول إلى مرحلة الإنتاج الفعلي.",
+        "تصنف أنماط التنسيق إلى مستويات تشمل التحكم الحتمي والمسارات التي يحددها النموذج وقت التشغيل.",
+        "الدروس المستفادة من التصنيع تساعد في تحسين وقت الإيقاع وحدود الأمان وحلقات التشغيل."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الإنتاج وتنسيق الوكلاء المتعددين",
+          "paragraphs": [
+            {
+              "text": "تواجه الفرق التقنية في المؤسسات تحديات حقيقية عند بناء وتطوير أنظمة متعددة الوكلاء، وعادة ما تكون أسباب القصور مرتبطة بطبيعة الأنظمة الموزعة وليست عيوباً في النماذج بحد ذاتها. تشير البيانات الواردة في منشورات AWS Machine Learning Blog إلى أن نحو 88 بالمئة من مشاريع الذكاء الاصطناعي التجريبية تفشل في الوصول إلى مرحلة الإنتاج الفعلي. وتتطابق هذه الإحصاءات مع ما أثبته باحثو جامعة ستانفورد من أن تعاون نموذجين قد يقدم أداءً أسوأ من عمل أحدهما منفارداً عندما يتجاوز عبء التنسيق المكاسب المتوقعة. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/"
+                },
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/"
+                }
+              ]
+            },
+            {
+              "text": "تتضاعف المخاطر مع زيادة خطوات الاعتمادية في السلاسل المتسلسلة؛ فعلى سبيل المثال، تساهم الخطوات المتعددة في خفض الموثوقية النهائية للنظام بشكل ملحوظ إذا غابت آليات إعادة المحاولة الفعالة. يوضح التحليل التقني أن معالجة هذه المشكلات تتطلب فهماً عميقاً لهندسة الأنظمة الموزعة وتجنب إضافة التعقيد دون مبرر هندسي واضح.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أنماط الطبقة الأولى للتحكم الحتمي",
+          "paragraphs": [
+            {
+              "text": "تنقسم أنماط التنسيق إلى مستويات أساسية بناءً على الجهة التي تتحكم في تدفق العمليات. ففي الطبقة الأولى، يحدد المطور المسار مسبقاً وبشكل حتمي ومضبوط. ومن أبرز هذه الأنماط خط الأنابيب المتسلسل الذي ينفذ المهام خطياً بحيث يُغذّي مخرج كل عقدة مدخل العقدة التالية لتوفير معالجة مرتبة وأوقات تنفيذ يمكن توقعها مسبقاً، وهو ما يناسب معالجة المستندات وعمليات الاستخراج والتحويل والتحميل.",
+              "links": []
+            },
+            {
+              "text": "تشمل أنماط الطبقة الأولى أيضاً سير العمل الشرطي الذي يعتمد على قواعد منطقية لاختيار العقدة التالية وتفريع المهام حسب الحالة، إضافة إلى نمط سير العمل الموازي. يتيح النمط الموازي تقسيم المهام إلى مهام فرعية مستقلة تُنفذ بالتزامن عبر معالجات متعددة، مع خطوة تجميع نهائية تدمج النتائج وتحل التعارضات، مما يقلل زمن الاستجابة الكلي ليساوي زمن أبطأ وكيل فردي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الأنماط المستقلة للتحكم الديناميكي",
+          "paragraphs": [
+            {
+              "text": "تعتمد الأنماط المستقلة في الطبقة الثانية على نموذج الذكاء الاصطناعي لتحديد مسار التحكم وقت التشغيل بدلاً من البرمجة المسبقة. تتعامل هذه المرونة العالية مع المهام المعقدة التي يصعب تحديد خطواتها مسبقاً، رغم أنها تتطلب تكاليف أعلى في رموز الذاكرة وزمن الانتقال وعمليات تصحيح الأخطاء. ويعتبر النهج العملي المفضل هو البدء بأنماط الطبقة الأولى ثم الانتقال إلى الطبقة الثانية فقط عند ظهور مهام فرعية جديدة أثناء التنفيذ.",
+              "links": []
+            },
+            {
+              "text": "تتضمن هذه الأنماط التنسيق القائم على التخطيط، حيث يتولى وكيل رئيسي دور مدير المشروع للحفاظ على خطة عمل صريحة وتوزيع المهام على عمال مستقلين وخالين من الحالة. كما تشمل أنماط التسليم بين النظراء والتنسيق القائم على المحادثة والمجموعات المشتركة، مما يعكس التعاون الجماعي البشري لحل المشكلات المعقدة بكفاءة عالية ومن خلال سياق عمل موحد ومنظم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الدروس المستفادة من قطاع التصنيع",
+          "paragraphs": [
+            {
+              "text": "تستمد الهندسة الحديثة للوكلاء المتعددين رؤى قيمة من قطاع التصنيع الصناعي التقليدي، حيث تلعب مفاهيم مثل وقت الإيقاع وحدود الأمان دوراً حاسماً في ضبط أداء الأنظمة البرمجية. تساعد هذه المفاهيم في تصميم هياكل رقمية قادرة على التعامل مع تدفقات البيانات الحافة ودورات الورديات التشغيلية بسلاسة تامة، مما يقلل من احتمالات الفشل ويضمن استمرارية الأعمال دون توقفات غير مخطط لها.",
+              "links": []
+            },
+            {
+              "text": "من خلال تطبيق مبادئ التصنيع على هندسة البرمجيات الذكية، تستطيع المؤسسات تجنب الأنماط المضادة المكلفة مثل التكرار غير المنضبط للعمليات والمحادثات اللانهائية بين الوكلاء. يضمن ذلك بناء أنظمة آمنة وقوية تعتمد على حدود واضحة ومسارات تدقيق دقيقة تدعم اتخاذ القرار في الوقت الفعلي وتمنع تضارب الصلاحيات بين الوكلاء العاملين في النظام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بناء أنظمة موثوقة وعالية الكفاءة",
+          "paragraphs": [
+            {
+              "text": "يتطلب بناء أنظمة موثوقة وفعالة من حيث التكلفة الاعتماد على أدوات وتقنيات متقدمة تدير دورة حياة الوكلاء بفعالية. توفر بيئات العمل الحديثة إمكانيات متكاملة لإدارة الذاكرة والتعرف على الهوية والمراقبة الشاملة، مما يتيح للمفرق الهندسية تتبع أداء الوكلاء بدقة ورصد الاختناقات وعلاجها فور ظهورها في بيئة الإنتاج.",
+              "links": []
+            },
+            {
+              "text": "تساعد هذه البنى التحتية المتقدمة في تقليل معدلات فشل المشاريع التجريبية وتحويلها إلى حلول إنتاجية قوية ومستدامة. ومن خلال الاستفادة من التصاميم الموثوقة والأنماط المجلى ميدانياً، يمكن للمؤسسات تعظيم العائد على الاستثمار في تقنيات الذكاء الاصطناعي وضمان تكامل سلس بين مختلف مكونات النظام الموزع.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أنظمة متعددة الوكلاء",
+        "تعلم الآلة",
+        "الحوسبة السحابية",
+        "أنظمة موزعة",
+        "أمازون"
+      ],
+      "entities": [
+        "AWS Machine Learning Blog",
+        "جامعة ستانفورد",
+        "أمازون"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر بناءً على المصدر الرسمي لمدونة تعلم الآلة من أمازون مع الالتزام التام بالمعلومات الواردة وتجنب أي افتراضات خارجية."
+    },
+    "en": {
+      "title": "A Field-Tested Taxonomy of Multi-Agent Design Patterns",
+      "description": "Explore a field-tested taxonomy of multi-agent design patterns, coordination tiers, anti-patterns, and manufacturing lessons for reliable AI.",
+      "deck": "Enterprise teams building multi-agent systems often find that early implementations fall short due to coordination challenges rather than model limitations.",
+      "summary_bullets": [
+        "Multi-agent coordination is a distributed systems problem rather than a model problem.",
+        "Data indicates that ~88% of AI pilots never reach production across various industry sources.",
+        "Design patterns are split into Tier 1 deterministic workflows and Tier 2 autonomous runtime models.",
+        "Each dependent handoff in a workflow multiplies risk and lowers end-to-end system reliability."
+      ],
+      "sections": [
+        {
+          "heading": "Understanding Multi-Agent Coordination Challenges",
+          "paragraphs": [
+            {
+              "text": "Enterprise software teams are increasingly building multi-agent systems, but when these early implementations fall short, the root cause is rarely the underlying model. Multi-agent coordination is inherently a distributed systems problem, and many teams taking it on have not yet developed traditional distributed systems instincts. Statistics consistently show that ~88% of AI pilots never reach production, reflecting the underlying complexities of managing system reliability at scale.",
+              "links": [
+                {
+                  "text": "~88% of AI pilots never reach production",
+                  "url": "https://www.cio.com/article/3850763/88-of-ai-pilots-fail-to-reach-production-but-thats-not-all-on-it.html"
+                }
+              ]
+            },
+            {
+              "text": "Furthermore, research from Stanford HAI demonstrated that two models can perform worse collaborating than either individual model alone when the coordination overhead exceeds the actual benefit. As teams add system complexity faster than they build operational understanding, risks compound. For instance, ten sequential steps that are each 95 percent reliable will deliver only 59.9 percent end-to-end reliability, while twenty steps drop that reliability to 35.8 percent, illustrating how dependent handoffs multiply risk.",
+              "links": [
+                {
+                  "text": "two models can perform worse collaborating",
+                  "url": "https://hai.stanford.edu/news/ai-coding-agents-fail-at-teamwork"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Tier 1: Deterministic Control Flow Patterns",
+          "paragraphs": [
+            {
+              "text": "Coordination patterns fall into two distinct tiers based on who controls the execution flow. In Tier 1, developers explicitly define the execution path. The first pattern in this tier is the Sequential Pipeline, which implements linear execution where each node's output feeds directly into the next node, such as moving from agent A to agent B and then to agent C. This supports ordered processing with predictable timing.",
+              "links": []
+            },
+            {
+              "text": "Additional Tier 1 architectures include the Conditional Workflow and Parallel Workflow patterns. Conditional workflows utilize logic-based edges to select the next node, allowing workflows to branch and send each case down a specialized path while enforcing iteration limits to prevent unbounded loops. Meanwhile, parallel workflows split tasks into independent subtasks that run simultaneously across handlers before a fan-in step combines the results.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Tier 2: Autonomous Runtime Control Flow Patterns",
+          "paragraphs": [
+            {
+              "text": "In Tier 2 autonomous patterns, control flow is determined dynamically at runtime by the AI model itself rather than being predefined by developers. These flexible architectures handle work whose specific steps cannot be mapped in advance, though they come with higher costs in tokens, latency, and debugging complexity. Developers are generally advised to start with deterministic Tier 1 patterns and transition tasks to Tier 2 only when subtasks truly emerge during execution.",
+              "links": []
+            },
+            {
+              "text": "Plan-based orchestration represents one approach in this tier, where a single orchestrator agent acts as a project manager, maintaining an explicit task plan with assignments and dependencies. Other approaches include local delegation and conversation-driven group chat patterns, where coordination emerges organically through turn-taking rather than through structured, rigid pipelines.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Building Reliable Systems on AWS",
+          "paragraphs": [
+            {
+              "text": "When building scalable and cost-efficient agent architectures, developers can leverage comprehensive cloud infrastructure tools and runtimes. For example, utilizing specialized components like the AgentCore runtime helps teams manage agent execution environments securely and effectively across distributed workloads.",
+              "links": [
+                {
+                  "text": "AgentCore runtime",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agents-tools-runtime.html"
+                }
+              ]
+            },
+            {
+              "text": "In addition to execution runtimes, modern enterprise systems require robust state management, secure identity handling, and deep observability. Tools such as AgentCore memory, AgentCore Gateway, AgentCore Identity, and AgentCore Observability provide the necessary foundation for tracking agent actions, securing communications, and maintaining context across multi-agent deployments.",
+              "links": [
+                {
+                  "text": "AgentCore memory",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/memory.html"
+                },
+                {
+                  "text": "AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                },
+                {
+                  "text": "AgentCore Identity",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/identity.html"
+                },
+                {
+                  "text": "AgentCore Observability",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability.html"
+                }
+              ]
+            },
+            {
+              "text": "Integrating these capabilities with managed services like Amazon Bedrock and AWS Quick allows engineering teams to streamline development, reduce operational overhead, and deploy reliable multi-agent systems that successfully transition from pilot phases into full production environments.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                },
+                {
+                  "text": "AWS Quick",
+                  "url": "https://aws.amazon.com/quicksuite/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Multi-Agent Systems",
+        "Artificial Intelligence",
+        "Distributed Systems",
+        "Design Patterns",
+        "AWS",
+        "Machine Learning"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Bedrock",
+        "Stanford HAI"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article is strictly based on the provided AWS Machine Learning Blog source text and allowed link targets without introducing outside facts."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "en:article_too_short"
+      ],
+      "word_count_ar": 855,
+      "word_count_en": 360
+    },
+    {
+      "attempt": 2,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 428,
+      "word_count_en": 730
+    },
+    {
+      "attempt": 3,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 681,
+      "word_count_en": 604
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "2d7a5d6b20fff3cd431e",
+      "title": "Broadening access to AI for scientists",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "21e886491b30cfff0403",
+      "title": "More ways to move care forward with ChatGPT for Healthcare",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "story_id": "3d4aeac88b69acfaa9cd",
+      "title": "At Holiday Extras, dots get to work before anyone asks",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "story_id": "33b95c2112c46efd0955",
+      "title": "Our new blog for science",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "story_id": "86f7c7c99bd2479f548c",
+      "title": "Taxonomy of multi-agent design patterns, anti-patterns, and lessons from manufacturing",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "en:article_too_short"
+          ],
+          "word_count_ar": 855,
+          "word_count_en": 360
+        },
+        {
+          "attempt": 2,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 428,
+          "word_count_en": 730
+        },
+        {
+          "attempt": 3,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 681,
+          "word_count_en": 604
+        }
+      ]
+    }
+  ],
+  "slug": "taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/hero.webp",
+    "card": "/forum/assets/posts/2026/11/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/card.webp",
+    "social": "/forum/assets/posts/2026/11/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/social.jpg",
+    "alt": {
+      "ar": "دليل تصاميم النظم متعددة الوكلاء والدروس المستفادة",
+      "en": "A Field-Tested Taxonomy of Multi-Agent Design Patterns"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21577-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/inline-01.webp",
+        "width": 1310,
+        "height": 426,
+        "alt": {
+          "ar": "دليل تصاميم النظم متعددة الوكلاء والدروس المستفادة",
+          "en": "Sequential pipeline: input flows through extract, transform, and validate agents to output"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21577-1-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/inline-02.webp",
+        "width": 1230,
+        "height": 733,
+        "alt": {
+          "ar": "دليل تصاميم النظم متعددة الوكلاء والدروس المستفادة",
+          "en": "Conditional workflow where passing work from the test agent deploys and failing work loops back to the write agent"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21577-2-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/inline-03.webp",
+        "width": 1306,
+        "height": 662,
+        "alt": {
+          "ar": "دليل تصاميم النظم متعددة الوكلاء والدروس المستفادة",
+          "en": "Conditional router sending each request down a single classified processing path"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21577-3-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/inline-04.webp",
+        "width": 969,
+        "height": 1050,
+        "alt": {
+          "ar": "دليل تصاميم النظم متعددة الوكلاء والدروس المستفادة",
+          "en": "Parallel workflow fanning out to financial, geopolitical, and logistics agents that run concurrently"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21577-4-1.png"
+      }
+    ]
+  }
 }
