@@ -1,5 +1,451 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-17T01:49:14+00:00",
-  "last_published_story_id": "c04e20070f0fc9a3b030"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-17T01:53:41+00:00",
+  "target_publish_at": "2026-11-17T05:09:13.596869+03:00",
+  "story": {
+    "title": "Control where GitHub Copilot customizations come from",
+    "url": "https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from",
+    "domain": "github.blog",
+    "summary": "As an enterprise administrator, you can now require selected GitHub Copilot customizations to come from plugins or managed settings, rather than standalone user or project configuration. Combined with marketplace restrictions,&#8230; The post Control where GitHub Copilot customizations come from appeared first on The GitHub Blog .",
+    "published_at": "2026-11-16T19:48:33+00:00",
+    "discovered_at": "2026-11-17T01:37:47+00:00",
+    "source": {
+      "name": "GitHub Changelog",
+      "feed": "https://github.blog/changelog/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "web"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 63,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "a06076806a0e698d5e36",
+    "trend": {
+      "score": 108.15,
+      "age_hours": 6.07,
+      "corroboration_count": 0,
+      "entity_momentum": 9.51,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from/",
+      "name": "GitHub Changelog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Control where GitHub Copilot customizations come from",
+      "title": "Control where GitHub Copilot customizations come from - GitHub Changelog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "GitHub تتيح لمديري المؤسسات التحكم بمصادر تخصيصات Copilot",
+      "description": "أعلنت GitHub عن ميزة جديدة تُمكّن مديري المؤسسات من فرض مصدر تخصيصات GitHub Copilot لتأتي حصراً من الإضافات أو الإعدادات المدارة بدلاً من التكوينات الفردية.",
+      "deck": "تتيح الميزة الجديدة لمديري المؤسسات فرض قدوم تخصيصات GitHub Copilot من الإضافات أو الإعدادات المدارة لتعزيز الأمان والتحكم.",
+      "summary_bullets": [
+        "إمكانية اشتراط قدوم تخصيصات GitHub Copilot من الإضافات أو الإعدادات المدارة.",
+        "تطبيق القيود على خمس فئات رئيسية تشمل المهارات والوكلاء وخطافات العمل وخوادم MCP.",
+        "التحكم المتقدم بالتكامل مع قيود السوق عبر إعدادات المؤسسات المدارة.",
+        "دعم الإصدار على GitHub Enterprise Cloud للمشتركين بـ Copilot Business أو Enterprise."
+      ],
+      "sections": [
+        {
+          "heading": "التحكم المتقدم في تخصيصات GitHub Copilot للمؤسسات",
+          "paragraphs": [
+            {
+              "text": "أعلنت منصة الإدارة والتطوير الشهيرة عن تحديث تقني جديد يمنح مديري المؤسسات قدرات تحكم أوسع في بيئة العمل، حيث أصبح بإمكانهم اشتراط قدوم تخصيصات GitHub Copilot المختارة من الإضافات (plugins) أو الإعدادات المدارة، بدلاً من الاعتماد على إعدادات المستخدمين أو المشاريع المستقلة. ويساعد هذا النهج، المقترن بقيود الأسواق، على توزيع أدوات ومساحات عمل MCP المعتمدة من خلال مكتبة إضافات مشتركة من دون تعطيل تلك القدرات بشكل كامل، وفق ما جاء في التحديثات التقنية عبر [GitHub Changelog]. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from/"
+                },
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from/"
+                }
+              ]
+            },
+            {
+              "text": "يسهم هذا التنظيم في تبسيط الإدارة التقنية للمؤسسات الكبرى التي تسعى لفرض معايير أمان وسياسات استخدام موحدة لبرمجيات الذكاء الاصطناعي، مما يقلل من ثغرات التكوين الفردي والعشوائي داخل فرق العمل البرمجية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل إعداد strictPluginOnlyCustomization الصارم",
+          "paragraphs": [
+            {
+              "text": "يعتمد النظام الجديد على إعداد مخصص يُعرف بـ strictPluginOnlyCustomization، والذي يتولى حظر التخصيصات المستقلة الواردة من مصادر المستخدمين والمشاريع. وفي المقابل، تظل الإضافات المؤهلة والإعدادات المدارة مسموحة وخاضعة لبقية السياسات المؤسسية المعتمدة.",
+              "links": []
+            },
+            {
+              "text": "يمنح هذا الخيار المرونة للمسؤولين لضبط سلوك المساعد الذكي بما يتوافق بدقة مع المتطلبات الأمنية والتشغيلية لكل شركة، مع ضمان استمرار تدفق التحديثات والتخصيصات عبر القنوات الرسمية والموثوقة فقط.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الفئات المدعومة في نظام التخصيص الجديد",
+          "paragraphs": [
+            {
+              "text": "يمكن لمديري التقنية تطبيق هذه القيود الجديدة على جميع الفئات الخمس المدعومة بشكل كامل، أو اختيار فئات محددة بعينها. وتشمل هذه الفئات: المهارات (skills)، والوكلاء المخصصون (custom agents)، وخطافات العمل (hooks)، وخوادم MCP (MCP servers)، وتمديدات Copilot القابلة للتنفيذ.",
+              "links": []
+            },
+            {
+              "text": "على سبيل المثال، يتيح النظام تقييد خوادم MCP والتمديدات مع إبقاء المهارات والوكلاء والخطافات مفتوحة أمام المطورين. ومن الجدير بالذكر أن المقصود بالتمديدات هنا هو موفرات مساحات العمل القابلة للتتنفيذ وليست تمديدات سوق VS Code.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع قيود الأسواق والإعدادات المدارة",
+          "paragraphs": [
+            {
+              "text": "توضح المنصة أن الاعتماد حصراً على الإضافات لا يعني بالضرورة الإضافات المُدارة من قِبل المؤسسة حصرياً، كما أنه لا يعد قائمة سماح للسوق وحده، بل يجب ربطه مع إعداد strictKnownMarketplaces لتقييد مصادر الأسواق المؤهلة. ويمكن لإعدادات المؤسسة الحالية توفير تعريفات السوق وفرض أو حظر إضافات محددة.",
+              "links": []
+            },
+            {
+              "text": "يمكن لمديري المؤسسات تكوين هذه الإعدادات والتحكم بها على بيئة GitHub Enterprise Cloud للأعضاء الذين يحملون تراخيص Copilot Business أو Copilot Enterprise الصادرة عن المؤسسة أو إحدى منظماتها.",
+              "links": []
+            },
+            {
+              "text": "للتعرف على خطوات الإعداد التفصيلية للمسؤولين، يمكن مراجعة الوثائق الرسمية الخاصة بـ [managing plugin marketplaces and plugins with enterprise-managed settings] المتاحة عبر منصة GitHub.",
+              "links": []
+            },
+            {
+              "text": "تواصل المنصة دورياً تقديم النشرات والنصائح التقنية عبر مراجعاتها النصف شهرية الموجهة للمطورين ضمن تحديثات [GitHub Copilot weekly releases — November 9] المستمرة.",
+              "links": []
+            },
+            {
+              "text": "",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "Copilot",
+        "الذكاء الاصطناعي",
+        "تطوير البرمجيات",
+        "إدارة المؤسسات",
+        "أمن المعلومات"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Copilot",
+        "GitHub Enterprise Cloud",
+        "VS Code"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر استناداً حصراً إلى مدونة التغييرات الرسمية لـ GitHub بتاريخ 16 نوفمبر 2026."
+    },
+    "en": {
+      "title": "Control GitHub Copilot Customizations Source With New Settings",
+      "description": "Enterprise administrators can now mandate that GitHub Copilot customizations originate from approved plugins or managed settings instead of standalone configs.",
+      "deck": "Enterprise administrators can now require selected GitHub Copilot customizations to originate from plugins or managed settings rather than standalone user or project configurations.",
+      "summary_bullets": [
+        "Enterprise administrators can require specific GitHub Copilot customizations to come from plugins or managed settings.",
+        "The new strictPluginOnlyCustomization setting blocks standalone configurations from user and project sources.",
+        "Restrictions can be applied globally across all five supported categories or selectively to individual ones.",
+        "Administrators can pair the feature with marketplace restrictions to distribute approved MCP tools and canvases securely."
+      ],
+      "sections": [
+        {
+          "heading": "New Controls for Enterprise Administrators",
+          "paragraphs": [
+            {
+              "text": "Enterprise administrators now have access to a powerful new capability that allows them to control where GitHub Copilot customizations originate. As detailed in the [GitHub Changelog](https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from/), administrators can require selected customizations to come directly from plugins or managed settings rather than relying on standalone user or project configurations. This update gives organizations tighter governance over how AI developer tools are tailored and deployed across corporate environments.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from/"
+                }
+              ]
+            },
+            {
+              "text": "When combined with existing marketplace restrictions, this functionality enables enterprises to distribute approved Model Context Protocol (MCP) tools and canvases through a shared plugin library. Crucially, this is achieved without having to disable those advanced capabilities entirely, striking a balance between strict security compliance and developer productivity within enterprise workflows.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Understanding the Strict Plugin-Only Setting",
+          "paragraphs": [
+            {
+              "text": "At the core of this release is the strictPluginOnlyCustomization managed setting. When enabled, this configuration blocks standalone customizations originating from individual user and project sources. Eligible plugins and managed settings, however, remain fully allowed, provided they comply with all other applicable enterprise security policies.",
+              "links": []
+            },
+            {
+              "text": "It is important to note that plugin-only enforcement does not mean that organizations are restricted exclusively to enterprise-managed plugins, nor does it function as a standalone marketplace allowlist. Administrators can pair this feature with stricter controls, such as strictKnownMarketplaces, to effectively regulate and restrict eligible marketplace sources according to internal compliance mandates.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Granular Category Control Options",
+          "paragraphs": [
+            {
+              "text": "Enterprise administrators do not have to apply these restrictions universally across the board. The feature allows organizations to either enforce the restriction across all five supported categories simultaneously or choose individual categories selectively based on their specific risk tolerance.",
+              "links": []
+            },
+            {
+              "text": "The five supported categories governed by these controls include skills, custom agents, hooks, MCP servers, and executable Copilot extensions. For example, an organization might choose to strictly restrict MCP servers and executable extensions while leaving skills, agents, and hooks open to broader team configuration. For the purposes of these settings, extensions refer specifically to executable canvas providers rather than general extensions from the VS Code Marketplace.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Integration With Enterprise-Managed Settings",
+          "paragraphs": [
+            {
+              "text": "The new customization controls integrate smoothly into existing administrative workflows. Existing managed settings can be utilized to supply marketplace definitions as well as explicitly require or block specific plugins across the organization. This ensures that IT and security teams can maintain a centralized, authoritative stance on what code assistance features are active.",
+              "links": []
+            },
+            {
+              "text": "Administrators seeking detailed instructions on how to implement these controls can consult the official documentation on [managing plugin marketplaces and plugins with enterprise-managed settings](https://docs.github.com/enterprise-cloud@latest/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/manage-plugin-marketplaces-and-plugins) for comprehensive setup guides and configuration parameters.",
+              "links": []
+            },
+            {
+              "text": "By centralizing these controls, enterprises can prevent shadow IT practices and unauthorized script execution while still empowering development teams with vetted, high-value AI capabilities.",
+              "links": []
+            },
+            {
+              "text": "For more updates and related platform announcements, you can return to the main [Back to changelog](https://github.blog/changelog/) index to review recent changes and weekly rollouts.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Licensing and Availability Requirements",
+          "paragraphs": [
+            {
+              "text": "These new administrative controls are made available specifically for enterprise administrators operating on GitHub Enterprise Cloud. To utilize these features, organization members must be assigned valid Copilot Business or Copilot Enterprise licenses that are issued directly by the enterprise itself or one of its authorized constituent organizations.",
+              "links": []
+            },
+            {
+              "text": "As enterprises increasingly adopt AI-powered coding assistants at scale, the ability to govern customization sources ensures that security teams retain oversight without sacrificing the collaborative benefits that modern development platforms provide.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub Copilot",
+        "Enterprise Administration",
+        "Managed Settings",
+        "MCP Servers",
+        "Security Compliance",
+        "Developer Tools"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Copilot",
+        "GitHub Enterprise Cloud"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based entirely on the official GitHub Changelog source text provided."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 132,
+      "word_count_en": 867
+    },
+    {
+      "attempt": 2,
+      "status": "quality_rejected",
+      "errors": [
+        "en:article_too_short"
+      ],
+      "word_count_ar": 495,
+      "word_count_en": 439
+    },
+    {
+      "attempt": 3,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 461,
+      "word_count_en": 629
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "ff7833693fa2a06713dc",
+      "title": "LVMH’s Media Division announces strategic partnership with OpenAI",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "60f3c7381bc61eae5e3d",
+      "title": "The King’s Trust and OpenAI launch £1m partnership",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "story_id": "dd659f011024f04f24b0",
+      "title": "Strengthening the fight against online child sexual abuse with new tools and support",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "story_id": "d91fd06de7b8771ee8ad",
+      "title": "Science at the Frontier: How scientists use ChatGPT",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "story_id": "a06076806a0e698d5e36",
+      "title": "Control where GitHub Copilot customizations come from",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 132,
+          "word_count_en": 867
+        },
+        {
+          "attempt": 2,
+          "status": "quality_rejected",
+          "errors": [
+            "en:article_too_short"
+          ],
+          "word_count_ar": 495,
+          "word_count_en": 439
+        },
+        {
+          "attempt": 3,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 461,
+          "word_count_en": 629
+        }
+      ]
+    }
+  ],
+  "slug": "control-where-github-copilot-customizations-come-from",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/control-where-github-copilot-customizations-come-from/hero.webp",
+    "card": "/forum/assets/posts/2026/11/control-where-github-copilot-customizations-come-from/card.webp",
+    "social": "/forum/assets/posts/2026/11/control-where-github-copilot-customizations-come-from/social.jpg",
+    "alt": {
+      "ar": "GitHub تتيح لمديري المؤسسات التحكم بمصادر تخصيصات Copilot",
+      "en": "Control GitHub Copilot Customizations Source With New Settings"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/11/703138145-4a20e6e7-211d-42bb-a45e-6a08d2ea3895.jpeg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
