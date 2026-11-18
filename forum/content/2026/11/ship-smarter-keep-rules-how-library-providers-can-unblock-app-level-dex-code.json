@@ -1,0 +1,366 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "3ef0a46f6ebaf64c3495",
+  "slug": "ship-smarter-keep-rules-how-library-providers-can-unblock-app-level-dex-code",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/ship-smarter-keep-rules-how-library-providers-can-unblock-app-level-dex-code/",
+    "en": "/forum/en/apps/ship-smarter-keep-rules-how-library-providers-can-unblock-app-level-dex-code/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أندرويد: دليل جديد لمزودي المكتبات لتحسين كود DEX",
+      "description": "تقدم Google إرشادات لمطوري المكتبات على Android لتقليل قواعد الإبقاء الواسعة، مما يتيح لـ R8 تحسين أداء التطبيقات وتجاوز متطلبات Google Play التقنية.",
+      "deck": "تسعى Google إلى تمكين مطوري المكتبات من تحسين كفاءة تطبيقاتهم عبر تقليل قواعد الإبقاء الزائدة، مما يفتح المجال أمام أداة R8 لتحسين الأداء وتقليل استهلاك الذاكرة.",
+      "summaryBullets": [
+        "أعلنت Google Play عن عتبات جديدة لتحسين كود DEX تهدف إلى تسريع بدء التشغيل وتقليل البصمة الذاكرة.",
+        "قواعد الإبقاء الواسعة (Broad Keep Rules) في المكتبات تمنع R8 من إزالة الكود غير المستخدم، مما يزيد حجم التطبيق.",
+        "يوفر R8 Configuration Analyzer رؤى حول الكفاءة ويكشف عن القواعد غير الفعالة القادمة من المكتبات الخارجية.",
+        "توصي Google باستخدام توليد الكود (Codegen) بدلاً من الانعكاس (Reflection) حيثما أمكن لتقليل الحاجة لقواعد الإبقاء.",
+        "توفر أدوات مثل Android CLI analyze وملاحظات Jetpack Keep مسارات عملية لمراقبة الأداء وضبط القواعد بدقة."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات تحسين الأداء في النظام البيئي",
+          "paragraphs": [
+            {
+              "text": "يواجه مطورو تطبيقات ومكتبات أندرويد تحدياً مشتركاً يتمثل في تحقيق أداء سلس وتجربة مستخدم متميزة. تلعب أداة R8، وهي محسّن التطبيقات في أندرويد، دوراً محورياً في هذا السياق من خلال إزالة الكود غير المستخدم وتحسين وطمس الكود المتبقي. ومع ذلك، فإن قدرة R8 على التحسين تعتمد بشكل كبير على المعلمات والقواعد التي يتم تقديمها لها، بما في ذلك قواعد الإبقاء المدمجة في المكتبات التي يعتمد عليها التطبيق.",
+              "links": [
+                {
+                  "text": "R8",
+                  "url": "https://developer.android.com/topic/performance/app-optimization/enable-app-optimization"
+                }
+              ]
+            },
+            {
+              "text": "أعلنت Google Play مؤخراً عن عتبات جديدة لتحسين كود DEX للتطبيقات والألعاب. تهدف هذه العتبات إلى تحسين أوقات بدء التشغيل، وتقليل بصمة الذاكرة، ومواءمة النظام مع التزام أندرويد بعزل تجربة المستخدم عن التطبيقات التي تستهلك ذاكرة زائدة. على الرغم من أن هذه المتطلبات تنطبق مباشرة على التطبيقات والألعاب، فإن تحقيقها مسؤولية مشتركة عبر النظام البيئي بأكمله، حيث أن أي خلل في قواعد المكتبات يؤثر سلباً على النتائج النهائية للتطبيق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور R8 Configuration Analyzer في الكشف عن المشكلات",
+          "paragraphs": [
+            {
+              "text": "يُعد R8 Configuration Analyzer أداة فعالة لتقييم نسب التحسين، والتقليص، والطمس في التطبيقات، وهي النسب التي تشكل جوهر المتطلبات التقنية لـ Google Play. بالإضافة إلى تتبع هذه النسب، تكشف الأداة عن قواعد الإبقاء غير الفعالة التي قد تنبع من التطبيقات نفسها، أو من قواعد الإبقاء للمستهلكين (Consumer Keep Rules) المدمجة في المكتبات التي يعتمد عليها التطبيق. هذا الكشف يساعد المطورين على تحديد مصادر العوائق التي تمنع التحسين الكامل.",
+              "links": [
+                {
+                  "text": "R8 Configuration Analyzer",
+                  "url": "https://developer.android.com/topic/performance/app-optimization/r8-configuration-analyzer"
+                }
+              ]
+            },
+            {
+              "text": "تهدف هذه الإرشادات إلى توضيح كيفية حل بعض التحديات الأكثر شيوعاً التي يواجهها مزودو المكتبات. الهدف النهائي هو نشر قواعد ضيقة وعالية الأداء تساعد عملاءهم على تلبية المتطلبات التقنية لـ Google Play. من خلال فهم كيفية تفاعل قواعد المكتبات مع عملية التحسين الشاملة، يمكن للمطورين تحسين جودة SDK الخاص بهم دون الإضرار بأداء التطبيقات النهائية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "فهم قواعد الإبقاء للمستهلكين",
+          "paragraphs": [
+            {
+              "text": "قواعد الإبقاء للمستهلكين هي تعليمات مدمجة داخل مكتبات Android أو JAR، تخبر R8 بأجزاء من كود المكتبة التي لا يجوز تحسينها أثناء عملية تجميع التطبيق. على عكس قواعد الإبقاء القياسية التي يكتبها مطور التطبيق أو المكتبة لتقليل حجم الكود في منتجهم، فإن قواعد المستهلكين مدمجة داخل المكتبة نفسها، وتؤثر على كيفية تقليص المكتبة أثناء التحسين الشامل للتطبيق. تضمن هذه القواعد بقاء أهداف الانعكاس الداخلية والواجهات الأصلية سليمة دون الحاجة إلى تدخل يدوي من مطور التطبيق.",
+              "links": []
+            },
+            {
+              "text": "تُعد قواعد الإبقاء للمستهلكين المتعمدة والمحددة النطاق ممارسة مثالية حاسمة تستفيد منها المكتبة والتطبيقات التي تستهلكها على حد سواء. في المقابل، تؤدي القواعد الواسعة جداً إلى الحفاظ على الكود غير المستخدم، مما يؤثر سلباً على تحسين التطبيق وأدائه. مع إضافة رؤى تحسين كود DEX إلى Play Console، تمثل المقاييس التي يراها مطورو التطبيقات التأثير المشترك لقواعد التطبيق والمكتبات المتكاملة فيه.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أخطار القواعد الواسعة واستراتيجيات الحل",
+          "paragraphs": [
+            {
+              "text": "غالباً ما يكون نية مزودي المكتبات حسنة عند نشر قواعد إبقاء واسعة، حيث لا يرغب أي مطور في رؤية SDK الخاص به يتسبب في انهيار التطبيق بسبب إزالة فئات أثناء الانعكاس. ومع ذلك، لا يُنصح بالقواعد الواسعة على مستوى الحزمة كحل طويل الأمد للوقاية من الانهيارات، لأنها تحد بشدة من إمكانات R8 في تحسين التطبيق على مستوى البرنامج بأكمله. توفر Google استراتيجيات موصى بها لمساعدة المطورين على نشر قواعد ضيقة وعالية الأداء دون التضحية بالاستقرار.",
+              "links": []
+            },
+            {
+              "text": "تشمل الممارسات الموصى بها اختبار القواعد في تطبيق نموذجي (Sample App) بعد تفعيل R8، مع التركيز على رحلات المستخدم الحرجة للتأكد من عمل الوظائف كما هو متوقع. كما يُنصح بتشغيل R8 Configuration Analyzer على هذا التطبيق النموذجي لرؤية ما يراه مطورو التطبيقات عند تدقيق إعدادات R8 الخاصة بهم، مما يتيح تصور تأثير قواعد الإبقاء على التطبيقات النهائية بسهولة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أدوات المراقبة والتقييم الفني",
+          "paragraphs": [
+            {
+              "text": "يُمكن استخدام أمر analyze من Android CLI لتقييم تحسين مكتبة AAR أو JAR، بما في ذلك الطرق والفئات والحقول التي تم إبقاؤها. يتيح هذا الأمر للمطورين مقارنة هذه الأرقام عبر الإصدارات المختلفة لمراقبة أي تراجع في الأداء. بالإضافة إلى ذلك، يُنصح بمراقبة استخدام إصدارات المكتبة والانهيارات في Google Play SDK Console، والاسترشاد بإرشادات التحسين لمؤلفي المكتبات وتوثيق R8 للممارسات الفضلى.",
+              "links": []
+            },
+            {
+              "text": "نشر مكتبة بقواعد إبقاء واسعة أو على مستوى الحزمة لا يؤثر فقط على SDK الخاص بالمطور، بل يجبر المطورين الآخرين على قبول تضخم الكود. هذا التضخم يبطئ وقت بدء تشغيل التطبيق، ويزيد من حجم التنزيل، واستهلاك الذاكرة، ومعدلات ANR (عدم الاستجابة). كما قد تكتب التطبيقات المهتمة بالأداء قواعد مخصصة لاستبدال تلك المدمجة مع المكتبة، مما قد يثني هذه التطبيقات عن تبنّي تحديثات المكتبة المستقبلية لتقليل المخاطر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الانعكاس مقابل توليد الكود",
+          "paragraphs": [
+            {
+              "text": "إذا كان SDK يستهدف الكود الأصلي (Native Code)، كما في الألعاب أو محررات الصور والفيديو، يجب توفير قواعد لجميع الفئات التي تستخدم JNI. تعمل معظم الألعاب على محركات ألعاب مثل Unity وUnreal التي تترجم اللعبة إلى كود أصلي، ويتواصل الكود الأصلي للعبة والإضافات مع إطار أندرويد عبر مكالمات JNI. في هذه الحالات، تكون الدقة في تحديد نقاط الدخول ضرورية لضمان الاستقرار.",
+              "links": []
+            },
+            {
+              "text": "تساعد ملاحظات Jetpack Keep، المتوفرة حالياً في مرحلة ألفا، على تقليل الصيانة المطلوبة للانعكاس من خلال السماح بتعليق استخدامات الانعكاس، والتي يمكن استخدامها بعد ذلك لتوليد قواعد الإبقاء أثناء البناء. النصيحة الأهم لتجنب الانهيارات بسبب الانعكاس هي تجنبه واستخدام توليد الكود (Codegen) حيثما أمكن. يخفي الانعكاس وقت التشغيل استخدام الكود عن R8 أثناء التجميع، مما يتطلب قواعد إبقاء لتجنب الانهيارات، بينما يتيح توليد الكود تحسين الكود أثناء عملية البناء، مما يمنح R8 الرؤية اللازمة لتحسين الكود بأمان مع قواعد إبقاء محدودة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ضبط نطاق القواعد بدقة",
+          "paragraphs": [
+            {
+              "text": "ومع ذلك، ليس توليد الكود الخيار الصحيح لكل السيناريوهات. فأنماط مثل الاعتماديات الاختيارية لا تزال تتطلب الانعكاس. يُنصح بدمج الانعكاس مع قواعد إبقاء ضيقة تحمي فقط نقاط الدخول المطلوبة. إذا كان تجنب الانعكاس غير ممكن، يجب أن تحدد قواعد الإبقاء للمستهلكين فقط ما تعكسه المكتبة. عند وصول مكتبتك إلى فئة أو طريقة ديناميكياً، يكفي تحديد نقطة الدخول، وسيتولى R8 الباقي من خلال بناء رسم بياني للكود المرجعي وإزالة أي فئات أو طرق أو حقول غير مرجعية.",
+              "links": []
+            },
+            {
+              "text": "ينطبق هذا المبدأ أيضاً إذا كنت قد قمت بالفعل بتحسين أو طمس بناء مكتبتك، وهي ممارسة رائعة لضمان SDK خفيف وعالي الأداء. لأن قواعدها تُطبق أثناء خطوة تجميع التطبيق، يمكن لـ R8 أن يحسن مكتبتك بشكل أكبر بناءً على الفئات والطرق الفعلية التي يستخدمها التطبيق النهائي. يكشف أمر analyze من Android CLI بشكل استباقي عن قواعد الإبقاء الواسعة المستخدمة وغير المستخدمة التي تساهم في عرقلة التحسين، مما يساعد في ضبط النطاق بدقة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أندرويد",
+        "R8",
+        "تحسين الأداء",
+        "مكتبات",
+        "Google Play",
+        "تطوير التطبيقات",
+        "DEX"
+      ],
+      "entities": [
+        "Google",
+        "Android",
+        "R8",
+        "Google Play",
+        "Jetpack Keep",
+        "Unity",
+        "Unreal",
+        "Hilt"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "18 نوفمبر 2026",
+      "modifiedLabel": "18 نوفمبر 2026",
+      "readMinutes": 6,
+      "wordCount": 1088
+    },
+    "en": {
+      "title": "Android Library Providers Get New Guide for DEX Optimization",
+      "description": "Android developers receive new guidance on optimizing app-level DEX code through narrow keep rules and the R8 Configuration Analyzer.",
+      "deck": "Google outlines strategies for Android library providers to ship narrow, high-performance consumer keep rules that help downstream apps meet technical performance requirements.",
+      "summaryBullets": [
+        "Google Play recently introduced new DEX code optimization thresholds to improve startup times and reduce app memory footprints.",
+        "Library providers often bundle consumer keep rules that can unintentionally cause code bloat and block R8 app-level optimization.",
+        "The R8 Configuration Analyzer helps developers assess optimization percentages and identify inefficient keep rules in apps and libraries.",
+        "Authors can replace runtime reflection with code generation or apply narrowly scoped rules to protect only essential entry points."
+      ],
+      "sections": [
+        {
+          "heading": "Understanding DEX Optimization and Keep Rules",
+          "paragraphs": [
+            {
+              "text": "Android app and library developers share the common objective of delivering performant applications that offer a smooth user experience. A major component of achieving this goal involves R8, which is detailed further by <a href=\"https://developer.android.com/\">Android Developers</a> as the platform's core app optimizer. R8 improves overall app performance by removing unused code while optimizing and obfuscating the remaining application logic.",
+              "links": [
+                {
+                  "text": "Android Developers",
+                  "url": "https://developer.android.com/"
+                }
+              ]
+            },
+            {
+              "text": "Google Play recently announced new DEX code optimization thresholds for apps and games designed to improve startup times and reduce memory footprints. However, meeting these thresholds is a shared ecosystem responsibility because R8 can only optimize an app within the given parameters, which includes consumer keep rules bundled by dependent libraries.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Assessing Optimization with the R8 Configuration Analyzer",
+          "paragraphs": [
+            {
+              "text": "To help developers evaluate their configuration, the <a href=\"https://developer.android.com/topic/performance/app-optimization/r8-configuration-analyzer\">R8 Configuration Analyzer</a> serves as a key utility for assessing app optimization, shrinking, and obfuscation percentages. These metrics sit at the core of Google Play technical requirements.",
+              "links": [
+                {
+                  "text": "R8 Configuration Analyzer",
+                  "url": "https://developer.android.com/topic/performance/app-optimization/r8-configuration-analyzer"
+                }
+              ]
+            },
+            {
+              "text": "Beyond tracking these performance percentages, the analyzer also surfaces inefficient keep rules originating from both applications and consumer keep rules bundled inside third-party libraries. Broad package-wide rules severely limit the whole-program optimization potential of the optimizer.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The Challenge of Consumer Keep Rules",
+          "paragraphs": [
+            {
+              "text": "Consumer keep rules are specialized instructions embedded within Android or JAR libraries. They inform R8 which portions of library code must not be optimized during the app-level compilation process. While well-intentioned library providers often ship broad rules to prevent crashes caused by class removal during reflection, package-wide rules are discouraged as a long-term solution.",
+              "links": []
+            },
+            {
+              "text": "Shipping a library with broad or package-wide keep rules forces downstream developers to accept code bloat. This bloat can slow down app startup times, increase download sizes, raise memory usage, and elevate ANR rates.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Adopting Code Generation and Narrowly Scoped Rules",
+          "paragraphs": [
+            {
+              "text": "To avoid crashes caused by reflection without hurting optimization, developers are encouraged to use code generation where possible. Runtime reflection hides code usage from R8 during compilation, whereas code generation allows the optimizer to safely process code with minimal keep rules.",
+              "links": []
+            },
+            {
+              "text": "When reflection is strictly necessary for patterns like optional dependencies, library authors should follow the guidelines for <a href=\"https://developer.android.com/topic/performance/app-optimization/library-optimization#requirements\">narrow, high-performance rules</a>. Keeping rules strictly scoped ensures that R8 can build accurate reference graphs and remove unreferenced classes, methods, and fields.",
+              "links": [
+                {
+                  "text": "narrow, high-performance rules",
+                  "url": "https://developer.android.com/topic/performance/app-optimization/library-optimization#requirements"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Testing and Best Practices for Library Authors",
+          "paragraphs": [
+            {
+              "text": "Library providers looking to ship efficient packages can utilize several recommended testing strategies. Developers should test their libraries in sample apps, run the analyzer command from the Android CLI, and monitor version usage and crash rates through the Google Play SDK Console.",
+              "links": []
+            },
+            {
+              "text": "Additionally, tracking performance against <a href=\"https://support.google.com/googleplay/android-developer/answer/17492799#zippy=%2Cdex-code-optimization\">Google Play technical requirements</a> ensures that integrated SDKs do not negatively impact downstream applications or hinder users from experiencing smooth, high-performing Android applications.",
+              "links": [
+                {
+                  "text": "Google Play technical requirements",
+                  "url": "https://support.google.com/googleplay/android-developer/answer/17492799#zippy=%2Cdex-code-optimization"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Android",
+        "R8",
+        "DEX Optimization",
+        "Google Play",
+        "App Performance",
+        "SDK Development",
+        "Keep Rules"
+      ],
+      "entities": [
+        "Google",
+        "Google Play",
+        "Android",
+        "R8"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "November 18, 2026",
+      "modifiedLabel": "November 18, 2026",
+      "readMinutes": 3,
+      "wordCount": 548
+    }
+  },
+  "datePublished": "2026-11-18T03:55:49.123798+03:00",
+  "dateModified": "2026-11-18T03:55:49.123798+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/ship-smarter-keep-rules-how-library-providers-can-unblock-app-level-dex-code/hero.webp",
+    "card": "/forum/assets/posts/2026/11/ship-smarter-keep-rules-how-library-providers-can-unblock-app-level-dex-code/card.webp",
+    "social": "/forum/assets/posts/2026/11/ship-smarter-keep-rules-how-library-providers-can-unblock-app-level-dex-code/social.jpg",
+    "alt": {
+      "ar": "أندرويد: دليل جديد لمزودي المكتبات لتحسين كود DEX",
+      "en": "Android Library Providers Get New Guide for DEX Optimization"
+    },
+    "credit": "Android Developers",
+    "sourceUrl": "https://developer.android.com/static/blog/assets/0817_Booking_assistant_agentic_cloud_Strapi_36710f6e0c_hrRjy.webp",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/ship-smarter-keep-rules-how-library-providers-can-unblock-app-level-dex-code/inline-01.webp",
+        "width": 1400,
+        "height": 700,
+        "alt": {
+          "ar": "أندرويد: دليل جديد لمزودي المكتبات لتحسين كود DEX",
+          "en": "Android Library Providers Get New Guide for DEX Optimization"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/ship-smarter-keep-rules-unblock-dex-optimization",
+        "originalUrl": "https://developer.android.com/static/blog/assets/AFD_ABL_101_Media3_1_11_is_out_Strapi_bebd1c9efc_Zpob7z.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/ship-smarter-keep-rules-how-library-providers-can-unblock-app-level-dex-code/inline-02.webp",
+        "width": 1200,
+        "height": 600,
+        "alt": {
+          "ar": "أندرويد: دليل جديد لمزودي المكتبات لتحسين كود DEX",
+          "en": "Ship smarter keep rules: How library providers can unblock app-level DEX code optimization"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/ship-smarter-keep-rules-unblock-dex-optimization",
+        "originalUrl": "https://developer.android.com/static/blog/assets/1109_ABL_160_Ship_smarter_keep_rules_How_library_providers_can_unblock_app_level_DEX_code_optimization_1_44aba4f3cd_XBpnS.webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/ship-smarter-keep-rules-how-library-providers-can-unblock-app-level-dex-code/inline-03.webp",
+        "width": 1252,
+        "height": 626,
+        "alt": {
+          "ar": "أندرويد: دليل جديد لمزودي المكتبات لتحسين كود DEX",
+          "en": "Android Library Providers Get New Guide for DEX Optimization"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Android Developers",
+          "en": "Image related to the report from Android Developers"
+        },
+        "credit": "Android Developers",
+        "sourceUrl": "https://developer.android.com/blog/posts/ship-smarter-keep-rules-unblock-dex-optimization",
+        "originalUrl": "https://developer.android.com/static/blog/assets/performance_Week11_efe6dd10be_1ULXct.webp"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Android Developers",
+      "url": "https://developer.android.com/blog/posts/ship-smarter-keep-rules-unblock-dex-optimization",
+      "type": "official",
+      "title": "Ship smarter keep rules: How library providers can unblock app-level DEX code optimization"
+    }
+  ],
+  "sourceUrl": "https://developer.android.com/blog/posts/ship-smarter-keep-rules-unblock-dex-optimization",
+  "sourceTitle": "Ship smarter keep rules: How library providers can unblock app-level DEX code optimization",
+  "trendScore": 113.38,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-18T00:55:49+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/ship-smarter-keep-rules-how-library-providers-can-unblock-app-level-dex-code.json"
+}
