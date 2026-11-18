@@ -1,0 +1,383 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "9b44c6a129423e347931",
+  "slug": "reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/",
+    "en": "/forum/en/ai/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تخفض تكاليف الرموز في Bedrock AgentCore بنسبة 71%",
+      "description": "تقدّم أمازون ثلاث استراتيجيات تقنية لخفض تكاليف الرموز وتقليل زمن الاستجابة في وكلاء الذكاء الاصطناعي المعالجين لبيانات JSON ضخمة، مما يحسّن الأداء والتكلفة.",
+      "deck": "تواجه وكلاء الإنتاج تحديات كبيرة في معالجة ملفات JSON متعددة الميجابايت، مما يؤدي إلى ارتفاع التكاليف وزمن الاستجابة. تكشف أمازون عن حلول عملية لتجاوز هذه العوائق.",
+      "summaryBullets": [
+        "خفض استهلاك الرموز بنسبة تصل إلى 71% وزمن الاستجابة بنسبة 80% عبر ثلاث استراتيجيات قابلة للتركيب.",
+        "نقل الملفات الضخمة إلى Amazon S3 مع الاحتفاظ بمراجع خفيفة في ذاكرة الوكيل لتقليل الضغط على نافذة السياق.",
+        "استخدام تقنيات مثل 'العناوين المبنية على المحتوى' لضمان كفاءة التخزين وتجنب التكرار.",
+        "تطبيق الحلول على منصة Flightscape لمعالجة بيانات حجوزات الطيران المعقدة بدقة وسرعة."
+      ],
+      "sections": [
+        {
+          "heading": "التحدي: ضغط نافذة السياق في الوكلاء الإنتاجيين",
+          "paragraphs": [
+            {
+              "text": "مع تزايد بناء الوكلاء الإنتاجيين الذين يستخدمون عشرات الأدوات ومدخلات هيكيلية كبيرة، أصبح استهلاك الرموز وزمن الاستجابة العوائق الرئيسية أمام تجربة مستخدم سلسة. عند معالجة بيانات JSON كبيرة، تُحقن كل استدعاءات الأدوات الحمولة الكاملة في نافذة سياق نموذج اللغة الكبير (LLM)، مما يؤدي إلى ارتفاع حاد في استخدام الرموز وتباطؤ الاستجابة. في المحادثات متعددة الأدوار، تتراكم هذه الضغوط، مما يرفع التكاليف ويقلل من جودة الاستجابة. إدارة ضغط نافذة السياق بفعالية في الأنظمة الوكيلية أمر حاسم للموثوقية والاستجابة على نطاق واسع.",
+              "links": []
+            },
+            {
+              "text": "في هذا السياق، شاركت أمازون ثلاث استراتيجيات قابلة للتركيب استخدمتها لبناء وكيل إنتاجي لمنصة Flightscape التي تتعامل مع حمولات JSON تتجاوز 20 ميجابايت. يمكن تطبيق هذه الاستراتيجيات لتقليل تكاليف الرموز، وخفض زمن الاستجابة، والحفاظ على القدرة الكاملة للاستدلال عبر جلسات ممتدة. ساهمت هذه التحسينات مجتمعة في تقليل استهلاك الرموز بنسبة تصل إلى 71% وقصّ متوسط زمن الاستجابة بنسبة تصل إلى 80% عبر عمليات الاختبار على حمولة تمثيلية بحجم 23 ميجابايت.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حالة الاستخدام: وكيل تحسين جداول التدريب",
+          "paragraphs": [
+            {
+              "text": "تُعد Flightscape منصة عمليات طيران تساعد شركات الطيران على التخطيط وإدارة طواقمها ورحلاتها وعملياتها. كجزء من قدرات إدارة الطواقم، تم بناء وكيل لتحسين جداول التدريب يتحقق من إسنادات جداول تدريب الطواقم مقابل قواعد العمل. مع وجود أكثر من 40 أداة ومدخلات JSON بمقاييس الميجابايت، كان بإمكان هذا الوكيل الإجابة عن استعلامات معقدة عبر إسنادات الطواقم، والجدولة، وتخصيص الموارد.",
+              "links": []
+            },
+            {
+              "text": "على الرغم من أن الوكيل قدّم الوظائف المطلوبة، إلا أن متوسط زمن استجابة الطلبات تجاوز 15 ثانية في معظم الاستدعاءات. كان كل استدعاء للأداة يحقن حمولته الكاملة في سياق النموذج، مما ينفخ عدد الرموز والتكاليف. في مجموعات البيانات الأكبر، تمتلئ نافذة السياق قبل أن يتمكن الوكيل من إنهاء عملية الاستدلال. تم بناء الوكيل باستخدام LangGraph، وهو إطار عمل مفتوح المصدر من LangChain، ويعمل على Amazon Bedrock AgentCore، وهو منصة لبناء الوكلاء وربطها وتحسينها على نطاق واسع بأي إطار عمل أو نموذج.",
+              "links": [
+                {
+                  "text": "LangGraph",
+                  "url": "https://www.langchain.com/langgraph"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الاستراتيجية الأولى: استبعاد الملفات الضخمة من السياق",
+          "paragraphs": [
+            {
+              "text": "كانت أول تحسينات تتمثل في تغيير طريقة استمرارية حالة الجلسة. في البداية، كانت الحمولات الكبيرة تُخزن بالقرب من حالة المحادثة. لذلك، تم نقل الملفات الضخمة (JSON للطلب، JSON للاستجابة، بيانات التحقق، وغيرها من الحمولات المشتقة الكبيرة) إلى Amazon Simple Storage Service (Amazon S3). تحتفظ ذاكرة AgentCore فقط بمراجع مستقرة لهذه الكائنات، مما يبقي حالة الجلسة خفيفة الوزن.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            },
+            {
+              "text": "لدعم ذلك، تم تقديم مخطط حالة مستمرة مخصص يحتفظ فقط بحقول خفيفة ومراجع للملفات. لا يزال مخطط الرسم البياني المباشر يتضمن كائنات المجال المحللة لتنفيذ الأدوات، لكن الاستمرارية تكتب الآن شكلاً مجفف (dehydrated). وقت التشغيل، ترطب الأدوات الحمولات الضخمة عند الطلب باستخدام تلك المراجع، بدلاً من تحميل كل شيء في كل دور. يعتمد كل من التجفيف والترطيب على متجر الملفات الذي يعيد مرجعاً متسقاً لكل حمولة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "العناوين المبنية على المحتوى وكفاءة التخزين",
+          "paragraphs": [
+            {
+              "text": "بدلاً من إنشاء مفتاح عشوائي، يتم اشتقاق المرجع من الحمولة نفسها. تُعرف هذه الطريقة بالعناوين المبنية على المحتوى، حيث يتم تسلسل JSON بمفاتيح مرتبة وفاصلات مضغوطة، واستخدام هضم SHA-256 لتلك البايتات كمرجع. يجعل هذا النهج عمليات الكتابة قاطعة (idempotent). تتطابق الحمولات المتطابقة مع نفس المفتاح، لذا فإن الدور الذي يعيد تسلسل JSON للطلب دون تغيير يعيد استخدام الكائن الموجود بالفعل في الدلو بدلاً من رفعه مرة أخرى.",
+              "links": []
+            },
+            {
+              "text": "يعرض متجر S3 المدعوم واجهة put_json و get_json. كما يوفر آلية لاسترجاع التفاصيل عند الحاجة. عند بداية الدور، تستعيد دالة hydrate_state() حالة الجلسة الخفيفة من ذاكرة AgentCore. عندما تعيد الأداة قائمة أو قاموساً كبيراً، يخزن الوكيل النتيجة الكاملة في Amazon S3 ويمرر للنموذج ملخصاً مضغوطاً مع مقبض (handle). يمكن للنموذج بعد ذلك استرجاع مزيد من التفاصيل باستخدام أداة get_result_page_tool().",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاستراتيجيات الثانية والثالثة: التصفح والضغوط",
+          "paragraphs": [
+            {
+              "text": "تشمل الاستراتيجيات الأخرى التصفح عند الطلب للنتائج وضغط القواميس. تعمل الاستراتيجيات 2 و3 كل مرة تعيد فيها الأداة نتيجة. عند نهاية الدور، تكتب دالة dehydrate_state() الحمولات الضخمة إلى متجر S3ArtifactStore وتحفظ فقط المراجع في ذاكرة AgentCore. هذا يضمن أن تبقى حالة الجلسة خفيفة الوزن عبر الأدوار المتعددة، مما يقلل من الضغط على نافذة السياق ويحافظ على كفاءة المعالجة.",
+              "links": []
+            },
+            {
+              "text": "تسمح هذه المقاربات القابلة للتركيب للمهندسين بتكييف الحلول حسب احتياجاتهم المحددة. يمكن دمج هذه التقنيات مع ممارسات الذكاء الاصطناعي المسؤول، مثل تطبيق حواجز Bedrock Guardrails للتحقق من استجابات الوكيل المرحة وتصفيتها، مما يساعد في تسهيل ممارسات الذكاء الاصطناعي المسؤول في عمليات النشر الإنتاجية.",
+              "links": [
+                {
+                  "text": "Bedrock Guardrails",
+                  "url": "https://aws.amazon.com/bedrock/guardrails/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات التقنية والموارد المتاحة",
+          "paragraphs": [
+            {
+              "text": "لتطبيق هذه الاستراتيجيات، يجب توفر حساب AWS مع وصول إلى Amazon Bedrock ونموذج مدعوم. كما يتطلب الأمر تمكين Amazon Bedrock AgentCore مع ذاكرة AgentCore لاستمرارية حالة الجلسة. يُنصح باستخدام وكيل مبني على LangGraph أو إطار عمل تنظيم رسوم بيانية مكافئ يدعم استدعاء الأدوات. بالإضافة إلى ذلك، يُفضل بيئة Python 3.12 أو أحدث مع مكتبات boto3 و langchain-core و langgraph.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "تتوفر الكود المرافق لهذه الاستراتيجيات في مستودع GitHub، مما يتيح للمطورين استكشاف التنفيذ التفصيلي وتطبيقه في بيئاتهم الخاصة. توفر هذه الموارد نقطة انطلاق قوية لأي منظمة تسعى لتحسين أداء وكلاء الذكاء الاصطناعي الذين يتعاملون مع بيانات هيكيلية ضخمة، مع التركيز على خفض التكاليف وتحسين زمن الاستجابة دون التضحية بجودة الاستدلال.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "Bedrock AgentCore",
+        "تحسين الأداء",
+        "تقليل التكاليف",
+        "وكلاء الذكاء الاصطناعي",
+        "JSON",
+        "S3"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock AgentCore",
+        "Flightscape",
+        "LangChain",
+        "LangGraph",
+        "Amazon S3"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "18 نوفمبر 2026",
+      "modifiedLabel": "18 نوفمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 867
+    },
+    "en": {
+      "title": "Cutting Token Costs and Latency in Amazon Bedrock AgentCore",
+      "description": "Discover three composable strategies to reduce token consumption by up to 71% and latency by up to 80% for large JSON workloads on Amazon Bedrock AgentCore.",
+      "deck": "Production agents managing multi-megabyte JSON payloads face severe performance bottlenecks, driving up token costs and inflating response latency across conversation turns.",
+      "summaryBullets": [
+        "Production agents processing large JSON inputs often experience bloated LLM context windows and slow response latencies.",
+        "Engineers developed three composable strategies to address context-window pressure for enterprise workloads handling data payloads exceeding 20 MB.",
+        "Strategies include offloading heavy artifacts to storage, on-demand result paging, and dictionary compaction.",
+        "Together, these combined optimizations cut per-turn token use by up to 71% and decreased average request latency by up to 80%."
+      ],
+      "sections": [
+        {
+          "heading": "Context-Window Pressures in Production Agent Workloads",
+          "paragraphs": [
+            {
+              "text": "As enterprises deploy production agents featuring dozens of tools and large structured inputs, token consumption and response latency frequently emerge as primary operational hurdles. When systems process massive JSON payloads, every additional tool invocation injects the complete dataset directly into the large language model context window. This architecture causes token usage and response latencies to spike dramatically. Over multi-turn conversations, this compounding pressure drives up operational costs while simultaneously degrading response quality and reasoning capabilities.",
+              "links": []
+            },
+            {
+              "text": "These performance challenges became evident during the development of a Training Schedule Optimization agent designed for Flightscape, an airline operations platform that helps airlines plan and manage crews, flights, and operations. The agent utilizes inputs scaling into the megabytes and more than 40 tools to evaluate complex crew assignments, scheduling configurations, and resource allocations. Although the system fulfilled its core functional requirements, average request latencies surpassed 15 seconds across the majority of calls because full payloads were repeatedly injected into the model context.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Core Framework Integration",
+          "paragraphs": [
+            {
+              "text": "The underlying architecture features an Optimizer that consumes a request JSON and generates a response JSON, which a Business Rules Validator subsequently checks to produce a validation report. An AI agent ingests all three documents to provide a conversational interface for querying results, exploring scheduling assignments, and understanding validation errors. Developers built this agent utilizing LangGraph, an open-source framework by LangChain, operating on top of Amazon Bedrock AgentCore, a dedicated platform designed to build, connect, and optimize agents at scale regardless of the chosen framework or model.",
+              "links": [
+                {
+                  "text": "LangGraph",
+                  "url": "https://www.langchain.com/langgraph"
+                },
+                {
+                  "text": "Amazon Bedrock AgentCore",
+                  "url": "https://aws.amazon.com/bedrock/agentcore/"
+                }
+              ]
+            },
+            {
+              "text": "To support responsible AI deployments, developers integrated Amazon Bedrock Guardrails to validate and filter the conversational responses produced by the agent. Furthermore, the system relies on Amazon Bedrock AgentCore memory to securely persist chat interactions across multiple conversation turns. Developers also defined a custom agent state to manage optimization requests, responses, and validation reports alongside basic statistics and cache data.",
+              "links": [
+                {
+                  "text": "Bedrock Guardrails",
+                  "url": "https://aws.amazon.com/bedrock/guardrails/"
+                },
+                {
+                  "text": "Amazon Bedrock AgentCore memory",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/memory.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Three Composable Strategies for Optimization",
+          "paragraphs": [
+            {
+              "text": "To mitigate the memory overhead, latency, and high token costs driven by passing large JSON files through the model context, engineers formulated three composable optimization strategies. Strategy 1 executes at the beginning and conclusion of each agent turn, while Strategies 2 and 3 operate dynamically whenever a tool returns a result.",
+              "links": []
+            },
+            {
+              "text": "At the start of a conversational turn, a hydration function restores a lightweight session state from the underlying memory persistence layer. When a tool outputs an oversized list or dictionary, the system automatically stores the complete result in Amazon Simple Storage Service (Amazon S3) and provides the model with a compact summary containing a reference handle. The model can subsequently fetch granular details using a dedicated result paging tool when required.",
+              "links": [
+                {
+                  "text": "Amazon Simple Storage Service (Amazon S3)",
+                  "url": "https://aws.amazon.com/s3/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Offloading Heavy Artifacts and Content Addressing",
+          "paragraphs": [
+            {
+              "text": "The primary optimization strategy focuses on altering how session state is persisted across interactions. Instead of storing large payloads directly within the conversational state, heavy artifacts such as request JSONs, response objects, and validation data are offloaded to Amazon S3. Consequently, the persistence layer retains only stable references to these objects, ensuring that the active session state remains lightweight.",
+              "links": []
+            },
+            {
+              "text": "To achieve reliable reference generation without relying on randomized identifiers, developers implemented content addressing. This technique serializes the JSON data using sorted keys and compact separators, subsequently calculating the SHA-256 digest of those bytes to serve as the reference key. Content addressing makes write operations idempotent, allowing identical payloads to map to the exact same storage key so that unchanged request data reuses existing bucket objects rather than triggering redundant uploads.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Implementation and Availability",
+          "paragraphs": [
+            {
+              "text": "Implementing these architectural strategies requires an active AWS account equipped with access to Amazon Bedrock and a supported model, alongside Amazon Bedrock AgentCore configured with memory persistence enabled. Additionally, teams need a graph orchestration framework with tool-calling capabilities and a Python environment configured with necessary libraries like boto3 and langchain-core.",
+              "links": []
+            },
+            {
+              "text": "Developers interested in replicating these performance gains can review the complete implementation details and companion code made publicly available in the official GitHub repository.",
+              "links": [
+                {
+                  "text": "GitHub repository",
+                  "url": "https://github.com/aws-samples/sample-reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock AgentCore",
+        "Generative AI",
+        "LangGraph",
+        "JSON Workloads",
+        "Cloud Storage",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "LangChain",
+        "Flightscape"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 18, 2026",
+      "modifiedLabel": "November 18, 2026",
+      "readMinutes": 4,
+      "wordCount": 745
+    }
+  },
+  "datePublished": "2026-11-18T04:15:49.405338+03:00",
+  "dateModified": "2026-11-18T04:15:49.405338+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/hero.webp",
+    "card": "/forum/assets/posts/2026/11/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/card.webp",
+    "social": "/forum/assets/posts/2026/11/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/social.jpg",
+    "alt": {
+      "ar": "أمازون تخفض تكاليف الرموز في Bedrock AgentCore بنسبة 71%",
+      "en": "Cutting Token Costs and Latency in Amazon Bedrock AgentCore"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-21786-featured-image-1.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/inline-01.webp",
+        "width": 1400,
+        "height": 976,
+        "alt": {
+          "ar": "أمازون تخفض تكاليف الرموز في Bedrock AgentCore بنسبة 71%",
+          "en": "Architecture diagram: the optimization workflow outputs request, response, and validation report JSON, which an AI agent reads to answer user questions through a chat interface"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ml-21786-Figure-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/inline-02.webp",
+        "width": 1400,
+        "height": 453,
+        "alt": {
+          "ar": "أمازون تخفض تكاليف الرموز في Bedrock AgentCore بنسبة 71%",
+          "en": "Diagram of one agent turn: hydrate session state, run tool calls, then dehydrate state back to storage"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-21786-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/inline-03.webp",
+        "width": 1400,
+        "height": 909,
+        "alt": {
+          "ar": "أمازون تخفض تكاليف الرموز في Bedrock AgentCore بنسبة 71%",
+          "en": "Flow diagram of one agent turn. At the start of the turn, hydrate_state() restores lightweight session state from AgentCore memory. Tool results are checked for size: oversized lists return a count, a sample, and a handl"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-21786-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/inline-04.webp",
+        "width": 1400,
+        "height": 337,
+        "alt": {
+          "ar": "أمازون تخفض تكاليف الرموز في Bedrock AgentCore بنسبة 71%",
+          "en": "Bar chart comparing total token usage and average latency before and after optimization for a 5-question run"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ml-21786-Figure-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/",
+      "type": "official",
+      "title": "Reducing token costs and latency in Amazon Bedrock AgentCore JSON workloads"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads",
+  "sourceTitle": "Reducing token costs and latency in Amazon Bedrock AgentCore JSON workloads",
+  "trendScore": 113.1,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-18T01:15:49+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads.json"
+}
