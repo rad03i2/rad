@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "52211e5ecdc6473a0532",
+  "slug": "design-responsible-ai-controls-for-amazon-aurora-postgresql",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/design-responsible-ai-controls-for-amazon-aurora-postgresql/",
+    "en": "/forum/en/ai/design-responsible-ai-controls-for-amazon-aurora-postgresql/"
+  },
+  "locales": {
+    "ar": {
+      "title": "ضوابط الذكاء الاصطناعي المسؤول في أمازون أورورا",
+      "description": "تعرف على كيفية تصميم ضوابط الذكاء الاصطناعي المسؤول وتتبع إجابات روبوتات الدردشة باستخدام أورورا بوستجري إس كيو إل وخدمات أمازون.",
+      "deck": "نشرت مدونة التعلم الآلي من إيه دبليو إس تفاصيل دمج ضوابط الذكاء الاصطناعي المسؤول مع قاعدة بيانات أمازون أورورا بوستجري إس كيو إل لتعزيز الشفافية وتتبع استجابات روبوتات الدردشة.",
+      "summaryBullets": [
+        "ربط أبعاد الذكاء الاصطناعي المسؤول الثمانية بقدرات قاعدة البيانات لتوفير بيئة موثوقة.",
+        "استخدام امتداد pgvector لتخزين المتجهات وإجراء عمليات البحث الدلالي مباشرة داخل قاعدة البيانات.",
+        "الاعتماد على إمكانات التعلم الآلي في قاعدة البيانات لتنفيذ نماذج أمازون دون الحاجة لخطรับ بيانات معقدة.",
+        "تسجيل تفاصيل التفاعلات ودرجات التشابه ونقاط المصادر في جداول مخصصة لدعم قابلية التفسير والحوكمة."
+      ],
+      "sections": [
+        {
+          "heading": "مقدمة حول الذكاء الاصطناعي المسؤول في قواعد البيانات",
+          "paragraphs": [
+            {
+              "text": "توفر روبوتات دردشة دعم العملاء التي تستعلم عن التذاكر التاريخية ومقالات قاعدة المعرفة المخزنة في خدمة أمازون أورورا بوستجري إس كيو إل إجابات سريعة ومدروسة السياق. ومع ذلك، يفرض ذلك تحديات تتعلق بالخصوصية والدقة والأمان والحوكمة، سيما عندما تتضمن البيانات الأساسية معلومات حساسة للعملاء.",
+              "links": [
+                {
+                  "text": "أمازون أورورا بوستجري إس كيو إل",
+                  "url": "https://aws.amazon.com/rds/aurora/postgresql-features/"
+                }
+              ]
+            },
+            {
+              "text": "في منشور حديث صدر على مدونة التعلم الآلي من إيه دبليو إس، جرى استعراض كيفية مطابقة الأبعاد الثمانية للذكاء الاصطناعي المسؤول مع إمكانيات قاعدة البيانات، مع التركيز بشكل عميق على بُعد قابلية التفسير باستخدام نموذج مرن لروبوت دردشة دعم العملاء يعتمد على تقنية التوليد المعزز بالاسترجاع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تشغيل التعلم الآلي والبحث المتجهي داخل قاعدة البيانات",
+          "paragraphs": [
+            {
+              "text": "تسهل إصدارات أمازون أورورا المتوافقة مع بوستجري إس كيو إل عملية تفعيل الذكاء الاصطناعي المسؤول بفضل قدرات التعلم الآلي المدمجة فيها. وتمكن هذه الإمكانات المطورين من استدعاء نقاط نهاية أمازون ساجيميكر ونماذج المؤسسات في أمازون بيدروك مباشرة من لغة الاستعلام المهيكلة دون الحاجة لعمليات نقل بيانات معقدة.",
+              "links": []
+            },
+            {
+              "text": "يستخدم التصميم الحالي وظائف التعلم الآلي في أورورا لتوليد تمثيلات متجهة للنصوص مباشرة داخل طبقة قاعدة البيانات، بالاعتماد على امتداد pgvector الشهير لتخزين ومقارنة المتجهات وإجراء عمليات البحث الدلالي بكفاءة عالية.",
+              "links": [
+                {
+                  "text": "pgvector",
+                  "url": "https://github.com/pgvector/pgvector"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "أبعاد الذكاء الاصطناعي المسؤول والإطار الهيكلي",
+          "paragraphs": [
+            {
+              "text": "تحدد شركة إيه دبليو إس ثمانية أبعاد رئيسية للذكاء الاصطناعي المسؤول، والتي يتم نشرها عبر عدسة الذكاء الاصطناعي المسؤول المرتبطة بالإطار الهندسي ودليل الاستخدام المسؤول. وتوفر هذه الأبعاد هيكلاً منظماً لتقييم وتنفيذ أنظمة موثوقة.",
+              "links": []
+            },
+            {
+              "text": "تتضمن هذه الأبعاد جوانب العدالة، وقابلية التفسير، والخصوصية والأمان، والسلامة، وقابلية التحكم، والصحة والمتانة، والحوكمة، والشفافية. وتعمل ميزات قاعدة البيانات وخدمات الذكاء الاصطناعي معاً لضمان تحقيق هذه المعايير في التطبيقات العملية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "معمارية الاستعلام والتوليد المدعومة بالحراسة",
+          "paragraphs": [
+            {
+              "text": "عندما يطرح المستخدم سؤالاً، يتبع النظام مساراً تقنياً يبدأ بتحويل السؤال إلى متجه باستخدام نماذج أمازون بيدروك، ثم إجراء بحث تشابه عبر قاعدة البيانات لتحديد المقاطع الأكثر صلة مع مراعاة أمان مستوى الصفوف لحماية خصوصية المستأجرين.",
+              "links": []
+            },
+            {
+              "text": "تتدخل أدوات حراسة النماذج لفحص المدخلات والمخرجات وضمان خلوها من البيانات الشخصية المكتوبة بصيغة مكشوفة، بالإضافة إلى التحقق من الدعم السياقي للإجابات المولدة قبل إعادتها إلى المستخدم مع الاستشهادات الخاصة بالمصادر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تسجيل التفاعلات وقابلية التفسير في جداول مخصصة",
+          "paragraphs": [
+            {
+              "text": "يتيح التصميم المخصص تسجيل كافة تفاصيل التفاعل ضمن جداول قاعدة البيانات، بما في ذلك السؤال المطروح، ومعرفات المقاطع المسترجعة، ودرجات التشابه، والمصادر التي تم الاستشهاد بها فعلياً، وآثار حراسة النماذج.",
+              "links": []
+            },
+            {
+              "text": "تساعد هذه القدرات المؤسسات على الاحتفاظ ببيانات المصدر وسجلاتها ضمن مخططاتها الخاصة وقواعد الاحتفاظ بالبيانات الخاصة بها، مما يعزز من معايير الحوكمة والتدقيق المستمر لأنظمة الذكاء الاصطناعي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "قواعد البيانات",
+        "أمازون أورورا",
+        "بوستجري إس كيو إل",
+        "التعلم الآلي",
+        "أمان البيانات"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Aurora PostgreSQL",
+        "Amazon Bedrock",
+        "Amazon SageMaker",
+        "pgvector"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "19 نوفمبر 2026",
+      "modifiedLabel": "19 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 475
+    },
+    "en": {
+      "title": "Designing Responsible AI Controls for Amazon Aurora PostgreSQL",
+      "description": "Learn how to build traceable, responsible AI chatbots using Amazon Aurora PostgreSQL, pgvector, and Amazon Bedrock Guardrails.",
+      "deck": "A new architectural design pattern maps AWS Responsible AI dimensions to database capabilities for traceable RAG chatbots.",
+      "summaryBullets": [
+        "AWS maps eight core Responsible AI dimensions to Amazon Aurora PostgreSQL features.",
+        "The reference architecture utilizes pgvector and Amazon Bedrock to support retrieval-augmented generation.",
+        "Explainability and provenance are tracked directly in SQL through custom logging schemas.",
+        "Aurora Machine Learning integrates foundation models directly within the database layer."
+      ],
+      "sections": [
+        {
+          "heading": "Operationalizing Responsible AI in Databases",
+          "paragraphs": [
+            {
+              "text": "Deploying a customer support chatbot that queries historical tickets and internal documentation can deliver rapid, context-aware answers to users. However, these systems frequently encounter challenges related to accuracy, data privacy, safety, and governance, particularly when handling sensitive information. A recent publication on the AWS Machine Learning Blog explores how organizations can map the eight core AWS Responsible AI dimensions to the capabilities of the Amazon Aurora PostgreSQL-Compatible Edition.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                },
+                {
+                  "text": "Amazon Aurora PostgreSQL-Compatible Edition",
+                  "url": "https://aws.amazon.com/rds/aurora/"
+                }
+              ]
+            },
+            {
+              "text": "The framework encompasses fairness, explainability, privacy and security, safety, controllability, veracity and robustness, governance, and transparency. Rather than attempting a full build-out of all dimensions at once, the initial architecture focuses deeply on the explainability dimension using a retrieval-augmented generation customer support chatbot as a reference use case.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Leveraging Native Database Capabilities",
+          "paragraphs": [
+            {
+              "text": "Operationalizing responsible artificial intelligence becomes more straightforward through native capabilities offered by the database engine. By utilizing features within the Amazon Aurora PostgreSQL-Compatible Edition, developers can invoke machine learning endpoints and foundation models directly from SQL queries. This approach eliminates the need for complex data movement or separate extract, transform, and load pipelines.",
+              "links": [
+                {
+                  "text": "Amazon Aurora PostgreSQL-Compatible Edition",
+                  "url": "https://aws.amazon.com/rds/aurora/postgresql-features/"
+                }
+              ]
+            },
+            {
+              "text": "The architecture implements vector embedding generation directly inside the database tier. By combining database functions with vector indexing extensions, teams can manage structured data and semantic vector searches within a single storage environment.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture of the RAG Support Chatbot",
+          "paragraphs": [
+            {
+              "text": "The reference architecture relies on an ingestion pipeline that redacts personally identifiable information from support tickets and product documents before transforming them into vector embeddings. When a user submits a natural language inquiry, the system conducts a semantic search across the data store while applying row-level security and privacy guardrails.",
+              "links": []
+            },
+            {
+              "text": "To achieve efficient semantic retrieval, the design utilizes the open-source pgvector extension to perform similarity searches on stored embeddings. The database compares incoming query vectors against knowledge vectors, returning the most relevant document chunks along with their corresponding similarity scores.",
+              "links": [
+                {
+                  "text": "pgvector",
+                  "url": "https://github.com/pgvector/pgvector"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Integrating Guardrails and Model Inference",
+          "paragraphs": [
+            {
+              "text": "Once relevant text chunks are retrieved from the database, they are combined with the user query to construct an augmented prompt. This prompt is then sent to managed AI services for text generation. During this phase, Amazon Bedrock Guardrails evaluate both the input and the output to filter denied topics, manage content safety, and verify that the generated responses remain grounded in the retrieved sources.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock Guardrails",
+                  "url": "https://aws.amazon.com/bedrock/guardrails/"
+                }
+              ]
+            },
+            {
+              "text": "The integration process uses foundation models hosted on managed infrastructure to synthesize accurate answers complete with citation markers. This ensures that users receive precise responses while maintaining strict compliance with enterprise data security requirements.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Logging and Explainability in SQL",
+          "paragraphs": [
+            {
+              "text": "A key highlight of the published design pattern is its focus on maintaining provenance within a custom database schema. While fully managed services provide built-in RAG capabilities, building a custom logging framework allows organizations to store retrieval metrics, similarity scores, and guardrail traces directly in their own relational tables.",
+              "links": []
+            },
+            {
+              "text": "Every interaction is logged comprehensively, capturing the user question, retrieved chunk identifiers, similarity metrics, cited sources, and model metadata. This detailed recordkeeping supports auditing requirements and provides teams with the transparency needed to evaluate and refine their generative AI implementations over time.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Aurora PostgreSQL",
+        "pgvector",
+        "Amazon Bedrock",
+        "Responsible AI",
+        "RAG",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Aurora",
+        "Amazon Bedrock"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 19, 2026",
+      "modifiedLabel": "November 19, 2026",
+      "readMinutes": 3,
+      "wordCount": 571
+    }
+  },
+  "datePublished": "2026-11-19T02:05:35.890279+03:00",
+  "dateModified": "2026-11-19T02:05:35.890279+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/design-responsible-ai-controls-for-amazon-aurora-postgresql/hero.webp",
+    "card": "/forum/assets/posts/2026/11/design-responsible-ai-controls-for-amazon-aurora-postgresql/card.webp",
+    "social": "/forum/assets/posts/2026/11/design-responsible-ai-controls-for-amazon-aurora-postgresql/social.jpg",
+    "alt": {
+      "ar": "ضوابط الذكاء الاصطناعي المسؤول في أمازون أورورا",
+      "en": "Designing Responsible AI Controls for Amazon Aurora PostgreSQL"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-20463-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/design-responsible-ai-controls-for-amazon-aurora-postgresql/inline-01.webp",
+        "width": 998,
+        "height": 532,
+        "alt": {
+          "ar": "ضوابط الذكاء الاصطناعي المسؤول في أمازون أورورا",
+          "en": "Architecture diagram showing a user question flowing through API Gateway to Lambda inside a VPC. Lambda converts the question into a vector with Aurora ML and Titan Text Embeddings, runs a pgvector similarity search in A"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/design-responsible-ai-controls-for-amazon-aurora-postgresql/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/20463-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/design-responsible-ai-controls-for-amazon-aurora-postgresql/",
+      "type": "official",
+      "title": "Design responsible AI controls for Amazon Aurora PostgreSQL"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/design-responsible-ai-controls-for-amazon-aurora-postgresql",
+  "sourceTitle": "Design responsible AI controls for Amazon Aurora PostgreSQL",
+  "trendScore": 109.51,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-18T23:05:36+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/design-responsible-ai-controls-for-amazon-aurora-postgresql.json"
+}
