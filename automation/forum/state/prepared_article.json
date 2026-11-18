@@ -1,5 +1,404 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-18T15:46:00+00:00",
-  "last_published_story_id": "40f3033b4005fcc77b34"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-18T16:00:29+00:00",
+  "target_publish_at": "2026-11-18T19:05:58.825728+03:00",
+  "story": {
+    "title": "How Cloudflare WAF helps protect against Java4Shell (CVE-2026-114938)",
+    "url": "https://blog.cloudflare.com/java4shell-waf-protection",
+    "domain": "blog.cloudflare.com",
+    "summary": "Java4Shell is a critical memory-corruption flaw in OpenJDK's Base64 decoder that can lead to remote code execution. Cloudflare has released six WAF managed rules for paid plans that logs matching requests by default. Patch your Java runtimes now.",
+    "published_at": "2026-11-18T14:52:10+00:00",
+    "discovered_at": "2026-11-18T14:53:03+00:00",
+    "source": {
+      "name": "Cloudflare Blog",
+      "feed": "https://blog.cloudflare.com/rss/",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 25,
+      "defaultCategory": "web"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 61,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "332e0d2625000ee23dd2",
+    "last_publisher_status": "generation_error",
+    "last_publisher_at": "2026-11-18T15:33:27+00:00",
+    "quality_errors": [
+      "generation_error:RuntimeError: No usable source text available"
+    ],
+    "publisher_attempts": [
+      {
+        "attempt": 1,
+        "status": "generation_error",
+        "error": "RuntimeError: No usable source text available"
+      },
+      {
+        "attempt": 2,
+        "status": "generation_error",
+        "error": "RuntimeError: No usable source text available"
+      },
+      {
+        "attempt": 3,
+        "status": "generation_error",
+        "error": "RuntimeError: No usable source text available"
+      }
+    ],
+    "publisher_failures": 1,
+    "publisher_retry_at": "2026-11-18T15:43:27.090442+00:00",
+    "trend": {
+      "score": 109.53,
+      "age_hours": 1.03,
+      "corroboration_count": 0,
+      "entity_momentum": 13.93,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.cloudflare.com/java4shell-waf-protection",
+      "name": "Cloudflare Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How Cloudflare WAF helps protect against Java4Shell (CVE-2026-114938)",
+      "title": "How Cloudflare WAF helps protect against Java4Shell (CVE-2026-114938) | Cloudflare Blog",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "كلاودفلير تطلق قواعد WAF لحماية Java4Shell",
+      "description": "كلاودفلير تصدر ست قواعد مُدارة لـ WAF لكشف محاولات استغلال ثغرة Java4Shell الحرجة في فك ترميز Base64، مع تفعيل وضع التسجيل افتراضياً.",
+      "deck": "أعلنت كلاودفلير عن حماية فورية عبر جدار الحماية لتطبيقات الويب ضد ثغرة Java4Shell التي تسمح بتنفيذ تعليمات برمجية عن بعد في بيئات OpenJDK.",
+      "summary_bullets": [
+        "ثغرة Java4Shell (CVE-2026-114938) تؤثر في فك ترميز Base64 بـ OpenJDK 17.0.6 وما أحدث على معالجات x86-64 تدعم AVX-512",
+        "كلاودفلير أطلقت ست قواعد مُدارة في Cloudflare Managed Ruleset لخطط Pro و Business و Enterprise",
+        "القواعد مفعلة افتراضياً بوضع التسجيل (Log) لتجنب الإيجابيات الكاذبة مع حركة Base64 الشرعية",
+        "التصحيح الكامل يتطلب تحديث بيئة Java وإعادة تشغيل الخدمات، مع توفر أعلام JVM كحل مؤقت"
+      ],
+      "sections": [
+        {
+          "heading": "تفاصيل الثغرة وتأثيرها",
+          "paragraphs": [
+            {
+              "text": "كشفت شركة الأبحاث الأمنية Calif في 17 نوفمبر 2026 عن ثغرة Java4Shell (CVE-2026-114938)، وهي خلل تلف ذاكرة (memory-corruption) في وحدة فك ترميز Base64 بـ OpenJDK، حصلت على تقييم 9.2 من 10 وفق معيار CVSS 4.0. الثغرة تسمح لمهاجم غير مصادق بإرسال بيانات Base64 مشوهة تؤدي إلى الكتابة خارج حدود المصفوفة، مما يمكّن من تسريب ذاكرة الكومة (heap) وتنفيذ تعليمات برمجية عن بعد.",
+              "links": [
+                {
+                  "text": "Java4Shell (CVE-2026-114938)",
+                  "url": "https://calif.io/java4shell/"
+                },
+                {
+                  "text": "Java4Shell",
+                  "url": "https://calif.io/java4shell/"
+                }
+              ]
+            },
+            {
+              "text": "أظهرت Calif استغلالاً مسبق المصادقة ضد Keycloak و Atlassian Jira و Confluence و JFrog Artifactory و Jenkins و PingFederate بتكويناتها الافتراضية، واستغلالاً لاحقاً للمصادقة ضد Apache Kafka و Solr و Elasticsearch و Gerrit و Spinnaker. نُشرت الاستشارة الأمنية لـ OpenJDK وأصدرت أوراكل تصحيحات في تحديث نوفمبر 2026 الحرج في نفس اليوم الساعة 21:00 ت ع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية الاستغلال والمتطلبات",
+          "paragraphs": [
+            {
+              "text": "تستغل الثغرة مسارًا سريعًا (intrinsic) يستخدم تعليمات AVX-512 لمعالجة 64 بايت دفعة واحدة. عند وجود محرف تعبئة (=) في موضع غير صالح، تحسب الدالة طول مخرجات سالبًا يتحول إلى كتابة 64 بايت كاملة، مما يكتب 62 بايت بعد نهاية مصفوفة مخصصة لـ 50 بايت فقط. يحدث التلف قبل أن يرفض Java المدخلات، لذا لا تفيد التحققات على مستوى التطبيق.",
+              "links": []
+            },
+            {
+              "text": "تؤثر الثغرة فقط عند توفر ثلاثة شروط مجتمعة: OpenJDK 17.0.6 أو أحدث (بما في ذلك توزيعات Amazon Corretto و Eclipse Temurin و Microsoft Build of OpenJDK و Azul Zulu و BellSoft Liberica و SAP SapMachine و Red Hat OpenJDK و Oracle OpenJDK و Oracle Java SE و Oracle GraalVM)، معالج x86-64 يدعم AVX-512 VBMI (Intel Xeon Ice Lake وما أحدث، أو AMD EPYC/Ryzen Zen 4 وما أحدث)، وتطبيق يفك ترميز Base64 مهاجمًا عبر المُفكك القياسي. معالجات ARM64 غير متأثرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حماية كلاودفلير عبر WAF",
+          "paragraphs": [
+            {
+              "text": "أصدرت كلاودفلير ست قواعد جديدة في Cloudflare Managed Ruleset (معرف القواعد efb7b8c949ac4650a09736fc376e9aee) لكشف أنماط Base64 المشوهة المرتبطة بالثغرة. القواعد متاحة لخطط Pro و Business و Enterprise ومفعلة افتراضيًا بوضع التسجيل (Log) لأن مدخلات مشوهة وتنسيقات رمزية (token) شرعية قد تشبه محاولات الاستغلال، والحظر الافتراضي قد يعطل حركة مرور مشروعة.",
+              "links": []
+            },
+            {
+              "text": "يمكن للعملاء مراجعة الطلبات المطابقة في Security Events وتغيير الإجراء إلى Block بعد التأكد من عدم تأثيره على حركة مرور شرعية. لعملاء Business و Enterprise، تضيف ميزة WAF Attack Score طبقة تعلم آلي تُقيّم كل طلب بحثًا عن حمولات تنفيذ تعليمات عن بعد، مما يساعد في كشف المتغيرات ومحاولات الالتفاف التي قد تفوت القواعد القائمة على التواقيع.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إرشادات النشر والمراجعة",
+          "paragraphs": [
+            {
+              "text": "للمراجعة، توجه إلى Security > Security Analytics > Events وصَفِّ حسب معرف القاعدة. لتغيير الإجراء: Security > Settings، حرر Cloudflare Managed Ruleset، ابحث عن CVE-2026-114938 وعيّن الإجراء إلى Block. بديلًا، يمكن متابعة التكوين عبر موجز Zero Wire المخصص.",
+              "links": []
+            },
+            {
+              "text": "أسماء القواعد الست المنشورة: Java4Shell - Malformed Base64 Header، Java4Shell - Malformed Base64 Query Value، Java4Shell - Malformed Base64 Body Value، Java4Shell - Malformed Base64 Path Segment، وقاعدتان إضافيتان لتغطية متجهات حقن أخرى. يمكن تتبع تحديثات القواعد عبر سجل تغييرات WAF.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التخفيف المؤقت وأفضل الممارسات",
+          "paragraphs": [
+            {
+              "text": "إذا تعذر التصحيح فورًا، توثق Calif علمين لبدء JVM يزيلان المسار المعرض للخطر: -XX:-UseBASE64Intrinsics يعطل التسريع العتادي لترميز وفك ترميز Base64، و -XX:UseAVX=2 يعطل AVX-512 (على مضيفين x86-64 فقط؛ سيفشل البدء على ARM). كلا العلمين يتطلبان إعادة تشغيل وقد يقللان الأداء لأحمال عمل تفكك كميات كبيرة من Base64، وهما يشتريان وقتًا فقط ولا يغنيان عن التحديث.",
+              "links": []
+            },
+            {
+              "text": "تشدد كلاودفلير على أن WAF طبقة دفاع إضافية وليس بديلًا عن التصحيح، لأن Java4Shell يمكن الوصول إليها عبر مسارات لا يراها WAF مثل استجابات TLS الصادرة. الإصلاح الكامل الوحيد هو تحديث بيئة Java. العديد من التطبيقات تضمين بيئة تشغيل Java خاصة، وصور الحاويات تشحن مع JDK ثابت؛ تحديث حزمة Java النظامية لا يحدث تلك النسخ ولا يستبدل JVM قيد التشغيل بالفعل، لذا كل خدمة محدثة تحتاج إعادة تشغيل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "وضع التهديد الحالي",
+          "paragraphs": [
+            {
+              "text": "أفادت كلاودفلير بعدم رصد أي مؤشر على استغلال Java4Shell على بنيتها التحتية حتى الآن. طورت Calif أول استغلال محلي عامل في نحو ثلاث ساعات بمساعدة وكلاء ذكاء اصطناعي، مما يشير إلى أن مهاجمين آخرين قد يبنون سلاسل استغلال بسرعة. يواصل محللو كلاودفلير مراقبة نشاط الهجمات وسيحدّثون القواعد مع ظهور تقنيات وتنويعات جديدة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Java4Shell",
+        "CVE-2026-114938",
+        "Cloudflare WAF",
+        "OpenJDK",
+        "ثغرة أمنية",
+        "تنفيذ تعليمات عن بعد",
+        "قواعد مُدارة",
+        "قاعدة بيانات الثغرات"
+      ],
+      "entities": [
+        "Cloudflare",
+        "Calif",
+        "OpenJDK",
+        "Oracle",
+        "Java4Shell",
+        "CVE-2026-114938",
+        "WAF",
+        "AVX-512"
+      ],
+      "article_type": "news",
+      "confidence_note": "مستند حصريًا إلى مدونة كلاودفلير الرسمية وروابطها المسموحة؛ لا معلومات مخترعة."
+    },
+    "en": {
+      "title": "Cloudflare adds WAF rules for Java4Shell flaw",
+      "description": "Cloudflare released six managed WAF rules for paid plans to detect Java4Shell malformed Base64 attacks, but says patching OpenJDK remains essential.",
+      "deck": "Cloudflare has added six managed WAF rules to help paid-plan customers detect Java4Shell, a critical OpenJDK Base64 decoder flaw. The company says the rules are a stopgap while organizations patch and restart affected Java runtimes.",
+      "summary_bullets": [
+        "Java4Shell, tracked as CVE-2026-114938, is a critical memory-corruption flaw in OpenJDK's Base64 decoder that can lead to heap memory leaks and remote code execution.",
+        "Cloudflare's six managed WAF rules are available on Pro, Business and Enterprise plans and are enabled by default with the Log action.",
+        "Affected systems require OpenJDK 17.0.6 or newer on x86-64 processors with AVX-512 VBMI support and must decode attacker-controlled Base64 data with the standard Java decoder.",
+        "Cloudflare says the WAF is an additional layer of defense, not a replacement for patching, and bundled JDKs in applications and container images need separate updates and restarts."
+      ],
+      "sections": [
+        {
+          "heading": "Cloudflare ships managed rules for Java4Shell",
+          "paragraphs": [
+            {
+              "text": "Cloudflare has released six managed WAF rules for Pro, Business and Enterprise customers to detect malformed Base64 input tied to Java4Shell (CVE-2026-114938), a critical OpenJDK vulnerability disclosed on November 17, 2026. In a Cloudflare Blog post, the company said the rules are enabled by default with the Log action, so matching requests are recorded rather than blocked.",
+              "links": [
+                {
+                  "text": "Cloudflare Blog",
+                  "url": "https://blog.cloudflare.com/java4shell-waf-protection"
+                }
+              ]
+            },
+            {
+              "text": "Cloudflare said blocking by default could disrupt legitimate traffic because malformed input and some benign application-specific token formats can resemble exploitation attempts. Customers can review matches in Security Events and change the rule action to Block after confirming the traffic is not legitimate. The rules are part of the Cloudflare Managed Ruleset and are available on paid plans.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "A critical flaw in OpenJDK's Base64 decoder",
+          "paragraphs": [
+            {
+              "text": "Java4Shell is a memory-corruption vulnerability in the Base64 decoder of OpenJDK, the widely used Java runtime. Calif, the security research company that disclosed the flaw, assigned it a CVSS 4.0 score of 9.2 out of 10, classifying it as Critical. OpenJDK published a security advisory and Oracle released patched builds in its November 2026 Critical Patch Update the same day at 21:00 UTC.",
+              "links": [
+                {
+                  "text": "security advisory",
+                  "url": "https://openjdk.org/groups/vulnerability/advisories/2026-11-17"
+                }
+              ]
+            },
+            {
+              "text": "The flaw lets an unauthenticated remote attacker send malformed Base64 data to a Java application and overwrite memory next to the decoded output. Calif turned that overwrite into a leak of heap memory, similar to Heartbleed, and into remote code execution. The bug sits in handwritten assembly that handles the final characters of the input. When padding characters appear in a position where valid Base64 never places them, the routine calculates a negative output length that turns into a full 64-byte write.",
+              "links": []
+            },
+            {
+              "text": "For a 65-character input made of 64 characters followed by a single equals sign, OpenJDK allocates a 50-byte output array and then writes 62 bytes past its end. Java eventually rejects the input as invalid and throws an exception, but by then neighboring memory has already been overwritten. Application-level input validation does not help because the corruption happens inside the decoder before the application can reject the data. The simplest trigger is 64 A characters followed by an equals sign; on OpenJDK 17, the trigger needs 128 characters followed by an equals sign because the threshold for the fast code path is higher.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Exposure depends on runtime, CPU and data path",
+          "paragraphs": [
+            {
+              "text": "Java4Shell affects a system only when several conditions align: OpenJDK 17.0.6 or newer, including distributions built from OpenJDK; an x86-64 processor with AVX-512 VBMI support, such as recent Intel Xeon or AMD EPYC and Ryzen Zen 4 or newer; and an application that decodes attacker-controlled Base64 data with the standard Java decoder. ARM64 processors are not affected. Oracle's advisory lists the exact affected Oracle builds.",
+              "links": [
+                {
+                  "text": "Oracle's advisory",
+                  "url": "https://www.oracle.com/security-alerts/cspunov2026.html"
+                }
+              ]
+            },
+            {
+              "text": "Calif demonstrated pre-authentication remote code execution against Keycloak, Atlassian Jira, Atlassian Confluence, JFrog Artifactory, Jenkins and PingFederate in their default configurations. It also demonstrated post-authentication remote code execution against Apache Kafka, Apache Solr, Elasticsearch, Gerrit and Spinnaker. Exploitation is not point-and-shoot: the overwritten bytes are mostly fixed values, and the attacker controls only where the write lands. Calif reported developing its first working local exploit in about three hours with the help of AI agents, suggesting other attackers could build exploit chains quickly.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "WAF buys time but does not replace patching",
+          "paragraphs": [
+            {
+              "text": "Cloudflare positions the WAF as an additional layer of defense, not a replacement for the patch. Java4Shell can be reached through paths a WAF does not see, such as outbound TLS responses, and the only complete fix is to update the Java runtime. Cloudflare said it has seen no indication so far that Java4Shell was exploited on its infrastructure.",
+              "links": []
+            },
+            {
+              "text": "For Business and Enterprise customers, WAF attack score adds a machine learning layer that scores each request for remote code execution payloads, helping catch variations and bypass attempts that signature-based rules can miss. Cloudflare said its analysts continue to monitor attack activity and will update the rules as new techniques and variations appear.",
+              "links": [
+                {
+                  "text": "WAF attack score",
+                  "url": "https://developers.cloudflare.com/waf/detections/attack-score/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "What defenders should do now",
+          "paragraphs": [
+            {
+              "text": "Organizations should patch every Java runtime, including JDKs bundled inside applications and container images. Upgrading the system Java package does not update those copies or replace a Java virtual machine that is already running, so every updated service needs a restart. If an immediate update is not possible, Calif documents two JVM startup flags that remove the vulnerable code path: -XX:-UseBASE64Intrinsics disables hardware-accelerated Base64 encoding and decoding, and -XX:UseAVX=2 disables AVX-512. The second flag should be applied only on x86-64 hosts because OpenJDK on ARM does not recognize it and will fail to start. Both flags require a restart and may reduce performance for workloads that decode large amounts of Base64. They buy time while you patch, but they do not replace the update.",
+              "links": []
+            },
+            {
+              "text": "Cloudflare customers on paid plans should review matching requests in Security Events and change the rule action to Block if the matches are not legitimate traffic. Rule changes can be tracked in the WAF changelog, and more information on how the vulnerability develops is available on the dedicated Cloudflare Zero Wire briefing.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "Java4Shell",
+        "OpenJDK",
+        "WAF",
+        "CVE-2026-114938",
+        "Base64",
+        "remote code execution"
+      ],
+      "entities": [
+        "Cloudflare",
+        "OpenJDK",
+        "Oracle",
+        "Calif",
+        "Java4Shell",
+        "CVE-2026-114938"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence: article is based on the supplied Cloudflare Blog source and its extracted text, with all technical claims attributed to the source."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 720,
+      "word_count_en": 967
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "a1de396d3910fa2e0f79",
+      "title": "Le Groupe Figaro and OpenAI partner to bring Le Figaro journalism to ChatGPT",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "332e0d2625000ee23dd2",
+      "title": "How Cloudflare WAF helps protect against Java4Shell (CVE-2026-114938)",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 720,
+          "word_count_en": 967
+        }
+      ]
+    }
+  ],
+  "slug": "how-cloudflare-waf-helps-protect-against-java4shell-cve-2026-114938",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-cloudflare-waf-helps-protect-against-java4shell-cve-2026-114938/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-cloudflare-waf-helps-protect-against-java4shell-cve-2026-114938/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-cloudflare-waf-helps-protect-against-java4shell-cve-2026-114938/social.jpg",
+    "alt": {
+      "ar": "كلاودفلير تطلق قواعد WAF لحماية Java4Shell",
+      "en": "Cloudflare adds WAF rules for Java4Shell flaw"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M7QF29ZF72GYSWMY1N1JYEF1.01M7QF2B7Y1RATAK2QBPTQ100E.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-cloudflare-waf-helps-protect-against-java4shell-cve-2026-114938/inline-01.webp",
+        "width": 1200,
+        "height": 675,
+        "alt": {
+          "ar": "كلاودفلير تطلق قواعد WAF لحماية Java4Shell",
+          "en": "Cloudflare adds WAF rules for Java4Shell flaw"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/java4shell-waf-protection",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M7QEX0WPTPFDDEE77HAVYYGB.01M7QEX1A784VKSE3C9SPC0P30.png&w=2400&h=1350&f=webp&fit=cover&position=center"
+      }
+    ]
+  }
 }
