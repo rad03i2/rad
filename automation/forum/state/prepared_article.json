@@ -1,5 +1,458 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-18T03:16:27+00:00",
-  "last_published_story_id": "3b8bc46555767ca434ff"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-18T03:24:43+00:00",
+  "target_publish_at": "2026-11-18T06:36:25.977848+03:00",
+  "story": {
+    "title": "Responsible AI for agentic AI: A phased roadmap for platform and application teams",
+    "url": "https://aws.amazon.com/blogs/machine-learning/responsible-ai-for-agentic-ai-a-phased-roadmap-for-platform-and-application-teams",
+    "domain": "aws.amazon.com",
+    "summary": "Enterprises adopting agentic AI at scale need platforms that embed responsible AI from the start. This post gives platform and application teams a three-phase roadmap (governance foundation, pilot deployment, and evaluation and hardening) that maps the AWS Responsible AI Lens pillars to each phase, with guidance on when to revisit each one.",
+    "published_at": "2026-11-17T16:56:31+00:00",
+    "discovered_at": "2026-11-17T16:58:38+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "1c55d3d1e6c03df7f551",
+    "trend": {
+      "score": 105.44,
+      "age_hours": 10.46,
+      "corroboration_count": 0,
+      "entity_momentum": 9.51,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/responsible-ai-for-agentic-ai-a-phased-roadmap-for-platform-and-application-teams/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Responsible AI for agentic AI: A phased roadmap for platform and application teams",
+      "title": "Responsible AI for agentic AI: A phased roadmap for platform and application teams | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تطلق خارطة طريق ثلاثية للمساءلة في أنظمة الذكاء الاصطناعي الوكيل",
+      "description": "تقدم أمازون ويب خدمات خارطة طريق عملية من ثلاث مراحل لدمج الذكاء الاصطناعي المسؤول في منصات الوكلاء، مع تركيز على الحوكمة والأمان لتقليل المخاطر التشغيلية.",
+      "deck": "تستجيب أمازون ويب خدمات للتحديات الناشئة عن عدم حتمية نماذج الذكاء الاصطناعي التوليدي من خلال تقديم إطار عمل نضج من ثلاث مراحل، يهدف إلى تمكين فرق المنصات والتطبيقات من بناء أنظمة وكلاء آمنة وقابلة للتدقيق.",
+      "summary_bullets": [
+        "تحديد ثلاث مراحل رئيسية: أساسيات الحوكمة، النشر التجريبي، والتقييم والتعزيز لضمان المساءلة المستمرة.",
+        "ربط أعمدة الذكاء الاصطناعي المسؤول من عدسة AWS Responsible AI Lens بكل مرحلة من مراحل النضج.",
+        "توفير مهارة تقييم الذكاء الاصطناعي المسؤول (Responsible AI Assessment Skill) كأداة عملية لقياس الوضع الحالي.",
+        "التأكيد على أهمية إدارة حدود الصلاحيات وكشف البيانات في بيئات الوكلاء متعددة الخطوات."
+      ],
+      "sections": [
+        {
+          "heading": "تغير طبيعة التحديات مع صعود الوكلاء",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات التي تتبنى أنظمة الذكاء الاصطناعي الوكيل تحديات غير مسبوقة، حيث لم تعد نماذج الذكاء الاصطناعي التوليدي مجرد مولدات نصوص، بل أصبحت أنظمة قادرة على الاستدلال، واتخاذ الإجراءات، وتكوين الأدوات ديناميكياً عبر خطوات متعددة. هذا التحول يوسع نطاق الذكاء الاصطناعي المسؤول (Responsible AI) ليشمل أبعاداً أعمق من مجرد دورة حياة النموذج التقليدي، مثل التدريب والاستدلال، ليشمل السلوك التشغيلي المعقد.",
+              "links": [
+                {
+                  "text": "الذكاء الاصطناعي المسؤول",
+                  "url": "https://aws.amazon.com/ai/responsible-ai/"
+                }
+              ]
+            },
+            {
+              "text": "تشير أمازون ويب خدمات إلى أن الطبيعة غير الحتمية لهذه النماذج تخلق تعقيدات لم تستشرها ممارسات تطوير البرمجيات السابقة. فعلى سبيل المثال، قد يهالوس وكيل عقاري ميزات غير موجودة في العقار، أو قد يكشف وكيل خدمة عملاء عن معلومات سرية من قواعد المعرفة الداخلية. هذه الأمثلة توضح الحاجة الماسة إلى أطر عمل تتجاوز الاختبارات الإحصائية التقليدية للتعامل مع سلوكيات الوكلاء الديناميكية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الذكاء الاصطناعي المسؤول كاستراتيجية نمو",
+          "paragraphs": [
+            {
+              "text": "تتحول المؤسسات الكبرى تدريجياً إلى اعتبار الذكاء الاصطناعي المسؤول استراتيجية نمو تنافسية بدلاً من كونه مجرد عبء تنظيمي. وفقاً لملاحظات واد وويرتز المنشورة في Harvard Business Review، أصبحت الثقة عاملاً مميزاً تنافسياً، حيث إن القدرات التي تتيح تخصيص الخدمات على نطاق واسع قد تستخدم أيضاً للمراقبة أو التمييز. المؤسسات التي تدير هذه المخاطر بفعالية تكسب ثقة أصحاب المصلحة.",
+              "links": [
+                {
+                  "text": "Harvard Business Review",
+                  "url": "https://hbr.org/2026/07/responsible-ai-is-becoming-a-growth-strategy"
+                }
+              ]
+            },
+            {
+              "text": "يبرز مثال روبين هود (Robinhood) كدليل عملي على هذا التحول، حيث بنى الشركة وكيل ذكاء اصطناعي جنائي على منصة Amazon Bedrock مع حوكمة بيانات صارمة. نتيجة لذلك، حققت الشركة مكاسب في الكفاءة بنسبة 20% مع الحفاظ على الامتثال التنظيمي، مما يؤكد أن البنية التحتية الآمنة لا تعيق الابتكار بل تدعمه.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "أربعة تحديات تشغيلية جوهرية",
+          "paragraphs": [
+            {
+              "text": "من خلال التفاعل مع عملاء يبنيون منصات وكلاء، حددت أمازون أربعة تحديات متكررة. أولاً، السلوك التشغيلي غير المتوقع، حيث يمكن أن تؤدي أخطاء وكيل واحد إلى فشل متسلسل عبر خدمات متعددة؛ فعلى سبيل المثال، اكتشفت شركة خدمات مالية ألمانية أن تنسيق الوكلاء المتعددين ضخم خطأ تصنيف واحد إلى انتهاكات سياسات في ثلاث خدمات لاحقة.",
+              "links": []
+            },
+            {
+              "text": "ثانياً، كشف البيانات وحدود الصلاحيات، حيث يجب تحديد نطاق كل وكيل بدقة تجاه المستأجرين والأنظمة والبيانات. يتطلب ذلك عزل سياق الجلسة ومنح صلاحيات دنيا مرتبطة بالمهام لا يمكن للوكيل تعديلها بنفسه. ثالثاً، سرعة التنظيم، حيث تفرض تشريعات مثل EU AI Act ومعايير ISO 42001 متطلبات امتثال تتطور بسرعة أكبر من قدرة فرق الحوكمة على التكيف، مما يستلزم تقييماً مستمراً.",
+              "links": [
+                {
+                  "text": "EU AI Act",
+                  "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"
+                },
+                {
+                  "text": "ISO 42001",
+                  "url": "https://www.iso.org/standard/42001"
+                }
+              ]
+            },
+            {
+              "text": "رابعاً، التعاون بين الفرق، حيث تفتقر العديد من المؤسسات إلى إطار عمل مشترك يحدد ملكية المسؤوليات عبر دورة حياة الوكيل. أشارت شركة إعلامية بريطانية إلى أن فصل المهام بين فرق التطوير والنشر غير محدد بوضوح في أحمال عمل الوكلاء، مما يؤدي إلى فجوات في المسؤولية بين فريق المنصة وفرق التطبيقات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إطار عمل النضج من ثلاث مراحل",
+          "paragraphs": [
+            {
+              "text": "تقدم أمازون إطار عمل نضج من ثلاث مراحل مصمماً ليتم قراءته وتطبيقه بشكل مشترك بين فريق المنصة وفرق التطبيقات. يعتمد هذا الإطار على أعمدة AWS Responsible AI Lens ويوزعها على مراحل: أساسيات الحوكمة، النشر التجريبي، والتقييم والتعزيز. يهدف هذا النهج إلى تمكين فريق المنصة من وضع حواجز حماية (Guardrails) بينما تبني فرق التطبيقات ضمن هذه الحدود، مع استخدام لغة مشتركة لتقييم الوضع الحالي.",
+              "links": [
+                {
+                  "text": "AWS Responsible AI Lens",
+                  "url": "https://docs.aws.amazon.com/wellarchitected/latest/responsible-ai-lens/responsible-ai-lens.html"
+                }
+              ]
+            },
+            {
+              "text": "توفر أمازون أداة عملية تسمى Responsible AI Assessment Skill، والتي تربط أعمدة الذكاء الاصطناعي المسؤول بنموذج النضج الثلاثي. تتيح هذه الأداة، المرفقة ببطاقة تقييم (Scorecard)، للفرق تقييم وضعها الحالي والتكرار عليه مع نضج التطبيقات، مما يوفر خارطة طريق قابلة للتخصيص ضمن جدول زمني يقارب 12 أسبوعاً.",
+              "links": [
+                {
+                  "text": "Responsible AI Assessment Skill",
+                  "url": "https://github.com/aws-samples/sample-agent-skills-for-builders/tree/main/skills/agentic-responsible-ai-assessment"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "المرحلة الأولى: تأسيس الحوكمة والأمان",
+          "paragraphs": [
+            {
+              "text": "تركز المرحلة الأولى على أعمدة الحوكمة والأمان والخصوصية. في هذه المرحلة، يقوم فريق المنصة بتقييم ملاءمة المشروع والمخاطر والأخلاقيات، والحصول على الموافقات القانونية، وتعريف نموذج الثقة للوكلاء. يتولى فريق المنصة بناء البنية التحتية الأساسية لمنطقة الهبوط (Landing Zone)، بما في ذلك المراقبة الشاملة وضوابط الوصول، بينما يصنف فرق التطبيقات المخاطر لكل حالة استخدام مقترحة باستخدام مقياس مخاطر موحد.",
+              "links": []
+            },
+            {
+              "text": "تشمل المهام الحرجة في هذه المرحلة تقييم الوصول إلى البيانات والأنظمة اللازمة لكل وكيل، وتنفيذ أمان البيانات الأساسي وحماية تسرب البيانات عبر التصنيف والمراقبة. كما يتطلب الأمر بناء خريطة للبيانات المشتركة بين الوكلاء، مثل قواعد المعرفة المؤسسية، وتحديد حدود الوصول وصلاحيات القراءة والكتابة بدقة لضمان عدم تجاوز الوكلاء للحدود المسموح بها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الامتثال المستمر والتقييم الدوري",
+          "paragraphs": [
+            {
+              "text": "نظراً لسرعة تطور المتطلبات التنظيمية، يتطلب إثبات الامتثال للأنظمة غير الحتمية تقييماً مستمراً وليس فحصاً لمرة واحدة. ينصح الإطار العمل بمراقبة المخاطر ومراجعتها وفق جدول زمني محدد مسبقاً، سواء كان يومياً أو أسبوعياً أو شهرياً، لضمان مواكبة التغيرات في السلوك التشغيلي للوكلاء. هذا النهج الاستباقي يساعد في اكتشاف الانحرافات في الأهداف أو الفشل المتسلسل قبل أن تتحول إلى أزمات تنظيمية.",
+              "links": []
+            },
+            {
+              "text": "يؤكد المقال على أن هذا الإطار لا يوفر تفاصيل تنفيذية خطوة بخطوة ولا يقدم استشارات قانونية، بل يركز على الأسئلة الجوهرية التي يجب طرحها في كل مرحلة. يجب على المؤسسات استشارة فرقها القانونية دائماً لضمان توافق ممارساتها مع التشريعات المحلية والدولية، مع استخدام أدوات التقييم كدليل إرشادي لتحسين البنية التحتية للذكاء الاصطناعي الوكيل.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي المسؤول",
+        "الوكلاء الاصطناعيون",
+        "أمازون ويب خدمات",
+        "حوكمة البيانات",
+        "الامتثال التنظيمي",
+        "أمن المعلومات",
+        "الذكاء الاصطناعي التوليدي"
+      ],
+      "entities": [
+        "أمازون ويب خدمات",
+        "Amazon Bedrock",
+        "Robinhood",
+        "Harvard Business Review",
+        "EU AI Act",
+        "ISO 42001",
+        "NIST AI RMF"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال يعتمد حصرياً على مدونة أمازون الرسمية، مع ربط أمثلة واقعية (مثل Robinhood) وروابط تشريعية محددة. تم الحفاظ على الدقة التقنية دون إضافة آراء شخصية."
+    },
+    "en": {
+      "title": "Scaling Agentic AI Requires Phased Responsible Framework",
+      "description": "Discover how platform and application teams can adopt a three-phase responsible AI roadmap to securely scale agentic AI systems and manage risks.",
+      "deck": "As enterprises scale agentic AI systems, platform and application teams face unique challenges around unpredictable behavior, data boundaries, and regulatory compliance that require a structured, phased approach to responsible design.",
+      "summary_bullets": [
+        "Agentic AI introduces complex, nondeterministic challenges compared to traditional model-centric machine learning practices.",
+        "A new maturity roadmap guides teams through governance foundations, pilot deployments, and evaluation phases.",
+        "Organizations must navigate unpredictable runtime behavior, data exposure boundaries, and fast-moving global regulations.",
+        "Companies like Robinhood are successfully leveraging secure foundations on Amazon Bedrock to drive efficiency and maintain compliance."
+      ],
+      "sections": [
+        {
+          "heading": "The Shift from Model-Centric to Agentic AI Systems",
+          "paragraphs": [
+            {
+              "text": "The evolution of generative artificial intelligence has fundamentally shifted how software is developed, monitored, and governed. Until recently, responsible AI practices were largely model-centric, focusing narrowly on the machine learning development lifecycle such as training, testing, and inference. In those traditional settings, models did not dynamically reason, utilize external tools, or execute independent actions across multiple steps.",
+              "links": [
+                {
+                  "text": "responsible AI",
+                  "url": "https://aws.amazon.com/ai/responsible-ai/"
+                }
+              ]
+            },
+            {
+              "text": "With the rise of agentic systems, applications now reason, act, compose tools dynamically, and interact over multiple stages. This dynamic behavior significantly expands both the scope and depth of what responsible AI must cover. For example, a customer service agent grounded on internal knowledge bases or a real estate application generating property listings introduces the risk of hallucinations or unauthorized data exposure.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Navigating Industry Challenges and Regulatory Pressures",
+          "paragraphs": [
+            {
+              "text": "Organizations adopting agentic AI at scale frequently encounter distinct technical and operational hurdles. Four primary challenges consistently surface during deployment: unpredictable runtime behavior, strict data exposure and authority boundaries, rapid regulatory velocity, and complex team collaboration dynamics.",
+              "links": []
+            },
+            {
+              "text": "Regulatory frameworks such as the EU AI Act, ISO 42001, and the NIST AI RMF are establishing compliance standards faster than traditional governance models can naturally adapt. Proving compliance for nondeterministic systems requires continuous evaluation, daily or monthly monitoring, and clear lines of responsibility between developer teams and deployment teams.",
+              "links": [
+                {
+                  "text": "EU AI Act",
+                  "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"
+                },
+                {
+                  "text": "ISO 42001",
+                  "url": "https://www.iso.org/standard/42001"
+                },
+                {
+                  "text": "NIST AI RMF",
+                  "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Trust as a Competitive Growth Strategy",
+          "paragraphs": [
+            {
+              "text": "Despite these operational complexities, organizations are increasingly turning responsible AI into a core growth strategy. As highlighted in discussions published by the Harvard Business Review, trust is rapidly becoming a significant competitive differentiator. The same underlying capabilities that allow organizations to personalize experiences at scale can also introduce risks of surveillance and discrimination if proper governance is absent.",
+              "links": [
+                {
+                  "text": "Harvard Business Review",
+                  "url": "https://hbr.org/2026/07/responsible-ai-is-becoming-a-growth-strategy"
+                }
+              ]
+            },
+            {
+              "text": "Enterprises that govern these powerful capabilities early earn stakeholder confidence while driving measurable business results. For instance, Robinhood successfully built a generative artificial intelligence financial crimes agent utilizing Amazon Bedrock equipped with strict data governance protocols.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "Through this disciplined approach, they achieved a notable 20 percent efficiency gain while maintaining strict adherence to regulatory compliance standards across their infrastructure.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "A Phased Maturity Framework for Platform and Application Teams",
+          "paragraphs": [
+            {
+              "text": "To help organizations structure these practices effectively, a new three-phase maturity framework has been outlined for platform and application teams. In this context, platform teams manage the foundational infrastructure and guardrails, while application teams build and own individual agents operating within those established boundaries.",
+              "links": []
+            },
+            {
+              "text": "The implementation journey is divided into three distinct phases: a governance foundation, a pilot deployment stage, and a final evaluation and hardening phase. Builders can utilize resources such as the Responsible AI Assessment Skill to map the AWS Responsible AI Lens pillars to each maturity phase, ensuring continuous assessment as applications scale.",
+              "links": [
+                {
+                  "text": "Responsible AI Assessment Skill",
+                  "url": "https://github.com/aws-samples/sample-agent-skills-for-builders/tree/main/skills/agentic-responsible-ai-assessment"
+                },
+                {
+                  "text": "AWS Responsible AI Lens",
+                  "url": "https://docs.aws.amazon.com/wellarchitected/latest/responsible-ai-lens/responsible-ai-lens.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Establishing Governance Foundations and Security Controls",
+          "paragraphs": [
+            {
+              "text": "The initial phase of the maturity framework centers heavily on governance, security, and privacy. During this foundational period, teams assess project fit, evaluate potential risks and ethical implications, and secure necessary legal and compliance approvals before rolling out agentic workflows.",
+              "links": []
+            },
+            {
+              "text": "Application teams classify risks for each planned use case using a standardized risk rubric, while platform teams focus on building core landing zone infrastructure. This includes setting up overarching monitoring, access controls, data exfiltration protections, and clear organizational data boundaries to ensure agents act strictly within their authorized parameters.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Agentic AI",
+        "Responsible AI",
+        "Machine Learning",
+        "Cloud Computing",
+        "Data Governance",
+        "Artificial Intelligence",
+        "AWS"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon Bedrock",
+        "Robinhood",
+        "Harvard Business Review"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly reflects the provided source material, outlining the challenges of agentic AI, regulatory pressures, trust as a growth strategy, and the phased maturity framework."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 845,
+      "word_count_en": 630
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "2d7a5d6b20fff3cd431e",
+      "title": "Broadening access to AI for scientists",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "1c55d3d1e6c03df7f551",
+      "title": "Responsible AI for agentic AI: A phased roadmap for platform and application teams",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 845,
+          "word_count_en": 630
+        }
+      ]
+    }
+  ],
+  "slug": "responsible-ai-for-agentic-ai-phased-roadmap-for-platform-and-application-teams",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/responsible-ai-for-agentic-ai-phased-roadmap-for-platform-and-application-teams/hero.webp",
+    "card": "/forum/assets/posts/2026/11/responsible-ai-for-agentic-ai-phased-roadmap-for-platform-and-application-teams/card.webp",
+    "social": "/forum/assets/posts/2026/11/responsible-ai-for-agentic-ai-phased-roadmap-for-platform-and-application-teams/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق خارطة طريق ثلاثية للمساءلة في أنظمة الذكاء الاصطناعي الوكيل",
+      "en": "Scaling Agentic AI Requires Phased Responsible Framework"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21131-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/responsible-ai-for-agentic-ai-phased-roadmap-for-platform-and-application-teams/inline-01.webp",
+        "width": 1400,
+        "height": 860,
+        "alt": {
+          "ar": "أمازون تطلق خارطة طريق ثلاثية للمساءلة في أنظمة الذكاء الاصطناعي الوكيل",
+          "en": "Four responsible AI challenges for agentic platforms: unpredictable runtime behavior, data boundaries, regulatory velocity, and team collaboration"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/responsible-ai-for-agentic-ai-a-phased-roadmap-for-platform-and-application-teams/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/30/ML-21131-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/responsible-ai-for-agentic-ai-phased-roadmap-for-platform-and-application-teams/inline-02.webp",
+        "width": 1400,
+        "height": 732,
+        "alt": {
+          "ar": "أمازون تطلق خارطة طريق ثلاثية للمساءلة في أنظمة الذكاء الاصطناعي الوكيل",
+          "en": "Responsible AI maturity framework mapping pillars across three phases: governance foundation, pilot deployment, and evaluation and hardening"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/responsible-ai-for-agentic-ai-a-phased-roadmap-for-platform-and-application-teams/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/21131-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/responsible-ai-for-agentic-ai-phased-roadmap-for-platform-and-application-teams/inline-03.webp",
+        "width": 833,
+        "height": 724,
+        "alt": {
+          "ar": "أمازون تطلق خارطة طريق ثلاثية للمساءلة في أنظمة الذكاء الاصطناعي الوكيل",
+          "en": "Portable AI skill scoring a team’s responsible AI posture across the eight pillars"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/responsible-ai-for-agentic-ai-a-phased-roadmap-for-platform-and-application-teams/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/30/ML-21131-3.png"
+      }
+    ]
+  }
 }
