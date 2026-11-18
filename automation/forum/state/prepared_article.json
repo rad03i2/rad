@@ -1,5 +1,444 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-18T19:17:49+00:00",
-  "last_published_story_id": "f1ec32751030720bfcdb"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-18T19:27:26+00:00",
+  "target_publish_at": "2026-11-18T22:37:48.556832+03:00",
+  "story": {
+    "title": "How Stretto built an AI voice agent with Amazon Nova 2 Sonic",
+    "url": "https://aws.amazon.com/blogs/machine-learning/how-stretto-built-an-ai-voice-agent-with-amazon-nova-2-sonic",
+    "domain": "aws.amazon.com",
+    "summary": "Stretto replaced its web-form lead capture with Tara, an AI voice agent built on Amazon Nova 2 Sonic that conducts bankruptcy intake interviews by phone and qualifies leads. See how Stretto, the AWS Generative AI Innovation Center, and CI&amp;T designed the voice architecture, validated it for sensitive conversations, and moved it to production.",
+    "published_at": "2026-11-18T18:58:42+00:00",
+    "discovered_at": "2026-11-18T19:02:35+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "33686cc601861f18841c",
+    "trend": {
+      "score": 122.84,
+      "age_hours": 0.4,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-stretto-built-an-ai-voice-agent-with-amazon-nova-2-sonic/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How Stretto built an AI voice agent with Amazon Nova 2 Sonic",
+      "title": "How Stretto built an AI voice agent with Amazon Nova 2 Sonic | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "كيف بنت شركة سترتو وكيلاً صوتياً ذكياً باستخدام أمازون نوفا 2 سونيك",
+      "description": "استبدلت شركة سترتو نماذج الويب لجمع العملاء المحتملين بوكالة صوتية ذكية تدعى تارا، مبنية على أمازون نوفا 2 سونيك، لإجراء مقابلات استيفاء قضايا الإفلاس عبر الهاتف وتحسين جودة العملاء المحتملين.",
+      "deck": "قامت شركة سترتو، بالتعاون مع مركز الابتكار للذكاء الاصطناعي التوليدي من أمازون وشركة سي آند تي، بتطوير تارا، وكيل صوتي ذكي يُجري مقابلات استيفاء قضايا الإفلاس عبر الهاتف، مما يقلل التكاليف ويحسن دقة العملاء المحتملين.",
+      "summary_bullets": [
+        "استبدلت سترتو نماذج الويب لجمع العملاء المحتملين بوكالة صوتية ذكية تدعى تارا، مبنية على أمازون نوفا 2 سونيك.",
+        "حقق الحل انخفاضاً بنسبة 95% في تكلفة الدقائق الصوتية، وزمن وصول أقل من 500 مللي ثانية، ومعالجة أفضل للانقطاعات.",
+        "تم تصميم البنية المعمارية باستخدام خدمات أمازون ويب سيرفيسز مثل أمازون بيدروك، وأمازون نوفا 2 سونيك، وتويلو، وأمازون ECS، وأمازون أورورا Serverless v2.",
+        "تعاونت سترتو مع مركز الابتكار للذكاء الاصطناعي التوليدي من أمازون وشركة سي آند تي، وهي شريكة لأمازون، لبناء واختبار ونشر تارا في بيئة الإنتاج."
+      ],
+      "sections": [
+        {
+          "heading": "المقدمة والتحدي",
+          "paragraphs": [
+            {
+              "text": "قبل أن تطور شركة سترتو وكيلاً صوتياً ذكياً، كان المستهلكون المهتمون بالإفلاس على موقع Bankruptcy.com يملؤون نموذج ويب يحتوي على حقول محدودة فقط: مبلغ الدين، ووضع المحامي، ومعلومات الاتصال. كانت هذه العملاء المحتملون الذين تم توليدهم من النماذج يتمتعون بهوامش ضئيلة. [AWS Machine Learning Blog](https://aws.amazon.com/blogs/machine-learning/how-stretto-built-an-ai-voice-agent-with-amazon-nova-2-sonic/)",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-stretto-built-an-ai-voice-agent-with-amazon-nova-2-sonic/"
+                }
+              ]
+            },
+            {
+              "text": "الفجوة بين العميل المحتمل من نموذج الويب والعميل المؤهل بالكامل كبيرة. يقدر محامو الإفلاس العملاء المحتملين الذين يتضمنون بيانات مالية مفصلة - الديون، والأصول، والمركبات، والعقارات، وتاريخ التوظيف، والطلبات السابقة - أكثر بكثير. على الرغم من أنه كان من الممكن توسيع نموذج الويب لالتقاط هذه التفاصيل، إلا أن جعله أطول أدى إلى تخلي الزوار عنه في منتصف الطريق. كان من الممكن أن يستخرج المقابلة الهاتفية المعلومات بشكل طبيعي، لأن الناس أكثر استعداداً لمشاركة التفاصيل المالية الحساسة في المحادثة، لكن توظيف وتدريب فريق استيفاء بشري لإجراء هذه المقابلات كان مكلفاً للغاية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الشراكة والحل",
+          "paragraphs": [
+            {
+              "text": "رأت شركة سترتو فرصة: استبدال نموذج الويب بوكالة صوتية ذكية تجري مقابلة الاستيفاء عبر الهاتف. من شأن أن يتولى الوكيل توجيه المتصلين عبر استبيان الإفلاس بالكامل بطريقة محادثية واستخراج البيانات المنظمة في الوقت الفعلي. ثم كان سيقوم بتصنيف العملاء المحتملين ضد قواعد محددة من قبل المحامين لدعم عملية اتخاذ القرار الخاصة بالمحامين.",
+              "links": []
+            },
+            {
+              "text": "تعاونت شركة سترتو مع مركز الابتكار للذكاء الاصطناعي التوليدي من أمازون وشركة سي آند تي، وهي شريكة لأمازون، لبناء تارا، وكيل صوتي ذكي مدعوم من أمازون نوفا 2 سونيك، وهو نموذج تحويل الكلام إلى كلام متاح عبر أمازون بيدروك. تجري تارا مقابلات استيفاء قضايا الإفلاس متعددة المراحل وتصنف العملاء المحتملين ضد قواعد محددة من قبل المحامين. يغطي هذا التعاون البنية المعمارية، والبناء التدريجي من التحقق إلى النشر في بيئة الإنتاج، وكيفية اختبار الفريق لجودة الصوت للمحادثات الحساسة. [Amazon Nova 2 Sonic](https://docs.aws.amazon.com/nova/latest/nova2-userguide/using-conversational-speech.html)",
+              "links": [
+                {
+                  "text": "Amazon Nova 2 Sonic",
+                  "url": "https://docs.aws.amazon.com/nova/latest/nova2-userguide/using-conversational-speech.html"
+                }
+              ]
+            },
+            {
+              "text": "اختارت شركة سترتو أمازون نوفا 2 سونيك على حل الصوت السابق لثلاثة أسباب رئيسية: التكلفة، وزمن الوصول، ومعالجة الانقطاعات. أبلغت شركة سترتو عن انخفاض بنسبة 95% في تكلفة الدقائق الصوتية لكل دقيقة مقارنة بالحل السابق، بناءً على تسعير أمازون بيدروك عند الطلب في منطقة us-east-1 اعتباراً من أبريل 2026. في اختبارات شركة سترتو، أظهر الحل السابق زمن وصول للصوت الأولي يزيد عن 500 مللي ثانية، مما تسبب في توقفات محرجة. تم تصميم أمازون نوفا 2 سونيك ليكون منخفض زمن الوصول لدعم التدفق المحادثي الطبيعي. يمكن للمتصلين في المواقف المجهدة المقاطعة، وتصحيح أنفسهم، وطرح أسئلة توضيحية. تعامل الحل السابق مع المقاطعة بشكل سيء، مما أدى في كثير من الأحيان إلى كسر تدفق المحادثة. تم تصميم أمازون نوفا 2 سونيك للتعامل مع الانقطاعات دون كسر الجلسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نظرة على البنية المعمارية",
+          "paragraphs": [
+            {
+              "text": "يوضح الشكل التالي البنية المعمارية الشاملة لتارا.",
+              "links": []
+            },
+            {
+              "text": "يصل المتصل إلى تارا عبر تويلو، الذي يفتح اتصال ويب سوكيت مع أمازون ويب سيرفيسز. يمر المرور عبر AWS WAF وموازن تحميل التطبيقات إلى جسر الصوت على أمازون إيلاستيك كونتينر سيرفيس (أمازون ECS) على AWS Fargate، والذي يبث الصوت مع أمازون نوفا 2 سونيك (يتم الوصول إليه عبر أمازون بيدروك). بعد المكالمة، يقوم أمازون بسيط كيو سيرفيس (أمازون SQS) مع قائمة انتظار الرسائل الميتة بتسليم النسخة إلى معالج غير متزامن. يستخدم المعالج كلود 3 هايكو من أنثروبيك على أمازون بيدروك لاستخراج الحقول المنظمة، والتي يتم تخزينها في أمازون أورورا Serverless v2. يتم توجيه العملاء المحتملين المؤهلين إلى المحامين حسب الاختصاص. تشمل الخدمات الداعمة بوابات NAT، ونقاط نهاية VPC (AWS PrivateLink)، وأمازون إيلاستيك كونتينر ريجستري (أمازون ECR)، وAWS Secrets Manager، وأمازون كلاود ووتش.",
+              "links": []
+            },
+            {
+              "text": "استخدمت شركة سترتو تويلو للاتصالات الهاتفية لأن استيفاء تارا آلي بالكامل، دون وجود وكلاء بشريين يستقبلون المكالمات، ولأن شركة سترتو أرادت تكاملاً مباشراً مع أمازون نوفا 2 سونيك مع الحفاظ على بنائها الخلفي الحالي في أمازون ويب سيرفيسز. توفر تويلو ميديا ستريمز الصوت الخام للمتصل عبر ويب سوكيت، وهو الإدخال الذي يحتاجه جسر الصوت، وكانت شركة سي آند تي قد قامت بالفعل بدمجه مع أمازون نوفا 2 سونيك. بالنسبة لأعباء عمل مراكز الاتصال التي تقوم بتوجيه المكالمات بين الوكلاء البشريين، يدعم أمازون كونكت أيضاً أمازون نوفا 2 سونيك. [CI&T](https://ciandt.com/)",
+              "links": [
+                {
+                  "text": "CI&T",
+                  "url": "https://ciandt.com/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "النتائج والأداء",
+          "paragraphs": [
+            {
+              "text": "أظهرت تارا تحسناً ملحوظاً في كل من تجربة العملاء وإدارة التكاليف لشركة سترتو. من خلال أتمتة عملية الاستيفاء، قللت شركة سترتو من النفقات العامة لتوظيف وتدريب الوكلاء البشريين، مع الحفاظ على جودة عالية في جمع البيانات. أبلغت شركة سترتو عن انخفاض بنسبة 95% في تكلفة الدقائق الصوتية لكل دقيقة، مما يعكس بشكل كبير نموذج التكلفة السابق القائم على النماذج. أدى زمن الوصول المنخفض إلى محادثات أكثر سلاسة، مما يقلل من الإحباط لكل من المتصلين وفريق الدعم.",
+              "links": []
+            },
+            {
+              "text": "من الناحية التقنية، سمح استخدام أمازون بيدروك كخدمة مُدارة للفرق بالوصول إلى كل من أمازون نوفا 2 سونيك وكلود 3 هايكو من أنثروبيك دون الحاجة إلى تشغيل بنية تحتية للنماذج. أدى ذلك إلى تبسيط عملية النشر وأدى إلى تطبيق ضوابط الأمان والحوكمة من أمازون ويب سيرفيسز على عبء العمل الذي يتعامل مع البيانات المالية الحساسة. يتم التحكم في الوصول إلى كلا النموذجين بواسطة AWS Identity and Access Management (IAM). يبقى حركة المرور إلى أمازون بيدروك على شبكة أمازون ويب سيرفيسز عبر نقاط نهاية السحابة الافتراضية الخاصة (VPC) (AWS PrivateLink). لا تستخدم أمازون بيدروك المطالبات أو مخرجات النماذج لتدريب النماذج (لمزيد من التفاصيل، راجع حماية البيانات في أمازون بيدروك). نظراً لأن النماذج تعمل في نفس بيئة أمازون ويب سيرفيسز مثل جسر الصوت، وقاعدة البيانات، ومراقبة أمازون كلاود ووتش، تمكنت شركة سترتو من تأمين وتشغيل الحل بالكامل باستخدام مجموعة واحدة من الأدوات.",
+              "links": []
+            },
+            {
+              "text": "بالإضافة إلى الفوائد التشغيلية، ساهمت تارا في تحسين جودة العملاء المحتملين. من خلال استخراج البيانات المنظمة وتطبيق القواعد المحددة من قبل المحامين، يمكن لشركة سترتو تصنيف العملاء المحتملين على أنهم مؤهلون، أو غير مؤهلين، أو يحتاجون إلى مزيد من المعلومات للمراجعة من قبل المحامين. أدى ذلك إلى زيادة كفاءة فريق الاستيفاء، مما سمح للمحامين بالتركيز على العملاء المحتملين ذوي القيمة الأعلى. [Stretto](https://www.stretto.com/)",
+              "links": [
+                {
+                  "text": "Stretto",
+                  "url": "https://www.stretto.com/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الآثار المستقبلية والخطوات القادمة",
+          "paragraphs": [
+            {
+              "text": "يمهد نجاح تارا الطريق لمزيد من الأتمتة في مجالات أخرى ضمن نطاق خدمات الإفلاس التي تقدمها شركة سترتو. تخطط شركة سترتو لاستكشاف استخدام وكلاء صوتيين ذكيين لمجالات الممارسة القانونية الأخرى، مثل قانون الإفلاس التجاري وقانون العقارات، حيث يمكن أن يؤدي الاستيفاء الآلي إلى تحقيق وفورات مماثلة في التكاليف وتحسين تجربة العملاء.",
+              "links": []
+            },
+            {
+              "text": "كما تستكشف شركة سترتو، بالتعاون مع مركز الابتكار للذكاء الاصطناعي التوليدي من أمازون وشركة سي آند تي، عن فرص لتوسيع قدرات تارا لتشمل لغات متعددة ودعم أكثر دقة للمحادثات، مما يعزز قدرتها على التعامل مع السيناريوهات متعددة اللغات واللغات العامية المحلية. سيؤدي ذلك إلى توسيع نطاق الوصول إلى الخدمات للأفراد الذين قد يواجهون حواجز لغوية.",
+              "links": []
+            },
+            {
+              "text": "من الناحية التقنية، تواصل شركة سترتو استخدام أمازون بيدروك كنظام أساسي للنماذج، مما يسمح لها بالتجربة مع نماذج الأساس الناشئة مع تقليل التعقيد التشغيلي. يضمن هذا النهج المرن بقاء شركة سترتو في طليعة مجال الذكاء الاصطناعي التوليدي مع حماية البيانات الحساسة والامتثال للوائح.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Amazon Nova 2 Sonic",
+        "Stretto",
+        "AWS",
+        "التحول الرقمي",
+        "CI&T",
+        "أمازون بيدروك"
+      ],
+      "entities": [
+        "Stretto",
+        "AWS Generative AI Innovation Center",
+        "CI&T",
+        "Amazon Nova 2 Sonic",
+        "Amazon Bedrock",
+        "Tara",
+        "Twilio",
+        "Amazon ECS",
+        "Amazon Aurora Serverless v2",
+        "Claude 3 Haiku"
+      ],
+      "article_type": "news",
+      "confidence_note": "بناءً على مدونة أمازون الرسمية للذكاء الاصطناعي الآلي."
+    },
+    "en": {
+      "title": "Stretto builds AI voice agent with Amazon Nova 2 Sonic",
+      "description": "Stretto’s Tara uses Amazon Nova 2 Sonic to conduct bankruptcy intake calls, qualify leads and capture financial details for attorneys.",
+      "deck": "Stretto has replaced a short web-form process with Tara, an AI voice agent that conducts bankruptcy intake interviews by phone. The system gathers detailed financial information and sorts leads for attorney review.",
+      "summary_bullets": [
+        "Tara guides callers through a conversational bankruptcy questionnaire.",
+        "The agent collects debts, assets, employment history and other intake details.",
+        "Stretto reports a 95 percent reduction in per-minute voice costs.",
+        "Amazon Nova 2 Sonic provides speech-to-speech processing through Amazon Bedrock.",
+        "Attorney-defined rules classify leads as qualified, disqualified or needing more information."
+      ],
+      "sections": [
+        {
+          "heading": "From web forms to phone interviews",
+          "paragraphs": [
+            {
+              "text": "Before Tara, consumers considering bankruptcy on Bankruptcy.com entered a small amount of information into a web form, including their debt amount, attorney status and contact details. Those submissions generated leads, but the information was limited and the margins were thin.",
+              "links": [
+                {
+                  "text": "Bankruptcy.com",
+                  "url": "https://www.stretto.com/"
+                }
+              ]
+            },
+            {
+              "text": "Stretto determined that attorneys placed greater value on leads containing detailed financial information, such as debts, assets, vehicles, real estate, employment history and previous bankruptcy filings. Expanding the form to capture those details risked increasing abandonment, while staffing and training a human intake team would have been too expensive.",
+              "links": []
+            },
+            {
+              "text": "The company instead pursued a phone-based intake process. Tara answers calls, introduces herself and guides each caller through a structured bankruptcy questionnaire. During the conversation, the agent gathers personal and financial information, adjusts its tone to the caller’s emotional state and extracts structured data in real time.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "A speech-to-speech foundation model",
+          "paragraphs": [
+            {
+              "text": "Tara is powered by Amazon Nova 2 Sonic, a speech-to-speech foundation model available through Amazon Bedrock. Rather than connecting separate speech-to-text, language-model and text-to-speech systems, the model processes spoken input and generates spoken responses natively in a single model.",
+              "links": [
+                {
+                  "text": "Amazon Nova 2 Sonic",
+                  "url": "https://docs.aws.amazon.com/nova/latest/nova2-userguide/using-conversational-speech.html"
+                }
+              ]
+            },
+            {
+              "text": "That design was important for bankruptcy intake, where callers may need to pause, correct themselves or ask questions while discussing sensitive financial circumstances. Stretto said its previous voice solution produced time-to-first-audio latency above 500 milliseconds in testing, creating awkward pauses. Nova 2 Sonic is designed for lower-latency interaction and more natural conversational flow.",
+              "links": []
+            },
+            {
+              "text": "The model is also designed to handle interruptions without breaking the session. Stretto identified that capability as a key requirement because callers in stressful situations may interject or change an answer during an interview.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Lower costs and managed infrastructure",
+          "paragraphs": [
+            {
+              "text": "Stretto chose Nova 2 Sonic for cost, latency and interruption handling. The company reports a 95 percent reduction in per-minute voice costs compared with its previous solution, based on Amazon Bedrock on-demand pricing in the us-east-1 Region as of April 2026. The figure is a company-reported comparison rather than a general pricing guarantee.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock on-demand pricing",
+                  "url": "https://aws.amazon.com/bedrock/pricing/"
+                }
+              ]
+            },
+            {
+              "text": "Working with the AWS Generative AI Innovation Center and AWS Partner CI&T, Stretto built the system on Amazon Bedrock. The managed service gives the team access to both Nova 2 Sonic and Anthropic’s Claude without operating model infrastructure directly.",
+              "links": [
+                {
+                  "text": "AWS Generative AI Innovation Center",
+                  "url": "https://aws.amazon.com/ai/generative-ai/innovation-center/"
+                },
+                {
+                  "text": "CI&T",
+                  "url": "https://ciandt.com/"
+                }
+              ]
+            },
+            {
+              "text": "The same AWS environment also hosts the voice bridge, database and monitoring tools. Access to the models is governed through AWS Identity and Access Management, while traffic to Amazon Bedrock remains on the AWS network through virtual private cloud endpoints using AWS PrivateLink. AWS says Amazon Bedrock does not use customer prompts or model outputs to train its models.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Call flow and data processing",
+          "paragraphs": [
+            {
+              "text": "A caller reaches Tara through Twilio, which opens a WebSocket connection into AWS. The traffic passes through AWS WAF and an Application Load Balancer before reaching a voice bridge running in Amazon Elastic Container Service on AWS Fargate. The bridge streams audio with Nova 2 Sonic through Amazon Bedrock.",
+              "links": []
+            },
+            {
+              "text": "After the call, Amazon Simple Queue Service, including a dead-letter queue, sends the transcript to an asynchronous processor. That processor uses Anthropic’s Claude 3 Haiku on Amazon Bedrock to extract structured fields, which are stored in Amazon Aurora Serverless v2. Qualified leads are then routed to attorneys according to jurisdiction.",
+              "links": [
+                {
+                  "text": "Anthropic’s Claude 3 Haiku",
+                  "url": "https://aws.amazon.com/bedrock/claude/"
+                }
+              ]
+            },
+            {
+              "text": "The architecture also uses Amazon Elastic Container Registry, AWS Secrets Manager, Amazon CloudWatch, NAT gateways and VPC endpoints. The voice bridge tasks run across three Availability Zones, while the database uses a Multi-AZ configuration, according to the AWS account of the project.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Automated qualification for attorneys",
+          "paragraphs": [
+            {
+              "text": "Tara does not make the final legal decision on a caller’s case. Instead, once the interview is complete, Stretto’s system applies attorney-defined rules and classifies the lead as qualified, disqualified or needing more information for attorney review.",
+              "links": []
+            },
+            {
+              "text": "Stretto used Twilio because Tara’s intake process is fully automated and does not rely on human agents taking calls. Twilio Media Streams provides raw caller audio over a WebSocket, which the voice bridge uses as input. For contact-center workloads that route calls among human agents, AWS says Amazon Connect also supports Amazon Nova 2 Sonic.",
+              "links": [
+                {
+                  "text": "Amazon Connect",
+                  "url": "https://aws.amazon.com/connect/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "artificial intelligence",
+        "voice AI",
+        "Amazon Nova 2 Sonic",
+        "Amazon Bedrock",
+        "Stretto",
+        "bankruptcy technology"
+      ],
+      "entities": [
+        "Stretto",
+        "Tara",
+        "Amazon Nova 2 Sonic",
+        "Amazon Bedrock",
+        "AWS Generative AI Innovation Center",
+        "CI&T",
+        "Twilio"
+      ],
+      "article_type": "news",
+      "confidence_note": "Based solely on the supplied AWS Machine Learning Blog source; performance and cost figures are attributed to Stretto."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 418,
+      "word_count_en": 614
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 1170,
+      "word_count_en": 752
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "68ddb817fe4001c0fc7b",
+      "title": "Advancing chip design with OpenAI models",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "33686cc601861f18841c",
+      "title": "How Stretto built an AI voice agent with Amazon Nova 2 Sonic",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 418,
+          "word_count_en": 614
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 1170,
+          "word_count_en": 752
+        }
+      ]
+    }
+  ],
+  "slug": "how-stretto-built-an-ai-voice-agent-with-amazon-nova-sonic",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-stretto-built-an-ai-voice-agent-with-amazon-nova-sonic/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-stretto-built-an-ai-voice-agent-with-amazon-nova-sonic/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-stretto-built-an-ai-voice-agent-with-amazon-nova-sonic/social.jpg",
+    "alt": {
+      "ar": "كيف بنت شركة سترتو وكيلاً صوتياً ذكياً باستخدام أمازون نوفا 2 سونيك",
+      "en": "Stretto builds AI voice agent with Amazon Nova 2 Sonic"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21890-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-stretto-built-an-ai-voice-agent-with-amazon-nova-sonic/inline-01.webp",
+        "width": 1142,
+        "height": 994,
+        "alt": {
+          "ar": "كيف بنت شركة سترتو وكيلاً صوتياً ذكياً باستخدام أمازون نوفا 2 سونيك",
+          "en": "Tara’s end-to-end call flow from Twilio telephony through the Amazon ECS voice bridge and Amazon Nova 2 Sonic to data persistence in Amazon Aurora"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-stretto-built-an-ai-voice-agent-with-amazon-nova-2-sonic/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21890-1.jpg"
+      }
+    ]
+  }
 }
