@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "ce67f2f6f2f691bd3d26",
+  "slug": "amazon-bedrock-agentcore-harness-adds-strands-harness-defaults-built-in-tools-and-lifecycle",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/amazon-bedrock-agentcore-harness-adds-strands-harness-defaults-built-in-tools-and-lifecycle/",
+    "en": "/forum/en/ai/amazon-bedrock-agentcore-harness-adds-strands-harness-defaults-built-in-tools-and-lifecycle/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تدمج Strands في Bedrock AgentCore مع أدوات مدمجة وخطافات دورة حياة",
+      "description": "أعلنت أمازون عن ترقية Bedrock AgentCore لتعمل على إطار Strands مفتوح المصدر، مما يوفر أدوات مدمجة، إدارة سياق ذكية، وخطافات دورة حياة لتأمين عمليات الوكلاء.",
+      "deck": "تحولت خدمة Bedrock AgentCore من أمازون إلى إطار عمل مفتوح المصدر، مما يمنح المطورين أدوات متقدمة لإدارة السياق والتحكم في سلوك الوكلاء عبر خطافات محددة.",
+      "summaryBullets": [
+        "اعتماد إطار Strands مفتوح المصدر كقاعدة تشغيلية لخدمة Bedrock AgentCore.",
+        "إضافة أدوات مدمجة جديدة للتخطيط، الاسترجاع من الويب، وإدارة الملفات.",
+        "تفعيل خطافات دورة حياة تسمح بفرض قيود حتمية (Deterministic) على سلوك الوكيل.",
+        "تحسين كفاءة التكلفة عبر التخزين المؤقت التلقائي وإدارة السياق النشطة."
+      ],
+      "sections": [
+        {
+          "heading": "الانتقال إلى إطار عمل مفتوح المصدر",
+          "paragraphs": [
+            {
+              "text": "أعلنت أمازون عن ترقية جوهرية لخدمة Amazon Bedrock AgentCore harness، حيث أصبحت تعتمد الآن على إطار Strands harness مفتوح المصدر الذي أصدرته الشركة سابقاً هذا العام تحت رخصة Apache 2.0. هذا التحول يهدف إلى توفير أساس قوي للوكلاء الاصطناعيين، حيث يوفر إطار العمل تعليمات موصى بها، وأدوات جاهزة، وآليات لإدارة السياق، بينما تتولى أمازون تشغيل هذه البنية كخدمة إدارية (Managed Service) جاهزة للإنتاج دون الحاجة من المطورين إلى إدارة البنية التحتية أو الحوسبة بأنفسهم.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore harness",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html"
+                },
+                {
+                  "text": "Strands harness",
+                  "url": "https://strandsagents.com/docs/user-guide/harness/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إدارة السياق وتخفيض التكاليف",
+          "paragraphs": [
+            {
+              "text": "من أبرز الميزات الجديدة هي إدارة السياق النشطة (Proactive Context Management). فعندما يصل حجم السياق إلى حد معين، يقوم النظام تلقائياً بتلخيص المحادثات القديمة مع الاحتفاظ بالسياق الحديث، مما يساعد في الحفاظ على كفاءة الأداء. كما أضافت الخدمة ميزة التخزين المؤقت التلقائي للتلميحات (Prompt Caching) للنماذج المدعومة، مما يقلل من زمن الاستجابة والتكلفة. وتؤكد أمازون أن هذه الآليات تساهم في تحقيق تكلفة رموز (Token Cost) أقل بنسبة 34% مقارنة بإطارات العمل الأخرى الرائدة في السوق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توسيع قدرات الوكلاء عبر أدوات مدمجة",
+          "paragraphs": [
+            {
+              "text": "أضافت الترقية مجموعة من الأدوات المدمجة الجديدة لتعزيز قدرات الوكلاء في المهام الطويلة. تشمل هذه الأدوات أداة تخطيط (todo_write) تحافظ على خطة المهام عبر استدعاءات متعددة، وأداة تفويض (subagent) تسمح بتفويض مهام فرعية لوكلاء فرعيين مؤقتين، وأداة استرجاع ويب (web_fetch) لجلب محتوى حديث. كما تم تحسين الوصول إلى نظام الملفات عبر أدوات قراءة وكتابة وتعديل منفصلة، مما يتيح للمطورين منح صلاحيات دقيقة حسب الحاجة دون منح وصول شامل غير ضروري.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التحكم في العمليات عبر خطافات دورة الحياة",
+          "paragraphs": [
+            {
+              "text": "أدخلت أمازون مفهوم خطافات دورة الحياة (Lifecycle Hooks) التي تتيح للمطورين تنفيذ أكواد حتمية (Deterministic) في نقاط محددة من حلقة عمل الوكيل. على سبيل المثال، يمكن استخدام دالة AWS Lambda للسماح أو رفض استدعاء أداة معينة قبل تنفيذها، بينما يمكن استخدام خدمات مثل Amazon SNS أو EventBridge لإرسال إشعارات حول النشاط دون تعطيل سير العمل. هذا يسمح بتحويل السلوك غير الحتمي للذكاء الاصطناعي إلى عمليات آمنة وخاضعة للرقابة، مثل التحقق من حدود الميزانية قبل إصدار استرداد نقدي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المرونة في التكوين والإعدادات",
+          "paragraphs": [
+            {
+              "text": "تعمل الخدمة على مبدأ \"الموصى به افتراضياً، وقابل للتكوين عند الحاجة\". إذا لم يحدد المطور نموذجاً معيناً، يستخدم النظام نموذجاً موصى به يتطور تلقائياً مع إصدارات النماذج الجديدة. كما يمكن استبدال التلميحات الافتراضية بتعليمات مخصصة أو تحديد قائمة أدوات محددة لضمان حدود أمنية صارمة. وتؤكد أمازون أن هذا التحديث لا يتطلب إنشاء موارد جديدة، بل يتم تطبيقه تلقائياً على الوكلاء الحاليين الذين يستخدمون الإعدادات الافتراضية للخدمة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AgentCore",
+        "Strands",
+        "AI Agents",
+        "Cloud Computing",
+        "AWS",
+        "LLM"
+      ],
+      "entities": [
+        "Amazon",
+        "AWS",
+        "Bedrock AgentCore",
+        "Strands Harness",
+        "AWS Lambda",
+        "Amazon SNS"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "19 نوفمبر 2026",
+      "modifiedLabel": "19 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 456
+    },
+    "en": {
+      "title": "Amazon Bedrock AgentCore Harness Adds Strands and Hooks",
+      "description": "Amazon Bedrock AgentCore harness upgrades to the open-source Strands harness, introducing built-in tools, prompt caching, and deterministic lifecycle hooks.",
+      "deck": "Amazon has upgraded the Amazon Bedrock AgentCore harness to run on the open-source Strands harness, introducing task-oriented defaults, automatic prompt caching, and new lifecycle hooks for deterministic control.",
+      "summaryBullets": [
+        "Amazon Bedrock AgentCore harness now runs on the open-source Strands harness.",
+        "Brings automatic prompt caching, proactive context management, and built-in tools.",
+        "Introduces lifecycle hooks to run deterministic allow or deny checks in the agent loop.",
+        "Managed defaults provide a recommended model and task-oriented instructions."
+      ],
+      "sections": [
+        {
+          "heading": "Upgrading to the Strands Harness",
+          "paragraphs": [
+            {
+              "text": "When building an AI agent, selecting a model is only the first step. The agent still needs tools, instructions for finishing the job, a way to manage context growth in long sessions, and guardrails before executing consequential actions. To address these requirements, the Amazon Bedrock AgentCore harness has been upgraded to run on the open-source Strands harness, which was released earlier this year under an Apache 2.0 license, as detailed in the official Strands harness announcement.",
+              "links": [
+                {
+                  "text": "Strands harness announcement",
+                  "url": "https://strandsagents.com/blog/introducing-strands-harness/"
+                }
+              ]
+            },
+            {
+              "text": "This integration brings a recommended model, task-oriented defaults, automatic prompt caching, and proactive context management directly to the managed service. Developers can review further technical specifics regarding the framework through the Strands harness documentation.",
+              "links": [
+                {
+                  "text": "Strands harness",
+                  "url": "https://strandsagents.com/docs/user-guide/harness/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Managed Defaults and Cost Efficiency",
+          "paragraphs": [
+            {
+              "text": "Operating the foundation as a managed AWS service means users do not need to provision compute, bundle and host the agent loop, manage session scaling, or operate tool-execution infrastructure. Each session runs in a secure, kernel-isolated microVM in AgentCore runtime. Furthermore, proactive context management automatically summarizes older conversation turns while retaining recent context once a configurable threshold is reached. According to benchmark data, this approach helps run at about 34% lower token cost than other leading harnesses.",
+              "links": [
+                {
+                  "text": "about 34% lower token cost than other leading harnesses",
+                  "url": "https://strandsagents.com/blog/we-ran-94000-trials-to-measure-the-cost-of-harness-choice/"
+                }
+              ]
+            },
+            {
+              "text": "Users looking to implement these features can reference the Amazon Bedrock AgentCore Developer Guide for architectural patterns and configuration steps.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Developer Guide",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "New Built-In Tools and Capabilities",
+          "paragraphs": [
+            {
+              "text": "The updated harness introduces additional built-in tools designed to support long tasks and reduce context window usage. These include context offloading for large tool results, task planning across invocations via the todo_write tool, and focused delegation through the subagent tool. Additionally, web retrieval via web_fetch and granular filesystem access tools allow developers to finely tune what resources an agent can interact with during execution.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deterministic Governance with Lifecycle Hooks",
+          "paragraphs": [
+            {
+              "text": "A key addition in this upgrade is the introduction of lifecycle hooks, enabling developers to run deterministic code at defined points in the agent loop. For instance, an AWS Lambda function can execute synchronous allow or deny checks before an agent runs a consequential tool call, such as issuing a refund. Comprehensive documentation on implementing these checks is available in the Amazon Bedrock AgentCore Developer Guide.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Developer Guide",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-lifecycle-hooks.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Getting Started and Code Resources",
+          "paragraphs": [
+            {
+              "text": "Developers can begin integrating these updates immediately without adopting a new resource type or integration. Initial setup instructions are provided in the official documentation, and implementation examples can be found in the samples repository on GitHub.",
+              "links": [
+                {
+                  "text": "samples repository on GitHub",
+                  "url": "https://github.com/awslabs/agentcore-samples/tree/main/01-features/01-harness/02-use-cases/05-refund-desk-hooks"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AgentCore",
+        "Strands Harness",
+        "Artificial Intelligence",
+        "AWS",
+        "Agentic Workflows"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Strands",
+        "Amazon Bedrock AgentCore"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 19, 2026",
+      "modifiedLabel": "November 19, 2026",
+      "readMinutes": 3,
+      "wordCount": 470
+    }
+  },
+  "datePublished": "2026-11-19T23:25:06.695869+03:00",
+  "dateModified": "2026-11-19T23:25:06.695869+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/amazon-bedrock-agentcore-harness-adds-strands-harness-defaults-built-in-tools-and-lifecycle/hero.webp",
+    "card": "/forum/assets/posts/2026/11/amazon-bedrock-agentcore-harness-adds-strands-harness-defaults-built-in-tools-and-lifecycle/card.webp",
+    "social": "/forum/assets/posts/2026/11/amazon-bedrock-agentcore-harness-adds-strands-harness-defaults-built-in-tools-and-lifecycle/social.jpg",
+    "alt": {
+      "ar": "أمازون تدمج Strands في Bedrock AgentCore مع أدوات مدمجة وخطافات دورة حياة",
+      "en": "Amazon Bedrock AgentCore Harness Adds Strands and Hooks"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22098-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-agentcore-harness-adds-strands-harness-defaults-built-in-tools-and-lifecycle-hooks/",
+      "type": "official",
+      "title": "Amazon Bedrock AgentCore harness adds Strands harness defaults, built-in tools, and lifecycle hooks"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-agentcore-harness-adds-strands-harness-defaults-built-in-tools-and-lifecycle-hooks",
+  "sourceTitle": "Amazon Bedrock AgentCore harness adds Strands harness defaults, built-in tools, and lifecycle hooks",
+  "trendScore": 108.92,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-19T20:25:07+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/amazon-bedrock-agentcore-harness-adds-strands-harness-defaults-built-in-tools-and-lifecycle.json"
+}
