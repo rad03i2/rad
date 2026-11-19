@@ -1,5 +1,385 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-19T00:25:37+00:00",
-  "last_published_story_id": "e0342a634eb3ce38156b"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-19T00:35:32+00:00",
+  "target_publish_at": "2026-11-19T03:45:36.937421+03:00",
+  "story": {
+    "title": "Full Fine-Tuning (FFT) on SageMaker AI Serverless Model Customization",
+    "url": "https://aws.amazon.com/blogs/machine-learning/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization",
+    "domain": "aws.amazon.com",
+    "summary": "Amazon SageMaker AI Serverless Model Customization now supports Full Fine-Tuning (FFT). This post explores when FFT outperforms LoRA across key benchmarks, examines the spectral properties of model weight matrices behind the quality gap, shares practical hyperparameter tuning guidelines, and shows how to get started.",
+    "published_at": "2026-11-19T00:15:58+00:00",
+    "discovered_at": "2026-11-19T00:18:10+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "1471104375f835f45826",
+    "trend": {
+      "score": 112.88,
+      "age_hours": 0.31,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Full Fine-Tuning (FFT) on SageMaker AI Serverless Model Customization",
+      "title": "Full Fine-Tuning (FFT) on SageMaker AI Serverless Model Customization | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تطلق الضبط الكامل FFT على SageMaker AI Serverless",
+      "description": "أعلنت أمازون عن دعم الضبط الكامل FFT في SageMaker AI Serverless، مما يتيح تحسين أداء النماذج اللغوية الكبيرة دون إدارة بنى تحتية، متفوقاً على تقنية LoRA في المهام المعقدة.",
+      "deck": "أضافت أمازون ميزة الضبط الكامل (FFT) إلى خدمة SageMaker AI Serverless، مما يوفر حلاً سحابياً مدمجاً لتحسين جودة النماذج اللغوية الكبيرة دون الحاجة إلى إدارة موارد GPU معقدة.",
+      "summary_bullets": [
+        "أصبح الضبط الكامل (FFT) متاحاً في SageMaker AI Serverless، متجاوزاً قيود تقنية LoRA في تمثيل المعرفة المعقدة.",
+        "أظهرت التجارب أن FFT يتفوق على LoRA في مهام توليد الأكواد عند استخدام مجموعات بيانات تتجاوز 100 ألف عينة.",
+        "تتيح الخدمة السحابية إجراء عمليات الضبط دون الحاجة إلى تهيئة عناقيد الحوسبة أو إدارة نقاط التفتيش يدوياً.",
+        "أجريت التجارب على نموذج Qwen3-4B باستخدام مجموعة بيانات Magicoder-Evol-Instruct-110K لتقييم الدقة الدلالية."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق الضبط الكامل في بيئة سحابية",
+          "paragraphs": [
+            {
+              "text": "أعلنت أمازون عن دعم ميزة الضبط الكامل (Full Fine-Tuning) في خدمة Amazon SageMaker AI Serverless Model Customization. تتيح هذه الإضافة للمطورين تحسين أداء النماذج اللغوية الكبيرة (LLMs) على بياناتهم الخاصة دون الحاجة إلى إدارة البنية التحتية أو تهيئة عناقيد الحوسبة. يهدف هذا التحديث إلى سد الفجوة بين كفاءة الحوسبة وجودة النماذج، حيث يوفر حلاً سحابياً مدمجاً يتولى تلقائياً تخصيص الموارد وإدارة نقاط التفتيش أثناء التدريب.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI Serverless Model Customization",
+                  "url": "https://aws.amazon.com/sagemaker/ai/model-customization/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تجاوز قيود تقنية LoRA",
+          "paragraphs": [
+            {
+              "text": "لطالما اعتمدت الشركات على طرق الضبط الفعالة من حيث المعلمات (PEFT) مثل تقنية LoRA لتقليل متطلبات وحدات معالجة الرسوميات (GPU). ومع ذلك، تشير التحليلات التقنية إلى أن الطبيعة منخفضة الرتبة (Low-Rank) لتحديثات الأوزان في LoRA تفرض قيوداً جوهرية على قدرة النموذج على استيعاب الأنماط المعقدة. عندما تتجاوز مجموعات البيانات عشرات الآلاف من العينات، تصل تقنية LoRA إلى سقف دقة (Plateau) لا يمكن تجاوزه بزيادة عدد المعلمات القابلة للتدريب، مما يعكس عجزاً بنيوياً في القدرة التمثيلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المزايا الرياضية والضبط الكامل",
+          "paragraphs": [
+            {
+              "text": "يعمل الضبط الكامل (FFT) من خلال تحديث جميع معاملات النموذج اللغوي بشكل متزامن، مما يسمح باستخدام القدرة التمثيلية الكاملة لمصفوفات الأوزان بدلاً من حصر التحديثات في فضاء فرعي صغير. يؤدي هذا النهج إلى تقارب أقوى للنموذج ومواءمة أفضل للتفعيلات عبر طبقات الشبكة، مما يضمن الحفاظ على المعرفة المسبقة للنموذج مع استيعاب توزيع المهمة المستهدفة بدقة. وتؤكد أمازون أن هذه الميزة تمنح النماذج المخصصة قدرة أعلى على التعامل مع التعقيدات الدلالية دون تشوهات محلية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج التجارب على توليد الأكواد",
+          "paragraphs": [
+            {
+              "text": "أجريت التجارب المعيارية باستخدام تقنية الضبط الإشرافي (SFT) على نموذج Qwen3-4B الأساسي المتاح في Amazon SageMaker AI Studio. اعتمدت التجارب على مجموعة بيانات Magicoder-Evol-Instruct-110K، التي تتكون من 110,000 زوج تعليمات واستجابات في مجال البرمجة، موزعة بنسبة 90% للتدريب و5% للتحقق و5% للاختبار. أظهرت النتائج أن FFT حقق دقة دلالية بلغت 90% وفقاً لمقياس LLM-as-Judge عند استخدام أكثر من 100 ألف عينة تدريبية، متفوقاً بشكل ملحوظ على النتائج المحققة بتقنية LoRA.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI Studio",
+                  "url": "https://console.aws.amazon.com/sagemaker"
+                },
+                {
+                  "text": "Magicoder-Evol-Instruct-110K",
+                  "url": "https://huggingface.co/datasets/ise-uiuc/Magicoder-Evol-Instruct-110K"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "منهجية التقييم والمقارنة",
+          "paragraphs": [
+            {
+              "text": "شملت عملية التقييم ثلاث طرق مختلفة مدمجة في الخدمة: LLM-as-Judge لتقييم الدقة الدلالية، وPRIMECODE لتقييم جودة توليد الأكواد، وMMLU لتقييم المعرفة العامة. أظهرت الرسوم البيانية الرادارية أن النموذج الأساسي سجل درجات منخفضة، بينما حققت تقنية LoRA تحسناً متوازناً، لكن FFT توسع في جميع الأبعاد مع تفوق خاص في مقاييس BLEU وROUGE-2. يؤكد هذا التفوق متعدد الأبعاد أن الميزة ليست ناتجة عن متغير عشوائي، بل هي نتيجة جوهرية لتحسين عملية التحسين ذات الرتبة الكاملة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إرشادات الضبط والتطبيق العملي",
+          "paragraphs": [
+            {
+              "text": "توفر الخدمة مرونة عالية في التحويل بين طرق التدريب؛ حيث يتطلب التبديل من الضبط الكامل إلى LoRA تغييراً واحداً في الكود باستخدام SDK الخاص بـ SageMaker. كما توفر أمازون إرشادات عملية لضبط المعلمات الفائقة (Hyperparameters) بناءً على تجارب مضبوطة، مما يساعد المهندسين على تحديد الإعدادات المثلى لكل مهمة. يمكن للمستخدمين الاطلاع على التوثيق التفصيلي للمعلمات الفائقة لضمان أفضل أداء للنماذج المخصصة في بيئات الإنتاج.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "SageMaker",
+        "توليد الأكواد",
+        "النماذج اللغوية الكبيرة",
+        "الضبط الدقيق",
+        "الحوسبة السحابية"
+      ],
+      "entities": [
+        "Amazon",
+        "SageMaker AI",
+        "Qwen3-4B",
+        "LoRA",
+        "FFT",
+        "Magicoder-Evol-Instruct-110K"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال يعتمد حصراً على المدونة الرسمية لأمازون ويوضح الفروق التقنية بين FFT وLoRA بناءً على النتائج المعلنة."
+    },
+    "en": {
+      "title": "Amazon SageMaker AI Adds Support for Full Fine-Tuning",
+      "description": "Amazon SageMaker AI Serverless Model Customization now supports Full Fine-Tuning, allowing developers to improve model performance without infrastructure management.",
+      "deck": "Amazon SageMaker AI Serverless Model Customization has expanded to support Full Fine-Tuning (FFT), enabling data scientists and machine learning engineers to train models without provisioning GPUs or configuring distributed infrastructure.",
+      "summary_bullets": [
+        "Amazon SageMaker AI Serverless Model Customization now supports Full Fine-Tuning (FFT).",
+        "FFT updates model parameters simultaneously to overcome the low-rank limitations inherent in methods like LoRA.",
+        "Experiments using a Qwen3-4B base model and a 110K instruction dataset showed FFT outperforming LoRA across key benchmarks.",
+        "The serverless customization approach handles compute allocation and checkpoint management automatically."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Serverless Model Customization",
+          "paragraphs": [
+            {
+              "text": "Fine-tuning allows organizations to adapt pretrained large language models (LLMs) to specific domains, tasks, or styles using internal data. While Parameter-Efficient Fine-Tuning (PEFT) methods like Low-Rank Adaptation (LoRA) have offered a practical way to reduce GPU requirements by updating only a subset of parameters, their low-rank nature can limit representation power on complex tasks. To help developers overcome these constraints, Amazon SageMaker AI Serverless Model Customization now supports Full Fine-Tuning (FFT), bringing enhanced model quality capabilities to the serverless environment.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI Serverless Model Customization",
+                  "url": "https://aws.amazon.com/sagemaker/ai/model-customization/"
+                },
+                {
+                  "text": "Full Fine-Tuning (FFT)",
+                  "url": "http://docs.aws.amazon.com/sagemaker/latest/dg/customizing-models-fft.html"
+                }
+              ]
+            },
+            {
+              "text": "Using this serverless capability, engineering teams can achieve superior model quality without managing underlying compute infrastructure, GPU provisioning, or cluster setups. The service manages compute allocation and checkpoint management automatically.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Comparing Full Fine-Tuning and LoRA",
+          "paragraphs": [
+            {
+              "text": "While LoRA freezes pretrained weights and injects small low-rank matrices into layers, it can hit accuracy plates when tasks grow complex and datasets scale beyond tens of thousands of examples. This performance gap stems from rank deficiency rather than a lower parameter count alone, as low-rank updates struggle to capture the full complexity of required weight changes.",
+              "links": []
+            },
+            {
+              "text": "In contrast, Full Fine-Tuning modifies model weight matrices uniformly and simultaneously. This approach utilizes the full representational capacity of the model's weights to achieve stronger convergence and better activation alignment across layers. According to experimental insights shared on the AWS Machine Learning Blog, FFT's advantages become particularly noticeable as dataset scales expand to 100K+ examples.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Experimental Setup and Evaluation",
+          "paragraphs": [
+            {
+              "text": "Recent evaluations explored the performance differences between LoRA and FFT by fine-tuning a Qwen3-4B base model available within Amazon SageMaker AI Studio. The experiments utilized the Magicoder-Evol-Instruct-110K dataset, a corpus comprising 110,000 coding instruction-response pairs covering algorithm design, debugging, data structures, and systems programming.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI Studio",
+                  "url": "https://console.aws.amazon.com/sagemaker"
+                },
+                {
+                  "text": "Magicoder-Evol-Instruct-110K",
+                  "url": "https://huggingface.co/datasets/ise-uiuc/Magicoder-Evol-Instruct-110K"
+                }
+              ]
+            },
+            {
+              "text": "The dataset was split into training, validation, and held-out test sets to monitor convergence and conduct unbiased evaluations. Developers can explore multiple supported base models and apply the Supervised Fine-Tuning (SFT) technique to adapt models to target workloads.",
+              "links": [
+                {
+                  "text": "multiple supported base models",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/model-customize-open-weight.html"
+                },
+                {
+                  "text": "Supervised Fine-Tuning (SFT) technique",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/customizing-models-sft.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Launching Jobs and Tracking Metrics",
+          "paragraphs": [
+            {
+              "text": "Launching a model customization job via the SageMaker Python SDK allows engineers to initiate serverless training runs efficiently. Switching between training methods is straightforward, requiring adjustments to parameters specified in the hyperparameters documentation page.",
+              "links": [
+                {
+                  "text": "hyperparameters documentation page",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/customizing-models-sft.html#customizing-models-sft-hyperparameters"
+                }
+              ]
+            },
+            {
+              "text": "Training performance metrics can be tracked directly within the customization job and reviewed inside integrated MLflow applications. Once training concludes, teams can review model performance using built-in evaluation methods.",
+              "links": [
+                {
+                  "text": "evaluation methods",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/model-customize-evaluation-types.html"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Full Fine-Tuning",
+        "Serverless Computing",
+        "AWS"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker AI",
+        "AWS Machine Learning Blog"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly reflects the provided source material from the AWS Machine Learning Blog regarding Full Fine-Tuning support on SageMaker AI Serverless Model Customization."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 539,
+      "word_count_en": 471
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "1471104375f835f45826",
+      "title": "Full Fine-Tuning (FFT) on SageMaker AI Serverless Model Customization",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 539,
+          "word_count_en": 471
+        }
+      ]
+    }
+  ],
+  "slug": "full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/hero.webp",
+    "card": "/forum/assets/posts/2026/11/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/card.webp",
+    "social": "/forum/assets/posts/2026/11/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق الضبط الكامل FFT على SageMaker AI Serverless",
+      "en": "Amazon SageMaker AI Adds Support for Full Fine-Tuning"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21644-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/inline-01.webp",
+        "width": 1332,
+        "height": 881,
+        "alt": {
+          "ar": "أمازون تطلق الضبط الكامل FFT على SageMaker AI Serverless",
+          "en": "LLM-as-Judge semantic correctness by training method as training data scales to 100K-plus examples"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21644-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/inline-02.webp",
+        "width": 1169,
+        "height": 978,
+        "alt": {
+          "ar": "أمازون تطلق الضبط الكامل FFT على SageMaker AI Serverless",
+          "en": "Radar chart comparing the base model, LoRA, and FFT across BLEU, ROUGE, and correctness metrics"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21644-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/inline-03.webp",
+        "width": 1400,
+        "height": 409,
+        "alt": {
+          "ar": "أمازون تطلق الضبط الكامل FFT على SageMaker AI Serverless",
+          "en": "The 110K instruction-pair dataset with train, validation, and test splits registered in SageMaker AI dataset assets"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21644-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/inline-04.webp",
+        "width": 1400,
+        "height": 699,
+        "alt": {
+          "ar": "أمازون تطلق الضبط الكامل FFT على SageMaker AI Serverless",
+          "en": "Serverless model customization job in SageMaker AI with training metrics tracked and a linked MLflow app"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/full-fine-tuning-fft-on-sagemaker-ai-serverless-model-customization/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21644-4.png"
+      }
+    ]
+  }
 }
