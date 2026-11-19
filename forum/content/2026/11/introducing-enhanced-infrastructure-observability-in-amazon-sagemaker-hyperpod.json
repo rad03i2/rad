@@ -1,0 +1,333 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "b91e0d0a1a224c11a62d",
+  "slug": "introducing-enhanced-infrastructure-observability-in-amazon-sagemaker-hyperpod",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/introducing-enhanced-infrastructure-observability-in-amazon-sagemaker-hyperpod/",
+    "en": "/forum/en/ai/introducing-enhanced-infrastructure-observability-in-amazon-sagemaker-hyperpod/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تعزز مراقبة البنية التحتية في SageMaker HyperPod",
+      "description": "أطلقت أمازون ويب سيرفيسز تحسينات في SageMaker HyperPod لتشخيص أعطال تدريب الذكاء الاصطناعي على وحدات معالجة الرسومات بشكل أسرع عبر أدوات مراقبة متقدمة.",
+      "deck": "أصبحت مراقبة أداء وحدات معالجة الرسومات في مهام التدريب واسعة النطاق أكثر دقة مع إطلاق أدوات تشخيص جديدة من أمازون.",
+      "summaryBullets": [
+        "إطلاق ميزة المراقبة المعززة في Amazon SageMaker HyperPod لتحديد أعطال GPU بسرعة.",
+        "دمج قدرات التشخيص والملف الشخصي للعملية على منصات Amazon EKS وSlurm.",
+        "استخدام Amazon CloudWatch كأداة مراقبة افتراضية جديدة لتحسين الأداء وتقليل التكاليف.",
+        "كشف الانحرافات في أداء وحدات المعالجة عبر مقارنة استهلاك الطاقة والحرارة والذاكرة."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات تدريب النماذج الكبيرة",
+          "paragraphs": [
+            {
+              "text": "يُعد تدريب النماذج اللغوية الكبيرة من أكثر الأعباء التشغيلية تكلفة على وحدات معالجة الرسومات (GPU)، حيث يمكن أن يؤدي عطل في معالج واحد إلى توقف المهمة التوزيعية بأكملها. غالباً ما يقضي الفرق الهندسية ساعات أو أياماً في فرز السجلات ولوحات المعلومات المنفصلة لتحديد سبب انخفاض معدل الإنتاجية، سواء كان ناتجاً عن تقييد المعالج، أو تشبع الشبكة، أو تباطؤ خط البيانات على المضيف. وفي هذا السياق، أعلنت أمازون عن إطلاق ميزة المراقبة المعززة في Amazon SageMaker HyperPod، وهي قدرة جديدة تهدف إلى تسريع تشخيص مشاكل تدريب GPU من خلال توحيد أدوات التشخيص وملف العملية (Profiling) لمهام التدريب التي تعمل على كل من Amazon Elastic Kubernetes Service (Amazon EKS) ومنسق Slurm. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod.html"
+                },
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/introducing-enhanced-observability-in-amazon-sagemaker-hyperpod-to-diagnose-gpu-training-issues/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "نظام المراقبة المعززة",
+          "paragraphs": [
+            {
+              "text": "تعمل ميزة المراقبة المعززة على سد ثلاث فجوات رئيسية في الرؤية التشغيلية، حيث تعزل المعالج المعطل الواحد من بين مئات أو آلاف وحدات GPU، سواء كان ذلك بسبب أخطاء XID، أو أعطال ذاكرة ECC، أو التقييد الحراري. هذا يتيح للفرق التركيز على إصلاح المشكلة بدلاً من البحث عنها. تجمع الميزة بيانات التلغرافيا (Telemetry) على مستويين: مقاييس افتراضية مفعلة تلقائياً تغطي صحة العنقود واستخدام المعالج المركزي والقرص ومستوى النظام، بالإضافة إلى استخدام GPU وحرارته، وتُجمع هذه المقاييس كل 30 ثانية مع استهلاك منخفض للموارد. كما توفر مقاييس متقدمة اختيارية تشمل مجموعة Node exporter الكاملة، وجميع مقاييس NVIDIA GPU DCGM وAWS Neuron، ومقاييس Elastic Fabric Adapter (EFA) لتتبع أداء الشبكة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "كشف الانحرافات والقواعد الثابتة",
+          "paragraphs": [
+            {
+              "text": "يعتمد ملخص التشخيص على نهجين متكاملين. أولاً، يستخدم كشف الانحرافات في GPU واجهة برمجة التطبيقات DetectGroupOutliers من Amazon CloudWatch لمقارنة وحدات المعالجة ضمن مهمة تدريب واحدة بناءً على الاستخدام، والذاكرة، والحرارة، والطاقة، وتردد الساعة. عندما ينحرف معالج بشكل كبير عن نظرائه، يظهر كعنصر شاذ في الملخص. ثانياً، تقيّم القواعد التشخيصية الثابتة أنماط الأعطال المعروفة وتصنفها حسب النوع: العتاد (مثل أخطاء ذاكرة ECC)، والشبكة (انخفاض عائد EFA)، والتقييد (بسبب الحرارة)، والاحتراق (تجاوز درجات الحرارة المحددة). يحدد كل عطل المشكلة المهمة والعنقود والعقدة والمعالج المرتبط بها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تكامل أدوات المراقبة",
+          "paragraphs": [
+            {
+              "text": "تتوفر المراقبة المعززة كإضافة (Add-on) للعناقيد المنسقة عبر EKS، وكامتداد (Extension) للعناقيد المنسقة عبر Slurm، مما يمنح المستخدمين تحكماً في الصلاحيات عبر AWS Identity and Access Management (IAM). أصبحت Amazon CloudWatch هي الخيار الافتراضي الجديد للمراقبة، مما يوفر تكاملاً أوثق مع وحدة تحكم SageMaker وتكاليف أقل مقارنة بـ Amazon Managed Service for Prometheus. يمكن للمستخدمين أيضاً اختيار Prometheus وGrafana إذا كانوا يعتمدون على هذه الأدوات قياسيهم. توفر هذه المرونة إمكانية تصور المقاييس دون مغادرة وحدة تحكم أمازون، مع إمكانية تفعيل أو تعطيل أي فئة من المقاييس أو قدرات الملف الشخصي في أي وقت.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خطوات التفعيل والإعداد",
+          "paragraphs": [
+            {
+              "text": "لإنشاء عنقود جديد، يمكن للمستخدمين اتباع الخطوات الموضحة في الدليل الرسمي. في وحدة تحكم Amazon SageMaker AI، يتم اختيار HyperPod clusters ثم Create HyperPod cluster. في مسار الإعداد المخصص (Custom setup)، يتم توسيع قسم HyperPod observability حيث تكون المراقبة مفعلة افتراضياً. يمكن للمستخدمين تحديد المقاييس المتقدمة المطلوبة، وتفعيل التسجيل (Logging) لإنشاء مجموعات سجلات CloudWatch، واختيار مخزن المقاييس (CloudWatch أو Prometheus). كما يمكن تثبيت الإضافة عبر واجهة سطر الأوامر AWS CLI باستخدام أوامر محددة تنشئ الإضافة وتفعّل فئات المقاييس الأساسية. توفر هذه الخطوات مساراً واضحاً لتفعيل المراقبة المعززة وضمان استمرارية عمل العناقيد الكبيرة بكفاءة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "SageMaker HyperPod",
+        "مراقبة البنية التحتية",
+        "GPU",
+        "تدريب النماذج",
+        "CloudWatch"
+      ],
+      "entities": [
+        "Amazon SageMaker HyperPod",
+        "Amazon EKS",
+        "Slurm",
+        "Amazon CloudWatch",
+        "AWS Identity and Access Management",
+        "NVIDIA GPU",
+        "AWS Neuron",
+        "Elastic Fabric Adapter"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "19 نوفمبر 2026",
+      "modifiedLabel": "19 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 582
+    },
+    "en": {
+      "title": "Amazon SageMaker HyperPod Adds Enhanced Observability for GPU Training",
+      "description": "AWS launches enhanced observability in SageMaker HyperPod to diagnose GPU training issues across EKS and Slurm clusters with automated outlier detection and diagnostic rules.",
+      "deck": "Amazon Web Services has introduced enhanced observability capabilities in Amazon SageMaker HyperPod, enabling faster diagnosis of GPU training issues across distributed workloads running on both Amazon EKS and Slurm orchestrators.",
+      "summaryBullets": [
+        "New diagnostic summary uses CloudWatch DetectGroupOutliers API to flag deviating GPUs across utilization, memory, temperature, power, and SM clock",
+        "Static diagnostic rules detect hardware faults, EFA network degradation, thermal throttling, and overheating with job-level attribution",
+        "Default metrics collected automatically with 1–2% CPU overhead; advanced metrics including full DCGM and EFA telemetry available opt-in",
+        "Amazon CloudWatch now serves as default metric store, offering lower pricing and tighter SageMaker console integration than Prometheus-only approach"
+      ],
+      "sections": [
+        {
+          "heading": "New Capability Targets Distributed Training Pain Points",
+          "paragraphs": [
+            {
+              "text": "Large-scale model training represents one of the most expensive workloads on GPU infrastructure, where a single unhealthy accelerator can stall an entire distributed job. Until now, teams running training on Amazon SageMaker HyperPod faced the challenge of stitching together separate tools to gain visibility into cluster health, often spending hours or days determining whether a slowdown originated from a throttled GPU, a saturated network link, or a stalled data pipeline on the host.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker HyperPod",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod.html"
+                }
+              ]
+            },
+            {
+              "text": "The new enhanced observability capability addresses this gap by bringing together diagnostic and profiling functions for workloads on both Amazon Elastic Kubernetes Service (Amazon EKS) and Slurm orchestrators. According to the AWS Machine Learning Blog, the feature isolates a single bad accelerator across hundreds or thousands of GPUs — whether through XID errors, ECC memory faults, or thermal throttling — so engineers spend time on the fix instead of the search.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/introducing-enhanced-observability-in-amazon-sagemaker-hyperpod-to-diagnose-gpu-training-issues/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Two-Tier Metrics Collection with CloudWatch as Default",
+          "paragraphs": [
+            {
+              "text": "Enhanced observability collects telemetry at two levels. Default metrics are enabled automatically and cover cluster health, CPU, disk, and OS-level usage, GPU utilization and temperature, and per-job resource utilization. These metrics are gathered every 30 seconds with approximately 1–2% CPU overhead and 250–300 MB of memory, then sent to the customer's chosen metric store.",
+              "links": []
+            },
+            {
+              "text": "Advanced metrics are opt-in and provide deeper visibility, including the full node exporter suite for comprehensive host-level metrics, all NVIDIA GPU DCGM and AWS Neuron metrics covering clock speeds, power, PCIe activity, and error indicators, and Elastic Fabric Adapter (EFA) metrics for network interface throughput, drops, retransmissions, and errors. The advanced tier is optional because it increases telemetry volume and associated costs, making it essential primarily for long-running training jobs on large clusters where patterns emerge over time.",
+              "links": []
+            },
+            {
+              "text": "A significant shift in this release is the adoption of Amazon CloudWatch as the default metric store via CloudWatch SageMaker Insights, allowing visualization without leaving the AWS Management Console. Amazon Managed Service for Prometheus remains supported for teams standardized on Prometheus and Grafana. Previously, only Prometheus was supported; CloudWatch now offers lower pricing and tighter integration with the SageMaker console.",
+              "links": [
+                {
+                  "text": "AWS Management Console",
+                  "url": "https://us-west-2.console.aws.amazon.com/sagemaker/home?region=us-west-2#/cluster-management"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Diagnostic Summary Combines Outlier Detection and Rule-Based Alerts",
+          "paragraphs": [
+            {
+              "text": "The diagnostic summary employs two complementary approaches to surface issues across a HyperPod cluster. GPU outlier detection leverages CloudWatch's DetectGroupOutliers API to compare GPUs within a training job across utilization, memory usage, temperature, power draw, and SM clock frequency. When a GPU deviates significantly from its peers, it appears as an outlier card in the diagnostic summary, functioning for both EKS and Slurm jobs.",
+              "links": []
+            },
+            {
+              "text": "Static diagnostic rules evaluate known failure patterns and organize detected issues by type: hardware faults such as GPU ECC memory errors and XID faults; network issues including EFA throughput degradation, packet drops, and retransmissions; throttling caused by heat, board, or reliability limits; and overheating where GPU temperatures exceed configured limits. Each detected issue identifies the affected job, cluster, node, accelerator, and rank, providing precise attribution for remediation.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Deployment Options for EKS and Slurm Orchestrators",
+          "paragraphs": [
+            {
+              "text": "Enhanced observability is delivered as an add-on for EKS-orchestrated clusters and as an extension for Slurm-orchestrated clusters, with installation and modification controlled through AWS Identity and Access Management (IAM). For existing clusters, the capability can be enabled immediately. New clusters can be created through the Amazon SageMaker AI console by selecting HyperPod clusters in the navigation pane and choosing either Orchestrated on Amazon EKS or Orchestrated by Slurm.",
+              "links": []
+            },
+            {
+              "text": "In the Custom setup workflow, the HyperPod observability section allows configuration of default and advanced metric categories, selection of metric store (CloudWatch or Prometheus), Grafana workspace options, and IAM roles. Quick setup enables observability by default without the option to uncheck it, while Custom setup provides granular control over which metric categories and advanced metrics to enable. Alternatively, the observability add-on for EKS or extension for Slurm can be installed via the AWS Command Line Interface (AWS CLI).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Getting Started with Enhanced Observability",
+          "paragraphs": [
+            {
+              "text": "Customers can begin using enhanced observability today by navigating to the HyperPod clusters section of the Amazon SageMaker AI console. The feature is available for both new and existing clusters, with the Custom setup path offering full control over metric categories, advanced metrics, logging, metric store selection, and Grafana workspace configuration. Metric categories and profiling capabilities can be enabled or disabled at any time through the cluster's Add-ons tab for EKS clusters.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Web Services",
+        "Amazon SageMaker HyperPod",
+        "GPU training",
+        "observability",
+        "Amazon EKS",
+        "Slurm",
+        "Amazon CloudWatch",
+        "distributed training"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker HyperPod",
+        "Amazon EKS",
+        "Slurm",
+        "Amazon CloudWatch",
+        "NVIDIA GPU",
+        "Elastic Fabric Adapter"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 19, 2026",
+      "modifiedLabel": "November 19, 2026",
+      "readMinutes": 4,
+      "wordCount": 821
+    }
+  },
+  "datePublished": "2026-11-19T20:05:04.059759+03:00",
+  "dateModified": "2026-11-19T20:05:04.059759+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/introducing-enhanced-infrastructure-observability-in-amazon-sagemaker-hyperpod/hero.webp",
+    "card": "/forum/assets/posts/2026/11/introducing-enhanced-infrastructure-observability-in-amazon-sagemaker-hyperpod/card.webp",
+    "social": "/forum/assets/posts/2026/11/introducing-enhanced-infrastructure-observability-in-amazon-sagemaker-hyperpod/social.jpg",
+    "alt": {
+      "ar": "أمازون تعزز مراقبة البنية التحتية في SageMaker HyperPod",
+      "en": "Amazon SageMaker HyperPod Adds Enhanced Observability for GPU Training"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22438-featured-image-1.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-enhanced-infrastructure-observability-in-amazon-sagemaker-hyperpod/inline-01.webp",
+        "width": 1400,
+        "height": 646,
+        "alt": {
+          "ar": "أمازون تعزز مراقبة البنية التحتية في SageMaker HyperPod",
+          "en": "Create HyperPod cluster page on Amazon EKS with Custom setup selected"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-enhanced-observability-in-amazon-sagemaker-hyperpod-to-diagnose-gpu-training-issues/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22438-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-enhanced-infrastructure-observability-in-amazon-sagemaker-hyperpod/inline-02.webp",
+        "width": 1115,
+        "height": 1050,
+        "alt": {
+          "ar": "أمازون تعزز مراقبة البنية التحتية في SageMaker HyperPod",
+          "en": "HyperPod observability section showing default and advanced metrics, metric store, and Grafana workspace options"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-enhanced-observability-in-amazon-sagemaker-hyperpod-to-diagnose-gpu-training-issues/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22438-2-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-enhanced-infrastructure-observability-in-amazon-sagemaker-hyperpod/inline-03.webp",
+        "width": 1400,
+        "height": 313,
+        "alt": {
+          "ar": "أمازون تعزز مراقبة البنية التحتية في SageMaker HyperPod",
+          "en": "Add-ons tab on a HyperPod EKS cluster showing the Amazon SageMaker HyperPod observability add-on as Active with Amazon CloudWatch as the metrics store"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-enhanced-observability-in-amazon-sagemaker-hyperpod-to-diagnose-gpu-training-issues/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22438-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-enhanced-infrastructure-observability-in-amazon-sagemaker-hyperpod/inline-04.webp",
+        "width": 1400,
+        "height": 338,
+        "alt": {
+          "ar": "أمازون تعزز مراقبة البنية التحتية في SageMaker HyperPod",
+          "en": "Observability add-on Actions menu with Edit, Update version, Delete, and View in EKS options"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-enhanced-observability-in-amazon-sagemaker-hyperpod-to-diagnose-gpu-training-issues/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22438-4-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/introducing-enhanced-observability-in-amazon-sagemaker-hyperpod-to-diagnose-gpu-training-issues/",
+      "type": "official",
+      "title": "Introducing enhanced infrastructure observability in Amazon SageMaker HyperPod"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-enhanced-observability-in-amazon-sagemaker-hyperpod-to-diagnose-gpu-training-issues",
+  "sourceTitle": "Introducing enhanced infrastructure observability in Amazon SageMaker HyperPod",
+  "trendScore": 120.95,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-19T17:05:04+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/introducing-enhanced-infrastructure-observability-in-amazon-sagemaker-hyperpod.json"
+}
