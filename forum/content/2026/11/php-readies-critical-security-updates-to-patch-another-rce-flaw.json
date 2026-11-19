@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "7f5ef5c0f8c4a36253c2",
+  "slug": "php-readies-critical-security-updates-to-patch-another-rce-flaw",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/php-readies-critical-security-updates-to-patch-another-rce-flaw/",
+    "en": "/forum/en/apps/php-readies-critical-security-updates-to-patch-another-rce-flaw/"
+  },
+  "locales": {
+    "ar": {
+      "title": "PHP announces critical security updates to patch new RCE flaw",
+      "description": "PHP will release critical security updates on November 19 to fix CVE-2026-115560, a remote code execution flaw in session upload progress tracking.",
+      "deck": "PHP is preparing a fresh batch of critical security patches scheduled for November 19, targeting an additional remote code execution vulnerability disclosed shortly after the high‑profile PHP2Shell issues.",
+      "summaryBullets": [
+        "Critical updates are slated for November 19, 14:00‑14:30 UTC, as part of PHP’s regular four‑week release cycle.",
+        "The new flaw, CVE‑2026‑115560, is a remote code execution bug in file‑upload progress tracking that appeared two days after PHP2Shell made headlines.",
+        "Exploitation requires a rare configuration: session.serialize_handler set to php_binary or php_serialize, then switched to php at runtime with ini_set() before session_start(), while session upload progress remains enabled.",
+        "PHP developers advise disabling session upload as a mitigation and urge users to upgrade promptly once the patches are available.",
+        "The PHP2Shell vulnerabilities have already been widely exploited, with attacks observed days before official patches were released."
+      ],
+      "sections": [
+        {
+          "heading": "PHP announces critical security updates",
+          "paragraphs": [
+            {
+              "text": "The PHP project has confirmed a new wave of critical security updates that will be released on November 19 between 14:00 and 14:30 UTC. These refreshes are part of PHP’s regular four‑week release cadence and are intended to address security vulnerabilities across all currently supported PHP versions. The maintainers emphasized that the highest severity level for this batch is Critical, underscoring the potential impact if the flaws remain unpatched. For more details, see the coverage on {SecurityWeek}.",
+              "links": [
+                {
+                  "text": "SecurityWeek",
+                  "url": "https://www.securityweek.com/php-readies-critical-security-updates-to-patch-another-rce-flaw/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "New RCE flaw CVE‑2026‑115560",
+          "paragraphs": [
+            {
+              "text": "Among the issues being fixed is CVE‑2026‑115560, a remote code execution vulnerability located in the file‑upload progress tracking functionality. The flaw was publicly disclosed just two days after the PHP2Shell vulnerabilities captured widespread attention, highlighting how quickly attackers can move once a weakness is known. This latest RCE can be triggered under specific non‑default configurations, making it less likely to be exploited accidentally but still a serious risk for improperly configured deployments. More about the PHP2Shell context can be found on the dedicated {PHP2Shell} page.",
+              "links": [
+                {
+                  "text": "PHP2Shell",
+                  "url": "https://www.securityweek.com/topics/php2shell/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Conditions required for exploitation",
+          "paragraphs": [
+            {
+              "text": "PHP’s maintainers have outlined the precise conditions needed to trigger the CVE‑2026‑115560 flaw. An application must first set session.serialize_handler to php_binary or php_serialize in its configuration, then switch the handler to php at runtime using ini_set() before calling session_start(). Additionally, session upload progress must remain enabled for the vulnerability to be reachable. This combination of settings is considered unusual, which limits the attack surface to environments that have deliberately configured PHP in this manner. The official announcement provides further technical context at {announcement}.",
+              "links": [
+                {
+                  "text": "announcement",
+                  "url": "https://www.php.net/archive/2026.php#2026-11-18-1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Recommended mitigations and upgrade guidance",
+          "paragraphs": [
+            {
+              "text": "To reduce risk while waiting for the patches, PHP developers recommend disabling session upload functionality—a setting that also serves as a mitigation for CVE‑2026‑109619, one of the two RCE bugs tracked under the PHP2Shell banner. Users are strongly encouraged to prepare their systems for a swift upgrade as soon as the updates become available. The pre‑release notice states that technical details and the exact version numbers containing the fixes will be published alongside the release, enabling administrators to verify protection quickly. For additional guidance on the PHP2Shell issues, refer to the {PHP2Shell} resource.",
+              "links": [
+                {
+                  "text": "PHP2Shell",
+                  "url": "https://www.securityweek.com/topics/php2shell/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Broader impact and exploitation history",
+          "paragraphs": [
+            {
+              "text": "The PHP2Shell vulnerabilities have already been {widely exploited}, with attack activity observed days before the official patches were made public. This pattern underscores the importance of rapid response to disclosed flaws. Recent security news highlights a busy patch cycle across the ecosystem: Chrome 158 addressed 204 vulnerabilities, a critical Perforce Puppet RCE was actively exploited, Oracle released a November 2026 CSPU patching 950 flaws, and the Java4Shell vulnerability put many enterprise applications at risk of takeover. These concurrent incidents illustrate how attackers target multiple platforms simultaneously, making timely updates a universal best practice. For the detailed report on the PHP2Shell exploitation, see the {widely exploited} article.",
+              "links": [
+                {
+                  "text": "widely exploited",
+                  "url": "https://www.securityweek.com/php2shell-exploited-in-destructive-check-point-gateway-attacks/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "PHP",
+        "security updates",
+        "RCE",
+        "CVE-2026-115560",
+        "PHP2Shell",
+        "vulnerabilities",
+        "patch management"
+      ],
+      "entities": [
+        "PHP",
+        "SecurityWeek",
+        "CVE-2026-115560",
+        "PHP2Shell",
+        "Oracle",
+        "Chrome",
+        "Perforce Puppet",
+        "Java4Shell",
+        "Ionut Arghire"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "19 نوفمبر 2026",
+      "modifiedLabel": "19 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 598
+    },
+    "en": {
+      "title": "PHP Prepares Critical Security Updates to Patch RCE Flaw",
+      "description": "PHP is readying critical security updates to address a remote code execution vulnerability, CVE-2026-115560, affecting session upload progress.",
+      "deck": "PHP maintainers have announced critical security updates scheduled for release as part of the regular four-week release cycle, addressing an RCE vulnerability.",
+      "summaryBullets": [
+        "PHP scheduled critical security updates for November 19 between 14:00 and 14:30 UTC.",
+        "The updates address critical-severity issues including CVE-2026-115560, a remote code execution flaw.",
+        "The vulnerability impacts file-upload progress tracking functionality under uncommon configurations.",
+        "PHP developers previously recommended disabling session upload as a temporary mitigation measure."
+      ],
+      "sections": [
+        {
+          "heading": "Upcoming Critical Security Updates",
+          "paragraphs": [
+            {
+              "text": "PHP is preparing a new batch of critical security updates, arriving four weeks after patches for the <a href=\"https://www.securityweek.com/topics/php2shell/\">PHP2Shell</a> vulnerabilities were deployed. According to a pre-release <a href=\"https://www.php.net/archive/2026.php#2026-11-18-1\">announcement</a>, the refreshes are scheduled for November 19, between 14:00 and 14:30 UTC.",
+              "links": [
+                {
+                  "text": "PHP2Shell",
+                  "url": "https://www.securityweek.com/topics/php2shell/"
+                },
+                {
+                  "text": "announcement",
+                  "url": "https://www.php.net/archive/2026.php#2026-11-18-1"
+                }
+              ]
+            },
+            {
+              "text": "The upcoming updates are designed to fix critical-severity issues that can be triggered in non-default configurations or uncommon setups. Maintainers noted that these releases are part of PHP’s regular four-week release cycle and will address security vulnerabilities affecting all supported PHP versions, with the highest severity designated as critical.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Details on CVE-2026-115560",
+          "paragraphs": [
+            {
+              "text": "One of the key security defects expected to be resolved in this batch is CVE-2026-115560, which is a remote code execution (RCE) defect residing within the file-upload progress tracking functionality. This vulnerability was publicly disclosed just two days after the PHP2Shell security issues made major headlines across the industry.",
+              "links": []
+            },
+            {
+              "text": "When the flaw was initially revealed, PHP maintainers <a href=\"https://www.php.net/archive/2026.php#2026-10-23-1\">said</a> that the security flaw can only be triggered under an unusual and specific combination of configuration settings and application code.",
+              "links": [
+                {
+                  "text": "said",
+                  "url": "https://www.php.net/archive/2026.php#2026-10-23-1"
+                }
+              ]
+            },
+            {
+              "text": "Specifically, PHP detailed that an application must set session.serialize_handler to php_binary or php_serialize in its configuration and then switch it to php at runtime using ini_set() before calling session_start(). Additionally, session upload progress must still remain enabled for the condition to occur.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Mitigation and Upgrade Guidance",
+          "paragraphs": [
+            {
+              "text": "Before the official patches were prepared for release as part of the regular update cycle, PHP developers recommended disabling session upload entirely. This specific setting was also previously listed as a primary mitigation for CVE-2026-109619, which is one of the two remote code execution bugs tracked under the PHP2Shell umbrella.",
+              "links": []
+            },
+            {
+              "text": "Users are strongly encouraged by project maintainers to prepare to upgrade promptly once the security releases officially become available. Technical details and fixed version numbers are scheduled to be published alongside the official software releases.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Broader Threat Context",
+          "paragraphs": [
+            {
+              "text": "The discovery and impending patching of CVE-2026-115560 follow a tense period for administrators managing PHP-based infrastructure. Earlier security flaws associated with <a href=\"https://www.securityweek.com/php2shell-exploited-in-destructive-check-point-gateway-attacks/\">widely exploited</a> vectors demonstrated the speed at which threat actors can weaponize server-side code execution bugs.",
+              "links": [
+                {
+                  "text": "widely exploited",
+                  "url": "https://www.securityweek.com/php2shell-exploited-in-destructive-check-point-gateway-attacks/"
+                }
+              ]
+            },
+            {
+              "text": "In the case of those earlier incidents, exploitation activity notably began <a href=\"https://www.securityweek.com/php2shell-exploitation-started-days-before-patches/\">days before</a> the official patches were published by developers, leaving server administrators with a narrow window to secure vulnerable systems.",
+              "links": [
+                {
+                  "text": "days before",
+                  "url": "https://www.securityweek.com/php2shell-exploitation-started-days-before-patches/"
+                }
+              ]
+            },
+            {
+              "text": "As organizations prepare for the November 19 security drop, security teams continue to emphasize proactive inventory management and rapid deployment habits to neutralize risks stemming from complex configuration-dependent remote code execution vulnerabilities across production environments.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "PHP",
+        "CVE-2026-115560",
+        "Remote Code Execution",
+        "Cybersecurity",
+        "Vulnerabilities",
+        "Software Updates"
+      ],
+      "entities": [
+        "PHP",
+        "SecurityWeek"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "November 19, 2026",
+      "modifiedLabel": "November 19, 2026",
+      "readMinutes": 3,
+      "wordCount": 483
+    }
+  },
+  "datePublished": "2026-11-19T11:05:03.271694+03:00",
+  "dateModified": "2026-11-19T11:05:03.271694+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/php-readies-critical-security-updates-to-patch-another-rce-flaw/hero.webp",
+    "card": "/forum/assets/posts/2026/11/php-readies-critical-security-updates-to-patch-another-rce-flaw/card.webp",
+    "social": "/forum/assets/posts/2026/11/php-readies-critical-security-updates-to-patch-another-rce-flaw/social.jpg",
+    "alt": {
+      "ar": "PHP announces critical security updates to patch new RCE flaw",
+      "en": "PHP Prepares Critical Security Updates to Patch RCE Flaw"
+    },
+    "credit": "SecurityWeek",
+    "sourceUrl": "https://www.securityweek.com/wp-content/uploads/2024/06/PHP.jpeg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "SecurityWeek",
+      "url": "https://www.securityweek.com/php-readies-critical-security-updates-to-patch-another-rce-flaw/",
+      "type": "journalism",
+      "title": "PHP Readies Critical Security Updates to Patch Another RCE Flaw"
+    }
+  ],
+  "sourceUrl": "https://www.securityweek.com/php-readies-critical-security-updates-to-patch-another-rce-flaw",
+  "sourceTitle": "PHP Readies Critical Security Updates to Patch Another RCE Flaw",
+  "trendScore": 96.94,
+  "verification": {
+    "confidence": 0.87,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-11-19T08:05:03+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/11/php-readies-critical-security-updates-to-patch-another-rce-flaw.json"
+}
