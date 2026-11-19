@@ -1,0 +1,340 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "ec56b5eff9affb1c339e",
+  "slug": "180b-parameters-32gb-of-ram-pushing-moe-inference-to-the-limit-with",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/180b-parameters-32gb-of-ram-pushing-moe-inference-to-the-limit-with/",
+    "en": "/forum/en/ai/180b-parameters-32gb-of-ram-pushing-moe-inference-to-the-limit-with/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Hugging Face تشغّل MoE ب180 مليار معلمة في 32GB",
+      "description": "تجربة Hugging Face لتبسيط تشغيل نماذج MoE الضخمة عبر تدفق الخبراء من SSD، مع ذاكرة محدودة وأداء يقارب محركات الاستدلال المتخصصة.",
+      "deck": "طرحت Hugging Face تجربة عملية لتشغيل نموذج مختلط الخبراء بحجم 180 مليار معلمة على حاسوب Mac مزود بـ32 جيجابايت من الذاكرة الموحدة، مستعينة بتدفق الخبراء من القرص وبذاكرة تخزين مؤقت محلية محدودة.",
+      "summaryBullets": [
+        "اعتمدت التجربة تخزين خبراء نموذج Qwen3.8-Flash-Next على SSD، مع إبقاء جزء نشط فقط في ذاكرة الجهاز.",
+        "استبدلت الحلقة البرمجية البطيئة بذاكرة خُزنات ومواءمة معرفات الخبراء لتستفيد من نواة grouped_mm الأصلية.",
+        "قارن المشروع منصات llama.cpp وvLLM وTransformers وأبرز اختلافات مكان التخزين والحوسبة وإعادة نقل الأوزان.",
+        "بلغت الذاكرة المستخدمة بعد التحميل حوالي 18 جيبيبايت، بينما وصل الاستهلاك الأقصى عند مطالبة من 6 آلاف رمز إلى 25.4 جيبيبايت.",
+        "لا يزال المسار أسرع في نماذج المحاكاة الصغيرة، لكنه يهدف إلى تقليل عتبة تشغيل نماذج MoE الضخمة على الأجهزة الشخصية."
+      ],
+      "sections": [
+        {
+          "heading": "المشكلة الحاسوبية وراء نماذج الخبراء المختلطة",
+          "paragraphs": [
+            {
+              "text": "تواجه نماذج التعلم الخبير المختلط، أو MoE، عقبة مختلفة عن الزيادة المعتادة في عدد المعلمات. إذ يتولى مُوجّه داخلي اختيار عدد محدود من الخبراء لكل رمز، بدلاً من تمرير كل التمثيلات عبر شبكة واحدة كاملة. لكن هذا القيد لا يعني أن الأوزان يمكن إزالتها من الحاسوب؛ فعدد الخبراء الكلي قد يظل ضخمًا حتى إذا كان جزء الخبراء النشطة صغيرًا في كل خطوة. كتب مبرمج Hugging Face تجاربه على نحو يمكنه تشغيل نماذج بكثافة معلمات لا تتسع في ذاكرة بطاقات الرسوم أو ذاكرة الحواسيب الشخصية.",
+              "links": []
+            },
+            {
+              "text": "أوضح المنشور أن خبراء نموذج ضخم مثل Qwen يمكن أن يشكلوا أكثر من 90% من أوزانه. لذلك، فإن نقل الخبراء فقط إلى ذواكر أقل سرعة قد يتيح تشغيل النموذج بعتاد أقل، حتى إذا كانت الأجزاء الكثيفة أو بعض الجداول الإضافية تحتاج إلى حلول تخزين منفصلة. اعتمدت التجربة على حاسوب Mac مزود بمعالج M5 و32 جيجابايت من الذاكرة الموحدة، وهي بيئة تتشارك فيها المعالجة والمعالج الرسومي في المخزون نفسه، بعكس حاسوب مزود بذاكرة رسومية منفصلة.",
+              "links": []
+            },
+            {
+              "text": "لذلك فإن التحسين لا يقتصر على ضغط النموذج. فالمسألة العملية هي تحديد مكان وجود الخبراء، ومكان تنفيذ عملية ضرب المصفوفات، وكمية البيانات المنقولة مع كل رمز ناتج. تختلف المناهج التي طورتها عائلات الأدوات المختلفة بحسب الإجابة عن هذه الأسئلة، وقد تقفز البطاقة الرسومية إلى ذاكرة غير مناسبة، أو يتسبب نظام التخزين المتكرر في اختناق الإدخال والإخراج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "كيف يقارن llama.cpp وvLLM وTransformers",
+          "paragraphs": [
+            {
+              "text": "اختبر المنشور ثلاث حزم رئيسية لمعرفة سلوكها عند عدم ملاءمة نموذج MoE لبيانات الماكينة بالكامل. يسمح llama.cpp بربط ملف GGUF مباشرة بذاكرة النظام، والإبقاء على الخبراء في المعالج أو نقل عدد محدد منها إلى المعالج بحسب إعدادات تشغيلية مختلفة. ويشترط هذا الأسلوب أن تتسع الخبراء في ذاكرة النظام أو ذاكرة التخزين المؤقت؛ وإلا فقد يبدأ الضغط على الصفحة الافتراضية وسيتدهور الأداء بسبب استخدام القرص.",
+              "links": []
+            },
+            {
+              "text": "أما vLLM فيتيح تفريغ عدد محدد من جيجابايتات الأوزان إلى ذاكرة الوصول العشوائي المقيدة، ثم قراءتها عبر PCIe في مكانها. يمكن حصر التفريغ بالخبراء فقط، مما يعيد نقل الخبراء الساخنة عند كل رمز في غياب ذاكرة تخزين مؤقت للخبراء. توصل الاختبار إلى أن حصر الأوزان المفصولة بالخبراء يضاعف السرعة، وأن استخدام تمثيل FP8 يزيد عدد الأوزان التي يمكن إحضارها للبطاقة لأن كل خبير يحتاج إلى بايتات أقل.",
+              "links": []
+            },
+            {
+              "text": "أما Accelerate داخل Transformers فيفترض تفريغ الأوزان وحدة بُعدية، فيقوم بنسخ الأوزان إلى الجهاز قبل تمريرها في النموذج. مع بنية MoE، قد تصبح الوحدة بنك خبراء كاملًا لمستوى واحد، فينتقل عبره كل الخبراء بدلاً من الخبراء التي اختارها الموجّه. لا توجد ذاكرة تخزين مؤقت ولا معلومات توجيه، كما أن التفريغ إلى المعالج لا يحرر ذاكرة على Mac عندما تشارك المعالج والرسوم البصري الذاكرة نفسها.",
+              "links": []
+            },
+            {
+              "text": "استنتج المؤلف أن المنهج المثالي، عند اتساع الخبراء في ذاكرة النظام، هو ما يقدمه llama.cpp. أما حين لا تتسع هذه الخبراء، فالمطلوب هو تدفق الخبراء المختارة فعليًا عبر ذاكرة محدودة مع إعادة استخدام نوى ضرب المصفوفات السريعة، بحيث يبقى القرص هو عنق الزجاجة الأساسي وليس حلقة Python التي تدير التدفقات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مسار آخر داخل Transformers قائم على تجميع الخُزنات",
+          "paragraphs": [
+            {
+              "text": "بدأت التجربة بنموذج أصغر، هو OLMoE-1B-7B، الذي يتسع في الذاكرة ويسمح بمقارنة كل رمز بأداء التشغيل العادي في Transformers. في النسخة الأولى وُضعت الخبراء على القرص، وأضيفت ذاكرة تخزين LRU على الجهاز، وحلت حلقة Python خبيرًا واحدًا تلو الآخر. ومع تخزين جميع الخبراء، بلغ الأداء 10.1 رمز في الثانية، مقابل حوالي 32 رمزًا في الثانية في النسخة العادية؛ ولم يكن القرص هو السبب الأساسي، بل كانت الحلقة تنفذ الخبراء تسلسليًا.",
+              "links": []
+            },
+            {
+              "text": "يتجنب التنفيذ القياسي هذا العيب باستخدام نواة grouped_mm التي تنفذ خبراء الطبقة كلها في عملية واحدة مجمّعة. وللاستفادة من هذه النواة، حوّلت التجربة ذاكرة التخزين إلى تجمع خُزنات: مصفوفة موزعة مسبقًا في الجهاز ويشترك فيها جميع الطبقات، مع جدول لكل طبقة يربط معرف الخبير بالمخزن الذي يشغله. ثم تُعاد مواءمة أرقام الخبير التي يخرج بها الموجّه لتشير إلى مواضع التجمع، فتبدو البنية لبنية القياسية ويمكن لنواة grouped_mm تشغيلها دون كتابة عملية ضرب مصفوفات مخصصة.",
+              "links": []
+            },
+            {
+              "text": "رفع هذا التغيير الأداء إلى 34.6 رمز في الثانية في النموذج التجريبي، مقابل 38.1 رمزًا للنموذج العادي دون تفريغ أو تدفق. يُظهر الفرق أن التجربة قادرة على تقليص كلفة التخزين، رغم أنها لا تتساوى تمامًا مع التشغيل الذي تتوافر فيه جميع الأوزان في الذاكرة.",
+              "links": []
+            },
+            {
+              "text": "تحولت نسخة التحميل المستقلة إلى خيار متاح عبر from_pretrained داخل مشروع تطوير Transformers، وفي قيد حالته مناقشة واجهة الاستخدام مع القائمين على المشروع. يمكن تشغيل التعديل عبر device_map، بينما من المرجح أن تنتقل الخبيرات المضغوطة إلى خطط الضغط المحسوبة لكل طبقة في سلسلة تطوير لاحقة بدل خيار منفصل خاص بها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تشغيل Qwen3.8-Flash-Next ب32 جيجابايت",
+          "paragraphs": [
+            {
+              "text": "انتقل المؤلف بعد ذلك إلى الهدف الحقيقي، وهو نموذج Qwen3.8-Flash-Next على جهاز Mac مزود ب32 جيجابايت. يتكون النموذج من 48 طبقة ويضم 512 خبيرًا في كل موضع، ويُفعّل موجهه 10 خبراء لكل رمز تقريبيًا. ويبلغ وزن النموذج في تمثيل FP8 نحو 121 جيجابايت، ما يجعله أكبر بكثير من سعة الذاكرة الموحدة المتاحة.",
+              "links": [
+                {
+                  "text": "Qwen3.8-Flash-Next",
+                  "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next"
+                }
+              ]
+            },
+            {
+              "text": "يضع المستودع الناتج عن برنامج التحويل الأوزان الكثيفة وقيم الخبراء المضغوطة إلى 3 بتات، إلى جانب جدول n-gram. يُوجَّه أي خبير معيّن إلى المسار الخانق للقرص بدلاً من التفريغ التقليدي في Accelerate. يتخطى المُحَمّل موترات تلك الخبراء ويحصل كل مستوي MoE على تطبيق مخصص للتفريغ، فيما تقرأ ثمانية مسارات إدخال خبيرًا واحدًا متصلًا عند حدوث كل فَقْد في ذاكرة التخزين.",
+              "links": []
+            },
+            {
+              "text": "تستغل هذه البنية أيضًا معرفات الخبراء المتوقعة مسبقًا: تشغّل مستويان تالٍان موجههما مبكرًا، اعتمادًا على الحالات المخفية الحالية، لتقدير الخبراء التي ستحتاج إليها وتجهيزها قبل وصول الطلب إليها. يمكن ضغط الخبراء دون اتصال لخفض حجم القراءة، وتدعم الخبيرة القياسية ذات التخطيط المعتاد في الحزم، ما يسمح بإعادة نواة grouped_mm الأصلية بدل ابتكار عملية ضرب جديدة لكل منصة.",
+              "links": []
+            },
+            {
+              "text": "يضم النموذج أيضًا جدول تضمينات n-gram بحجم 51 جيجابايت، لذلك لا تكفي خبراء التدفق وحدها. استُخدمت خبراء مضغوطة إلى 3 بتات بحجم قرص يبلغ نحو 49 جيجابايت، مع 12 جيبيبايت خُزنات على الجهاز، وأُبقيت الطبقات الكثيفة في تمثيل 8 بت بحجم يقارب 5.4 جيجابايت مع انخفاض في التقطيّة بنحو 0.2% مقارنة بـBF16، بينما بقي جدول n-gram على القرص وتُقرأ صفوفه عند الحاجة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أداء أقرب إلى محرك متخصص، وحدود الاستمرار على الجهاز",
+          "paragraphs": [
+            {
+              "text": "استغرق التحويل نحو خمس ساعات، وبعد تحميل النموذج استقر استهلاك الذاكرة عند حوالي 18 جيبيبايت. وعند تشغيل مطالبة بطول 6 آلاف رمز، وصل الاستهلاك الأقصى إلى 25.4 جيبيبايت، وهو قرب الحد العملي لجهاز 32 جيجابايت، خاصة أن macOS قد يبدأ التبادل إلى القرص عند وصول متصفح الإنترنت أو تطبيقات أخرى إلى المساحة المتبقية.",
+              "links": []
+            },
+            {
+              "text": "تظهر النتيجة أن تدفق الخبراء عبر SSD وصل إلى أداء يقل بنحو 6% عن محرك Strata المتخصص في توليد الرموز في المعيار المعروض في المنشور، وهو تحسن كبير بالنسبة إلى مسار Accelerate الذي كان لا يتعامل مع آلية توجيه MoE أصلًا. مع ذلك، وصف المؤلف أن السرعة لا تزال أقل مما يحتاجه في عمله اليومي مع وكلاء البرمجة؛ وكانت الغاية الأساسية هي اختبار هل يمكن لخارطة تدفق الخبراء داخل Transformers أن تتوسع بدل التسليم بعدم ملاءمة نموذج لأجهزة الحاسوب الشخصية.",
+              "links": [
+                {
+                  "text": "Strata",
+                  "url": "https://github.com/niko1221/strata"
+                }
+              ]
+            },
+            {
+              "text": "ويفصل المؤلف بين ثلاث مراحل منفصلة في التجربة: اختيار تدفق الخبراء وإعادة توجيه الموجّه، وإزالة حلقة Python البطيئة عبر تجميع الخُزنات، وإضافة تخطيط لضغط الخبراء والجداول الوسيطة. كل ما لزم من مسارات التنفيذ، بما في ذلك نوى Metal الخاصة بهذا النموذج، وُضع في مساحة Hugging Face ليُمكن التعرف عليه واختباره، لكنه لا يغير الشرط الأساسي: فالقرص لا يمكنه تعويض نقص الذاكرة دون كلفة زمنية، حتى إذا قل حجم البيانات المنقولة بفضل التوجيه والكمية المضغوطة.",
+              "links": []
+            },
+            {
+              "text": "ولا تقدم التجربة دليلًا على أنها استبدال شامل لمحركات الاستدلال المتخصصة، ولا تدعي أنها تصل إلى أعلى سرعة في كل العتاد. لكنها توضح أن طبقة التحويل والتدفق داخل Transformers أصبحت قابلة للاستمرار تقنيًا، وأن ربط الخبير النشط بخبير مخزن يمكن أن يجعل نموذجًا بحجم 180 مليار معلمة يعمل ضمن جهاز شخصي محدود، إذا وفرت بقية الأجزاء حلولًا تخزينها منفصلة وألغت عمليات النسخ غير الضرورية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Transformers",
+        "MoE",
+        "Qwen",
+        "Hugging Face",
+        "تعلم الآلة",
+        "الأجهزة الشخصية",
+        "SSD"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Transformers",
+        "Accelerate",
+        "llama.cpp",
+        "vLLM",
+        "Strata",
+        "Qwen3.8-Flash-Next",
+        "Qwen",
+        "Mac",
+        "Metal"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "19 نوفمبر 2026",
+      "modifiedLabel": "19 نوفمبر 2026",
+      "readMinutes": 8,
+      "wordCount": 1348
+    },
+    "en": {
+      "title": "Pushing MoE Inference to the Limit with Transformers",
+      "description": "Explore how engineers are pushing mixture-of-experts model inference to run 180B parameter architectures using just 32GB of RAM with Transformers.",
+      "deck": "A recent experiment details how Mixture-of-Experts (MoE) models can perform local inference on consumer hardware with limited memory through advanced streaming and caching strategies.",
+      "summaryBullets": [
+        "Engineers tackled running large Mixture-of-Experts models locally on constrained consumer hardware like MacBooks and dual-GPU setups.",
+        "Traditional tools like llama.cpp, vLLM, and vanilla Transformers handle offloading differently, often resulting in performance bottlenecks or cache thrashing.",
+        "A custom streaming approach implemented via Hugging Face Transformers enables models like Qwen3.8-Flash-Next to utilize SSD storage and disk-based quantization.",
+        "By turning device caches into slot pools, systems can leverage grouped matrix multiplication without requiring custom expert kernels."
+      ],
+      "sections": [
+        {
+          "heading": "The Challenge of Local MoE Inference",
+          "paragraphs": [
+            {
+              "text": "Running massive artificial intelligence models locally has historically been restricted by hardware memory limits. While smaller setups like a dual RTX 4090 desktop or a MacBook with unified memory can handle certain workloads, large Mixture-of-Experts (MoE) models present unique scaling challenges. Because experts typically constitute over 90 percent of a MoE model's total weight, running a 180-billion parameter model locally requires sophisticated memory management techniques to bridge the gap between GPU memory, system RAM, and storage.",
+              "links": []
+            },
+            {
+              "text": "Developers looking into local hardware capabilities often experiment with various setups, ranging from standard coding assistants powered by models like Qwen 3.8 27B interacting via tools like llama.app and pi, to specialized inference engines designed to handle massive parameter counts without overwhelming available hardware resources.",
+              "links": [
+                {
+                  "text": "Qwen 3.8 27B",
+                  "url": "https://huggingface.co/Qwen/Qwen3.8-27B"
+                },
+                {
+                  "text": "llama.app",
+                  "url": "https://llama.app/"
+                },
+                {
+                  "text": "pi",
+                  "url": "https://pi.dev/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Comparing Existing Offload Frameworks",
+          "paragraphs": [
+            {
+              "text": "Before developing new offloading pathways, technical evaluations compared how established frameworks handle models that exceed available memory limits. Specifically, llama.cpp utilizes memory mapping via mmap to keep inactive experts on the CPU. While this works well when experts comfortably fit within available system RAM, it suffers from page cache thrashing and memory fragmentation when capacity is exceeded.",
+              "links": []
+            },
+            {
+              "text": "Meanwhile, alternative engines approach memory management through pinned RAM allocations and PCIe transfers. However, these methods often necessitate reading hot experts repeatedly across tokens without leveraging advanced disk tiering. Vanilla Transformers implementations handle offloading through Accelerate by moving entire module layers sequentially, which remains inefficient for sparse MoE architectures where only a fraction of experts are actually routed per token.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Optimizing Transformers for Expert Streaming",
+          "paragraphs": [
+            {
+              "text": "To address these limitations, developers looked at optimizing offloading directly within the core Transformers ecosystem. Initial tests utilizing smaller architectures like OLMoE-1B-7B helped refine the caching architecture. While standard Python loops incurred severe performance penalties due to individual expert processing, introducing a slot pool architecture transformed performance significantly.",
+              "links": []
+            },
+            {
+              "text": "By establishing a preallocated device tensor shared across all layers alongside a per-layer mapping table, systems can seamlessly remap router expert IDs to preassigned slots. This configuration allows grouped matrix multiplication kernels to operate natively on the cache pool without requiring custom hardware-specific expert routines. Further exploration of these methodologies and community discussions can be followed via the Hugging Face Blog and developer contributions on GitHub.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/moe-expert-streaming"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Streaming Qwen3.8-Flash-Next on Constrained Hardware",
+          "paragraphs": [
+            {
+              "text": "Applying these streaming enhancements to larger models demonstrates the feasibility of running expansive architectures on constrained memory budgets. For instance, testing advanced configurations with models like Qwen3.8-Flash-Next highlights how aggressive quantization—such as reducing experts to 3-bit precision alongside 8-bit dense layers—can compress massive parameter footprints down to sizes capable of running on consumer laptops and desktop GPUs.",
+              "links": [
+                {
+                  "text": "Qwen3.8-Flash-Next",
+                  "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next"
+                }
+              ]
+            },
+            {
+              "text": "The streaming pipeline bypasses traditional offloading by utilizing dedicated I/O threads for un-cached expert reads directly from disk, while also implementing early routing predictions to prefetch upcoming expert requirements. Additional insights into setting up these workflows on Apple silicon hardware can be found in technical write-ups available on this blog post detailing local Mac deployments.",
+              "links": [
+                {
+                  "text": "this blog post",
+                  "url": "https://modelfit.io/blog/strata-qwen38-flash-next-mac/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Mixture of Experts",
+        "Transformers",
+        "Hardware Acceleration",
+        "Model Optimization"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Transformers",
+        "Qwen",
+        "GitHub"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 19, 2026",
+      "modifiedLabel": "November 19, 2026",
+      "readMinutes": 3,
+      "wordCount": 581
+    }
+  },
+  "datePublished": "2026-11-19T12:10:17.715725+03:00",
+  "dateModified": "2026-11-19T12:10:17.715725+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/180b-parameters-32gb-of-ram-pushing-moe-inference-to-the-limit-with/hero.webp",
+    "card": "/forum/assets/posts/2026/11/180b-parameters-32gb-of-ram-pushing-moe-inference-to-the-limit-with/card.webp",
+    "social": "/forum/assets/posts/2026/11/180b-parameters-32gb-of-ram-pushing-moe-inference-to-the-limit-with/social.jpg",
+    "alt": {
+      "ar": "Hugging Face تشغّل MoE ب180 مليار معلمة في 32GB",
+      "en": "Pushing MoE Inference to the Limit with Transformers"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/moe-expert-streaming/thumbnail.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/180b-parameters-32gb-of-ram-pushing-moe-inference-to-the-limit-with/inline-01.webp",
+        "width": 1280,
+        "height": 640,
+        "alt": {
+          "ar": "Hugging Face تشغّل MoE ب180 مليار معلمة في 32GB",
+          "en": "Pushing MoE Inference to the Limit with Transformers"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/moe-expert-streaming",
+        "originalUrl": "https://huggingface.co/blog/assets/ml4/thumbnail.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/moe-expert-streaming",
+      "type": "official",
+      "title": "180B Parameters, 32GB of RAM: Pushing MoE Inference to the Limit with Transformers"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/moe-expert-streaming",
+  "sourceTitle": "180B Parameters, 32GB of RAM: Pushing MoE Inference to the Limit with Transformers",
+  "trendScore": 95.18,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-19T09:10:18+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 2
+  },
+  "contentFile": "forum/content/2026/11/180b-parameters-32gb-of-ram-pushing-moe-inference-to-the-limit-with.json"
+}
