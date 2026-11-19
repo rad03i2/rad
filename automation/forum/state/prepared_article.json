@@ -1,5 +1,349 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-19T00:45:38+00:00",
-  "last_published_story_id": "1471104375f835f45826"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-19T00:53:21+00:00",
+  "target_publish_at": "2026-11-19T04:05:37.131857+03:00",
+  "story": {
+    "title": "Connect Amazon Bedrock AgentCore Gateway to private APIs in a hub-and-spoke network with centralized inspection",
+    "url": "https://aws.amazon.com/blogs/machine-learning/connect-amazon-bedrock-agentcore-gateway-to-private-apis-in-a-hub-and-spoke-network-with-centralized-inspection",
+    "domain": "aws.amazon.com",
+    "summary": "Many enterprises run a centralized network model: one account owns every VPC and a central firewall inspects all traffic. This post shows a tested pattern for connecting Amazon Bedrock AgentCore Gateway to private APIs and MCP servers in that model, with the VPC Lattice resource gateway in the network account so every hop crosses the firewall.",
+    "published_at": "2026-11-18T19:05:45+00:00",
+    "discovered_at": "2026-11-18T19:13:43+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "913b45050bfc4e952ada",
+    "last_publisher_status": "generation_error",
+    "last_publisher_at": "2026-11-18T19:54:03+00:00",
+    "quality_errors": [
+      "generation_error:RuntimeError: No usable source text available"
+    ],
+    "publisher_attempts": [
+      {
+        "attempt": 1,
+        "status": "generation_error",
+        "error": "RuntimeError: No usable source text available"
+      },
+      {
+        "attempt": 2,
+        "status": "generation_error",
+        "error": "RuntimeError: No usable source text available"
+      },
+      {
+        "attempt": 3,
+        "status": "generation_error",
+        "error": "RuntimeError: No usable source text available"
+      }
+    ],
+    "publisher_failures": 1,
+    "publisher_retry_at": "2026-11-18T20:04:03.441793+00:00",
+    "trend": {
+      "score": 106.75,
+      "age_hours": 5.78,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/connect-amazon-bedrock-agentcore-gateway-to-private-apis-in-a-hub-and-spoke-network-with-centralized-inspection/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Connect Amazon Bedrock AgentCore Gateway to private APIs in a hub-and-spoke network with centralized inspection",
+      "title": "Connect Amazon Bedrock AgentCore Gateway to private APIs in a hub-and-spoke network with centralized inspection | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "أمازون تتيح ربط بوابة Bedrock AgentCore بالشبكات الخاصة عبر جدار حماية مركزي",
+      "description": "تقدم أمازون ويب سيرفيسز نمطاً معمارياً جديداً يربط بوابة Bedrock AgentCore بالواجهات البرمجية الخاصة داخل شبكات Hub-and-Spoke، مع ضمان فحص مركزي لجميع الحركات عبر جدار الحماية.",
+      "deck": "تتبنى الشركات الكبرى نماذج شبكية مركزية تتطلب فحصاً دقيقاً لكل حركة بيانات. يوضح هذا النمط كيفية دمج وكلاء الذكاء الاصطناعي مع البنية التحتية الآمنة دون المساس بسياسات الشبكة المركزية.",
+      "summary_bullets": [
+        "يتيح النمط الجديد لوكلاء Bedrock AgentCore الوصول إلى واجهات API الخاصة وخدمات MCP عبر جدار حماية مركزي في كلا الاتجاهين.",
+        "يعتمد الحل على وضع بوابة موارد VPC Lattice في حساب الشبكة المركزي لضمان عبور جميع الحركات عبر نقطة الفحص.",
+        "يتم اختبار النمط في منطقة us-east-1 باستخدام حسابات أعضاء متعددة ضمن AWS Organizations، مع توفير قوالب CloudFormation جاهزة.",
+        "يحدد النمط بوضوح حدود الفحص، حيث يرى جدار الحماية بيانات التدفق والمعرفات وليس محتوى الحزم المشفرة بالكامل."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي التكامل في الشبكات المركزية",
+          "paragraphs": [
+            {
+              "text": "تعتمد العديد من المؤسسات على نموذج شبكي مركزي تدير فيه فرق الشبكة كل السحابة الخاصة (VPC) والشبكات الفرعية، مع اشتراط مرور جميع الحركات عبر جدار حماية مركزي. تواجه وكلاء الذكاء الاصطناعي الذين يستدعون واجهات REST الداخلية أو خوادم بروتوكول سياق النموذج (MCP) عبر Amazon Bedrock AgentCore Gateway تحدياً مزدوجاً: الحاجة إلى الوصول الآمن لهذه الخدمات الخاصة، والالتزام الصارم بسياسات الفحص المركزية. يمثل Amazon Bedrock AgentCore منصة لبناء الوكلاء وربطهم وتحسينهم على نطاق واسع باستخدام أي إطار عمل أو نموذج.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "النمط المعماري المقترح",
+          "paragraphs": [
+            {
+              "text": "يقدم هذا النمط حلاً عملياً يحافظ على ملكية فريق الشبكة لكل الشبكات الفرعية، مع ضمان مرور حركة المرور بين البوابة والواجهات البرمجية الخاصة عبر جدار الحماية المركزي في كلا الاتجاهين. يركز الحل على تحديد موقع بوابة موارد Amazon VPC Lattice التي تستخدمها البوابة للوصول إلى الأهداف الخاصة. يشمل النمط تحديد ملكية كل مكوّن، واتخاذ ستة قرارات تكوينية، وإجراء فحوصات تؤكد عمل البنية بشكل صحيح. تم بناء هذا النمط واختباره في منطقة شرق الولايات المتحدة (فرجينيا الشمالية) us-east-1، في مختبر يضم ثلاثة حسابات أعضاء وحساب إدارة ضمن AWS Organizations.",
+              "links": [
+                {
+                  "text": "Amazon VPC Lattice",
+                  "url": "https://docs.aws.amazon.com/vpc-lattice/latest/ug/what-is-vpc-lattice.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل البوابة وضبط التكوين",
+          "paragraphs": [
+            {
+              "text": "تعتمد البنية على مفهومين رئيسيين: بوابة الموارد (Resource Gateway) وهي نقطة دخول Amazon VPC Lattice إلى الشبكة الخاصة، وتكوين الموارد (Resource Configuration) الذي يحدد الخادم الخلفي خلف البوابة. توفر أمازون خيارين لنقاط النهاية الخاصة: الوضع المُدار حيث تنشئ AgentCore البوابة تلقائياً، والوضع ذاتي الإدارة حيث ينشئ المستخدم البوابة ويمنح الهدف تكويناً محدداً. في هذا النمط، يستخدم الوضع ذاتي الإدارة مع تعديل بسيط: يملك حساب الشبكة البوابة ويضعها في شبكات فرعية تمر عبر بوابة النقل (Transit Gateway)، مما يضمن مرور كل طلب واستجابة عبر شبكة الفحص.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مسار حركة المرور والفحص",
+          "paragraphs": [
+            {
+              "text": "تبدأ العملية عندما يستدعي الوكيل، الموجود في شبكة فرعية مشتركة بدون مسار للإنترنت، عنوان البوابة. يحل DNS الخاص داخل شبكة الوكيل هذا العنوان. إذا كان مفعلاً، يقيّم AWS WAF الطلب، ثم تتحقق البوابة من سياسة الموارد ورمز JWT الوارد لاختيار الهدف والأداة. تحصل البوابة على رمز OAuth للخادم الخلفي وترسل الطلب عبر VPC Lattice إلى بوابة الموارد في حساب الشبكة. تمر الشبكات الفرعية لبوابة الموارد عبر بوابة النقل، مما يرسل الحركة عبر شبكة الفحص إلى موازن التحميل الداخلي (ALB) أو نقطة نهاية execute-api في حساب الأداة. يتحقق الخادم الخلفي من الرمز ويحوّل الطلب، ثم تعود الاستجابة بنفس المسار عبر جدار الحماية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "القيود والحدود التقنية",
+          "paragraphs": [
+            {
+              "text": "من المهم فهم ما لا يفعله هذا النمط. لا يوجد فحص لمحتوى الحزم (Payload Inspection) لأن الحركة مشفرة عبر TLS من البوابة إلى موازن التحميل، حيث يرى جدار الحماية بيانات التدفق واسم خادم TLS (SNI) فقط، بينما يكون محتوى الطلبات في سجلات البوابة وWAF وALB. كما تتجاوز بعض الأجزاء جدار الحماية، مثل مسار الوكيل إلى نقطة النهاية، ومسار البوابة إلى بوابة الموارد، وطلبات الرموز من مزودي الهوية. لا تصل هوية المستخدم النهائي إلى الأداة مباشرة عند استخدام منح بيانات العميل، لذا يجب تتبع الاستدعاءات عبر مطالبات JWT الواردة في سجلات تطبيق البوابة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المتطلبات والموارد الداعمة",
+          "paragraphs": [
+            {
+              "text": "يتطلب تطبيق هذا النمط وجود منظمة في AWS Organizations مع تمكين مشاركة الموارد عبر AWS RAM. كما يحتاج إلى واجهة سطر أوامر AWS CLI الإصدار 2.37.7 أو أحدث، أو SDK لبايثون (Boto3) الإصدار 1.43.106 أو أحدث لدعم معاملات التكوين. يوفر المستودع المرافق قوالب AWS CloudFormation، وسكربتات الاختبار، والأدلة على الاختبار، ومواد مرجعية تشمل خطة العناوين وفحوصات التحقق الكاملة وحل المشكلات. يُنصح باستخدام النمط كدليل وتكييفه مع بنية الحسابات الخاصة بالمؤسسة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "Amazon Bedrock",
+        "أمن الشبكات",
+        "VPC Lattice",
+        "بنية تحتية سحابية",
+        "وكلاء الذكاء الاصطناعي"
+      ],
+      "entities": [
+        "أمازون ويب سيرفيسز (AWS)",
+        "Amazon Bedrock AgentCore",
+        "Amazon VPC Lattice",
+        "AWS Organizations",
+        "AWS RAM",
+        "AWS WAF",
+        "Model Context Protocol (MCP)"
+      ],
+      "article_type": "news",
+      "confidence_note": "النص يعتمد حصرياً على مدونة AWS الرسمية المذكورة، مع الحفاظ على الدقة التقنية للمصطلحات وتوضيح القيود المذكورة في المصدر."
+    },
+    "en": {
+      "title": "AWS Details Pattern for Bedrock AgentCore Gateway and Private APIs",
+      "description": "Discover a tested hub-and-spoke networking pattern to connect Amazon Bedrock AgentCore Gateway to private APIs with centralized firewall inspection.",
+      "deck": "Enterprise architectures using a centralized network model can now implement a tested pattern for connecting Amazon Bedrock AgentCore Gateway to private APIs and MCP servers while ensuring all traffic passes through a central firewall.",
+      "summary_bullets": [
+        "Enterprise network teams can maintain ownership of all subnets and VPCs under a centralized hub-and-spoke model.",
+        "A custom self-managed approach routes traffic through an Amazon VPC Lattice resource gateway located within the network account.",
+        "AWS tested the pattern using a multi-account lab in the US East (N. Virginia) Region with AWS Organizations.",
+        "The architecture ensures all cross-VPC communication flows through a central inspection firewall in both directions."
+      ],
+      "sections": [
+        {
+          "heading": "Centralized Network Requirements for AI Agents",
+          "paragraphs": [
+            {
+              "text": "Many enterprise organizations operate under a centralized network model where a dedicated network team owns every virtual private cloud (VPC) and subnet. Within this framework, all traffic moving between VPCs must pass through a central firewall in both directions. As artificial intelligence deployments expand, agents calling internal REST APIs and Model Context Protocol (MCP) servers via Amazon Bedrock AgentCore Gateway must adhere to these strict enterprise governance rules.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                }
+              ]
+            },
+            {
+              "text": "To address this operational constraint, the AWS Machine Learning Blog published a tested architectural pattern. This configuration allows network teams to maintain ownership of every subnet while routing traffic between the Gateway and private internal backends through the central inspection firewall. The design uses Amazon VPC Lattice to manage connectivity without sacrificing centralized security mandates.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/connect-amazon-bedrock-agentcore-gateway-to-private-apis-in-a-hub-and-spoke-network-with-centralized-inspection/"
+                },
+                {
+                  "text": "Amazon VPC Lattice",
+                  "url": "https://docs.aws.amazon.com/vpc-lattice/latest/ug/what-is-vpc-lattice.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Understanding Private Endpoint Modes and Gateway Targets",
+          "paragraphs": [
+            {
+              "text": "When configuring private endpoints for a Gateway target, administrators typically choose between Managed mode and Self-managed mode. In managed mode, AgentCore automatically creates the necessary resource gateway within the Gateway account. Conversely, self-managed mode allows administrators to manually create the resource gateway and assign a resource configuration directly to the target.",
+              "links": [
+                {
+                  "text": "Managed mode",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/vpc-egress-private-endpoints.html#lattice-vpc-egress-managed-lattice"
+                },
+                {
+                  "text": "Self-managed mode",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/vpc-egress-private-endpoints.html#lattice-vpc-egress-self-managed-lattice"
+                }
+              ]
+            },
+            {
+              "text": "However, standard deployment options do not automatically force every packet across a central inspection firewall. Because enterprise requirements demand strict inspection for both requests and replies, the published hub-and-spoke configuration adapts self-managed mode by placing the resource gateway inside the network account's dedicated subnets.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Implementation and Architectural Design",
+          "paragraphs": [
+            {
+              "text": "The verified pattern places the VPC Lattice resource gateway inside a dedicated VPC and subnets owned entirely by the central network account. Backends are kept separate from these subnets, and routes are configured through an AWS Transit Gateway. This ensures that every request and response crosses the inspection VPC firewall. Teams can share a single resource configuration per backend with the AgentCore account using AWS Resource Access Manager (AWS RAM).",
+              "links": []
+            },
+            {
+              "text": "Engineers building out this infrastructure can consult alternative configuration models and evaluate why other methods fall short under strict inspection constraints. A comprehensive build order and alternative analysis are documented in the companion repository to help technical teams replicate the environment successfully.",
+              "links": [
+                {
+                  "text": "build order",
+                  "url": "https://github.com/aws-samples/sample-bedrock-agentcore-gateway-hub-spoke-inspection/blob/main/docs/build-order.md"
+                },
+                {
+                  "text": "companion repository",
+                  "url": "https://github.com/aws-samples/sample-bedrock-agentcore-gateway-hub-spoke-inspection"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Traffic Path and Operational Boundaries",
+          "paragraphs": [
+            {
+              "text": "The traffic flow begins when an agent within a shared subnet calls the Gateway URL. Private DNS inside the agent's VPC resolves the address, and after passing through optional AWS WAF evaluation and inbound JWT checks, the Gateway selects the target tool. An outbound OAuth token is generated, and requests travel through VPC Lattice to the network account's resource gateway.",
+              "links": []
+            },
+            {
+              "text": "From the resource gateway, transit gateway routes guide the traffic through the central inspection VPC before reaching the tool account's internal Application Load Balancer or API Gateway endpoint. Responses return along the exact same inspected path. Enterprises should note specific security boundaries of this pattern, such as end-to-end TLS encryption which limits the central firewall to viewing metadata and SNI rather than deep payload contents.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "AWS VPC Lattice",
+        "Cloud Architecture",
+        "Enterprise Networking",
+        "API Security",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon Bedrock",
+        "AWS RAM",
+        "AWS Transit Gateway"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based directly on the official AWS Machine Learning Blog post detailing hub-and-spoke network integration for Amazon Bedrock AgentCore Gateway."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 641,
+      "word_count_en": 578
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "913b45050bfc4e952ada",
+      "title": "Connect Amazon Bedrock AgentCore Gateway to private APIs in a hub-and-spoke network with centralized inspection",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 641,
+          "word_count_en": 578
+        }
+      ]
+    }
+  ],
+  "slug": "connect-amazon-bedrock-agentcore-gateway-to-private-apis-in-hub-and-spoke-network-with",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/connect-amazon-bedrock-agentcore-gateway-to-private-apis-in-hub-and-spoke-network-with/hero.webp",
+    "card": "/forum/assets/posts/2026/11/connect-amazon-bedrock-agentcore-gateway-to-private-apis-in-hub-and-spoke-network-with/card.webp",
+    "social": "/forum/assets/posts/2026/11/connect-amazon-bedrock-agentcore-gateway-to-private-apis-in-hub-and-spoke-network-with/social.jpg",
+    "alt": {
+      "ar": "أمازون تتيح ربط بوابة Bedrock AgentCore بالشبكات الخاصة عبر جدار حماية مركزي",
+      "en": "AWS Details Pattern for Bedrock AgentCore Gateway and Private APIs"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22132-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/connect-amazon-bedrock-agentcore-gateway-to-private-apis-in-hub-and-spoke-network-with/inline-01.webp",
+        "width": 1400,
+        "height": 905,
+        "alt": {
+          "ar": "أمازون تتيح ربط بوابة Bedrock AgentCore بالشبكات الخاصة عبر جدار حماية مركزي",
+          "en": "Network account owns every VPC and the VPC Lattice resource gateway; traffic crosses the central firewall in both directions"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/connect-amazon-bedrock-agentcore-gateway-to-private-apis-in-a-hub-and-spoke-network-with-centralized-inspection/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/22132-1.png"
+      }
+    ]
+  }
 }
