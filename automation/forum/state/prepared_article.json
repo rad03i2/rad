@@ -1,5 +1,282 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-19T20:45:07+00:00",
-  "last_published_story_id": "88461657b387a0e65112"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-19T20:53:34+00:00",
+  "target_publish_at": "2026-11-20T00:05:06.891928+03:00",
+  "story": {
+    "title": "Introducing Tool Retrieval in the Gemini API",
+    "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval",
+    "domain": "blog.google",
+    "summary": "Gemini spark on a space background",
+    "published_at": "2026-11-19T18:00:00+00:00",
+    "discovered_at": "2026-11-19T18:38:32+00:00",
+    "source": {
+      "name": "Google AI",
+      "feed": "https://blog.google/technology/ai/rss/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 30,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 66,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "056cf0b58a3dbace6833",
+    "trend": {
+      "score": 112.88,
+      "age_hours": 2.88,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/",
+      "name": "Google AI",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Introducing Tool Retrieval in the Gemini API",
+      "title": "Gemini API tool retrieval for efficient agent scaling",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "جوجل تطلق ميزة استرجاع الأدوات في واجهة برمجة تطبيقات Gemini",
+      "description": "أعلنت جوجل عن ميزة Tool Retrieval في Gemini API، مما يتيح للوكلاء الوصول لمئات الأدوات بكفاءة. تخفض الميزة استهلاك الرموز وتزيد دقة اختيار الأدوات عند توسيع نطاق التطبيقات.",
+      "deck": "تسعى جوجل إلى تحسين كفاءة الوكلاء البرمجيين من خلال ميزة جديدة تسمح بتحميل مخططات الأدوات عند الحاجة فقط، مما يقلل التكاليف ويحافظ على دقة الأداء.",
+      "summary_bullets": [
+        "تتيح ميزة Tool Retrieval للوكلاء إدارة مكتبات أدوات ضخمة دون إرسال جميع المخططات في كل طلب.",
+        "تعمل الميزة مع نماذج Gemini 3.6 وما بعدها، بما في ذلك جميع نماذج Gemini 4، وتوفر في استهلاك الرموز المدخلة.",
+        "تتوافق الميزة مع خوادم MCP عن بُعد وتسمح بتعريف الأدوات ديناميكياً أثناء المحادثة.",
+        "لا تفرض جوجل رسوماً إضافية على الميزة، حيث يتم احتساب التكاليف بناءً على الرموز المستخدمة فعلياً."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق ميزة استرجاع الأدوات في Gemini API",
+          "paragraphs": [
+            {
+              "text": "أعلنت جوجل رسمياً عن إطلاق ميزة Tool Retrieval (استرجاع الأدوات) في واجهة برمجة تطبيقات Gemini، متاحة حالياً في وضع المعاينة ضمن Interactions API. تهدف هذه الميزة إلى معالجة التحدي الكبير الذي يواجه المطورين عند بناء وكلاء برمجيين يتعاملون مع مئات الأدوات المختلفة. بدلاً من إرسال جميع مخططات المعاملات (Schemas) في كل طلب، تتيح الميزة للوكيل الاحتفاظ بمكتبة الأدوات في وضع الاستعداد وتحميل التفاصيل المطلوبة فقط عند الحاجة إليها. هذا النهج يقلل بشكل كبير من عدد الرموز المدخلة (Input Tokens) ويخفض زمن الاستجابة، مما يحسن دقة اختيار الأدوات كلما زاد حجم المكتبة. ويمكن الرجوع إلى Google AI للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Interactions API",
+                  "url": "https://aistudio.google.com/docs/interactions-overview"
+                },
+                {
+                  "text": "Google AI",
+                  "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل وتقليل استهلاك الرموز",
+          "paragraphs": [
+            {
+              "text": "عند دمج عشرات أو مئات الأدوات مع وكيل برمجي، يؤدي إرسال كل مخطط كامل في كل طلب إلى تضخم حجم البيانات المرسلة، مما يزيد من التكاليف ويضيف تأخراً في الأداء. مع ميزة Tool Retrieval، يرى النموذج اسم ووصف كل أداة مؤجلة (Deferred) دون تحميل مخططها الكامل في السياق. عندما يحتاج النموذج إلى أداة محددة، يطلبها بالاسم، فتقوم الواجهة البرمجية بتحميل المخطط الكامل وتنفيذ استدعاء الدالة ضمن نفس الطلب. هذا يعني أن الخطوات الثلاث (البحث، التحميل، الاستدعاء) تحدث داخل استدعاء واحد، مما يجعل عملية التصحيح أسهل من خلال فحص تفاعل الخطوات (interaction.steps).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع خوادم MCP عن بُعد",
+          "paragraphs": [
+            {
+              "text": "تتوافق ميزة استرجاع الأدوات بشكل جيد مع خوادم MCP (Model Context Protocol) عن بُعد في Gemini API. يمكن للمطورين تعيين defer_loading: true على أداة mcp_server، مما يؤدي إلى تحميل جميع الأدوات التي يعرضها الخادم عند الحاجة فقط. هذا يسمح بتوصيل خوادم كبيرة تحتوي على عدد هائل من الأدوات دون الحاجة إلى سرد كل أداة على حدة في الطلب الأولي. كما تدعم الميزة التخزين المؤقت للبادئات (Prefix Caching)، حيث تبقى المخططات المؤجلة خارج بداية الطلب، مما يحافظ على ثبات البادئة المخزنة مؤقتاً بين التفاعلات المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الأدوات من جانب العميل",
+          "paragraphs": [
+            {
+              "text": "للمطورين الذين يحافظون على سجلات أدواتهم الخاصة أو فلاتر أذونات لكل مستخدم، تتيح الميزة تحديد tool_search مع execution: client. في هذا الوضع، يقوم تطبيق المطور بتنفيذ عملية البحث، مما يضيف رحلة ذهاباً وإياباً واحدة لكل عملية بحث. ميزة أخرى مهمة هي عدم الحاجة إلى إعلان الأدوات مسبقاً، مما يتيح عرض أدوات جديدة أثناء المحادثة عندما يربط المستخدم تكاملات إضافية. هذا يوفر مرونة عالية في بناء تطبيقات تفاعلية تتكيف مع احتياجات المستخدمين المتغيرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوافق مع نماذج Gemini 4",
+          "paragraphs": [
+            {
+              "text": "تعمل ميزة Tool Retrieval مع نماذج Gemini 3.6 وما بعدها، وتشمل جميع نماذج Gemini 4 المتاحة في Interactions API. توفر هذه التوافقية للمطورين القدرة على بناء تطبيقات أكثر قدرة واستجابة باستخدام أحدث تقنيات جوجل في مجال الذكاء الاصطناعي. يمكن للمطورين البدء في استخدام هذه الميزة اليوم من خلال إضافة أداة tool_search وتعيين defer_loading: true على الأدوات التي يرغبون في تأجيل تحميلها، مع إبقاء الأدوات الأكثر استخداماً محملة مسبقاً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "سياسة التسعير والقياس",
+          "paragraphs": [
+            {
+              "text": "أوضحت جوجل أن ميزة Tool Retrieval لا تحمل رسوماً إضافية منفصلة. يتم احتساب الرموز المدخلة والمخرجة بمعدلات النموذج القياسية. يضيف تفعيل tool_search كتلة صغيرة وثابتة من الرموز المدخلة، وتُحتسب كل مخطط يحمّله النموذج كرموز مدخلة لبقية المحادثة، تماماً مثل الأداة المعلنة مسبقاً. توفر الميزة توفيراً حقيقياً في التكاليف عندما تتجاوز المخططات التي لا يتم تحميلها تلك التي يتم تحميلها، وهو ما يحدث عادةً في المكتبات الكبيرة. تنصح جوجل المطورين بقياس الأداء مقابل حركة المرور الخاصة بهم لتحديد حجم التوفير الفعلي.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "جوجل",
+        "Gemini API",
+        "الذكاء الاصطناعي",
+        "الوكلاء البرمجيون",
+        "تطوير البرمجيات",
+        "MCP",
+        "كفاءة الحوسبة"
+      ],
+      "entities": [
+        "جوجل",
+        "Gemini API",
+        "Interactions API",
+        "Gemini 3.6",
+        "Gemini 4",
+        "MCP"
+      ],
+      "article_type": "news",
+      "confidence_note": "الخبر يعتمد حصرياً على المدونة الرسمية لجوجل، مع التركيز على الميزات التقنية والتوافقية المذكورة صراحةً في المصدر دون استنتاجات خارجية."
+    },
+    "en": {
+      "title": "Google Launches Tool Retrieval in the Gemini API",
+      "description": "Google introduces Tool Retrieval in the Gemini API in preview, letting AI agents load parameter schemas on demand to reduce input tokens and latency.",
+      "deck": "Google has announced the preview release of Tool Retrieval in the Gemini API, a new feature designed to help developers manage large collections of software tools efficiently by loading parameter schemas on demand.",
+      "summary_bullets": [
+        "Tool Retrieval is now available in preview within the Interactions API.",
+        "The feature allows agents to keep a full tool library on standby and load parameter schemas only when required.",
+        "Input tokens and latency are reduced by avoiding the need to send full tool libraries in every prompt.",
+        "It works with Gemini 3.6 and later models, including all Gemini 4 models."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to Tool Retrieval",
+          "paragraphs": [
+            {
+              "text": "Google AI has introduced Tool Retrieval in the Gemini API, currently available in preview within the Interactions API. When AI agents connect to dozens or hundreds of tools, sending every full parameter schema on every single request can inflate input token counts, add latency, and lower tool-selection accuracy as the candidate list grows. According to Google, this new capability lets an agent keep its full tool library on standby and load parameter schemas exclusively when the current task requires them.",
+              "links": [
+                {
+                  "text": "Interactions API",
+                  "url": "https://aistudio.google.com/docs/interactions-overview"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "How Tool Retrieval Works",
+          "paragraphs": [
+            {
+              "text": "To turn on Tool Retrieval, developers can add a tool_search tool to their request and set defer_loading: true on the specific tools they want to hold back. While the parameter schemas stay out of context, the model still sees the name and description of every deferred tool so that it understands what options are available. When the model ultimately needs a tool, it requests it by name, the API loads the full schema, and the model calls the function all inside the same request.",
+              "links": []
+            },
+            {
+              "text": "Google notes that there is no index to build or host because Gemini runs the search directly on the server. Developers only need to make minor changes to their code by adding the new tool and a flag on the tools they wish to defer. Furthermore, Tool Retrieval works seamlessly with prefix caching since deferred schemas stay out of the start of the prompt while loaded schemas are added later in the conversation.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Integration and Compatibility",
+          "paragraphs": [
+            {
+              "text": "Tool Retrieval also integrates with remote MCP servers in the Gemini API. By setting defer_loading: true on an mcp_server tool, every tool exposed by that server is loaded on demand, eliminating the need to list servers and tools one by one. For developers maintaining custom tool registries, embedding indexes, or per-user permission filters, declarations can be made with client-side execution parameters.",
+              "links": [
+                {
+                  "text": "remote MCP servers in the Gemini API",
+                  "url": "https://ai.google.dev/gemini-api/docs/function-calling#mcp"
+                }
+              ]
+            },
+            {
+              "text": "The feature is compatible with Gemini 3.6 and later models, including all Gemini 4 models. Developers interested in reviewing the complete setup can consult the documentation provided by Google AI.",
+              "links": [
+                {
+                  "text": "all Gemini 4 models",
+                  "url": "https://aistudio.google.com/docs/latest-model"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Pricing and Billing Details",
+          "paragraphs": [
+            {
+              "text": "Google has stated that Tool Retrieval carries no separate charge. Input and output tokens are billed at the standard rates established for the specific model being called. Enabling tool_search introduces a small, fixed block of input tokens, and each schema loaded by the model is subsequently billed as input for the rest of the conversation, matching the behavior of a tool declared upfront. Developers are encouraged to measure performance and token savings against their own application traffic.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Gemini API",
+        "Google AI",
+        "Tool Retrieval",
+        "Interactions API",
+        "Artificial Intelligence",
+        "Developer Tools"
+      ],
+      "entities": [
+        "Google",
+        "Gemini API",
+        "Interactions API",
+        "Gemini 3.6",
+        "Gemini 4"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly reflects the provided source material regarding the Gemini API Tool Retrieval preview, its functional mechanics, compatibility, and billing structure."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 617,
+      "word_count_en": 514
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "056cf0b58a3dbace6833",
+      "title": "Introducing Tool Retrieval in the Gemini API",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 617,
+          "word_count_en": 514
+        }
+      ]
+    }
+  ],
+  "slug": "introducing-tool-retrieval-in-the-gemini-api",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/introducing-tool-retrieval-in-the-gemini-api/hero.webp",
+    "card": "/forum/assets/posts/2026/11/introducing-tool-retrieval-in-the-gemini-api/card.webp",
+    "social": "/forum/assets/posts/2026/11/introducing-tool-retrieval-in-the-gemini-api/social.jpg",
+    "alt": {
+      "ar": "جوجل تطلق ميزة استرجاع الأدوات في واجهة برمجة تطبيقات Gemini",
+      "en": "Google Launches Tool Retrieval in the Gemini API"
+    },
+    "credit": "Google AI",
+    "sourceUrl": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Tool_retrieval_hero.width-1300.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
