@@ -1,0 +1,364 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "f770aea7096a9d1664bb",
+  "slug": "protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/",
+    "en": "/forum/en/ai/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/"
+  },
+  "locales": {
+    "ar": {
+      "title": "حماية استدعاءات أدوات الوكلاء بالذكاء الاصطناعي عبر Skyflow وAgentCore",
+      "description": "تعرّف على كيفية استخدام Skyflow وAmazon Bedrock AgentCore Gateway لمنع تسرب البيانات الحساسة من أدوات الوكلاء، مع إزالة الهوية قبل الوصول لأي أداة أو نموذج دون تعديل الكود.",
+      "deck": "تقدم Skyflow وAmazon Bedrock AgentCore Gateway حلاً متكاملاً لحماية تدفقات البيانات الحساسة في أنظمة الوكلاء الذكيين، من خلال إزالة الهوية التلقائية دون الحاجة إلى تعديل البنية التحتية للوكلاء أو الأدوات.",
+      "summaryBullets": [
+        "تعمل Skyflow كوسيط (Interceptor) في بوابة AgentCore لإخفاء البيانات الحساسة قبل وصولها إلى الأدوات الخارجية.",
+        "تستعيد البوابة البيانات الأصلية للوكلاء المصرح لهم فقط، مما يحافظ على خصوصية العملاء أثناء تنفيذ المهام.",
+        "تدعم البنية المعمارية ثلاثة أوضاع حماية: حماية الأداة، حماية النموذج، وحماية المستندات.",
+        "تعمل الآلية بشكل 'مغلق عند الفشل' (Fail Closed) لضمان عدم إرسال البيانات غير المحمية إذا تعذر إجراء إزالة الهوية."
+      ],
+      "sections": [
+        {
+          "heading": "تسرب البيانات عبر استدعاءات الأدوات",
+          "paragraphs": [
+            {
+              "text": "تطورت أنظمة الوكلاء الذكيين من مجرد الإجابة على الأسئلة إلى تنفيذ إجراءات فعلية عبر استدعاء أدوات خارجية مثل خوادم بروتوكول سياق النموذج (MCP) وواجهات برمجة التطبيقات (APIs). ومع كل استدعاء أداة، يحدث تدفق للبيانات، حيث تكتب النماذج الحاسوبية المعلمات بناءً على كل ما هو موجود في سياقها، بما في ذلك تفاصيل لا تحتاجها الأداة فعلياً. على سبيل المثال، عند الاستعلام عن عميل، قد تُرسل اسم العميل ورقم حسابه مباشرة إلى خادم طرف ثالث يقع خارج نطاق الامتثال المؤسسي.",
+              "links": []
+            },
+            {
+              "text": "لا يقتصر الخطر على البيانات الصادرة، بل يشمل أيضاً البيانات العائدة. فالنتائج المستخرجة من الويب أو سجلات إدارة علاقات العملاء (CRM) قد تحتوي على بيانات شخصية غير ذات صلة، مما يؤدي إلى تلوث سياق النموذج والسجلات. بالإضافة إلى ذلك، تتجاوز المستندات فحوصات النصوص التقليدية، حيث تُعاد روابط موقعة بدلاً من النص، مما يسمح للوكيل بفتح الملف الأصلي دون فحص محتواه.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور بوابة AgentCore في الحماية",
+          "paragraphs": [
+            {
+              "text": "تقدم Amazon Bedrock AgentCore Gateway حلاً مركزياً لهذه المشكلة من خلال وضعها في نقطة مرور كل استدعاءات الأدوات، بغض النظر عن الإطار البرمجي أو النموذج المستخدم. تتيح البوابة تنفيذ أكواد مخصصة كدوال AWS Lambda على كل طلب واستجابة. يعمل وسيط الطلب (Request Interceptor) قبل وصول الاستدعاء إلى الأداة، بينما يعمل وسيط الاستجابة (Response Interceptor) قبل وصول النتيجة إلى الوكيل، مما يسمح بفحص الحمولة وإعادة كتابتها أو حظر الاستدعاء.",
+              "links": [
+                {
+                  "text": "AgentCore Gateway",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+                }
+              ]
+            },
+            {
+              "text": "هذا التصميم يجعل البوابة مكاناً طبيعياً لإضافة طبقات حماية البيانات بجانب سياسات الأمان والحواجز (Guardrails). بمجرد ربط هذا التحكم مرة واحدة، يغطي جميع الوكلاء والأدوات خلف البوابة دون أي تغيير في كود الوكيل أو الأداة، مما يوفر قابلية توسع عالية عبر الفرق المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل Skyflow كوسيط أمني",
+          "paragraphs": [
+            {
+              "text": "تُدمج Skyflow في البوابة كوسيط يطلب ويستجيب، حيث تستخدم تقنية Skyflow Detect للبحث عن الكيانات الحساسة مثل الأسماء، عناوين البريد الإلكتروني، أرقام الهواتف، المعرفات الحكومية، وأرقام البطاقات. يتم استبدال هذه القيم برموز (Tokens) قبل إرسالها، ثم تُستعاد القيم الأصلية للوكلاء المصرح لهم. يتم تخزين القيم الأصلية في Skyflow Vault للسماح بالعكس عند الحاجة.",
+              "links": [
+                {
+                  "text": "Skyflow",
+                  "url": "https://www.skyflow.com/"
+                }
+              ]
+            },
+            {
+              "text": "يعمل وسيط Skyflow كدالة AWS Lambda واحدة مرتبطة بنقطتي اعتراض في البوابة. في نقطة الطلب، يتم إخفاء البيانات الحساسة في المعلمات. وفي نقطة الاستجابة، يتم إما استعادة البيانات أو إخفاؤها أو استبدال روابط المستندات بنسخ نظيفة. هذا يضمن أن النموذج لا يرى البيانات الحساسة إلا عندما يكون ذلك ضرورياً ومصرحاً به.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حماية المستندات والبيانات العائدة",
+          "paragraphs": [
+            {
+              "text": "تتضمن الحماية أيضاً معالجة المستندات التي تتجاوزها فلاتر النصوص التقليدية. عندما تعيد أدوات مثل Amazon S3 أو Box رابطاً موقعا، يقوم الوسيط باستبدال هذا الرابط برابط لنسخة منزوعة الهوية من المستند. بهذا، يقرأ الوكيل نسخة نظيفة خالية من البيانات الشخصية، بينما تبقى النسخة الأصلية محمية في المستودع.",
+              "links": []
+            },
+            {
+              "text": "تحدد إعدادات بوابة Skyflow وضع الحماية لكل أداة من بين ثلاثة أوضاع: حماية الأداة (Shield the tool)، حماية النموذج (Shield the model)، وحماية المستند (Shield the document). يسمح هذا المرونة بتطبيق مستويات أمان مختلفة بناءً على طبيعة الأداة وحساسية البيانات المتداولة معها.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة العمليات والأمان التشغيلي",
+          "paragraphs": [
+            {
+              "text": "تتميز البنية المعمارية بعدم الحاجة إلى إعادة نشر الوكلاء عند تغيير السياسات. يتم تخزين السياسات في AWS Systems Manager Parameter Store، وتدخل التغييرات حييز التنفيذ فوراً. كما يتم تخزين مفتاح API الخاص بـ Skyflow في AWS Secrets Manager، مما يضمن إدارة آمنة للمفاتيح الحساسة.",
+              "links": []
+            },
+            {
+              "text": "تتبع آلية 'الإغلاق عند الفشل' (Fail Closed) حيث يتم احتجاز الاستدعاء بدلاً من إرساله بشكل غير محمي إذا تعذر إكمال عملية إزالة الهوية. كما يسجل الوسيط كل قرار في Amazon CloudWatch مع مقاييس للتنبيهات، مع ضمان عدم تسجيل بيانات الاعتماد أو القيم الأصلية في السجلات، مما يعزز الشفافية والأمان التشغيلي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مثال عملي من قطاع البنوك",
+          "paragraphs": [
+            {
+              "text": "توضح حالة بنك أوروبي كبير كيف تحمي هذه التقنية بيانات العملاء. عند استعلام وكيل عن نزاع بطاقة، كانت البيانات الحساسة تُرسل سابقاً إلى مزودي البحث. مع تفعيل وسيط Skyflow، يستقبل مزود البحث رموزاً بدلاً من الأسماء، مما يمنع تسرب الهوية. بينما يرى المحلل الاسم الحقيقي في إجابة الوكيل، مما يحافظ على كفاءة العمل مع تعزيز الخصوصية.",
+              "links": []
+            },
+            {
+              "text": "يُتاح هذا الحل عبر AWS Marketplace، ويوجد الكود المصدري للوسيط مفتوح المصدر على GitHub، مما يتيح للمؤسسات المراجعة والتخصيص حسب احتياجاتها. يوفر هذا النهج طبقة حماية شاملة تضمن بقاء البيانات الحساسة خارج نطاق الأدوات والنماذج غير المصرح لها.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمن البيانات",
+        "Amazon Bedrock",
+        "Skyflow",
+        "وكلاء الذكاء الاصطناعي",
+        "حماية الخصوصية",
+        "AWS"
+      ],
+      "entities": [
+        "Skyflow",
+        "Amazon Bedrock AgentCore Gateway",
+        "AWS Lambda",
+        "Amazon S3",
+        "AWS Secrets Manager",
+        "Amazon CloudWatch"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "19 نوفمبر 2026",
+      "modifiedLabel": "19 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 750
+    },
+    "en": {
+      "title": "Protect AI Agent Tool Calls with Skyflow and Amazon Bedrock",
+      "description": "Learn how Skyflow and Amazon Bedrock AgentCore Gateway secure sensitive data across AI agent tool calls without modifying code.",
+      "deck": "A new integration between Skyflow and Amazon Bedrock AgentCore Gateway aims to keep sensitive enterprise data out of AI agent tool calls, third-party servers, and model contexts.",
+      "summaryBullets": [
+        "Skyflow integrates as a request and response interceptor within Amazon Bedrock AgentCore Gateway.",
+        "The architecture de-identifies sensitive data before it reaches tools and restores it for authorized callers.",
+        "The system operates without requiring changes to existing agent or tool code.",
+        "Deployment leverages standard AWS infrastructure including AWS Lambda, Secrets Manager, and Systems Manager Parameter Store."
+      ],
+      "sections": [
+        {
+          "heading": "Securing AI Agent Tool Calls",
+          "paragraphs": [
+            {
+              "text": "As artificial intelligence agents evolve from answering simple questions to taking direct actions through various servers and APIs, data security challenges have expanded. Every agent tool call represents a data flow, yet most enterprise controls historically focus only on inputs and outputs of the underlying model rather than what an agent sends to its tools or receives in return. To address this gap, organizations can utilize solutions detailed on the AWS Machine Learning Blog to secure their workflows.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/"
+                }
+              ]
+            },
+            {
+              "text": "When models write arguments for tool calls, they often pull details from their full context—including information that the specific tool does not actually require. For example, a query sent to a third-party server outside an organization's compliance scope might inadvertently include sensitive customer names, account numbers, or email addresses. Similarly, scraped web pages, customer relationship management records, and case notes can return sensitive data directly into the model's memory and traces even when the task did not demand it.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The Role of AgentCore Gateway and Interceptors",
+          "paragraphs": [
+            {
+              "text": "Patching individual agents across multiple teams and frameworks is difficult and fails to secure third-party tools adequately. Instead, security controls must sit precisely where every tool call passes. The AgentCore Gateway serves this exact function by fronting every tool an agent uses, regardless of the framework or model running the agent.",
+              "links": []
+            },
+            {
+              "text": "By utilizing an interceptor, developers can execute custom code via an AWS Lambda function on every traffic call passing through the gateway. A request interceptor reviews each call before it reaches a tool, while a response interceptor examines each result before the agent processes it. Organizations can review technical documentation on the interceptor mechanism to understand how payloads can be inspected, rewritten, or blocked.",
+              "links": [
+                {
+                  "text": "interceptor",
+                  "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-interceptors.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Integrating Skyflow Data Protection",
+          "paragraphs": [
+            {
+              "text": "To provide robust data privacy, Skyflow can be added as a request and response interceptor to the gateway, de-identifying data before any tool, model, or log encounters it. The platform relies on tools like Skyflow Detect to identify sensitive entities such as names, phone numbers, government IDs, and payment card numbers, replacing them with reversible vault tokens while storing original values securely in a vault.",
+              "links": []
+            },
+            {
+              "text": "This configuration allows agents running on the AgentCore runtime to interact with tools normally while maintaining strict data privacy compliance. Developers can explore the open-source integration via the designated agentcore-skyflow repository to implement these security controls.",
+              "links": [
+                {
+                  "text": "agentcore-skyflow",
+                  "url": "https://github.com/SkyflowFoundry/agentcore-skyflow"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Real-World European Banking Application",
+          "paragraphs": [
+            {
+              "text": "A practical scenario involves a large European bank handling retail and corporate banking operations under strict data-residency obligations. When investigation agents look into card disputes, they frequently search the web for merchant details and pull case notes from document storage systems like Amazon S3.",
+              "links": []
+            },
+            {
+              "text": "Without gateway protection, customer details can easily leak into third-party search queries and model contexts. With Skyflow enabled on the AgentCore Gateway, external search providers receive only reversible vault tokens rather than cleartext personal information. Merchant results return successfully without exposing customer identity, and web content reaches the model already de-identified.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Deployment",
+          "paragraphs": [
+            {
+              "text": "The integration operates without requiring any modifications to existing agent or tool code. Agents continue to discover the gateway and sign requests using their AWS Identity and Access Management roles. Policies dictating entity types and token behaviors are managed through AWS Systems Manager Parameter Store, ensuring configuration updates take effect without system redeployments.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, operations are built natively on AWS infrastructure, keeping API keys secure in AWS Secrets Manager and routing decisions to Amazon CloudWatch for logging and monitoring. Administrators can procure the solution directly through the AWS Marketplace and reference official deployment guidelines across supported AWS Regions.",
+              "links": [
+                {
+                  "text": "AWS Marketplace",
+                  "url": "https://aws.amazon.com/marketplace/pp/prodview-zysz3tjic76qg"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Skyflow",
+        "Amazon Bedrock",
+        "Artificial Intelligence",
+        "Data Privacy",
+        "Cloud Security",
+        "AWS"
+      ],
+      "entities": [
+        "Skyflow",
+        "Amazon Web Services",
+        "Amazon Bedrock"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 19, 2026",
+      "modifiedLabel": "November 19, 2026",
+      "readMinutes": 4,
+      "wordCount": 671
+    }
+  },
+  "datePublished": "2026-11-19T21:45:05.328713+03:00",
+  "dateModified": "2026-11-19T21:45:05.328713+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/hero.webp",
+    "card": "/forum/assets/posts/2026/11/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/card.webp",
+    "social": "/forum/assets/posts/2026/11/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/social.jpg",
+    "alt": {
+      "ar": "حماية استدعاءات أدوات الوكلاء بالذكاء الاصطناعي عبر Skyflow وAgentCore",
+      "en": "Protect AI Agent Tool Calls with Skyflow and Amazon Bedrock"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22128-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/inline-01.webp",
+        "width": 800,
+        "height": 624,
+        "alt": {
+          "ar": "حماية استدعاءات أدوات الوكلاء بالذكاء الاصطناعي عبر Skyflow وAgentCore",
+          "en": "Reference architecture with the Skyflow interceptor Lambda function between Amazon Bedrock AgentCore Gateway and the tools, reading its policy from Parameter Store and its API key from Secrets Manager"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22128-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/inline-02.webp",
+        "width": 800,
+        "height": 855,
+        "alt": {
+          "ar": "حماية استدعاءات أدوات الوكلاء بالذكاء الاصطناعي عبر Skyflow وAgentCore",
+          "en": "Shield the tool flow where the customer name is replaced with a vault token before the search provider sees the query and restored before the agent reads the results"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22128-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/inline-03.webp",
+        "width": 800,
+        "height": 976,
+        "alt": {
+          "ar": "حماية استدعاءات أدوات الوكلاء بالذكاء الاصطناعي عبر Skyflow وAgentCore",
+          "en": "Shield the model flow where the interceptor de-identifies the prompt and conversation history before the model reads them and restores the minted tokens before the agent reads the answer"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22128-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/inline-04.webp",
+        "width": 776,
+        "height": 1050,
+        "alt": {
+          "ar": "حماية استدعاءات أدوات الوكلاء بالذكاء الاصطناعي عبر Skyflow وAgentCore",
+          "en": "Shield the document flow where the interceptor checks the presigned URL against the allowlist and Skyflow Detect returns a link to a de-identified copy of the file"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22128-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway/",
+      "type": "official",
+      "title": "Protect agent tool calls with Skyflow and Amazon Bedrock AgentCore Gateway"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway",
+  "sourceTitle": "Protect agent tool calls with Skyflow and Amazon Bedrock AgentCore Gateway",
+  "trendScore": 119.88,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-19T18:45:05+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/protect-agent-tool-calls-with-skyflow-and-amazon-bedrock-agentcore-gateway.json"
+}
