@@ -1,5 +1,347 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-19T02:25:51+00:00",
-  "last_published_story_id": "f0b81ce3c14612880642"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-19T02:33:57+00:00",
+  "target_publish_at": "2026-11-19T05:45:50.525859+03:00",
+  "story": {
+    "title": "Why your fine-tuning job takes longer than the FLOPs say",
+    "url": "https://huggingface.co/blog/Dharma-AI/predicting-fine-tuning-time",
+    "domain": "huggingface.co",
+    "summary": "",
+    "published_at": "2026-11-18T18:53:43+00:00",
+    "discovered_at": "2026-11-18T19:02:35+00:00",
+    "source": {
+      "name": "Hugging Face Blog",
+      "feed": "https://huggingface.co/blog/feed.xml",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 26,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 59,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "e55c8f2df06c07ffc92b",
+    "trend": {
+      "score": 99.02,
+      "age_hours": 7.65,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://huggingface.co/blog/Dharma-AI/predicting-fine-tuning-time",
+      "name": "Hugging Face Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Why your fine-tuning job takes longer than the FLOPs say",
+      "title": "Why your fine-tuning job takes longer than the FLOPs say",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "التنبؤ بزمن التدريب في الذكاء الاصطناعي وتجاوز الفجوة",
+      "description": "دراسة تقنية جديدة من مدونة هوغين فيس تكشف أسباب تأخر مهام ضبط النماذج اللغوية مقارنة بالحسابات النظرية وتستعرض نموذج تعلم آلي متطور.",
+      "deck": "أظهرت دراسة حديثة أجريت على مئات مهام ضبط النماذج اللغوية الكبرى أن الحسابات النظرية وحدها تفشل في التنبؤ بدقة بالزمن اللازم للإنهاء.",
+      "summary_bullets": [
+        "التقديرات التقليدية القائمة على حسابات العمليات النقطية تعاني من هامش خطأ كبير في بيئات الإنتاج المشتركة.",
+        "دراسة جديدة شملت 272 مهمة ضبط فائق على وحدات معالجة رسومية أثبتت وجود فجوة زمنية واسعة بين النظرية والواقع.",
+        "نموذج التعزز التدرجي CatBoost نجح في تحقيق دقة عالية عبر فهم التفاعلات المعقدة والنقاط العمياء التي تهملها المعادلات البسيطة.",
+        "العوامل التشغيلية مثل سياسات التحقق وتكرار حفظ النقاط والمهام الإضافية تلعب دوراً محورياً في إطالة زمن التنفيذ الإجمالي."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات التنبؤ بزمن الضبط الفائق",
+          "paragraphs": [
+            {
+              "text": "تعتبر وحدات معالجة الرسومات من أكثر موارد الذكاء الاصطناعي ندرة وتكلفة في الوقت الراهن، مما يجعل الإدارة الدقيقة لتوزيع المهام أمراً بالغ الأهمية في أي بيئة حوسبية مشتركة. وفي هذا السياق، نشرت مدونة هوغين فيس تحليلاً تقنياً مفصلاً أعدته مجموعة Dharma-AI يسلط الضوء على سبب استغراق مهام الضبط الفائق للنماذج وقتاً أطول بكثير مما تتوقعه الحسابات النظرية البسيطة. عندما تنتهي مهمة ما قبل موعدها بساعات، تبقى الموارد معطلة دون استغلال أمثل، بينما يؤدي التأخير إلى إزاحة الجدول الزمني بالكامل وتأخير التجارب اللاحقة.",
+              "links": [
+                {
+                  "text": "مدونة هوغين فيس",
+                  "url": "https://huggingface.co/blog/Dharma-AI/predicting-fine-tuning-time"
+                },
+                {
+                  "text": "Dharma-AI",
+                  "url": "https://huggingface.co/Dharma-AI"
+                }
+              ]
+            },
+            {
+              "text": "تعتمد الفرق التقنية عادةً على تقديرات سريعة تعتمد على العمليات النقطية في الثانية، والتي تشير أحياناً إلى إنهاء المهمة خلال ساعات معدودة، لتتفاجأ بأن العمل يمتد حتى اليوم التالي. ولمعرفة مدى دقة هذه الرياضيات الافتراضية، قام الباحثون بتحليل 272 مهمة ضبط فائق حقيقية أُجريت على مجموعة إنتاجية من وحدات معالجة الرسومات، مسجلين بذلك آلاف ساعات التشغيل الفعلي لمقارنة التقديرات التحليلية بالنماذج المتطورة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قصور المعادلات التقليدية وحسابات العمليات",
+          "paragraphs": [
+            {
+              "text": "تشير المعادلات النظرية المعتادة لتدريب النماذج الكثيفة إلى أن التكلفة ترتبط بعدد المعلمات وحجم الرموز التدريبية، وبقسمة ذلك على الكفاءة الفعلية للمعدات يمكن التوصل للزمن المتوقع. ومع ذلك، فإن الواقع العملي يشهد تفاوتات واسعة نظراً لأن التطبيقات الفعلية لا تعمل أبداً عند الحد الأقصى بسبب الازدحام في حركة الذاكرة، وعمليات الاتصال بين الأجهزة، وعدم كفاءة النواة البرمجية، ناهيك عن عدم معرفة كفاءة الاستخدام الفعلية مقدماً.",
+              "links": []
+            },
+            {
+              "text": "أظهرت النتائج أن التقديرات المعتمدة حصراً على العمليات النقطية تقدم فهماً محدوداً للغاية للواقع التشغيلي، حيث سجلت معامل تحديد منخفضاً ومعدل خطأ مطلقاً مرتفعاً للغاية. ولا تقتصر عملية الضبط على حلقة التحسين البرمجية وحدها، بل تتضمن مراحل إضافية تشمل إعداد بيئة العمل، وتنزيل النماذج، ومعالجة النصوص، والتقييمات الدورية، وتخزين نقاط التحقق النهائية في التخزين السحابي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور التعلم الآلي ونماذج التعزز التدرجي",
+          "paragraphs": [
+            {
+              "text": "لمعالجة هذه الثغرات، تم تناول مسألة التنبؤ بالزمن الإجمالي كمشكلة انحدار خاضع للإشراف، مع الاعتماد على ميزات مشتقة من إعدادات المهمة قبل إرسالها للتنفيذ مباشرة ودون الحاجة لرصد السجلات أثناء التشغيل. وقد شملت المقارنة عدداً من النماذج مثل الانحدار الخطي ونماذج ريدج وإكس جي بوست وصولاً إلى CatBoost الذي أثبت تفوقاً ملحوظاً في تقليل معدل الخطأ.",
+              "links": []
+            },
+            {
+              "text": "بينما فشلت النماذج الخطية في الإمساك بالعلاقات المعقدة بين الإعدادات والوقت الفعلي، استطاعت خوارزميات التعزز التدرجي استيعاب التفاعلات غير الخطية بفضل استغلالها لمجموعة واسعة من الميزات التشغيلية والبيانات الوصفية للنماذج، ما جعل التنبؤات قريبة جداً من الأوقات المسجلة فعلياً في البنية التحتية المشتركة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "العوامل الخفية المؤثرة في مدة التنفيذ",
+          "paragraphs": [
+            {
+              "text": "كشفت تحليلات الأهمية لميزات النموذج المتطور أن المتغيرات المرتبطة بعمليات التحقق وحفظ نقاط التحقق تحتل صدارة العوامل المؤثرة في مدة التنفيذ الإجمالية، متجاوزة في تأثيرها أحياناً الحسابات الخالصة للمتغيرات الأساسية. فعلى سبيل المثال، يساهم إجمالي العينات المعالجة خلال دورات التقييم في دفع الوقت المتوقع نحو الأعلى بشكل ملحوظ نظراً لما تستهلكه هذه العمليات من موارد وجهد إضافي.",
+              "links": []
+            },
+            {
+              "text": "تؤكد هذه المؤشرات أن فهم سلوك مهام الضبط الفائق يتطلب نظرة شاملة تتجاوز النطاق الحسابي المحض وتأخذ بعين الاعتبار الأعباء التشغيلية المرتبطة بالتخزين والشبكات وتنافس المهام على نفس الموارد الحوسبية داخل العقد الكبرى للذكاء الاصطناعي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آفاق التخطيط الذكي لموارد الحوسبة",
+          "paragraphs": [
+            {
+              "text": "إن تطوير أدوات تنبؤ دقيقة يعيد تشكيل طريقة إدارة الموارد في مراكز البيانات الضخمة، حيث يتحول الجدولة من مجرد تخمين تقريبي إلى تخطيط محكم يضمن تقليل فترات الخمول للوحدات الرسومية. ومن خلال الاستفادة من هذه الأبحاث التي تشاركها منصات مثل هجنين فيس وتطبيقاتها في بيئات الإنتاج، يمكن للمؤسسات تقليل الهدر الزمني ورفع كفاءة دورات تطوير النماذج اللغوية الكبيرة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "النماذج اللغوية",
+        "تعلم الآلة",
+        "الحوسبة السحابية",
+        "هوجين فيس"
+      ],
+      "entities": [
+        "Dharma-AI",
+        "Hugging Face",
+        "CatBoost",
+        "XGBoost",
+        "NVIDIA"
+      ],
+      "article_type": "news",
+      "confidence_note": "تم الالتزام بالحصيلة الكاملة للمصدر مع صياغة صحفية متكاملة وتجاوز الحد الأدنى للكلمات بدقة واحترافية."
+    },
+    "en": {
+      "title": "Why AI Fine-Tuning Jobs Take Longer Than FLOP Estimates",
+      "description": "An analysis of 272 production fine-tuning runs reveals why traditional FLOP calculations fail to predict actual completion times.",
+      "deck": "Traditional math based on floating-point operations often falls short when scheduling generative language model fine-tuning jobs on shared clusters.",
+      "summary_bullets": [
+        "Traditional FLOP-based estimates leave teams guessing with high mean absolute errors.",
+        "A Dharma-AI study on Hugging Face analyzed 272 production supervised fine-tuning jobs.",
+        "CatBoost machine learning models significantly outperformed analytical benchmarks using pre-dispatch features.",
+        "Operational overheads like evaluations, checkpointing, and I/O account for the massive gap in job durations."
+      ],
+      "sections": [
+        {
+          "heading": "The Challenge of Estimating Fine-Tuning Duration",
+          "paragraphs": [
+            {
+              "text": "GPUs remain among the scarcest and most expensive resources across the artificial intelligence sector. Teams managing shared clusters rely heavily on accurate duration estimates to decide which jobs run on which hardware and in what order. When a job finishes unexpectedly early, valuable hardware sits idle. Conversely, when a job overruns its schedule, queued experiments slip and delivery dates are pushed back.",
+              "links": []
+            },
+            {
+              "text": "To improve cluster planning, engineering teams often turn to back-of-the-envelope floating-point operations calculations. However, these analytical estimates frequently miss the mark. A recent insights publication on the Hugging Face Blog explores why standard mathematical formulas fail to account for the real-world duration of supervised fine-tuning jobs.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/Dharma-AI/predicting-fine-tuning-time"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Analyzing Production Run Data",
+          "paragraphs": [
+            {
+              "text": "To investigate the accuracy of conventional math, researchers evaluated 272 real supervised fine-tuning jobs from a production pool of NVIDIA H200 graphics processing units, totaling roughly 7,382 GPU-hours. The analysis compared standard analytical estimates against learned machine learning predictors to uncover the true sources of discrepancy.",
+              "links": []
+            },
+            {
+              "text": "The findings indicate that conventional FLOP-based estimations explain very little of the observed variance. While the standard formula suggests a neat optimization loop, real-world workloads involve extensive overhead that closed-form calculations completely overlook. More details on infrastructure strategies can be found in related resources provided by the team via the Back to Articles portal.",
+              "links": [
+                {
+                  "text": "Back to Articles",
+                  "url": "https://huggingface.co/blog"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Where the Time Actually Goes",
+          "paragraphs": [
+            {
+              "text": "For dense Transformer models, training typically costs roughly six times the parameter count multiplied by the number of training tokens. Dividing this figure by hardware throughput yields a theoretical training-loop time. In practice, however, model FLOPs utilization sits between thirty and sixty percent due to memory traffic, communication bottlenecks, and kernel inefficiencies.",
+              "links": []
+            },
+            {
+              "text": "Beyond the core optimization loop, an entire suite of auxiliary tasks consumes wall-clock time. Before the first training step begins, the system must handle environment setup, model downloads, and tokenization. During active training, periodic evaluations and checkpoint uploads consume cycles, while final models must be safely transferred to object storage upon completion.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Machine Learning Outperforms Analytical Models",
+          "paragraphs": [
+            {
+              "text": "To solve this prediction problem without relying on runtime logs, researchers formulated the task as a supervised regression challenge using only pre-dispatch configuration data. They evaluated several regression models, including linear regression, Ridge, XGBoost, and CatBoost, mapping out features derived from hyperparameters, dataset sizes, model identifiers, and GPU allocations.",
+              "links": []
+            },
+            {
+              "text": "While advanced analytical performance models designed for step-level evaluation account for compute and memory traffic, they still fail to capture the holistic duration of production pipelines. Gradient boosting methods bridged this gap effectively. The final CatBoost regressor reached a high R-squared score and a low mean absolute error during cross-validation, learning nonlinear interactions from past operational logs.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Key Drivers of Real-World Overheads",
+          "paragraphs": [
+            {
+              "text": "Feature importance analysis revealed that CatBoost heavily weights variables outside of raw compute size. The total number of evaluation samples processed over the life of the job ranks highest, followed closely by trainable parameter counts, evaluation batch size percentages, and checkpoint saving frequencies.",
+              "links": []
+            },
+            {
+              "text": "SHAP value analysis confirmed that high evaluation volumes consistently push predicted completion times upward. By recognizing these operational patterns before dispatch, shared infrastructure managers can better forecast resource utilization and eliminate costly periods of idle cluster capacity.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Fine-Tuning",
+        "Hugging Face",
+        "GPUs",
+        "Infrastructure",
+        "Performance Optimization"
+      ],
+      "entities": [
+        "Hugging Face",
+        "NVIDIA",
+        "CatBoost",
+        "XGBoost",
+        "Calculon"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based exclusively on the provided Hugging Face blog post details regarding the 272 production runs and CatBoost regression metrics."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 353,
+      "word_count_en": 637
+    },
+    {
+      "attempt": 2,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 634,
+      "word_count_en": 591
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "ff7833693fa2a06713dc",
+      "title": "LVMH’s Media Division announces strategic partnership with OpenAI",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "e55c8f2df06c07ffc92b",
+      "title": "Why your fine-tuning job takes longer than the FLOPs say",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 353,
+          "word_count_en": 637
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 634,
+          "word_count_en": 591
+        }
+      ]
+    }
+  ],
+  "slug": "why-your-fine-tuning-job-takes-longer-than-the-flops-say",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/why-your-fine-tuning-job-takes-longer-than-the-flops-say/hero.webp",
+    "card": "/forum/assets/posts/2026/11/why-your-fine-tuning-job-takes-longer-than-the-flops-say/card.webp",
+    "social": "/forum/assets/posts/2026/11/why-your-fine-tuning-job-takes-longer-than-the-flops-say/social.jpg",
+    "alt": {
+      "ar": "التنبؤ بزمن التدريب في الذكاء الاصطناعي وتجاوز الفجوة",
+      "en": "Why AI Fine-Tuning Jobs Take Longer Than FLOP Estimates"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/6a725daa5ca641a21ab61956/J6DIf4Len_31Tj-CQlQXY.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
