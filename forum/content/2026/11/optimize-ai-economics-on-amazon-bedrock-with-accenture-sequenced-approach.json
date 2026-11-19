@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "a6051f05f81a9a6d1e38",
+  "slug": "optimize-ai-economics-on-amazon-bedrock-with-accenture-sequenced-approach",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/optimize-ai-economics-on-amazon-bedrock-with-accenture-sequenced-approach/",
+    "en": "/forum/en/ai/optimize-ai-economics-on-amazon-bedrock-with-accenture-sequenced-approach/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Accenture توجّه اقتصاد الذكاء الاصطناعي على Bedrock",
+      "description": "تطرح Accenture منهجاً مرحلياً لتقليص إنفاق رموز الذكاء الاصطناعي على Amazon Bedrock، عبر القياس وربط الاستهلاك بالقيمة ثم تطبيق أدوات تحسين قابلة للتدرج.",
+      "deck": "مع توسع تطبيقات الذكاء الاصطناعي، لم تعد أسعاره المنخفضة للرمز تكفي لضبط الإنفاق، إذ يمكن أن ترتفع التكلفة الإجمالية أسرع من انخفاض السعر. تقترح Accenture ترتيباً من ثلاث مراحل يربط تخصيص التكلفة أولاً، ثم يضيف التحسينات بحسب تعقيدها وتأثيرها.",
+      "summaryBullets": [
+        "تحتاج المقارنة الاقتصادية إلى قياس تكلفة كل تطبيق أو وكيل، لا الاعتماد على فاتورة سحابية مجمعة.",
+        "تقسم المنهجية إلى ثلاثة محاور: إعدادات فورية، تحسينات سياقية، ثم استثمار بنيوي وتدريبي.",
+        "تشمل الأدوات التخزين المؤقت للمطالبات، التجميع غير الفوري، توجيه الطلبات، وضبط الاسترجاع.",
+        "انخفض الإنفاق على الرموز بنحو 40 إلى 85 بالمئة في تعاملات مقاسة، مع اختلاف النتائج حسب عبء العمل."
+      ],
+      "sections": [
+        {
+          "heading": "سبب ارتفاع الكلفة مع انخفاض الأسعار",
+          "paragraphs": [
+            {
+              "text": "مع اعتماد المؤسسات [Amazon Bedrock](https://aws.amazon.com/bedrock/) لتشغيل نماذج الذكاء الاصطناعي، قد تنمو فاتورة الرموز رغم تناقص سعر المعالجة لكل رمز. فالاعتماد الموسع يرفع عدد الطلبات، بينما تضاعف التطبيقات الوكيلية الاستدعاءات عبر المحاولات وأدوات التدخل وانتقالات الوكلاء. وفي غياب تصنيف واضح للتكلفة، تظهر الذكاء الاصطناعي في الفاتورة السحابية كعنصر واحد بدلاً من أن يكون موزعاً على فرق العمل والتطبيقات والوكلاء والنماذج.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "الاقتصاد الحقيقي لا يقوم فقط بمقارنة سعر الإدخال والإخراج. بل يسأل هل تنمو القيمة التجارية الناتجة أسرع من تكلفة الذكاء اللازم لإنتاجها؟ ويهدف إطلاق Linux Foundation إلى Tokenomics Foundation إلى وضع معايير مفتوحة لقياس كلفة الذكاء الاصطناعي والعائد منه، وهو مؤشر إلى أن إدارة هذه الفاتورة أصبحت اختصاصاً مؤسساتياً مستقلاً. من هذا المنظور، لا يكون خفض عدد الرموز هدفاً بذاته، بل اختيار مستوى الذكاء المناسب لجودة النتيجة ومخاطرها وتكلفتها.",
+              "links": [
+                {
+                  "text": "Tokenomics Foundation",
+                  "url": "https://www.linuxfoundation.org/press/linux-foundation-launches-the-tokenomics-foundation-to-define-the-economics-and-roi-of-ai-value"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تخصيص الكلفة يبدأ قبل التحسين",
+          "paragraphs": [
+            {
+              "text": "تنصح AWS وAccenture بقياس الموقع الذي يبدأ منه الإنفاق قبل تغيير الإعدادات أو البنية. ويشير هذا إلى أن ملفات تكاليف الفرق وأعباء العمل والوكلاء شرط أولي لربط الاستهلاك بمسؤولين ونتائج أعمال حقيقية. يمكن إنشاء ملف استدلال تطبيق واحد لكل تطبيق أو عبء عمل عبر [ملفات استدلال التطبيقات في Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/cost-mgmt-application-inference-profiles.html)، ثم وسمه بالفريق ومركز التكلفة والبيئة. بعد تفعيل وسوم تخصيص التكلفة في [AWS Billing and Cost Management console](https://aws.amazon.com/aws-cost-management/billing-and-cost-management-console-home/)، تصبح كل الفئات قابلة للتتبع.",
+              "links": [
+                {
+                  "text": "ملفات استدلال التطبيقات في Amazon Bedrock",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/cost-mgmt-application-inference-profiles.html"
+                },
+                {
+                  "text": "AWS Billing and Cost Management console",
+                  "url": "https://aws.amazon.com/aws-cost-management/billing-and-cost-management-console-home/"
+                }
+              ]
+            },
+            {
+              "text": "تجمع بيانات الفوترة والتشغيل من أكثر من مصدر. تفصل [AWS Cost and Usage Reports](https://aws.amazon.com/aws-cost-management/aws-cost-and-usage-reporting/) والتصديرات المالية كلفة الاستدلال بحسب عبء العمل والفريق بعد تفعيل الوسوم، بينما يلتقط [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/) المؤشرات التشغيلية مثل عدد الاستدعاءات وزمن الاستجابة. ويسجل [تسجيل استدعاء نماذج Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/model-invocation-logging.html) تفاصيل كل طلب، بما فيها النموذج وعدد رموز الإدخال والإخراج.",
+              "links": [
+                {
+                  "text": "AWS Cost and Usage Reports",
+                  "url": "https://aws.amazon.com/aws-cost-management/aws-cost-and-usage-reporting/"
+                },
+                {
+                  "text": "Amazon CloudWatch",
+                  "url": "https://aws.amazon.com/cloudwatch/"
+                },
+                {
+                  "text": "تسجيل استدعاء نماذج Amazon Bedrock",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-invocation-logging.html"
+                }
+              ]
+            },
+            {
+              "text": "تترجم منهجية Cost per Business Transaction التكاليف التشغيلية إلى صورة تخصها الأعمال. وتجمع هذه المنهجية كل استدعاء للنموذج والمحاولة المعاد تنفيذها والمكالمة الأداتية وانتقال الوكيل الضرورية لإنتاج نتيجة ناجحة في رقم واحد محسوب التكلفة بالكامل. وبذلك تظهر المحاولات الفاشلة التي يخفيها تسعير الرموز الخام، ويُمكن مقارنة الكلفة بـالقيمة التي يقدمها سير العمل. يصبح من الممكن حينئذ التفريق بين فاتورة تنمو مع النجاح التجاري وبين فاتورة تنمو بسبب الهدر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المرحلة الأولى: تحسينات إعدادية فورية",
+          "paragraphs": [
+            {
+              "text": "تبدأ المرحلة الأولى بخيارات لا تتطلب تغيير البنية الأساسية. يعيد [التخزين المؤقت للمطالبات في Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html) استخدام الحالة المحسوبة سابقاً لأجزاء متكررة من المطالبة، مثل تعليمات النظام وتعريفات الأدوات والمستندات المرجعية. ويصمم Amazon Bedrock التخزين المؤقت لتجاوز إعادة معالجة بادئات المطالبات المحفوظة، ما قد يخفض تكلفة رموز الإدخال المخزنة حتى 90 بالمئة للنماذج المدعومة. يتطلب التفعيل وضع علامات نقاط تخزين ضمن المطالبات.",
+              "links": [
+                {
+                  "text": "التخزين المؤقت للمطالبات في Amazon Bedrock",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html"
+                }
+              ]
+            },
+            {
+              "text": "أما الاستدلال المجمع، فيناسب الأعمال غير العاجلة التي يمكن تجميعها ومعالجتها بشكل غير متزامن. ويكلف الاستدلال المجمع في Bedrock على النماذج المؤهلة أقل بنسبة 50 بالمئة من تسعير الطلبات الفورية، ويصلح للتقارير الليلية ومراحل معالجة المستندات وعمليات التقييم. ويكتفي التطبيق بتقديم الطلبات كدفعة، مع كتابة النتائج في أمازون S3 عند اكتمال المعالجة.",
+              "links": []
+            },
+            {
+              "text": "وفيما يتعلق بتوجيه النماذج، يرسل التوجيه الذكي للمطالبات الطلبات عبر نماذج من العائلة نفسها بحسب قيمة المهمة وتعقيدها ومخاطرها. ويمكن أن يقلل التكاليف حتى 30 بالمئة دون المساس بالدقة وفق النص المقدم، مع مراعاة أي رسوم منفصلة للتوجيه بحسب التسعير السائد. ويطبّق النهج ذاته منطق تعيين مستوى النموذج وتصنيف الطلبات الذي استخدمته Accenture في الحالات الإنتاجية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المرحلة الثانية: تقليص السياق غير الضروري",
+          "paragraphs": [
+            {
+              "text": "تستهدف المرحلة الثانية الاستهلاك قبل وصوله إلى النموذج، وليس حسابه بعد تقديم الرد. يحسن الجيل المعزز بالاسترجاع RAG خطوة البحث نفسها حتى يصل إلى النموذج عدد أقل من الرموز التي لا تسهم في الإجابة. وتشمل الأساليب تقطيع المستندات هرمياً، وتصفية النتائج بحسب البيانات الوصفية، وإعادة ترتيبها، كي يقتصر السياق على المقاطع الأكثر صلة بالسؤال.",
+              "links": []
+            },
+            {
+              "text": "تطبق Accenture أيضاً نمطين تكميليين على هذه الآليات. يحد تحديد السياق البيانات التي يحصل عليها كل وكيل في كل خطوة من الوثيقة ذات الصلة بهذا الجزء من سير العمل، بدلاً من تمرير كامل حالة القضية عند كل انتقال. أما ضغط السياق فيلخص الوثائق أو يرشحها قبل وصولها إلى النموذج. ويساعد النمطان على خفض حجم رموز الإدخال خصوصاً في سلاسل العمل متعددة الوكلاء، حيث تتراكم محطات السياق مع كل عملية تسليم.",
+              "links": []
+            },
+            {
+              "text": "الفكرة العملية هي توجيه مستوى المعلومات والنموذج والخدمة إلى المهمة المتاحة، لا افتراض أن كل طلب يحتاج أعلى قدر من الذكاء أو أكبر سياق ممكن. ويسبق هذا التنظيم عادةً بناء ذاكرة خفية أو بنية تخزين دلالي، لأنه يحقق خفضاً بأقل تعقيد بنيوي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المرحلة الثالثة: التخزين الدلالي والبنية",
+          "paragraphs": [
+            {
+              "text": "تستثمر المرحلة الثالثة في البنية والتدريب والتخزين الدلالي لإزالة الاستدعاءات المتكررة. يحفظ التخزين المؤقت الدلالي إجابات سابقة ويعيد استخدامها عندما تكون مطالبة جديدة متقاربة في المعنى حتى لو اختلفت صياغتها. وبذلك يتجنب استدعاء النموذج من جديد، ويرفع احتمال خفض الكلفة وزمن الاستجابة معاً.",
+              "links": []
+            },
+            {
+              "text": "يمكن تنفيذ النموذج على AWS بوضع مخزن متجهات، مثل Amazon ElastiCache، أمام النموذج. وفي معيار نفذته AWS على نحو 63796 استعلاماً حقيقياً لمحادثات، أنتج عتبة تشابه قدرها 0.90 معدل إصابة للكاش بلغ 74.5 بالمئة، ودقة بلغت 92.3 بالمئة، وتخفيضاً مقداره 72.5 بالمئة في الكلفة. وترتبط هذه الأرقام بالعبء المختبر، ولا تضمن أن تنطبق النسب نفسها على كل تطبيق.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "منهج ترتيب المراحل ونتائج التطبيقات",
+          "paragraphs": [
+            {
+              "text": "تنظم المنهجية مرحلتين للإعداد والتقنية، ثم مرحلة للإسناد والبنية. توصي AWS وAccenture بالعمل بالترتيب ذاته، مع إمكانية تطبيق كل مرحلة بشكل مستقل على العبء الذي يحقق الأثر الأكبر. ويكون البدء بإعدادات سريعة مثل التخزين المؤقت والتجميع والتوجيه؛ ثم ضبط الاسترجاع ونطاق السياق؛ وأخيراً توسيع التخزين الدلالي أو الاستثمار في بنية موحدة.",
+              "links": []
+            },
+            {
+              "text": "طبقت Accenture هذه الأدوات في أربع تعاملات عمومية لمجالات الاتصالات والتأمين والتعدين وشركة كبرى، حيث جرى تعديل العبء والعملاء وفق كل حالة، ولم يكشف عن أسماء العملاء لأسباب سرية. وفي الأماكن التي قيس فيها التخفيض، انخفض إنفاق الرموز بنحو 40 إلى 85 بالمئة. وتقول AWS إن هذه النتائج خاصة بعملاء بعينهم وقد تختلف بحسب طبيعة الطلبات والنماذج وحجم المعالجة.",
+              "links": []
+            },
+            {
+              "text": "تفصل [مدونة AWS للتعلم الآلي](https://aws.amazon.com/blogs/machine-learning/optimize-ai-economics-on-accentures-sequenced-approach/) التفاصيل الفنية للمنهج والحالات التطبيقية، وتجمعها في مسار واحد يبدأ بالرقابة على الإنفاق وينتهي بتقليل الاستدعاءات غير الضرورية. ويظل نجاح المنهج مرتبطاً بقياس أثر كل تغيير، لا بإجمالي الفواتير فقط، وبقدرة الفرق على تفسير تكلفة كل نتيجة تجارية بدقة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon Bedrock",
+        "Accenture",
+        "تكلفة الذكاء الاصطناعي",
+        "التخزين المؤقت للمطالبات",
+        "الاستدلال المجمع",
+        "إدارة الرموز",
+        "AWS"
+      ],
+      "entities": [
+        "Accenture",
+        "Amazon Bedrock",
+        "AWS",
+        "Linux Foundation",
+        "Tokenomics Foundation",
+        "Amazon CloudWatch",
+        "Amazon ElastiCache",
+        "AWS Cost and Usage Reports"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "19 نوفمبر 2026",
+      "modifiedLabel": "19 نوفمبر 2026",
+      "readMinutes": 6,
+      "wordCount": 1042
+    },
+    "en": {
+      "title": "Accenture outlines six ways to cut Amazon Bedrock AI costs",
+      "description": "Accenture and AWS outline six ways to control rising AI token spend on Amazon Bedrock, from prompt caching and routing to semantic caching.",
+      "deck": "AWS and Accenture have outlined a sequenced approach to controlling AI costs as enterprise workloads on Amazon Bedrock expand. The framework combines measurement, configuration changes and infrastructure investment.",
+      "summaryBullets": [
+        "Accenture applied six optimization levers across four client engagements.",
+        "Measured token-spend reductions ranged from about 40% to 85%, depending on the workload.",
+        "Cost allocation tags and business-level metrics are presented as the starting point.",
+        "Prompt caching, batch inference, routing and retrieval optimization can reduce consumption without major infrastructure changes.",
+        "Semantic caching requires additional infrastructure but can reduce repeated model calls, cost and latency."
+      ],
+      "sections": [
+        {
+          "heading": "A sequenced approach to AI economics",
+          "paragraphs": [
+            {
+              "text": "AWS and Accenture are recommending a six-lever approach for enterprises seeking to manage the economics of artificial intelligence on Amazon Bedrock. The guidance comes as lower per-token prices encourage broader adoption, while agentic workloads can increase the number of model invocations and push total consumption higher.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock",
+                  "url": "https://aws.amazon.com/bedrock/"
+                }
+              ]
+            },
+            {
+              "text": "The approach was applied by Accenture across four client engagements spanning telecom, insurance, mining and a large enterprise deployment. Where savings were measured, token spend fell by about 40% to 85%. AWS and Accenture cautioned that the results were specific to each client’s workload and may vary. Accenture did not identify the clients because of confidentiality requirements.",
+              "links": []
+            },
+            {
+              "text": "The framework divides the levers into three phases based on the complexity of the change and the investment required. AWS and Accenture recommend progressing through the phases in order, while allowing each phase to be applied independently to workloads where it is likely to have the greatest effect.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Measure ownership before cutting spend",
+          "paragraphs": [
+            {
+              "text": "The first step is attribution. Without cost allocation tags, an organization’s cloud invoice can show AI spending as a single line item rather than distinguishing among teams, workloads, agents or models. Amazon Bedrock application inference profiles can be created for individual applications or workloads and tagged by team, cost center and environment.",
+              "links": []
+            },
+            {
+              "text": "After the tags are activated as cost allocation tags in the AWS Billing and Cost Management console, organizations can trace spending to the teams and applications driving it. The same attribution makes it possible to measure the effect of later changes rather than relying only on total invoice values.",
+              "links": [
+                {
+                  "text": "AWS Billing and Cost Management console",
+                  "url": "https://aws.amazon.com/aws-cost-management/billing-and-cost-management-console-home/"
+                }
+              ]
+            },
+            {
+              "text": "AWS Cost and Usage Reports, delivered through AWS Data Exports, provide the financial view of billed inference costs. Amazon CloudWatch captures operational signals such as invocation counts and latency, while Amazon Bedrock model invocation logging records request-level information, including the model used and input and output token counts.",
+              "links": []
+            },
+            {
+              "text": "Accenture’s Cost per Business Transaction framework combines the model invocations, retries, tool calls and agent handoffs that contribute to one successful business output. The resulting fully loaded figure is intended to show the cost of producing a result, including failed attempts that raw token prices may not reveal. Comparing that cost with the value of the workflow can help distinguish growth caused by successful scaling from growth caused by waste.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Configuration changes come first",
+          "paragraphs": [
+            {
+              "text": "The first optimization phase requires no infrastructure change. Amazon Bedrock prompt caching allows a model to reuse recurring parts of a prompt, such as system instructions, tool definitions and reference documents, instead of processing the same content at full price for every request. AWS says the feature is designed to reduce cached input-token costs by up to 90% for supported models.",
+              "links": [
+                {
+                  "text": "Amazon Bedrock prompt caching",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html"
+                }
+              ]
+            },
+            {
+              "text": "Batch inference is another configuration-level lever for non-urgent work. Eligible requests are submitted as a batch job, with results written to Amazon Simple Storage Service when processing completes. AWS says batch inference is available at 50% lower cost than on-demand pricing for select models, making it suitable for activities such as nightly reports, document-processing pipelines and evaluation runs that do not need immediate responses.",
+              "links": []
+            },
+            {
+              "text": "The recommended division is to use prompt caching for interactive, on-demand traffic and batch inference for asynchronous work. Prompt caching requires cache checkpoint markers in prompts, while batch inference changes how eligible requests are submitted, but neither approach requires a new architecture.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Match intelligence to the task",
+          "paragraphs": [
+            {
+              "text": "Amazon Bedrock intelligent prompt routing directs requests among models within the same model family. Instead of sending every request to the most powerful model, routing matches the level of intelligence to the task’s business value, complexity and risk. AWS says the capability can reduce costs by up to 30% without compromising accuracy, although customers should check for any routing charges in Amazon Bedrock pricing.",
+              "links": []
+            },
+            {
+              "text": "Accenture’s model tiering and triage routing patterns apply the same principle in its engagements: reserve more capable models for tasks that require them and use less expensive options where the business outcome allows. The objective is not to minimize token use regardless of the result, but to use an appropriate level of intelligence for each outcome.",
+              "links": []
+            },
+            {
+              "text": "The guidance also covers retrieval-augmented generation optimization. Hierarchical chunking, metadata-based filtering and reranking can narrow retrieved context to the most relevant content, reducing the number of unnecessary tokens sent to the model while preserving information that improves the answer.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Reduce context across agent workflows",
+          "paragraphs": [
+            {
+              "text": "Two additional Accenture patterns address the size of context passed through multi-agent workflows. Context scoping limits the data each agent receives to the document slice relevant to its step, rather than passing the full case context at every handoff. Context compression summarizes or filters documents before they reach the model.",
+              "links": []
+            },
+            {
+              "text": "Both techniques are intended to reduce input-token volume, particularly in chains where several agents or model calls participate in producing one result. They complement prompt caching, routing and retrieval improvements by reducing the amount of information that must be processed in the first place.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Semantic caching requires more investment",
+          "paragraphs": [
+            {
+              "text": "The final phase involves infrastructure and training investment. Semantic caching stores responses and reuses them when a new request is semantically similar to one that has already been answered, even when the wording differs. By avoiding redundant model invocations, the approach can reduce both cost and latency.",
+              "links": []
+            },
+            {
+              "text": "On AWS, semantic caching can be implemented with a vector store such as Amazon ElastiCache in front of the model. In an AWS benchmark covering 63,796 real chatbot queries, a similarity threshold of 0.90 produced a 74.5% cache hit rate, 92.3% accuracy and 72.5% cost savings. The figures come from that benchmark and are not presented as a guarantee for every workload.",
+              "links": []
+            },
+            {
+              "text": "Taken together, the levers provide a progression from visibility and attribution to prompt and workload configuration, followed by deeper application and infrastructure changes. AWS and Accenture’s central measure is business value relative to the cost of the intelligence required to produce it, rather than token reduction alone.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Artificial intelligence",
+        "Amazon Bedrock",
+        "Accenture",
+        "AI economics",
+        "Prompt caching",
+        "Semantic caching",
+        "Cloud costs"
+      ],
+      "entities": [
+        "AWS",
+        "Accenture",
+        "Amazon Bedrock",
+        "Amazon ElastiCache",
+        "Tokenomics Foundation"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 19, 2026",
+      "modifiedLabel": "November 19, 2026",
+      "readMinutes": 5,
+      "wordCount": 1067
+    }
+  },
+  "datePublished": "2026-11-19T22:25:05.806321+03:00",
+  "dateModified": "2026-11-19T22:25:05.806321+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/optimize-ai-economics-on-amazon-bedrock-with-accenture-sequenced-approach/hero.webp",
+    "card": "/forum/assets/posts/2026/11/optimize-ai-economics-on-amazon-bedrock-with-accenture-sequenced-approach/card.webp",
+    "social": "/forum/assets/posts/2026/11/optimize-ai-economics-on-amazon-bedrock-with-accenture-sequenced-approach/social.jpg",
+    "alt": {
+      "ar": "Accenture توجّه اقتصاد الذكاء الاصطناعي على Bedrock",
+      "en": "Accenture outlines six ways to cut Amazon Bedrock AI costs"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22007-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/optimize-ai-economics-on-amazon-bedrock-with-accentures-sequenced-approach/",
+      "type": "official",
+      "title": "Optimize AI economics on Amazon Bedrock with Accenture’s sequenced approach"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/optimize-ai-economics-on-amazon-bedrock-with-accentures-sequenced-approach",
+  "sourceTitle": "Optimize AI economics on Amazon Bedrock with Accenture’s sequenced approach",
+  "trendScore": 109.84,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-19T19:25:06+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/optimize-ai-economics-on-amazon-bedrock-with-accenture-sequenced-approach.json"
+}
