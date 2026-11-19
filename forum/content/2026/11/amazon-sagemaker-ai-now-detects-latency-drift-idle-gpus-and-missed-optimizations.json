@@ -1,0 +1,336 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "735d1f9416d3ebe29eda",
+  "slug": "amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations/",
+    "en": "/forum/en/ai/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations/"
+  },
+  "locales": {
+    "ar": {
+      "title": "سد ميزات أمازون سيجمايكر للذكاء الاصطناعي تفاصيل أداء نقاط الاستدلال",
+      "description": "أعلنت أمازون سيجمايكر للذكاء الاصطناعي عن ميزات جديدة لمراقبة نقاط الاستدلال وتحديد التباطؤ واستغلال الموارد بدقة لتخفيض التكاليف وتحسين الأداء.",
+      "deck": "تطرح أمازون سيجمايكر للذكاء الاصطناعي قدرات متقدمة لرصد وتقييم نقاط الاستدلال للذكاء الاصطناعي التوليدي افتراضياً، بهدف رصد الانحرافات في الأداء والموارد المعطلة.",
+      "summaryBullets": [
+        "مراقبة تلقائية لنقاط الاستدلال للذكاء الاصطناعي التوليدي دون الحاجة لإعداد مسبق.",
+        "رصد ثلاثة أنواع رئيسية من الملاحظات تشمل انحراف زمن الاستجابة، السعة غير المستخدمة، والفجوات الإعدادية.",
+        "إرسال تنبيهات عبر خدمة أيه دبليو إس هيلث مع مسار بنقرة واحدة لإجراء المقارنات المعيارية في أيه دبليو إس.",
+        "الاحتفاظ الكامل بالتحكم للفرق التقنية وعدم إجراء أي تغييرات إنتاجية تلقائياً قبل الموافقة الصريحة."
+      ],
+      "sections": [
+        {
+          "heading": "مقدمة حول المراقبة التلقائية لنقاط الاستدلال",
+          "paragraphs": [
+            {
+              "text": "تمر نقاط الاستدلال عادةً بعمليات ضبط دقيقة ودقيقة عند إطلاقها في بيئة الإنتاج أول مرة، حيث تختار فرق العمل نوع المثيل، وإعدادات خدمة البيانات، وخيارات التحجيم التي تناسب النموذج وحركة المرور وقت الإطلاق. ومع استقرار الخدمة وسلاسة عملها، تتحول اهتمامات الفرق التقنية عادة نحو أولويات أخرى، في حين تظل أحمال العمل في حالة تغير مستمر. وتتطور أنماط حركة المرور بمرور الوقت، وتكبر التوجيهات، وتصدر محركات الخدمة تحديثات جديدة، بينما تطور أنظمة أمازون تقنيات تحسين جديدة ومختلفة تغير متطلبات الموارد للنماذج المستخدمة. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations-on-your-inference-endpoints/"
+                }
+              ]
+            },
+            {
+              "text": "مع مرور الوقت، تتعرض نقاط الاستدلال المضبوطة بعناية لانحرافات غير مرئية تؤدي إلى ارتفاع تدريجي في أزمنة الاستجابة ووقت استخراج الرمز الأول. وفي المقابل، قد تظل الإعدادات غير مثالية تماماً لتفوت مكاسب الأداء المتاحة، أو تظل وحدات معالجة الرسومات المخصصة للذروات التي لم تحدث معطلة أسبوعاً بعد أسبوع. ونظراً لعدم حدوث عطل برمجي مباشر، فإن الإنذارات المعتادة لا تُطلق، وتبقى هذه الانحرافات مخفية حتى يلاحظها المستخدمون النهائيون بوضوح أو تظهر بوضوح في الفواتير الشهرية للخدمات السحابية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية العمل ورصد الإشارات التشغيلية",
+          "paragraphs": [
+            {
+              "text": "تستطيع منصة أمازون سيجمايكر للذكاء الاصطناعي الآن مراقبة نقاط الاستدلال الخاصة بالذكاء الاصطناعي التوليدي وإعلام الفرق التقنية فور توفر فرصة لتحسين الأداء أو خفض التكاليف التشغيلية. وتعتمد المنصة في ذلك على ميزة التوصيات المحسنة للاستدلال والمدعومة بالقدرات الوكيلية داخل بيئة العمل المخصصة، وتعمل هذه المراقبة افتراضياً وبشكل تلقائي لنقاط الاستدلال التي تستخدم حاويات خدمة معينة ومثيلات معالجة رسومية دون الحاجة لأي إعدادات معقدة مسبقة.",
+              "links": [
+                {
+                  "text": "أمازون سيجمايكر للذكاء الاصطناعي",
+                  "url": "https://aws.amazon.com/sagemaker/ai/"
+                }
+              ]
+            },
+            {
+              "text": "تقتصر عملية الفحص والمراقبة التي تجريها المنصة على الإشارات التشغيلية البحتة وحدها، مثل زمن الاستجابة، ومعدل استخدام وحدات معالجة الرسومات، وإعدادات خدمة البيانات الخاصة بنقطة الاستدلال المعنية. ولا تقوم المنصة نهائياً بقراءة محتوى الطلبات أو الاستجابات المرسلة، مما يحافظ على الخصوصية الكاملة للبيانات. ومن خلال تحليل هذه الإشارات التشغيلية، تستخرج المنصة ثلاثة أنواع رئيسية من النتائج والملاحظات المهمة للفرق التقنية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أنواع النتائج والملاحظات المرصودة",
+          "paragraphs": [
+            {
+              "text": "تتضمن النتائج التي تكشفها المنصة أولاً انحراف زمن الاستجابة، والذي يمثل ارتفاعاً أسبوعياً في الوسيط الإحصائي لزمن الاستجابة الشامل أو وقت الوصول إلى الرمز الأول. وثانياً، ترصد المنصة السعة غير المستخدمة والمتمثلة في وحدات معالجة الرسومات المدفوعة التي تظل معطلة أو منخفضة الاستخدام لمعظم الوقت. وأخيراً، تحدد الميزة الفجوات الإعدادية المتمثلة في حاويات الخدمة التي تفتقر إلى تحسينات الأداء الحديثة أو التحديثات الأمنية، أو غياب تحسينات مثل فك التشفير التخميني وضبط النواقل الرسومية التي يدعمها النموذج ولكنها غير مفعلة في نقطة الاستدلال.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التنبيهات وإجراءات المقارنة المعيارية",
+          "paragraphs": [
+            {
+              "text": "تقوم أمازون سيجمايكر للذكاء الاصطناعي بإرسال النتائج عبر خدمة التنبيهات السحابية لتوفير إشعار موحد يغطي كافة الملاحظات الخاصة بكل نقطة استدلال على حدة. وبمجرد وصول التنبيه، يمكن للفرق التعامل معه من مكان واحد عبر فتح التجربة الوكيلية المدمجة في بيئة التعدوير والتحليل مع ملء بيانات نقطة الاستدلال وحركة المرور الأخيرة تلقائياً.",
+              "links": []
+            },
+            {
+              "text": "يتيح ذلك للفرق تشغيل توصيات الاستدلال لإجراء مقارنة معيارية بين الإعدادات الحالية والبدائل المتاحة، مع عرض مقارنات تفصيلية جنباً إلى جنب لتوضيح زمن الاستجابة، والإنتاجية، والتكلفة لكل مليون رمز. وتُنفذ الاختبارات على موارد حوسبية منفصلة تماماً، مع ضمان عدم إجراء أي تغييرات على نقطة الاستدلال الإنتاجية إلا بعد اتخاذ قرار واعي وتطبيق النتيجة صراحة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "حلقة المراقبة والتحكم في الإنتاج",
+          "paragraphs": [
+            {
+              "text": "تتبع توصيات الاستدلال في المنصة دورة مبسطة من أربع خطوات أساسية تبدأ بالمراقبة المستمرة، ثم إرسال الإشعارات التوضيحية، مروراً بتقديم التوصيات الاختيارية، وانتهاءً باتخاذ القرار النهائي. وتهدف هذه الخطوات إلى إبقاء فرق العمل في وضع السيطرة الكاملة على البنية التحتية، ومنع إحداث أي تغييرات غير محسوبة على بيئة الإنتاج.",
+              "links": []
+            },
+            {
+              "text": "لا تتطلب ميزة المراقبة أي إعدادات معقدة حيث تعمل افتراضياً دون تكاليف إضافية لوحدات معالجة الرسومات، بينما تستخدم المقارنات المعيارية الرسوم القياسية للخدمة أو الحجوزات السحابية الخاصة بالتعلم الآلي في حال توفرها، مما يمنح المهندسين أداة قوية وموثوقة لرفع كفاءة النماذج اللغوية والاستدلالية باستمرار.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون",
+        "سيجمايكر",
+        "الذكاء الاصطناعي",
+        "الحوسبة السحابية",
+        "استدلال النماذج",
+        "تحسين الأداء",
+        "أمن البيانات"
+      ],
+      "entities": [
+        "Amazon SageMaker AI",
+        "AWS Health",
+        "Amazon SageMaker Studio",
+        "AWS Machine Learning Blog"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "20 نوفمبر 2026",
+      "modifiedLabel": "20 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 678
+    },
+    "en": {
+      "title": "Amazon SageMaker AI Adds Automated Inference Monitoring",
+      "description": "Amazon SageMaker AI now monitors generative AI inference endpoints by default, detecting latency drift, idle GPUs, and optimization opportunities.",
+      "deck": "Amazon SageMaker AI has introduced automated monitoring for generative AI inference endpoints, designed to detect performance drift, unused capacity, and configuration gaps without requiring manual setup.",
+      "summaryBullets": [
+        "Monitoring is enabled by default for inference endpoints using vLLM serving containers and GPU instances.",
+        "System tracks operational signals including latency, GPU utilization, and serving configurations.",
+        "Findings are delivered through AWS Health with pathways to benchmark alternatives in Amazon SageMaker Studio.",
+        "Production endpoints remain completely unchanged until administrators explicitly apply recommendations."
+      ],
+      "sections": [
+        {
+          "heading": "Automated Monitoring for Generative AI Endpoints",
+          "paragraphs": [
+            {
+              "text": "Production machine learning environments often drift over time as traffic patterns shift, prompt lengths grow, and serving software updates. To address this challenge, Amazon SageMaker AI now monitors generative AI inference endpoints by default to identify potential performance improvements and cost reductions. The monitoring capability focuses exclusively on operational signals such as latency, GPU utilization, and serving configurations, ensuring that user requests and responses remain completely private.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/sagemaker/ai/"
+                }
+              ]
+            },
+            {
+              "text": "Because the system runs automatically for eligible endpoints utilizing vLLM serving containers and GPU instances, teams do not need to perform any initial setup. When operational changes or optimization opportunities are identified, the system surfaces specific findings to help administrators maintain peak performance across their deployments.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Identifying Latency Drift, Unused Capacity, and Configuration Gaps",
+          "paragraphs": [
+            {
+              "text": "The platform analyzes operational telemetry to categorize findings into three distinct areas. The first is latency drift, which flags week-over-week increases in median end-to-end latency or time to first token. The second category identifies unused capacity by tracking GPU resources that remain largely idle over extended periods. Finally, configuration gaps highlight serving containers missing newer performance patches or optimization techniques like speculative decoding and GPU kernel tuning.",
+              "links": []
+            },
+            {
+              "text": "By continuously tracking these metrics against the historical baseline of each specific endpoint, the system can detect subtle degradations that typically bypass standard threshold-based alarms. This continuous evaluation helps engineering teams catch regressions caused by longer prompts or updated retrieval workflows before users notice a drop in responsiveness.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Streamlined Notifications via AWS Health",
+          "paragraphs": [
+            {
+              "text": "When the monitoring service detects an actionable finding, it delivers a consolidated notification through AWS Health and email. Each notification is region-specific and provides a clear description of the observation, explains why it matters regarding performance or cost, and suggests a straightforward path forward. To prevent alert fatigue, each endpoint receives at most one notification at a time covering all applicable findings.",
+              "links": []
+            },
+            {
+              "text": "These notices explicitly label any estimates provided and confirm that no automated modifications have been made to the production setup. Administrators are given clear context regarding week-over-week changes in metrics like time to first token, giving them reliable data to initiate further investigations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Benchmarking Alternatives in Amazon SageMaker Studio",
+          "paragraphs": [
+            {
+              "text": "Receiving a notification provides a direct pathway into the agentic experience within Amazon SageMaker Studio. By selecting the notification link, users can open a prefilled session containing the endpoint details and recent traffic patterns, enabling them to launch targeted evaluations.",
+              "links": [
+                {
+                  "text": "Amazon SageMaker Studio",
+                  "url": "https://aws.amazon.com/sagemaker/ai/studio/"
+                }
+              ]
+            },
+            {
+              "text": "These benchmark jobs run on separate compute instances rather than the live production environment. Engineers can compare alternative configurations side by side, evaluating response time, overall throughput, and cost per million tokens to make an informed decision grounded in empirical data.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Structured Workflow and Implementation Prerequisites",
+          "paragraphs": [
+            {
+              "text": "The feature follows a structured four-step loop consisting of observing operational signals, notifying stakeholders, recommending optimized alternatives via an opt-in process, and deciding whether to apply changes. Production environments remain untouched until administrators explicitly choose to apply a verified benchmark result.",
+              "links": []
+            },
+            {
+              "text": "While monitoring requires no initial setup and incurs no additional GPU costs, taking action on recommendations requires specific prerequisites. Teams need appropriate permissions and access to the AWS User Notifications console, an active SageMaker Studio domain with IAM permissions for running recommendation jobs, and sufficient service quotas for any benchmark instances they intend to test.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker AI",
+        "Machine Learning",
+        "Generative AI",
+        "GPU Monitoring",
+        "Cloud Computing",
+        "AWS Health"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker AI",
+        "Amazon SageMaker Studio",
+        "AWS Health"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 20, 2026",
+      "modifiedLabel": "November 20, 2026",
+      "readMinutes": 3,
+      "wordCount": 617
+    }
+  },
+  "datePublished": "2026-11-20T00:45:07.661617+03:00",
+  "dateModified": "2026-11-20T00:45:07.661617+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations/hero.webp",
+    "card": "/forum/assets/posts/2026/11/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations/card.webp",
+    "social": "/forum/assets/posts/2026/11/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations/social.jpg",
+    "alt": {
+      "ar": "سد ميزات أمازون سيجمايكر للذكاء الاصطناعي تفاصيل أداء نقاط الاستدلال",
+      "en": "Amazon SageMaker AI Adds Automated Inference Monitoring"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22416-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations/inline-01.webp",
+        "width": 1400,
+        "height": 576,
+        "alt": {
+          "ar": "سد ميزات أمازون سيجمايكر للذكاء الاصطناعي تفاصيل أداء نقاط الاستدلال",
+          "en": "AWS Health latency drift event showing time to first token rose about 200 ms week over week"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations-on-your-inference-endpoints/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22416-1-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations/inline-02.webp",
+        "width": 1400,
+        "height": 569,
+        "alt": {
+          "ar": "سد ميزات أمازون سيجمايكر للذكاء الاصطناعي تفاصيل أداء نقاط الاستدلال",
+          "en": "AWS Health event showing the model supports speculative decoding but the endpoint does not use it"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations-on-your-inference-endpoints/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22416-2-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations/inline-03.webp",
+        "width": 756,
+        "height": 552,
+        "alt": {
+          "ar": "سد ميزات أمازون سيجمايكر للذكاء الاصطناعي تفاصيل أداء نقاط الاستدلال",
+          "en": "Amazon SageMaker AI Adds Automated Inference Monitoring"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations-on-your-inference-endpoints/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ml-22416-edit3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations/inline-04.webp",
+        "width": 1400,
+        "height": 592,
+        "alt": {
+          "ar": "سد ميزات أمازون سيجمايكر للذكاء الاصطناعي تفاصيل أداء نقاط الاستدلال",
+          "en": "AWS Health unused capacity event showing the busiest GPU used 12% or less of its capacity for most of the week"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations-on-your-inference-endpoints/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22416-3-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations-on-your-inference-endpoints/",
+      "type": "official",
+      "title": "Amazon SageMaker AI now detects latency drift, idle GPUs, and missed optimizations on your inference endpoints"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations-on-your-inference-endpoints",
+  "sourceTitle": "Amazon SageMaker AI now detects latency drift, idle GPUs, and missed optimizations on your inference endpoints",
+  "trendScore": 117.97,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-19T21:45:07+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 3
+  },
+  "contentFile": "forum/content/2026/11/amazon-sagemaker-ai-now-detects-latency-drift-idle-gpus-and-missed-optimizations.json"
+}
