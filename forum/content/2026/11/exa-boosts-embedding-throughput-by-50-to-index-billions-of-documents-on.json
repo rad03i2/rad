@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "e0342a634eb3ce38156b",
+  "slug": "exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on/",
+    "en": "/forum/en/ai/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on/"
+  },
+  "locales": {
+    "ar": {
+      "title": "إكسا ترفع كفاءة التضمين 50% على شرائح AWS للذكاء الاصطناعي",
+      "description": "أعلنت شركة إكسا عن تحسينات جوهرية في بنية التضمين باستخدام شرائح Inferentia2 وTrainium2، مما خفض التكاليف وزاد السرعة لمعالجة مليارات المستندات.",
+      "deck": "اعتمدت شركة إكسا على تطوير نوى مخصصة لشرائح AWS Neuron لتحقيق مكاسب كبيرة في الأداء وتكلفة المعالجة لكل مليون مستند.",
+      "summaryBullets": [
+        "حققت إكسا تحسناً بنسبة 47% في الأداء والتكلفة لكل مليون مستند مضمّن.",
+        "استُخدمت شرائح Inferentia2 وTrainium2 مع تطوير نوى NKI مخصصة.",
+        "اعتمد الفريق على منهجية تعتمد على الوكلاء (Agentic) للتحسين المستمر.",
+        "تم تقليل هدر العمليات الحسابية عبر تخصيص نوى الانتباه للأشكال الدقيقة للنموذج."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات التوسع في فهرسة الويب",
+          "paragraphs": [
+            {
+              "text": "تعتمد شركة إكسا في محركها للبحث العصبي على قاعدة بيانات متجهات داخلية، مما يجعل الاقتصاديات الوحدوية لعملية التضمين (Embedding) عاملاً حاسماً في عملها. مع الحاجة إلى تضمين عشرات المليارات من مستندات الويب، أصبح إيجاد العتاد الذي يوفر أفضل أداء مقابل التكلفة أمراً بالغ الأهمية، حيث أن أي تحسين في التكلفة لكل مستند يتراكم ليصبح رقماً كبيراً على نطاق واسع.",
+              "links": [
+                {
+                  "text": "إكسا",
+                  "url": "https://exa.ai/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الانتقال إلى عتاد AWS Neuron",
+          "paragraphs": [
+            {
+              "text": "بدأت التجربة مع عملية إعادة تضمين (Backfill) لثلاثين مليار مستند ذات أولوية عالية بعد ترقية نموذج المستندات. هذا الانتقال ضاعف الحمل المؤقت، مما دفع الفريق لإعادة تقييم خيارات العتاد. تم اختيار شرائح AWS Inferentia2 وAWS Trainium2، حيث يعمل الحمل على نواة Neuron واحدة، مع استخدام حاويات Kubernetes للتأكد من عدم ترك أي نوى خاملة، مما يوفر تجانساً في أسطول التضمين.",
+              "links": [
+                {
+                  "text": "AWS Inferentia2",
+                  "url": "https://aws.amazon.com/ai/machine-learning/inferentia/"
+                },
+                {
+                  "text": "AWS Trainium2",
+                  "url": "https://aws.amazon.com/ai/machine-learning/trainium/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات أساسية في الذاكرة والدقة",
+          "paragraphs": [
+            {
+              "text": "بدأت رحلة التحسين من تمثيل FP16 بسيط، ثم تم تطبيق تحسينات على تخطيط الأوزان لإزالة العمليات غير الضرورية. كما تم تفعيل خاصية Autocast للسماح للمترجم بتقليل دقة عمليات ضرب المصفوفات مع الحفاظ على النطاق الديناميكي. تأكد الفريق من أن النتائج تلتزم بمعيار دقة عالٍ يتمثل في تشابه جيب التمام (Cosine Similarity) بنسبة 0.999 مقارنة بالنموذج المرجعي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تطوير نوى NKI المخصصة",
+          "paragraphs": [
+            {
+              "text": "استخدم الفريق مكتبة Neuron Kernel Interface (NKI) للحصول على نوى محسنة مسبقاً، لكن التحدي الأكبر كان في تجاوز حدود التنفيذ الجاهز. كشفت أدوات التحليل عن هدر كبير في الذاكرة عالية النطاق (HBM)، مما دفع المطورين لكتابة نواة SwiGLU MLP مدمجة ومخصصة. تم استخدام لغة NKI العليا للعمليات الأساسية، مع الهبوط إلى مستوى ISA المنخفض فقط لعمليات المصفوفات المحددة، مما جعل الكود أسهل في الفهم والتصحيح.",
+              "links": [
+                {
+                  "text": "Neuron Kernel Interface",
+                  "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/v2.33.0/nki/index.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تخصيص نوى الانتباه لتقليل الهدر",
+          "paragraphs": [
+            {
+              "text": "واجه الفريق فجوة في الأداء عند تشغيل النواتين معاً، مما أشار إلى وجود تنافس على الموارد. أثبتت التجارب أن محرك المصفوفات لم يكن مشبعاً بالكامل، لذا كان الحل هو تقليل العمليات الحسابية (FLOPS) المطلوبة. أعاد الفريق كتابة نواة الانتباه (Attention) لتتناسب مع الأشكال الدقيقة للنموذج، مما قلل من هدر العمليات على الحشو (Padding). كما تم دمج عمليات الانتباه في ضربات مصفوفات مفردة، مما قلل من الرحلات إلى الذاكرة الخارجية وحقق تسريعاً نهائياً ملحوظاً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "منهجية تعتمد على الوكلاء",
+          "paragraphs": [
+            {
+              "text": "تم تطوير جميع هذه التحسينات داخل إطار عمل بسيط يتيح للوكلاء التحقق من الدقة وقياس الأداء وتحليل الحمل. باستخدام منصة Flyte، يعمل كل وكيل على تدفق عمل خاص يترجم التنفيذ القابل للتشغيل (NEFF) ويتحقق من النتائج. تستخدم النماذج الخفيفة المهام المتكررة مثل البحث الشبكي لمعايير المترجم، بينما تتولى النماذج المتقدمة التحسينات المعقدة، مما يضمن استمرارية التحسين دون انحراف عن المعايير المطلوبة.",
+              "links": [
+                {
+                  "text": "Flyte",
+                  "url": "https://flyte.org/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "AWS",
+        "Inferentia2",
+        "Trainium2",
+        "Neuron",
+        "إكسا",
+        "تحسين الأداء",
+        "البحث العصبي"
+      ],
+      "entities": [
+        "إكسا",
+        "AWS",
+        "Inferentia2",
+        "Trainium2",
+        "Neuron",
+        "NKI",
+        "Flyte"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "19 نوفمبر 2026",
+      "modifiedLabel": "19 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 465
+    },
+    "en": {
+      "title": "Exa Boosts Embedding Throughput by 50% on AWS Chips",
+      "description": "Exa optimizes neural search embedding inference on AWS Inferentia2 and Trainium2 using custom NKI kernels, achieving significant performance gains.",
+      "deck": "Exa has optimized its embedding inference infrastructure on AWS Neuron hardware, achieving a substantial increase in throughput to index billions of web documents.",
+      "summaryBullets": [
+        "Exa boosted embedding throughput and cost-per-million-documents performance by 47% to index tens of billions of web documents.",
+        "The optimization effort utilized AWS Neuron hardware, specifically AWS Inferentia2 and AWS Trainium2 instances.",
+        "Engineers and autonomous agents leveraged the Neuron Kernel Interface to write custom fused kernels and eliminate memory bottlenecks.",
+        "An automated workflow built with Flyte verified correctness and measured hardware saturation during the optimization process."
+      ],
+      "sections": [
+        {
+          "heading": "Scaling Vector Databases for Web-Scale Search",
+          "paragraphs": [
+            {
+              "text": "Building a comprehensive web index requires aggregating and serving knowledge from across public, private, and synthetic sources. According to the AWS Machine Learning Blog, neural search engine provider Exa relies on an in-house vector database to handle tens of billions of web documents. Because embedding raw text into a shared vector space underpins the company's core unit economics, optimizing inference performance and cost per document is critical at this scale.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on-aws-ai-chips/"
+                }
+              ]
+            },
+            {
+              "text": "To support complex natural language queries alongside traditional keyword searches, Exa utilizes multi-tower semantic machine learning models. The incoming web data flows through an asynchronous pipeline encompassing parsing, moderation, filtering, and finally embedding before the results are indexed in the vector database.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Migrating and Profiling on AWS Neuron Hardware",
+          "paragraphs": [
+            {
+              "text": "The hardware migration began when Exa selected 30 billion high-priority documents to re-embed under a superior document model. This migration temporarily doubled the active embedding load by running parallel pipelines for live and re-embedded content. To handle this massive workload efficiently, Exa optimized its inference workloads using AWS Neuron hardware, focusing specifically on AWS Inferentia2 and AWS Trainium2 chips.",
+              "links": [
+                {
+                  "text": "AWS Inferentia2",
+                  "url": "https://aws.amazon.com/ai/machine-learning/inferentia/"
+                },
+                {
+                  "text": "AWS Trainium2",
+                  "url": "https://aws.amazon.com/ai/machine-learning/trainium/"
+                }
+              ]
+            },
+            {
+              "text": "Initial testing deployed a data-parallel FP16 model baseline on an Inferentia2 xlarge instance featuring a single chip and two NeuronCores. By packing Kubernetes pods onto larger instances, the engineering team maintained container homogeneity across the embedding fleet without leaving individual NeuronCores idle.",
+              "links": [
+                {
+                  "text": "Inferentia2 xlarge instance",
+                  "url": "https://aws.amazon.com/ec2/instance-types/inf2/"
+                },
+                {
+                  "text": "NeuronCores",
+                  "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/about-neuron/arch/neuron-hardware/neuron-core-v2.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Incremental Optimizations and Weight Layout Improvements",
+          "paragraphs": [
+            {
+              "text": "Starting from a naive model compilation, Exa implemented a progressive series of enhancements to push throughput higher. The first major improvement involved weight layout optimization, which eliminated unnecessary transposes by aligning the weight layout with the broader model's scheduling. Additionally, the team enabled autocast functionality, allowing the compiler to downcast matrix multiplications to lower precision while preserving dynamic range.",
+              "links": []
+            },
+            {
+              "text": "These downcasted outputs met the strict accuracy threshold of 0.999 cosine similarity against the reference model. Initial performance gains were also accelerated by adopting pre-built options from the Neuron Kernel Interface library for common model layers and operations.",
+              "links": [
+                {
+                  "text": "Neuron Kernel Interface",
+                  "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/v2.33.0/nki/index.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Eliminating Memory Spills with Custom Kernels",
+          "paragraphs": [
+            {
+              "text": "As profiling data from Neuron Explorer revealed large amounts of memory spill and reload from high-bandwidth memory, Tensor Engine utilization suffered during the forward pass. To address these bottlenecks, engineers used a drop-in multi-layer perceptron kernel to analyze shortcomings before writing a custom, weight-stationary fused SwiGLU MLP kernel that successfully eliminated high-bandwidth memory stalls.",
+              "links": [
+                {
+                  "text": "Neuron Explorer",
+                  "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/tools/neuron-explorer/index.html"
+                }
+              ]
+            },
+            {
+              "text": "The team utilized the high-level Neuron Kernel Interface language for loops, memory operations, and layout tasks, dropping into lower-level instruction set architecture only for specific tensor operations. This approach kept the custom code readable and easier for engineers to debug.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Tailoring Attention Kernels to Model Shapes",
+          "paragraphs": [
+            {
+              "text": "After addressing multi-core contention issues, Exa focused on reducing overall floating-point operations by tailoring attention kernels to the exact shapes used in the model architecture rather than relying on generic implementations that handle arbitrary dimensions. Folding attention operations into single matrix multiplications further cut inner-loop operations and minimized round trips to high-bandwidth memory.",
+              "links": []
+            },
+            {
+              "text": "Through these combined hardware and software optimizations, the final infrastructure achieved a 47% improvement in overall performance and cost per one million documents embedded compared to the initial baseline.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Agentic Workflows and Automated Validation",
+          "paragraphs": [
+            {
+              "text": "Throughout the project, autonomous agents drove the optimization process inside a structured harness integrated with Flyte, an machine learning operations workflow platform. Each agent executed its own workflow to compile the NEFF Neuron executable, verify forward-pass correctness against baseline datasets, and run prolonged hardware saturation benchmarks.",
+              "links": [
+                {
+                  "text": "Flyte",
+                  "url": "https://flyte.org/"
+                },
+                {
+                  "text": "NEFF",
+                  "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/compiler/neuronx-cc/how-to-generate-neff.html#neuronx-cc-generate-neff-how-to"
+                }
+              ]
+            },
+            {
+              "text": "Lightweight models handled routine tasks such as grid-searching compiler parameters, while strict correctness gates prevented performance drift, allowing Exa to efficiently scale its neural search capabilities on AWS infrastructure.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Exa",
+        "Inferentia2",
+        "Trainium2",
+        "Vector Database",
+        "Neural Search",
+        "Machine Learning"
+      ],
+      "entities": [
+        "Exa",
+        "AWS",
+        "AWS Inferentia2",
+        "AWS Trainium2",
+        "Flyte"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 19, 2026",
+      "modifiedLabel": "November 19, 2026",
+      "readMinutes": 4,
+      "wordCount": 685
+    }
+  },
+  "datePublished": "2026-11-19T03:25:36.937421+03:00",
+  "dateModified": "2026-11-19T03:25:36.937421+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on/hero.webp",
+    "card": "/forum/assets/posts/2026/11/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on/card.webp",
+    "social": "/forum/assets/posts/2026/11/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on/social.jpg",
+    "alt": {
+      "ar": "إكسا ترفع كفاءة التضمين 50% على شرائح AWS للذكاء الاصطناعي",
+      "en": "Exa Boosts Embedding Throughput by 50% on AWS Chips"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22138-featured-image-1.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on/inline-01.webp",
+        "width": 1400,
+        "height": 201,
+        "alt": {
+          "ar": "إكسا ترفع كفاءة التضمين 50% على شرائح AWS للذكاء الاصطناعي",
+          "en": "Exa stack showing web data flowing from crawlers through parse, moderate, and embed stages into a vector database"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on-aws-ai-chips/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22138-1-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on/inline-02.webp",
+        "width": 1400,
+        "height": 466,
+        "alt": {
+          "ar": "إكسا ترفع كفاءة التضمين 50% على شرائح AWS للذكاء الاصطناعي",
+          "en": "Two parallel embedding pipelines sharing crawl and parse stages, doubling the inference load during the backfill"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on-aws-ai-chips/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22138-2-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on-aws-ai-chips/",
+      "type": "official",
+      "title": "Exa boosts embedding throughput by 50% to index billions of documents on AWS AI chips"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on-aws-ai-chips",
+  "sourceTitle": "Exa boosts embedding throughput by 50% to index billions of documents on AWS AI chips",
+  "trendScore": 107.41,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-19T00:25:37+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on.json"
+}
