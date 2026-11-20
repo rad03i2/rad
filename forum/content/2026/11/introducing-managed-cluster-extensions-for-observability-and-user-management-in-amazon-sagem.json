@@ -1,0 +1,364 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "24a3a35b947b3236755b",
+  "slug": "introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagem",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagem/",
+    "en": "/forum/en/ai/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagem/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تطلق امتدادات إدارية لمراقبة وإدارة مستخدمين في SageMaker HyperPod",
+      "description": "أطلقت أمازون ويب سيرفيسز امتدادات إدارية جديدة لمنصة SageMaker HyperPod، تتيح إدارة برمجيات العناقيد عبر واجهات برمجية ولوحات تحكم، مما يعزز المراقبة وإدارة المستخدمين في بيئات الذكاء الاصطناعي.",
+      "deck": "تسعى أمازون إلى تبسيط إدارة عناقيد Slurm المخصصة لتطوير نماذج الذكاء الاصطناعي من خلال تقديم امتدادات برمجية إدارية تضمن اتساق الإعدادات عبر جميع العقد.",
+      "summaryBullets": [
+        "إطلاق امتدادات إدارية جديدة لمراقبة أداء العناقيد وإدارة المستخدمين في SageMaker HyperPod.",
+        "تحويل إدارة البرمجيات على العقد من السكربتات اليدوية إلى إعدادات إعلانية قابلة للتحقق عبر API.",
+        "ضمان اتساق الإعدادات تلقائياً على جميع العقد، بما في ذلك تلك المضافة حديثاً أو المستبدلة.",
+        "حفاظ المستخدمين على إمكانية الوصول المباشر للعقد عبر SSH مع توفير طبقة إدارة أعلى.",
+        "توفير امتدادين مبدئيين: واحد للمراقبة يرسل البيانات إلى CloudWatch، وآخر لإدارة المستخدمين والتكامل مع Active Directory."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي إدارة عناقيد Slurm في بيئات الذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "تواجه فرق المنصات تحديات كبيرة في الحفاظ على اتساق إعدادات عناقيد Slurm المشتركة المستخدمة لتطوير نماذج اللغة الكبيرة. تتوزع هذه الإعدادات على ملفات متعددة، وسكربتات مخصصة، وقوائم مستخدمين يدوية، مما يؤدي مع مرور الوقت إلى انحراف الحالة الفعلية للعقد عن الإعدادات المعلنة دون وجود آلية تنبيه واضحة لهذا الاختلاف.",
+              "links": []
+            },
+            {
+              "text": "تؤمن أمازون بأن إدارة هذه العناقيد يجب أن تتبع نفس النهج المستخدم في إدارة البنية التحتية الأخرى على AWS، حيث يتم الإعلان عن الحالة المطلوبة عبر واجهات برمجية أو لوحات تحكم، ثم يتم التحقق منها وتطبيقها باستمرار. خلال عام 2026، قدمت أمازون عدة تحسينات لهذا الغرض، شملت [إعدادات Slurm عبر API](https://aws.amazon.com/about-aws/whats-new/2026/02/amazon-sagemaker-hyperpod-slurm/)، وإدارة التوبولوجيا تلقائياً، وفحوصات صحة عميقة، وصولاً إلى إطلاق امتدادات العناقيد الجديدة التي تعالج طبقة البرمجيات على العقد.",
+              "links": [
+                {
+                  "text": "إعدادات Slurm عبر API",
+                  "url": "https://aws.amazon.com/about-aws/whats-new/2026/02/amazon-sagemaker-hyperpod-slurm/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الأساس الإعلاني لإدارة العناقيد",
+          "paragraphs": [
+            {
+              "text": "يمكن تقسيم إعدادات عناقيد Slurm إلى ست طبقات، خمس منها تتعلق بالبنية التحتية مثل تعريف العقد، السعة، وتوبولوجيا الشبكة، بينما تتعلق الطبقة السادسة بالبرمجيات المثبتة على العقد. تمكنت أمازون من تطبيق الإدارة الإعلانية على الطبقات الخمس الأولى سابقاً، مما سمح للمديرين بتحديد أدوار العقد وتقسيماتها عبر طلبات CreateCluster وUpdateCluster، وربط قواعد بيانات محاسبة خارجية.",
+              "links": []
+            },
+            {
+              "text": "كما ساهمت ميزات مثل [التزويد المستمر لـ Slurm](https://aws.amazon.com/about-aws/whats-new/2026/03/amazon-sagemaker-hyperpod-continuous-provisioning/) في إعادة محاولة طلبات السعة في الخلفية، بينما حافظت إدارة التوبولوجيا التلقائية على ترتيب الشبكة أثناء توسع العقد أو استبدالها. تضمن هذه الميزات أن تبقى العناقيد في الحالة المطلوبة مع تقليل التدخل اليدوي في العمليات الروتينية.",
+              "links": [
+                {
+                  "text": "التزويد المستمر لـ Slurm",
+                  "url": "https://aws.amazon.com/about-aws/whats-new/2026/03/amazon-sagemaker-hyperpod-continuous-provisioning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "لماذا تحتاج البرمجيات على العقد إلى آلية مختلفة؟",
+          "paragraphs": [
+            {
+              "text": "تختلف طبقة البرمجيات عن باقي الطبقات في أنها تتغير باستمرار طوال عمر العنقود؛ فمع انضمام باحثين جدد أو مغادرة آخرين، قد تتطلب الفرق مقاييس GPU أعمق لفترة مؤقتة، أو تحتاج إلى تحديثات سريعة لمصدري البيانات. كانت السكربتات الدورية هي الآلية الرئيسية سابقاً، لكنها تعاني من عيوب جوهرية حيث تعمل فقط عند توفير العقد، مما يعني أن أي تغيير يتطلب تعديل السكربت واستبدال العقد أو إعادة تشغيله على كامل الأسطول.",
+              "links": []
+            },
+            {
+              "text": "بالإضافة إلى ذلك، لا تكشف الأخطاء إلا عند تنفيذ السكربت على عقدة معينة، ولا يوجد تقرير يوضح ما هو مثبّت فعلياً، مما يؤدي إلى انحراف العقد عن بعضها البعض مع مرور الوقت. كان الهدف هو إيجاد آلية تُعلن فيها البرمجيات في مكان واحد، يتم التحقق منها عند الإرسال، وتبقى متسقة عبر العقد، مع إمكانية رؤية حالتها لاحقاً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إطلاق امتدادات العناقيد الإدارية",
+          "paragraphs": [
+            {
+              "text": "أطلقت أمازون في نوفمبر 2026 امتدادات العناقيد، وهي حزم برمجية تديرها AWS ويمكن للمستخدمين تثبيتها، وإعدادها، وتحديثها، وإزالتها عبر واجهات API أو لوحة تحكم Amazon SageMaker AI. تشمل الامتدادات الأولى المراقبة وإدارة المستخدمين، بما في ذلك التكامل مع الدلائل. توفر هذه الامتدادات مزايا واضحة مقارنة بالسكربتات، حيث يتم التحقق من الإعدادات مسبقاً ضد مخطط محدد، مما يرفض أي خطأ إملائي قبل وصوله إلى العقد.",
+              "links": []
+            },
+            {
+              "text": "تضمن الامتدادات أيضاً اتساق الإعدادات على كل عقد، بما في ذلك تلك المضافة عبر التوسع أو الاستبدال، مع الحفاظ على هذا الاتساق أثناء ترميم العنقود. يمكن تغيير الإعدادات أو ترقية الإصدارات عبر استدعاء API أو من لوحة التحكم، بدلاً من تعديل السكربتات واستبدال العقد. كما توفر كل امتداد تقارير عن حالته وصحة كل عقدة على حدة، مما يعزز الشفافية في إدارة البنية التحتية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الامتدادات المبدئية: المراقبة وإدارة المستخدمين",
+          "paragraphs": [
+            {
+              "text": "يدعم SageMaker HyperPod حالياً امتدادين إداريين رئيسيين. الأول هو امتداد المراقبة (sagemaker-observability)، الذي يجمع مقاييس العقد، وGPU، ومكيفات الألياف المرنة (EFA)، ومهام Slurm، ومقاييس العنقود، ويرسلها إلى Amazon CloudWatch أو Amazon Managed Service for Prometheus. هذا يتيح للفرق الحصول على رؤية شاملة لأداء العنقود دون الحاجة لإعداد أدوات مراقبة يدوية على كل عقدة.",
+              "links": []
+            },
+            {
+              "text": "الثاني هو امتداد إدارة المستخدمين (sagemaker-user-management)، الذي ينشئ المستخدمين والمجموعات بنفس المعرفات على جميع العقد، ويتحكم في من يمكنه استخدام SSH وsudo على كل نوع من العقد، ويسجل المستخدمين في محاسبة Slurm. كما يمكن لهذا الامتداد ربط العنقود بـ Active Directory، مثل AWS Directory Service for Microsoft Active Directory، مما يسهل إدارة هويات المستخدمين في بيئات المؤسسات الكبيرة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الوصول المباشر والتوازن بين الإدارة والتحكم",
+          "paragraphs": [
+            {
+              "text": "على الرغم من تقديم هذه الطبقة الإدارية الجديدة، تحتفظ أمازون بمبدأ السماح للمستخدمين بالوصول الكامل إلى جميع عقد العنقود، بما في ذلك عقدة التحكم. يمكن للمستخدمين الدخول عبر SSH، وإعداد العقد مباشرة، وتشغيل سكربتات دورة حياتهم الخاصة. هذا يوفر توازناً بين تقليل العبء الإداري من خلال الواجهات البرمجية، والحفاظ على مستوى عالٍ من التحكم المباشر عند الحاجة.",
+              "links": []
+            },
+            {
+              "text": "يُنصح باستخدام امتدادات العناقيد عندما توفر HyperPod قدرات برمجية إدارية جاهزة، بينما تبقى صور AMI المخصصة وسكربتات دورة الحياة الخيار الأنسب للبرمجيات المحددة للمؤسسة أو عمليات التهيئة التي لا تغطيها الامتدادات المتاحة. يمكن للمستخدمين الوصول إلى هذه الامتدادات من تبويب Extensions في صفحة تفاصيل العنقود على لوحة تحكم SageMaker AI، حيث يعرض كل امتداد حالته وإصداره وARN الخاص به.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker",
+        "HyperPod",
+        "Slurm",
+        "إدارة العناقيد",
+        "الذكاء الاصطناعي",
+        "AWS",
+        "مراقبة الأداء"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker HyperPod",
+        "Slurm",
+        "Amazon CloudWatch",
+        "Amazon Managed Service for Prometheus",
+        "AWS Directory Service for Microsoft Active Directory"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "21 نوفمبر 2026",
+      "modifiedLabel": "21 نوفمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 827
+    },
+    "en": {
+      "title": "Amazon SageMaker HyperPod Adds Managed Cluster Extensions",
+      "description": "Amazon SageMaker HyperPod introduces managed cluster extensions for observability and user management in Slurm clusters, bringing declarative AWS configuration.",
+      "deck": "Amazon SageMaker HyperPod now offers managed cluster extensions for observability and user management, bringing declarative, API- and console-driven configuration to the software running on Slurm cluster nodes.",
+      "summaryBullets": [
+        "Amazon SageMaker HyperPod launches managed cluster extensions for observability and user management in Slurm clusters.",
+        "New features allow declarative configuration via APIs and the Amazon SageMaker AI console.",
+        "The observability extension collects metrics for nodes, GPUs, EFA, and Slurm jobs, routing them to CloudWatch or Amazon Managed Service for Prometheus.",
+        "The user management extension handles uniform user IDs, SSH and sudo controls, Slurm accounting, and Active Directory integration."
+      ],
+      "sections": [
+        {
+          "heading": "Declarative Management for Slurm Clusters",
+          "paragraphs": [
+            {
+              "text": "Keeping a shared Slurm cluster for foundation model development in sync entails keeping several separately maintained pieces of configuration matched to what's running on the nodes. The cluster's shape lives on multiple configuration files, its software in custom scripts, its network topology in files that must be edited as nodes change, and its users in a roster that an administrator must maintain and rerun. Over time these pieces drift away from what's actually running, and nothing tells you when they do.",
+              "links": []
+            },
+            {
+              "text": "AWS believes cluster configurations should be managed the way you manage the rest of your AWS infrastructure. Throughout 2026, Amazon SageMaker HyperPod brought a declarative approach to Slurm clusters through capabilities like API-driven Slurm configuration and continuous provisioning.",
+              "links": [
+                {
+                  "text": "API-driven Slurm configuration",
+                  "url": "https://aws.amazon.com/about-aws/whats-new/2026/02/amazon-sagemaker-hyperpod-slurm/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Evolution of Cluster Operations and Layers",
+          "paragraphs": [
+            {
+              "text": "A Slurm cluster's configuration can be grouped into six distinct layers. Five of them describe the cluster itself: its definition, node setup, capacity, network topology, and hardware health. Earlier in 2026, declarative management was brought to these first five layers using features like connection to an external accounting database and AMI-based configuration.",
+              "links": [
+                {
+                  "text": "external accounting database",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-external-accounting-db-slurm.html"
+                },
+                {
+                  "text": "AMI-based configuration",
+                  "url": "https://aws.amazon.com/about-aws/whats-new/2026/05/amazon-sagemaker-hyperpod-ami-based-node/"
+                }
+              ]
+            },
+            {
+              "text": "The first five layers represent configurations that HyperPod can derive or apply once when provisioning a node. Further support includes specialized workflows where AMI-based configuration works with it and automated tracking handles scaling requests.",
+              "links": [
+                {
+                  "text": "AMI-based configuration works with it",
+                  "url": "https://aws.amazon.com/about-aws/whats-new/2025/06/ami-configuration-continuous-slurm/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "The Sixth Layer: Software on Running Nodes",
+          "paragraphs": [
+            {
+              "text": "The sixth layer covers the software running on the cluster nodes, which behaves differently because it keeps changing for the life of the cluster. As researchers join and leave, a team asks for deeper GPU metrics for a week, and an exporter ships a fix. For this layer, lifecycle scripts have been the main mechanism so far, but they present drawbacks when software keeps changing.",
+              "links": []
+            },
+            {
+              "text": "A script runs only when a node is provisioned, meaning each change requires editing the script and then replacing nodes or rerunning it across the fleet. Mistakes only show up when the script runs on a node, and nothing reports what is installed, leading to node drift over time.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Introduction of Cluster Extensions",
+          "paragraphs": [
+            {
+              "text": "To solve these software management hurdles, AWS launched cluster extensions. These are software packages managed by AWS that administrators can install, configure, update, and remove through APIs or the Amazon SageMaker AI console.",
+              "links": []
+            },
+            {
+              "text": "Compared to traditional lifecycle scripts, these managed extensions offer up-front validation against schemas, consistent application across all nodes including newly scaled or replaced instances, API- or console-driven changes, and clear visibility into status and per-node health.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Observability and User Management Extensions",
+          "paragraphs": [
+            {
+              "text": "HyperPod currently supports two primary cluster managed extensions. The observability extension collects node, GPU, Elastic Fabric Adapter, Slurm job, and cluster metrics, sending them to Amazon CloudWatch or Amazon Managed Service for Prometheus.",
+              "links": []
+            },
+            {
+              "text": "The user management extension creates users and groups with identical IDs across every node, controls SSH and sudo access privileges for each node type, and registers users directly with Slurm accounting. It can also connect clusters to enterprise directory services like AWS Directory Service for Microsoft Active Directory.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker HyperPod",
+        "Slurm",
+        "AWS",
+        "Cloud Computing",
+        "Artificial Intelligence",
+        "Observability"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker",
+        "Slurm"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 21, 2026",
+      "modifiedLabel": "November 21, 2026",
+      "readMinutes": 3,
+      "wordCount": 591
+    }
+  },
+  "datePublished": "2026-11-21T02:25:36.820367+03:00",
+  "dateModified": "2026-11-21T02:25:36.820367+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagem/hero.webp",
+    "card": "/forum/assets/posts/2026/11/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagem/card.webp",
+    "social": "/forum/assets/posts/2026/11/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagem/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق امتدادات إدارية لمراقبة وإدارة مستخدمين في SageMaker HyperPod",
+      "en": "Amazon SageMaker HyperPod Adds Managed Cluster Extensions"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/l-ml-22428.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagem/inline-01.webp",
+        "width": 1400,
+        "height": 599,
+        "alt": {
+          "ar": "أمازون تطلق امتدادات إدارية لمراقبة وإدارة مستخدمين في SageMaker HyperPod",
+          "en": "Amazon SageMaker HyperPod Adds Managed Cluster Extensions"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagemaker-hyperpod-slurm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ml-22428-figure-12.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagem/inline-02.webp",
+        "width": 1248,
+        "height": 863,
+        "alt": {
+          "ar": "أمازون تطلق امتدادات إدارية لمراقبة وإدارة مستخدمين في SageMaker HyperPod",
+          "en": "Flow showing an extension’s version and settings declared through the API, validated and recorded by HyperPod, applied to every node for its role, with status and health reported back"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagemaker-hyperpod-slurm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22428-4.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagem/inline-03.webp",
+        "width": 1400,
+        "height": 634,
+        "alt": {
+          "ar": "أمازون تطلق امتدادات إدارية لمراقبة وإدارة مستخدمين في SageMaker HyperPod",
+          "en": "An extension’s status display with an example health issue for a node exporter that isn’t running"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagemaker-hyperpod-slurm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22428-5.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagem/inline-04.webp",
+        "width": 1400,
+        "height": 794,
+        "alt": {
+          "ar": "أمازون تطلق امتدادات إدارية لمراقبة وإدارة مستخدمين في SageMaker HyperPod",
+          "en": "Console install form for the observability extension, with configurable metric levels and a choice of metric store"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagemaker-hyperpod-slurm/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22428-7.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagemaker-hyperpod-slurm/",
+      "type": "official",
+      "title": "Introducing managed cluster extensions for observability and user management in Amazon SageMaker HyperPod Slurm"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagemaker-hyperpod-slurm",
+  "sourceTitle": "Introducing managed cluster extensions for observability and user management in Amazon SageMaker HyperPod Slurm",
+  "trendScore": 115.95,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-20T23:25:37+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagem.json"
+}
