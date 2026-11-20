@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "06863d94c187626f5c00",
+  "slug": "amazon-sagemaker-inference-2026-launches-in-review-part",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/amazon-sagemaker-inference-2026-launches-in-review-part/",
+    "en": "/forum/en/ai/amazon-sagemaker-inference-2026-launches-in-review-part/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تضيف 13 ميزة جديدة لسيرفرات استنتاج الذكاء الاصطناعي في 2026",
+      "description": "تستعرض أمازون 13 إطلاقاً جديداً لخدمة SageMaker Inference خلال 2026، تركز على تحسين كفاءة المعالجات الرسومية، وتوزيع النماذج الضخمة، وإدارة الطلبات عبر المناطق الجغرافية المختلفة.",
+      "deck": "تقدم أمازون تحديثات شاملة لمنصة SageMaker AI تتيح للمهندسين تحسين أداء نماذج الذكاء الاصطناعي وتقليل التكاليف عبر أدوات أتمتة متقدمة.",
+      "summaryBullets": [
+        "إتاحة توصيات الاستنتاج عبر واجهات برمجية وأدوات تطوير متعددة لتسهيل اختيار الإعدادات المثلى.",
+        "دعم تقسيم المعالجات الرسومية (GPU) لاستيعاب نماذج أكبر وتقليل عدد الأجهزة المطلوبة.",
+        "تفعيل التوجيه الذكي للطلبات عبر مناطق جغرافية مختلفة لتقليل زمن الاستجابة.",
+        "إدماج أدوات تحسين الأداء مع وكلاء البرمجة التوليدية لتوصية بالإعدادات تلقائياً."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الإنتاج بعد إطلاق النموذج",
+          "paragraphs": [
+            {
+              "text": "بعد وصول نموذج الذكاء الاصطناعي إلى مرحلة الإنتاج، تتغير أولويات فرق التطوير. لم يعد الهدف مجرد تشغيل النموذج، بل تحديد الإعدادات المثلى التي تتناسب مع حجم الطلب الفعلي، وكيفية استيعاب المزيد من النماذج على نفس الأجهزة، ومعالجة النماذج التي تتجاوز سعة جهاز واحد. كما تبرز الحاجة إلى فهم أسباب تباطؤ الاستجابة في منطقة جغرافية معينة بينما تبقى المعالجات في منطقة أخرى خاملة. يستعرض هذا الجزء الثاني من مراجعة إطلاق خدمات أمازون هذه التحديات بالترتيب الذي تواجهه الفرق عادةً. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-inference-2026-launches-in-review-part-2/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "توصيات الاستنتاج عبر أدوات متعددة",
+          "paragraphs": [
+            {
+              "text": "أطلقت أمازون في أبريل 2026 ميزة التوصيات التلقائية للإعدادات عبر واجهات برمجية، ثم وسعت نطاقها لاحقاً لتشمل أدوات العمل اليومية للمهندسين. أصبح بإمكان الفرق الآن الوصول إلى هذه التوصيات من خلال واجهة SageMaker AI Studio، أو عبر مكتبة Python SDK، أو حتى من خلال وكلاء البرمجة التوليدية. تتيح هذه الأدوات تحديد عدد الإضافات (Adapters) التي يمكن استيعابها، ومستوى التوازي الأقصى قبل تجاوز أهداف زمن الاستجابة.",
+              "links": [
+                {
+                  "text": "SageMaker AI Studio",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/launching-ui-for-generative-ai-inference-recommendations-in-amazon-sagemaker-ai/"
+                }
+              ]
+            },
+            {
+              "text": "في يوليو 2026، أصبحت التوصيات متاحة كعملية إرشادية منخفضة الكود داخل SageMaker AI Studio. يختار المستخدم ملف استخدام (مثل التوليد أو التلخيص) وهدف التحسين (تقليل الكمون أو زيادة الإنتاجية)، ثم يقوم النظام بمعايرة الإعدادات على أجهزة رسومية حقيقية باستخدام أدوات قياس الأداء. وفي أغسطس، دُمجت هذه الميزة في إصدار 3.17.0 من مكتبة Python SDK، مما يسمح بإجراء الاختبارات ضمن خطوط الأنابيب التلقائية دون الحاجة لفتح الواجهة الرسومية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الإضافات وتحديد حدود التوازي",
+          "paragraphs": [
+            {
+              "text": "تعتمد العديد من الفرق على إضافات LoRA لتخصيص نموذج أساسي لعدة استخدامات. في سبتمبر 2026، أصبحت توصيات الاستنتاج تدعم هذه الإضافات مباشرة، حيث تقوم بمعايرة التوازن بين عدد الإضافات المستضافة ومستوى التوازي. كما أُضيفت ميزة البحث التلقائي عن حد التوازي الأقصى الذي يحافظ على استقرار الخدمة دون تجاوز أهداف الجودة (SLA)، بدلاً من الاختبار اليدوي المتكرر للمستويات المختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تكامل وكلاء البرمجة مع أدوات التحسين",
+          "paragraphs": [
+            {
+              "text": "مع تزايد اعتماد المهندسين على وكلاء البرمجة التوليدية، أصبحت الحاجة ماسة لأن تستند هذه الوكلاء إلى بيانات أداء حقيقية وليس تخمينات. في أكتوبر 2026، أطلقت أمازون مهارة جديدة (Agent Skill) تتيح لوكلاء البرمجة الوصول إلى توصيات SageMaker المحسنة. هذا التكامل يضمن أن تكون اقتراحات اختيار الأجهزة والحاويات مبنية على اختبارات أداء دقيقة، مما يقلل من احتمالية اختيار إعدادات غير مناسبة قد تؤدي لتكاليف أعلى أو أداء أبطأ.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسين كفاءة المعالجات الرسومية",
+          "paragraphs": [
+            {
+              "text": "لتقليل التكاليف، تركز أمازون على استغلال سعة المعالجات الرسومية (GPU) المتاحة بالكامل. تتيح تقنيات تقسيم الذاكرة (Partitioning) استضافة نماذج متعددة على نفس الجهاز، مما يزيد من كثافة الاستخدام. كما تدعم المنصة أطر عمل تقديم النماذج المتقدمة مثل NVIDIA Dynamo، مما يتيح التعامل مع النماذج الضخمة التي لا تتسع لجهاز واحد من خلال تقسيمها على عدة أجهزة مترابطة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التوجيه عبر المناطق الجغرافية",
+          "paragraphs": [
+            {
+              "text": "أحد التحديات الرئيسية هو ضمان استجابة سريعة للمستخدمين في مختلف المناطق. تتيح بوابات الاستنتاج (Inference Gateway) توجيه الطلبات عبر مناطق متعددة (Regions) وحسابات مختلفة. إذا كانت المعالجات في منطقة معينة خاملة بينما تتراكم الطلبات في منطقة أخرى، يقوم النظام بتوزيع الحمل تلقائياً. هذا التوجيه الذكي يساهم في الحفاظ على استقرار الخدمة وتقليل زمن الاستجابة للمستخدم النهائي دون الحاجة لإدارة يدوية معقدة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "أمازون ويب سيرفيسز",
+        "SageMaker",
+        "استنتاج النماذج",
+        "تحسين الأداء",
+        "GPU",
+        "البنية التحتية"
+      ],
+      "entities": [
+        "Amazon",
+        "AWS",
+        "SageMaker AI",
+        "NVIDIA",
+        "LoRA",
+        "SageMaker Python SDK"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "20 نوفمبر 2026",
+      "modifiedLabel": "20 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 561
+    },
+    "en": {
+      "title": "Amazon SageMaker Reviews 2026 AI Inference Launches",
+      "description": "Amazon reviews 13 additional SageMaker AI inference launches from 2026, covering configuration recommendations, model optimization, and routing strategies.",
+      "deck": "The second installment of Amazon's 2026 inference review highlights new configuration tools, LLM optimizations, and agent skills designed to help teams scale production workloads.",
+      "summaryBullets": [
+        "Amazon reviewed 13 additional SageMaker AI inference launches from 2026, bringing the yearly total to 26.",
+        "Updates span configuration recommendations, multi-Region routing, and fitting more models onto existing GPUs.",
+        "New capabilities include low-code workflows in SageMaker AI Studio and integration with the SageMaker Python SDK v3.",
+        "Engineers can now use coding agent skills and automated SLA-based concurrency searches to right-size generative AI endpoints."
+      ],
+      "sections": [
+        {
+          "heading": "Expanding Configuration Choices for Generative AI",
+          "paragraphs": [
+            {
+              "text": "As production traffic evolves, machine learning teams frequently face challenges regarding model configurations, hardware capacity, and latency targets. To help address these operational hurdles, AWS released a comprehensive review detailing thirteen additional Amazon SageMaker AI inference launches from 2026. Building on the initial batch of features, these updates aim to assist engineers in optimizing real-world workloads without inflating GPU expenses.",
+              "links": []
+            },
+            {
+              "text": "Among the primary updates is the introduction of a guided, low-code workflow integrated directly into SageMaker AI Studio. Teams can now utilize the Launching UI for generative AI inference recommendations in Amazon SageMaker AI to select use-case profiles, optimization goals, and models from multiple registries, allowing the system to benchmark candidate configurations on real GPU infrastructure using NVIDIA AIPerf.",
+              "links": [
+                {
+                  "text": "Launching UI for generative AI inference recommendations in Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/launching-ui-for-generative-ai-inference-recommendations-in-amazon-sagemaker-ai/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "SDK Integrations and LoRA Adapter Support",
+          "paragraphs": [
+            {
+              "text": "To better fit existing developer workflows, benchmarking and recommendation capabilities have also been integrated into the SageMaker Python SDK v3. Through the LLM optimization integration for Amazon SageMaker Python SDK, engineers can evaluate live endpoints against workload traffic, run parallel comparison jobs across different serving frameworks, and deploy top-ranked configurations directly from notebooks or continuous integration pipelines.",
+              "links": [
+                {
+                  "text": "LLM optimization integration for Amazon SageMaker Python SDK",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/llm-optimization-integration-for-amazon-sagemaker-python-sdk/"
+                }
+              ]
+            },
+            {
+              "text": "Furthermore, managing specialized foundation models has become more streamlined with native support for low-rank adaptation. Teams looking to deploy multiple variants can leverage guidance on how to Get recommendations for models with LoRA adapters, which benchmarks adapter counts and concurrency levels to help balance GPU memory and request throughput effectively.",
+              "links": [
+                {
+                  "text": "Get recommendations for models with LoRA adapters",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/generative-ai-inference-recommendations-adapters.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "SLA-Based Concurrency Searches and Right-Sizing",
+          "paragraphs": [
+            {
+              "text": "Right-sizing endpoints to match strict service level agreements historically required manual iteration and trial-and-error testing across various concurrency levels. With recent updates highlighted in the Right-size generative AI endpoints with concurrency sweeps on Amazon SageMaker AI publication, inference recommendations now feature an automated search algorithm designed to find the highest sustainable concurrency boundary without breaching latency or error thresholds.",
+              "links": [
+                {
+                  "text": "Right-size generative AI endpoints with concurrency sweeps on Amazon SageMaker AI",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/right-size-generative-ai-endpoints-with-concurrency-sweeps-on-amazon-sagemaker-ai/"
+                }
+              ]
+            },
+            {
+              "text": "By configuring specific search recipes and bounding parameters, the underlying benchmarking engine quickly converges on feasible maximum concurrency limits, significantly reducing the manual overhead previously associated with endpoint tuning.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Coding Agent Skills and Developer Tooling",
+          "paragraphs": [
+            {
+              "text": "To assist engineers who routinely interact with development tools rather than traditional management consoles, AWS introduced specialized agent capabilities. The New agent skill: Amazon SageMaker optimized generative AI inference for your coding agent post outlines how coding assistants can now access grounded knowledge and real benchmark data to recommend optimal instance types and containers.",
+              "links": [
+                {
+                  "text": "New agent skill: Amazon SageMaker optimized generative AI inference for your coding agent",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/new-agent-skill-amazon-sagemaker-optimized-generative-ai-inference-for-your-coding-agent/"
+                }
+              ]
+            },
+            {
+              "text": "This integration forms part of the broader Agent Toolkit for AWS, empowering automated development agents to make informed, data-driven infrastructure decisions during the software engineering process.",
+              "links": [
+                {
+                  "text": "Agent Toolkit for AWS",
+                  "url": "https://aws.amazon.com/products/developer-tools/agent-toolkit-for-aws/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Advanced Infrastructure and Multi-Region Routing",
+          "paragraphs": [
+            {
+              "text": "Beyond endpoint configuration, the 2026 review covers infrastructure scalability challenges, such as deploying models too large for a single machine and handling cross-Region traffic routing. Utilizing GPU partitioning features allows teams to fit multiple models onto individual hardware accelerators efficiently, maximizing resource utilization across available assets.",
+              "links": [
+                {
+                  "text": "GPU partitioning",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/inference-components-accelerator-partitioning.html"
+                }
+              ]
+            },
+            {
+              "text": "For demanding enterprise architectures, Managed NVIDIA Dynamo on Amazon SageMaker HyperPod Inference introduces new serving framework capabilities, while Amazon SageMaker HyperPod continues to expand its regional footprint, providing robust multi-Region networking and advanced routing strategies to keep inference pipelines responsive.",
+              "links": [
+                {
+                  "text": "Managed NVIDIA Dynamo on Amazon SageMaker HyperPod Inference",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/managed-nvidia-dynamo-on-amazon-sagemaker-hyperpod-inference/"
+                },
+                {
+                  "text": "Amazon SageMaker HyperPod",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod.html#sagemaker-hyperpod-available-regions"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker",
+        "Machine Learning",
+        "Artificial Intelligence",
+        "AWS",
+        "Cloud Computing",
+        "GPU Inference"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker AI",
+        "NVIDIA",
+        "AWS Machine Learning Blog"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 20, 2026",
+      "modifiedLabel": "November 20, 2026",
+      "readMinutes": 3,
+      "wordCount": 595
+    }
+  },
+  "datePublished": "2026-11-20T04:09:27.839483+03:00",
+  "dateModified": "2026-11-20T04:09:27.839483+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/amazon-sagemaker-inference-2026-launches-in-review-part/hero.webp",
+    "card": "/forum/assets/posts/2026/11/amazon-sagemaker-inference-2026-launches-in-review-part/card.webp",
+    "social": "/forum/assets/posts/2026/11/amazon-sagemaker-inference-2026-launches-in-review-part/social.jpg",
+    "alt": {
+      "ar": "أمازون تضيف 13 ميزة جديدة لسيرفرات استنتاج الذكاء الاصطناعي في 2026",
+      "en": "Amazon SageMaker Reviews 2026 AI Inference Launches"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22497-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/amazon-sagemaker-inference-2026-launches-in-review-part/inline-01.webp",
+        "width": 1244,
+        "height": 764,
+        "alt": {
+          "ar": "أمازون تضيف 13 ميزة جديدة لسيرفرات استنتاج الذكاء الاصطناعي في 2026",
+          "en": "Five inference stages in this post and the launches grouped under each"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-inference-2026-launches-in-review-part-2/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22497-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/amazon-sagemaker-inference-2026-launches-in-review-part/inline-02.webp",
+        "width": 1400,
+        "height": 575,
+        "alt": {
+          "ar": "أمازون تضيف 13 ميزة جديدة لسيرفرات استنتاج الذكاء الاصطناعي في 2026",
+          "en": "Three small models on three separate GPUs compared with the same models sharing partitions of one GPU"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-inference-2026-launches-in-review-part-2/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22497-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/amazon-sagemaker-inference-2026-launches-in-review-part/inline-03.webp",
+        "width": 1400,
+        "height": 313,
+        "alt": {
+          "ar": "أمازون تضيف 13 ميزة جديدة لسيرفرات استنتاج الذكاء الاصطناعي في 2026",
+          "en": "Architecture of managed NVIDIA Dynamo running on Amazon SageMaker HyperPod Inference"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-inference-2026-launches-in-review-part-2/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22497-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/amazon-sagemaker-inference-2026-launches-in-review-part/inline-04.webp",
+        "width": 1400,
+        "height": 502,
+        "alt": {
+          "ar": "أمازون تضيف 13 ميزة جديدة لسيرفرات استنتاج الذكاء الاصطناعي في 2026",
+          "en": "Request routing across Regions and inside each endpoint or cluster on both deployment paths"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-inference-2026-launches-in-review-part-2/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22497-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-inference-2026-launches-in-review-part-2/",
+      "type": "official",
+      "title": "Amazon SageMaker Inference: 2026 launches in review, part 2"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-inference-2026-launches-in-review-part-2",
+  "sourceTitle": "Amazon SageMaker Inference: 2026 launches in review, part 2",
+  "trendScore": 127.87,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-20T01:09:28+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/amazon-sagemaker-inference-2026-launches-in-review-part.json"
+}
