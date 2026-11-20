@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "d5bec1fa3b07f6176fa0",
+  "slug": "introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-a",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-a/",
+    "en": "/forum/en/ai/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-a/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أمازون تطلق بوابة استنتاج عالمية لسيرفس ماكر هايبيربود",
+      "description": "أعلنت أمازون عن بوابة الاستنتاج العالمية في SageMaker HyperPod، وهي نقطة نهاية موحدة تدير توجيه الطلبات عبر المناطق والسحب مع تعافٍ تلقائي وأمان مشدد.",
+      "deck": "تتيح البوابة الجديدة إدارة حركة المرور للذكاء الاصطناعي عبر عدة مناطق جغرافية بنقطة نهاية واحدة، مما يقلل التعقيد التشغيلي.",
+      "summaryBullets": [
+        "توجيه ذكي للطلبات إلى أفضل سرب متاح بناءً على مؤشرات الأداء الفعلي.",
+        "تعافٍ تلقائي من الأعطال دون تدخل يدوي من المهندسين.",
+        "أمان معزز عبر SigV4 و IAM والاتصال الخاص عبر AWS PrivateLink.",
+        "تقليل عدد نقاط النهاية المطلوبة من 20 إلى 5 في السيناريوهات النموذجية."
+      ],
+      "sections": [
+        {
+          "heading": "توحيد نقاط النهاية عبر المناطق",
+          "paragraphs": [
+            {
+              "text": "أعلنت أمازون ويب سيرفيسز عن إطلاق بوابة الاستنتاج العالمية (Global Inference Gateway) ضمن خدمة SageMaker HyperPod. تهدف هذه الميزة إلى حل مشكلة تشتت سعة وحدات معالجة الرسومات (GPU) عبر عدة سحابات ومناطق جغرافية، حيث تتيح للعملاء استخدام نقطة نهاية واحدة موحدة بدلاً من إدارة نقاط نهاية منفصلة لكل سرب أو نموذج. تأتي هذه الخطوة كجزء من البنية التحتية التي وصفتها أمازون سابقاً في مدونة [AWS Machine Learning Blog](https://aws.amazon.com/blogs/machine-learning/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-and-clusters/)، وتهدف إلى تبسيط إدارة خدمات الذكاء الاصطناعي المعقدة.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-and-clusters/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "حل مشكلة عدم توازن الأحمال",
+          "paragraphs": [
+            {
+              "text": "تواجه الفرق التقنية تحدياً كبيراً عندما تنتشر سعة الحوسبة عبر مناطق متعددة؛ فغالباً ما تتراكم الطلبات في منطقة مشبعة بينما تبقى وحدات المعالجة في منطقة أخرى خاملة. في السيناريوهات التقليدية، يتطلب هذا إدارة يدوية لنقاط النهاية وتوزيع الأحمال. تتيح البوابة الجديدة توجيه الطلبات تلقائياً إلى السرب الأكثر ملاءمة، مما يضمن استغلال السعة المتاحة بكفاءة ويقلل من فترات الانتظار أثناء ذروة الاستخدام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية التوجيه والتعافي التلقائي",
+          "paragraphs": [
+            {
+              "text": "تعتمد البوابة على خوارزمية تقييم تقيس أربعة إشارات رئيسية لكل سرب صحي، بما في ذلك معدل الأخطاء وقرب المنطقة الجغرافية. يقوم النظام باختيار السرب الأعلى تقييماً وتوجيه الطلب إليه عبر العمود الفقري لشبكة أمازون. في حال تعطل سرب معين، تنتقل البوابة تلقائياً بالطلب إلى السرب التالي الأفضل أداءً دون الحاجة إلى أي تغييرات في إعدادات العميل. يوفر هذا مستوى عالٍ من المرونة ويقلل من الوقت اللازم لاستعادة الخدمة بعد الأعطال.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الأمان والاتصال الخاص",
+          "paragraphs": [
+            {
+              "text": "تولي أمازون أهمية كبيرة للأمان في هذه البنية، حيث يتم مصادقة كل طلب باستخدام توقيع SigV4 وصلاحيات IAM. لا تمر الطلبات عبر الإنترنت العام، بل تُنقل حصرياً عبر AWS PrivateLink، مما يضمن بقاء البيانات ضمن الشبكة الخاصة للعميل. كما تتولى الخدمة إدارة الشهادات والتحقق من صحة الإعدادات تلقائياً، مما يقلل من الأخطاء البشرية المرتبطة بالإعداد اليدوي للشهادات والشبكات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خطوات الإعداد والتشغيل",
+          "paragraphs": [
+            {
+              "text": "يتطلب إعداد البوابة قرارين أساسيين: تحديد السحابات المراد فتحها للتوجيه، وتجميعها خلف بوابة واحدة. يبدأ المستخدم بنشر كل سرب من خلال تفعيل إعدادات التوجيه العالمي، مما ينشئ موازن أحمال خاص ونقطة نهاية VPC. ثم يقوم بإنشاء البوابة عبر استدعاء CreateGlobalInferenceGateway مع تحديد السحابات المستهدفة. توفر أمازون [AWS documentation](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-model-deployment-global-inference-gateway.html) التفصيلية لشرح هذه الخطوات وضبط أوزان التوجيه حسب احتياجات كل حالة استخدام.",
+              "links": [
+                {
+                  "text": "AWS documentation",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-model-deployment-global-inference-gateway.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "شهادة عميل وتجربة عملية",
+          "paragraphs": [
+            {
+              "text": "أشارت شركة Bagelcode، التي تستخدم الخدمة لتشغيل نماذج اللغة الكبيرة داخلياً، إلى أن الاختبارات الأولية أظهرت قدرة البوابة على توجيه الطلبات عبر منطقتين جغرافيتين بنجاح. أكدت الشركة أن البوابة واصلت تقديم الخدمة حتى عندما تعذر على أحد السرب تقديم النموذج، مما منح فريقها الصغير ميزة التعافي عبر المناطق دون الحاجة لبناء طبقة توجيه مخصصة. يعكس هذا الاستخدام الفعلي كيف يمكن للميزة أن تخفف العبء التشغيلي عن الفرق التقنية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أمازون ويب سيرفيسز",
+        "SageMaker HyperPod",
+        "الذكاء الاصطناعي",
+        "بنية تحتية سحابية",
+        "توجيه الطلبات",
+        "أمان سحابي"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "SageMaker HyperPod",
+        "Global Inference Gateway",
+        "Bagelcode",
+        "AWS PrivateLink"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "21 نوفمبر 2026",
+      "modifiedLabel": "21 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 480
+    },
+    "en": {
+      "title": "Amazon Introduces SageMaker HyperPod Global Inference Gateway",
+      "description": "Amazon SageMaker HyperPod announces the Global Inference Gateway, a managed endpoint for routing inference requests across single or multiple Regions.",
+      "deck": "Amazon SageMaker HyperPod has introduced the Global Inference Gateway, a managed routing solution designed to distribute inference requests across multiple clusters and AWS Regions.",
+      "summaryBullets": [
+        "The Global Inference Gateway acts as a single managed endpoint to route requests across registered HyperPod clusters.",
+        "It reads real-time signals such as queue depth and key-value cache utilization to route requests to the best available cluster.",
+        "The service provides automatic failover and uses AWS Signature Version 4 (SigV4) alongside IAM over AWS PrivateLink.",
+        "Users can publish clusters by turning on the spec.globalRouting block in the InferenceGatewayConfig."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to the Global Inference Gateway",
+          "paragraphs": [
+            {
+              "text": "During high traffic peaks, inference requests can often queue on a saturated Amazon SageMaker HyperPod cluster while GPUs remain completely idle on another cluster or even across a different AWS Region. To help teams utilize already-paid-for GPU capacity more efficiently, Amazon has launched the Global Inference Gateway as detailed on the AWS Machine Learning Blog.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-and-clusters/"
+                }
+              ]
+            },
+            {
+              "text": "Previously, teams relied on individual configurations to handle cluster routing. Building upon earlier infrastructure options discussed when Introducing Amazon SageMaker HyperPod Inference Gateway, this new second-tier architecture addresses cross-cluster and cross-Region scaling challenges.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Solving Multi-Region Capacity Challenges",
+          "paragraphs": [
+            {
+              "text": "Modern machine learning models continue to grow larger, forcing organizations to spread necessary GPU capacity across multiple clusters and geographical Regions. Without a centralized routing solution, engineering teams previously had to track numerous endpoints, manage manual failovers when a cluster experienced issues, and build custom plumbing involving load balancers and DNS.",
+              "links": []
+            },
+            {
+              "text": "The newly introduced Global Inference Gateway eliminates the need to build and maintain custom cross-Region networking. It aggregates multiple clusters behind a single managed endpoint, automatically shifting traffic away from saturated or failed clusters toward available capacity.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Security and Architecture Specifications",
+          "paragraphs": [
+            {
+              "text": "Security remains a core component of the Global Inference Gateway architecture. Every incoming request is authenticated using AWS Signature Version 4 (SigV4) and AWS Identity and Access Management (IAM), ensuring traffic reaches the designated clusters strictly over AWS PrivateLink.",
+              "links": []
+            },
+            {
+              "text": "The gateway handles TLS termination, caller authentication, cluster scoring, and request forwarding through a managed routing fleet. Meanwhile, service-managed metrics publishers feed real-time load data back to the gateway from each individual cluster.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Configuration and Deployment Options",
+          "paragraphs": [
+            {
+              "text": "Setting up the Global Inference Gateway requires two primary actions: publishing individual clusters and creating the gateway itself. Administrators can publish a cluster by enabling the spec.globalRouting block within the cluster's existing InferenceGatewayConfig.",
+              "links": []
+            },
+            {
+              "text": "Once clusters are published, calling CreateGlobalInferenceGateway groups them together and returns a unified endpoint. Detailed implementation steps and parameters can be found directly within the AWS documentation.",
+              "links": [
+                {
+                  "text": "AWS documentation",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-model-deployment-global-inference-gateway.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Routing Weights and Operational Support",
+          "paragraphs": [
+            {
+              "text": "The Global Inference Gateway evaluates healthy clusters using multiple signals and allows administrators to control routing preferences using weighted parameters. For scenarios requiring specific guidance on resolving configuration or operational challenges, developers can consult the official Troubleshooting Guide.",
+              "links": [
+                {
+                  "text": "Troubleshooting Guide",
+                  "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-model-deployment-ts-global-inference-gateway.html"
+                }
+              ]
+            },
+            {
+              "text": "Early beta testers, such as AI teams at Bagelcode, reported that the Global Inference Gateway successfully delivered cross-Region failover capabilities without requiring platform teams to independently build and maintain complex internal routing layers.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Amazon SageMaker",
+        "HyperPod",
+        "Global Inference Gateway",
+        "AWS",
+        "Machine Learning",
+        "Artificial Intelligence"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon SageMaker",
+        "Bagelcode"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 21, 2026",
+      "modifiedLabel": "November 21, 2026",
+      "readMinutes": 3,
+      "wordCount": 493
+    }
+  },
+  "datePublished": "2026-11-21T02:05:36.571223+03:00",
+  "dateModified": "2026-11-21T02:05:36.571223+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-a/hero.webp",
+    "card": "/forum/assets/posts/2026/11/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-a/card.webp",
+    "social": "/forum/assets/posts/2026/11/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-a/social.jpg",
+    "alt": {
+      "ar": "أمازون تطلق بوابة استنتاج عالمية لسيرفس ماكر هايبيربود",
+      "en": "Amazon Introduces SageMaker HyperPod Global Inference Gateway"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22376-featured-image-1.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-a/inline-01.webp",
+        "width": 1400,
+        "height": 773,
+        "alt": {
+          "ar": "أمازون تطلق بوابة استنتاج عالمية لسيرفس ماكر هايبيربود",
+          "en": "Figure 1: Global Inference Gateway architecture"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-and-clusters/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22376-1-1.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-and-clusters/",
+      "type": "official",
+      "title": "Introducing Amazon SageMaker HyperPod Global Inference Gateway: One endpoint across Regions and clusters"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-and-clusters",
+  "sourceTitle": "Introducing Amazon SageMaker HyperPod Global Inference Gateway: One endpoint across Regions and clusters",
+  "trendScore": 123.88,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-20T23:05:36+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-a.json"
+}
