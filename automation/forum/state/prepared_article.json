@@ -1,5 +1,441 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-20T13:39:27+00:00",
-  "last_published_story_id": "db96f6e2f827777f6d22"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-20T13:45:27+00:00",
+  "target_publish_at": "2026-11-20T16:59:26.672554+03:00",
+  "story": {
+    "title": "Introducing harness adapters: adapt your favorite model to your harness to improve performance and cost",
+    "url": "https://huggingface.co/blog/harness-adapters-at-scale",
+    "domain": "huggingface.co",
+    "summary": "",
+    "published_at": "2026-11-20T00:00:00+00:00",
+    "discovered_at": "2026-11-20T13:43:44+00:00",
+    "source": {
+      "name": "Hugging Face Blog",
+      "feed": "https://huggingface.co/blog/feed.xml",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 26,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 56,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "701a571706ec6c00de8b",
+    "trend": {
+      "score": 108.66,
+      "age_hours": 13.74,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://huggingface.co/blog/harness-adapters-at-scale",
+      "name": "Hugging Face Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Introducing harness adapters: adapt your favorite model to your harness to improve performance and cost",
+      "title": "Introducing harness adapters: adapt your favorite model to your harness to improve performance and cost",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "هافينغ فيس تطلق محولات Harness لتحسين أداء النماذج",
+      "description": "تقدّم هافينغ فيس تقنية جديدة تعتمد على التعلم المعزز لتكييف نماذج الذكاء الاصطناعي مع هياكل العمل، مما يرفع الدقة ويخفض استهلاك الرموز بشكل ملحوظ.",
+      "deck": "أعلنت هافينغ فيس عن إطلاق محولات Harness التي تتيح للمستخدمين تحسين أداء نماذجهم المفضلة وتقليل التكاليف عبر التدريب المخصص.",
+      "summary_bullets": [
+        "تحسين أداء نموذج Qwen3.8-27B من 39% إلى 55% في اختبارات Terminal-Bench 2.1.",
+        "خفض متوسط استهلاك الرموز لكل مهمة من 2.9 ألف إلى 1.5 ألف رمز.",
+        "تدريب محولات LoRA مخصصة لكل هيكل عمل (Harness) باستخدام التعلم المعزز.",
+        "دمج المحولات في محول واحد يعمل بسلاسة عبر ثلاثة هياكل عمل مختلفة."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق تقنية المحولات المخصصة",
+          "paragraphs": [
+            {
+              "text": "أطلقت هافينغ فيس تقنية جديدة تسمى محولات Harness، تهدف إلى سد الفجوة بين الأداء العام للنماذج وأداءها في المهام المحددة. توضح الشركة في مدونتها الرسمية أن النماذج الحالية ليست محسنة بالكامل لجميع الهياكل والمهام، مما يؤدي إلى فقدان في الكفاءة. من خلال استخدام التعلم المعزز، يمكن تدريب محول مخصص يستغل قدرات النموذج بشكل أقصى ضمن هيكل العمل المستهدف.",
+              "links": [
+                {
+                  "text": "هافينغ فيس",
+                  "url": "https://huggingface.co/blog/harness-adapters-at-scale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "نتائج ملموسة في الأداء والكفاءة",
+          "paragraphs": [
+            {
+              "text": "تُظهر التجارب العملية تحسناً كبيراً في النتائج. فعلى سبيل المثال، حقق نموذج Qwen3.8-27B دقة 39% في اختبار Terminal-Bench 2.1 باستخدام هيكل pi، مع استهلاك متوسط قدره 2.9 ألف رمز لكل مهمة. بعد تجميد الأوزان وإضافة محول LoRA مدرّب بالتعلم المعزز، ارتفعت الدقة إلى 55%، وانخفض استهلاك الرموز إلى 1.5 ألف فقط. يعزى هذا التحسن إلى تقليل عمليات الاستدلال، وقلة استدعاء الأدوات، وتحسين الأداء من المحاولة الأولى.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "منهجية التدريب والتحقق",
+          "paragraphs": [
+            {
+              "text": "اعتمد الفريق على منهجية دقيقة لبناء مجموعة مهام التدريب. تم استخدام مصادر متعددة، بما في ذلك SWE-smith وSWE-Gym، بالإضافة إلى توليد مهام جديدة عبر أداة Tasksmith. خضعت كل مهمة لفحص صارم للتأكد من صلاحيتها، حيث يجب أن يحقق الحل المرجعي أعلى مكافأة، وأن تكون النتيجة أقل عند عدم القيام بأي إجراء. هذا يضمن أن النموذج يتعلم سلوكاً صحيحاً وليس مجرد إجابات خاطئة مقبولة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل مع الهياكل المختلفة",
+          "paragraphs": [
+            {
+              "text": "تم تدريب محول واحد لنموذج Qwen3.8-27B لكل هيكل عمل، شاملاً pi وHermes Agent وOpenCode. تم إجراء التدريب داخل الهيكل نفسه باستخدام AsyncGRPOTrainer من TRL، مما يضمن أن النموذج يتعلم من الرموز الفعلية التي ينتجها الهيكل. هذا النهج يختلف عن أطر العمل التقليدية التي تعيد تنفيذ حلقة الوكيل، حيث هنا يعمل الهيكل كما هو منشور، ويتعلم المدرب من البيانات المسجلة عبر وكيل بين الهيكل وvLLM.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "محول فائق متعدد الاستخدامات",
+          "paragraphs": [
+            {
+              "text": "أحد أبرز مزايا هذه التقنية هو إمكانية دمج المحولات الثلاثة في محول فائق واحد. يعمل هذا المحول المدمج دون تغيير عبر هياكل pi وHermes Agent وOpenCode، مما يوفر مرونة عالية للمستخدمين. جميع المخرجات، بما في ذلك المحولات وملفات GGUF ومهام التعلم المعزز، متاحة للاستعراض والتحميل من مجموعة هافينغ فيس، مما يسهل إعادة إنتاج النتائج على مهام وهياكل ونماذج مختلفة.",
+              "links": [
+                {
+                  "text": "مجموعة هافينغ فيس",
+                  "url": "https://huggingface.co/blog"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "توفر الأدوات والموارد",
+          "paragraphs": [
+            {
+              "text": "لتسهيل عملية إعادة الإنتاج، تم توفير صور Docker جاهزة للاستخدام تتضمن الهياكل المستهدفة مثبتة مسبقاً. استخدم الفريق إصدارات محددة من Pi 1.5.2 وOpenCode 2.2.7 وHermes Agent v0.22.6 في الصور النهائية. كما تم توثيق العملية بالكامل، بما في ذلك كيفية استخدام openenv validate للتحقق من المهام، مما يتيح للمطورين تطبيق نفس المنهجية على مجالاتهم الخاصة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "هافينغ فيس",
+        "التعلم المعزز",
+        "LoRA",
+        "Qwen3.8",
+        "كفاءة الحوسبة",
+        "نماذج اللغة"
+      ],
+      "entities": [
+        "هافينغ فيس",
+        "Qwen3.8-27B",
+        "pi",
+        "Hermes Agent",
+        "OpenCode",
+        "TRL",
+        "OpenEnv",
+        "Tasksmith"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من مدونة هافينغ فيس الرسمية، مع التركيز على النتائج الكمية والمنهجية التقنية المذكورة."
+    },
+    "en": {
+      "title": "Introducing Harness Adapters to Optimize AI Models",
+      "description": "Discover how harness adapters leverage reinforcement learning to optimize AI models for specific harnesses, boosting performance and efficiency.",
+      "deck": "A new open-source recipe leverages reinforcement learning to train custom harness adapters, enhancing model performance and efficiency across multiple agent harnesses.",
+      "summary_bullets": [
+        "Harness adapters use custom reinforcement learning to squeeze maximum performance from AI models for specific tasks.",
+        "Training Qwen3.8-27B with a custom LoRA adapter improved its Terminal-Bench 2.1 score from 39% to 55% while reducing token usage.",
+        "The approach was tested across three agent harnesses: Pi, OpenCode, and Hermes Agent.",
+        "All artifacts, adapters, GGUFs, and RL tasks are available through a Hugging Face collection."
+      ],
+      "sections": [
+        {
+          "heading": "The Concept Behind Harness Adapters",
+          "paragraphs": [
+            {
+              "text": "Artificial intelligence models are typically optimized for general performance rather than being fully tailored to specific agent harnesses and unique task distributions. When combining a model with a particular harness, users often leave efficiency and performance on the table for their actual workloads. To address this gap, developers can utilize reinforcement learning to train a custom harness adapter that optimizes the model for a specific harness and task combination. More details can be found on the Hugging Face Blog.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/harness-adapters-at-scale"
+                }
+              ]
+            },
+            {
+              "text": "By freezing model weights and adding a custom reinforcement learning-trained LoRA adapter, developers can achieve significantly better results. For instance, testing Qwen3.8-27B with the pi harness yielded a Terminal-Bench 2.1 score of 39% while using an average of 2.9K tokens per task. Introducing a custom adapter increased the pass rate to 55% while dropping average token usage down to 1.5K, largely because the model performed better on the first attempt and engaged in less excessive reasoning and tool calling.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Exploring Multi-Harness Performance",
+          "paragraphs": [
+            {
+              "text": "Earlier experimental work demonstrated that applying reinforcement learning inside an individual harness on a custom task distribution yields more accurate and efficient models. While those initial studies focused on data-analysis and code-building tasks, recent efforts have pushed the envelope further. Developers tested whether these positive results would hold at a 27B scale on harder real-world software engineering tasks across three distinct harnesses: Pi, OpenCode, and Hermes Agent.",
+              "links": []
+            },
+            {
+              "text": "The research team successfully trained one LoRA adapter for Qwen3.8-27B inside each of the three agent harnesses. Every individual harness adapter managed to outperform the base model under its respective harness on both performance and efficiency benchmarks. Additionally, the three separate LoRAs were merged into a single super adapter capable of running unchanged under pi, Hermes Agent, and OpenCode.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Infrastructure and Training Protocols",
+          "paragraphs": [
+            {
+              "text": "Datasets, training, and agent rollouts took place on the Hub using Jobs powered by TRL's AsyncGRPOTrainer, OpenEnv, and harbor. Unlike many reinforcement learning frameworks that rely on a re-implementation of the agent loop, this approach allows the harness to run exactly as it ships. A proxy positioned between the harness and vLLM records the exact tokens produced, enabling the trainer to learn directly from real execution data.",
+              "links": []
+            },
+            {
+              "text": "For this particular training recipe, the team created a specialized dataset for agentic coding. They combined task retrieval from existing reinforcement learning environments, task generation through Repo2RLEnv, task validation via OpenEnv, and systematic sampling into a unified data pipeline to curate high-quality tasks.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Task Curation and Validation",
+          "paragraphs": [
+            {
+              "text": "Effective reinforcement learning training requires viable tasks, an accurate verifier to score each attempt, and strict quality control. The team built their task set using three primary sources, subjecting every candidate task to a rigorous eligibility screen and difficulty check against the base Qwen3.8-27B model.",
+              "links": []
+            },
+            {
+              "text": "Following an initial metadata screen to filter out duplicates and non-training splits, the semantic checks from openenv validate were executed on every task. Out of 1,127 Hub candidates, 858 passed the screening process. Code implementations, wrong-answer controls, and deterministic checks ensured that only reliable, high-value tasks were integrated into the final training pipeline.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Accessing Community Artifacts",
+          "paragraphs": [
+            {
+              "text": "To support reproducibility and community adoption, all project artifacts—including the adapters, GGUFs, reinforcement learning tasks, and the safeagents plugin—have been made publicly available. Interested developers and researchers can access the complete collection directly by visiting the Hugging Face Blog.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/harness-adapters-at-scale"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Hugging Face",
+        "Artificial Intelligence",
+        "Reinforcement Learning",
+        "LoRA",
+        "Qwen",
+        "Agent Harness",
+        "Open Source"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Qwen",
+        "Pi",
+        "OpenCode",
+        "Hermes Agent"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based on official Hugging Face blog post detailing harness adapters, benchmarks, and training methodology."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 454,
+      "word_count_en": 634
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "9342dbf934e428aa00c1",
+      "title": "How OpenAI’s Performance Factory keeps ChatGPT fast",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "story_id": "82fe289fe466dcc1d4f7",
+      "title": "Explore the Codex Security Plugin",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "story_id": "68ddb817fe4001c0fc7b",
+      "title": "Advancing chip design with OpenAI models",
+      "status": "generation_error",
+      "errors": [
+        "generation_error:RuntimeError: No usable source text available"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 2,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        },
+        {
+          "attempt": 3,
+          "status": "generation_error",
+          "error": "RuntimeError: No usable source text available"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "story_id": "701a571706ec6c00de8b",
+      "title": "Introducing harness adapters: adapt your favorite model to your harness to improve performance and cost",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 454,
+          "word_count_en": 634
+        }
+      ]
+    }
+  ],
+  "slug": "introducing-harness-adapters-adapt-your-favorite-model-to-your-harness-to-improve",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/introducing-harness-adapters-adapt-your-favorite-model-to-your-harness-to-improve/hero.webp",
+    "card": "/forum/assets/posts/2026/11/introducing-harness-adapters-adapt-your-favorite-model-to-your-harness-to-improve/card.webp",
+    "social": "/forum/assets/posts/2026/11/introducing-harness-adapters-adapt-your-favorite-model-to-your-harness-to-improve/social.jpg",
+    "alt": {
+      "ar": "هافينغ فيس تطلق محولات Harness لتحسين أداء النماذج",
+      "en": "Introducing Harness Adapters to Optimize AI Models"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/harness-adapters-at-scale/thumbnail.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-harness-adapters-adapt-your-favorite-model-to-your-harness-to-improve/inline-01.webp",
+        "width": 828,
+        "height": 1050,
+        "alt": {
+          "ar": "هافينغ فيس تطلق محولات Harness لتحسين أداء النماذج",
+          "en": "Task pipeline: Tasksmith, SWE-smith and SWE-Gym sources pass through an eligibility screen, Harbor packaging, openenv validate on Hugging Face Jobs, and a difficulty check with Qwen3.8-27B"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/harness-adapters-at-scale",
+        "originalUrl": "https://huggingface.co/blog/assets/harness-adapters-at-scale/task-pipeline.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-harness-adapters-adapt-your-favorite-model-to-your-harness-to-improve/inline-02.webp",
+        "width": 1400,
+        "height": 910,
+        "alt": {
+          "ar": "هافينغ فيس تطلق محولات Harness لتحسين أداء النماذج",
+          "en": "Qwen3.8-27B results on 442 scored tasks, split by attempts solved and by source"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/harness-adapters-at-scale",
+        "originalUrl": "https://huggingface.co/blog/assets/harness-adapters-at-scale/difficulty-check.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-harness-adapters-adapt-your-favorite-model-to-your-harness-to-improve/inline-03.webp",
+        "width": 1400,
+        "height": 429,
+        "alt": {
+          "ar": "هافينغ فيس تطلق محولات Harness لتحسين أداء النماذج",
+          "en": "safeagents blocked calls per 1,000 tool calls by training step for the pi, hermes and opencode adapters"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/harness-adapters-at-scale",
+        "originalUrl": "https://huggingface.co/blog/assets/harness-adapters-at-scale/safeagents-blocked.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/introducing-harness-adapters-adapt-your-favorite-model-to-your-harness-to-improve/inline-04.webp",
+        "width": 1300,
+        "height": 650,
+        "alt": {
+          "ar": "هافينغ فيس تطلق محولات Harness لتحسين أداء النماذج",
+          "en": "Introducing Harness Adapters to Optimize AI Models"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/harness-adapters-at-scale",
+        "originalUrl": "https://huggingface.co/blog/assets/asyncgrpo-lora-hfjobs/thumbnail.png"
+      }
+    ]
+  }
 }
