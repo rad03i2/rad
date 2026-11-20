@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "0c86565354b6242e71e1",
+  "slug": "how-cloudflare-waf-helps-protect-against-phpaftershell-and-other-critical-php-flaws",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/how-cloudflare-waf-helps-protect-against-phpaftershell-and-other-critical-php-flaws/",
+    "en": "/forum/en/ai/how-cloudflare-waf-helps-protect-against-phpaftershell-and-other-critical-php-flaws/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Cloudflare تحمي عملاءها من ثغرة phpAfterShell الحرجة في PHP",
+      "description": "أطلقت Cloudflare قواعد حماية جديدة في جدارها الناري لتعطيل استغلال ثغرة phpAfterShell الحرجة في PHP، وتوفر الحماية المجانية لجميع المستخدمين.",
+      "deck": "كشفت شركة depthfirst عن ثغرة حرجة في PHP تتيح تنفيذ أكواد عن بُعد، وسارعت Cloudflare بتحديث جدارها الناري لحمايتها.",
+      "summaryBullets": [
+        "ثغرة phpAfterShell (CVE-2026-126714) حرجة بدرجة 9.2 وتسمح بتنفيذ أكواد عن بُعد.",
+        "Cloudflare وفرت الحماية عبر WAF لجميع العملاء، بما في ذلك الخطة المجانية.",
+        "أضافت Cloudflare قواعد جديدة لثغرات أخرى في PHP-FPM وSOAP ضمن نفس التحديث.",
+        "تؤكد Cloudflare أن جدارها الناري طبقة دفاع إضافية ولا يغني عن تحديث PHP."
+      ],
+      "sections": [
+        {
+          "heading": "كشف ثغرة phpAfterShell الحرجة",
+          "paragraphs": [
+            {
+              "text": "في 19 نوفمبر 2026، كشفت شركة أبحاث الأمن depthfirst عن ثغرة حرجة جديدة في PHP تحمل اسم phpAfterShell (CVE-2026-126714). هذه الثغرة موجودة في معالج الجلسات الافتراضي (session handler) وتسمح للمهاجمين بتنفيذ أكواد عن بُعد. وفقاً لنظام تصنيف الثغرات CVSS 4.0، حصلت الثغرة على درجة 9.2 من 10، مما يصنفها كحرجة. سارع فريق PHP بإصلاح الثغرة في نفس اليوم عبر إصدارات 8.2.36 و8.3.37 و8.4.28 و8.5.13 و8.6.0، والتي تتضمن أيضاً إصلاحات لستة عشر ثغرة أمنية أخرى، ستة منها مصنفة كحرجة.",
+              "links": [
+                {
+                  "text": "phpAfterShell (CVE-2026-126714)",
+                  "url": "https://depthfirst.com/research/phpaftershell"
+                },
+                {
+                  "text": "php",
+                  "url": "https://blog.cloudflare.com/tag/php/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "حماية فورية عبر Cloudflare WAF",
+          "paragraphs": [
+            {
+              "text": "أعلنت Cloudflare أن جدارها الناري لتطبيقات الويب (WAF) يحظر أنماط الهجوم المعروفة لثغرة phpAfterShell لجميع عملائها، بما في ذلك أولئك الذين يستخدمون الخطة المجانية. تأتي هذه الحماية من قاعدة بيانات تنفيذ الأكواد عن بُعد في PHP التي تم نشرها لأول مرة في أكتوبر 2026 لحماية من ثغرات php2shell. لاحظ فريق Cloudflare أن هذه القاعدة كانت تكشف بالفعل عن جزء من نمط هجوم phpAfterShell قبل الكشف الرسمي عن الثغرة، وفي 19 نوفمبر تم تحديث منطق الكشف ليشمل الثغرة الجديدة بالكامل. القاعدة مفعلة افتراضياً في حزم القواعد المدارة (Managed Rulesets) مع إجراء الحظر (Block).",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "قواعد جديدة لثغرات إضافية",
+          "paragraphs": [
+            {
+              "text": "في نفس إصدار WAF، أضافت Cloudflare ثلاث قواعد جديدة إلى حزمة القواعد المدارة للمخططات المدفوعة. تشمل هذه القواعد حماية من ثغرة في PHP-FPM (CVE-2026-129289) تسمح بتسريب طلبات (request smuggling)، وثغرتين في امتداد SOAP (CVE-2026-15353 وCVE-2026-129506). تم تفعيل هذه القواعد افتراضياً مع إجراء التسجيل (Log) بدلاً من الحظر، لأن أنماط الطلبات التي تبحث عنها قد تظهر في حركة مرور مشروعة. يمكن للعملاء مراجعة الأحداث الأمنية وتغيير الإجراء إلى الحظر بعد التأكد من عدم تأثير القواعد على التطبيقات المشروعة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية استغلال الثغرة",
+          "paragraphs": [
+            {
+              "text": "تخزن PHP بيانات الجلسات في ملفات افتراضياً. عند استدعاء session_start()، تقرأ PHP ملف الجلسة وتقوم بفك تسلسل محتواه. يتم تفعيل ثغرة phpAfterShell عندما يتم مقاطعة عملية الكتابة في ملف الجلسة، مما يؤدي إلى احتواء الملف على بداية بيانات الجلسة الجديدة ونهاية البيانات القديمة. في الطلب التالي، تقوم PHP بفك تسلسل هذا المحتوى المختلط. إذا كان المهاجم يتحكم في البيانات القديمة، يمكن لـ PHP فك تسلسل كائنات يختارها المهاجم. حددت وثيقة PHP الأمنية طريقتين رئيسيتين لزرع البيانات: ميزة تقدم رفع الملفات (session upload progress) والتطبيقات التي تخزن نصوصاً كبيرة يتحكم بها المستخدم في الجلسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الحماية ليست بديلاً عن التحديث",
+          "paragraphs": [
+            {
+              "text": "تؤكد Cloudflare أن جدارها الناري يمثل طبقة دفاع إضافية وليس بديلاً عن تطبيق التصحيحات. تعتمد بعض الثغرات الحرجة على إعدادات الخادم أو يمكن الوصول إليها عبر مسارات لا يراها WAF، لذا فإن الحل الكامل هو ترقية PHP وإعادة تشغيل جميع العمليات (workers). يستمر محللو Cloudflare في مراقبة نشاط الهجمات وتحديث القواعد عند ظهور تقنيات جديدة. يمكن للمستخدمين تتبع تغييرات القواعد في سجل التغييرات ومتابعة تطور الثغرات في نشرة Cloudflare Zero Wire المخصصة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "لا مؤشرات على استغلال واسع",
+          "paragraphs": [
+            {
+              "text": "حتى 19 نوفمبر 2026، لا توجد مؤشرات على استغلال هذه الثغرات في العالم الحقيقي. لم يتم إدراج أي من الثغرات السبع عشرة في كتالوج CISA للثغرات المستغلة المعروفة (Known Exploited Vulnerabilities). كما لم تذكر أي من المصادر التي راجعتها Cloudflare عن حالات استغلال نشطة. ومع ذلك، نظراً لأن PHP يشغل جزءاً كبيراً من الويب، وغالباً داخل أنظمة إدارة المحتوى والصور الحاوية (container images) التي لا يتم تحديثها مباشرة، فإن تصحيح جميع بيئات PHP يستغرق وقتاً. هنا يأتي دور Cloudflare WAF لتقليل التعرض للخطر أثناء عملية التصحيح.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "PHP",
+        "phpAfterShell",
+        "WAF",
+        "أمن سيبراني",
+        "ثغرات أمنية",
+        "CVE-2026-126714"
+      ],
+      "entities": [
+        "Cloudflare",
+        "PHP",
+        "depthfirst",
+        "CISA",
+        "phpAfterShell"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "21 نوفمبر 2026",
+      "modifiedLabel": "21 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 591
+    },
+    "en": {
+      "title": "Cloudflare WAF Blocks phpAfterShell and PHP Flaws",
+      "description": "Cloudflare updates its web application firewall to protect customers against the critical phpAfterShell PHP session handler vulnerability and other flaws.",
+      "deck": "Cloudflare has deployed protections across its web application firewall (WAF) to defend customers against the critical phpAfterShell vulnerability and multiple other severe PHP security issues disclosed in November 2026.",
+      "summaryBullets": [
+        "Security research company depthfirst disclosed the critical phpAfterShell vulnerability (CVE-2026-126714) in PHP's default session handler on November 19, 2026.",
+        "Cloudflare updated its existing PHP remote code execution rule to block known attack patterns for all customers, including those on Free plans.",
+        "The PHP project released updates across multiple versions to patch phpAfterShell alongside 16 other security vulnerabilities.",
+        "Cloudflare added three new managed WAF rules for paid plans covering an enterprise request smuggling flaw and SOAP extension issues."
+      ],
+      "sections": [
+        {
+          "heading": "Disclosure of phpAfterShell and Critical PHP Flaws",
+          "paragraphs": [
+            {
+              "text": "On November 19, 2026, security research company depthfirst disclosed phpAfterShell (CVE-2026-126714), a critical vulnerability residing in PHP's default file-based session handler that can result in remote code execution. Under the Common Vulnerability Scoring System (CVSS) 4.0, the flaw receives a 9.2 out of 10 critical rating. The vulnerability triggers when a session write is interrupted, leaving mixed session data that PHP deserializes upon subsequent requests.",
+              "links": [
+                {
+                  "text": "phpAfterShell (CVE-2026-126714)",
+                  "url": "https://depthfirst.com/research/phpaftershell"
+                }
+              ]
+            },
+            {
+              "text": "The PHP project responded to the disclosure by releasing patches the same day for versions 8.2.36, 8.3.37, 8.4.28, 8.5.13, and 8.6.0. These software releases address 16 additional security vulnerabilities, six of which are also rated critical, spanning various components such as PHP-FPM and the SOAP extension.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Cloudflare WAF Defenses and Free Plan Coverage",
+          "paragraphs": [
+            {
+              "text": "In response to the newly revealed security issues, Cloudflare announced that its web application firewall (WAF) actively blocks known phpAfterShell attack patterns. This crucial security coverage extends to all customers, including those utilizing Free plans. The underlying detection mechanism leverages a PHP remote code execution rule initially deployed in October 2026 to mitigate php2shell vulnerabilities.",
+              "links": [
+                {
+                  "text": "web application firewall (WAF)",
+                  "url": "https://developers.cloudflare.com/waf/"
+                }
+              ]
+            },
+            {
+              "text": "Because phpAfterShell shares overlapping attack techniques with php2shell—specifically the placement of serialized PHP data into session storage followed by deserialization—the existing rule already detected part of the attack pattern prior to public disclosure. Cloudflare updated this detection logic on November 19 to comprehensively cover phpAfterShell as part of both the Free Managed Ruleset and the Cloudflare Managed Ruleset with an enabled-by-default Block action.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "New Managed Rules for Paid Plans",
+          "paragraphs": [
+            {
+              "text": "Alongside the free tier updates, Cloudflare introduced three additional rules to the Cloudflare Managed Ruleset tailored for paid plans. These rules address a request smuggling flaw in PHP-FPM (CVE-2026-129289) and two separate vulnerabilities found within PHP's SOAP extension (CVE-2026-15353 and CVE-2026-129506).",
+              "links": []
+            },
+            {
+              "text": "Because these specific request patterns can occasionally appear in legitimate traffic, the newly introduced rules default to the Log action rather than outright blocking. This configuration prevents potential disruptions while allowing administrators to review matching requests and manually adjust actions through security event logs once verified.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Exploitation Status and Recommended Remediation",
+          "paragraphs": [
+            {
+              "text": "As of November 19, 2026, security analysts noted no indication that these vulnerabilities had been actively exploited in the wild. Furthermore, none of the 17 disclosed vulnerabilities appeared in the Known Exploited Vulnerabilities catalog maintained by CISA at the time of the review.",
+              "links": [
+                {
+                  "text": "Known Exploited Vulnerabilities catalog",
+                  "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
+                }
+              ]
+            },
+            {
+              "text": "Security teams emphasize that firewall protections serve purely as an additional layer of defense rather than a complete substitute for software patches. Because several critical flaws depend on server configurations or paths invisible to network firewalls, the definitive remedy requires upgrading PHP and restarting every worker instance. Administrators can track evolving rule details through the official WAF changelog or consult the comprehensive Cloudflare Zero Wire briefing.",
+              "links": [
+                {
+                  "text": "WAF changelog",
+                  "url": "https://developers.cloudflare.com/waf/change-log/changelog/"
+                },
+                {
+                  "text": "Cloudflare Zero Wire briefing",
+                  "url": "https://radar.cloudflare.com/zero-wire/php-november-2026-security-release-phpaftershell"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cloudflare",
+        "PHP",
+        "WAF",
+        "Cybersecurity",
+        "Vulnerabilities",
+        "phpAfterShell",
+        "Remote Code Execution"
+      ],
+      "entities": [
+        "Cloudflare",
+        "PHP",
+        "depthfirst",
+        "CISA"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 21, 2026",
+      "modifiedLabel": "November 21, 2026",
+      "readMinutes": 3,
+      "wordCount": 556
+    }
+  },
+  "datePublished": "2026-11-21T01:25:36.171706+03:00",
+  "dateModified": "2026-11-21T01:25:36.171706+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-cloudflare-waf-helps-protect-against-phpaftershell-and-other-critical-php-flaws/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-cloudflare-waf-helps-protect-against-phpaftershell-and-other-critical-php-flaws/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-cloudflare-waf-helps-protect-against-phpaftershell-and-other-critical-php-flaws/social.jpg",
+    "alt": {
+      "ar": "Cloudflare تحمي عملاءها من ثغرة phpAfterShell الحرجة في PHP",
+      "en": "Cloudflare WAF Blocks phpAfterShell and PHP Flaws"
+    },
+    "credit": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/_emdash/api/media/file/01M7X76FEMSF7NE7RCCQQBHCVN.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-cloudflare-waf-helps-protect-against-phpaftershell-and-other-critical-php-flaws/inline-01.webp",
+        "width": 1200,
+        "height": 675,
+        "alt": {
+          "ar": "Cloudflare تحمي عملاءها من ثغرة phpAfterShell الحرجة في PHP",
+          "en": "Cloudflare WAF Blocks phpAfterShell and PHP Flaws"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Cloudflare Blog",
+          "en": "Image related to the report from Cloudflare Blog"
+        },
+        "credit": "Cloudflare Blog",
+        "sourceUrl": "https://blog.cloudflare.com/phpaftershell-waf-protection",
+        "originalUrl": "https://blog.cloudflare.com/_image?href=https%3A%2F%2Fblog.cloudflare.com%2F_emdash%2Fapi%2Fmedia%2Ffile%2F01M7X76DTFTZ4PHVTH5XWJ37KT.png&w=2400&h=1350&f=webp&fit=cover&position=center"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/phpaftershell-waf-protection",
+      "type": "official",
+      "title": "How Cloudflare WAF helps protect against phpAfterShell and other critical PHP flaws"
+    }
+  ],
+  "sourceUrl": "https://blog.cloudflare.com/phpaftershell-waf-protection",
+  "sourceTitle": "How Cloudflare WAF helps protect against phpAfterShell and other critical PHP flaws",
+  "trendScore": 118.13,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-20T22:25:36+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/how-cloudflare-waf-helps-protect-against-phpaftershell-and-other-critical-php-flaws.json"
+}
