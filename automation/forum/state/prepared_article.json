@@ -1,5 +1,325 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-20T11:19:26+00:00",
-  "last_published_story_id": "616c0891b30f92b5eebf"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-20T11:24:09+00:00",
+  "target_publish_at": "2026-11-20T14:39:25.092118+03:00",
+  "story": {
+    "title": "Ruby Patches Ruby2Shell Vulnerability That Could Lead to RCE",
+    "url": "https://www.securityweek.com/ruby-patches-ruby2shell-vulnerability-that-could-lead-to-rce",
+    "domain": "securityweek.com",
+    "summary": "Tracked as CVE-2026-132825, the bug is a heap-based buffer overflow that could lead to remote code execution (RCE). The post Ruby Patches Ruby2Shell Vulnerability That Could Lead to RCE appeared first on SecurityWeek .",
+    "published_at": "2026-11-20T10:34:10+00:00",
+    "discovered_at": "2026-11-20T10:42:48+00:00",
+    "source": {
+      "name": "SecurityWeek",
+      "feed": "https://www.securityweek.com/feed/",
+      "type": "journalism",
+      "trust": 0.87,
+      "priority": 21,
+      "defaultCategory": "security"
+    },
+    "category": "security",
+    "category_label": "الأمن التقني",
+    "score": 48,
+    "verification": {
+      "confidence": 0.87,
+      "reason": "trusted_journalism_single_source",
+      "official": false,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "0f8561f9e1c8d113c1e9",
+    "trend": {
+      "score": 104.68,
+      "age_hours": 0.82,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 6
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://www.securityweek.com/ruby-patches-ruby2shell-vulnerability-that-could-lead-to-rce/",
+      "name": "SecurityWeek",
+      "domain": null,
+      "kind": "journalism",
+      "type": "journalism",
+      "feed_title": "Ruby Patches Ruby2Shell Vulnerability That Could Lead to RCE",
+      "title": "Ruby Patches Ruby2Shell Vulnerability That Could Lead to RCE - SecurityWeek",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "روبي تصدر تحديثات أمنية لمعالجة ثغرة Ruby2Shell الخطيرة",
+      "description": "أطلقت لغة البرمجة روبي تحديثات أمنية لمعالجة سبع ثغرات، أبرزها ثغرة Ruby2Shell المسجلة برمز CVE-2026-132825 والتي قد تؤدي لتنفيذ برمجة خبيثة عن بعد.",
+      "deck": "أصدر فريق لغة البرمجة روبي تحديثات عاجلة لمعالجة سبع ثغرات أمنية تؤثر على محرك التعابير النمطية وعمليات تحويل حالة الأحرف في النصوص، وفي مقدمتها ثغرة Ruby2Shell.",
+      "summary_buffer": [],
+      "summary_bullets": [
+        "معالجة 7 ثغرات أمنية في لغة روبي تشمل محرك التعابير النمطية وتحويل حالة الأحرف.",
+        "ثغرة Ruby2Shell (CVE-2026-132825) هي تجاوز سعة ذاكرة التخزين المؤقت المعتمدة على الكومة.",
+        "وجود إثبات مفهوم لعدة ثغرات قد يسمح بتنفيذ تعليمات برمجية عن بُعد في ظروف معينة.",
+        "إصدار التحديثات ضمن النسخ 4.0.10 و3.4.13 و3.3.14 مع دعوات لتطبيقها فوراً."
+      ],
+      "sections": [
+        {
+          "heading": "تفاصيل ثغرة Ruby2Shell والخطورة المحتملة",
+          "paragraphs": [
+            {
+              "text": "أصدرت لغة البرمجة روبي تحديثات أمنية جديدة لمعالجة سبع ثغرات تؤثر على محرك التعابير النمطية وعمليات تحويل حالة الأحرف للنصوص. وتتصدر القائمة ثغرة تحمل الرمز CVE-2026-132825 والتي حصلت على تقييم خطورة بلغ 7.4 على مقياس CVSS، حيث تم وصفها بأنها تجاوز سعة ذاكرة التخزين المؤقت المعتمدة على الكومة (heap-based buffer overflow). هذه الثغرة، التي أُطلق عليها اسم Ruby2Shell وتناولتها تقارير منشورة في موقع SecurityWeek، تؤثر بشكل مباشر على العمليات الخاصة بتحويل حالة أحرف النصوص في بعض التشفيرات أحادية البايت مثل ISO-8859-1 وWindows-1252.",
+              "links": [
+                {
+                  "text": "SecurityWeek",
+                  "url": "https://www.securityweek.com/ruby-patches-ruby2shell-vulnerability-that-could-lead-to-rce/"
+                }
+              ]
+            },
+            {
+              "text": "بحسب تفاصيل نشرتها شركة Previdian، فعند محاولة تغيير حالة بعض الأحرف مثل الحرف الألماني ß إلى الأحرف الكبيرة لتصبح SS، يقوم نظام روبي بالتحقق من وجود مساحة كافية لبايت واحد فقط بينما يكتب بايتين اثنين، مما يؤدي إلى احتمالية تلف الذاكرة المجاورة للكومة في الشيفرات المتأثرة. وقد أشارت تحليلات أخرى إلى تفاصيل تقنية إضافية كما وردت في مدونة Previdian حول المخاطر الكامنة في هذه الثغرة.",
+              "links": [
+                {
+                  "text": "Previdian",
+                  "url": "https://blog.previdian.com/ruby2shell-cve-2026-132825-what-we-know-so-far/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "نطاق التأثير والإطار التقني للثغرة",
+          "paragraphs": [
+            {
+              "text": "أفادت شركة Veria Labs المتخصصة في الأمن التقني أن المهاجمين غير الموثقين يمكنهم استغلال هذا الخلل الأمني في التكوينات الافتراضية للغة روبي عبر أطر عمل مثل Rails وSinatra بالنسخة الكلاسيكية، بالإضافة إلى أطر عمل أخرى محتملة. وقد تمت مناقشة جوانب إضافية لهذا الخلل في تحليلات تفصيلية نشرتها Veria Labs حول طبيعة التأثير والأنظمة المعرضة للخطر.",
+              "links": [
+                {
+                  "text": "Veria Labs",
+                  "url": "https://verialabs.com/ruby2shell/"
+                }
+              ]
+            },
+            {
+              "text": "من جانبها، أوضحت شركة إدارة التعرض المسبق WatchTowr أن أي تطبيق مكتوب بلغة روبي ويعمل على تغيير حالة النصوص الخارجية باستخدام ترميز أحادي البايت يُعتبر متأثراً بهذه الثغرة. وتضمنت تقارير WatchTowr إجابات تفصيلية حول الأسئلة الشائعة المتعلقة بالثغرة وكيفية تفاعل الأنظمة المختلفة معها.",
+              "links": [
+                {
+                  "text": "WatchTowr",
+                  "url": "https://watchtowr.com/intelligence/ruby-cve-2026-132825-faq/"
+                }
+              ]
+            },
+            {
+              "text": "على صعيد المنصات المتأثرة، ذكرت Veria Labs أن خادم GitHub Enterprise Server يتأثر بالثغرة، بينما سارعت جهات ومنصات أخرى مثل Chatwoot وGitLab وMastodon وOpenProject والصورة الأساسية لـ Discourse لتطبيق الإصلاحات اللازمة وإغلاق الثغرة بشكل كامل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحديات الاستغلال الفعلي وآراء الخبراء",
+          "paragraphs": [
+            {
+              "text": "على الرغم من المخاوف المرتبطة بإمكانية تنفيذ تعليمات برمجية عن بُعد، أشار يوردان غانتشيف، اخصائي استخبارات التهديدات الرئيسي في شركة WatchTowr، إلى أن الاستغلال الناجح لثغرة Ruby2Shell في بيئات الإنتاج يظل أمراً بالغ الصعوبة. وأوضح أن الترتيب الصحيح للذاكرة يعد أمراً معقداً للغاية، وأن المهاجمين سيحتاجون أيضاً إلى مخصص ذاكرة غير glibc ملائم، وتهيئة صحيحة لوقت التشغيل، وافتراضات مسبقة في منطق التطبيق.",
+              "links": []
+            },
+            {
+              "text": "وأضاف غانتشيف أن المهاجمين سيحتاجون فوق ذلك للتعامل مع الزيارات المتكررة للأنظمة عبر الإنترنت وتجاوز آلية عشوائية تخطيط عنوان الفضاء (ASLR)، مما يجعل رحلة الاستغلال الشاملة بالغة التعقيد ورجّح أن تؤدي الطلبات المشوهة في الغالب إلى رفض الخدمة (DoS) وتعطل الخدمات بدلاً من التنفيذ الناجح للتعليمات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ثغرات إضافية وتفاصيل الإصلاحات المطروحة",
+          "paragraphs": [
+            {
+              "text": "إلى جانب ثغرة Ruby2Shell، تضمنت التحديثات الأمنية معالجة أربع ثغرات أخرى توجد لها شفرات إثبات مفهوم (PoC) لتنفيذ تعليمات برمجية عن بُعد، وتتضمن هذه الثغرات مشكلة تحرير مزدوج للذاكرة (double free)، واثنين من عيوب تجاوز سعة الأعداد الصحيحة (integer overflows)، بالإضافة إلى ثغرة إضافية لتجاوز سعة المخزون المؤقت على الكومة. ولا تزال المعرفات الخاصة بهذه المشكلات قيد الطلب ولم تُخصص نهائياً بعد.",
+              "links": []
+            },
+            {
+              "text": "كما تضمنت التحديثات معالجة خلل قراءة خارج الحدود يظهر في محرك التعابير النمطية للغة روبي والذي قد يسفر عن تسريب في الذاكرة أو توقف العمليات بشكل مفاجئ. وقد شملت الإصلاحات الخاصة بالثغرات السبع نسخ روبي 4.0.10 و3.4.13 و3.3.14، مع توصيات صارمة للمستخدمين بضرورة تثبيت التحديثات والترقيعات في أقرب وقت ممكن لحماية بيئات عملهم.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Ruby",
+        "Ruby2Shell",
+        "أمن المعلومات",
+        "ثغرات أمنية",
+        "برمجة",
+        "CVE-2026-132825"
+      ],
+      "entities": [
+        "Ruby",
+        "Ruby2Shell",
+        "SecurityWeek",
+        "Previdian",
+        "Veria Labs",
+        "WatchTowr",
+        "GitHub Enterprise Server",
+        "GitLab",
+        "Mastodon"
+      ],
+      "article_type": "news",
+      "confidence_note": "تم صياغة الخبر استناداً حصرياً إلى المصادر المقدمة، مع الالتزام بالدقة التقنية وربط المصادر بمواقعها المسموح بها دون أي إضافات خارجية."
+    },
+    "en": {
+      "title": "Ruby Releases Patches for Ruby2Shell and Six Other Flaws",
+      "description": "Ruby has issued critical security patches addressing seven vulnerabilities, including the Ruby2Shell heap-based buffer overflow linked to potential RCE risks.",
+      "deck": "Fresh security updates for the Ruby programming language address seven distinct vulnerabilities affecting its regular expression engine and string case conversion operations, including the high-severity Ruby2Shell bug.",
+      "summary_bullets": [
+        "Ruby has released security updates addressing seven vulnerabilities across versions 4.0.10, 3.4.13, and 3.3.14.",
+        "Tracked as CVE-2026-132825 with a CVSS score of 7.4, the Ruby2Shell flaw involves a heap-based buffer overflow during string case conversion.",
+        "Proof-of-concept code demonstrating remote code execution exists for five of the patched vulnerabilities.",
+        "Industry experts note that successful exploitation in production environments remains challenging due to complex prerequisites and memory layout requirements."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of the Ruby Security Updates",
+          "paragraphs": [
+            {
+              "text": "The maintainers of the Ruby programming language have rolled out fresh security updates designed to resolve seven distinct vulnerabilities located within its regular expression engine and string case-conversion operations. According to details shared by <a href=\"https://www.securityweek.com/ruby-patches-ruby2shell-vulnerability-that-could-lead-to-rce/\">SecurityWeek</a>, proof-of-concept code demonstrating remote code execution capability currently exists for five of these identified issues.",
+              "links": [
+                {
+                  "text": "SecurityWeek",
+                  "url": "https://www.securityweek.com/ruby-patches-ruby2shell-vulnerability-that-could-lead-to-rce/"
+                }
+              ]
+            },
+            {
+              "text": "The primary issue leading the advisory is tracked as CVE-2026-132825 and carries a CVSS score of 7.4. Described as a heap-based buffer overflow linked to string case conversion, this flaw has been widely designated under the name Ruby2Shell. The vulnerability stems from how Ruby manages character case-conversion operations under specific conditions.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Technical Mechanics of Ruby2Shell",
+          "paragraphs": [
+            {
+              "text": "When handling certain single-byte encodings—including ISO-8859-1 and Windows-1252—Ruby may write one byte past the boundary of the output buffer during a string case change. <a href=\"https://blog.previdian.com/ruby2shell-cve-2026-132825-what-we-know-so-far/\">Previdian</a> explains this behavior by pointing to scenarios such as converting the German character ß to uppercase, which produces SS. In vulnerable code blocks, Ruby checks that sufficient space exists for only one byte instead of the two bytes actually written, potentially resulting in adjacent heap memory corruption.",
+              "links": [
+                {
+                  "text": "Previdian",
+                  "url": "https://blog.previdian.com/ruby2shell-cve-2026-132825-what-we-know-so-far/"
+                }
+              ]
+            },
+            {
+              "text": "Further analysis from <a href=\"https://verialabs.com/ruby2shell/\">Veria Labs</a> indicates that unauthenticated attackers utilizing default Ruby configurations can trigger this security defect from frameworks like Rails, classic-style Sinatra, and potentially others. Meanwhile, exposure management specialists at <a href=\"https://watchtowr.com/intelligence/ruby-cve-2026-132825-faq/\">WatchTowr</a> note that any Ruby application altering the case of external text within a single-byte encoding environment is fundamentally affected.",
+              "links": [
+                {
+                  "text": "Veria Labs",
+                  "url": "https://verialabs.com/ruby2shell/"
+                },
+                {
+                  "text": "WatchTowr",
+                  "url": "https://watchtowr.com/intelligence/ruby-cve-2026-132825-faq/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Ecosystem Impact and Vendor Responses",
+          "paragraphs": [
+            {
+              "text": "As security teams analyze the implications of CVE-2026-132825, various platform maintainers and enterprise software providers have begun addressing the flaw. Veria Labs reports that GitHub Enterprise Server is affected by the vulnerability and has stated plans to release a proof-of-concept after major software vendors finish rolling out their respective patches.",
+              "links": []
+            },
+            {
+              "text": "Several major projects and platform components have already moved to secure their infrastructure. Prominent open-source and enterprise solutions including Chatwoot, GitLab, Mastodon, OpenProject, and the Discourse base image have applied fixes to mitigate potential risks associated with the bug.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Exploitation Challenges and Production Risks",
+          "paragraphs": [
+            {
+              "text": "Despite the severity designation and remote code execution potential, executing successful attacks against production environments running vulnerable Ruby configurations remains a significant challenge. According to Yordan Ganchev, principal threat intelligence specialist at WatchTowr, properly laying out memory is notoriously difficult for attackers.",
+              "links": []
+            },
+            {
+              "text": "Ganchev highlighted that malicious actors would require specific runtime configurations, appropriate non-glibc memory allocators, and precise application logic preconditions to achieve viable exploitation. Additionally, attackers would need to defeat Address Space Layout Randomization and contend with standard internet traffic noise, making the exploitation process an extensive journey. In most practical scenarios, malformed requests are more likely to trigger denial-of-service conditions and overall service disruption.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Additional Vulnerabilities and Remediation Guidance",
+          "paragraphs": [
+            {
+              "text": "Alongside the Ruby2Shell flaw, the latest security advisory encompasses several other severe issues. Four additional vulnerabilities featuring proof-of-concept code demonstrating remote code execution include a double free, two separate integer overflows, and another heap-based buffer overflow. Official CVE identifiers for these specific items have been requested but remain unassigned.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, proof-of-concept code exists for an out-of-bounds read that demonstrates memory corruption, while a separate out-of-bounds read inside the regular expression engine was resolved to prevent memory leaks and unexpected process crashes. Comprehensive patches covering all seven identified vulnerabilities have been integrated directly into Ruby versions 4.0.10, 3.4.13, and 3.3.14. Administrators and developers maintaining Ruby applications are strongly encouraged to apply these software updates as quickly as possible.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Ruby",
+        "Ruby2Shell",
+        "CVE-2026-132825",
+        "Buffer Overflow",
+        "Remote Code Execution",
+        "Cybersecurity"
+      ],
+      "entities": [
+        "Ruby",
+        "Previdian",
+        "Veria Labs",
+        "WatchTowr",
+        "GitHub",
+        "GitLab",
+        "Mastodon"
+      ],
+      "article_type": "news",
+      "confidence_note": "The article strictly reflects the facts, versions, and quotes provided in the source material without introducing unverified figures or outside extrapolations."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 601,
+      "word_count_en": 660
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "0f8561f9e1c8d113c1e9",
+      "title": "Ruby Patches Ruby2Shell Vulnerability That Could Lead to RCE",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 601,
+          "word_count_en": 660
+        }
+      ]
+    }
+  ],
+  "slug": "ruby-patches-ruby2shell-vulnerability-that-could-lead-to-rce",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/ruby-patches-ruby2shell-vulnerability-that-could-lead-to-rce/hero.webp",
+    "card": "/forum/assets/posts/2026/11/ruby-patches-ruby2shell-vulnerability-that-could-lead-to-rce/card.webp",
+    "social": "/forum/assets/posts/2026/11/ruby-patches-ruby2shell-vulnerability-that-could-lead-to-rce/social.jpg",
+    "alt": {
+      "ar": "روبي تصدر تحديثات أمنية لمعالجة ثغرة Ruby2Shell الخطيرة",
+      "en": "Ruby Releases Patches for Ruby2Shell and Six Other Flaws"
+    },
+    "credit": "SecurityWeek",
+    "sourceUrl": "https://www.securityweek.com/wp-content/uploads/2024/04/Vulnerability-Databases.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  }
 }
