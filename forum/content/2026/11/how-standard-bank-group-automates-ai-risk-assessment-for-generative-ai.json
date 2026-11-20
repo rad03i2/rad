@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "fb0117cbcf0e24c7c776",
+  "slug": "how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai/",
+    "en": "/forum/en/ai/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai/"
+  },
+  "locales": {
+    "ar": {
+      "title": "ستاندرد بنك يربط الذكاء الاصطناعي التوليدي بمعايير المخاطر",
+      "description": "أتمت ستاندرد بنك مجموعة تقييم مخاطر الذكاء الاصطناعي التوليدي عبر AWS، مما يوفر لجان المخاطر أدلة متسقة وقابلة للتتبع لتسريع اعتماد التطبيقات الجديدة.",
+      "deck": "اعتمدت ستاندرد بنك مجموعة نظاماً آلياً لتقييم مخاطر الذكاء الاصطناعي التوليدي، يجمع الأدلة ويقيسها وفق معايير دولية وسياسات داخلية، مما يخفف العبء عن لجان المراجعة ويسرّع عملية الاعتماد.",
+      "summaryBullets": [
+        "بنية تحتية مبنية على AWS: يستخدم البنك Amazon Bedrock ونموذج LLM-as-a-judge لتقييم الأدلة تلقائياً دون تدريب مخصص.",
+        "جمع أدلة أوتوماتيكي: وكيل ما قبل التقييم يفحص المستودعات والمستندات ويملأ استبيانات المخاطر مسبقاً.",
+        "اختبارات حية: يرسل النظام استفسارات وجلسات اختراق (Jailbreak) للتأكد من سلوك التطبيق واتساق إجاباته.",
+        "تقارير موحدة: يولّد النظام تقارير تقيّم المخاطر من 'منخفض جداً' إلى 'حرج' بناءً على معايير AWS للذكاء الاصطناعي المسؤول.",
+        "سيطرة كاملة: يعمل النظام داخل حساب AWS الخاص بالبنك، مما يضمن بقاء البيانات ضمن نطاق التحكم الأمني الحالي."
+      ],
+      "sections": [
+        {
+          "heading": "تحدي الحوكمة في عصر الذكاء الاصطناعي التوليدي",
+          "paragraphs": [
+            {
+              "text": "تواجه المؤسسات المالية تحدياً متزايداً مع تسارع وتيرة تطوير تطبيقات الذكاء الاصطناعي التوليدي. فبينما يمكن للفرق التقنية بناء نماذج جديدة في أيام، تبقى عملية الموافقة عليها من لجان المخاطر بطيئة وتعتمد غالباً على المراجعة اليدوية للمستندات والاختبارات. هذا الاختناق يجعل الحوكمة الحلقة الأضعف في خط الإنتاج، مما يعيق إطلاق القيمة التجارية للتقنيات الجديدة. اختارت ستاندرد بنك مجموعة (Standard Bank Group) معالجة هذه المشكلة عبر أتمتة عملية جمع الأدلة والتحقق من الامتثال، بدلاً من الاعتماد على الجهد البشري المكثف. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai/"
+                }
+              ]
+            },
+            {
+              "text": "أوضحت جورد فيشر، الرئيسة التنفيذية للمعلومات والذكاء الاصطناعي في المجموعة، أن الهدف ليس إبطاء الابتكار بل تمكينه. وقالت: 'هذا التقييم يوضح كيف نعمل مع AWS لدمج إدارة مخاطر ذكية وأوتوماتيكية في رحلتنا مع الذكاء الاصطناعي، مما يسمح لنا بتسريع القيمة التجارية مع الحفاظ على الثقة والضوابط التي تتطلبها الصناعة المصرفية'. هذا النهج يضمن أن تكون القرارات المبنية على أدلة متسقة وقابلة للتتبع عبر جميع حالات الاستخدام. ويمكن الرجوع إلى Artificial Intelligence للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "بنية تحتية مدمجة داخل حساب البنك",
+          "paragraphs": [
+            {
+              "text": "يعمل نظام التقييم الجديد بالكامل داخل حساب AWS الخاص بستاندرد بنك، مما يضمن بقاء المستندات والأكواد ونتائج الاختبارات ضمن نطاق التحكم الأمني الحالي للبنك. تُخزن جميع البيانات في دلاء Amazon S3، بينما تتولى أداة AWS Well-Architected Tool استقبال الطلبات، وتنسق AWS Step Functions سير العمل. يعتمد النظام على نموذج أساسي (Foundation Model) من خلال Amazon Bedrock لتقييم الأدلة، باستخدام تقنية تُعرف بـ 'LLM-as-a-judge'، حيث يتحقق النموذج اللغوي الكبير من مطابقة الأدلة لمعايير محددة مسبقاً.",
+              "links": []
+            },
+            {
+              "text": "يوفر استخدام Amazon Bedrock مرونة عالية للبنك؛ إذ يمكنه الوصول إلى نماذج متعددة عبر واجهة برمجة واحدة دون الحاجة لإعادة بناء البنية التحتية عند ترقية النموذج. كما يضمن النظام عدم مشاركة استعلامات البنك أو مخرجات النماذج مع مزودي النماذج، وعدم استخدامها في التدريب، مما يحافظ على سرية البيانات الحساسة. يتحكم البنك في الوصول إلى النموذج عبر AWS Identity and Access Management (IAM) بنفس الطريقة التي يدير بها أحمال العمل الأخرى.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل التقييم الأوتوماتيكي",
+          "paragraphs": [
+            {
+              "text": "يمر كل تقييم بأربع مراحل رئيسية. تبدأ المرحلة الأولى بـ 'وكيل ما قبل التقييم' (Pre-assessment agent) يعمل على AWS Fargate. يفحص هذا الوكيل مستودع الكود والمستندات الخاصة بحالة الاستخدام، ثم يربط الملفات ذات الصلة بأسئلة الاستبيان ويملأها مسبقاً بالأدلة والروابط. يتولى فريق التسليم بعد ذلك مراجعة هذه الإجابات وتصحيح أي أخطاء وإضافة الأدلة التي لم يستطع الوكيل العثور عليها، مما يختصر وقت التحضير بشكل كبير.",
+              "links": []
+            },
+            {
+              "text": "في المرحلة الثانية، يفحص خط الأنابيب أربعة أنواع من الأدلة: توثيق النظام، مستندات السياسات، الكود المصدري والنص التوجيهي (System Prompt)، والاستدعاءات الحية للتطبيق. يتحقق النظام من أن كل عنصر يحتوي على ما تتطلبه الضوابط المخصصة له، سواء كانت مستمدة من معايير دولية أو سياسات داخلية. على سبيل المثال، يجب أن يصف إجراء معالجة الحوادث كيفية الإبلاغ عنها بوضوح.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاختبارات الحية وتقييم السلوك",
+          "paragraphs": [
+            {
+              "text": "لا يقتصر التقييم على المستندات، بل يشمل اختبار التطبيق مباشرة. يرسل خط الأنابيب استفسارات نموذجية يقدمها فريق التسليم، بالإضافة إلى مجموعة مدمجة من محاولات الاختراق (Jailbreak) وأسئلة خارج الموضوع، والتي يُتوقع أن يرفضها التطبيق. كما يرسل نفس الاستعلام عدة مرات بصيغ مختلفة، ويستخدم نموذج تضمين (Embedding Model) على Amazon Bedrock للتحقق من اتساق المعنى في الإجابات. إذا قدم الفريق إجابات متوقعة، يقيس النظام مدى تطابق الاستجابات الفعلية معها، وتخزن جميع الردود في Amazon S3 لمراجعتها لاحقاً.",
+              "links": []
+            },
+            {
+              "text": "في المرحلة الثالثة، يتولى النموذج الأساسي على Amazon Bedrock دور 'القاضي'. يتم استخدام النموذج كما هو دون أي ضبط دقيق (Fine-tuning). يفحص النموذج وجود أدلة محددة في المستندات وردود التطبيق، ويعيد إجابة بنعم أو لا. كل فحص مرتبط بضابط في معيار دولي لإدارة الذكاء الاصطناعي أو المخاطر أو الأمن. خصصت ستاندرد بنك العدسة (Lens) بأسئلة إضافية مبنية على معاييرها الخاصة، ليرتفع إجمالي الفحوصات إلى أكثر من 300 فحصاً.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تقارير المخاطر واتخاذ القرار",
+          "paragraphs": [
+            {
+              "text": "تغطي الفحوصات الأبعاد الثمانية للذكاء الاصطناعي المسؤول في AWS. لكل مخاطر، يمنح النظام درجة احتمال (Likelihood) تعكس نسبة الأدلة المطلوبة التي لم يعثر عليها النموذج، ومستوى خطورة ثابت يمكن لفريق المخاطر في البنك تعديله. تولد هذه العناصر معاً تصنيفاً للمخاطر يمتد من 'منخفض جداً' إلى 'حرج'. كل قطعة دليل مفقودة ترتبط بإجراء تخفيفي محدد، مما يوفر للجنة المخاطر رؤية واضحة لما هو موجود، وما يعمل بشكل جيد، وما لا يزال بحاجة إلى معالجة.",
+              "links": []
+            },
+            {
+              "text": "تنتج المرحلة الرابعة ملخصاً في تنسيق قياسي محدد مسبقاً، وتسلّمه للأشخاص المعنيين باتخاذ الإجراءات. هذا النظام يوفر للجان المخاطر أدلة متسقة وموحدة الطريقة عبر جميع حالات الاستخدام، مما يقلل من التحيز البشري ويسرع عملية الاعتماد. من خلال أتمتة جمع الأدلة والتحقق منها، تمكنت ستاندرد بنك من تحويل الحوكمة من عائق بطيء إلى محرك يدعم الابتكار المسؤول والقابل للتوسع.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي التوليدي",
+        "حوكمة البيانات",
+        "إدارة المخاطر",
+        "AWS",
+        "البنوك الرقمية",
+        "الامتثال"
+      ],
+      "entities": [
+        "ستاندرد بنك مجموعة",
+        "AWS",
+        "Amazon Bedrock",
+        "AWS Professional Services",
+        "جورد فيشر"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "20 نوفمبر 2026",
+      "modifiedLabel": "20 نوفمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 843
+    },
+    "en": {
+      "title": "Standard Bank Group Automates Generative AI Risk Assessment",
+      "description": "Standard Bank Group uses Amazon Bedrock and AWS to automate generative AI risk assessments, giving risk committees traceable evidence.",
+      "deck": "Standard Bank Group has automated the evidence gathering and scoring behind its generative AI approval gates, streamlining risk management by integrating large language model evaluations directly into its AWS environment.",
+      "summaryBullets": [
+        "Standard Bank Group automated generative AI risk assessments to speed up approvals while maintaining strict compliance controls.",
+        "The bank partnered with AWS Professional Services to build an automated assessment tool running entirely in its own AWS account.",
+        "The system utilizes an LLM-as-a-judge approach on Amazon Bedrock to evaluate use cases against internal policies and international standards.",
+        "The four-step pipeline gathers evidence, tests applications directly, evaluates controls, and produces clear, standardized reports for risk committees."
+      ],
+      "sections": [
+        {
+          "heading": "Automating Compliance for Rapid Generative AI Deployment",
+          "paragraphs": [
+            {
+              "text": "As financial institutions rapidly adopt generative AI, proving that applications comply with established policies often becomes a major bottleneck. While teams can build new tools in days, securing approvals from risk committees traditionally requires reviewers to manually read documents and test systems by hand. To solve this challenge, Standard Bank Group automated the evidence behind its approval gates by collaborating with AWS Professional Services.",
+              "links": [
+                {
+                  "text": "AWS Professional Services",
+                  "url": "https://aws.amazon.com/professional-services/"
+                }
+              ]
+            },
+            {
+              "text": "The bank deployed an automated assessment framework that scores each generative AI use case against both international AI standards and internal policies. The solution generates comprehensive reports and dashboards highlighting existing controls, successful implementations, and areas requiring mitigation. Jorg Fischer, Group Chief Information and AI Officer at Standard Bank Group, noted that the initiative demonstrates how the bank embeds intelligent risk management into its AI journey without slowing down innovation.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and Pipeline Design on AWS",
+          "paragraphs": [
+            {
+              "text": "The entire assessment pipeline operates securely inside Standard Bank Group's own AWS account. Documents, source code, and test results are stored in an Amazon Simple Storage Service (Amazon S3) bucket, while intake is managed via the AWS Well-Architected Tool. AWS Step Functions orchestrates the overall process, and a foundation model hosted on Amazon Bedrock evaluates the gathered evidence using an LLM-as-a-judge approach.",
+              "links": []
+            },
+            {
+              "text": "Using Amazon Bedrock allows the bank to leverage foundation models without stepping outside its established security controls. Access to the model is strictly managed through AWS Identity and Access Management (IAM), ensuring data privacy. Furthermore, because Amazon Bedrock provides access to multiple foundation models through a single API, the engineering team can easily transition to newer judge models simply by updating a configuration setting.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Step 1 and Step 2: Evidence Collection and Direct Testing",
+          "paragraphs": [
+            {
+              "text": "The evaluation workflow progresses through four structured steps. In the initial phase, a custom lens within the Well-Architected Tool contains roughly 40 questions covering potential risk events, such as insufficient human oversight or incomplete documentation. A pre-assessment agent running on AWS Fargate automatically scans the use case's code repository and documentation, mapping relevant files to each question before delivery teams review and refine the inputs.",
+              "links": []
+            },
+            {
+              "text": "Following evidence collection, the pipeline evaluates system documentation, policy documents, source code, system prompts, and live application calls. During live testing, the framework interacts with the application through an AWS Lambda function or API, testing it against standard user queries as well as built-in jailbreak attempts and off-topic questions. Additionally, an embedding model checks response consistency across reworded prompts to ensure behavioral stability.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Step 3 and Step 4: LLM-as-a-Judge Evaluation and Reporting",
+          "paragraphs": [
+            {
+              "text": "In the third step, a foundation model operating on Amazon Bedrock evaluates the collected evidence against predefined criteria without requiring fine-tuning or custom modification. The evaluation maps every check to controls found in international AI management standards or internal policies. Developers should consult supported models by Region documentation before deploying similar workloads to ensure regional model availability.",
+              "links": [
+                {
+                  "text": "supported models by Region",
+                  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-regions.html"
+                }
+              ]
+            },
+            {
+              "text": "The checks span more than 300 customized criteria aligned with broader frameworks like Responsible AI on AWS. Each identified risk receives a likelihood score, a metric tracking missing required evidence, and a fixed severity level that risk teams can adjust. This generates an overall rating ranging from Very low to Critical, linking every missing control directly to a specific mitigation step.",
+              "links": [
+                {
+                  "text": "Responsible AI on AWS",
+                  "url": "https://aws.amazon.com/ai/responsible-ai/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Standard Bank Group",
+        "AWS",
+        "Amazon Bedrock",
+        "Generative AI",
+        "AI Risk Assessment",
+        "Artificial Intelligence",
+        "Compliance"
+      ],
+      "entities": [
+        "Standard Bank Group",
+        "Amazon Web Services",
+        "Amazon Bedrock"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 20, 2026",
+      "modifiedLabel": "November 20, 2026",
+      "readMinutes": 3,
+      "wordCount": 642
+    }
+  },
+  "datePublished": "2026-11-20T22:45:34.107037+03:00",
+  "dateModified": "2026-11-20T22:45:34.107037+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai/social.jpg",
+    "alt": {
+      "ar": "ستاندرد بنك يربط الذكاء الاصطناعي التوليدي بمعايير المخاطر",
+      "en": "Standard Bank Group Automates Generative AI Risk Assessment"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22493-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai/inline-01.webp",
+        "width": 745,
+        "height": 1050,
+        "alt": {
+          "ar": "ستاندرد بنك يربط الذكاء الاصطناعي التوليدي بمعايير المخاطر",
+          "en": "Architecture diagram of the automated AI risk assessment running in Standard Bank Group’s AWS account"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22493-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai/inline-02.webp",
+        "width": 896,
+        "height": 1050,
+        "alt": {
+          "ar": "ستاندرد بنك يربط الذكاء الاصطناعي التوليدي بمعايير المخاطر",
+          "en": "A single missing piece of evidence traced to a scored finding and a recommended fix"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22493-2.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "AWS Machine Learning Blog",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai/",
+      "type": "official",
+      "title": "How Standard Bank Group automates AI risk assessment for generative AI"
+    }
+  ],
+  "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai",
+  "sourceTitle": "How Standard Bank Group automates AI risk assessment for generative AI",
+  "trendScore": 126.82,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-20T19:45:34+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai.json"
+}
