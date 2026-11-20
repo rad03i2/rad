@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "53f1b5f5135ebb39ffc6",
+  "slug": "github-enterprise-server-23-release-candidate",
+  "categorySlug": "apps",
+  "urls": {
+    "ar": "/forum/ar/apps/github-enterprise-server-23-release-candidate/",
+    "en": "/forum/en/apps/github-enterprise-server-23-release-candidate/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub Enterprise Server 3.23: مرشح إصدار جديد يعزز الأمان والتعاون",
+      "description": "أطلقت GitHub نسخة مرشحة من Enterprise Server 3.23، وتقدم تحسينات في GitHub Projects، وكشف الأسرار بالذكاء الاصطناعي، وإدارة اعتماديات Dependabot بشكل أكثر أماناً.",
+      "deck": "توفر النسخة المرشحة من GitHub Enterprise Server 3.23 ميزات جديدة تركز على تحسين تجربة المطورين وتعزيز أمان الشبكات المعزولة.",
+      "summaryBullets": [
+        "إضافة فلاتر منطقية متقدمة في GitHub Projects لتصنيف المهام بدقة أكبر.",
+        "تمكين كشف الأسرار غير المهيكلة بالذكاء الاصطناعي داخل الشبكة دون اتصال خارجي.",
+        "توسيع قاعدة بيانات GitHub Advisory Database لتشمل حزم برمجية متعددة مثل PyPI وMaven.",
+        "إدخال فترة انتظار إلزامية لـ Dependabot قبل فتح طلبات التحديث لتقليل المخاطر.",
+        "إتاحة التحكم في صلاحية رموز OAuth عبر إضافة صلاحية انتهاء الصلاحية."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق النسخة المرشحة 3.23",
+          "paragraphs": [
+            {
+              "text": "أعلنت GitHub رسمياً عن توفر النسخة المرشحة (Release Candidate) من GitHub Enterprise Server 3.23، والتي تهدف إلى تقديم قدرات جديدة عبر المنصة. تتيح هذه النسخة للمؤسسات تجربة الميزات الحديثة ومشاركة ملاحظاتها قبل الإطلاق العام الكامل. يمكن للإداريين الاطلاع على تفاصيل الترقية عبر دليل [About upgrades to new releases] الرسمي، أو تنزيل النسخة مباشرة من صفحة [download the GHES 3.23 release candidate].",
+              "links": [
+                {
+                  "text": "About upgrades to new releases",
+                  "url": "https://docs.github.com/enterprise-server@3.23/admin/overview/about-upgrades-to-new-releases"
+                },
+                {
+                  "text": "download the GHES 3.23 release candidate",
+                  "url": "https://enterprise.github.com/releases/3.23.0/download"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات في إدارة المشاريع",
+          "paragraphs": [
+            {
+              "text": "شهدت أداة GitHub Projects تحسينات جوهرية في طريقة عرض البيانات، حيث أصبح بإمكان المستخدمين إنشاء عروض أكثر دقة من خلال دمج الفلاتر مع العمليات المنطقية. تتيح هذه الميزة استخدام أوامر مثل OR وAND مع الأقواس لتجميع الشروط، مما يسمح بعرض المهام بناءً على حالات متعددة في آن واحد. على سبيل المثال، يمكن عرض جميع المشاكل التي تكون حالتها 'منجزة' أو 'قيد التنفيذ' في عرض واحد مخصص، مما يعزز كفاءة فرق التطوير في متابعة التقدم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "كشف الأسرار بالذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "للمؤسسات التي تعتمد على GitHub Secret Protection، تقدم النسخة الجديدة ميزة كشف الأسرار غير المهيكلة باستخدام الذكاء الاصطناعي بالكامل داخل الشبكة المحلية. تعمل هذه الميزة عبر نموذج ذكاء اصطناعي مخصص ومحسّن يعمل على معالج وحدة المعالجة المركزية (CPU) للجهاز دون الحاجة إلى وحدات معالجة رسومية (GPU) أو اتصالات خارجية. هذا يجعل الميزة مناسبة تماماً للبيئات المعزولة (Air-gapped)، مع العلم أنها ما تزال في مرحلة المعاينة العامة (Public Preview) وقابلة للتغيير.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "توسيع تغطية الحزم الضارة",
+          "paragraphs": [
+            {
+              "text": "وسعت GitHub نطاق قاعدة بيانات GitHub Advisory Database لتشمل اكتشاف الحزم البرمجية الخبيثة المعروفة في بيئات متعددة، بما في ذلك PyPI وMaven وRubyGems وNuGet وGo وRust وComposer، بالإضافة إلى npm. يتم ذلك من خلال استهلاك تلقائي لتوصيات الأمان المتعلقة بالبرمجيات الخبيثة من مستودع malicious-packages الخاص بـ OpenSSF، مما يعزز حماية المطورين من الاعتماديات الضارة عبر منصات مختلفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحديثات أمان Dependabot وOAuth",
+          "paragraphs": [
+            {
+              "text": "أدخلت GitHub تغييرات في سلوك Dependabot لتعزيز الأمان، حيث أصبح ينتظر افتراضياً لمدة ثلاثة أيام على الأقل قبل فتح طلب سحب (Pull Request) لتحديث إصدار حزمة معينة. تهدف هذه الفترة الانتقالية إلى منح مجتمع المطورين وقتاً كافياً للكشف عن أي ثغرات أو إصدارات معيبة قبل دمج التحديثات. كما أُضيفت ميزة جديدة لمطوري تطبيقات OAuth تتيح تحديد صلاحية رموز الوصول (Access Tokens) لتنتهي بعد ثماني ساعات، مع استخدام رموز تحديث (Refresh Tokens) للحصول على صلاحيات جديدة. هذه الميزة اختيارية للتطبيقات الحالية لكنها الافتراضية للتطبيقات الجديدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات البنية التحتية",
+          "paragraphs": [
+            {
+              "text": "من الناحية التقنية، أصبحت إدارة العناقيد (Clusters) في GHES أكثر مرونة، حيث يمكن الآن نقل خدمة Redis الرئيسية من عقدة تشغل خدمات أخرى مثل MySQL إلى عقدة مخصصة. يسمح هذا الإجراء لـ Redis باستخدام موارد العقدة المخصصة ومساحة التخزين الخاصة بها دون مشاركة الموارد مع الخدمات الأخرى، مما قد يحسن الأداء والاستقرار. لا يتطلب هذا الإجراء إضافة أقراص جديدة أو استخدام خدمات Redis خارجية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "المشاركة والدعم الفني",
+          "paragraphs": [
+            {
+              "text": "تدعو GitHub المستخدمين إلى تجربة النسخة المرشحة ومشاركة ملاحظاتهم عبر قنوات الدعم الرسمية. يمكن للإداريين التواصل مع فريق [contact GitHub Support] لأي استفسارات أو تقارير أخطاء. كما توفر المنصة نشرة إخبارية ثنائية الأسبوعية تتضمن نصائح وأدلة تقنية للمطورين، ويمكن الاطلاع على سجل التحديثات الكامل من خلال [Back to changelog] لتتبع جميع التغييرات الأخيرة.",
+              "links": [
+                {
+                  "text": "contact GitHub Support",
+                  "url": "https://support.github.com/features/enterprise-administrators-server"
+                },
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "Enterprise Server",
+        "أمن المعلومات",
+        "تطوير البرمجيات",
+        "Dependabot",
+        "DevOps"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Enterprise Server",
+        "OpenSSF",
+        "Dependabot",
+        "OAuth"
+      ],
+      "category": "التطبيقات والبرامج",
+      "dateLabel": "21 نوفمبر 2026",
+      "modifiedLabel": "21 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 567
+    },
+    "en": {
+      "title": "GitHub Enterprise Server 3.23 Release Candidate Arrives",
+      "description": "GitHub has announced the release candidate for GitHub Enterprise Server 3.23, introducing new platform capabilities, AI features, and cluster tools.",
+      "deck": "The latest release candidate for GitHub Enterprise Server introduces enhanced filtering, AI secret detection, expanded advisory database coverage, and infrastructure updates.",
+      "summaryBullets": [
+        "GitHub Projects now supports advanced filtering using logical operators like OR, explicit AND, and parentheses.",
+        "A public preview introduces AI-powered secret detection running locally on appliance CPUs for air-gapped environments.",
+        "The GitHub Advisory Database now tracks malicious packages across PyPI, Maven, RubyGems, NuGet, Go, Rust, and Composer.",
+        "Dependabot defaults to a three-day cooldown period for package versions before opening version update pull requests.",
+        "Cluster administrators can now relocate the Redis primary service to a dedicated node away from shared services like MySQL."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction and Platform Availability",
+          "paragraphs": [
+            {
+              "text": "GitHub has announced the official availability of the GitHub Enterprise Server (GHES) 3.23 release candidate, bringing a robust set of new features and capabilities across the platform. Release candidates allow administrators and developers to test the latest features early and share feedback before the software reaches general availability. Teams interested in evaluating the new build can download the GHES 3.23 release candidate directly from GitHub's distribution channels.",
+              "links": [
+                {
+                  "text": "download the GHES 3.23 release candidate",
+                  "url": "https://enterprise.github.com/releases/3.23.0/download"
+                }
+              ]
+            },
+            {
+              "text": "Organizations planning upgrades can consult detailed documentation to understand the transition process. Reviewing About upgrades to new releases provides essential guidance on managing server updates safely, while the GHES 3.23 release notes outline comprehensive technical specifications, changes, and configuration details for the new version.",
+              "links": [
+                {
+                  "text": "About upgrades to new releases",
+                  "url": "https://docs.github.com/enterprise-server@3.23/admin/overview/about-upgrades-to-new-releases"
+                },
+                {
+                  "text": "GHES 3.23 release notes",
+                  "url": "https://docs.github.com/enterprise-server@3.23/admin/release-notes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Enhanced Project Views and Security Capabilities",
+          "paragraphs": [
+            {
+              "text": "When working within GitHub Projects, users can now construct much more precise project views by combining filters with logical operators such as explicit AND, logical OR, and parentheses for proper grouping. For example, a filter query structured as (status:Done OR status:Todo) is:issue will correctly display issues carrying either status designation, giving teams greater flexibility in organizing their project boards and tracking workflows.",
+              "links": []
+            },
+            {
+              "text": "For enterprises utilizing GitHub Secret Protection, GHES 3.23 introduces an innovative AI secret detection feature capable of identifying unstructured secrets entirely within a local network, including completely air-gapped environments. This mechanism utilizes a self-contained, fine-tuned model that operates directly on the appliance’s CPU, eliminating any requirement for an external GPU, hosted large language model, or outbound network connection. GitHub notes that this security capability is currently in public preview and remains subject to future modifications.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Ecosystem Security and Dependabot Updates",
+          "paragraphs": [
+            {
+              "text": "Developer security coverage has been significantly broadened across several software ecosystems. Through the GitHub Advisory Database, developers can now identify known malicious packages across PyPI, Maven, RubyGems, NuGet, Go, Rust, and Composer, extending protection far beyond the previously supported npm ecosystem. The database achieves this by automatically ingesting malware advisories directly from the OpenSSF malicious-packages repository to maintain comprehensive, up-to-date threat coverage.",
+              "links": []
+            },
+            {
+              "text": "In addition to expanded advisory tracking, Dependabot has received an important safety adjustment. By default, Dependabot now waits until a newly published package version has been available on its respective registry for at least three days before generating a version update pull request. This mandatory cooldown period offers maintainers and the broader community crucial time to discover, report, and mitigate compromised or buggy software releases prior to users merging the updates into their codebases.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "OAuth Token Lifetimes and Cluster Architecture",
+          "paragraphs": [
+            {
+              "text": "OAuth app developers gain finer control over credential lifespans through a new mechanism that limits token lifetimes. Applications can utilize access tokens configured to expire after eight hours, paired with refresh tokens to request new access tokens securely. While token expiration is opt-in for existing OAuth applications, it is enabled by default for all newly created apps. Developers can request expiring tokens during authorization by using the scope=offline_access parameter for testing and gradual rollouts, or mandate expiration directly in their application registration.",
+              "links": []
+            },
+            {
+              "text": "On the infrastructure side, administrators managing GHES clusters gain the ability to optimize resource allocation. The Redis primary service can now be moved from a node that concurrently executes other services, such as MySQL, to a dedicated node. This ensures Redis relies exclusively on the dedicated node’s hardware resources and data volume rather than competing with secondary services. GitHub specifies that this procedure does not attach new disks to existing nodes or require an external Redis service.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Support and Feedback Channels",
+          "paragraphs": [
+            {
+              "text": "Because GitHub Enterprise Server 3.23 is currently a release candidate, administrators and enterprise teams are encouraged to test the build in staging environments and report any unexpected behavior. Users seeking technical assistance or wanting to share structured feedback regarding the release candidate can contact GitHub Support directly through their enterprise administrative portal.",
+              "links": [
+                {
+                  "text": "contact GitHub Support",
+                  "url": "https://support.github.com/features/enterprise-administrators-server"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "GitHub Enterprise Server",
+        "GHES 3.23",
+        "Dependabot",
+        "Secret Protection",
+        "DevOps",
+        "Software Development"
+      ],
+      "entities": [
+        "GitHub",
+        "OpenSSF",
+        "PyPI",
+        "Maven",
+        "RubyGems",
+        "NuGet",
+        "Go",
+        "Rust",
+        "Composer",
+        "MySQL",
+        "Redis"
+      ],
+      "category": "Apps & Software",
+      "dateLabel": "November 21, 2026",
+      "modifiedLabel": "November 21, 2026",
+      "readMinutes": 4,
+      "wordCount": 723
+    }
+  },
+  "datePublished": "2026-11-21T00:45:35.697093+03:00",
+  "dateModified": "2026-11-21T00:45:35.697093+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/github-enterprise-server-23-release-candidate/hero.webp",
+    "card": "/forum/assets/posts/2026/11/github-enterprise-server-23-release-candidate/card.webp",
+    "social": "/forum/assets/posts/2026/11/github-enterprise-server-23-release-candidate/social.jpg",
+    "alt": {
+      "ar": "GitHub Enterprise Server 3.23: مرشح إصدار جديد يعزز الأمان والتعاون",
+      "en": "GitHub Enterprise Server 3.23 Release Candidate Arrives"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/themes/github-2021-child/dist/img/social-v3-new-releases.jpg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-11-20-github-enterprise-server-3-23-release-candidate/",
+      "type": "official",
+      "title": "GitHub Enterprise Server 3.23 release candidate"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-11-20-github-enterprise-server-3-23-release-candidate",
+  "sourceTitle": "GitHub Enterprise Server 3.23 release candidate",
+  "trendScore": 128.17,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-20T21:45:35+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/github-enterprise-server-23-release-candidate.json"
+}
