@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "67952d9a918d2536a7bf",
+  "slug": "inside-the-codex-sandbox",
+  "categorySlug": "computers",
+  "urls": {
+    "ar": "/forum/ar/computers/inside-the-codex-sandbox/",
+    "en": "/forum/en/computers/inside-the-codex-sandbox/"
+  },
+  "locales": {
+    "ar": {
+      "title": "نظرة متعمقة على بيئة العمل الآمنة Sandbox في نظام كودكس",
+      "description": "تستعرض شركة أوبن إيه آي آلية عمل بيئة الحماية الآمنة Sandbox في نظام كودكس لتنفيذ الأوامر ضمن قيود محددة على أنظمة التشغيل المختلفة.",
+      "deck": "تعتمد أوبن إيه آي نهجاً دفاعياً متعدداً الطبقات لتأمين الوكلاء الذكيين عبر أداة كودكس وبيئة الحماية المخصصة.",
+      "summaryBullets": [
+        "بناء بيئة حماية Sandbox تتيح تشغيل الأوامر ضمن حدود نظام الملفات والشبكة.",
+        "اعتماد ملفات تعريف الأذرع والصلاحيات لتخصيص القيود بحسب المهام المطلوبة.",
+        "توفير إعدادات افتراضية محافظة توازن بين إمكانية العمل الأغراض وحماية النظام.",
+        "استغلال إمكانيات أنظمة التشغيل الأساسية مباشرة بدلاً من استخدام الحاويات الافتراضية.",
+        "دعم العمل عبر أنظمة التشغيل الرئيسية مثل ماك أو إس، لينكس، ويندوز."
+      ],
+      "sections": [
+        {
+          "heading": "نهج الحماية المتقدم في كودكس",
+          "paragraphs": [
+            {
+              "text": "تتبع شركة OpenAI منهجاً يسمى الدفاع في العمق لحماية الوكلاء الذكيين، حيث تتكامل الاستثمارات في التدريب والمواءمة مع ميزات أمان إضافية مدمجة في أداة Codex المتاحة عبر مشروع Codex، مما يتيح تشغيل الأوامر بأمان داخل بيئة المستخدم مع فرض قيود صارمة على شبكة الإنترنت ونظام الملفات.",
+              "links": [
+                {
+                  "text": "Codex",
+                  "url": "https://github.com/openai/codex"
+                }
+              ]
+            },
+            {
+              "text": "تعتبر عملية تشغيل الأوامر البرمجية على أجهزة المستخدمين إحدى أكثر المهام حساسية واحتمالية للمخاطر، ولذلك تم تطوير بيئة الحماية الآمنة Sandbox لتمكين المساعد من أداء مهامه بفعالية في بيئة العمل الحالية للمستخدم مع الالتزام التام بالصلاحيات المحددة مسبقاً عبر آليات الأمان الموثوقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تخصيص الصلاحيات وملفات التعريف",
+          "paragraphs": [
+            {
+              "text": "تتيح بيئة العزل تحديد البرامج وما يمكنها الوصول إليه أثناء تشغيلها؛ ففي مهام تنظيم الصور مثلاً، يمكن إعداد البيئة للسماح بقراءة وتعديل الملفات في مجلد الصور مع حظر الوصول للشبكة لمنع رفع البيانات، بينما تختلف هذه الإعدادات تماماً عند مراجعة الأكواد البرمجية والسماح بالوصول لتوثيق المنصات عبر الإنترنت وفق متطلبات العمل.",
+              "links": []
+            },
+            {
+              "text": "يعتمد المستخدمون على ضبط تلك القيود والجلسات البرمجية من خلال استخدام permission profiles، والتي تحدد بوضوح الصلاحيات المتاحة لنظام الملفات والشبكة طوال فترة عمل جلسة كودكس، مع وجود مصادر إرشادية تفصيلية للمؤسسات والشركات لتخصيص مستويات الأمان.",
+              "links": [
+                {
+                  "text": "permission profiles",
+                  "url": "https://learn.chatgpt.com/docs/permissions"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "الإعدادات الافتراضية والمقايضات الأمنية",
+          "paragraphs": [
+            {
+              "text": "تعتمد الفلسفة التصميمية على وضع إعدادات افتراضية محافظة ولكنها عملية تسمح بإنجاز المهام المطلوبة؛ فعند اعتماد مستودع جيت كمجلد أساسي للعمل، يتيح ملف التعريف المدمج إمكانية الكتابة داخل مساحة العمل مع الحفاظ على حماية المجلدات الحساسة مثل مجلدات التكوينات وجيت بصيغة القراءة فقط لمنع أي تعديلات غير مصرح بها.",
+              "links": []
+            },
+            {
+              "text": "رغم أن هذه الضوابط تمنع شريحة واسعة من التصرفات غير المرغوب فيها، إلا أن المخاطر تظل قائمة إذا حاول الوكيل حقن تعليمات برمجية ضارة في الحزم المثبتة محلياً، وهو ما يبرز أهمية الاعتماد على تقنيات الأمان المتعددة لتغطية كافة الثغرات المحتملة بالتعاون مع توجيهات كتاب الأمان لبيئات الشركات والمؤسسات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مقارنة الآليات وتفضيل البيئة المضيفة",
+          "paragraphs": [
+            {
+              "text": "تُعد الأجهزة الافتراضية والحاويات من الآليات الشائعة للعزل الأمني في الحوسبة، إلا أن منصة OpenAI اتخذت نهجاً مغايراً يتفادى نقل عمليات الحوسبة إلى بيئة منفصلة بالكامل، حيث تفضل استغلال مرافق الحماية المدمجة في أنظمة التشغيل لتقييد الأوامر التي تعمل ضمن البيئة المحلية للمستخدم دون الحاجة لإعادة إنتاج بيئة التطوير داخل حاويات معقدة.",
+              "links": []
+            },
+            {
+              "text": "يساعد هذا التوجه المباشر في تجنب المشكلات التقنية التي تواجه بعض بيئات العمل المعقدة مثل أدوات تطوير تطبيقات الهواتف الذكية ومحاكياتها التي تتطلب تفاعلاً وثيقاً مع نظام التشغيل المضيف، مما يضمن كفاءة أعلى وسهولة أكبر في التنفيذ دون تعقيدات الحاويات الافتراضية المستقلة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "التكامل البرمجي ودعم أنظمة التشغيل",
+          "paragraphs": [
+            {
+              "text": "تتيح واجهة البرمجة المشتركة للمطورين إمكانية الاستفادة من آليات الحماية عبر مختلف منصات التشغيل الرئيسية وتشمل أنظمة macOS وLinux وWindows، حيث تتولى الواجهة تمرير الأوامر وملفات تعريف الصلاحيات لضمان تطبيق القيود بفعالية تامة على كافة العمليات الفرعية المنبثقة من العملية الرئيسية.",
+              "links": []
+            },
+            {
+              "text": "تستمر المتابعة الهندسية لتلك الأدوات عبر مقالات تقنية متخصصة تنشرها منصة OpenAI مثل مدونة Engineering، والتي تشرح تفاصيل إدارة الحلقات البرمجية للوكلاء وتوضيح آليات الاستجابة وتطبيق الضوابط المعمارية للتعامل مع استدعاءات الأدوات وتوفير بيئة تطوير موثوقة وآمنة للمبرمجين.",
+              "links": [
+                {
+                  "text": "Engineering",
+                  "url": "https://openai.com/news/engineering/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "أوبن إيه آي",
+        "كودكس",
+        "أمان الحواسيب",
+        "بيئة الحماية",
+        "تطوير البرمجيات",
+        "الذكاء الاصطناعي"
+      ],
+      "entities": [
+        "OpenAI",
+        "Codex"
+      ],
+      "category": "الحواسيب",
+      "dateLabel": "21 نوفمبر 2026",
+      "modifiedLabel": "21 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 542
+    },
+    "en": {
+      "title": "Inside the Codex Sandbox and OS Security Controls",
+      "description": "Explore how OpenAI designs the Codex sandbox to enforce filesystem and network limits across macOS, Linux, and Windows operating systems.",
+      "deck": "OpenAI details the design and implementation of the Codex sandbox, explaining how its agentic harness enforces filesystem and network constraints across macOS, Linux, and Windows.",
+      "summaryBullets": [
+        "OpenAI implements a defense in depth approach to safeguard AI agents executing user commands.",
+        "The Codex sandbox restricts program access to filesystems and networks based on user configurations.",
+        "Instead of utilizing virtual machines or containers, Codex leverages native OS-specific sandboxing capabilities.",
+        "Conservative default permission profiles allow meaningful work while restricting sensitive directory modifications."
+      ],
+      "sections": [
+        {
+          "heading": "Understanding the Codex Sandbox Design",
+          "paragraphs": [
+            {
+              "text": "At OpenAI, safeguarding agents involves a robust defense in depth ⁠ (opens in a new window) strategy. While fundamental investments focus on training and alignment, additional protections are implemented directly within the agentic harness known as Codex ⁠ (opens in a new window) . Because executing commands on a user's computer presents inherent risks, the Codex sandbox was built to allow the agent to work within an existing environment under strict filesystem and network limits controlled by the user.",
+              "links": [
+                {
+                  "text": "defense in depth",
+                  "url": "https://en.wikipedia.org/wiki/Defense_in_depth_(computing)"
+                },
+                {
+                  "text": "Codex",
+                  "url": "https://github.com/openai/codex"
+                }
+              ]
+            },
+            {
+              "text": "A sandbox ⁠ (opens in a new window) strictly limits what a program can access during execution. For instance, a photo-organizing task can be configured to let commands read and modify files within specific picture directories while blocking network access entirely to prevent data uploads. Similarly, code review tasks might grant access to online documentation while keeping primary source files strictly read-only. Users configure these parameters through customizable permission profiles ⁠ (opens in a new window) that define exact session restrictions.",
+              "links": [
+                {
+                  "text": "sandbox",
+                  "url": "https://en.wikipedia.org/wiki/Sandbox_(computer_security)"
+                },
+                {
+                  "text": "permission profiles",
+                  "url": "https://learn.chatgpt.com/docs/permissions"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Conservative Defaults and Tradeoffs",
+          "paragraphs": [
+            {
+              "text": "Codex relies on conservative default settings designed to enable productive work without exposing the entire system to risk. Utilizing a Git repository as the workspace root, the built-in workspace permission profile allows write operations within the workspace while maintaining read-only status for sensitive configuration and version control directories. This approach enables the agent to edit source code efficiently without repeatedly prompting the user for approval on every individual modification.",
+              "links": []
+            },
+            {
+              "text": "At the same time, the system allows broad filesystem reads to accommodate compilers, runtimes, and build tools that depend on external SDKs and libraries located outside the immediate repository. While restricting reads exclusively to the workspace would break standard workflows, the tradeoff is that other sensitive files on the machine, such as configuration files containing API keys, may remain readable.",
+              "links": []
+            },
+            {
+              "text": "Default profiles also disable network access to block direct uploads to external services and prevent potential data exfiltration. Enterprises seeking further guidance on tailoring these permissions can consult resources such as the Codex security cookbook ⁠ (opens in a new window) for comprehensive configuration strategies.",
+              "links": [
+                {
+                  "text": "Codex security cookbook",
+                  "url": "https://learn.chatgpt.com/docs/enterprise/security-cookbook"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Native OS Sandboxing Versus Containers",
+          "paragraphs": [
+            {
+              "text": "While virtual machines and containers ⁠ (opens in a new window) remain popular mechanisms for isolation, the Codex sandbox takes a distinctly different approach. Rather than shifting computation to an entirely separate environment, Codex utilizes each platform's native sandboxing facilities to constrain commands directly within the user's established environment.",
+              "links": [
+                {
+                  "text": "containers",
+                  "url": "https://opencontainers.org/"
+                }
+              ]
+            },
+            {
+              "text": "For many developers, a personal laptop represents a bespoke development environment that changes frequently. Replicating that exact environment inside a Docker container requires significant effort, and certain workflows rely entirely on tools running directly on the host operating system.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Cross-Platform Implementation Details",
+          "paragraphs": [
+            {
+              "text": "The Codex harness exposes its OS-specific sandboxing mechanisms through a uniform API spanning macOS, Windows, and Linux environments. This application programming interface accepts both a command and a designated permission profile, ensuring that any restricted network access requires an accompanying network proxy to properly enforce the specified limits.",
+              "links": []
+            },
+            {
+              "text": "Processes started within this sandbox framework return handles that allow the harness to monitor execution until completion. Each child process automatically inherits the parent sandbox constraints, ensuring that restrictions remain active throughout the entire process tree initiated by the command.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Additional Insights and Resources",
+          "paragraphs": [
+            {
+              "text": "Detailed information regarding how the harness handles tool execution loops can be found in supplementary technical materials published by OpenAI News ⁠ (opens in a new window) , outlining the broader architecture supporting safe agentic workflows across diverse computing environments.",
+              "links": [
+                {
+                  "text": "OpenAI News",
+                  "url": "https://openai.com/index/inside-the-codex-sandbox/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "OpenAI",
+        "Codex",
+        "Sandbox",
+        "Cybersecurity",
+        "Operating Systems",
+        "Developer Tools"
+      ],
+      "entities": [
+        "OpenAI",
+        "Codex",
+        "macOS",
+        "Linux",
+        "Windows"
+      ],
+      "category": "Computing",
+      "dateLabel": "November 21, 2026",
+      "modifiedLabel": "November 21, 2026",
+      "readMinutes": 3,
+      "wordCount": 649
+    }
+  },
+  "datePublished": "2026-11-21T07:45:41.021275+03:00",
+  "dateModified": "2026-11-21T07:45:41.021275+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/inside-the-codex-sandbox/hero.webp",
+    "card": "/forum/assets/posts/2026/11/inside-the-codex-sandbox/card.webp",
+    "social": "/forum/assets/posts/2026/11/inside-the-codex-sandbox/social.jpg",
+    "alt": {
+      "ar": "نظرة متعمقة على بيئة العمل الآمنة Sandbox في نظام كودكس",
+      "en": "Inside the Codex Sandbox and OS Security Controls"
+    },
+    "credit": "OpenAI News",
+    "sourceUrl": "https://images.ctfassets.net/kftzwdyauwt9/1PnylD7lJwgUw7jYNP8wLh/7fa5553001136f3982e8d4db44146de3/inside-the-codex-sandbox-social.png?w=1600&h=900&fit=fill",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/inside-the-codex-sandbox/inline-01.webp",
+        "width": 745,
+        "height": 1050,
+        "alt": {
+          "ar": "نظرة متعمقة على بيئة العمل الآمنة Sandbox في نظام كودكس",
+          "en": "Flow diagram: configuration and managed requirements define a session permission profile; the Codex harness launches commands under platform-specific sandbox restrictions on macOS, Linux, or Windows. Child processes inhe"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من OpenAI News",
+          "en": "Image related to the report from OpenAI News"
+        },
+        "credit": "OpenAI News",
+        "sourceUrl": "https://openai.com/index/inside-the-codex-sandbox/",
+        "originalUrl": "https://images.ctfassets.net/kftzwdyauwt9/7phvBtHTMSTY6vHJx9YL9L/0a4cf5a80f25882a663681872f648617/codex-sandbox-command-desktop-light.png?w=3840&q=90&fm=webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/inside-the-codex-sandbox/inline-02.webp",
+        "width": 1050,
+        "height": 1050,
+        "alt": {
+          "ar": "نظرة متعمقة على بيئة العمل الآمنة Sandbox في نظام كودكس",
+          "en": "Performance Factory — Art card"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من OpenAI News",
+          "en": "Image related to the report from OpenAI News"
+        },
+        "credit": "OpenAI News",
+        "sourceUrl": "https://openai.com/index/inside-the-codex-sandbox/",
+        "originalUrl": "https://images.ctfassets.net/kftzwdyauwt9/iYpBFP2nteJOaNG1v5Rrp/e0eb5dbefa86d133c3392df5983e45a3/performance-factory-cover.png?w=3840&q=90&fm=webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/inside-the-codex-sandbox/inline-03.webp",
+        "width": 1050,
+        "height": 1050,
+        "alt": {
+          "ar": "نظرة متعمقة على بيئة العمل الآمنة Sandbox في نظام كودكس",
+          "en": "Scaling Git at OpenAI — art card"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من OpenAI News",
+          "en": "Image related to the report from OpenAI News"
+        },
+        "credit": "OpenAI News",
+        "sourceUrl": "https://openai.com/index/inside-the-codex-sandbox/",
+        "originalUrl": "https://images.ctfassets.net/kftzwdyauwt9/6G64B5haCxDuphl2iqwZ1N/4f8d319293f5e5e98b319e01b4fbdf59/scaling-git-at-openai-art-card.png?w=3840&q=90&fm=webp"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/inside-the-codex-sandbox/inline-04.webp",
+        "width": 1050,
+        "height": 1050,
+        "alt": {
+          "ar": "نظرة متعمقة على بيئة العمل الآمنة Sandbox في نظام كودكس",
+          "en": "Rapidly scaling online storage to serve over 1 billion ChatGPT users (Part II) — card"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من OpenAI News",
+          "en": "Image related to the report from OpenAI News"
+        },
+        "credit": "OpenAI News",
+        "sourceUrl": "https://openai.com/index/inside-the-codex-sandbox/",
+        "originalUrl": "https://images.ctfassets.net/kftzwdyauwt9/3a839ECHaGsidJPLJqqm5s/55968ec17735b96514d1bb4851f43bf8/scaling-storage-one-billion-users-part-two-card.png?w=3840&q=90&fm=webp"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "OpenAI News",
+      "url": "https://openai.com/index/inside-the-codex-sandbox/",
+      "type": "official",
+      "title": "Inside the Codex sandbox"
+    }
+  ],
+  "sourceUrl": "https://openai.com/index/inside-the-codex-sandbox",
+  "sourceTitle": "Inside the Codex sandbox",
+  "trendScore": 93.85,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-21T04:45:41+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 3
+  },
+  "contentFile": "forum/content/2026/11/inside-the-codex-sandbox.json"
+}
