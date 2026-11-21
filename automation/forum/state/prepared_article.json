@@ -1,5 +1,422 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-21T00:25:38+00:00",
-  "last_published_story_id": "bd271598618c4a3ca4bc"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-21T00:35:31+00:00",
+  "target_publish_at": "2026-11-21T03:45:37.636411+03:00",
+  "story": {
+    "title": "Cut self-hosted LLM cost and latency with the distributed KV caching agent skill",
+    "url": "https://aws.amazon.com/blogs/machine-learning/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent-skill",
+    "domain": "aws.amazon.com",
+    "summary": "Self-hosting LLMs on GPUs means paying to recompute the same context on every turn. Distributed KV caching with Amazon ElastiCache can cut inference cost by up to 40% and time to first token by up to 80%. This post walks through the distributed KV caching skill in the Agent Toolkit for AWS, which evaluates and sets up the cache from your coding agent.",
+    "published_at": "2026-11-21T00:14:26+00:00",
+    "discovered_at": "2026-11-21T00:23:20+00:00",
+    "source": {
+      "name": "AWS Machine Learning Blog",
+      "feed": "https://aws.amazon.com/blogs/machine-learning/feed/",
+      "type": "official",
+      "trust": 1.0,
+      "priority": 27,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 69,
+    "verification": {
+      "confidence": 1.0,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "f6e744ab21c05cebfa08",
+    "trend": {
+      "score": 119.38,
+      "age_hours": 0.33,
+      "corroboration_count": 0,
+      "entity_momentum": 15.51,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent-skill/",
+      "name": "AWS Machine Learning Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Cut self-hosted LLM cost and latency with the distributed KV caching agent skill",
+      "title": "Cut self-hosted LLM cost and latency with the distributed KV caching agent skill | Artificial Intelligence",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "تقليص تكلفة نماذج اللغات عبر التخزين الموزع",
+      "description": "تعرف على كيفية تقليل تكلفة تشغيل نماذج اللغات الكبيرة وزمن الاستجابة بنسبة تصل إلى 80% باستخدام التخزين الموزع لحالات المفتاح والقيمة.",
+      "deck": "أعلنت مدونة تعلم الآلة في أمازون وبمازون ويب سيرفيسز عن مهارة وكيل جديدة تهدف إلى تقليل تكلفة وزمن استجابة نماذج اللغات الكبيرة المستضافة ذاتياً عبر التخزين الموزع.",
+      "summary_bullets": [
+        "التخزين المؤقت الموزع لحالات المفتاح والقيمة يقلل تكلفة الاستدلال بنسبة تصل إلى 40%.",
+        "تحسين زمن الحصول على الرمز الأول بنسبة تصل إلى 80% عبر خدمات أمازون.",
+        "استخدام أداة تقييم متخصصة لتقدير العوائد قبل نشر أي بنية تحتية جديدة.",
+        "التوافق مع وكلاء البرمجة ومحركات التشغيل الشائعة مثل vLLM."
+      ],
+      "sections": [
+        {
+          "heading": "تحديات الاستضافة الذاتية للنماذج اللغوية",
+          "paragraphs": [
+            {
+              "text": "تواجه الشركات والمطورون الذين يقومون باستضافة نماذج اللغات الكبيرة محلياً أو على خوادم الرسوميات الخاصة بهم تحديات مالية وتقنية مرتبطة بتكرار الحسابات. عندما يتعامل المساعد الذكي، مثل المساعدات القانونية أو البرمجية، مع سياقات طويلة تتضمن مئات الآلاف من الرمز، فإن الخادم المعالج يضطر إلى إعادة حساب حالات الانتباه الخاصة بجميع الرمز السابقة في مرحلة تعرف باسم الحساب التمهيدي. هذا التكرار المستمر يؤدي إلى ارتفاع ملحوظ في تكلفة التشغيل وزيادة زمن الانتظار قبل ظهور الكلمة الأولى للمستخدم، مما يؤثر على كفاءة التطبيقات التفاعلية. ويمكن الرجوع إلى AWS Machine Learning Blog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent-skill/"
+                }
+              ]
+            },
+            {
+              "text": "ولمعالجة هذه المشكلة المستمرة، نشرت المدونة تفاصيل تقنية حول كيفية تجاوز هذه العقبات عبر الاعتماد على ذاكرة تخزين مؤقت مشتركة وموزعة. هذه البنية تتيح للخوادم المختلفة إعادة استخدام حالات الذاكرة المؤقتة عبر الجلسات وتحولات التوجيه المختلفة، مما يقلل الهدر الحاصل في الموارد الحاسوبية للرسوميات ويحسن تجربة الاستخدام النهائية للمطورين والمستخدمين على حد سواء. ويمكن الرجوع إلى Artificial Intelligence للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Artificial Intelligence",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "دور مهارة الوكيل في التخزين الموزع",
+          "paragraphs": [
+            {
+              "text": "تقدم مهارة التخزين المؤقت الموزع الجديدة ضمن مجموعة الأدوات المخصصة للوكلاء وسيلة عملية لتقييم وإعداد آليات التخزين المؤقت مباشرة من خلال وكيل البرمجة الخاص بك. تساهم هذه المهارة في إرشاد الوكيل للتحقق مما إذا كانت بيئة العمل وحجم حركة المرور يستفيدان حقاً من إضافة ذاكرة تخزين مؤقت موزعة، فضلاً عن مساعدة الفرق التقنية في إعداد العقد والتجمعات واختبار الأداء واستكشاف الأخطاء وإصلاحها بمرونة عالية ودون الحاجة لتعديلات معقدة يدوياً.",
+              "links": []
+            },
+            {
+              "text": "وتتكامل هذه المهارة بسلاسة مع منصات ومساعدي البرمجة المتنوعة التي تدعم مهارات الوكلاء مثل مساعد كيرو والحلول البرمجية الأخرى، مما يسهل على المطورين دمجها ضمن بيئات التطوير الحالية الخاصة بهم دون إحداث تغييرات جذرية في دورة العمل البرمجية أو الحاجة إلى أدوات إضافية معقدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تقييم الجدوى الاقتصادية والأداء",
+          "paragraphs": [
+            {
+              "text": "قبل الشروع في أي إنفاق مالي على البنية التحتية، تتيح أدوات التقييم المتاحة للمطورين تقدير الفوائد المتوقعة بناءً على نماذج الذكاء الاصطناعي المستخدمة وأنماط حركة مرور المستخدمين. تساهم أداة القياس المخصصة في تسجيل أحداث التخزين المؤقت وتشغيلها بشكل غير متصل لمعرفة الأداء المحتمل عند أحجام مختلفة للذاكرة، مع الحفاظ على خصوصية البيانات عبر إخفاء هويات الرموز الحساسة.",
+              "links": []
+            },
+            {
+              "text": "وتقوم الأداة بتسجيل تفاصيل الأحداث المرتبطة بالتخزين المؤقت لكل خادم رسوميات خلال نافذة زمنية تمثيلية، مثل يوم عمل كامل. تتيح هذه البيانات للفرق الفنية اتخاذ قرارات مدروسة حول جدوى الاستثمار في حلول التخزين المؤقت الموزع ومقارنة التكاليف بالعوائد المتوقعة على صعيد تقليص زمن الاستجابة وتكاليف الحوسبة السحابية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إدارة الإعدادات والأمان",
+          "paragraphs": [
+            {
+              "text": "تتطلب إدارة التخزين المؤقت الموزع توافقاً دقيقاً في الإعدادات عبر جميع خوادم الاستدلال لضمان عدم حدوث تطابق خاطئ في مفاتيح الذاكرة. يقوم الوكيل بإضافة الموصلات المناسبة إلى محركات التشغيل الحالية مثل محركات vLLM و SGLang، مع الحفاظ على إعدادات التوجيه الخاصة بالعميل وضبط آليات التداول والمعرفات بدقة متناهية.",
+              "links": []
+            },
+            {
+              "text": "وعلى صعيد الحماية والأمان، تدعم المنصة استخدام مستودعات آمنة لإدارة بيانات الاعتماد وتخصيص مستخدمي الذاكرة المؤقتة لضمان عزل البيانات بين المستأجرين المختلفين، مما يمنع أي تسريب محتمل للمعلومات عبر أوقات الاستجابة في التطبيقات المشتركة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الخلاصة والتوقعات المستقبلية",
+          "paragraphs": [
+            {
+              "text": "يمثل دمج مهارات الوكلاء مع تقنيات التخزين المؤقت الموزع خطوة متقدمة نحو تحسين كفاءة تشغيل نماذج اللغات الكبيرة المستضافة ذاتياً. ومن خلال تقليل التكرار في الحسابات وتوفير أدوات تقييم دقيقة للمطورين، فتحت أمازون الباب أمام الشركات للاستفادة القصوى من موارد الحوسبة المتاحة لديها وخفض التكاليف التشغيلية بشكل مستدام.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "نماذج اللغات الكبيرة",
+        "الحوسبة السحابية",
+        "أمازون",
+        "الاستدلال الذكي",
+        "تحسين الأداء"
+      ],
+      "entities": [
+        "AWS",
+        "Amazon ElastiCache",
+        "Kiro",
+        "vLLM",
+        "SGLang"
+      ],
+      "article_type": "news",
+      "confidence_note": "تمت صياغة الخبر بناءً على المصدر الرسمي للوحة معلومات تعلم الآلة في AWS مع الالتزام التام بالروابط المسموحة."
+    },
+    "en": {
+      "title": "AWS Introduces Distributed KV Caching Agent Skill",
+      "description": "Cut self-hosted LLM inference costs by up to 40% and latency by up to 80% using the new distributed KV caching agent skill from AWS.",
+      "deck": "A new agent skill enables developers to evaluate, size, and set up distributed KV caching for self-hosted large language models directly from coding assistants.",
+      "summary_bullets": [
+        "Distributed KV caching with Amazon ElastiCache can reduce self-hosted LLM inference costs by up to 40% and time to first token by up to 80%.",
+        "The distributed KV caching skill works with coding agents such as Kiro and Claude Code to evaluate workloads and configure clusters.",
+        "The KVTrace tool allows teams to estimate workload benefits offline without deploying infrastructure first.",
+        "The agent skill manages configurations across vLLM or SGLang inference servers using consistent KV data types and hashing mechanisms."
+      ],
+      "sections": [
+        {
+          "heading": "Addressing Self-Hosted LLM Latency and Cost",
+          "paragraphs": [
+            {
+              "text": "Self-hosting large language models (LLMs) on GPUs offers organizations direct control over cost, accuracy, and latency. However, this approach often introduces redundant GPU computations because isolated server-side caches cannot share the growing contexts generated by chat applications and AI agents. For example, long conversational histories or document Q&A sessions require GPU servers to recompute key-value (KV) attention states during the prefill phase before generating a response. To mitigate these performance bottlenecks, administrators can implement distributed KV caching to share KV states across sessions, server failures, and routing shifts.",
+              "links": []
+            },
+            {
+              "text": "By utilizing Amazon ElastiCache alongside GPU fleets, organizations can cut inference costs by up to 40% and reduce time to first token (TTFT) by up to 80%. Technical details and comprehensive performance benchmarks regarding this architecture are available on the AWS Machine Learning Blog.",
+              "links": [
+                {
+                  "text": "AWS Machine Learning Blog",
+                  "url": "https://aws.amazon.com/blogs/machine-learning/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Evaluating Workloads with the Agent Skill",
+          "paragraphs": [
+            {
+              "text": "The newly detailed distributed KV caching skill within the Agent Toolkit for AWS guides developers through assessing and establishing infrastructure directly from a coding assistant. The skill evaluates whether specific workloads benefit from distributed caching by performing initial fit checks and analyzing prompt lengths. Because loading KV states for short prompts can occasionally take longer than direct computation, the agent calculates precise cutover points based on prompt repetition and workload characteristics.",
+              "links": [
+                {
+                  "text": "distributed KV caching skill",
+                  "url": "https://github.com/aws/agent-toolkit-for-aws/tree/main/skills/specialized-skills/database-skills/distributed-kv-caching"
+                }
+              ]
+            },
+            {
+              "text": "Compatible coding assistants include Kiro, Claude Code, OpenAI Codex, and other platforms supporting Agent Skills. For users utilizing Kiro, the assistant interacts naturally to diagnose slow first tokens, price potential configurations, and implement the necessary cache setups.",
+              "links": [
+                {
+                  "text": "Kiro",
+                  "url": "https://kiro.dev/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Utilizing KVTrace for Accurate Benefit Estimates",
+          "paragraphs": [
+            {
+              "text": "Estimating the financial and performance impact of caching can be complex due to varying user traffic patterns and prompt routing choices. To address this, the development framework incorporates the KVTrace tool, which records KV cache events locally from vLLM or SGLang engines. These recorded events can then be replayed offline against potential shared cache sizes to determine accurate hit rates without deploying production infrastructure.",
+              "links": [
+                {
+                  "text": "KVTrace tool",
+                  "url": "https://github.com/aws-samples/amazon-elasticache-samples/tree/main/kvtrace"
+                }
+              ]
+            },
+            {
+              "text": "During recording, the tool captures block hashes and token counts while maintaining data privacy. For sensitive prompts, teams can utilize specialized anonymization parameters to secure block hashes before evaluating cache performance and expected savings.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Configuration and Security Best Practices",
+          "paragraphs": [
+            {
+              "text": "Deploying distributed KV caching across multiple inference servers requires consistent configuration to prevent key mismatches. The agent skill integrates the LMCache connector into existing vLLM or SGLang engines—including vLLM workers running under framework topologies such as Ray Serve and llm-d—while establishing uniform KV data types and identifier mechanisms.",
+              "links": []
+            },
+            {
+              "text": "Security remains a key consideration when multiple tenants share a caching tier. The framework supports dedicated cache users and secure credential management via AWS Secrets Manager, ensuring tenant isolation and safe resource provisioning across high-impact operational workflows.",
+              "links": [
+                {
+                  "text": "AWS Secrets Manager",
+                  "url": "https://aws.amazon.com/secrets-manager/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Technical Requirements and Implementation",
+          "paragraphs": [
+            {
+              "text": "Successful implementation of the distributed KV caching agent skill requires specific software and hardware configurations. Deployments typically leverage GPU instances supporting EFA RDMA write operations, such as p5 instances, paired with ElastiCache for Valkey nodes. Software prerequisites include appropriate versions of LMCache, vLLM, and SGLang to ensure seamless compatibility with the automated setup routines.",
+              "links": [
+                {
+                  "text": "distributed KV caching",
+                  "url": "https://github.com/aws/agent-toolkit-for-aws/tree/main/skills/specialized-skills/database-skills/distributed-kv-caching"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "AWS",
+        "Amazon ElastiCache",
+        "LLM",
+        "GPU",
+        "Artificial Intelligence",
+        "vLLM",
+        "Agent Toolkit"
+      ],
+      "entities": [
+        "Amazon Web Services",
+        "Amazon ElastiCache",
+        "Kiro",
+        "vLLM",
+        "LMCache"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based entirely on the provided AWS Machine Learning Blog source material."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "quality_rejected",
+      "errors": [
+        "en:article_too_short"
+      ],
+      "word_count_ar": 577,
+      "word_count_en": 418
+    },
+    {
+      "attempt": 2,
+      "status": "quality_rejected",
+      "errors": [
+        "ar:article_too_short"
+      ],
+      "word_count_ar": 280,
+      "word_count_en": 903
+    },
+    {
+      "attempt": 3,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 599,
+      "word_count_en": 607
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "f6e744ab21c05cebfa08",
+      "title": "Cut self-hosted LLM cost and latency with the distributed KV caching agent skill",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "quality_rejected",
+          "errors": [
+            "en:article_too_short"
+          ],
+          "word_count_ar": 577,
+          "word_count_en": 418
+        },
+        {
+          "attempt": 2,
+          "status": "quality_rejected",
+          "errors": [
+            "ar:article_too_short"
+          ],
+          "word_count_ar": 280,
+          "word_count_en": 903
+        },
+        {
+          "attempt": 3,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 599,
+          "word_count_en": 607
+        }
+      ]
+    }
+  ],
+  "slug": "cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent/hero.webp",
+    "card": "/forum/assets/posts/2026/11/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent/card.webp",
+    "social": "/forum/assets/posts/2026/11/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent/social.jpg",
+    "alt": {
+      "ar": "تقليص تكلفة نماذج اللغات عبر التخزين الموزع",
+      "en": "AWS Introduces Distributed KV Caching Agent Skill"
+    },
+    "credit": "AWS Machine Learning Blog",
+    "sourceUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22449-featured-image.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent/inline-01.webp",
+        "width": 1400,
+        "height": 752,
+        "alt": {
+          "ar": "تقليص تكلفة نماذج اللغات عبر التخزين الموزع",
+          "en": "Diagram of the agent’s diagnosis and the proposed distributed KV caching architecture for the legal assistant"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent-skill/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22449-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent/inline-02.webp",
+        "width": 1400,
+        "height": 747,
+        "alt": {
+          "ar": "تقليص تكلفة نماذج اللغات عبر التخزين الموزع",
+          "en": "The agent’s cost summary showing the GPU and cache node prices it looked up and the two recommended cache.i8ge.48xlarge nodes"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent-skill/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22449-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent/inline-03.webp",
+        "width": 1400,
+        "height": 983,
+        "alt": {
+          "ar": "تقليص تكلفة نماذج اللغات عبر التخزين الموزع",
+          "en": "KVTrace report showing net savings at four cache hit shares, TTFT benchmarks, and the recommended shard count"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent-skill/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22449-3.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent/inline-04.webp",
+        "width": 1400,
+        "height": 726,
+        "alt": {
+          "ar": "تقليص تكلفة نماذج اللغات عبر التخزين الموزع",
+          "en": "The agent’s troubleshooting answer: the most likely cause is a missing self-referencing egress rule. It explains why HELLO succeeds while RDMA transfers fail, gives a describe-security-groups command to check the rules a"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من AWS Machine Learning Blog",
+          "en": "Image related to the report from AWS Machine Learning Blog"
+        },
+        "credit": "AWS Machine Learning Blog",
+        "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent-skill/",
+        "originalUrl": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22449-4.png"
+      }
+    ]
+  }
 }
