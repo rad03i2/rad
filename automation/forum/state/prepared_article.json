@@ -1,5 +1,360 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-22T18:55:35+00:00",
-  "last_published_story_id": "b9e80bb8713be977aaa4"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-22T19:04:33+00:00",
+  "target_publish_at": "2026-11-22T22:15:33.859413+03:00",
+  "story": {
+    "title": "Hackers exploit GL.iNet cloud flaw to infect routers, KVM devices",
+    "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-glinet-cloud-flaw-to-infect-routers-kvm-devices",
+    "domain": "bleepingcomputer.com",
+    "summary": "GL.iNet has confirmed that hackers exploited a vulnerability in its cloud remote management services to install custom malware on customers' routers and KVM devices, with some affected users reporting backdoors and reverse shells giving remote access to infected devices. [...]",
+    "published_at": "2026-11-22T18:45:37+00:00",
+    "discovered_at": "2026-11-22T18:48:55+00:00",
+    "source": {
+      "name": "BleepingComputer",
+      "feed": "https://www.bleepingcomputer.com/feed/",
+      "type": "journalism",
+      "trust": 0.88,
+      "priority": 22,
+      "defaultCategory": "security"
+    },
+    "category": "security",
+    "category_label": "الأمن التقني",
+    "score": 49,
+    "verification": {
+      "confidence": 0.88,
+      "reason": "trusted_journalism_single_source",
+      "official": false,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "86d05566c7a214bc432a",
+    "trend": {
+      "score": 94.88,
+      "age_hours": 0.31,
+      "corroboration_count": 0,
+      "entity_momentum": 12.0,
+      "category_boost": 6
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-glinet-cloud-flaw-to-infect-routers-kvm-devices/",
+      "name": "BleepingComputer",
+      "domain": null,
+      "kind": "journalism",
+      "type": "journalism",
+      "feed_title": "Hackers exploit GL.iNet cloud flaw to infect routers, KVM devices",
+      "title": "Hackers exploit GL.iNet cloud flaw to infect routers, KVM devices",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "اختراق GL.iNet: ثغرة سحابية تتيح للمهاجمين التحكم في أجهزة التوجيه",
+      "description": "أعلنت شركة GL.iNet عن استغلال ثغرة أمنية في خدماتها السحابية، مما أدى إلى إصابة أجهزة التوجيه وأجهزة KVM ببرمجيات خبيثة تمنح المهاجمين وصولاً كاملاً.",
+      "deck": "كشفت شركة GL.iNet عن حملة اختراق استهدفت منصات إدارتها عن بُعد، مما سمح للمهاجمين بتثبيت برمجيات خبيثة متقدمة على آلاف الأجهزة.",
+      "summary_bullets": [
+        "استغل المهاجمون ثغرة في خدمة GoodCloud لتثبيت برمجيات خبيثة مخصصة لأجهزة GL.iNet.",
+        "أظهرت التحليلات وجود أصداف عكسية (Reverse Shells) تمنح المهاجمين صلاحيات جذرية (Root).",
+        "أصدرت الشركة تحديثات أمنية عاجلة وأدوات فحص مجتمعية للكشف عن الإصابات.",
+        "حذرت الشركة من أن التحديث العادي قد لا يزيل الملفات الخبيثة المخفية في إعدادات النظام."
+      ],
+      "sections": [
+        {
+          "heading": "تأكيد الاختراق وإغلاق مسار الهجوم",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركة GL.iNet، المتخصصة في تصنيع أجهزة الشبكات المنزلية وأجهزة KVM، عن تعرض خدماتها السحابية لاختراق أمني جسيم. في بيان أمني صادر بتاريخ 20 نوفمبر، أكدت الشركة أن طرفاً غير مصرح به استغل ثغرة في خدمات الإدارة عن بُعد للوصول إلى الأجهزة وتثبيت برمجيات خبيثة مخصصة. وأوضح البيان أن مسار الهجوم قد تم إغلاقه، حيث تم إصلاح الثغرة السحابية وحظر الوصول الذي استخدمه المهاجمون، مما يمنع إصابة أجهزة جديدة عبر هذا المسار. إلا أن الشركة شددت على أن هذه الإجراءات لا تزيل البرمجيات الخبيثة من الأجهزة التي سبق أن تعرضت للاختراق، مما يستدعي تدخلاً يدوياً من المستخدمين.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية عمل البرمجية الخبيثة ni.sh",
+          "paragraphs": [
+            {
+              "text": "كشف تحليل تقني أجرته BleepingComputer عن تفاصيل البرمجية الخبيثة المستخدمة في الهجوم، والتي تعتمد على سكربت يحمل اسم ni.sh. يحتوي هذا السكربت على كود مصمم خصيصاً لأجهزة GL.iNet، حيث يتعرف على عدة نماذج من أجهزة التوجيه وأجهزة KVM. يقوم السكربت بتحميل ملفات تنفيذية خبيثة تحمل أسماء gl-helper وgb من خوادم محددة مسبقاً. كما يعمل على إنشاء آلية بقاء (Persistence) من خلال تعديل سكربتات الإقلاع والمهام المجدولة، مما يسمح للبرمجية بالعودة للعمل بعد إعادة تشغيل الجهاز أو إنهاء عملياتها.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-glinet-cloud-flaw-to-infect-routers-kvm-devices/"
+                }
+              ]
+            },
+            {
+              "text": "من الميزات المثيرة للقلق في هذه البرمجية قدرتها على التمويه. يقوم المثبت بتغيير اسم العملية الخبيثة لتظهر كعملية نظام عادية تحمل اسم crond -i /tmp/.log، وهو ما يتطابق مع مؤشر الاختراق (IOC) الذي أعلنته الشركة. بالإضافة إلى ذلك، يستبدل السكربت أداة netstat الأصلية بنسخة معدلة تقوم بفلترة الاتصالات الصادرة نحو عنوان IP محدد، مما يخفي نشاط البرمجية الخبيثة عن الإداريين الذين يفحصون الاتصالات الشبكية. كما يتضمن السكربت أوامر لتثبيت مفاتيح SSH للوصول عن بُعد، وتعديل طوابع الوقت للملفات، والاتصال الدوري بخادم بعيد لاستلام أوامر جديدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أدلة على نشاط شبكي مشبوه",
+          "paragraphs": [
+            {
+              "text": "شارك مستخدمون وباحثون أمنيون أدلة على إصابات مخصصة لأجهزة GL.iNet، بما في ذلك أصداف عكسية (Reverse Shells) على مستوى الجذر (Root). كشفت التحليلات أن هذه الأصداف استخدمت أداة nc في نظام لينكس لإنشاء اتصالات صادرة، مما مكن المهاجمين من تنفيذ أوامر عن بُعد على الأجهزة المصابة. في تقرير منفصل على منتدى الشركة، شارك مالك جهاز GL-RM1 KVM سجلات شبكة تظهر أن الجهاز قام بتحميل سكربت ni.sh الخبيث وملفات تنفيذية إضافية من عنوان IP في 19 نوفمبر. كما لوحظ أن الجهاز بدأ بالاتصال بنحو 1800 عنوان IP سكني يومياً، وتواصل بشكل متكرر مع واجهة برمجة تطبيقات سلسلة الكتل TRON، مما يوحي بأن النشاط قد يكون جزءاً من شبكة أقران (P2P) أو شبكة بوتنت، على الرغم من عدم وجود تأكيد رسمي على ذلك.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحليلات خبراء الأمن السيبراني",
+          "paragraphs": [
+            {
+              "text": "قام فريق من شركة RemoteToHome Consulting بتحليل 183 جهاز توجيه تمتلكها أو تديرها الشركة، حيث اكتشفوا نشاطاً مشبوهاً في 152 جهازاً. شملت النتائج وجود 24 جهازاً مصاباً بأصداف عكسية على مستوى الجذر، و47 جهازاً مصاباً بباب خلفي (Backdoor) أقدم، و81 جهازاً تظهر عليه أدلة على تنفيذ أوامر زودها بها المهاجمون. كما حدد الباحثون ثغرة محتملة في حقن الأوامر (Command Injection) في عميل GoodCloud الخاص بـ GL.iNet، تتعلق بمعالج يستخدم لوظائف AstroWarp/SD-WAN. أشار الباحثون إلى أن المعالج يمرر قيماً مقدمة من السحابة إلى أوامر shell تنفذ بصلاحيات الجذر دون تحقق كافٍ، لكن GL.iNet لم تؤكد بعد استخدام هذه الثغرة تحديداً في الهجمات الحالية.",
+              "links": [
+                {
+                  "text": "RemoteToHome Consulting",
+                  "url": "https://github.com/RemoteToHome-io/gl-security-incident-2026"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إرشادات الفحص والتعافي",
+          "paragraphs": [
+            {
+              "text": "توصي GL.iNet عملاءها بفحص أجهزتهم بحثاً عن علامات الإصابة وتثبيت أحدث البرامج الثابتة الأمنية (Firmware)، حتى في حال عدم اكتشاف برمجيات خبيثة. حددت الشركة عملية crond -i /tmp/.log كمؤشر رئيسي للاختراق. ومع ذلك، يحذر أعضاء منتدى الشركة من أن إرشادات الكشف الأساسية قد لا تحدد جميع الأجهزة المصابة، خاصة تلك التي تحمل أبواباً خلفية أخرى أو أصدافاً عكسية. لذلك، قامت الشركة بربط أدوات فحص وتنظيف طورها المجتمع ضمن إرشادات الدعم الرسمية.",
+              "links": []
+            },
+            {
+              "text": "يقوم هذا الماسح بإجراء فحوصات إضافية للبحث عن ملفات برمجيات خبيثة معروفة، وعمليات مشبوهة، وأدوات نظام معدلة، وملفات إعدادات تم تعديلها لضمان البقاء. كما يمكنه جمع أدلة جنائية وإزالة مكونات البرمجيات الخبيثة المعروفة اختيارياً. يحذر مطورو المشروع من أن الماسح لا يمكنه اكتشاف كل إصابة، وقد تتطلب الأجهزة المصابة إعادة تثبيت البرامج الثابتة دون الاحتفاظ بالإعدادات الحالية، حيث قد تبقى الملفات الخبيثة المخزنة في مجلدات الإعدادات بعد التحديث العادي. ينصح العملاء الذين يشككون في تعرض أجهزتهم للاختراق بحفظ الأدلة قبل إعادة الضبط، وتجنب استعادة الإعدادات المصابة، وتبديل بيانات الاعتماد ومفاتيح الوصول التي قد تكون مكشوفة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحديثات البرامج الثابتة القادمة",
+          "paragraphs": [
+            {
+              "text": "على الرغم من إصلاح الثغرة السحابية، أعلنت GL.iNet عن جدول إصدار تحديثات برامج ثابتة مستقرة تحتوي على إصلاحات أمنية إضافية لكل من أجهزة التوجيه وأجهزة KVM، ومن المقرر إطلاقها في 22 نوفمبر 2026. بالنسبة لأجهزة KVM، توفر الشركة إرشادات للترقية توصي بإصدار 1.10.3 أو أحدث لنماذج RM10 وRM1 وRM1V2 وRM1PE وRM4PE، وإصدار 1.10.3 beta أو أحدث لنموذج RM10RC، وإصدار 1.8.7 أو أحدث لنموذج RMQ1. يُنصح مالكو أجهزة التوجيه بتثبيت أحدث برنامج ثابت أمني لنموذجهم المحدد فور توفره.",
+              "links": []
+            },
+            {
+              "text": "تدعو الشركة العملاء الذين يقومون بتشغيل أداة الفحص إلى رفع التقرير المجهول عند الطلب، مما يساعد المطورين على تحديد عدد وأنواع الأجهزة المتأثرة. وبالنسبة لمستخدمي أجهزة KVM، قد تكون البرمجية الخبيثة سمحت بالوصول إلى الحواسيب التي تتحكم بها هذه الأجهزة، لذا يجب تحليل تلك الحواسيب أيضاً بحثاً عن أي اختراق محتمل. لا تزال الشركة تحقق في ما إذا كانت الحواسيب المتصلة بأجهزة KVM المصابة قد تعرضت للاختراق، ولم تكشف بعد عن كيفية استغلال المهاجمين للمنصة السحابية أو عدد العملاء المتأثرين بدقة، أو ما إذا كانت معلومات سرية قد سُرقت من الأجهزة المخترقة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GL.iNet",
+        "أمن سيبراني",
+        "برمجيات خبيثة",
+        "أجهزة توجيه",
+        "KVM",
+        "اختراق",
+        "ثغرة أمنية"
+      ],
+      "entities": [
+        "GL.iNet",
+        "GoodCloud",
+        "BleepingComputer",
+        "RemoteToHome Consulting",
+        "ni.sh",
+        "TRON blockchain"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستمدة حصرياً من المصادر المقدمة، مع التركيز على التمييز بين ما أكده الشركة وما اكتشفه الباحثون المستقلون."
+    },
+    "en": {
+      "title": "Hackers Exploit GL.iNet Cloud Flaw to Infect Devices",
+      "description": "GL.iNet confirms hackers exploited a cloud remote management flaw to install custom malware, backdoors, and reverse shells on routers and KVM devices.",
+      "deck": "GL.iNet has confirmed that an unauthorized party exploited a vulnerability in its cloud remote management services to deploy custom malware across customer routers and KVM devices.",
+      "summary_bullets": [
+        "Hackers exploited a vulnerability in GL.iNet's cloud remote management platform to install custom malware.",
+        "Affected users reported backdoors and root-level reverse shells providing remote access to infected routers and KVM devices.",
+        "GL.iNet blocked the attack path and fixed the cloud flaw, while releasing updated firmware and guidance for users.",
+        "Security researchers and community developers have published cleanup tools and shared evidence regarding malicious scripts."
+      ],
+      "sections": [
+        {
+          "heading": "Cloud Flaw and Device Infections",
+          "paragraphs": [
+            {
+              "text": "GL.iNet has confirmed that hackers exploited a vulnerability in its cloud remote management services to install custom malware on customers' routers and KVM devices, with some affected users reporting backdoors and reverse shells giving remote access to infected devices. Additional details are outlined in the report by BleepingComputer.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-glinet-cloud-flaw-to-infect-routers-kvm-devices/"
+                }
+              ]
+            },
+            {
+              "text": "The company manufactures networking hardware, including home and travel routers, alongside KVM devices that enable users to remotely access and control computers. Its GoodCloud platform permits customers to manage supported equipment remotely, which includes interacting with computers and servers linked to KVM products. In a security advisory published on November 20, GL.iNet noted that an unauthorized party capitalized on a cloud remote management vulnerability to infiltrate devices and install malicious software. Further details can be found in the official advisory from the company said.",
+              "links": [
+                {
+                  "text": "the company said",
+                  "url": "http://www.gl-inet.com/en-us/blogs/blog/glinet-security-notice-2026-11-20"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Company Response and Mitigation Steps",
+          "paragraphs": [
+            {
+              "text": "GL.iNet stated that the attack path has been successfully blocked and the underlying cloud vulnerability fixed, preventing any new infections through this specific vector. However, the company clarified that these cloud measures do not eliminate malware from devices that were already compromised prior to the patch. Although the vendor has not disclosed how many customers were impacted or if data was stolen, it continues to investigate whether computers connected to infected KVM hardware were compromised.",
+              "links": []
+            },
+            {
+              "text": "To help users secure their hardware, the manufacturer provided initial detection indicators and recommended installing the latest security firmware. Owners of KVM devices should review the firmware upgrade guidance provided by the vendor, while router owners are advised to install updates specific to their models as soon as they become available.",
+              "links": [
+                {
+                  "text": "firmware upgrade guidance",
+                  "url": "https://forum.gl-inet.com/t/quickly-check-if-your-kvm-is-under-attack/73069"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Detection and Community Cleanup Tools",
+          "paragraphs": [
+            {
+              "text": "Because initial company instructions and IOCs may not catch every variation of the threat, GL.iNet has linked to a community-developed detection and cleanup tool as part of official support documentation. This utility scans for known malicious files, modified system utilities, suspicious processes, and altered configuration files designed to achieve persistence.",
+              "links": [
+                {
+                  "text": "community-developed detection and cleanup tool",
+                  "url": "https://gl-i.net/security/csa-2026-01/fix/"
+                }
+              ]
+            },
+            {
+              "text": "Developers behind the scanner warn that it might not detect all instances of compromise. Consequently, severely affected devices may require a full firmware reinstallation without retaining existing settings, as malicious components stored in configuration directories could survive standard upgrades. Users are encouraged to preserve evidence, rotate credentials, and avoid restoring potentially tainted configurations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Researcher Analysis and Malware Behavior",
+          "paragraphs": [
+            {
+              "text": "Security researchers at RemoteToHome Consulting investigated the incident and analyzed multiple routers to understand the scope of the activity. Further background on their findings and methodologies can be explored via RemoteToHome Consulting.",
+              "links": [
+                {
+                  "text": "RemoteToHome Consulting",
+                  "url": "https://github.com/RemoteToHome-io/gl-security-incident-2026"
+                }
+              ]
+            },
+            {
+              "text": "Additional insights emerged from community discussions. A detailed forum report highlighted network logs showing compromised hardware downloading malicious scripts and executable payloads from external IP addresses, subsequently communicating with residential addresses and blockchain APIs.",
+              "links": [
+                {
+                  "text": "forum report",
+                  "url": "https://forum.gl-inet.com/t/2026-11-20-gl-inet-security-notice-goodcloud-kvm-routers/73056/79"
+                }
+              ]
+            },
+            {
+              "text": "An examination of the malicious ni.sh installation script—available for review on VirusTotal—revealed that the code is explicitly tailored for GL.iNet models, deploying utilities like gl-helper and gb while modifying system binaries such as netstat to hide outbound connections.",
+              "links": [
+                {
+                  "text": "VirusTotal",
+                  "url": "https://www.virustotal.com/gui/file/36e04e10b4667e59b0a3a25147b032dc038c5a9971a7df88be80f8882e30dd87"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GL.iNet",
+        "GoodCloud",
+        "Cybersecurity",
+        "Routers",
+        "KVM",
+        "Malware",
+        "Vulnerability"
+      ],
+      "entities": [
+        "GL.iNet",
+        "GoodCloud",
+        "RemoteToHome Consulting",
+        "VirusTotal"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence based directly on BleepingComputer reporting and official GL.iNet advisories."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 915,
+      "word_count_en": 575
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "86d05566c7a214bc432a",
+      "title": "Hackers exploit GL.iNet cloud flaw to infect routers, KVM devices",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 915,
+          "word_count_en": 575
+        }
+      ]
+    }
+  ],
+  "slug": "hackers-exploit-gl-inet-cloud-flaw-to-infect-routers-kvm-devices",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/hackers-exploit-gl-inet-cloud-flaw-to-infect-routers-kvm-devices/hero.webp",
+    "card": "/forum/assets/posts/2026/11/hackers-exploit-gl-inet-cloud-flaw-to-infect-routers-kvm-devices/card.webp",
+    "social": "/forum/assets/posts/2026/11/hackers-exploit-gl-inet-cloud-flaw-to-infect-routers-kvm-devices/social.jpg",
+    "alt": {
+      "ar": "اختراق GL.iNet: ثغرة سحابية تتيح للمهاجمين التحكم في أجهزة التوجيه",
+      "en": "Hackers Exploit GL.iNet Cloud Flaw to Infect Devices"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/11/22/routers-kvms.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/hackers-exploit-gl-inet-cloud-flaw-to-infect-routers-kvm-devices/inline-01.webp",
+        "width": 1373,
+        "height": 791,
+        "alt": {
+          "ar": "اختراق GL.iNet: ثغرة سحابية تتيح للمهاجمين التحكم في أجهزة التوجيه",
+          "en": "Chinese-language comments in the ni.sh malware script"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Chinese-language comments in the ni.sh malware script Source: BleepingComputer"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/hackers-exploit-glinet-cloud-flaw-to-infect-routers-kvm-devices/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/security/attacks/g/GL.iNet/gl-chinese-language.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/hackers-exploit-gl-inet-cloud-flaw-to-infect-routers-kvm-devices/inline-02.webp",
+        "width": 1038,
+        "height": 676,
+        "alt": {
+          "ar": "اختراق GL.iNet: ثغرة سحابية تتيح للمهاجمين التحكم في أجهزة التوجيه",
+          "en": "Malicious commands added to legitimate urandom_seed file"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Malicious commands added to legitimate urandom_seed file Source: BleepingComputer"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/hackers-exploit-glinet-cloud-flaw-to-infect-routers-kvm-devices/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/security/attacks/g/GL.iNet/modified-urandom_seed.jpg"
+      }
+    ]
+  }
 }
