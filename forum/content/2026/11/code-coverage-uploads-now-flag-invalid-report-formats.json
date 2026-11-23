@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "48d620a145eb3f8455ce",
+  "slug": "code-coverage-uploads-now-flag-invalid-report-formats",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/code-coverage-uploads-now-flag-invalid-report-formats/",
+    "en": "/forum/en/ai/code-coverage-uploads-now-flag-invalid-report-formats/"
+  },
+  "locales": {
+    "ar": {
+      "title": "GitHub: رفع تقارير التغطية يرفض الآن صيغ XML غير الصالحة",
+      "description": "أدخلت GitHub تعديلات على إجراء رفع تغطية الكود لتفشل العملية إذا لم تكن التقارير بصيغة Cobertura XML، مما يمنع ظهور أخطاء صامتة ويسهّل على المطورين اكتشاف المشكلات مبكراً.",
+      "deck": "لم تعد عمليات رفع تقارير تغطية الكود في GitHub تنجح بصمت عند استخدام صيغ غير مدعومة، بل أصبحت العملية تفشل مع إظهار رسالة خطأ واضحة.",
+      "summaryBullets": [
+        "إجراء upload-code-coverage في GitHub Code Quality يفحص الآن صيغة التقرير قبل الرفع.",
+        "العملية تفشل إذا لم يكن التقرير بصيغة Cobertura XML مع إظهار رسالة خطأ في سجلات Actions.",
+        "تحسينات على معالجة التقارير الصالحة لتجاوز الأخطاء الهيكلية البسيطة بدلاً من رفض التقرير بالكامل.",
+        "التحديث متاح على GitHub Enterprise Cloud و GitHub Team، وغير متاح على GitHub Enterprise Server."
+      ],
+      "sections": [
+        {
+          "heading": "تغيير جذري في معالجة صيغ التقارير",
+          "paragraphs": [
+            {
+              "text": "أعلنت GitHub عن تحديث مهم في إجراء upload-code-coverage ضمن إطار عمل GitHub Code Quality. أصبح الإجراء الآن يفحص صيغة تقرير التغطية للتأكد من أنه بصيغة Cobertura XML قبل محاولة الرفع. إذا لم يكن التقرير في صيغة مدعومة، فإن خطوة الرفع تفشل بدلاً من النجاح الظاهري، ويظهر في سجلات Actions رسالة خطأ واضحة تقول: 'هذا الملف ليس تقرير Cobertura XML. يرجى رفع تقرير Cobertura XML'. ويمكن الرجوع إلى GitHub Changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-11-23-code-coverage-uploads-now-flag-invalid-report-formats/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "إنهاء مشكلة النجاح الصامت",
+          "paragraphs": [
+            {
+              "text": "السابق، كانت عمليات الرفع هذه تبدو ناجحة في الواجهة، لكن لا تظهر أي بيانات تغطية على طلبات الدمج (Pull Requests). هذا الوضع كان يسبب إحباطاً للمطورين الذين كانوا يظنون أن كل شيء يعمل بشكل صحيح. الآن، سيكتشف المطورون المشكلة مباشرة أثناء تشغيل سير العمل، مع وجود خطوة تالية واضحة لمعالجتها. إذا بدأ سير العمل يفشل بسبب هذا الخطأ، يجب على المطورين تكوين إطار الاختبار الخاص بهم لإخراج Cobertura XML، أو تحويل التقرير إلى هذه الصيغة قبل خطوة الرفع. ويمكن الرجوع إلى Back to changelog للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مرونة أكبر في معالجة التقارير الصالحة",
+          "paragraphs": [
+            {
+              "text": "إلى جانب التشديد على الصيغ غير الصالحة، أجرت GitHub تعديلات لجعل معالجة التقارير الصالحة أكثر تسامحاً. لم تعد المنصة ترفض التقرير بالكامل بسبب مشاكل هيكلية بسيطة. بدلاً من ذلك، يتم تخطي الأسطر الفردية التي لا تحتوي على رقم سطر قابل للاستخدام أو عدد إصابات، مع الحفاظ على بقية التقرير سليماً. هذا التحسين يقلل من فرص فشل الرفع بسبب أخطاء طفيفة في بنية التقرير.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات التفعيل والتوفر",
+          "paragraphs": [
+            {
+              "text": "للاستفادة من ميزة تغطية الكود، يجب تفعيل GitHub Code Quality للمستودع الخاص بك. هذا التحديث متاح الآن على GitHub Enterprise Cloud و GitHub Team، بما في ذلك GitHub Enterprise Cloud مع خاصية الإقامة البياناتية (Data Residency). ومع ذلك، لا يتوفر هذا التحديث على GitHub Enterprise Server. للمزيد من التفاصيل حول كيفية إعداد تغطية الكود، يمكن الرجوع إلى التوثيق الرسمي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "سياق أوسع لتحسين جودة الكود",
+          "paragraphs": [
+            {
+              "text": "يأتي هذا التحديث ضمن سلسلة من التحسينات التي تقدمها GitHub لتعزيز جودة الكود والأمان. في وقت سابق من هذا الشهر، أعلنت المنصة عن تنفيذ تقييمات مخاطر الأمان تلقائياً على GitHub Team، مما يعكس تركيزاً متزايداً على أتمتة عمليات الفحص والتحليل. كما تتوفر أدوات أخرى مثل مسح الأسرار (Secret Scanning) و AI Scan لتحليل المستودعات، مما يوفر للمطورين مجموعة شاملة من الأدوات للحفاظ على جودة وأمان الكود.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "Code Quality",
+        "Cobertura XML",
+        "CI/CD",
+        "تغطية الكود",
+        "جودة البرمجيات",
+        "GitHub Actions"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Code Quality",
+        "Cobertura XML",
+        "GitHub Enterprise Cloud",
+        "GitHub Team",
+        "GitHub Enterprise Server"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "23 نوفمبر 2026",
+      "modifiedLabel": "23 نوفمبر 2026",
+      "readMinutes": 3,
+      "wordCount": 457
+    },
+    "en": {
+      "title": "GitHub flags invalid code coverage report uploads",
+      "description": "GitHub now rejects unsupported code coverage report formats and provides clearer workflow errors, while improving Cobertura report processing.",
+      "deck": "GitHub has updated its Code Quality upload-code-coverage action to validate coverage report formats and report unsupported files directly in Actions workflow logs.",
+      "summaryBullets": [
+        "The upload action now requires reports in Cobertura XML format.",
+        "Unsupported formats cause the upload step to fail with a clear error.",
+        "Valid Cobertura reports can tolerate minor structural issues.",
+        "The change is available for GitHub Team and GitHub Enterprise Cloud.",
+        "GitHub Enterprise Server is not included."
+      ],
+      "sections": [
+        {
+          "heading": "GitHub adds coverage format validation",
+          "paragraphs": [
+            {
+              "text": "GitHub has changed the behavior of its Code Quality upload-code-coverage action so that it verifies whether an uploaded coverage report uses the supported Cobertura XML format. The update gives repository maintainers an explicit way to identify invalid report formats through their GitHub Actions workflows. Further details are available from GitHub Changelog in the original source material.",
+              "links": [
+                {
+                  "text": "GitHub Changelog",
+                  "url": "https://github.blog/changelog/2026-11-23-code-coverage-uploads-now-flag-invalid-report-formats/"
+                }
+              ]
+            },
+            {
+              "text": "When the action receives a report that is not in a supported format, the upload step now fails. The Actions log identifies the problem with the message, “This file is not a Cobertura XML report. Upload a Cobertura XML report.” GitHub says this replaces a more ambiguous earlier experience in which uploads appeared successful even though no coverage appeared on pull requests. Further details are available from Back to changelog in the original source material.",
+              "links": [
+                {
+                  "text": "Back to changelog",
+                  "url": "https://github.blog/changelog/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "A clearer failure points to the next step",
+          "paragraphs": [
+            {
+              "text": "The new error is designed to appear in the workflow run, making the source of a failed upload easier to diagnose than silently missing coverage. GitHub advises teams to configure their test framework to output Cobertura XML or convert the report to that format before the upload step.",
+              "links": []
+            },
+            {
+              "text": "This distinction can matter because the upload process previously proceeded without clearly telling users that their report was unusable. Repository owners could see that the job had reached the upload step and assume coverage data had been processed, only to find that no results appeared in pull request views.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Valid Cobertura reports become more tolerant",
+          "paragraphs": [
+            {
+              "text": "GitHub has also adjusted processing for reports that do use the Cobertura XML format. Under the updated behavior, valid reports are no longer rejected because of minor structural issues. This is intended to preserve useful coverage data even when the source file contains problems that do not invalidate the report as a whole.",
+              "links": []
+            },
+            {
+              "text": "The action will also skip individual lines that do not have a usable line number or hit count instead of discarding the entire report. That behavior allows remaining coverage information to be processed while excluding specific entries that GitHub cannot reliably interpret.",
+              "links": []
+            },
+            {
+              "text": "Together, the validation and processing changes address two separate cases: unsupported file formats now produce an immediate and visible failure, while minor defects within otherwise valid Cobertura reports are less likely to prevent the rest of the data from being uploaded.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Availability across GitHub offerings",
+          "paragraphs": [
+            {
+              "text": "The change is available now on GitHub Team and GitHub Enterprise Cloud, including GitHub Enterprise Cloud with data residency. GitHub states that it is not available on GitHub Enterprise Server.",
+              "links": []
+            },
+            {
+              "text": "To use code coverage, a repository must have GitHub Code Quality enabled. Teams that need to configure the feature can follow GitHub's guidance on setting up code coverage for their repository on GitHub Enterprise Cloud.",
+              "links": []
+            },
+            {
+              "text": "The availability details are significant for organizations with multiple GitHub hosting models or residency requirements. The update applies to the specified cloud and team environments, but GitHub Enterprise Server deployments are outside the scope of this release.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "What repository maintainers should change",
+          "paragraphs": [
+            {
+              "text": "Maintainers whose workflows begin failing with the Cobertura XML error should first verify the format produced by their test framework. If the framework does not emit Cobertura XML directly, the workflow can convert the coverage report before invoking upload-code-coverage.",
+              "links": []
+            },
+            {
+              "text": "The direct next step is to generate a compatible report and confirm that the upload step completes without the new format error. The resulting workflow feedback should make unsupported inputs visible, while valid reports retain coverage data even if they contain minor structural problems or unusable line entries.",
+              "links": []
+            },
+            {
+              "text": "GitHub's update is therefore primarily a reliability and diagnostics change for code coverage workflows. It preserves the required report format while replacing silent or misleading upload outcomes with explicit validation, and it makes processing more tolerant once a report is identified as Cobertura XML.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "GitHub",
+        "Code Quality",
+        "Cobertura XML",
+        "Code coverage",
+        "DevOps",
+        "GitHub Actions",
+        "Application security"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Code Quality",
+        "upload-code-coverage",
+        "Cobertura XML",
+        "GitHub Actions",
+        "GitHub Team",
+        "GitHub Enterprise Cloud"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 23, 2026",
+      "modifiedLabel": "November 23, 2026",
+      "readMinutes": 4,
+      "wordCount": 694
+    }
+  },
+  "datePublished": "2026-11-23T18:59:59.496448+03:00",
+  "dateModified": "2026-11-23T18:59:59.496448+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/code-coverage-uploads-now-flag-invalid-report-formats/hero.webp",
+    "card": "/forum/assets/posts/2026/11/code-coverage-uploads-now-flag-invalid-report-formats/card.webp",
+    "social": "/forum/assets/posts/2026/11/code-coverage-uploads-now-flag-invalid-report-formats/social.jpg",
+    "alt": {
+      "ar": "GitHub: رفع تقارير التغطية يرفض الآن صيغ XML غير الصالحة",
+      "en": "GitHub flags invalid code coverage report uploads"
+    },
+    "credit": "GitHub Changelog",
+    "sourceUrl": "https://github.blog/wp-content/uploads/2026/11/712280380-8f5619e7-924c-43b1-baec-ef1763ad1870.jpeg",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-11-23-code-coverage-uploads-now-flag-invalid-report-formats/",
+      "type": "official",
+      "title": "Code coverage uploads now flag invalid report formats"
+    }
+  ],
+  "sourceUrl": "https://github.blog/changelog/2026-11-23-code-coverage-uploads-now-flag-invalid-report-formats",
+  "sourceTitle": "Code coverage uploads now flag invalid report formats",
+  "trendScore": 120.87,
+  "verification": {
+    "confidence": 1.0,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-23T15:59:59+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/code-coverage-uploads-now-flag-invalid-report-formats.json"
+}
