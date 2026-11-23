@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "eb2701ff66febea27293",
+  "slug": "robotrack-point-tracking-for-real-world-robotic-manipulation",
+  "categorySlug": "robotics",
+  "urls": {
+    "ar": "/forum/ar/robotics/robotrack-point-tracking-for-real-world-robotic-manipulation/",
+    "en": "/forum/en/robotics/robotrack-point-tracking-for-real-world-robotic-manipulation/"
+  },
+  "locales": {
+    "ar": {
+      "title": "RoboTrack: معيار جديد لاختبار تتبع النقاط في الروبوتات",
+      "description": "أطلقت مؤسسة Ai2 حزمة RoboTrack لتقييم تتبع النقاط في التلاعب الروبوتي الحقيقي، كاشفةً عن فجوات أداء كبيرة في النماذج الحالية مقارنةً بالبيئات المختبرية.",
+      "deck": "تُظهر نتائج جديدة أن أدوات التتبع الحالية تعاني من ضعف ملحوظ في المشاهد الواقعية المعقدة، مما يستدعي معايير تقييم أكثر صرامة.",
+      "summaryBullets": [
+        "إطلاق RoboTrack-Bench: مجموعة بيانات تضم 307 فيديو حقيقي بتعليقات يدوية دقيقة لتقييم تتبع النقاط.",
+        "إصدار RoboTrack-15M: مجموعة بيانات اصطناعية ضخمة مولّدة عبر محاكاة MolmoSpaces لتحسين أداء النماذج.",
+        "إطلاق نموذجين جديدين: RoboTracker و RoboTracker-Warp، حيث حقق الأخير أداءً متقدماً في 4 من 5 معايير.",
+        "كشفت التقييمات عن انخفاض أداء النماذج الرائدة بمقدار 3.0 إلى 6.6 نقاط على RoboTrack-Bench مقارنةً بالمعايير التقليدية."
+      ],
+      "sections": [
+        {
+          "heading": "تحدّي التتبع في البيئات الواقعية",
+          "paragraphs": [
+            {
+              "text": "تواجه الروبوتات صعوبات كبيرة عند التعامل مع الكائنات في بيئات حقيقية مزدحمة، حيث تتداخل العوائق وتتحول زوايا الرؤية. يتطلب رفع كائن ما من قبل روبوت متابعة دقيقة لموقع قابضه وموقع الكائن نفسه أثناء الحركة، وهو تحدٍّ يتفاقم عندما يحجب القابض الكائن أو تتغير زاوية الكاميرا. في المختبرات، يجب على الروبوت الذي يتعامل مع ماصة (pipette) أن يتتبع طرفها بدقة لمحاذاة فتحة الأنبوب، وهي مهام تصبح أكثر تعقيداً مع وجود كائنات أخرى في الخلفية. تعتمد أنظمة الروبوتات الحالية على أدوات تتبع جاهزة لتوثيق الحركة في الفيديوهات وتوفير تغذية راجعة أثناء التنفيذ، لكن أداء هذه الأدوات في البيئات المختبرية لا يعكس بالضرورة قدرتها في العالم الحقيقي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "مقدمة حزمة RoboTrack",
+          "paragraphs": [
+            {
+              "text": "لمعالجة هذه الفجوة، أطلقت مؤسسة Ai2 حزمة RoboTrack، وهي مجموعة بيانات ومعايير مخصصة لتتبع النقاط في التلاعب الروبوتي. تهدف هذه الحزمة إلى تقييم قدرة النماذج على تتبع مواقع محددة على الكائنات عبر إطارات الفيديو المتتالية، بما في ذلك اللحظات التي يختفي فيها الكائن خلف عوائق ثم يظهر مجدداً. تتضمن الحزمة مكونين رئيسيين: RoboTrack-Bench للتقييم، و RoboTrack-15M للبيانات التدريبية الاصطناعية. كما أصدرت المؤسسة نموذجين جديدين هما RoboTracker و RoboTracker-Warp، اللذين صُمما لتحسين الأداء في هذه السيناريوهات المعقدة. يمكن الاطلاع على التفاصيل التقنية والبيانات عبر صفحة المشروع الرسمية.",
+              "links": [
+                {
+                  "text": "صفحة المشروع",
+                  "url": "https://robotrack.allen.ai/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تفاصيل معيار التقييم RoboTrack-Bench",
+          "paragraphs": [
+            {
+              "text": "يتجاوز RoboTrack-Bench البيئات المختبرية التقليدية المزدحمة على الطاولات، حيث يضم 307 فيديو مأخوذة من مصادر متنوعة مثل DROID و Ego-Exo4D و MolmoAct 2 و EgoVerse. تم توثيق إجمالي 2,522 مساراً للنقاط يدوياً، مع التركيز على النقاط المتحركة أو المحجوبة بدلاً من الخلفية الثابتة. تشمل الفيديوهات روبوتات وأيدي بشرية تتعامل مع كائنات في مشاهد مزدحمة، ومن منظور الشخص الأول والثالث. لضمان الدقة، خضع كل مسار لعملية تحقق يدوي إطاراً بإطار، وتم تصنيف المسارات حسب نوع الكائن (روبوت، كائن متلاعب به، أو كائن ثابت) لتسهيل التحليل المستقبلي للأداء.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بيانات التدريب الاصطناعية RoboTrack-15M",
+          "paragraphs": [
+            {
+              "text": "بالإضافة إلى بيانات التقييم، طورت Ai2 مجموعة بيانات تدريبية اصطناعية ضخمة تسمى RoboTrack-15M. تم توليد هذه البيانات باستخدام نظام المحاكاة MolmoSpaces، حيث أُنشئت مسارات نقاط كثيفة من مسارات التلاعب الروبوتي المحاكاة. تهدف هذه البيانات إلى سد الفجوة بين الأداء في المحاكاة والأداء في العالم الحقيقي. أثبتت التقييمات أن إضافة هذه البيانات الاصطناعية إلى تدريب النماذج القائمة يحسن بشكل ملحوظ من أدائها على فيديوهات التلاعب الحقيقية، مع امتداد هذه المكاسب إلى معايير تتبع أخرى. تتوفر هذه البيانات ومصادر الكود على منصات مفتوحة المصدر.",
+              "links": [
+                {
+                  "text": "البيانات",
+                  "url": "https://huggingface.co/datasets/allenai/RoboTrack-15M"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "نتائج التقييم: فجوة الأداء",
+          "paragraphs": [
+            {
+              "text": "أظهرت التقييمات التي أجرتها Ai2 على أربعة متتبعين رائدين (CoTracker3, BootsTAPNext, AllTracker, CoWTracker) أن الأداء ينخفض بشكل كبير على RoboTrack-Bench مقارنةً بالمعايير الروبوتية الحالية. انخفضت درجات النماذج النهائية بمقدار يتراوح بين 3.0 و 6.6 نقاط في مؤشر Average Jaccard (AJ). على سبيل المثال، انخفض أداء أقوى المتتبعات الجاهزة، CoWTracker، من 70.5 AJ على معيار RoboTAP إلى 63.9 على RoboTrack-Bench. تشير هذه النتائج إلى أن المعايير الحالية تقدم صورة غير كاملة عن أداء التتبع في التلاعب الواقعي، وأن التقييم على مشاهد أكثر تنوعاً يكشف عن نقاط ضعف مشتركة بين جميع النماذج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إطلاق النماذج الجديدة",
+          "paragraphs": [
+            {
+              "text": "أطلقت Ai2 نموذجين جديدين ضمن هذه الحزمة: RoboTracker، وهو نموذج AllTracker مُحسّن باستخدام تقنيات وبيانات RoboTrack، و RoboTracker-Warp، المدرب من نموذج CoWTracker. أظهرت النتائج أن كلا النموذجين يحسنان من متوسط مؤشر AJ عبر معايير الروبوتات الثلاثة مقارنةً بالخطوط الأساسية المصاحبة لهما. حقق RoboTracker-Warp أداءً متقدماً (State-of-the-art) في أربعة من المعايير الخمسة التي تم تقييمها. توفر هذه النماذج أدوات عملية لتحسين توجيه الروبوتات في المهام المخبرية، مثل التعامل مع الماصات، مما يعزز دقة التفاعل مع الكائنات في بيئات العمل الحقيقية.",
+              "links": [
+                {
+                  "text": "النماذج",
+                  "url": "https://huggingface.co/collections/allenai/robotrack"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "روبوتات",
+        "تعلم الآلة",
+        "تتبع النقاط",
+        "معايير تقييم",
+        "Ai2",
+        "محاكاة",
+        "رؤية حاسوبية"
+      ],
+      "entities": [
+        "Ai2",
+        "RoboTrack",
+        "RoboTrack-Bench",
+        "RoboTrack-15M",
+        "RoboTracker",
+        "RoboTracker-Warp",
+        "MolmoSpaces",
+        "CoWTracker",
+        "AllTracker"
+      ],
+      "category": "الروبوتات",
+      "dateLabel": "23 نوفمبر 2026",
+      "modifiedLabel": "23 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 631
+    },
+    "en": {
+      "title": "Ai2 Releases RoboTrack Benchmark and Models for Robotic Point Tracking",
+      "description": "Allen Institute for AI introduces RoboTrack benchmark suite and two new tracking models that outperform existing methods on real-world manipulation tasks.",
+      "deck": "The Allen Institute for AI has released RoboTrack, a new benchmark and training data suite for point tracking in robotic manipulation, along with two models that set new performance records on multiple benchmarks.",
+      "summaryBullets": [
+        "RoboTrack-Bench contains 307 human-annotated videos with 2,522 point tracks from diverse real-world manipulation scenarios",
+        "RoboTrack-15M provides 15 million synthetic training tracks generated from simulated robot interactions",
+        "RoboTracker and RoboTracker-Warp models improve average Jaccard scores across three robotics benchmarks",
+        "RoboTracker-Warp achieves state-of-the-art performance on four of five evaluated benchmarks",
+        "All components including code, data, and models are openly released on Hugging Face and GitHub"
+      ],
+      "sections": [
+        {
+          "heading": "New Benchmark Exposes Gaps in Current Tracking Systems",
+          "paragraphs": [
+            {
+              "text": "The Allen Institute for AI (Ai2) has unveiled RoboTrack, a comprehensive benchmark and training data suite designed to evaluate and improve point tracking for real-world robotic manipulation. The release addresses a critical gap: while existing trackers score well on established robotics benchmarks, their performance drops significantly when tested on more varied, realistic manipulation scenes.",
+              "links": [
+                {
+                  "text": "RoboTrack",
+                  "url": "https://huggingface.co/blog/allenai/robotrack"
+                },
+                {
+                  "text": "RoboTrack",
+                  "url": "https://robotrack.allen.ai/"
+                }
+              ]
+            },
+            {
+              "text": "RoboTrack-Bench, the evaluation component, comprises 307 human-annotated videos sourced from DROID, Ego-Exo4D, MolmoAct 2, and EgoVerse datasets. These clips capture robots and human hands manipulating objects across cluttered environments, with both first-person and third-person viewpoints. Every one of the 2,522 point tracks has been verified by human annotators, who prioritized points that move or become occluded — conditions that commonly challenge tracking systems during actual robot operations.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Synthetic Training Data at Scale",
+          "paragraphs": [
+            {
+              "text": "To support model training, Ai2 extended its MolmoSpaces simulation ecosystem to generate RoboTrack-15M, a synthetic dataset of 15 million dense point tracks derived from simulated robot manipulation trajectories. The pipeline produces training data specifically targeted toward the challenges of robotic manipulation, including occlusions, viewpoint changes, and cluttered backgrounds.",
+              "links": []
+            },
+            {
+              "text": "Evaluations demonstrate that adding RoboTrack-15M to an existing tracker's training regimen improves performance on real manipulation video, with gains that transfer to other tracking benchmarks. This suggests the synthetic data captures relevant manipulation dynamics despite being generated in simulation.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Current Trackers Struggle on Real-World Manipulation",
+          "paragraphs": [
+            {
+              "text": "Ai2 evaluated four leading trackers — CoTracker3, BootsTAPNext, AllTracker, and CoWTracker — on RoboTrack-Bench and four other benchmarks. Every tracker scored lower on RoboTrack-Bench than on RoboTAP, the only other real-video robotics benchmark, with drops ranging from 3.0 to 6.6 Average Jaccard (AJ) points. Even the strongest off-the-shelf tracker, CoWTracker, fell from 70.5 AJ on RoboTAP to 63.9 on RoboTrack-Bench.",
+              "links": []
+            },
+            {
+              "text": "The results also reveal that performance rankings on older benchmarks do not reliably predict real-world manipulation ability. For example, BootsTAPNext — the strongest model on DAVIS — trails CoWTracker by 3.7 AJ on RoboTrack-Bench and even falls behind the Kubric-only AllTracker (60.2 vs 61.4 AJ), despite BootsTAPNext's training on 15 million real videos. RGB-Stacking, a simulated benchmark, ranks models differently than real manipulation video, rewarding synthetic training over real-world capability.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Two New Models Set New Benchmarks",
+          "paragraphs": [
+            {
+              "text": "Alongside the benchmark and training data, Ai2 is releasing two new point tracking models. RoboTracker is a fine-tuned AllTracker model incorporating Ai2's techniques and data, while RoboTracker-Warp is trained from CoWTracker. Both models improve average AJ across three robotics benchmarks compared to their respective released baselines.",
+              "links": []
+            },
+            {
+              "text": "RoboTracker-Warp achieves state-of-the-art performance on four out of the five benchmarks evaluated, marking a significant advance for point tracking in robotic manipulation. The models are available for immediate use and further development by the research community.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Real-World Validation on Wet-Lab Tasks",
+          "paragraphs": [
+            {
+              "text": "Beyond benchmark evaluations, Ai2 validated the improved trackers on a physical robot performing pipette handling in wet-lab tasks. The tracker helped guide the robot's gripper and track the pipette tip while aligning it with tube openings — a task that requires precise tracking under occlusion and viewpoint changes. This demonstration shows the practical utility of the RoboTrack-trained models for actual robotic deployment.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Open Release for Community Research",
+          "paragraphs": [
+            {
+              "text": "All RoboTrack components — including the benchmark, synthetic training data, model weights, evaluation code, and a technical paper describing the work — are openly released. Researchers can access the benchmark data on Hugging Face, the training dataset as RoboTrack-15M, and the model checkpoints through the Allen AI collection. The codebase is available on GitHub for reproduction and extension.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Ai2",
+        "Allen Institute for AI",
+        "RoboTrack",
+        "point tracking",
+        "robotic manipulation",
+        "computer vision",
+        "benchmark",
+        "Hugging Face"
+      ],
+      "entities": [
+        "Allen Institute for AI",
+        "RoboTrack",
+        "RoboTracker",
+        "RoboTracker-Warp",
+        "MolmoSpaces"
+      ],
+      "category": "Robotics",
+      "dateLabel": "November 23, 2026",
+      "modifiedLabel": "November 23, 2026",
+      "readMinutes": 4,
+      "wordCount": 671
+    }
+  },
+  "datePublished": "2026-11-23T21:20:01.535903+03:00",
+  "dateModified": "2026-11-23T21:20:01.535903+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/robotrack-point-tracking-for-real-world-robotic-manipulation/hero.webp",
+    "card": "/forum/assets/posts/2026/11/robotrack-point-tracking-for-real-world-robotic-manipulation/card.webp",
+    "social": "/forum/assets/posts/2026/11/robotrack-point-tracking-for-real-world-robotic-manipulation/social.jpg",
+    "alt": {
+      "ar": "RoboTrack: معيار جديد لاختبار تتبع النقاط في الروبوتات",
+      "en": "Ai2 Releases RoboTrack Benchmark and Models for Robotic Point Tracking"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/0KlbITzhyUGtGPyvi09um.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/robotrack-point-tracking-for-real-world-robotic-manipulation/inline-01.webp",
+        "width": 1400,
+        "height": 1000,
+        "alt": {
+          "ar": "RoboTrack: معيار جديد لاختبار تتبع النقاط في الروبوتات",
+          "en": "RoboTrack wordmark logo on a dark teal-to-magenta gradient background"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/robotrack",
+        "originalUrl": "https://www.datocms-assets.com/64837/1795407244-robotrack-blog-draft-google-docs-image-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/robotrack-point-tracking-for-real-world-robotic-manipulation/inline-02.webp",
+        "width": 1400,
+        "height": 1000,
+        "alt": {
+          "ar": "RoboTrack: معيار جديد لاختبار تتبع النقاط في الروبوتات",
+          "en": "Overview diagram of RoboTrack showing RoboTrack-15M simulated data generation from MolmoSpaces and RoboTrack-Bench human-annotated real-world manipulation footage"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/robotrack",
+        "originalUrl": "https://www.datocms-assets.com/64837/1795407698-robotrack-blog-draft-google-docs-image-2.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/robotrack-point-tracking-for-real-world-robotic-manipulation/inline-03.webp",
+        "width": 1400,
+        "height": 749,
+        "alt": {
+          "ar": "RoboTrack: معيار جديد لاختبار تتبع النقاط في الروبوتات",
+          "en": "Examples of human-verified point tracks in RoboTrack-Bench across DROID, Ego-Exo4D, MolmoAct 2, and EgoVerse"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/robotrack",
+        "originalUrl": "https://www.datocms-assets.com/64837/1795407981-robotrack-blog-draft-google-docs-image-3-1.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/robotrack-point-tracking-for-real-world-robotic-manipulation/inline-04.webp",
+        "width": 1400,
+        "height": 696,
+        "alt": {
+          "ar": "RoboTrack: معيار جديد لاختبار تتبع النقاط في الروبوتات",
+          "en": "Evaluation table comparing CoTracker3, BootsTAPNext, AllTracker, and CoWTracker in Average Jaccard across RoboTrack-Bench, RoboTAP, RGB-Stacking, DAVIS, and Kinetics"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/allenai/robotrack",
+        "originalUrl": "https://www.datocms-assets.com/64837/1795408316-robotrack-blog-draft-google-docs-image-4.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/allenai/robotrack",
+      "type": "official",
+      "title": "RoboTrack: Point tracking for real-world robotic manipulation"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/allenai/robotrack",
+  "sourceTitle": "RoboTrack: Point tracking for real-world robotic manipulation",
+  "trendScore": 111.68,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-23T18:20:01+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/robotrack-point-tracking-for-real-world-robotic-manipulation.json"
+}
