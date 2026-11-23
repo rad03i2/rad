@@ -1,5 +1,370 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-23T13:58:53+00:00",
-  "last_published_story_id": "a0f20ca2abe1d1c845b2"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-23T14:09:58+00:00",
+  "target_publish_at": "2026-11-23T17:18:52.895522+03:00",
+  "story": {
+    "title": "How to build and maintain an agentic evaluation",
+    "url": "https://huggingface.co/blog/agentic-evals",
+    "domain": "huggingface.co",
+    "summary": "",
+    "published_at": "2026-11-23T00:00:00+00:00",
+    "discovered_at": "2026-11-23T14:04:01+00:00",
+    "source": {
+      "name": "Hugging Face Blog",
+      "feed": "https://huggingface.co/blog/feed.xml",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 26,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 59,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "00d52199bef25f9eda98",
+    "trend": {
+      "score": 99.53,
+      "age_hours": 14.07,
+      "corroboration_count": 0,
+      "entity_momentum": 6.0,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://huggingface.co/blog/agentic-evals",
+      "name": "Hugging Face Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "How to build and maintain an agentic evaluation",
+      "title": "How to build and maintain an agentic evaluation",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "هاغينغ فيس تطرح دليلاً لبناء تقييمات الوكلاء الذكية وصيانتها",
+      "description": "منصة هاغينغ فيس تنشر دليلاً تقنياً شاملاً يشرح ثماني خطوات لبناء تقييمات الوكلاء الذكية، مع التركيز على الشفافية وإعادة الاستخدام المفتوح.",
+      "deck": "نشرت منصة هاغينغ فيس دليلاً تقنياً مفصلاً يوضح كيفية بناء تقييمات الوكلاء الذكية وصيانتها عبر ثماني خطوات عملية، مستعرضةً تطور ثلاثة أجيال من التقييمات وأهمية البنية التحتية المفتوحة.",
+      "summary_bullets": [
+        "الدليل يغطي تطور التقييمات من الأسئلة والأجوبة إلى الوكلاء والفرق المتعددة",
+        "ثماني خطوات عملية لبناء تقييم وكيل فيزيائي حقيقي مع أوامر تنفيذية",
+        "منصة هاغينغ فيس تستضيف 3500 لوحة متصدرين ونمو 16 ضعفاً في مجموعات البيانات",
+        "دعوة لمشاركة البنية التحتية وطرق التصحيح مع الحفاظ على خصوصية الاختبارات الحساسة"
+      ],
+      "sections": [
+        {
+          "heading": "ثلاثة أجيال من تقييمات الذكاء الاصطناعي",
+          "paragraphs": [
+            {
+              "text": "تطور تصميم تقييمات الذكاء الاصطناعي عبر ثلاثة أشكال رئيسية مع تزايد قدرات النماذج اللغوية: بدأت بمرحلة الأسئلة والأجوبة مثل معايير MMLU عام 2020 وGPQA عام 2023 التي تقيس المعرفة والاستدلال عبر الإجابات، ثم انتقلت إلى التقييمات الوكليّة مثل SWE-bench وWebArena التي تتطلب تخطيطاً واستخدام أدوات داخل بيئات عمل، وأخيراً ظهرت تقييمات الفرق والأسراب التي تقيس تنسيق عدة وكلاء وإنجازهم الجماعي.",
+              "links": []
+            },
+            {
+              "text": "أوضحت هاغينغ فيس أن التقييمات الوكليّة أصبحت الأبرز في إعلانات إصدار النماذج نظراً لاهتمام المستخدمين والمؤسسات بالنشر الوكلي، كما أنها تشكل نقطة انطلاق لفهم كيف يؤثر تصميم التقييم على أداء النموذج. وأشارت إلى تدقيق Terminal-Bench حيث أدى تغيير حزام الوكيل فقط إلى تباين في الدقة بلغ 29.9 نقطة مئوية مع ثبات النموذج.",
+              "links": [
+                {
+                  "text": "هاغينغ فيس",
+                  "url": "https://huggingface.co/blog/agentic-evals"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تشريح التقييم الوكلي: المكونات الأساسية",
+          "paragraphs": [
+            {
+              "text": "يتألف التقييم الوكلي من عدة أجزاء قابلة للنشر والفحص المستقل: مهمة تمنح الوكيل تعليماته، وحزام وكيل يغلف النموذج وأدواته للعمل داخل بيئة مثبتة، وحزام تقييم يشغل عدة محاولات (rollouts) لكل مهمة، ومحقق يصنف الحالة النهائية للبيئة، وآثار (Traces) تسجل عمل الوكيل بشكل قابل للمراجعة والمشاركة.",
+              "links": [
+                {
+                  "text": "Traces",
+                  "url": "https://huggingface.co/docs/hub/en/agent-traces"
+                }
+              ]
+            },
+            {
+              "text": "تستضيف المنصة حالياً نحو 3500 لوحة متصدرين للتقييم، وشهدت نمواً بنحو 16 ضعفاً في مجموعات بيانات التقييم خلال العام الماضي لتصل إلى حوالي 17000 مجموعة، مع دمج دعم جديد للتجريدات الوكليّة ذات الصلة بالتقييم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "بناء تقييم عملي: ثماني خطوات من المطالبة إلى النتيجة",
+          "paragraphs": [
+            {
+              "text": "يستعرض الدليل بناء تقييم لوكيل يحلل قياسات مختبر فيزيائي، معتمداً على مهمة مفتوحة لتوجيه الجهد نحو الخبرة الميدانية والتحقق. الخطوات الثماني هي: تعريف المطالبة، إيجاد مهمة، تشغيلها دون تعديل، تكييفها، فحص التقييم، قراءة الآثار، الإبلاغ عن النتيجة، ومقارنة النماذج. ويوضح الشكل 3 في الدليل ما أنتجته كل خطوة في المثال العملي.",
+              "links": []
+            },
+            {
+              "text": "يوفر الملحق (Appendix A) تفصيلاً كاملاً مع الأوامر التنفيذية لكل خطوة، مما يتيح للممارسين إعادة الإنتاج والتحقق من صحة المنهجية. هذا النهج يهدف إلى تحويل التقييم من عملية مغلقة إلى ممارسة مفتوحة قابلة للتدقيق والتحسين المستمر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحديات التلوث والاستقلالية في التقييمات الحالية",
+          "paragraphs": [
+            {
+              "text": "تواجه التقييمات الحالية مشكلتين رئيسيتين: أولاً، 98.2% من درجات النماذج على المعايير تُبلغ من طرف واحد فقط، مما يحد من إمكانية التحقق المستقل. ثانياً، تحتفظ العديد من المعايير بعناصر اختبار خاصة لتقليل التلوث (تسرب الأسئلة أو الحلول إلى بيانات التدريب)، حيث تعتمد 60% من مؤشر الذكاء الاصطناعي v5 من Artificial Analysis على تقييمات بمجموعات اختبار محجوبة.",
+              "links": []
+            },
+            {
+              "text": "أطلقت جوجل ديب مايند مؤخراً تقييمات مزدوجة العمى تخفي فيها جيب آمن استفسارات المقيّم الخارجي عن مزود النموذج، وأوزان النموذج عن المقيّم. ورغم أن ذلك يقلل التلوث، إلا أن الخصوصية وحدها لا تضمن الجودة، وقد تعيق المراجعة الخبيرة. ترى هاغينغ فيس أن البنائين يستطيعون ويجب عليهم مشاركة البنية التحتية وطرق التصحيح وأدلة تصميم المهام.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "ما يجب فتحه استراتيجياً: جدول المكونات القابلة للمشاركة",
+          "paragraphs": [
+            {
+              "text": "يقدم الدليل جدولاً يحدد مكوناً بمكون ما يجب مشاركته علناً وما يمكن حمايته. الهدف هو تمكين التدقيق وتصحيح الأخطاء مع احترام حالات لا يناسب فيها النشر العام، عبر مراجعة خاضعة للضوابط. يشمل ذلك مشاركة المهام، البيئات، أحزمة الوكلاء والتقييم، المحققين، والآثار، مع إمكانية إبقاء بعض مجموعات الاختبار الحساسة محمية.",
+              "links": []
+            },
+            {
+              "text": "يختتم الدليل بمصطلحات موحدة لمعالجة عدم الاتساق المصطلحي الشائع في مجتمع أبحاث تقييم الذكاء الاصطناعي، مع الإشارة إلى الأسماء البديلة التي قد يواجهها القارئ، مما يسهل التواصل والتعاون عبر الفرق والمشاريع.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "تقييم النماذج",
+        "الوكلاء الذكية",
+        "هاغينغ فيس",
+        "المصدر المفتوح",
+        "معايير التقييم",
+        "هندسة المحفزات",
+        "تعلم الآلة"
+      ],
+      "entities": [
+        "هاغينغ فيس",
+        "Avijit Ghosh",
+        "Ben Burtenshaw",
+        "Irene Solaiman",
+        "Terminal-Bench",
+        "SWE-bench",
+        "WebArena",
+        "MMLU",
+        "GPQA",
+        "Artificial Analysis",
+        "جوجل ديب مايند"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال مستند حصراً إلى مدونة هاغينغ فيس الرسمية، لا يحتوي على معلومات غير موثقة، الروابط مستمدة من القائمة المسموحة فقط."
+    },
+    "en": {
+      "title": "Hugging Face details how to build agentic evals",
+      "description": "Hugging Face presents an open workflow for building, checking and maintaining agentic evaluations as AI systems take on more complex tasks.",
+      "deck": "Hugging Face has published a guide to building and maintaining agentic evaluations, emphasizing reusable infrastructure, transparent grading and reviewable evidence. The company says evaluations must account for the software surrounding an AI system, not just the model itself.",
+      "summary_bullets": [
+        "Agentic evaluations measure what systems do in environments, rather than only checking answers.",
+        "The guide follows eight steps from defining a claim to comparing models.",
+        "Hugging Face highlights traces, benchmarks and environments as reusable evaluation infrastructure.",
+        "The company says errors in tasks and graders are common and require ongoing review.",
+        "The guide argues that private test sets can reduce contamination but do not guarantee evaluation quality."
+      ],
+      "sections": [
+        {
+          "heading": "A broader definition of evaluation",
+          "paragraphs": [
+            {
+              "text": "Hugging Face has outlined a workflow for building and maintaining agentic evaluations, as AI systems increasingly plan, use tools and complete tasks inside software environments. The guide, published on the Hugging Face Blog, argues that a useful evaluation must define tasks that reflect domain expertise, score answers or actions reliably, and establish whether the results support the claims being made. Further details are available from Hugging Face Blog in the original source material.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/agentic-evals"
+                },
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/agentic-evals"
+                }
+              ]
+            },
+            {
+              "text": "The article describes three broad eras of AI evaluation. Question-and-answer benchmarks such as MMLU and GPQA check a model's response against an expected answer. Agentic benchmarks such as SWE-bench and WebArena examine whether an agent can resolve a software issue or complete a task on a website. More recent team and swarm evaluations assess what groups of agents produce and how they coordinate.",
+              "links": []
+            },
+            {
+              "text": "The guide focuses on agentic evaluations because they are becoming prominent in model release announcements and are attracting interest from users and enterprises. In these evaluations, the surrounding software can influence the result. The article cites an audit of Terminal-Bench in which researchers kept the model fixed but changed the agent harness, producing accuracy differences of as much as 29.9 percentage points.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "The components behind an agentic score",
+          "paragraphs": [
+            {
+              "text": "An agentic evaluation begins with a task that gives the agent an instruction. An agent harness then wraps the model and its tools, allowing it to work inside a pinned environment. During a rollout, the agent may run multiple commands, inspect outputs and retry before stopping. The evaluation harness runs several rollouts for each task, while a verifier grades the environment's final state.",
+              "links": []
+            },
+            {
+              "text": "Each rollout also produces a trace that records the agent's work. The guide presents traces and scores as part of the evidence behind a published result, with the different components capable of being published, inspected and reused separately. Hugging Face has recently added support for related abstractions on its hub, including [Traces](https://huggingface.co/docs/hub/en/agent-traces), [Benchmarks](https://huggingface.co/datasets?benchmark=benchmark%3Aofficial) and [Environments](https://huggingface.co/blog/rl-environments).",
+              "links": []
+            },
+            {
+              "text": "Hugging Face says its hub hosts around 3,500 evaluation leaderboards and that the number of evaluation datasets grew about 16 times over the past year, reaching approximately 17,000 datasets. The company presents this open infrastructure as a way for builders to spend more effort on domain expertise and validation instead of recreating basic tasks, environments and tools.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "An eight-step building process",
+          "paragraphs": [
+            {
+              "text": "The article demonstrates the process through an evaluation for an agent that analyzes measurements for a physics laboratory. Rather than starting from zero, the authors adapt an open task and organize the work into eight steps: define the claim, find a task, run it unchanged, adapt it, check the evaluation, read the traces, report the score and compare models.",
+              "links": []
+            },
+            {
+              "text": "This sequence separates the design of the claim from the mechanics of running the benchmark. It also places validation before reporting and comparison. The guide says the full walkthrough, including commands, appears in its appendix, while the example maps each step to the output it produces.",
+              "links": []
+            },
+            {
+              "text": "The approach is intended to make evaluation construction easier to inspect. Reusing an existing task can provide a starting point, but adaptation still requires domain knowledge and checks that the task, harness and verifier measure the intended capability. The resulting traces and scores can then help readers assess how a model reached its result.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Why benchmarks need ongoing correction",
+          "paragraphs": [
+            {
+              "text": "A central warning in the guide is that errors in tasks and graders are common. The authors describe benchmark maintenance as an active process in which problems must be found, examined and corrected rather than treated as a one-time publication step.",
+              "links": []
+            },
+            {
+              "text": "The article says demand for independent evaluation is growing among policymakers, enterprises and researchers, but that most evaluation results remain difficult for others to verify. It cites a figure that 98.2% of model-benchmark scores are reported by only one party, and it references arguments that in-house evaluation alone is insufficient.",
+              "links": []
+            },
+            {
+              "text": "Open methods, code and data can help others scrutinize an evaluation, identify mistakes and build on the work. The guide also acknowledges that sharing everything is not always possible, particularly when test items or solutions are withheld to reduce contamination. In those cases, it argues that builders can still share infrastructure, grading methods and evidence about task design.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Openness and protected test material",
+          "paragraphs": [
+            {
+              "text": "The guide distinguishes between protecting evaluation items and withholding the supporting material needed to understand a measurement. It notes that Artificial Analysis said 60% of its Intelligence Index v5, announced in October 2026, relies on evaluations with private test sets or held-out answers. The article also points to a recent Google DeepMind pilot of double-blind evaluations, in which a secure enclave hides an outside evaluator's test prompts from the model provider and the model's weights from the evaluator.",
+              "links": []
+            },
+            {
+              "text": "Hugging Face's article says privacy can reduce contamination, but privacy alone does not establish that an evaluation is accurate. Withholding materials can also make expert review harder. Its proposed balance is strategic openness: share each component where possible, explain how the evaluation was built, document what went wrong and use controlled review when public release is unsuitable.",
+              "links": []
+            },
+            {
+              "text": "The article closes with a glossary intended to address inconsistent terminology in the evaluation community. Its broader argument is that transparent construction, inspectable evidence and repeated maintenance are necessary if agentic scores are to support trustworthy comparisons as systems become more capable.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Hugging Face",
+        "AI evaluations",
+        "agentic AI",
+        "benchmarks",
+        "open source",
+        "AI agents"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Terminal-Bench",
+        "SWE-bench",
+        "WebArena",
+        "Artificial Analysis",
+        "Google DeepMind"
+      ],
+      "article_type": "news",
+      "confidence_note": "Based solely on the supplied Hugging Face Blog extract and its listed source metadata."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 577,
+      "word_count_en": 987
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "00d52199bef25f9eda98",
+      "title": "How to build and maintain an agentic evaluation",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 577,
+          "word_count_en": 987
+        }
+      ]
+    }
+  ],
+  "slug": "how-to-build-and-maintain-an-agentic-evaluation",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/how-to-build-and-maintain-an-agentic-evaluation/hero.webp",
+    "card": "/forum/assets/posts/2026/11/how-to-build-and-maintain-an-agentic-evaluation/card.webp",
+    "social": "/forum/assets/posts/2026/11/how-to-build-and-maintain-an-agentic-evaluation/social.jpg",
+    "alt": {
+      "ar": "هاغينغ فيس تطرح دليلاً لبناء تقييمات الوكلاء الذكية وصيانتها",
+      "en": "Hugging Face details how to build agentic evals"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/agentic-evals/thumbnail.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/how-to-build-and-maintain-an-agentic-evaluation/inline-01.webp",
+        "width": 1300,
+        "height": 650,
+        "alt": {
+          "ar": "هاغينغ فيس تطرح دليلاً لبناء تقييمات الوكلاء الذكية وصيانتها",
+          "en": "Hugging Face details how to build agentic evals"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/agentic-evals",
+        "originalUrl": "https://huggingface.co/blog/assets/cwe-bench/thumbnail.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/how-to-build-and-maintain-an-agentic-evaluation/inline-02.webp",
+        "width": 1400,
+        "height": 702,
+        "alt": {
+          "ar": "هاغينغ فيس تطرح دليلاً لبناء تقييمات الوكلاء الذكية وصيانتها",
+          "en": "Hugging Face details how to build agentic evals"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/agentic-evals",
+        "originalUrl": "https://huggingface.co/blog/assets/is-it-agentic-enough/thumbnail.png"
+      }
+    ]
+  }
 }
