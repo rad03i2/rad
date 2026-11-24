@@ -1,5 +1,425 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-24T13:34:20+00:00",
-  "last_published_story_id": "6bc521d5d376461744cd"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-24T13:44:45+00:00",
+  "target_publish_at": "2026-11-24T16:54:19.750694+03:00",
+  "story": {
+    "title": "OpenAI, Cisco Unveil Open Source Tool to Shield Unpatched Linux Systems",
+    "url": "https://www.securityweek.com/openai-cisco-unveil-open-source-tool-to-shield-unpatched-linux-systems",
+    "domain": "securityweek.com",
+    "summary": "OpenAI and Cisco’s Shirudo uses AI-generated shields to block Linux exploits while patches are prepared, but it’s not yet production-ready. The post OpenAI, Cisco Unveil Open Source Tool to Shield Unpatched Linux Systems appeared first on SecurityWeek .",
+    "published_at": "2026-11-24T12:20:41+00:00",
+    "discovered_at": "2026-11-24T12:23:40+00:00",
+    "source": {
+      "name": "SecurityWeek",
+      "feed": "https://www.securityweek.com/feed/",
+      "type": "journalism",
+      "trust": 0.87,
+      "priority": 21,
+      "defaultCategory": "security"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 45,
+    "verification": {
+      "confidence": 0.92,
+      "reason": "trusted_journalism_with_corroboration",
+      "official": false,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": [
+        {
+          "name": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/new-shirudo-tool-uses-ai-to-shield-unpatched-linux-systems-from-exploits",
+          "domain": "bleepingcomputer.com",
+          "title": "New Shirudo tool uses AI to shield unpatched Linux systems from exploits"
+        }
+      ]
+    },
+    "status": "incoming",
+    "id": "f18b8762d1b5a04c011c",
+    "trend": {
+      "score": 108.5,
+      "age_hours": 1.29,
+      "corroboration_count": 1,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://www.securityweek.com/openai-cisco-unveil-open-source-tool-to-shield-unpatched-linux-systems/",
+      "name": "SecurityWeek",
+      "domain": null,
+      "kind": "journalism",
+      "type": "journalism",
+      "feed_title": "OpenAI, Cisco Unveil Open Source Tool to Shield Unpatched Linux Systems",
+      "title": "OpenAI, Cisco Unveil Open Source Tool to Shield Unpatched Linux Systems - SecurityWeek",
+      "ok": true
+    },
+    {
+      "url": "https://www.bleepingcomputer.com/news/security/new-shirudo-tool-uses-ai-to-shield-unpatched-linux-systems-from-exploits/",
+      "name": "BleepingComputer",
+      "domain": null,
+      "kind": "corroborating",
+      "type": "corroborating",
+      "feed_title": "New Shirudo tool uses AI to shield unpatched Linux systems from exploits",
+      "title": "New Shirudo tool uses AI to shield unpatched Linux systems from exploits",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "OpenAI وسيسكو تطلقان أداة مفتوحة المصدر لحماية لينكس",
+      "description": "شيرودو من OpenAI وسيسكو يستخدم وكلاء ذكاء اصطناعي لتوليد «دروع» تمنع استغلال ثغرات لينكس قبل نشر التحديثات، دون إعادة تشغيل الخدمات.",
+      "deck": "منصة Shirudo تعيد بناء Tetragon حول وكلاء ذكاء اصطناعي يولّدون حمايات مؤقتة على مستوى نواة لينكس، لكنها ما زالت في مرحلة ما قبل الإصدار وتحتاج إلى متطلبات عتادية ونواة محددة.",
+      "summary_bullets": [
+        "OpenAI وسيسكو أعلنتا Shirudo، منصة أمنية مفتوحة المصدر تستخدم وكلاء ذكاء اصطناعي لتوليد «دروع» تمنع استغلال الثغرات في لينكس.",
+        "الأداة إعادة كتابة لمنصة Tetragon التابعة لـ Isovalent المملوكة لسيسكو، وتعتمد على eBPF لتعديل سلوك النواة دون إعادة تشغيل النظام.",
+        "في اختبار على ثغرة Java4Shell، صدّ درع مولّد بنموذج Codex محاولة استغلال ضد Elasticsearch دون إعادة تشغيل الخدمة.",
+        "المشروع ليس جاهزاً للإنتاج، ويتطلب قدرات نواة محددة ورقعاً إضافية ووحدة TPM 2.0.",
+        "خبراء يرون الفكرة واعدة لكنهم يحذرون من مخاطر كتابة شيفرة النواة آلياً ونشرها مباشرة في بيئة التشغيل."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق شيرودو وأصله التقني",
+          "paragraphs": [
+            {
+              "text": "أعلنت شركتا OpenAI وسيسكو عن إطلاق Shirudo، منصة أمنية مفتوحة المصدر تعتمد على وكلاء ذكاء اصطناعي لمنع استغلال الثغرات في أنظمة لينكس والتطبيقات العاملة عليها، بهدف منح فرق الدفاع السيبراني حماية مؤقتة أثناء إعداد التحديثات ونشرها. وبحسب ما نقلته SecurityWeek، يمثل المشروع إعادة كتابة تركّز على الذكاء الاصطناعي لمنصة Tetragon للتحقق الأمني في وقت التشغيل، والتي تملكها سيسكو عبر شركة Isovalent.",
+              "links": [
+                {
+                  "text": "SecurityWeek",
+                  "url": "https://www.securityweek.com/openai-cisco-unveil-open-source-tool-to-shield-unpatched-linux-systems/"
+                },
+                {
+                  "text": "Tetragon",
+                  "url": "https://isovalent.com/blog/post/cisco-openai-shirudo/"
+                }
+              ]
+            },
+            {
+              "text": "وكانت Tetragon قد أُطلقت كمشروع مفتوح المصدر في عام 2022، وتستند إليها أيضاً تقنية Live Protect التي تستخدمها سيسكو لتخفيف أثر الثغرات. وتقول الشركتان إن الأداة الجديدة صُممت لمواجهة التحديات التي فرضتها سرعة اكتشاف الثغرات واستغلالها بمساعدة الذكاء الاصطناعي، وهو ما يزيد الضغط على المؤسسات لتطبيق التحديثات في وقت أقصر.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دروع على مستوى النواة دون إعادة تشغيل",
+          "paragraphs": [
+            {
+              "text": "تعتمد Shirudo على تقنية eBPF في لينكس، وهي آلية تسمح بتشغيل برامج داخل بيئة مضبوطة في نواة النظام دون تعديل شيفرة المصدر أو إعادة تشغيل الجهاز. وبهذا تستطيع الأداة مراقبة النشاط المشبوه ونشر حمايات موجهة تُعرف بـ«الدروع» (shields) لعرقلة السلوك الخبيث مع إبقاء عمليات التطبيقات المشروعة دون إزعاج.",
+              "links": []
+            },
+            {
+              "text": "ووفقاً لشرح الشركتين، يستطيع الوكلاء تحليل معلومات الثغرة، وتوليد درع مناسب، واختبار فعاليته قبل تفعيله، مع بقاء قرار النشر النهائي بيد فرق الأمن. وتُوقَّع الحمايات رقمياً وتُتحقق قبل نشرها، مع آليات مصممة لمنع حتى المهاجمين الذين يملكون صلاحيات الجذر من تعطيل التنفيذ على مستوى النواة.",
+              "links": []
+            },
+            {
+              "text": "وتحدد OpenAI أربع قدرات أساسية للأداة: الحماية الحية التي تحجب مسارات الشيفرة المعرضة للخطر دون إعادة تشغيل الأنظمة، والدفاع بمساعدة الذكاء الاصطناعي حيث يحقق الوكلاء في الثغرات ويطورون الدروع ويتحققون من فعاليتها، والنشر الموثوق عبر التوقيعات التشفيرية ومدقق eBPF وضوابط أمان النواة، وأخيراً التحقق المدعوم بالعتاد باستخدام وحدات المنصة الموثوقة (TPM) لتسجيل تحميل الدروع أو إزالتها. وتضم وثائق Shirudo تفاصيل التشغيل والمتطلبات الأولية للمشروع.",
+              "links": [
+                {
+                  "text": "Shirudo",
+                  "url": "https://docs.shirudo.dev/start/faq.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "اختبار على ثغرة Java4Shell",
+          "paragraphs": [
+            {
+              "text": "في اختبار مضبوط استهدف ثغرة Java4Shell الحديثة، نجح درع وُلّد باستخدام نموذج Codex من OpenAI في صد محاولة استغلال استهدفت نسخة عاملة من Elasticsearch، دون الحاجة إلى إعادة تشغيل الخدمة. وتُقدَّم هذه النتيجة كعرض توضيحي لقدرة الأداة على التعامل مع ثغرات جارية، وليست دليلاً على جاهزيتها للبيئات الإنتاجية.",
+              "links": []
+            },
+            {
+              "text": "ويرى Marcus Hutchins، الباحث الرئيسي في مجال التهديدات لدى شركة Expel المتخصصة في الكشف والاستجابة المُدارين، أن إمكانات تخفيف الاستغلال في وقت التشغيل عبر eBPF «كبيرة بالفعل»، لكنه أشار إلى أن ترك وكلاء الذكاء الاصطناعي يكتبون قواعد قد تؤثر في النواة ليس فكرة سليمة بالضرورة. ولاحظ أيضاً أن قدرات الأداة محصورة في لينكس، لأن ماك وويندوز لم يوفّرا المكونات اللازمة لتعمل بفعالية، وفق ما أوردته BleepingComputer.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/new-shirudo-tool-uses-ai-to-shield-unpatched-linux-systems-from-exploits/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "قيود مرحلة ما قبل الإصدار",
+          "paragraphs": [
+            {
+              "text": "تُوصف Shirudo حالياً بأنها في مرحلة تطوير ما قبل الإصدار، وغير جاهزة للاستخدام الإنتاجي. وتتطلب الأداة قدرات محددة في نواة لينكس، إضافة إلى رقع إضافية للنواة ووحدة TPM 2.0، وهي شروط تحدّ من نطاق تجربتها في الوقت الراهن وتجعل نشرها العملي مقيداً ببيئات بعينها.",
+              "links": []
+            },
+            {
+              "text": "وتخطط الشركتان لتوفير تخفيفات «جاهزة للاستخدام» على شكل دروع مختبَرة تُنشر إلى جانب الإفصاحات عن الثغرات، بحيث تحصل المؤسسات على حماية مؤقتة إلى حين تركيب التحديثات الدائمة. وستُوزَّع الدروع كحزم موقعة تشفيرياً بامتداد «.bee» عبر سجل OCI، وفق ما ذكرته Isovalent.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحفظات على كتابة شيفرة النواة آلياً",
+          "paragraphs": [
+            {
+              "text": "أثار أميرام شاشار، الرئيس التنفيذي والشريك المؤسس لشركة أمن السحابة Upwind، تحفظات على الفكرة، قائلاً إن كتابة أكثر شيفرات النواة حساسية في اللحظة ونشرها مباشرة إلى بيئة التشغيل مفهوم عالي المخاطر. وأضاف أنه يحب الفكرة لكن تنفيذها بمصدر مفتوح ينطوي على مخاطر كبيرة، مشيراً إلى العدد الكبير من إصدارات لينكس وتوزيعاتها التي يجب أن تعمل عليها الأداة، وإلى أنها تحتاج إلى اختبار وتغليف وأتمتة قبل أن يثق بها أحد في الإنتاج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الترخيص وخطوات لاحقة",
+          "paragraphs": [
+            {
+              "text": "يُوزَّع المشروع بترخيص مزدوج BSD وGPL، ويأتي مع دليل بدء سريع ووثائق تعريفية من Isovalent، بحسب BleepingComputer. وتقول الشركتان إن Shirudo يمكن تفعيله عبر واجهة سطر أوامر دون الحاجة إلى تشغيل خادم دائم على الجهاز، وإنه ليس محصوراً في eBPF، إذ يمكنه تعديل الشيفرة التنفيذية للتطبيقات أو مساحة المستخدم عند الحاجة إلى توسيع الحماية.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/new-shirudo-tool-uses-ai-to-shield-unpatched-linux-systems-from-exploits/"
+                }
+              ]
+            },
+            {
+              "text": "وعند نشر درع، يحصل المشغلون على عدّادات للإصابات تُظهر محاولات الاستغلال وأين تحتاج الدفاعات إلى تعزيز. وتعتزم OpenAI تقديم شرح تقني موسّع لطريقة عمل الأداة في ندوة متعمقة في 15 ديسمبر، تغطي كيفية الجمع بين eBPF والذكاء الاصطناعي لرصد الهجمات الجديدة والتصدي لها، فيما تصف الشركتان المشروع بأنه نقطة بداية لسلسلة أدوات تعتمد على الوكلاء في إنتاج الشيفرة الأمنية.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "OpenAI",
+        "سيسكو",
+        "لينكس",
+        "الأمن السيبراني",
+        "المصادر المفتوحة",
+        "eBPF",
+        "الذكاء الاصطناعي",
+        "إدارة الثغرات"
+      ],
+      "entities": [
+        "OpenAI",
+        "سيسكو",
+        "Shirudo",
+        "Isovalent",
+        "Tetragon",
+        "eBPF",
+        "Java4Shell",
+        "Elasticsearch",
+        "Upwind",
+        "Expel",
+        "Marcus Hutchins",
+        "أميرام شاشار"
+      ],
+      "article_type": "news",
+      "confidence_note": "المعلومات مستندة إلى تقريري SecurityWeek وBleepingComputer؛ الادعاءات المتعلقة بالفعالية والأمان منسوبة إلى الشركتين، وحدود الجاهزية الإنتاجية مؤكدة في المصدرين."
+    },
+    "en": {
+      "title": "OpenAI, Cisco Unveil Shirudo for Unpatched Linux Systems",
+      "description": "OpenAI and Cisco’s open-source Shirudo uses AI-assisted runtime shields to block Linux exploits while teams prepare patches, but it is not production-ready.",
+      "deck": "OpenAI and Cisco have unveiled Shirudo, an open-source project that uses AI agents to help block vulnerability exploits on Linux systems. The companies say it can deploy temporary protections without restarting services, but the tool remains in pre-release development.",
+      "summary_bullets": [
+        "Shirudo generates and tests runtime protections, called shields, for vulnerable Linux code.",
+        "Operators retain control over deployment, and protections are digitally signed and verified.",
+        "A controlled test blocked a Java4Shell exploit attempt against a running Elasticsearch instance.",
+        "The project is not ready for production and requires specific kernel capabilities, patches and TPM 2.0."
+      ],
+      "sections": [
+        {
+          "heading": "A runtime defense for Linux",
+          "paragraphs": [
+            {
+              "text": "OpenAI and Cisco have introduced Shirudo, an open-source security platform intended to protect Linux systems and applications while administrators prepare and install permanent patches. The project uses AI agents to analyze vulnerability information and produce targeted protections, known as “shields,” that aim to prevent exploitation. The companies presented it as a response to pressure on defenders as vulnerability discovery and exploitation accelerate.",
+              "links": [
+                {
+                  "text": "Shirudo",
+                  "url": "https://docs.shirudo.dev/start/faq.html"
+                }
+              ]
+            },
+            {
+              "text": "The project is an AI-focused rewrite of Cisco-owned Isovalent’s Tetragon runtime security platform, which was open-sourced in 2022 and also underpins Cisco’s Live Protect vulnerability mitigation technology. Shirudo uses eBPF, a Linux technology that can run programs in a controlled environment in the kernel, to change kernel behavior without restarting the operating system. Isovalent describes the relationship between the platforms in its overview of the project.",
+              "links": [
+                {
+                  "text": "Tetragon runtime security platform",
+                  "url": "https://isovalent.com/blog/post/cisco-openai-shirudo/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "AI-generated shields, with operator control",
+          "paragraphs": [
+            {
+              "text": "According to the companies, agents can investigate vulnerability details, generate a shield intended to block the relevant exploit path, and test whether the protection works. The shields are designed to avoid disrupting important services or legitimate application operations. Security teams remain responsible for deciding which protections to deploy, rather than handing deployment decisions entirely to the agents.",
+              "links": []
+            },
+            {
+              "text": "The project combines AI-assisted analysis with kernel-level enforcement. Protections are digitally signed and verified before deployment, and Shirudo uses the eBPF verifier and kernel security controls to help prevent unauthorized changes. The companies also describe hardware-backed verification using Trusted Platform Modules (TPMs), which can provide records of shields being loaded or removed. Those controls are intended to make protections harder to tamper with, including by attackers who have root privileges.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "A Java4Shell demonstration",
+          "paragraphs": [
+            {
+              "text": "In a controlled test, OpenAI and Cisco used a shield generated with OpenAI’s Codex to block an attempted exploit of Java4Shell against an Elasticsearch instance. The protection worked without restarting the running service, according to the companies. The demonstration illustrates the proposed role for Shirudo: provide a temporary barrier around vulnerable code while organizations work toward installing a permanent fix.",
+              "links": [
+                {
+                  "text": "Java4Shell",
+                  "url": "https://www.securityweek.com/topics/java4shell/"
+                }
+              ]
+            },
+            {
+              "text": "The reported result is a test of a particular shield and target, not evidence that the project can protect every Linux system or vulnerability. BleepingComputer reports that deployed shields can provide operators with hit counts, giving teams visibility into attempted exploits and potential gaps in defenses. The available material does not establish how broadly the test has been repeated across Linux distributions or applications.",
+              "links": [
+                {
+                  "text": "BleepingComputer reports",
+                  "url": "https://www.bleepingcomputer.com/news/security/new-shirudo-tool-uses-ai-to-shield-unpatched-linux-systems-from-exploits/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Not ready for production",
+          "paragraphs": [
+            {
+              "text": "Shirudo is in pre-release development and the companies say it is not ready for production use. The tool requires specific Linux kernel capabilities, additional kernel patches and TPM 2.0. Its protections are Linux-focused; BleepingComputer also notes that macOS and Windows do not have the components needed for the tool to work in the same way.",
+              "links": []
+            },
+            {
+              "text": "Amiram Shachar, CEO and co-founder of cloud security firm Upwind, warned that generating and deploying sensitive kernel code at runtime is risky, particularly before the tool has been tested and automated across the many Linux versions and distributions it would need to support. Marcus Hutchins, principal threat researcher at Expel, also cautioned that AI-written rules could affect the kernel, despite the potential for eBPF-based runtime mitigation. Their concerns underscore the gap between a successful demonstration and a dependable production deployment.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Planned distribution with disclosures",
+          "paragraphs": [
+            {
+              "text": "OpenAI and Cisco hope to eventually provide tested, ready-to-use shields alongside vulnerability disclosures, giving organizations temporary protection before patches can be installed. Isovalent says the protections are intended to be distributed as cryptographically signed “.bee” packages through an OCI registry. This is a future goal, not a description of a currently production-ready distribution service.",
+              "links": []
+            },
+            {
+              "text": "Isovalent says Shirudo can be activated through a command-line interface and does not require a daemon to run permanently on a machine. The project is designed to allow a configurable degree of autonomy, while retaining operator oversight of mitigations. The companies have framed the release as an early step toward agent-assisted runtime defense; practical adoption will depend on development, testing and packaging beyond the initial pre-release stage.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "OpenAI",
+        "Cisco",
+        "Linux security",
+        "eBPF",
+        "AI security",
+        "Vulnerability management"
+      ],
+      "entities": [
+        "OpenAI",
+        "Cisco",
+        "Shirudo",
+        "Isovalent",
+        "Tetragon",
+        "eBPF",
+        "Codex",
+        "Java4Shell",
+        "Elasticsearch"
+      ],
+      "article_type": "news",
+      "confidence_note": "Core launch and readiness details are supported by SecurityWeek; BleepingComputer adds technical and expert commentary."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 797,
+      "word_count_en": 748
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "f18b8762d1b5a04c011c",
+      "title": "OpenAI, Cisco Unveil Open Source Tool to Shield Unpatched Linux Systems",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 797,
+          "word_count_en": 748
+        }
+      ]
+    }
+  ],
+  "slug": "openai-cisco-unveil-open-source-tool-to-shield-unpatched-linux-systems",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/openai-cisco-unveil-open-source-tool-to-shield-unpatched-linux-systems/hero.webp",
+    "card": "/forum/assets/posts/2026/11/openai-cisco-unveil-open-source-tool-to-shield-unpatched-linux-systems/card.webp",
+    "social": "/forum/assets/posts/2026/11/openai-cisco-unveil-open-source-tool-to-shield-unpatched-linux-systems/social.jpg",
+    "alt": {
+      "ar": "OpenAI وسيسكو تطلقان أداة مفتوحة المصدر لحماية لينكس",
+      "en": "OpenAI, Cisco Unveil Shirudo for Unpatched Linux Systems"
+    },
+    "credit": "SecurityWeek",
+    "sourceUrl": "https://www.securityweek.com/wp-content/uploads/2025/02/Agentic-AI-Hacking.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/openai-cisco-unveil-open-source-tool-to-shield-unpatched-linux-systems/inline-01.webp",
+        "width": 1400,
+        "height": 788,
+        "alt": {
+          "ar": "OpenAI وسيسكو تطلقان أداة مفتوحة المصدر لحماية لينكس",
+          "en": "New Shirudo tool uses AI to shield unpatched Linux systems from exploits"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Image related to the report from BleepingComputer"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/new-shirudo-tool-uses-ai-to-shield-unpatched-linux-systems-from-exploits/",
+        "originalUrl": "https://www.bleepstatic.com/content/hl-images/2026/11/24/Linux-shield.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/openai-cisco-unveil-open-source-tool-to-shield-unpatched-linux-systems/inline-02.webp",
+        "width": 1121,
+        "height": 1050,
+        "alt": {
+          "ar": "OpenAI وسيسكو تطلقان أداة مفتوحة المصدر لحماية لينكس",
+          "en": "Reporting hits of deployed shields"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Reporting hits on deployed shields Source: Isovalent"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/new-shirudo-tool-uses-ai-to-shield-unpatched-linux-systems-from-exploits/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/u/1220909/2026/November/hits.jpg"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/openai-cisco-unveil-open-source-tool-to-shield-unpatched-linux-systems/inline-03.webp",
+        "width": 1400,
+        "height": 748,
+        "alt": {
+          "ar": "OpenAI وسيسكو تطلقان أداة مفتوحة المصدر لحماية لينكس",
+          "en": "Shirudo's functional overview"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من BleepingComputer",
+          "en": "Shirudo's functional overview Source: Isovalent"
+        },
+        "credit": "BleepingComputer",
+        "sourceUrl": "https://www.bleepingcomputer.com/news/security/new-shirudo-tool-uses-ai-to-shield-unpatched-linux-systems-from-exploits/",
+        "originalUrl": "https://www.bleepstatic.com/images/news/u/1220909/2026/November/overview(5).jpg"
+      }
+    ]
+  }
 }
