@@ -1,0 +1,348 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "6eb709e7eddb6adde49a",
+  "slug": "the-three-dism-commands-you-should-know-to-fix-your-windows-system",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/the-three-dism-commands-you-should-know-to-fix-your-windows-system/",
+    "en": "/forum/en/ai/the-three-dism-commands-you-should-know-to-fix-your-windows-system/"
+  },
+  "locales": {
+    "ar": {
+      "title": "أوامر DISM الثلاثة لإصلاح ملفات نظام ويندوز التالفة",
+      "description": "تعرف على أوامر DISM الثلاثة الأساسية لفحص وإصلاح صور نظام ويندوز التالفة، مع خطوات استخدام وسائط التثبيت الرسمية عند تعذر الاتصال بخوادم التحديث.",
+      "deck": "توفر أداة DISM المدمجة في ويندوز حلاً فعالاً لاستعادة الملفات النظامية التالفة عبر ثلاثة أوامر رئيسية.",
+      "summaryBullets": [
+        "أداة DISM تفحص صور النظام وتصلح الملفات التالفة دون التأثير على بيانات المستخدم الشخصية.",
+        "الأوامر الثلاثة هي CheckHealth و ScanHealth و RestoreHealth، وتتطلب صلاحيات المسؤول.",
+        "عند تعطل ويندوز أبديت، يمكن استخدام ملف ISO رسمي كمصدر بديل لإصلاح مخزن المكونات.",
+        "يُنصح بتشغيل أداة SFC بعد اكتمال عملية إصلاح DISM لضمان استبدال الملفات التالفة بنجاح."
+      ],
+      "sections": [
+        {
+          "heading": "أهمية أداة DISM في صيانة نظام ويندوز",
+          "paragraphs": [
+            {
+              "text": "يعتمد نظام تشغيل ويندوز بشكل أساسي على مجموعة من الملفات النظامية الحرجة لتشغيل التطبيقات وتنفيذ المهام اليومية وتثبيت التحديثات. عند تلف هذه الملفات أو فقدانها، قد يعاني المستخدم من أخطاء متكررة أو تجمد النظام أو عدم استجابة بعض الميزات. في مثل هذه الحالات، قد لا تكون إعادة تشغيل الحاسوب أو خطوات استكشاف الأخطاء التقليدية كافية لحل المشكلة. ويمكن الرجوع إلى Engadget للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "Engadget",
+                  "url": "https://www.engadget.com/2320620/dism-commands-for-windows-system-image-repair/"
+                }
+              ]
+            },
+            {
+              "text": "للتعامل مع هذه الأعطال، توفر مايكروسوفت أداة مدمجة تسمى Deployment Image Servicing and Management أو اختصاراً DISM. تعمل هذه الأداة كواجهة سطر أوامر مخصصة لفحص صور نظام ويندوز بحثاً عن الملفات التالفة ومحاولة إصلاحها. من الجدير بالذكر أن DISM يركز حصرياً على الملفات النظامية، مما يضمن بقاء الملفات الشخصية للمستخدمين آمنة وغير متأثرة بالعملية. ويمكن الرجوع إلى News للاطلاع على التفاصيل الأصلية للمصدر.",
+              "links": [
+                {
+                  "text": "News",
+                  "url": "https://www.engadget.com/category/news/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "متطلبات التشغيل وصلاحيات المسؤول",
+          "paragraphs": [
+            {
+              "text": "لتشغيل أوامر DISM بنجاح، يجب استخدام إما سطر الأوامر (Command Prompt) أو PowerShell. تتطلب هذه الأدوات صلاحيات المسؤول (Administrator) لإجراء تغييرات على مستوى النظام. هذا الشرط ضروري لأن الأداة تحتاج إلى وصول مباشر إلى ملفات النظام المحمية لإجراء عمليات الفحص والإصلاح.",
+              "links": []
+            },
+            {
+              "text": "تتبع جميع أوامر DISM المذكورة في هذا السياق صيغة محددة تبدأ بـ DISM /Online /Cleanup-Image. يمثل الخيار /Online تحديد أن العملية ستستهدف نسخة ويندوز الحالية قيد التشغيل، بينما يشير /Cleanup-Image إلى تنفيذ عمليات الاسترداد على التثبيت المحدد. فهم هذه البنية يساعد المستخدمين على تكوين أوامر مخصصة عند الحاجة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أمر CheckHealth للفحص السريع",
+          "paragraphs": [
+            {
+              "text": "يُعد أمر DISM /Online /Cleanup-Image /CheckHealth الخطوة الأولى الموصى بها عند الاشتباه في تلف ملفات النظام. يقوم هذا الأمر بالتحقق مما إذا كان ويندوز قد حدد بالفعل ملفات نظام تالفة، وهل يمكن إصلاح هذا التلف. يتميز هذا الأمر بسرعة التنفيذ، مما يجعله خياراً مثالياً للتشخيص الأولي دون استهلاك وقت طويل.",
+              "links": []
+            },
+            {
+              "text": "إذا أشارت النتيجة إلى وجود تلف قابل للإصلاح، يمكن الانتقال إلى الخطوات التالية. أما إذا كانت النتيجة سلبية، فقد لا تكون هناك حاجة لإجراء عمليات إصلاح مكثفة. يوفر هذا الأمر نظرة عامة سريعة على حالة النظام دون إجراء مسح شامل جديد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أمر ScanHealth للمسح الشامل",
+          "paragraphs": [
+            {
+              "text": "على عكس أمر CheckHealth، يقوم أمر DISM /Online /Cleanup-Image /ScanHealth بإجراء مسح جديد وشامل لملفات النظام. يهدف هذا الأمر إلى تقديم تقرير محدث عن صحة مخزن المكونات (Component Store) في ويندوز. قد تستغرق هذه العملية عدة دقائق لإتمامها، نظراً لطبيعة المسح العميق الذي يقوم به.",
+              "links": []
+            },
+            {
+              "text": "يوفر ScanHealth للمستخدمين تقريراً دقيقاً عن أي ملفات تالفة أو مفقودة في مخزن المكونات. هذا التقرير يساعد في تحديد نطاق المشكلة بدقة قبل الشروع في عمليات الإصلاح. يُنصح باستخدام هذا الأمر إذا لم يوفر CheckHealth معلومات كافية أو إذا استمرت المشاكل بعد إعادة التشغيل.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "أمر RestoreHealth للإصلاح التلقائي",
+          "paragraphs": [
+            {
+              "text": "يُعتبر أمر DISM /Online /Cleanup-Image /RestoreHealth الأداة القوية التي تجمع بين المسح والإصلاح التلقائي. يقوم هذا الأمر بمسح مخزن المكونات بحثاً عن التلف، ثم يحاول إصلاحه تلقائياً. بشكل افتراضي، يستخدم RestoreHealth خدمة ويندوز أبديت (Windows Update) لجلب الملفات النظامية اللازمة لإتمام عملية الإصلاح.",
+              "links": []
+            },
+            {
+              "text": "يحتوي مخزن مكونات ويندوز على ملفات حرجة يحتاجها النظام للتحديث والصيانة. عند تلف هذه الملفات، يصبح النظام غير قادر على تنفيذ التحديثات أو إصلاح الأخطاء ذاتياً. يوفر هذا الأمر حلاً شاملاً لاستعادة سلامة النظام دون الحاجة إلى إعادة تثبيت كاملة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الحلول البديلة عند فشل الاتصال بخوادم التحديث",
+          "paragraphs": [
+            {
+              "text": "في بعض الحالات، قد يؤدي تلف ملفات النظام إلى تعطيل خدمة ويندوز أبديت نفسها، مما يمنع DISM من تنزيل ملفات الإصلاح. عند حدوث هذا السيناريو، يمكن استخدام وسائط تثبيت ويندوز الرسمية كمصدر بديل. يمكن للمستخدمين تنزيل ملف ISO من صفحة التنزيل الرسمية الخاصة بـ Microsoft.",
+              "links": []
+            },
+            {
+              "text": "بعد تنزيل الملف، يجب النقر بزر الفأرة الأيمن على ملف ISO واختيار خيار 'تثبيت' (Mount). سيقوم ويندوز بإنشاء محرك افتراضي وتعيين حرف محرك له، مما يجعل محتويات ملف التثبيت متاحة للاستخدام. هذه الخطوة ضرورية لتوفير مسار مباشر لملفات الإصلاح.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استخدام وسائط التثبيت كمصدر للإصلاح",
+          "paragraphs": [
+            {
+              "text": "قبل استخدام وسائط التثبيت، يجب تحديد إصدار ويندوز المثبت على جهازك. يمكن القيام بذلك عبر تشغيل سطر الأوامر بصلاحيات المسؤول وتشغيل أمر DISM /Get-ImageInfo /ImageFile:D:sourcesinstall.wim. سيستعرض هذا الأمر جميع إصدارات ويندوز المتوفرة على وسائط التثبيت مع أرقام الفهرس الخاصة بها.",
+              "links": []
+            },
+            {
+              "text": "يجب تدوين رقم الفهرس الذي يتوافق مع إصدار ويندوز المثبت على جهازك. بعد ذلك، يمكن تشغيل أمر الإصلاح باستخدام الوسائط عبر كتابة DISM /Online /Cleanup-Image /RestoreHealth /Source:WIM:D:sourcesinstall.wim:6 /LimitAccess. يجب استبدال حرف D: بحرف المحرك المخصص لملف ISO المثبت، واستبدال الرقم 6 برقم الفهرس الصحيح لإصدارك.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الخطوة الأخيرة: تشغيل أداة SFC",
+          "paragraphs": [
+            {
+              "text": "بعد اكتمال عملية إصلاح DISM بنجاح، يُنصح بشدة بتشغيل أداة System File Checker عبر كتابة أمر sfc /scannow في سطر الأوامر. توفر مايكروسوفت إرشادات واضحة تشير إلى ضرورة تشغيل DISM قبل SFC، لأن DISM يقوم بإصلاح مخزن المكونات الذي يعتمد عليه SFC لاستبدال الملفات التالفة.",
+              "links": []
+            },
+            {
+              "text": "تعمل أداة SFC على فحص ملفات النظام واستبدال أي ملفات تالفة أو مفقودة بنسخ سليمة من مخزن المكونات. إذا كان مخزن المكونات نفسه تالفاً، فلن تتمكن SFC من العمل بشكل صحيح، مما يبرر أهمية إجراء إصلاح DISM أولاً. هذا التسلسل المنطقي يضمن أعلى نسبة نجاح في استعادة استقرار نظام ويندوز.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "ويندوز",
+        "DISM",
+        "إصلاح النظام",
+        "مايكروسوفت",
+        "أوامر سطر الأوامر",
+        "صيانة الحاسوب",
+        "تقنية"
+      ],
+      "entities": [
+        "Microsoft",
+        "Windows",
+        "DISM",
+        "SFC",
+        "Windows Update",
+        "Engadget"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "24 نوفمبر 2026",
+      "modifiedLabel": "24 نوفمبر 2026",
+      "readMinutes": 5,
+      "wordCount": 854
+    },
+    "en": {
+      "title": "Windows DISM Commands Repair Corrupt System Images",
+      "description": "Learn how Windows DISM commands repair corrupted system images and resolve component store errors using online and offline methods.",
+      "deck": "Windows relies on built-in DISM commands to scan, diagnose, and restore corrupted system image files when standard troubleshooting fails.",
+      "summaryBullets": [
+        "Deployment Image Servicing and Management (DISM) diagnoses and fixes damaged Windows system files without altering personal data.",
+        "Three primary commands—CheckHealth, ScanHealth, and RestoreHealth—allow administrators to inspect logs, perform scans, and execute automated repairs.",
+        "RestoreHealth uses Windows Update by default to replace corrupted repository files in the protected component store.",
+        "If Windows Update is non-functional, local ISO installation media can serve as an offline repair source before running System File Checker (SFC)."
+      ],
+      "sections": [
+        {
+          "heading": "Understanding System File Corruption and the DISM Utility",
+          "paragraphs": [
+            {
+              "text": "Microsoft Windows depends on a broad collection of core system files to execute applications, handle software updates, and perform routine computing operations. When these files are damaged or deleted, the operating system can display erratic behavior, including system errors, broken features, interface freezes, and performance issues. Standard fixes like restarting your computer or using simple recovery utilities are often insufficient when core system images become damaged.",
+              "links": [
+                {
+                  "text": "restarting your computer",
+                  "url": "https://www.engadget.com/2251124/benefits-restarting-pc-more-often/"
+                }
+              ]
+            },
+            {
+              "text": "For these scenarios, Windows includes a built-in command-line tool called Deployment Image Servicing and Management (DISM). Operating within Command Prompt or PowerShell, DISM scans system images for corruption and attempts automated repairs. Executing DISM commands requires elevated administrator privileges due to the system-level changes involved. Importantly, DISM focuses exclusively on system architecture, leaving user files entirely untouched.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Evaluating Image Health with CheckHealth and ScanHealth",
+          "paragraphs": [
+            {
+              "text": "Repairing a Windows installation through DISM relies on three core commands, each using the base syntax DISM /Online /Cleanup-Image. In this command structure, /Online targets the currently running Windows environment, while /Cleanup-Image initiates diagnostic and recovery operations on that specific installation.",
+              "links": []
+            },
+            {
+              "text": "The initial diagnostic step begins with DISM /Online /Cleanup-Image /CheckHealth. This command quickly checks whether Windows has already recorded file corruption and determines if that corruption can be repaired. Because it references existing logs rather than conducting a full system scan, CheckHealth finishes almost instantly.",
+              "links": []
+            },
+            {
+              "text": "For a complete evaluation, users can run DISM /Online /Cleanup-Image /ScanHealth. Unlike CheckHealth, this command executes a fresh scan across all system files to report new findings. Although ScanHealth takes several minutes to complete, it delivers an updated evaluation of the component store's overall condition.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Automating System Image Restoration",
+          "paragraphs": [
+            {
+              "text": "When corruption is confirmed, the command DISM /Online /Cleanup-Image /RestoreHealth scans the system and attempts automated repairs. By default, RestoreHealth connects to Windows Update to download clean versions of damaged or missing files needed to fix the component store.",
+              "links": []
+            },
+            {
+              "text": "The Windows component store functions as a protected internal repository for vital system resources. Windows relies on this repository to service updates, maintain system stability, and customize the operating system. Keeping the component store healthy ensures that downstream maintenance tools operate correctly.",
+              "links": [
+                {
+                  "text": "customize the operating system",
+                  "url": "https://www.engadget.com/2265283/improve-windows-11-experience-change-these-settings/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Overcoming Update Failures with Local Media Sources",
+          "paragraphs": [
+            {
+              "text": "In cases where system corruption breaks Windows Update itself, DISM cannot automatically download repair files online. To resolve this, users can supply an offline repair source using official installation media downloaded from Microsoft's official download page. Downloading and mounting a Windows ISO file creates a virtual drive with an assigned drive letter, granting access to clean installation files.",
+              "links": [
+                {
+                  "text": "Microsoft's official download page",
+                  "url": "https://www.microsoft.com/en-in/software-download/windows11"
+                }
+              ]
+            },
+            {
+              "text": "Next, users must determine which Windows editions are included within the ISO media. By opening an administrator Command Prompt and entering DISM /Get-ImageInfo /ImageFile:D:sourcesinstall.wim, users can view a list of available editions alongside their corresponding index numbers.",
+              "links": [
+                {
+                  "text": "Windows editions",
+                  "url": "https://www.engadget.com/2226197/windows-11-home-vs-pro-difference-explained/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Executing Offline Repairs and Running SFC",
+          "paragraphs": [
+            {
+              "text": "Once the target index number is identified, users can initiate offline repair by executing DISM /Online /Cleanup-Image /RestoreHealth /Source:WIM:D:sourcesinstall.wim:6 /LimitAccess. In this command, D: represents the drive letter of the mounted ISO, and 6 represents the index number corresponding to the installed operating system version. The /LimitAccess flag prevents DISM from attempting online downloads through Windows Update.",
+              "links": []
+            },
+            {
+              "text": "After DISM completes the restoration process, running sfc /scannow completes the repair sequence. Microsoft advises running DISM before System File Checker (SFC) because DISM repairs the underlying component store that SFC depends on to replace damaged system files.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Windows",
+        "DISM",
+        "Microsoft",
+        "System File Checker",
+        "Windows 11",
+        "Operating Systems"
+      ],
+      "entities": [
+        "Microsoft",
+        "Windows",
+        "DISM",
+        "PowerShell",
+        "Command Prompt"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 24, 2026",
+      "modifiedLabel": "November 24, 2026",
+      "readMinutes": 3,
+      "wordCount": 647
+    }
+  },
+  "datePublished": "2026-11-24T13:10:18.478210+03:00",
+  "dateModified": "2026-11-24T13:10:18.478210+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/the-three-dism-commands-you-should-know-to-fix-your-windows-system/hero.webp",
+    "card": "/forum/assets/posts/2026/11/the-three-dism-commands-you-should-know-to-fix-your-windows-system/card.webp",
+    "social": "/forum/assets/posts/2026/11/the-three-dism-commands-you-should-know-to-fix-your-windows-system/social.jpg",
+    "alt": {
+      "ar": "أوامر DISM الثلاثة لإصلاح ملفات نظام ويندوز التالفة",
+      "en": "Windows DISM Commands Repair Corrupt System Images"
+    },
+    "credit": "Engadget",
+    "sourceUrl": "https://www.engadget.com/img/gallery/the-three-dism-commands-you-should-know-to-fix-your-windows-system-images/l-intro-1795019660.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/the-three-dism-commands-you-should-know-to-fix-your-windows-system/inline-01.webp",
+        "width": 780,
+        "height": 438,
+        "alt": {
+          "ar": "أوامر DISM الثلاثة لإصلاح ملفات نظام ويندوز التالفة",
+          "en": "A person typing on a laptop keyboard."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Engadget",
+          "en": "Image related to the report from Engadget"
+        },
+        "credit": "Engadget",
+        "sourceUrl": "https://www.engadget.com/2320620/dism-commands-for-windows-system-image-repair/",
+        "originalUrl": "https://www.engadget.com/img/gallery/the-three-dism-commands-you-should-know-to-fix-your-windows-system-images/intro-1795019660.jpg"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Engadget",
+      "url": "https://www.engadget.com/2320620/dism-commands-for-windows-system-image-repair/",
+      "type": "journalism",
+      "title": "The three DISM commands you should know to fix your Windows system images"
+    }
+  ],
+  "sourceUrl": "https://www.engadget.com/2320620/dism-commands-for-windows-system-image-repair",
+  "sourceTitle": "The three DISM commands you should know to fix your Windows system images",
+  "trendScore": 87.74,
+  "verification": {
+    "confidence": 0.86,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-11-24T10:10:18+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/the-three-dism-commands-you-should-know-to-fix-your-windows-system.json"
+}
