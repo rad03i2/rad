@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "df3be113c8aed13fbadf",
+  "slug": "hill-climbing-inkling-mini-inference-on-one-rtx-pro-6000",
+  "categorySlug": "ai",
+  "urls": {
+    "ar": "/forum/ar/ai/hill-climbing-inkling-mini-inference-on-one-rtx-pro-6000/",
+    "en": "/forum/en/ai/hill-climbing-inkling-mini-inference-on-one-rtx-pro-6000/"
+  },
+  "locales": {
+    "ar": {
+      "title": "Hugging Face تسرّع نموذج Inkling 2 Mini على بطاقة RTX PRO 6000",
+      "description": "نجح فريق Hugging Face في رفع سرعة استنتاج نموذج Inkling 2 Mini بنسبة 40% على بطاقة RTX PRO 6000 واحدة، مستخدماً وكيلاً برمجياً لتوليد إعدادات مثالية.",
+      "deck": "اعتمدت Hugging Face على وكيل برمجي لتعظيم أداء نموذج الذكاء الاصطناعي المحلي Inkling 2 Mini على بطاقة RTX PRO 6000، محققة قفزة في سرعة الاستجابة دون المساس بجودة المخرجات.",
+      "summaryBullets": [
+        "حقق النموذج سرعة فك تشفير تصل إلى 190.6 رمزاً في الثانية للمستخدم الواحد، بزيادة قدرها 40% عن الخط الأساسي.",
+        "اعتمد الفريق على إطار عمل vLLM مع فك التشفير التخميني DSpark للوصول إلى 95% من الحد الأقصى لعرض النطاق الترددي للذاكرة.",
+        "استخدم وكيل برمجي بروتوكولاً تجريبياً صارماً لتجربة الإعدادات، مما سمح باكتشاف أفضل تركيبة أداء تلقائياً.",
+        "تبقى المخرجات مطابقة تماماً على مستوى البايتات مع أو بدون فك التشفير التخميني، مما يضمن خسارة صفرية في الجودة."
+      ],
+      "sections": [
+        {
+          "heading": "تجاوز حدود الأداء على بطاقة واحدة",
+          "paragraphs": [
+            {
+              "text": "أطلقت Hugging Face نموذج Inkling 2 Mini مؤخراً، ليصبح الخيار الأقوى في فئة النماذج المفتوحة المصدر الصغيرة، حيث يتفوق على منافسين مثل Gemma 4 و Qwen3.8 في 32 من أصل 48 معياراً. يعتمد النموذج على بنية غير تقليدية تسمى Mixture-of-Experts (MoE) مع طبقات متكررة، مما يتطلب معالجة دقيقة للأداء على الأجهزة المتواضعة. في هذا السياق، سعت Hugging Face إلى تحديد أقصى سرعة ممكنة لتشغيل النموذج على بطاقة NVIDIA RTX PRO 6000 واحدة بسعة 96 غيغابايت، وهي البطاقة التي تدعم نقاط الاستنتاج الخاصة بها.",
+              "links": [
+                {
+                  "text": "Inkling 2 Mini",
+                  "url": "https://huggingface.co/blog/inkling2mini"
+                },
+                {
+                  "text": "Mixture-of-Experts (MoE)",
+                  "url": "https://huggingface.co/blog/moe"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "اعتماد الوكيل البرمجي في التحسين",
+          "paragraphs": [
+            {
+              "text": "بدلاً من ضبط الإعدادات يدوياً، منح فريق Hugging Face وكلاءً برمجيين مهارات خاصة لتحسين الاستنتاج، بالإضافة إلى وصولهم إلى أدوات السطر الأوامر و Hugging Face Jobs. سمح هذا النهج للوكيل بإجراء تجارب مكثفة على مدى فترة بعد الظهر، حيث قام بتجربة 46 إعداداً مختلفاً. تضمنت العملية قياس الأداء، وتغيير متغير واحد في كل مرة، وتسجيل النتائج في ملف مخطط، مع الحفاظ على توثيق كامل لكل خطوة، بما في ذلك الفشل والنهايات الميتة، لضمان شفافية العملية العلمية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "نتائج الأداء والقفزة النوعية",
+          "paragraphs": [
+            {
+              "text": "أظهرت النتائج تحسناً كبيراً في سرعة فك التشفير للمستخدم الواحد، حيث ارتفعت من 136 رمزاً في الثانية إلى 190.6 رمزاً في الثانية، بزيادة نسبتها 40%. كما تحسنت الإنتاجية الإجمالية لثماني مستخدمين متزامنين من حوالي 570 إلى 716 رمزاً في الثانية. تفوقت هذه الأرقام على معايير المجتمع المفتوح التي سجلت 167.7 رمزاً في الثانية على نفس البطاقة. تضمنت الاختبارات أيضاً استرجاع معلومات من سياقات طويلة تصل إلى 250 ألف رمز، حيث نجح النموذج في جميع الاختبارات الثلاثة، مما يؤكد ثبات الأداء في المهام المعقدة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "دور vLLM وفك التشفير التخميني",
+          "paragraphs": [
+            {
+              "text": "جاء معظم التحسن من الانتقال إلى إصدار vLLM الليلي مع تفعيل فك التشفير التخميني DSpark. ساهم هذا التغيير في رفع السرعة بنسبة 15% مقارنة بالإطار السابق، ثم أضاف تفعيل DSpark مع 7 مسودات زيادة إضافية بنسبة 21%. كما تم ضبط إعدادات الذاكرة لضمان بدء التشغيل السليم على بطاقات 96 غيغابايت. أثبتت الاختبارات أن المخرجات الناتجة عن فك التشفير التخميني مطابقة تماماً على مستوى البايتات للمخرجات التقليدية، مما يجعل التحسين خالياً من أي فقدان في جودة النموذج.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تحليل حدود العتاد والنطاق الترددي",
+          "paragraphs": [
+            {
+              "text": "قبل البدء بالتحسين، قام الوكيل البرمجي بقياس قدرات العتاد، حيث سجل عرض نطاق ترددي للنسخ يبلغ 1,469 غيغابايت في الثانية. بناءً على حجم الأوزان التي يجب قراءتها لكل رمز، تم حساب الحد الأقصى النظري لسرعة فك التشفير عند حوالي 256 رمزاً في الثانية. مع تفعيل فك التشفير التخميني، انخفض هذا الحد النظري إلى 201 رمزاً في الثانية بسبب زيادة حجم البيانات التي يتم التحقق منها. حقق النظام النهائي 190.6 رمزاً في الثانية، مما يعني أنه يعمل عند 95% من الحد الأقصى لعرض النطاق الترددي للذاكرة، وهو ما يشير إلى أن أي تحسينات إضافية ستكون محدودة جداً دون تغيير جذري في البنية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الاستنتاج والنشر النهائي",
+          "paragraphs": [
+            {
+              "text": "بعد تحديد أفضل إعداد، نشر الفريق النموذج كـ Inference Endpoint باستخدام صورة حاوية مثبتة، مما يضمن استقرار الأداء للمستخدمين. توضح هذه التجربة كيف يمكن لأدوات الأتمتة والوكلاء البرمجيين تسريع عملية تحسين نماذج الذكاء الاصطناعي، وتقليل الوقت اللازم للوصول إلى الأداء الأمثل على العتاد المتاح. كما تبرز أهمية الفهم العميق لحدود العتاد في تحديد متى يتوقف التحسين عن أن يكون مجدياً اقتصادياً وتقنياً.",
+              "links": [
+                {
+                  "text": "Inference Endpoint",
+                  "url": "https://huggingface.co/docs/inference-endpoints"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "الذكاء الاصطناعي",
+        "Hugging Face",
+        "Inkling 2 Mini",
+        "RTX PRO 6000",
+        "vLLM",
+        "DSpark",
+        "تحسين الأداء",
+        "نماذج مفتوحة المصدر"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Inkling 2 Mini",
+        "NVIDIA RTX PRO 6000",
+        "vLLM",
+        "SGLang",
+        "DSpark"
+      ],
+      "category": "الذكاء الاصطناعي",
+      "dateLabel": "25 نوفمبر 2026",
+      "modifiedLabel": "25 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 612
+    },
+    "en": {
+      "title": "Hugging Face Optimizes Inkling 2 Mini on Single RTX PRO 6000",
+      "description": "Hugging Face engineers use automated hill-climbing to boost Inkling 2 Mini inference 40% on NVIDIA RTX PRO 6000, reaching 190.6 tok/s with vLLM and DSpark speculative decoding.",
+      "deck": "Hugging Face researchers have achieved a 40% speedup running the new Inkling 2 Mini model on a single NVIDIA RTX PRO 6000 GPU, using automated optimization and speculative decoding to push single-user decode to 190.6 tokens per second.",
+      "summaryBullets": [
+        "Automated hill-climbing agent raises single-user decode from 136 to 190.6 tok/s (+40%) on one RTX PRO 6000 96 GB",
+        "vLLM nightly with DSpark speculative decoding outperforms SGLang baseline and community benchmarks",
+        "Eight-user aggregate throughput climbs 26% to 716 tok/s while maintaining byte-identical greedy outputs",
+        "Winning configuration deployed as a Hugging Face Inference Endpoint from a pinned image digest",
+        "Optimization hits ~95% of the GPU's memory-bandwidth ceiling, leaving little room for further flag tuning"
+      ],
+      "sections": [
+        {
+          "heading": "New Model, New Hardware Challenge",
+          "paragraphs": [
+            {
+              "text": "The recently released Inkling 2 Mini model sets a new state of the art for local AI with roughly 26 billion total parameters — 3 billion active per token — multimodal inputs, and a 1-million-token context window. It leads its weight class on the Artificial Analysis Intelligence Index v5 and across 32 of 48 benchmarks against rivals such as Gemma 4 31B and Qwen3.8-27B. Its unusual looped Mixture-of-Experts (MoE) architecture runs the middle 12 of 24 physical layers three times, so every token traverses 48 layers, and the checkpoint ships in mixed NVFP4 and MXFP8 precision with a bundled DSpark drafter for speculative decoding.",
+              "links": [
+                {
+                  "text": "Artificial Analysis Intelligence Index v5",
+                  "url": "https://artificialanalysis.ai/models/open-source"
+                },
+                {
+                  "text": "Mixture-of-Experts (MoE)",
+                  "url": "https://huggingface.co/blog/moe"
+                }
+              ]
+            },
+            {
+              "text": "While both vLLM and SGLang support the model on nightly builds, the published serving recipes target NVIDIA B200 and GB300 GPUs (sm100), leaving sm120 cards like the NVIDIA RTX PRO 6000 without validated configurations. Hugging Face engineers wanted to see how fast they could serve Inkling 2 Mini on a single RTX PRO 6000 96 GB — the same GPU behind the nvidia-rtx-pro-6000 Inference Endpoint — without hand-tuning flags.",
+              "links": [
+                {
+                  "text": "Inference Endpoint",
+                  "url": "https://huggingface.co/docs/inference-endpoints"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Automated Hill-Climbing with an Inference-Optimisation Skill",
+          "paragraphs": [
+            {
+              "text": "Rather than manual tuning, the team gave a coding agent the inference-optimisation skill, the Hugging Face CLI, and access to Hugging Face Jobs, letting it run experiments for an afternoon. The skill enforces a fixed protocol: measure hardware ceilings first, change one variable at a time bracketed by control runs, log every result in PLAN.md, and pass long-context, concurrency, and greedy-equivalence checks before declaring a winner. A 150-line driver script orchestrated parallel sweeps of SGLang and vLLM nightly containers on HF Jobs, while cheap CPU Jobs let the agent grep engine source for undocumented flags such as SGLang's SGLANG_OPT_* environment variables and vLLM's speculative-config fields.",
+              "links": [
+                {
+                  "text": "inference-optimisation",
+                  "url": "https://github.com/sybil-solutions/inference-optimisation-skill"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "From 136 to 190.6 Tokens per Second",
+          "paragraphs": [
+            {
+              "text": "Across 46 valid benchmark runs, single-user decode throughput rose from 136 to 190.6 tok/s (+40%), surpassing the 167.7 tok/s community SGLang + DSpark benchmark on LocalMaxxing for the same GPU. Eight-user aggregate throughput improved 26% from roughly 570 to 716 tok/s. The winning stack — vLLM nightly with DSpark speculative decoding — also passed greedy-equivalence tests (byte-identical outputs with and without speculation) and long-context needle retrieval at 3/3 up to 250K tokens. The final configuration is now running as an Inference Endpoint from a pinned image digest, with all logs, scripts, and raw measurements published in the NielsRogge/inkling-2-mini-hillclimb repository.",
+              "links": [
+                {
+                  "text": "NielsRogge/inkling-2-mini-hillclimb",
+                  "url": "https://huggingface.co/nielsr"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Where the Speedup Came From",
+          "paragraphs": [
+            {
+              "text": "The gains break down into three steps. Switching from the baseline SGLang configuration (--attention-backend fa4, no speculation) to vLLM nightly alone added 15% (136 → 157 tok/s). Enabling DSpark with seven draft tokens and probabilistic draft sampling contributed a further 21% (157 → 190.6 tok/s across four runs: 189.3, 190.4, 191.1, and 190.7). Two additional memory flags were required so vLLM's DSpark setup would start on the 96 GB card. Shorter draft counts such as five are rejected at startup because both engines enforce the checkpoint's fixed block size, and greedy draft sampling dropped vLLM decode speed by 11% at temperature 1.0.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Bandwidth Ceilings and MoE Memory Math",
+          "paragraphs": [
+            {
+              "text": "Probing the RTX PRO 6000 inside a Job revealed 1,469 GB/s copy bandwidth, 416 TFLOPS BF16, and 792 TFLOPS FP8. Because each token visits 48 layers, plain decode re-reads roughly 2.7 GB of attention and dense weights, 2 GB of routed experts (8 of 128 per layer), and 0.9 GB for the LM head — yielding a single-user bandwidth ceiling of about 256 tok/s. Without speculation, vLLM at 157 tok/s reaches 61% of that ceiling, limited mainly by kernel-launch latency across 48 layer visits.",
+              "links": []
+            },
+            {
+              "text": "Speculative decoding changes the memory arithmetic on an MoE. Verifying eight positions together activates the union of their routed experts, reading roughly 40% of each layer's experts instead of 6%. At the measured acceptance of ~2.3 tokens per step (per-position acceptance falling from 0.6 on the first draft to 0.33 and 0.19), the bandwidth ceiling drops to ~201 tok/s. At 190.6 tok/s, vLLM + DSpark already sits at ~95% of the hardware bandwidth limit, so further flag tuning has almost nowhere left to go. Breaking past 190 tok/s would require a drafter with higher acceptance at temperature 1.0 or a verification path that touches fewer experts per layer.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Dead Ends and Measurement Gotchas",
+          "paragraphs": [
+            {
+              "text": "Most candidate flags were unsupported, noisy, or slower. The team deliberately skipped rejection_sample_method values \"fly\" and \"synthetic\" because they alter the output distribution, and the goal was a strictly lossless speedup. A notable measurement pitfall emerged when Triton JIT compilation ran during the timed first 4K prefill, reporting 202 tok/s instead of the expected 20K. An unmeasured warmup across prompt lengths and concurrency fixed the 4K prefill measurement, though the first run in each session still pays the compilation cost.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Inkling 2 Mini",
+        "vLLM",
+        "SGLang",
+        "DSpark",
+        "speculative decoding",
+        "RTX PRO 6000",
+        "Hugging Face",
+        "MoE"
+      ],
+      "entities": [
+        "Hugging Face",
+        "NVIDIA",
+        "vLLM",
+        "SGLang",
+        "Inkling 2 Mini",
+        "RTX PRO 6000",
+        "DSpark"
+      ],
+      "category": "Artificial Intelligence",
+      "dateLabel": "November 25, 2026",
+      "modifiedLabel": "November 25, 2026",
+      "readMinutes": 5,
+      "wordCount": 896
+    }
+  },
+  "datePublished": "2026-11-25T20:20:10.282162+03:00",
+  "dateModified": "2026-11-25T20:20:10.282162+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/hill-climbing-inkling-mini-inference-on-one-rtx-pro-6000/hero.webp",
+    "card": "/forum/assets/posts/2026/11/hill-climbing-inkling-mini-inference-on-one-rtx-pro-6000/card.webp",
+    "social": "/forum/assets/posts/2026/11/hill-climbing-inkling-mini-inference-on-one-rtx-pro-6000/social.jpg",
+    "alt": {
+      "ar": "Hugging Face تسرّع نموذج Inkling 2 Mini على بطاقة RTX PRO 6000",
+      "en": "Hugging Face Optimizes Inkling 2 Mini on Single RTX PRO 6000"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/assets/inkling-2-mini-inference-hillclimb/thumbnail.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/hill-climbing-inkling-mini-inference-on-one-rtx-pro-6000/inline-01.webp",
+        "width": 1400,
+        "height": 653,
+        "alt": {
+          "ar": "Hugging Face تسرّع نموذج Inkling 2 Mini على بطاقة RTX PRO 6000",
+          "en": "Single-user decode speed of Inkling 2 Mini on one RTX PRO 6000 for four configurations"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/inkling-2-mini-inference-hillclimb",
+        "originalUrl": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/inkling-2-mini-inference-hillclimb/results.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/hill-climbing-inkling-mini-inference-on-one-rtx-pro-6000/inline-02.webp",
+        "width": 1300,
+        "height": 650,
+        "alt": {
+          "ar": "Hugging Face تسرّع نموذج Inkling 2 Mini على بطاقة RTX PRO 6000",
+          "en": "Hugging Face Optimizes Inkling 2 Mini on Single RTX PRO 6000"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/inkling-2-mini-inference-hillclimb",
+        "originalUrl": "https://huggingface.co/blog/assets/vllm-jobs/thumbnail.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/hill-climbing-inkling-mini-inference-on-one-rtx-pro-6000/inline-03.webp",
+        "width": 1280,
+        "height": 640,
+        "alt": {
+          "ar": "Hugging Face تسرّع نموذج Inkling 2 Mini على بطاقة RTX PRO 6000",
+          "en": "Hugging Face Optimizes Inkling 2 Mini on Single RTX PRO 6000"
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/inkling-2-mini-inference-hillclimb",
+        "originalUrl": "https://huggingface.co/blog/assets/ml4/thumbnail.png"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/inkling-2-mini-inference-hillclimb",
+      "type": "official",
+      "title": "Hill-climbing Inkling 2 Mini inference on one RTX PRO 6000"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/inkling-2-mini-inference-hillclimb",
+  "sourceTitle": "Hill-climbing Inkling 2 Mini inference on one RTX PRO 6000",
+  "trendScore": 102.29,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-25T17:20:10+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/hill-climbing-inkling-mini-inference-on-one-rtx-pro-6000.json"
+}
