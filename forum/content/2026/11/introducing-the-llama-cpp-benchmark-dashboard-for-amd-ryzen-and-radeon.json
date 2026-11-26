@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "a734da9d3a1d876054f8",
+  "slug": "introducing-the-llama-cpp-benchmark-dashboard-for-amd-ryzen-and-radeon",
+  "categorySlug": "computers",
+  "urls": {
+    "ar": "/forum/ar/computers/introducing-the-llama-cpp-benchmark-dashboard-for-amd-ryzen-and-radeon/",
+    "en": "/forum/en/computers/introducing-the-llama-cpp-benchmark-dashboard-for-amd-ryzen-and-radeon/"
+  },
+  "locales": {
+    "ar": {
+      "title": "لوحة قياس llama.cpp الجديدة تكشف أداء معالجات AMD",
+      "description": "أطلقت ggml-org لوحة قياس تفاعلية على Hugging Face لتتبع أداء نماذج الذكاء الاصطناعي محلياً على معالجات AMD Ryzen وبطاقات Radeon، مع مقارنة دقيقة للتكميم والسرعة.",
+      "deck": "أصبحت مراقبة أداء الاستدلال المحلي للذكاء الاصطناعي أكثر شفافية مع إطلاق لوحة قياس مخصصة لمستخدمي أجهزة AMD.",
+      "summaryBullets": [
+        "تتيح اللوحة مقارنة أداء معالجة الأوامر وتوليد النص عبر إصدارات llama.cpp المختلفة.",
+        "تدعم حالياً بطاقتي Radeon 8060S وRadeon AI Pro R9700S مع مجموعة متنوعة من النماذج.",
+        "تعتمد على اختبارات أسبوعية آلية باستخدام أداة llama-bench مع تفعيل Flash Attention.",
+        "البيانات مفتوحة المصدر ومتاحة للاطلاع المباشر عبر مخزن ggml-org على Hugging Face."
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق لوحة قياس موحدة لأداء AMD",
+          "paragraphs": [
+            {
+              "text": "أعلنت منظمة ggml-org عن إطلاق لوحة قياس تفاعلية جديدة مخصصة لمراقبة أداء مكتبة llama.cpp على أجهزة AMD Ryzen وبطاقات الرسوميات Radeon. تهدف هذه الأداة إلى توفير رؤية شاملة ومباشرة لكيفية عمل الاستدلال المحلي (Local Inference) عبر مختلف الإصدارات والنماذج، مما يساعد المطورين والمستخدمين على اتخاذ قرارات مستنيرة بشأن التجهيزات المناسبة لأعمالهم.",
+              "links": [
+                {
+                  "text": "ggml-org",
+                  "url": "https://huggingface.co/ggml-org"
+                }
+              ]
+            },
+            {
+              "text": "تأتي هذه المبادرة استجابةً للتغيرات المستمرة في أداء النماذج ونوى المعالجة (Kernels) والإصدارات البرمجية. وتهدف اللوحة إلى تسهيل فحص هذه التغيرات لأي مطور يعمل مع AMD، حيث يمكن للمستخدم اختيار العتاد والنموذج والإصدار المحدد، ثم مقارنة نتائج التكميم (Quantizations) وتتبع تطور الأداء بمرور الوقت. كما أن سير العمل المعتمد في الاختبارات والنتائج الأساسية متاحة للعامة، مما يسمح بفحص منهجية قياس أداء الاستدلال بدقة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "خيارات التهيئة والعتاد المدعوم",
+          "paragraphs": [
+            {
+              "text": "توفر لوحة القياس شريطاً جانبياً للتهيئة يتيح للمستخدمين تحديد العتاد (Hardware)، والنموذج (Model)، وإصدار llama.cpp المطلوب. حالياً، تشمل خيارات العتاد المتوفرة بطاقتي Radeon 8060S (المعرف gfx1151) وRadeon AI Pro R9700S (المعرف gfx1201). هذا التركيز على أحدث معالجات AMD يهدف إلى تقديم بيانات حديثة وموثوقة لأجهزة الجيل الجديد.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آليات القياس والمقارنة",
+          "paragraphs": [
+            {
+              "text": "تعمل اللوحة من خلال تبويبات متعددة تتيح تحليلات مختلفة. في تبويب 'نظرة عامة' (Overview)، يمكن للمستخدم مقارنة نتائج التكميم لعقداد ونموذج وإصدار محددين. تعرض الرسوم البيانية هنا مقاييس PP512 (معالجة 512 رمزاً مدخلاً دون توليد) وTG128 (توليد 128 رمزاً)، وكلاهما يبدأ من عمق سياق صفري (n_depth=0).",
+              "links": []
+            },
+            {
+              "text": "يتيح تبويب 'سجل الإصدارات' (Build history) تتبع مقاييس PP512 وTG128 عبر جميع الإصدارات المسجلة للعتاد والنموذج والتكميم المحددين. أما تبويب 'توسع السياق' (Context scaling) فيوضح كيف يتغير معدل توليد الرموز (Throughput) كلما زاد حجم السياق الموجود مسبقاً، مما يوفر فهماً أعمق لكيفية تأثير طول المحادثة أو المستند على الأداء.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "منهجية الاختبارات والبيانات",
+          "paragraphs": [
+            {
+              "text": "تعتمد اللوحة على اختبارات قياسية محددة بدقة. يتم قياس الاختبارين الرئيسيين بوحدة 'رمز في الثانية' (Tokens per second). يقيس PP512 معالجة 512 رمزاً مدخلاً دون أي عملية توليد، بينما يقيس TG128 توليد 128 رمزاً دون وجود سياق مسبق. القيمة المعروضة في الرسوم البيانية هي متوسط معدل الأداء (avg_ts). تُعد هذه الأحمال المرجعية مفيدة للمقارنات الأساسية، بينما يتيح تبويب توسع السياق استكشاف أداء التوليد مع نمو السياق.",
+              "links": []
+            },
+            {
+              "text": "تختبر اللوحة الثنائيات الجاهزة (Prebuilt binaries) الموزعة عبر مشروع llama-install.sh، الذي يقف خلف تطبيق llama.app. يتم جدولة سير العمل العام لعتادي gfx1151 وgfx1200 أسبوعياً، حيث تُنفذ الاختبارات القياسية باستخدام أداة llama-bench مع تفعيل وإيقاف تقنية Flash Attention، وتتم 10 تكرارات لكل تكوين لضمان دقة النتائج.",
+              "links": [
+                {
+                  "text": "llama-install.sh",
+                  "url": "https://github.com/ggml-org/llama-install.sh"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "النماذج والدعم التقني",
+          "paragraphs": [
+            {
+              "text": "يتطور مجموعة النماذج المختبرة باستمرار لتشمل حالياً Inkling 2 Mini، وQwen، وGemma، وgpt-oss، ونماذج LFM. تغطي هذه النماذج كلا من البنى الكثيفة (Dense) وبنى مزيج الخبراء (Mixture-of-Experts). وتشمل صيغ GGUF المتوفرة تكميمات مثل Q4_K_M وQ8_0، بالإضافة إلى صيغ دقة أعلى مثل BF16 وF16.",
+              "links": []
+            },
+            {
+              "text": "تقرأ أداة الاستكشاف البيانات مباشرة من مخزن ggml-org/install.sh-benches-data العام على Hugging Face. يوفر رابط مصدر البيانات المجاور لعنوان الرسم البياني إمكانية الوصول إلى المجلد الخاص بالإصدار والعتاد والنموذج المحددين. تستخدم النتائج القياسية مسارات ملفات محددة بصيغة <build>/<hardware>/<model>/<quant>.jsonl، بينما تستخدم اختبارات الأحمال المتسلسلة (Workload sweeps) نفس المجلد مع اسم ملف <quant>-tg.jsonl.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "الشفافية والشراكات",
+          "paragraphs": [
+            {
+              "text": "تتيح هذه البيانات المفتوحة للمستخدمين التحقيق في نتيجة معينة، أو إنشاء رسوم بيانية مخصصة، أو مقارنة النتائج مع تشغيل محلي خاص بهم. وتوجه ggml-org شكرها لفريق AMD على توفير بنية الاختبار التحتية والمساعدة في التحقق من الإعدادات. وتدعو المنظمة المستخدمين لتجربة اللوحة، وفحص البيانات، ومشاركة آرائهم حول النماذج والأحمال التي يرغبون في رؤيتها في التحديثات القادمة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "llama.cpp",
+        "AMD",
+        "Radeon",
+        "Ryzen",
+        "الذكاء الاصطناعي المحلي",
+        "ggml-org",
+        "Hugging Face",
+        "أداء الحواسيب"
+      ],
+      "entities": [
+        "ggml-org",
+        "AMD",
+        "llama.cpp",
+        "Hugging Face",
+        "Radeon 8060S",
+        "Radeon AI Pro R9700S",
+        "llama.app"
+      ],
+      "category": "الحواسيب",
+      "dateLabel": "26 نوفمبر 2026",
+      "modifiedLabel": "26 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 604
+    },
+    "en": {
+      "title": "llama.cpp Benchmark Dashboard Debuts for AMD Ryzen and Radeon",
+      "description": "Explore the new llama.cpp benchmark dashboard on Hugging Face, designed to track local AI inference performance on AMD Ryzen and Radeon hardware.",
+      "deck": "A new public dashboard on Hugging Face lets developers track prompt processing and text generation performance for llama.cpp across AMD Ryzen and Radeon hardware.",
+      "summaryBullets": [
+        "The llama.cpp × AMD Benchmark dashboard tracks local inference performance over time.",
+        "Hardware options include Radeon 8060S (gfx1151) and Radeon AI Pro R9700S (gfx1201).",
+        "Workloads measure performance using PP512 and TG128 tests in tokens per second.",
+        "Weekly public workflows utilize prebuilt binaries distributed through llama-install.sh."
+      ],
+      "sections": [
+        {
+          "heading": "Introduction to the Dashboard",
+          "paragraphs": [
+            {
+              "text": "A new performance-tracking tool for local AI development has been introduced on the [Hugging Face Blog](https://huggingface.co/blog/ggml-org/llamacpp-amd-bench). The llama.cpp × AMD Benchmark dashboard enables developers to evaluate prompt processing and text generation performance across various llama.cpp builds, models, and quantizations.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/ggml-org/llamacpp-amd-bench"
+                }
+              ]
+            },
+            {
+              "text": "Local inference performance shifts as underlying models, kernels, and builds continue to evolve. The project aims to make those changes straightforward to inspect for any AMD developer by providing a way to select specific hardware, models, and builds while comparing quantizations and following performance trends over time.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Hardware Configuration and Selection",
+          "paragraphs": [
+            {
+              "text": "Users can customize their evaluation using the configuration sidebar within the [llama.cpp × AMD Benchmark](https://ggml-org-llamacpp-amd-bench.static.hf.space/index.html) dashboard. Current hardware options featured in the interface include the Radeon 8060S (gfx1151) and the Radeon AI Pro R9700S (gfx1201).",
+              "links": [
+                {
+                  "text": "llama.cpp × AMD Benchmark",
+                  "url": "https://ggml-org-llamacpp-amd-bench.static.hf.space/index.html"
+                }
+              ]
+            },
+            {
+              "text": "The public gfx1151 and gfx1201 workflows run on a scheduled weekly basis. These automated runs execute standard benchmarks using the llama-bench tool with Flash Attention toggled both on and off, utilizing ten repetitions per configuration to ensure consistency.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Benchmark Metrics and Tabs",
+          "paragraphs": [
+            {
+              "text": "The dashboard provides multiple specialized tabs to analyze data from different angles. In the Overview tab, users can compare quantizations for a single hardware choice, model, and build using two distinct charts.",
+              "links": []
+            },
+            {
+              "text": "These charts evaluate specific reference workloads measured in tokens per second, with both tests starting at context depth zero. The PP512 test measures the processing of 512 input tokens without text generation, while the TG128 test measures generating 128 tokens without any pre-existing context. Additionally, the Build history tab tracks PP512 and TG128 across all recorded builds, and the Context scaling tab illustrates how token generation throughput shifts as the context grows.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Models, Quantizations, and Binaries",
+          "paragraphs": [
+            {
+              "text": "The underlying workflows benchmark prebuilt binaries that are distributed through [llama-install.sh](https://github.com/ggml-org/llama-install.sh), which serves as the build and installation project behind [llama.app](https://llama.app/).",
+              "links": [
+                {
+                  "text": "llama-install.sh",
+                  "url": "https://github.com/ggml-org/llama-install.sh"
+                },
+                {
+                  "text": "llama.app",
+                  "url": "https://llama.app/"
+                }
+              ]
+            },
+            {
+              "text": "The evaluated model set covers both dense and mixture-of-experts architectures, featuring models such as Inkling 2 Mini, Qwen, Gemma, gpt-oss, and LFM. Available GGUF formats span Q4_K_M, Q8_0, and various other quantizations alongside higher-precision options like BF16 and F16.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Data Transparency and Storage",
+          "paragraphs": [
+            {
+              "text": "The explorer reads data directly from the public ggml-org/install.sh-benches-data storage bucket hosted on Hugging Face. A data source link positioned beside each chart title opens the specific folder corresponding to the selected build, hardware, and model.",
+              "links": []
+            },
+            {
+              "text": "Standard results are stored using JSONL files structured by build, hardware, model, and quantization. Workload sweeps utilize matching filenames with specific extensions, allowing researchers and developers to investigate results independently, generate custom charts, or compare findings against local runs.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "llama.cpp",
+        "AMD",
+        "Radeon",
+        "Ryzen",
+        "Hugging Face",
+        "AI Inference",
+        "Benchmarks"
+      ],
+      "entities": [
+        "AMD",
+        "Hugging Face",
+        "ggml-org"
+      ],
+      "category": "Computing",
+      "dateLabel": "November 26, 2026",
+      "modifiedLabel": "November 26, 2026",
+      "readMinutes": 3,
+      "wordCount": 487
+    }
+  },
+  "datePublished": "2026-11-26T14:55:28.441877+03:00",
+  "dateModified": "2026-11-26T14:55:28.441877+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/introducing-the-llama-cpp-benchmark-dashboard-for-amd-ryzen-and-radeon/hero.webp",
+    "card": "/forum/assets/posts/2026/11/introducing-the-llama-cpp-benchmark-dashboard-for-amd-ryzen-and-radeon/card.webp",
+    "social": "/forum/assets/posts/2026/11/introducing-the-llama-cpp-benchmark-dashboard-for-amd-ryzen-and-radeon/social.jpg",
+    "alt": {
+      "ar": "لوحة قياس llama.cpp الجديدة تكشف أداء معالجات AMD",
+      "en": "llama.cpp Benchmark Dashboard Debuts for AMD Ryzen and Radeon"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/67289c93ff90038d9a6e5675/tbIvyMSISXCm64WYP3atl.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/ggml-org/llamacpp-amd-bench",
+      "type": "official",
+      "title": "Introducing the llama.cpp benchmark dashboard for AMD Ryzen and Radeon"
+    }
+  ],
+  "sourceUrl": "https://huggingface.co/blog/ggml-org/llamacpp-amd-bench",
+  "sourceTitle": "Introducing the llama.cpp benchmark dashboard for AMD Ryzen and Radeon",
+  "trendScore": 113.96,
+  "verification": {
+    "confidence": 0.98,
+    "reason": "official_source",
+    "official": true
+  },
+  "generation": {
+    "createdAt": "2026-11-26T11:55:28+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/introducing-the-llama-cpp-benchmark-dashboard-for-amd-ryzen-and-radeon.json"
+}
