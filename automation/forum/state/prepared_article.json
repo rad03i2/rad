@@ -1,5 +1,397 @@
 {
-  "status": "empty",
-  "cleared_at": "2026-11-26T05:05:18+00:00",
-  "last_published_story_id": "3fc9f10e490b24e43582"
+  "status": "ready",
+  "content_format_version": 3,
+  "prepared_at": "2026-11-26T05:15:43+00:00",
+  "target_publish_at": "2026-11-26T08:25:17.797872+03:00",
+  "story": {
+    "title": "Building on Nemotron 3.5 Parse: Open Data, Fine-Tuning, and Faster Inference",
+    "url": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin",
+    "domain": "huggingface.co",
+    "summary": "",
+    "published_at": "2026-11-26T05:05:36+00:00",
+    "discovered_at": "2026-11-26T05:13:27+00:00",
+    "source": {
+      "name": "Hugging Face Blog",
+      "feed": "https://huggingface.co/blog/feed.xml",
+      "type": "official",
+      "trust": 0.98,
+      "priority": 26,
+      "defaultCategory": "ai"
+    },
+    "category": "ai",
+    "category_label": "الذكاء الاصطناعي",
+    "score": 62,
+    "verification": {
+      "confidence": 0.98,
+      "reason": "official_source",
+      "official": true,
+      "single_source_trusted": true,
+      "publish_eligible": true,
+      "corroborating_sources": []
+    },
+    "status": "incoming",
+    "id": "3d2697b636d74b834fc0",
+    "trend": {
+      "score": 119.95,
+      "age_hours": 0.14,
+      "corroboration_count": 0,
+      "entity_momentum": 18,
+      "category_boost": 10
+    }
+  },
+  "source_pack": [
+    {
+      "url": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin",
+      "name": "Hugging Face Blog",
+      "domain": null,
+      "kind": "official",
+      "type": "official",
+      "feed_title": "Building on Nemotron 3.5 Parse: Open Data, Fine-Tuning, and Faster Inference",
+      "title": "Building on Nemotron 3.5 Parse: Open Data, Fine-Tuning, and Faster Inference",
+      "ok": true
+    }
+  ],
+  "editions": {
+    "ar": {
+      "title": "إنفيديا تطلق بيانات تدريب مفتوحة ومُسرّع DFlash2 لـ Nemotron 3.5 Parse",
+      "description": "إنفيديا تفتح مصادر ثلاث مجموعات بيانات ضخمة وتكشف وصفة ضبط دقيق وتعلم تعزيزي ونموذج DFlash2 لتسريع استنتاج Nemotron 3.5 Parse بنسبة تصل إلى 7.6 أضعاف",
+      "deck": "أعلنت إنفيديا عن توسيع قدرات نموذج Nemotron 3.5 Parse عبر إتاحة بيانات تدريب تركيبية مفتوحة المصدر، ومنهجية تدريب بمرحلتين، ومُسرّع استنتاج DFlash2 الجديد.",
+      "summary_bullets": [
+        "ثلاث مجموعات بيانات تركيبية مفتوحة المصدر: مخططات (9.98 مليون مثال)، جداول (مليون مثال)، نصوص متعددة اللغات (7.9 مليون مثال)",
+        "تدريب بمرحلتين: ضبط دقيق تحت الإشراف (SFT) ثم تعلم تعزيزي بمكافآت قابلة للتحقق باستخدام GRPO",
+        "مُسرّع DFlash2 يرفع الإنتاجية 7.62× عند تزامنية 1 و1.52× عند تزامنية 512 مقارنة بالتشغيل دون تخمين",
+        "استراتيجيات تحليل متعددة المرات (مرة، مرتين، ثلاث) للصفحات المعقدة ذات الجداول الكثيفة والمخططات الدقيقة"
+      ],
+      "sections": [
+        {
+          "heading": "إطلاق نموذج Nemotron 3.5 Parse ومجموعات بيانات مفتوحة",
+          "paragraphs": [
+            {
+              "text": "أعلنت إنفيديا (NVIDIA) عن بناء إضافات جوهرية على نموذج Nemotron 3.5 Parse الذي أطلقته مؤخراً، وهو نموذج مستندات مضغوط يحول صور الصفحات إلى بيانات مهيكلة لأنظمة الاسترجاع المعزز بالتوليد (RAG) والوكلاء الذكية. النموذج يستخرج المحتوى بترتيب القراءة، ويصنف العناصر إلى عناوين وفقرات وجداول ومخططات، مع إرجاع مربعات تحيط تحدد مواقعها، وتحويل الجداول والمخططات إلى سجلات مهيكلة قابلة للمعالجة اللاحقة.",
+              "links": [
+                {
+                  "text": "Nemotron 3.5 Parse",
+                  "url": "https://huggingface.co/nvidia/Nemotron-3.5-Parse"
+                }
+              ]
+            },
+            {
+              "text": "كجزء من هذا التوسع، أطلقت الشركة ثلاث مجموعات بيانات تركيبية مفتوحة المصدر استُخدمت في تدريب Parse 3.5: مجموعة Synthetic Charts V1 التي تضم 9.98 مليون مثال لمخططات مرسومة مع تعليقات مهيكلة لتعلم الفئات والسلاسل والقيم العددية، ومجموعة Synthetic Tables V1 بمليون مثال لجداول HTML مرسومة بأهداف تحفظ الصفوف والأعمدة والرؤوس والعلاقات بين الخلايا، ومجموعة OCR Synthetic Multilingual v2 بـ 7.9 مليون مثال لصفحات وثائق تركيبية بأهداف بصيغة Parse عبر خطوط وتخطيطات متنوعة للقراءة المهيكلة متعددة اللغات والتعرف الضوئي على الحروف.",
+              "links": [
+                {
+                  "text": "Synthetic Charts V1",
+                  "url": "https://huggingface.co/datasets/nvidia/Synthetic-Charts-V1"
+                },
+                {
+                  "text": "Synthetic Tables V1",
+                  "url": "https://huggingface.co/datasets/nvidia/Synthetic-Tables-V1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "تحسينات كبيرة في قراءة المخططات والجداول المعقدة",
+          "paragraphs": [
+            {
+              "text": "يتميز الإصدار الأخير بقدرة محسنة بشكل ملحوظ على قراءة المخططات والجداول، لا سيما في الحالات الصعبة والغامضة. على سبيل المثال، أصبح النموذج قادراً على استنتاج القيم في المخططات الشريطية أو غيرها من الرسوم التي لا تحتوي على قيم رقمية محددة، عبر تحليل المحاور وارتفاع الأشرطة لاستخلاص هذه القيم. أما الجداول، فتمثل تحدياً خاصاً لأن البنية تحمل معنى جوهرياً، ويمكن لصف أو عمود منزاح أن يغير التفسير بالكامل. وقد دُعمت هذه التطورات إلى حد كبير بتوليد البيانات التركيبية، حيث تُرسم تنويعات من المخططات والجداول بحقائق أرضية معروفة، ثم يُدرّب النموذج على عكس هذه العملية.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تدريب بمرحلتين: SFT ثم تعلم تعزيزي بمكافآت قابلة للتحقق",
+          "paragraphs": [
+            {
+              "text": "اتبع فريق إنفيديا نهجاً من مرحلتين لتدريب Parse 3.5. بدأت المرحلة الأولى بضبط دقيق تحت الإشراف (Supervised Fine-Tuning أو SFT) شمل النصوص والتخطيطات والجداول والمخططات والوثائق متعددة اللغات، حيث أسس تعلم التنبؤ بالأهداف المهيكلة القدرة العامة على قراءة الصفحة وتمثيل محتواها. تلا ذلك الانتقال إلى التعلم التعزيزي مع مكافآت قابلة للتحقق (Reinforcement Learning with Verifiable Rewards أو RLVR) باستخدام تحسين السياسة النسبية للمجموعات (Group Relative Policy Optimization أو GRPO).",
+              "links": []
+            },
+            {
+              "text": "تفحص المكافآت جودة الاستخلاصات المأخوذة كعينات؛ فاستخلاص مخطط يمكن أن يكسب مكافأة أفضل لاستعادة السلاسل والقيم الصحيحة، وإنتاج بنية قابلة للاستخدام، وإنهاء التوليد دون تكرار المحتوى نفسه مراراً. وبما أن الصفحة الصعبة قد يكون لها عدة تمثيلات صحيحة، تمنح هذه الفحوصات النموذج مرونة لإيجاد إجابة صحيحة دون وصف تسلسل رمزي دقيق واحد، مع تثبيط الحلقات والمخرجات غير المكتملة. أظهرت المقارنة المقيدة بين SFT وGRPO بإعدادات تقييم متطابقة انخفاض المخرجات المشارة كحلقات من 126 إلى 29 صفحة (نحو 77% أقل)، وانخفاض المخرجات التي تصل لحد 9000 رمز من 185 إلى 35، وتحسن الدرجة الإجمالية من 66.24 إلى 71.38، بما في ذلك +5.18 نقطة في الجداول و+4.15 في المخططات.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "تسريع الاستنتاج عبر معمارية محسنة ومُسرّع DFlash2",
+          "paragraphs": [
+            {
+              "text": "إلى جانب أعمال التدريب، حسّنت إنفيديا طريقة معالجة Parse 3.5 للصور وفك تشفير المخرجات. يتكيف المعالج المسبق NaViT مع شكل الإدخال ليتناسب مع الصفحة، ويضغط محول بصري تسلسل الصورة، ويستهلكه مُفكك النص كبادئة (prefix) مستبدلاً آلية الانتباه المتقاطع بين المُرمز والمُفكك. يقلل الانتباه المجمّع للاستعلامات مع ثمانية رؤوس مفاتيح/قيم (GQA-8) ذاكرة مخزن انتباه المُفكك. ويوفر رأس التنبؤ متعدد الرموز (Multi-Token Prediction أو MTP) المدمج تطلعاً برمز واحد.",
+              "links": []
+            },
+            {
+              "text": "يتجاوز مُسرّع DFlash2 هذا الحد: يقترح نموذج مسودة صغير ما يصل إلى 32 رمزاً مقدماً، ويتحقق Parse من المقترحات معاً. في التكوين المقاس بـ 32 رمزاً، يبلغ متوسط الرموز المقبولة من المسودة نحو 14 رمزاً، أو ما يقارب 15 رمز مخرجات تقدم لكل خطوة تحقق بما في ذلك الرمز الهدف. في اختبار الإنتاجية أحادي الممر الأصلي على معالج H200 واحد بدقة BF16، زاد DFlash2 الإنتاجية 7.62 مرة عند تزامنية 1 و1.52 مرة عند تزامنية 512، مقارنة بـ Parse 3.5 مع تعطيل فك التشفير التخميني. عند تزامنية 512، يصل Parse 3.5 إلى 13.48 صفحة/ثانية دون تخمين و20.44 صفحة/ثانية مع DFlash2، مقابل 2.98 لـ Parse 2.0، أي 4.53× و6.86× إنتاجية Parse 2.0 على التوالي.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "استراتيجيات تحليل متعددة المرات للوثائق المعقدة",
+          "paragraphs": [
+            {
+              "text": "يمنح التحليل السريع المجال لإعادة معالجة المناطق الصعبة. تقترح إنفيديا ثلاث استراتيجيات: تمريرة واحدة لتحليل الصفحة كاملة للنصوص والتخطيطات والجداول والمخططات؛ تمريرتان تُستخدمان للجداول الكثيفة وتفاصيل المخططات الصغيرة، حيث تُقتص مناطق الجداول والمخططات التي عثر عليها المحلل، وتُعاد معالجتها بتفصيل أعلى، ثم تُدمج التحسينات في مخرجات الصفحة؛ وثلاث تمريرات تضيف تمريرة ثانية في وضع الكشف للتحقق من العثور على جميع المربعات بدقة وعدم تفويت نصوص، تليها تمريرة ثالثة لإعادة استخلاص أي مخططات أو جداول تم العثور عليها.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "إنفيديا",
+        "Nemotron 3.5 Parse",
+        "الذكاء الاصطناعي",
+        "معالجة الوثائق",
+        "التعلم التعزيزي",
+        "البيانات التركيبية",
+        "تسريع الاستنتاج",
+        "DFlash2"
+      ],
+      "entities": [
+        "NVIDIA",
+        "Nemotron 3.5 Parse",
+        "DFlash2",
+        "GRPO",
+        "SFT",
+        "RLVR",
+        "NaViT",
+        "GQA-8"
+      ],
+      "article_type": "news",
+      "confidence_note": "المقال مستند حصراً إلى منشور مدونة إنفيديا على Hugging Face بتاريخ 2026-11-26، مع الالتزام بالروابط المسموحة فقط وتجنب أي معلومات غير واردة في المصدر."
+    },
+    "en": {
+      "title": "NVIDIA details Nemotron 3.5 Parse data and faster inference",
+      "description": "NVIDIA has open-sourced three Nemotron 3.5 Parse training datasets and detailed a fine-tuning recipe plus DFlash2 speculative decoding for faster inference.",
+      "deck": "NVIDIA is expanding its Nemotron 3.5 Parse document model with three open training datasets, a fine-tuning recipe and a DFlash2 speculator for faster inference. The company says the release also documents how supervised fine-tuning and reinforcement learning improved chart, table and multilingual page extraction.",
+      "summary_bullets": [
+        "NVIDIA open-sourced Synthetic Charts V1 with 9.98 million examples, Synthetic Tables V1 with 1 million examples and OCR Synthetic Multilingual v2 with 7.9 million examples.",
+        "Parse 3.5 was trained with supervised fine-tuning and then reinforcement learning with verifiable rewards using Group Relative Policy Optimization.",
+        "A matched comparison showed loop-flagged outputs falling from 126 to 29 pages and overall score rising from 66.24 to 71.38.",
+        "DFlash2 speculative decoding raised throughput 7.62 times at concurrency 1 and 1.52 times at concurrency 512 versus Parse 3.5 without speculation on one H200.",
+        "The model returns reading-order content, content classes and bounding boxes, with tables and charts converted into structured records for RAG and agents."
+      ],
+      "sections": [
+        {
+          "heading": "Open datasets for document parsing",
+          "paragraphs": [
+            {
+              "text": "NVIDIA is extending its Nemotron 3.5 Parse document model with three open training datasets, a fine-tuning recipe and a DFlash2 speculator for faster inference. In a Hugging Face Blog post, the company said the release builds on NVIDIA Nemotron 3.5 Parse, a compact model that turns page images into structured data for retrieval-augmented generation and agents.",
+              "links": [
+                {
+                  "text": "Hugging Face Blog",
+                  "url": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin"
+                },
+                {
+                  "text": "NVIDIA Nemotron 3.5 Parse",
+                  "url": "https://huggingface.co/nvidia/Nemotron-3.5-Parse"
+                }
+              ]
+            },
+            {
+              "text": "The datasets cover charts, tables and multilingual pages. Synthetic Charts V1 contains 9.98 million rendered charts and structured annotations for learning categories, series and numerical values. Synthetic Tables V1 contains 1 million rendered HTML tables with targets that preserve rows, columns, headers and cell relationships. A third set, OCR Synthetic Multilingual v2, contains 7.9 million synthetic document pages with Parse-format targets across varied fonts and layouts for multilingual OCR and structured page reading.",
+              "links": [
+                {
+                  "text": "Synthetic Charts V1",
+                  "url": "https://huggingface.co/datasets/nvidia/Synthetic-Charts-V1"
+                },
+                {
+                  "text": "Synthetic Tables V1",
+                  "url": "https://huggingface.co/datasets/nvidia/Synthetic-Tables-V1"
+                }
+              ]
+            },
+            {
+              "text": "NVIDIA said each release includes images, annotations, generation documentation and the training format. The pairs can be used to fine-tune document models or to create new variations for a target document type or language.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Reading order, classes and bounding boxes",
+          "paragraphs": [
+            {
+              "text": "Parse extracts content from document pages into reading order, assigns content classes such as headings, paragraphs, tables and charts, and returns bounding boxes that locate the content. Tables and charts become structured records intended to support downstream document processing applications.",
+              "links": []
+            },
+            {
+              "text": "The latest version extends the model’s ability to read charts and tables, especially in difficult and ambiguous cases. NVIDIA cites bar charts or other plots without marked numeric values, where the model can infer values by looking at the axes and the height of a bar. Tables can be harder because structure carries meaning: a shifted row or column can change the interpretation. NVIDIA says synthetic data generation has largely powered these advances by rendering variations of charts and tables with known ground truth and training the model to reverse that process.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "SFT first, then RLVR",
+          "paragraphs": [
+            {
+              "text": "NVIDIA trained Parse 3.5 in two phases. Supervised fine-tuning covered text, layout, tables, charts and multilingual documents. Learning to predict structured targets established the general capability to read a page and represent its contents. The company then used reinforcement learning with verifiable rewards and Group Relative Policy Optimization. Rewards check the quality of sampled extractions; for example, a chart extraction can earn a better reward for recovering the correct series and values, producing a usable structure and finishing without repeatedly generating the same content.",
+              "links": []
+            },
+            {
+              "text": "NVIDIA said a difficult page can have several valid representations. The reward checks give the model flexibility to find a correct answer without prescribing one exact token sequence, while discouraging looping and unfinished output.",
+              "links": []
+            },
+            {
+              "text": "A matched comparison of SFT and GRPO, using development checkpoints separate from the final released model, showed fewer loop-flagged outputs and fewer outputs hitting the 9,000-token limit. Loop-flagged outputs fell from 126 to 29 pages, about 77% fewer, and outputs reaching the token limit fell from 185 to 35. The overall score improved from 66.24 to 71.38, including gains of 5.18 points in tables and 4.15 points in charts.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Architecture and DFlash2",
+          "paragraphs": [
+            {
+              "text": "A parser must generate substantial text and structure for every page, so NVIDIA also optimized how Parse 3.5 processes images and decodes outputs. NaViT preprocessing adapts the input shape to the page. A visual adapter compresses the image sequence, and the text decoder consumes it as a prefix, replacing encoder–decoder cross-attention. Grouped-query attention with eight key/value heads reduces the decoder’s attention-cache memory. The built-in multi-token prediction head supplies one-token lookahead.",
+              "links": []
+            },
+            {
+              "text": "DFlash2 goes further. A small draft model proposes up to 32 tokens ahead, and Parse verifies the proposals together. In the measured 32-token configuration, NVIDIA says DFlash2 averages about 14 accepted draft tokens, or roughly 15 output tokens of progress per verification step including the target token.",
+              "links": []
+            },
+            {
+              "text": "In a native single-pass benchmark on one H200 in BF16 using the same 2,078 pages, DFlash2 increased throughput 7.62 times at concurrency 1 and 1.52 times at concurrency 512 compared with Parse 3.5 with speculative decoding disabled. At concurrency 512, Parse 3.5 reaches 13.48 pages per second without speculation and 20.44 pages per second with DFlash2, versus 2.98 for Parse 2.0. NVIDIA says those figures are 4.53 times and 6.86 times the Parse 2.0 throughput, respectively.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Single, double and triple passes",
+          "paragraphs": [
+            {
+              "text": "NVIDIA says faster parsing gives room to revisit difficult regions. The workflow starts with a full-page prediction and then adds focused reprocessing where the document needs it. A single pass parses the full page once for text, layout, tables and charts.",
+              "links": []
+            },
+            {
+              "text": "A double pass is intended for dense tables and small chart details. The parser crops the table and chart regions it found, re-parses them at higher detail and merges the refinements into the page output. A triple pass uses a second pass in detection mode to verify that all boxes were accurately found and that text was not missed, then re-extracts any found charts or tables in a third pass.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "NVIDIA",
+        "Nemotron 3.5 Parse",
+        "document AI",
+        "synthetic data",
+        "speculative decoding",
+        "Hugging Face"
+      ],
+      "entities": [
+        "NVIDIA",
+        "Nemotron 3.5 Parse",
+        "DFlash2",
+        "Hugging Face",
+        "Synthetic Charts V1",
+        "Synthetic Tables V1",
+        "OCR Synthetic Multilingual v2"
+      ],
+      "article_type": "news",
+      "confidence_note": "High confidence: based on NVIDIA’s official Hugging Face blog post; benchmark and training figures are company-reported."
+    }
+  },
+  "selected_attempts": [
+    {
+      "attempt": 1,
+      "status": "passed",
+      "errors": [],
+      "word_count_ar": 788,
+      "word_count_en": 963
+    }
+  ],
+  "candidate_reports": [
+    {
+      "rank": 1,
+      "story_id": "3d2697b636d74b834fc0",
+      "title": "Building on Nemotron 3.5 Parse: Open Data, Fine-Tuning, and Faster Inference",
+      "status": "passed",
+      "errors": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "errors": [],
+          "word_count_ar": 788,
+          "word_count_en": 963
+        }
+      ]
+    }
+  ],
+  "slug": "building-on-nemotron-parse-open-data-fine-tuning-and-faster-inference",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/building-on-nemotron-parse-open-data-fine-tuning-and-faster-inference/hero.webp",
+    "card": "/forum/assets/posts/2026/11/building-on-nemotron-parse-open-data-fine-tuning-and-faster-inference/card.webp",
+    "social": "/forum/assets/posts/2026/11/building-on-nemotron-parse-open-data-fine-tuning-and-faster-inference/social.jpg",
+    "alt": {
+      "ar": "إنفيديا تطلق بيانات تدريب مفتوحة ومُسرّع DFlash2 لـ Nemotron 3.5 Parse",
+      "en": "NVIDIA details Nemotron 3.5 Parse data and faster inference"
+    },
+    "credit": "Hugging Face Blog",
+    "sourceUrl": "https://cdn-uploads.huggingface.co/production/uploads/6365c3f398da81987e2753f2/zArpuP9uLsLz9luMW0K2g.png",
+    "sourceType": "official",
+    "generatedFallback": false,
+    "inline": [
+      {
+        "src": "/forum/assets/posts/2026/11/building-on-nemotron-parse-open-data-fine-tuning-and-faster-inference/inline-01.webp",
+        "width": 1358,
+        "height": 1050,
+        "alt": {
+          "ar": "إنفيديا تطلق بيانات تدريب مفتوحة ومُسرّع DFlash2 لـ Nemotron 3.5 Parse",
+          "en": "An operations brief with predicted regions on the left and its structured extraction on the right."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin",
+        "originalUrl": "https://huggingface.co/datasets/nvidia/Nemotron-Parse-Blog-Assets/resolve/main/images/figure-01-page-structure.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/building-on-nemotron-parse-open-data-fine-tuning-and-faster-inference/inline-02.webp",
+        "width": 1400,
+        "height": 532,
+        "alt": {
+          "ar": "إنفيديا تطلق بيانات تدريب مفتوحة ومُسرّع DFlash2 لـ Nemotron 3.5 Parse",
+          "en": "A bar chart without printed bar values, alongside the released model’s extracted values of 18, 27, 39, and 54."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin",
+        "originalUrl": "https://huggingface.co/datasets/nvidia/Nemotron-Parse-Blog-Assets/resolve/main/images/figure-02-chart-geometry.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/building-on-nemotron-parse-open-data-fine-tuning-and-faster-inference/inline-03.webp",
+        "width": 1400,
+        "height": 569,
+        "alt": {
+          "ar": "إنفيديا تطلق بيانات تدريب مفتوحة ومُسرّع DFlash2 لـ Nemotron 3.5 Parse",
+          "en": "A matched training comparison showing extraction gains after GRPO and fewer repetition flags and token-cap hits."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin",
+        "originalUrl": "https://huggingface.co/datasets/nvidia/Nemotron-Parse-Blog-Assets/resolve/main/images/figure-03-sft-grpo-gains.png"
+      },
+      {
+        "src": "/forum/assets/posts/2026/11/building-on-nemotron-parse-open-data-fine-tuning-and-faster-inference/inline-04.webp",
+        "width": 1400,
+        "height": 893,
+        "alt": {
+          "ar": "إنفيديا تطلق بيانات تدريب مفتوحة ومُسرّع DFlash2 لـ Nemotron 3.5 Parse",
+          "en": "Single-pass page parsing, double-pass crop refinement, and triple-pass refinement with an independent region detector."
+        },
+        "caption": {
+          "ar": "صورة مرتبطة بالخبر من Hugging Face Blog",
+          "en": "Image related to the report from Hugging Face Blog"
+        },
+        "credit": "Hugging Face Blog",
+        "sourceUrl": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin",
+        "originalUrl": "https://huggingface.co/datasets/nvidia/Nemotron-Parse-Blog-Assets/resolve/main/images/figure-05-multipass.png"
+      }
+    ]
+  }
 }
