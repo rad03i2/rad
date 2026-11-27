@@ -1,0 +1,311 @@
+{
+  "schemaVersion": 3,
+  "template": "article",
+  "id": "dc478ba580bb86300247",
+  "slug": "unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution",
+  "categorySlug": "security",
+  "urls": {
+    "ar": "/forum/ar/security/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution/",
+    "en": "/forum/en/security/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution/"
+  },
+  "locales": {
+    "ar": {
+      "title": "ثغرة صفريّة خطيرة في Cacti تتيح تنفيذ أوامر عن بُعد",
+      "description": "كُشفت ثغرة أمنية صفريّة في منصة المراقبة Cacti مع أداة استغلال تفاعلية تتيح للمهاجمين تنفيذ أوامر على الخوادم المتضررة دون مصادقة مسبقة.",
+      "deck": "ظهرت ثغرة أمنية جديدة من نوع يوم الصفر (Zero-day) في منصة مراقبة الشبكات الشهيرة Cacti، مصحوبة برمز إثبات مفهوم عام يهدد الأنظمة التي لم تتلقَّ تصحيحات أمنية بعد.",
+      "summaryBullets": [
+        "اكتشاف ثغرة يوم صفر في منصة Cacti لم يتم رقعها بعد وتتيح تنفيذ الأوامر عن بُعد.",
+        "أداة الاستغلال المسماة 4HTTP2SHELL تتطلب أربعة طلبات HTTP فقط ودون الحاجة لتسجيل الدخول.",
+        "التحقق من الثغرة شمل إصدار Cacti Core 1.2.31 وسط مطالبات بتعطيل حساب الضيف مؤقتاً.",
+        "الخبراء يؤكدون عدم وجود تقارير تفيد باستغلال الثغرة هجماتياً حتى تاريخ 27 نوفمبر."
+      ],
+      "sections": [
+        {
+          "heading": "تفاصيل الثغرة وأداة الاستغلال",
+          "paragraphs": [
+            {
+              "text": "تم الكشف علناً عن ثغرة أمنية جديدة من نوع يوم الصفر في منصة مراقبة الشبكات Cacti، إلى جانب رمز إثبات مفهوم (PoC) يتيح للمهاجمين غير المُصادَقين تنفيذ أوامر برمجية على الخوادم المعرضة للخطر. وقد نشر الباحث الأمني المعروف باسم ek0ms savi0r من مجموعة Malware هذه الثغرة، والتي تُعرف باسم 4HTTP2SHELL، حيث تُظهر التجربة كيفية استغلال النظام عبر أربعة طلبات HTTP فقط، وفق ما ورد في BleepingComputer.",
+              "links": [
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution/"
+                }
+              ]
+            },
+            {
+              "text": "تُعد منصة Cacti أداة مفتوحة المصدر مخصصة لمراقبة الأداء وإنشاء الرسوم البيانية الخاصة بالخوادم وأجهزة التوجيه والمحولات وجدران الحماية وغيرها من بنيات شبكات الاتصالات الأساسية. وبسبب قدرة هذه البرمجيات على تخزين بيانات الاعتماد وكلمات المرور الخاصة ببروتوكول إدارة الشبكات البسيط (SNMP) للوصول إلى الأجهزة المراقبة، فإن اختراق خادم Cacti قد يمنح المهاجمين مساراً للوصول إلى أنظمة أخرى داخل شبكة المؤسسة.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "آلية الهجوم ونقاط الضعف في التحقق",
+          "paragraphs": [
+            {
+              "text": "أوضح الباحث الأمني في التفاصيل التقنية المنشورة عبر GitHub أن الوصول إلى تنفيذ الأوامر يتم مباشرة من جلسة HTTP جديدة وغير مصادق عليها، ودون الحاجة لتسجيل دخول أو مفتاح API صالح. وتعود جذور المشكلة إلى ضعف التحقق من مدخلات البيانات، مما يسمح للمهاجم بحقن عبارات SQL داخل قاعدة بيانات التطبيق وتعديل الأوامر التي ينفذها نظام المعالجة الفوري في المنصة.",
+              "links": [
+                {
+                  "text": "GitHub",
+                  "url": "https://github.com/ekomsSavior/Sad-Girls-0day-Club/blob/main/sad_girls_0day_article.md"
+                }
+              ]
+            },
+            {
+              "text": "من جانبها، أشارت شركة الأمن السيبراني RavenAI إلى أن الهجوم يستغل ضعف التحقق من إعدادات عرض الرسوم البيانية لحسابات الضيوف، مما يؤدي إلى ثغرة حقن SQL مخزنة. وتتطلب هذه العملية تفعيل حساب الضيف في Cacti، لكنها لا تستلزم أي بيانات اعتماد صحيحة، حيث يقوم التطبيق بتنفيذ عبارات SQL المخزنة عند معالجة تفضيلات العرض.",
+              "links": [
+                {
+                  "text": "RavenAI",
+                  "url": "https://ravenai.sh/blog/four-requests-to-shell-cacti"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "مستوى الصلاحيات وتأثير الاستغلال",
+          "paragraphs": [
+            {
+              "text": "بينما استعرض الباحث الأمني قدرة أداة الاستغلال على منح صلاحيات الجذر (root) على خادم عرضة للخطر، أوضحت شركة watchTowr أن حجم الصلاحيات المكتسبة يعتمد بالأساس على الحساب الذي يشغل خادم الويب الخاص بـ Cacti وعمليات المعالجة. وفي العديد من حالات نشر المنصة، قد يكون هذا الحساب تابعاً لخادم ويب ذي صلاحيات محدودة بدلاً من صلاحيات الجذر الكاملة.",
+              "links": [
+                {
+                  "text": "watchTowr",
+                  "url": "https://watchtowr.com/intelligence/4http2root-cacti-zero-day-faq/"
+                }
+              ]
+            },
+            {
+              "text": "وقد جرى اختبار أداة الاستغلال بشكل رئيسي ضد إصدار Cacti Core 1.2.31، في حين لا يزال الغموض يحيط بما إذا كانت الإصدارات السابقة معرضة للخطر ذاته أم لا، نظراً لغياب البيانات المؤكدة عنها حتى الآن.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "موقف الباحثين وإحباط الإفصاح",
+          "paragraphs": [
+            {
+              "text": "وفي سياق متصل، أبدى الباحث الأمني استياءه الشديد من الطريقة التي تتعامل بها الشركات التقنية مع تقارير الثغرات الأمنية، مشيراً إلى إغلاق أو تجاهل تقارير سابقة استمرت لسنوات باعتبارها سلوكيات متوقعة أو حالات لا يمكن إعادة إنتاجها. وأكد الباحث أن المجتمع الأمني يسعى لمساعدة الشركات وحماية المستخدمين من المخاطر الكامنة في الأنظمة البرمجية.",
+              "links": []
+            },
+            {
+              "text": "وفي إطار الإعلان عن تفاصيل الثغرة، جرى نشر مقطع فيديو توضيحي عبر منصات التواصل الاجتماعي يعرض آلية عمل إثبات المفهوم دون إبلاغ الجهات المطورّة لبرمجية Cacti مسبقاً قبل إصدار هذه التفاصيل للعموم.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "إجراءات التخفيف والتوصيات الوقائية",
+          "paragraphs": [
+            {
+              "text": "حين إعداد هذه التغطية، لم يتم إطلاق تحديث أو تصحيح رسمي من الجهة المطورة لإصلاح الثغرة، ورغم ذلك، لا تتوفر حتى تاريخ 27 نوفمبر أي تقارير تفيد بتعرض المنصات لهجمات فعلية تستغل هذه الثغرة البرمجية في الميدان.",
+              "links": []
+            },
+            {
+              "text": "لذا، يوصي الخبراء مسؤولي النظم بضرورة تعطيل حساب الضيف (guest account) في منصة Cacti بشكل مؤقت، وتقييد الوصول إلى واجهة الويب الخاصة بالتطبيق لتقتصر حصراً على الشبكات الموثوقة. كما يُنصح بمراجعة إعدادات عمليات المعالجة للبحث عن أي أوامر غير متوقعة، وفحص سجلات التطبيق بحثاً عن تحذيرات تتعلق بوجود قيم غير رقمية ضمن إعدادات عرض الرسوم البيانية التي قد تشير إلى محاولات استغلال سابقة.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cacti",
+        "ثغرة أمنية",
+        "يوم الصفر",
+        "أمن شبكات",
+        "حقن SQL",
+        "تنفيذ أوامر"
+      ],
+      "entities": [
+        "Cacti",
+        "BleepingComputer",
+        "watchTowr",
+        "RavenAI",
+        "ek0ms savi0r"
+      ],
+      "category": "الأمن التقني",
+      "dateLabel": "28 نوفمبر 2026",
+      "modifiedLabel": "28 نوفمبر 2026",
+      "readMinutes": 4,
+      "wordCount": 621
+    },
+    "en": {
+      "title": "Unpatched Cacti Zero-Day Vulnerability Exposes Servers to RCE",
+      "description": "A zero-day vulnerability in the Cacti network monitoring platform allows unauthenticated remote code execution using four HTTP requests.",
+      "deck": "A public proof-of-concept exploit for an unpatched zero-day vulnerability in the Cacti network monitoring platform enables unauthenticated attackers to execute arbitrary commands on vulnerable servers.",
+      "summaryBullets": [
+        "A zero-day vulnerability dubbed '4HTTP2SHELL' has been publicly disclosed for the Cacti network monitoring platform.",
+        "The exploit requires only four HTTP requests from an unauthenticated session against the default guest surface.",
+        "Weak input validation leads to a stored SQL injection that modifies commands executed by Cacti's real-time poller.",
+        "Administrators are advised to deactivate the Cacti guest account and restrict web interface access until a patch is released."
+      ],
+      "sections": [
+        {
+          "heading": "Overview of the Cacti Zero-Day Exploit",
+          "paragraphs": [
+            {
+              "text": "A zero-day vulnerability affecting the Cacti network monitoring platform has been publicly disclosed alongside a proof-of-concept exploit, allowing unauthenticated attackers to execute commands on vulnerable servers. Detailed by <a href=\"https://www.bleepingcomputer.com/author/lawrence-abrams/\">Lawrence Abrams</a> on <a href=\"https://www.bleepingcomputer.com/news/security/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution/\">BleepingComputer</a>, the flaw provides a straightforward path to remote code execution.",
+              "links": [
+                {
+                  "text": "Lawrence Abrams",
+                  "url": "https://www.bleepingcomputer.com/author/lawrence-abrams/"
+                },
+                {
+                  "text": "BleepingComputer",
+                  "url": "https://www.bleepingcomputer.com/news/security/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution/"
+                }
+              ]
+            },
+            {
+              "text": "The exploit, which is named \"4HTTP2SHELL\" and was previously referred to as 4HTTP2ROOT, was published on Thanksgiving Day by a cybersecurity researcher known as ek0ms savi0r from the Church of Malware. The researcher demonstrated how the vulnerability can be leveraged using just four HTTP requests against vulnerable deployments.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Technical Details and Attack Vector",
+          "paragraphs": [
+            {
+              "text": "Cacti is widely utilized as an open-source network monitoring and graphing tool designed to track the performance of various infrastructure components, including servers, routers, switches, and firewalls. Because the platform can store sensitive credentials and SNMP passphrases used to access monitored devices, successfully compromising a Cacti server can potentially grant attackers broader access to an entire corporate network.",
+              "links": []
+            },
+            {
+              "text": "Further technical documentation and files can be found directly within <a href=\"https://github.com/ekomsSavior/Sad-Girls-0day-Club/blob/main/sad_girls_0day_article.md\">the GitHub repository</a> hosted by the researcher. According to the published write-up, the attack path requires no login, no valid API key, and no phishing.",
+              "links": [
+                {
+                  "text": "the GitHub repository",
+                  "url": "https://github.com/ekomsSavior/Sad-Girls-0day-Club/blob/main/sad_girls_0day_article.md"
+                }
+              ]
+            },
+            {
+              "text": "The vulnerability itself arises from weak input validation that permits an unauthenticated attacker to inject SQL statements into the application database, subsequently modifying the commands executed by Cacti's real-time poller. The attack requires the guest account to be enabled, though it does not necessitate valid credentials.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Analysis from Cybersecurity Firms",
+          "paragraphs": [
+            {
+              "text": "Additional insights regarding the mechanics of the vulnerability have been provided by industry experts. Cybersecurity firm RavenAI explains that the exploit abuses weak validation of guest users' graph display settings, leading directly to a stored SQL injection vulnerability.",
+              "links": []
+            },
+            {
+              "text": "Furthermore, security analysis provided by <a href=\"https://watchtowr.com/intelligence/4http2root-cacti-zero-day-faq/\">watchTowr explains</a> that while initial demonstrations showed root access, the actual privileges gained during an exploitation depend entirely on the specific account running the Cacti web server and poller processes.",
+              "links": [
+                {
+                  "text": "watchTowr explains",
+                  "url": "https://watchtowr.com/intelligence/4http2root-cacti-zero-day-faq/"
+                }
+              ]
+            },
+            {
+              "text": "In many typical deployments, these processes operate under a low-privileged web server account rather than root, limiting immediate system-wide escalation unless secondary vulnerabilities are present.",
+              "links": []
+            }
+          ]
+        },
+        {
+          "heading": "Researcher Motivations and Disclosure Frustrations",
+          "paragraphs": [
+            {
+              "text": "The researcher tested the exploit against Cacti Core 1.2.31, though it remains unclear whether earlier versions are similarly vulnerable. Rather than reporting the issue to the platform maintainers prior to publication, the researcher chose immediate public disclosure.",
+              "links": []
+            },
+            {
+              "text": "In accompanying commentary posted to the project repository, the researcher expressed deep frustration with corporate responses to vulnerability reports, citing instances where previous security findings were dismissed, closed as duplicates, or marked as expected behavior.",
+              "links": []
+            },
+            {
+              "text": "Specific exploit code and supporting artifacts have also been organized in <a href=\"https://github.com/ekomsSavior/Sad-Girls-0day-Club/tree/main/4http2shell\">4HTTP2SHELL</a> for public review and analysis by the security community.",
+              "links": [
+                {
+                  "text": "4HTTP2SHELL",
+                  "url": "https://github.com/ekomsSavior/Sad-Girls-0day-Club/tree/main/4http2shell"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Mitigation Guidance and Recommendations",
+          "paragraphs": [
+            {
+              "text": "As of November 27, there have been no confirmed reports of this zero-day vulnerability being actively exploited in the wild. However, because no official patch is currently available, administrators are urged to take immediate protective measures.",
+              "links": []
+            },
+            {
+              "text": "Security guidance recommends that organizations deactivate the Cacti guest account and restrict access to the application's web interface exclusively to trusted internal networks. Additionally, administrators should review poller configurations for anomalous commands and check application logs for warnings regarding non-numeric values in graph display settings, which can serve as an indicator of attempted exploitation.",
+              "links": []
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "Cacti",
+        "Zero-Day",
+        "Remote Code Execution",
+        "SQL Injection",
+        "Cybersecurity",
+        "Vulnerability"
+      ],
+      "entities": [
+        "Cacti",
+        "Church of Malware",
+        "watchTowr",
+        "RavenAI"
+      ],
+      "category": "Cybersecurity",
+      "dateLabel": "November 28, 2026",
+      "modifiedLabel": "November 28, 2026",
+      "readMinutes": 3,
+      "wordCount": 631
+    }
+  },
+  "datePublished": "2026-11-28T00:56:32.512253+03:00",
+  "dateModified": "2026-11-28T00:56:32.512253+03:00",
+  "images": {
+    "hero": "/forum/assets/posts/2026/11/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution/hero.webp",
+    "card": "/forum/assets/posts/2026/11/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution/card.webp",
+    "social": "/forum/assets/posts/2026/11/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution/social.jpg",
+    "alt": {
+      "ar": "ثغرة صفريّة خطيرة في Cacti تتيح تنفيذ أوامر عن بُعد",
+      "en": "Unpatched Cacti Zero-Day Vulnerability Exposes Servers to RCE"
+    },
+    "credit": "BleepingComputer",
+    "sourceUrl": "https://www.bleepstatic.com/content/hl-images/2026/11/27/cacti.jpg",
+    "sourceType": "journalism",
+    "generatedFallback": false,
+    "inline": []
+  },
+  "sources": [
+    {
+      "name": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution/",
+      "type": "journalism",
+      "title": "Unpatched Cacti zero-day with public PoC gives remote code execution"
+    }
+  ],
+  "sourceUrl": "https://www.bleepingcomputer.com/news/security/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution",
+  "sourceTitle": "Unpatched Cacti zero-day with public PoC gives remote code execution",
+  "trendScore": 93.2,
+  "verification": {
+    "confidence": 0.88,
+    "reason": "trusted_journalism_single_source",
+    "official": false
+  },
+  "generation": {
+    "createdAt": "2026-11-27T21:56:32+00:00",
+    "mode": "automated-bilingual",
+    "contentSource": "structured-json",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "features": [
+      "inline-links",
+      "inline-images"
+    ],
+    "attempts": 1
+  },
+  "contentFile": "forum/content/2026/11/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution.json"
+}
